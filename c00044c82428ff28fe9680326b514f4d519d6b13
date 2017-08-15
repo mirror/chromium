@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1757a19b_787a8ad3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d48934_416a48fb",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 35
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a210e92_8dd6df4f",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "665964ef_f837d4aa",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82233f3f_f419bf91",
+      "range": {
+        "startLine": 186,
+        "startChar": 38,
+        "endLine": 186,
+        "endChar": 51
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a53d0204_ce8e6c08",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a210e92_8dd6df4f",
+      "range": {
+        "startLine": 186,
+        "startChar": 5,
+        "endLine": 186,
+        "endChar": 12
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e38923_485a68e4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-15T20:59:06Z",
       "side": 1,
       "message": "Make a helper method that records the histogram, sets |is_active_| to false, adds the worker to the idle stack and resets |num_tasks_since_last_wait_|. Use this method here and at line 517-523.\n\n(I posted the same comment on your next CL, but I think it should be done as part of this CL because it\u0027s this CL that introduces code duplication)",
+      "range": {
+        "startLine": 462,
+        "startChar": 5,
+        "endLine": 465,
+        "endChar": 21
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3faa19_3c0535b3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "If I have such a method, I\u0027d have to put it before the CanCleanup, Cleanup block because after Cleanup(), I need to make sure the worker is removed from the idle workers stack. (so I can\u0027t call this method afterwards since it\u0027ll add it back to the idle workers stack).\n\nIt\u0027d be inefficient to do this since I\u0027d be adding to the idle stack, then removing in Cleanup.\nIs that inefficiency okay?",
+      "parentUuid": "42e38923_485a68e4",
       "range": {
         "startLine": 462,
         "startChar": 5,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "054ea592_210bccfb",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c646481b_8861d075",
+      "range": {
+        "startLine": 511,
+        "startChar": 2,
+        "endLine": 513,
+        "endChar": 33
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0505b56c_573525f1",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "db8d42a3_9a823f58",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0505b56c_573525f1",
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a77fac00_2225ba82",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
@@ -148,6 +286,24 @@
       "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9b78f0_27d1a929",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T21:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77fac00_2225ba82",
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
