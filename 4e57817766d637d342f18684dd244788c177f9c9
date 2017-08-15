@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acdfed47_b8cc5e3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-15T00:35:56Z",
+      "side": 1,
+      "message": "dup message.",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "4e57817766d637d342f18684dd244788c177f9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fabfc8c_1fa0c7f1",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-15T00:35:56Z",
+      "side": 1,
+      "message": "maybe wrap these into a private method since it\u0027s used many times, or cache the value with a local const bool.",
+      "range": {
+        "startLine": 378,
+        "startChar": 6,
+        "endLine": 379,
+        "endChar": 29
+      },
+      "revId": "4e57817766d637d342f18684dd244788c177f9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
