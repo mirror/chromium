@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a66e35c_48a98eaa",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T13:53:14Z",
+      "side": 1,
+      "message": "nit: needs_full_damage\n\nas we\u0027re not drawing, just creating a frame that will be submitting to the display compositor",
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743b5ab7_37b24225",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T13:53:14Z",
+      "side": 1,
+      "message": "nit: please move the state checks into the if scope below. something like\n\nbool needs_full_damage \u003d frame_type \u003d\u003d FRAME_TYPE_RECREATED_RESOURCES;\n\nif (needs_commit) {\n  needs_commit_surface_hierarchy_ \u003d false;\n  \n  if (pending_state_.buffer_scale !\u003d state_.buffer_scale ||\n      ...) {\n    needs_full_damage \u003d true;\n  }",
+      "range": {
+        "startLine": 422,
+        "startChar": 7,
+        "endLine": 422,
+        "endChar": 19
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9b9d0c_06c1ae80",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T13:53:14Z",
+      "side": 1,
+      "message": "nit: use \"new !\u003d old\" (e.g. pending_state_.crop !\u003d state_.crop instead of state_.crop !\u003d pending_state_.crop) as I think that has a minor advantage for readability",
+      "range": {
+        "startLine": 422,
+        "startChar": 24,
+        "endLine": 422,
+        "endChar": 74
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bc6ac0_f01554f0",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T13:53:14Z",
+      "side": 1,
+      "message": "what about opaque_region and only_visible_on_secure_output? they can effect output..",
+      "range": {
+        "startLine": 422,
+        "startChar": 24,
+        "endLine": 426,
+        "endChar": 60
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7659c8_6b9cfcd6",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T13:53:14Z",
+      "side": 1,
+      "message": "nit: needs_full_damage",
+      "range": {
+        "startLine": 657,
+        "startChar": 41,
+        "endLine": 657,
+        "endChar": 60
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13af9c7e_0affebef",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T13:53:14Z",
+      "side": 1,
+      "message": "nit: needs_full_damage",
+      "range": {
+        "startLine": 268,
+        "startChar": 34,
+        "endLine": 268,
+        "endChar": 53
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
