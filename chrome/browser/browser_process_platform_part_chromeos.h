@@ -12,7 +12,7 @@
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/sequence_checker.h"
-#include "chrome/browser/browser_process_platform_part_base.h"
+#include "chrome/browser/browser_process_platform_part_mus.h"
 
 namespace chromeos {
 class ChromeSessionManager;
@@ -37,13 +37,12 @@ class BrowserPolicyConnectorChromeOS;
 }
 
 namespace ui {
-class ImageCursorsSet;
 class InputDeviceControllerClient;
 }
 
 class ScopedKeepAlive;
 
-class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
+class BrowserProcessPlatformPart : public BrowserProcessPlatformPartMus {
  public:
   BrowserProcessPlatformPart();
   ~BrowserProcessPlatformPart() override;
@@ -99,13 +98,9 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   void StartTearDown() override;
   std::unique_ptr<policy::BrowserPolicyConnector> CreateBrowserPolicyConnector()
       override;
-  void RegisterInProcessServices(
-      content::ContentBrowserClient::StaticServiceMap* services) override;
 
   chromeos::system::SystemClock* GetSystemClock();
   void DestroySystemClock();
-
-  void DestroyImageCursorsSet();
 
   void AddCompatibleCrOSComponent(const std::string& name);
 
@@ -142,9 +137,6 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   std::unique_ptr<ScopedKeepAlive> keep_alive_;
 
   base::flat_set<std::string> compatible_cros_components_;
-
-  // Used by the UI Service.
-  std::unique_ptr<ui::ImageCursorsSet> image_cursors_set_;
 
 #if defined(USE_OZONE)
   std::unique_ptr<ui::InputDeviceControllerClient>
