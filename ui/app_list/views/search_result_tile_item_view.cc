@@ -23,7 +23,7 @@ namespace {
 
 constexpr int kSearchTileWidth = 80;
 constexpr int kSearchTileTopPadding = 4;
-constexpr int kSearchTitleSpacing = 6;
+constexpr int kSearchTitleSpacing = 5;
 constexpr int kSearchRatingStarSize = 12;
 constexpr int kSearchRatingStarHorizontalSpacing = 1;
 constexpr int kSearchRatingStarVerticalSpacing = 2;
@@ -112,10 +112,10 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
         ui::ResourceBundle::GetSharedInstance().GetFontList(
             ui::ResourceBundle::BaseFont);
 
+    title()->SetHorizontalAlignment(gfx::ALIGN_CENTER);
+    title()->SetFontList(base_font.DeriveWithSizeDelta(1));
     if (item_->display_type() == SearchResult::DISPLAY_RECOMMENDATION) {
       set_is_recommendation(true);
-
-      title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kGridTitleColorFullscreen);
     } else if (item_->display_type() == SearchResult::DISPLAY_TILE) {
       // Set solid color background to avoid broken text. See crbug.com/746563.
@@ -129,8 +129,10 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
       }
       title()->SetBackground(
           views::CreateSolidBackground(kCardBackgroundColorFullscreen));
-      title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kSearchTitleColor);
+      title()->SetMultiLine(
+          item_->result_type() == SearchResult::RESULT_INSTALLED_APP ? true
+                                                                     : false);
     }
   }
 
@@ -269,7 +271,9 @@ void SearchResultTileItemView::Layout() {
       badge()->SetBoundsRect(badge_rect);
     }
 
-    rect.Inset(0, kGridIconDimension + kSearchTitleSpacing, 0, 0);
+    rect.Inset(kGridTitleHorizontalPadding,
+               kGridIconDimension + kSearchTitleSpacing,
+               kGridTitleHorizontalPadding, 0);
     rect.set_height(title()->GetPreferredSize().height());
     title()->SetBoundsRect(rect);
 
