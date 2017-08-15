@@ -198,6 +198,7 @@ source_set("test_support") {
     "//ios/web:earl_grey_test_support",
     "//ios/web/public/test",
     "//ios/web/public/test/http_server",
+    "//net:test_support",
     "//ui/base",
     "//ui/base:test_support",
     "//url",
