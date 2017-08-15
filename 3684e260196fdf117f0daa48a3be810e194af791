@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2c1b4e3_6c659e57",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/performance/perf-push-metrics-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-15T22:10:46Z",
+      "side": 1,
+      "message": "runtime.evaluate gives these to us.",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "3684e260196fdf117f0daa48a3be810e194af791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
