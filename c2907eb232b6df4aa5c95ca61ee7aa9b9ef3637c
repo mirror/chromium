@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673cab6c_3f8437da",
+        "filename": "net/base/network_throttle_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-15T22:55:26Z",
+      "side": 1,
+      "message": "I think base::MakeUnique\u003c\u003e is more idiomatic?",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 25
+      },
+      "revId": "c2907eb232b6df4aa5c95ca61ee7aa9b9ef3637c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
