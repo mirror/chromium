@@ -345,6 +345,7 @@ class CC_EXPORT LayerImpl {
 
   // This includes |layer_property_changed_| and property_trees changes.
   bool LayerPropertyChanged() const;
+  bool LayerPropertyChangedFromPropertyTrees() const;
   // Only checks |layer_property_changed_|. Used in damage_tracker to determine
   // if there is a contributing content damage not from property_trees changes
   // in animaiton.
@@ -420,6 +421,7 @@ class CC_EXPORT LayerImpl {
   float GetIdealContentsScale() const;
 
   void NoteLayerPropertyChanged();
+  void NoteLayerPropertyChangedFromPropertyTrees();
 
   void SetHasWillChangeTransformHint(bool has_will_change);
   bool has_will_change_transform_hint() const {
@@ -494,6 +496,7 @@ class CC_EXPORT LayerImpl {
 
   // Tracks if drawing-related properties have changed since last redraw.
   bool layer_property_changed_ : 1;
+  bool layer_property_changed_from_property_trees_ : 1;
   bool may_contain_video_ : 1;
 
   bool masks_to_bounds_ : 1;
