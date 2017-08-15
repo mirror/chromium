@@ -16,6 +16,24 @@
       "revId": "ed285ec816926da8c1d867949bbf4ed87386727c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a999e48_acbf10cf",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-15T18:40:16Z",
+      "side": 1,
+      "message": "Ya, you\u0027ll need to do the stat incrementing (conditionally of course) on the UI thread after processing the minidump in teh background.",
+      "parentUuid": "683747e3_1502676d",
+      "revId": "ed285ec816926da8c1d867949bbf4ed87386727c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
