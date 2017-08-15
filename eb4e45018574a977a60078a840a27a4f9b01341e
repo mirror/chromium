@@ -16,6 +16,24 @@
       "revId": "eb4e45018574a977a60078a840a27a4f9b01341e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f3fea6_130b599d",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T05:53:18Z",
+      "side": 1,
+      "message": "Switched to observer from WeakPtr.",
+      "parentUuid": "ff3f9727_18131a68",
+      "revId": "eb4e45018574a977a60078a840a27a4f9b01341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
