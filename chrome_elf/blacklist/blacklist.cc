@@ -23,6 +23,17 @@ extern "C" IMAGE_DOS_HEADER __ImageBase;
 
 namespace blacklist {
 
+namespace {
+
+int NullCrashDumpFunction(EXCEPTION_POINTERS* exception_pointers) {
+  return EXCEPTION_CONTINUE_SEARCH;
+}
+
+blacklist::GenerateCrashDumpFunction g_generate_crashdump_func =
+    &NullCrashDumpFunction;
+
+}  // namespace
+
 // The DLLs listed here are known (or under strong suspicion) of causing crashes
 // when they are loaded in the browser. DLLs should only be added to this list
 // if there is nothing else Chrome can do to prevent those crashes.
@@ -354,6 +365,16 @@ bool Initialize(bool force) {
                                    PAGE_EXECUTE_READ, &old_protect);
 
   return NT_SUCCESS(ret) && page_executable;
+}
+
+void SetCrashdumpFunction(GenerateCrashDumpFunction crashdump_function) {
+  if (crashdump_function == nullptr)
+    crashdump_function = NullCrashDumpFunction;
+  g_generate_crashdump_func = crashdump_function;
+}
+
+int CallGenerateCrashdumpFunction(EXCEPTION_POINTERS* exception_pointers) {
+  return g_generate_crashdump_func(exception_pointers);
 }
 
 }  // namespace blacklist
