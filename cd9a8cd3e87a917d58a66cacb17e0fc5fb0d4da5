@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30dcf7e_1d50006f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-08-15T11:29:33Z",
+      "side": 1,
+      "message": "these should be in the last paragraph. Assuming Change-Id was added by git cl, Findit should have added an empty line before these 4 lines.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "cd9a8cd3e87a917d58a66cacb17e0fc5fb0d4da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
