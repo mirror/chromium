@@ -395,6 +395,14 @@ class MESSAGE_CENTER_EXPORT Notification {
   // method explicitly, to avoid setting it accidentally.
   void SetSystemPriority();
 
+  // Set attributes for system notification styling.
+  // |accent_color|, |small_image|, |vector_small_image| is set by the method.
+  // Also, if |display_source| is empty, this sets default display source.
+  // This method does not call SetSystemPriority().
+  void SetSystemNotificationAttributes(
+      const gfx::VectorIcon& small_image,
+      SystemNotificationWarningLevel warning_level);
+
   // Delegate actions.
   void Display() const { delegate()->Display(); }
   bool HasClickedListener() const { return delegate()->HasClickedListener(); }
@@ -436,7 +444,7 @@ class MESSAGE_CENTER_EXPORT Notification {
       const RichNotificationData& optional_fields,
       scoped_refptr<NotificationDelegate> delegate,
       const gfx::VectorIcon& small_image,
-      SystemNotificationWarningLevel color_type);
+      SystemNotificationWarningLevel warning_level);
 
  protected:
   // The type of notification we'd like displayed.

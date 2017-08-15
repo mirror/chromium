@@ -51,3 +51,24 @@ Notification& Notification::operator=(const Notification& notification) {
   delegate_ = notification.delegate();
   return *this;
 }
+
+// static
+Notification Notification::CreateSystemNotification(
+    message_center::NotificationType type,
+    const base::string16& title,
+    const base::string16& body,
+    const gfx::Image& icon,
+    const message_center::NotifierId& notifier_id,
+    const base::string16& display_source,
+    const GURL& origin_url,
+    const std::string& tag,
+    const message_center::RichNotificationData& rich_notification_data,
+    scoped_refptr<NotificationDelegate> delegate,
+    const gfx::VectorIcon& small_image,
+    message_center::SystemNotificationWarningLevel warning_level) {
+  Notification notification(type, title, body, icon, notifier_id,
+                            display_source, origin_url, tag,
+                            rich_notification_data, delegate);
+  notification.SetSystemNotificationAttributes(small_image, warning_level);
+  return notification;
+}

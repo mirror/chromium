@@ -177,6 +177,35 @@ void Notification::SetSystemPriority() {
   optional_fields_.never_timeout = true;
 }
 
+void Notification::SetSystemNotificationAttributes(
+    const gfx::VectorIcon& small_image,
+    SystemNotificationWarningLevel warning_level) {
+  SkColor color = message_center::kSystemNotificationColorNormal;
+  switch (warning_level) {
+    case SystemNotificationWarningLevel::NORMAL:
+      color = message_center::kSystemNotificationColorNormal;
+      break;
+    case SystemNotificationWarningLevel::WARNING:
+      color = message_center::kSystemNotificationColorWarning;
+      break;
+    case SystemNotificationWarningLevel::CRITICAL_WARNING:
+      color = message_center::kSystemNotificationColorCriticalWarning;
+      break;
+  }
+  if (display_source_.empty()) {
+    display_source_ = l10n_util::GetStringFUTF16(
+        IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
+        MessageCenter::Get()->GetProductOSName());
+  }
+  optional_fields_.accent_color = color;
+  optional_fields_.small_image =
+      small_image.is_empty()
+          ? gfx::Image()
+          : gfx::Image(gfx::CreateVectorIcon(small_image, color));
+  if (!small_image.is_empty())
+    optional_fields_.vector_small_image = small_image;
+}
+
 bool Notification::UseOriginAsContextMessage() const {
   return optional_fields_.context_message.empty() && origin_url_.is_valid() &&
          origin_url_.SchemeIsHTTPOrHTTPS();
@@ -226,35 +255,11 @@ std::unique_ptr<Notification> Notification::CreateSystemNotification(
     const RichNotificationData& optional_fields,
     scoped_refptr<NotificationDelegate> delegate,
     const gfx::VectorIcon& small_image,
-    SystemNotificationWarningLevel color_type) {
-  SkColor color = message_center::kSystemNotificationColorNormal;
-  switch (color_type) {
-    case SystemNotificationWarningLevel::NORMAL:
-      color = message_center::kSystemNotificationColorNormal;
-      break;
-    case SystemNotificationWarningLevel::WARNING:
-      color = message_center::kSystemNotificationColorWarning;
-      break;
-    case SystemNotificationWarningLevel::CRITICAL_WARNING:
-      color = message_center::kSystemNotificationColorCriticalWarning;
-      break;
-  }
-  base::string16 display_source_or_default = display_source;
-  if (display_source_or_default.empty()) {
-    display_source_or_default = l10n_util::GetStringFUTF16(
-        IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
-        MessageCenter::Get()->GetProductOSName());
-  }
+    SystemNotificationWarningLevel warning_level) {
   std::unique_ptr<Notification> notification = base::MakeUnique<Notification>(
-      type, id, title, message, icon, display_source_or_default, origin_url,
-      notifier_id, optional_fields, delegate);
-  notification->set_accent_color(color);
-  notification->set_small_image(
-      small_image.is_empty()
-          ? gfx::Image()
-          : gfx::Image(gfx::CreateVectorIcon(small_image, color)));
-  if (!small_image.is_empty())
-    notification->set_vector_small_image(small_image);
+      type, id, title, message, icon, display_source, origin_url, notifier_id,
+      optional_fields, delegate);
+  notification->SetSystemNotificationAttributes(small_image, warning_level);
   return notification;
 }
 
