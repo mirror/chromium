@@ -22,6 +22,30 @@
       "revId": "0445b32be0ffd586de4431b0009ce50aece8f4b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a0b2d7_6634a37e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-15T20:55:36Z",
+      "side": 1,
+      "message": "Makes sense to me. Done.",
+      "parentUuid": "e0d78d65_662f7947",
+      "range": {
+        "startLine": 1364,
+        "startChar": 53,
+        "endLine": 1364,
+        "endChar": 54
+      },
+      "revId": "0445b32be0ffd586de4431b0009ce50aece8f4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
