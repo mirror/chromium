@@ -82,6 +82,17 @@ using message_center::Notification;
 const char kHighContrastToggleAccelNotificationId[] =
     "chrome://settings/accessibility/highcontrast";
 
+// This enumeration maps AcceleratorAction with browser command id. It needs to
+// match //browser/app/chrome_command_ids.h.
+enum class BrowserCommand : int {
+  NEW_INCOGNITO_WINDOW = 34001,
+  NEW_TAB = 34014,
+  NEW_WINDOW = 34000,
+  OPEN_FEEDBACK_PAGE = 40008,
+  RESTORE_TAB = 34028,
+  SHOW_TASK_MANAGER = 40006,
+};
+
 // The notification delegate that will be used to open the keyboard shortcut
 // help page when the notification is clicked.
 class DeprecatedAcceleratorNotificationDelegate
@@ -833,11 +844,8 @@ bool AcceleratorController::ShouldCloseMenuAndRepostAccelerator(
 
 bool AcceleratorController::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
-  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
-      accelerators_.find(accelerator);
-  DCHECK(it != accelerators_.end());
-  AcceleratorAction action = it->second;
-  if (!CanPerformAction(action, accelerator))
+  AcceleratorAction action;
+  if (!GetAcceleratorAction(accelerator, &action))
     return false;
 
   // Handling the deprecated accelerators (if any) only if action can be
@@ -848,7 +856,34 @@ bool AcceleratorController::AcceleratorPressed(
   }
 
   PerformAction(action, accelerator);
-  return ShouldActionConsumeKeyEvent(action);
+  return true
+}
+
+int AcceleratorController::GetAcceleratorId(
+    const ui::Accelerator& accelerator) const {
+  AcceleratorAction action;
+  if (!GetAcceleratorAction(accelerator, &action))
+    return kUnknownAcceleratorId;
+
+  // TODO(zijiehe): Most of the ash accelerators cannot map to a browser
+  // command, so BrowserCommandController::IsReservedCommandOrKey() cannot make
+  // decision for these actions. Maybe add a kNotReservedAcceleratorId?
+  switch (action) {
+    case NEW_INCOGNITO_WINDOW:
+      return static_cast<int>(BrowserCommand::NEW_INCOGNITO_WINDOW);
+    case NEW_TAB:
+      return static_cast<int>(BrowserCommand::NEW_TAB);
+    case NEW_WINDOW:
+      return static_cast<int>(BrowserCommand::NEW_WINDOW);
+    case OPEN_FEEDBACK_PAGE:
+      return static_cast<int>(BrowserCommand::OPEN_FEEDBACK_PAGE);
+    case RESTORE_TAB:
+      return static_cast<int>(BrowserCommand::RESTORE_TAB);
+    case SHOW_TASK_MANAGER:
+      return static_cast<int>(BrowserCommand::SHOW_TASK_MANAGER);
+    default:
+      return kUnknownAcceleratorId;
+  }
 }
 
 bool AcceleratorController::CanHandleAccelerators() const {
@@ -1081,6 +1116,20 @@ bool AcceleratorController::CanPerformAction(
   }
   return delegate_ && delegate_->HandlesAction(action) &&
          delegate_->CanPerformAction(action, accelerator, previous_accelerator);
+}
+
+bool AcceleratorController::GetAcceleratorAction(
+    const ui::Accelerator& accelerator,
+    AcceleratorAction* action) const {
+  DCHECK(action);
+  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
+      accelerators_.find(accelerator);
+  DCHECK(it != accelerators_.end());
+  if (!CanPerformAction(it->second, accelerator))
+    return false;
+
+  *action = it->second;
+  return true;
 }
 
 void AcceleratorController::PerformAction(AcceleratorAction action,
@@ -1335,12 +1384,6 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       delegate_->PerformAction(action, accelerator);
       break;
   }
-}
-
-bool AcceleratorController::ShouldActionConsumeKeyEvent(
-    AcceleratorAction action) {
-  // Adding new exceptions is *STRONGLY* discouraged.
-  return true;
 }
 
 AcceleratorController::AcceleratorProcessingRestriction
