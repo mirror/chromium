@@ -10,17 +10,25 @@
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/palette/palette_ids.h"
 #include "ash/system/palette/palette_utils.h"
+#include "ash/system/tray/hover_highlight_view.h"
+#include "ash/system/tray/tray_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/views/controls/image_view.h"
+#include "ui/views/controls/label.h"
+#include "ui/views/view.h"
 
 namespace ash {
 
 MetalayerMode::MetalayerMode(Delegate* delegate)
     : CommonPaletteTool(delegate), weak_factory_(this) {
   Shell::Get()->AddPreTargetHandler(this);
+  Shell::Get()->AddShellObserver(this);
 }
 
 MetalayerMode::~MetalayerMode() {
+  Shell::Get()->RemoveShellObserver(this);
   Shell::Get()->RemovePreTargetHandler(this);
 }
 
@@ -55,11 +63,9 @@ const gfx::VectorIcon& MetalayerMode::GetPaletteIcon() const {
 }
 
 views::View* MetalayerMode::CreateView() {
-  if (!Shell::Get()->palette_delegate()->IsMetalayerSupported())
-    return nullptr;
-
-  return CreateDefaultView(
-      l10n_util::GetStringUTF16(IDS_ASH_STYLUS_TOOLS_METALAYER_MODE));
+  views::View* view = CreateDefaultView(base::string16());
+  UpdateView();
+  return view;
 }
 
 void MetalayerMode::OnMetalayerDone() {
@@ -68,6 +74,9 @@ void MetalayerMode::OnMetalayerDone() {
 
 void MetalayerMode::OnTouchEvent(ui::TouchEvent* event) {
   if (enabled())
+    return;
+
+  if (voice_interaction_state_ == ash::VoiceInteractionState::NOT_READY)
     return;
 
   // Shell::palette_delegate() might return null in some tests that are not
@@ -94,6 +103,43 @@ void MetalayerMode::OnTouchEvent(ui::TouchEvent* event) {
       PaletteToolIdToPaletteTrayOptions(GetToolId()));
   delegate()->EnableTool(GetToolId());
   event->StopPropagation();
+}
+
+void MetalayerMode::OnVoiceInteractionStatusChanged(
+    ash::VoiceInteractionState state) {
+  voice_interaction_state_ = state;
+  UpdateView();
+}
+
+void MetalayerMode::UpdateView() {
+  HoverHighlightView* view = highlight_view();
+  if (!view)
+    return;
+
+  const bool ready =
+      (voice_interaction_state_ != ash::VoiceInteractionState::NOT_READY);
+
+  // TODO(kaznacheev) Use prefs instead of IsMetalayerSupported
+  // when crbug.com/727873 is fixed.
+  const bool supported =
+      Shell::Get()->palette_delegate() &&
+      Shell::Get()->palette_delegate()->IsMetalayerSupported();
+
+  view->text_label()->SetText(l10n_util::GetStringUTF16(
+      ready ? IDS_ASH_STYLUS_TOOLS_METALAYER_MODE
+            : IDS_ASH_STYLUS_TOOLS_METALAYER_MODE_LOADING));
+
+  view->SetEnabled(ready && supported);
+
+  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::DETAILED_VIEW_LABEL);
+  style.set_color_style(view->enabled()
+                            ? TrayPopupItemStyle::ColorStyle::ACTIVE
+                            : TrayPopupItemStyle::ColorStyle::DISABLED);
+
+  style.SetupLabel(view->text_label());
+
+  view->left_icon()->SetImage(
+      CreateVectorIcon(GetPaletteIcon(), kMenuIconSize, style.GetIconColor()));
 }
 
 }  // namespace ash
