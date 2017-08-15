@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa3059c_60faa5c8",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-15T17:35:28Z",
+      "side": 1,
+      "message": "This seems to be only used from LayerTreeRP. Also, *_raster_buffer_provider.h/cc should probably use a LayerTreeRP.",
+      "range": {
+        "startLine": 186,
+        "startChar": 17,
+        "endLine": 186,
+        "endChar": 41
+      },
+      "revId": "2e785a9fdb1f2c55a74f7641eb7205f4ef15ac43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620f43fd_566e544d",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-15T17:35:28Z",
+      "side": 1,
+      "message": "This appears to be only used from the DisplayRP, can it be moved there?",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 25
+      },
+      "revId": "2e785a9fdb1f2c55a74f7641eb7205f4ef15ac43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e88bc4_8481b9c2",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-15T17:35:28Z",
+      "side": 1,
+      "message": "This is only used by gl_renderer.cc, not sure if it\u0027s generic enough that it should stay on the base class? or should we move to DisplayRP until needed elsewhere?",
+      "range": {
+        "startLine": 417,
+        "startChar": 18,
+        "endLine": 417,
+        "endChar": 44
+      },
+      "revId": "2e785a9fdb1f2c55a74f7641eb7205f4ef15ac43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb84b67_d9bd1a03",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-15T17:35:28Z",
+      "side": 1,
+      "message": "This appears to only be used by the LayerTreeRP, can this function be moved to this file?",
+      "range": {
+        "startLine": 692,
+        "startChar": 7,
+        "endLine": 692,
+        "endChar": 23
+      },
+      "revId": "2e785a9fdb1f2c55a74f7641eb7205f4ef15ac43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
