@@ -221,8 +221,7 @@ FrameTreeNode* FrameTreeNode::AddChild(std::unique_ptr<FrameTreeNode> child,
   // SiteInstances that have a proxy for the frame's parent, since all frames
   // in a frame tree should have the same set of proxies.
   // TODO(alexmos, nick): We ought to do this for non-oopif too, for openers.
-  if (SiteIsolationPolicy::AreCrossProcessFramesPossible())
-    render_manager_.CreateProxiesForChildFrame(child.get());
+  render_manager_.CreateProxiesForChildFrame(child.get());
 
   children_.push_back(std::move(child));
   return children_.back().get();
