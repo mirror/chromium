@@ -46,6 +46,75 @@
       "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00195431_7b80d213",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-15T23:17:11Z",
+      "side": 1,
+      "message": "Is there any way GetProcess() can be NULL? I don\u0027t see any checking for this elsewhere in Chrome.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb3814f_d2354d12",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-15T23:17:11Z",
+      "side": 1,
+      "message": "nit: no need to check rfh here. Alternatively, DCHECK here instead.",
+      "range": {
+        "startLine": 143,
+        "startChar": 6,
+        "endLine": 143,
+        "endChar": 9
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238928da_7c407df5",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-15T23:17:11Z",
+      "side": 1,
+      "message": "use \u0027salt\u0027 here.",
+      "range": {
+        "startLine": 154,
+        "startChar": 35,
+        "endLine": 154,
+        "endChar": 42
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
