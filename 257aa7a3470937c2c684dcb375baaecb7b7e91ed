@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7638807_0c6fd7c0",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "I see, changed to \"iter\" and deleted const.",
+      "parentUuid": "6adddae6_f0ad8430",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 27
+      },
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fab6ed8a_f002c9bf",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e500faee_482f2627",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab6ed8a_f002c9bf",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "745b5c95_50760740",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbd7d90_199a463a",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141975c3_cedee752",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d12de22_b67df1db",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141975c3_cedee752",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "f209f8d9_388b969e",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Makes sense, done.",
+      "parentUuid": "4e6c89a3_e46a6003",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024b6622_39ae4c5c",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 7
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "071c54fb_6683d475",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Right, I had deleted this before I added back \"has_created_compositor_frame_sink\". Added the if check back.",
+      "parentUuid": "024b6622_39ae4c5c",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf05c45c_063b3244",
         "filename": "services/ui/ws/test_frame_sink_manager.h",
         "patchSetId": 7
@@ -121,6 +235,24 @@
       "writtenOn": "2017-08-14T16:54:01Z",
       "side": 1,
       "message": "This should probably be in //components/viz/test. Also test_frame_sink_manager_impl.h.",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a69ca73_249bdbeb",
+        "filename": "services/ui/ws/test_frame_sink_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Moved this to //components/viz/test but left TestGpuHost here cuz GpuHost is in services/ui/ws?",
+      "parentUuid": "cf05c45c_063b3244",
       "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "bb4a059b_c8281a6a",
+        "filename": "services/ui/ws/test_gpu_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913dd909_d4cacdbc",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a9dea53_c50029d2",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 7
@@ -155,6 +305,24 @@
       "writtenOn": "2017-08-14T16:54:01Z",
       "side": 1,
       "message": "I don\u0027t really understand what this is doing. The mojo::Binding\u003c\u003e goes out of scope, is never used and gets destroyed almost immediately?",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934e6bcd_4a9642ae",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-15T01:10:41Z",
+      "side": 1,
+      "message": "Moved the creation of TestFrameSinkManagerImpl to TestGpuHost and do the binding there as discussed. I think it should have the correct binding now. WDYT?",
+      "parentUuid": "7a9dea53_c50029d2",
       "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
