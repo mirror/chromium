@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "499ec74c_ea947315",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:24:19Z",
+      "side": 1,
+      "message": "nit: note sure if this is easy to change now, but i think we\u0027ve been shifting to using e.g. org.chromium.VirtualFileProvider instead of putting \"Interface\" on the end of the interface name. (the constant name is still suffixed with \"Interface\", though.)",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96cbec3b_696985a4",
         "filename": "chromeos/dbus/virtual_file_provider_client.cc",
         "patchSetId": 5
@@ -18,6 +41,122 @@
         "startChar": 19,
         "endLine": 78,
         "endChar": 36
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6775502_5d83d623",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:24:19Z",
+      "side": 1,
+      "message": "my opinion is that i wish we were using mojo instead of d-bus. :-)\n\nis there a doc describing the big picture of communication between chrome and the service?",
+      "parentUuid": "96cbec3b_696985a4",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d439367_208df8aa",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:24:19Z",
+      "side": 1,
+      "message": "nit: \"The VirtualFileProvider service ...\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a2f8ce_4fdd2dfd",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:24:19Z",
+      "side": 1,
+      "message": "nit: Chrome",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1c6466_c965ccd8",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:24:19Z",
+      "side": 1,
+      "message": "nit: \"unlike a pipe\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 70
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e94f875_8cd897ab",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:24:19Z",
+      "side": 1,
+      "message": "is this acronym style more common in chrome now (vs. ReleaseIdHandler)? the google style guide still suggests using word capitalization for acronyms: https://google.github.io/styleguide/cppguide.html#Function_Names\n\n\"Prefer to capitalize acronyms as single words (i.e. StartRpc(), not StartRPC()).\"\n\n(but then again, we\u0027re using ScopedFD just above, so feel free to ignore this)",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 24
       },
       "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
