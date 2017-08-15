@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2767c53_cce9ca78",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 81718,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T14:47:42Z",
+      "side": 1,
+      "message": "This still needs to be updated to read something along the lines of \"Recorded on devices with less than 512MB of memory and when tile manager had sufficient memory to schedule all visible tiles\"",
+      "range": {
+        "startLine": 81718,
+        "startChar": 4,
+        "endLine": 81718,
+        "endChar": 40
+      },
+      "revId": "f1cf3d0bf5b8de5a2bedbe31fb2b4e420aa80c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
