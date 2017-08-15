@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22d577da_a7e3736d",
+        "filename": "ios/clean/chrome/browser/ui/commands/dialog_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T22:14:10Z",
+      "side": 1,
+      "message": "I\u0027ve created a DialogConfigurationIdentifier class to use for this protocol.",
+      "parentUuid": "9541cbe1_5d7cbb43",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "8413855126766080f344b0839b497e5f5c10d349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f63dbd35_3e0c031c",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2bf38a55_a0ef548b",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T22:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f63dbd35_3e0c031c",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "8413855126766080f344b0839b497e5f5c10d349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "113ee0f1_08819d19",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-10T15:04:13Z",
       "side": 1,
       "message": "Do we have a use case where the alert style isn\u0027t UIAlertControllerStyleAlert for dialogs?",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "8413855126766080f344b0839b497e5f5c10d349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b20e58_fad94fb3",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T22:14:10Z",
+      "side": 1,
+      "message": "Yes, the dialog blocking confirmation is an action sheet on iPhones.",
+      "parentUuid": "113ee0f1_08819d19",
       "range": {
         "startLine": 20,
         "startChar": 54,
