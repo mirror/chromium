@@ -166,5 +166,21 @@ scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(
   }
 }
 
+void SetDisabledExtensionsPlatform(const std::string& disabled_extensions) {
+  GLImplementation implementation = GetGLImplementation();
+  DCHECK_NE(kGLImplementationNone, implementation);
+  switch (implementation) {
+    case kGLImplementationEGLGLES2:
+      SetDisabledExtensionsEGL(disabled_extensions);
+      break;
+    case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
+    case kGLImplementationOSMesaGL:
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
 }  // namespace init
 }  // namespace gl
