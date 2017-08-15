@@ -16,6 +16,14 @@ DataOffer::~DataOffer() {
   delegate_->OnDataOfferDestroying(this);
 }
 
+void DataOffer::AddObserver(DataOfferObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void DataOffer::RemoveObserver(DataOfferObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
 void DataOffer::Accept(const std::string& mime_type) {
   NOTIMPLEMENTED();
 }
