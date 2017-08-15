@@ -18,7 +18,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.Callback;
@@ -34,7 +33,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
-import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider.ThumbnailRequest;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
@@ -58,6 +56,7 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.chrome.browser.widget.displaystyle.VerticalDisplayStyle;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.util.DisableAnimationsRule;
 import org.chromium.chrome.test.util.RenderTestRule;
 import org.chromium.chrome.test.util.browser.suggestions.DummySuggestionsEventReporter;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
@@ -86,24 +85,9 @@ public class ArticleSnippetsTest {
     public RenderTestRule mRenderTestRule =
             new RenderTestRule("chrome/test/data/android/render_tests");
 
-    // Rules must be public for JUnit to access them, but FindBugs complains about that.
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
+    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD") // Rules must be public.
     @Rule
-    public ExternalResource mDisableChromeAnimationsRule = new ExternalResource() {
-
-        private float mOldAnimationMultiplier;
-
-        @Override
-        protected void before() {
-            mOldAnimationMultiplier = ChromeAnimation.Animation.getAnimationMultiplier();
-            ChromeAnimation.Animation.setAnimationMultiplierForTesting(0f);
-        }
-
-        @Override
-        protected void after() {
-            ChromeAnimation.Animation.setAnimationMultiplierForTesting(mOldAnimationMultiplier);
-        }
-    };
+    public DisableAnimationsRule mDisableChromeAnimationsRule = new DisableAnimationsRule();
 
     private SuggestionsUiDelegate mUiDelegate;
     private FakeSuggestionsSource mSnippetsSource;
