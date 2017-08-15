@@ -442,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "704e422b_595d5c5d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:03:50Z",
+      "side": 1,
+      "message": "It should be, IMO.\nYou can find the BrowserContext instance in the argument of the function you linked.\nAlso, ExternalMountPoints which FSBackend refers is owned by the BrowserContext.\n\nSo, I still want to keep TODO here.",
+      "parentUuid": "ef7b8c75_08727dc0",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccf6460c_b1a1774b",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 3
