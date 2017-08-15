@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c690202b_c2c2f450",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-15T21:18:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to have any checks for credit cards.  Looks like if \"is_filling_credit_card\" is true, suggestions contains credit card suggestions, but if false, suggestions contains normal address suggestions.  Thus, this check will eliminate both types when the experiment is enabled.  Maybe this change should actually go up on line 606 where credit card suggestions are set?",
+      "range": {
+        "startLine": 613,
+        "startChar": 8,
+        "endLine": 613,
+        "endChar": 28
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02b7797_7e411488",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-15T21:18:53Z",
+      "side": 1,
+      "message": "Alternatively, lately I\u0027ve seen it suggested where you add the feature to autofill_experiments.h and .cc.  You define the experiment\u0027s enabled condition with the same base::FeatureList code, but it goes in autofill_experiments, like so:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_experiments.cc?l\u003d265-271\u0026rcl\u003de99ddc1455117eba392cc9cd354a8f49fe3d6838\nand then here in autofill_manager.cc you can write the more readable \"IsAutofillCreditCardDisabledExperimentEnabled()\".\n\nHere\u0027s an example of the CL I submitted today that contained a flag that did this:\nhttps://chromium-review.googlesource.com/c/611727",
+      "range": {
+        "startLine": 614,
+        "startChar": 8,
+        "endLine": 614,
+        "endChar": 65
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "767715d4_a5634bc2",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 3
@@ -13,6 +59,30 @@
       "writtenOn": "2017-08-15T21:00:51Z",
       "side": 1,
       "message": "Question : If there are empty suggestions. Upstream UI might trigger. Is there a way to disable it too ?",
+      "range": {
+        "startLine": 615,
+        "startChar": 5,
+        "endLine": 615,
+        "endChar": 6
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b606b91f_39220611",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-15T21:18:53Z",
+      "side": 1,
+      "message": "Good call--but I don\u0027t think that\u0027s how it works.  When a form is submitted, it\u0027s this code that automatically rejects Upstreaming if the same server card already exists:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/personal_data_manager.cc?l\u003d1664\u0026rcl\u003de99ddc1455117eba392cc9cd354a8f49fe3d6838\nSo it shouldn\u0027t be a problem, but it\u0027s still a good idea to test!",
+      "parentUuid": "767715d4_a5634bc2",
       "range": {
         "startLine": 615,
         "startChar": 5,
