@@ -51,6 +51,24 @@
       "revId": "b196e46b16ffbcacfc745b7bde30eab76f18cfff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0eee12_28ab91ab",
+        "filename": "tools/idl_parser/test_parser/enum_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-15T06:12:53Z",
+      "side": 0,
+      "message": "We\u0027ve investigated this a bit more and it seems our parser doesn\u0027t produce two errors (only the first error is reported). I\u0027ll file a separate bug.\n\nlisabelle@: Please ignore this comment.",
+      "parentUuid": "1e458f8f_beb915b7",
+      "revId": "b196e46b16ffbcacfc745b7bde30eab76f18cfff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
