@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e548d60_acb4aa02",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T16:26:39Z",
+      "side": 1,
+      "message": "Style has been for DB thread function names to end in Sync",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae09988_117bc70e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T16:26:39Z",
+      "side": 1,
+      "message": "Is this something we need to worry about in our tasks?",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be8c5726_91a39681",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
         "patchSetId": 2
@@ -13,6 +47,74 @@
       "writtenOn": "2017-08-14T23:09:42Z",
       "side": 1,
       "message": "Add documentation.",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584f961e_a35991a7",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T16:26:39Z",
+      "side": 1,
+      "message": "please document what is inside a Params.  Also, isn\u0027t it really a Result?  Perhaps DatabaseLookupResult?",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b7023d_c1a42188",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T16:26:39Z",
+      "side": 1,
+      "message": "See also MockPrefetchItemGenerator",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf9200e_d070c20e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T16:26:39Z",
+      "side": 1,
+      "message": "Could you insert an item for each state you expect not to be picked up by this task?",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b51abe6_e647c8c1",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T16:26:39Z",
+      "side": 1,
+      "message": "task_queue_.AddTask(std::move(download_archives_task))",
       "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
