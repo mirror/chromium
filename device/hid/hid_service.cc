@@ -32,10 +32,6 @@ void HidService::Observer::OnDeviceRemoved(
     scoped_refptr<HidDeviceInfo> device_info) {
 }
 
-void HidService::Observer::OnDeviceRemovedCleanup(
-    scoped_refptr<HidDeviceInfo> device_info) {
-}
-
 // static
 constexpr base::TaskTraits HidService::kBlockingTaskTraits;
 
@@ -127,10 +123,6 @@ void HidService::RemoveDevice(const HidPlatformDeviceId& platform_device_id) {
         observer.OnDeviceRemoved(device);
     }
     devices_.erase(device_guid);
-    if (enumeration_ready_) {
-      for (auto& observer : observer_list_)
-        observer.OnDeviceRemovedCleanup(device);
-    }
   }
 }
 
