@@ -236,6 +236,8 @@
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/WebTreeScopeType.h"
 
+// #include "base/tvlog.h"
+
 namespace blink {
 
 static int g_frame_count = 0;
@@ -1194,8 +1196,11 @@ void WebLocalFrameImpl::SelectRange(const WebPoint& base_in_viewport,
 
 void WebLocalFrameImpl::SelectRange(
     const WebRange& web_range,
-    HandleVisibilityBehavior handle_visibility_behavior) {
+    HandleVisibilityBehavior handle_visibility_behavior,
+    ClickInsideBehavior click_inside_behavior) {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::selectRange");
+
+  DVLOG(1) << __func__;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  see http://crbug.com/590369 for more details.
@@ -1217,6 +1222,13 @@ void WebLocalFrameImpl::SelectRange(
           .SetIsDirectional(false)
           .Build(),
       SetSelectionData::Builder().SetShouldShowHandle(show_handles).Build());
+
+  if (click_inside_behavior == kSelectClosestWord) {
+    DVLOG(1) << __func__ << " calling selection.SetAutoExpanded(true)";
+    selection.SetAutoExpanded(true);
+  }
+
+  DVLOG(1) << __func__ << " end";
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {

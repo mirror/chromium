@@ -82,6 +82,8 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 
+// #include "base/tvlog.h"
+
 #define EDIT_DEBUG 0
 
 namespace blink {
@@ -167,6 +169,8 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   if (!editable)
     return;
 
+  DVLOG(1) << __func__;
+
   const VisiblePosition position =
       VisiblePositionForContentsPoint(point, GetFrame());
   SelectionInDOMTree::Builder builder;
@@ -183,11 +187,13 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
 
 void FrameSelection::SetSelection(const SelectionInDOMTree& selection,
                                   const SetSelectionData& data) {
+  DVLOG(1) << __func__;
   if (SetSelectionDeprecated(selection, data))
     DidSetSelectionDeprecated(data);
 }
 
 void FrameSelection::SetSelection(const SelectionInDOMTree& selection) {
+  DVLOG(1) << __func__;
   SetSelection(selection, SetSelectionData::Builder()
                               .SetShouldCloseTyping(true)
                               .SetShouldClearTypingStyle(true)
@@ -199,6 +205,9 @@ bool FrameSelection::SetSelectionDeprecated(
     const SetSelectionData& options) {
   DCHECK(IsAvailable());
   passed_selection.AssertValidFor(GetDocument());
+
+  DVLOG(1) << __func__;
+
 
   SelectionInDOMTree::Builder builder(passed_selection);
   if (ShouldAlwaysUseDirectionalSelection(frame_))
@@ -222,8 +231,11 @@ bool FrameSelection::SetSelectionDeprecated(
   const bool should_show_handle = options.ShouldShowHandle();
   if (!is_changed && is_handle_visible_ == should_show_handle)
     return false;
-  if (is_changed)
+  if (is_changed) {
+    // Clear the click inside behavior only if the selection has changed.
+    SetAutoExpanded(false);
     selection_editor_->SetSelection(new_selection);
+  }
   is_handle_visible_ = should_show_handle;
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 
@@ -792,6 +804,11 @@ void FrameSelection::SetUseSecureKeyboardEntry(bool enable) {
     EnableSecureTextInput();
   else
     DisableSecureTextInput();
+}
+
+void FrameSelection::SetAutoExpanded(bool flag) {
+  DVLOG(1) << __func__ << ": " << flag << " this:" << this;
+  is_auto_expanded_ = flag;
 }
 
 void FrameSelection::SetFrameIsFocused(bool flag) {

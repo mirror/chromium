@@ -55,6 +55,7 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
+#include "core/editing/SelectionController.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
@@ -107,7 +108,7 @@ static WebURL UrlFromFrame(LocalFrame* frame) {
 
 // static
 int ContextMenuClient::ComputeEditFlags(Document& selected_document,
-                                        Editor& editor) {
+                                        Editor& editor, unsigned context_data) {
   int edit_flags = WebContextMenuData::kCanDoNone;
   if (!selected_document.IsHTMLDocument() &&
       !selected_document.IsXHTMLDocument())
@@ -130,6 +131,8 @@ int ContextMenuClient::ComputeEditFlags(Document& selected_document,
     edit_flags |= WebContextMenuData::kCanEditRichly;
   if (selected_document.queryCommandEnabled("selectAll", ASSERT_NO_EXCEPTION))
     edit_flags |= WebContextMenuData::kCanSelectAll;
+  if (!(context_data & SelectionController::kSmartSelectionReset))
+    edit_flags |= WebContextMenuData::kCanSuggestSelection;
   return edit_flags;
 }
 
@@ -198,7 +201,8 @@ static HTMLFormElement* CurrentForm(const FrameSelection& current_selection) {
 }
 
 bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
-                                        WebMenuSourceType source_type) {
+                                        WebMenuSourceType source_type,
+                                        unsigned context_data) {
   // Displaying the context menu in this function is a big hack as we don't
   // have context, i.e. whether this is being invoked via a script or in
   // response to user input (Mouse event WM_RBUTTONDOWN,
@@ -222,7 +226,8 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
 
   data.edit_flags = ComputeEditFlags(
       *selected_frame->GetDocument(),
-      ToLocalFrame(web_view_->FocusedCoreFrame())->GetEditor());
+      ToLocalFrame(web_view_->FocusedCoreFrame())->GetEditor(),
+      context_data);
 
   // Links, Images, Media tags, and Image/Media-Links take preference over
   // all else.

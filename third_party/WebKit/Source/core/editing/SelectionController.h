@@ -50,6 +50,8 @@ class CORE_EXPORT SelectionController final
   virtual ~SelectionController();
   DECLARE_TRACE();
 
+  enum SelectionProperties { kSmartSelectionReset = 0x1 };
+
   bool HandleMousePressEvent(const MouseEventWithHitTestResults&);
   void HandleMouseDraggedEvent(const MouseEventWithHitTestResults&,
                                const IntPoint&,

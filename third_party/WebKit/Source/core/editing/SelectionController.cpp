@@ -56,6 +56,8 @@
 #include "public/platform/WebMenuSourceType.h"
 #include "public/web/WebSelection.h"
 
+// #include "base/tvlog.h"
+
 namespace blink {
 SelectionController* SelectionController::Create(LocalFrame& frame) {
   return new SelectionController(frame);
@@ -97,12 +99,18 @@ DispatchEventResult DispatchSelectStart(Node* node) {
 SelectionInFlatTree ExpandSelectionToRespectUserSelectAll(
     Node* target_node,
     const SelectionInFlatTree& selection) {
-  if (selection.IsNone())
+  if (selection.IsNone()) {
+    DVLOG(1) << __func__ << " selection.IsNone(), returning empty selection";
     return SelectionInFlatTree();
+  }
   Node* const root_user_select_all =
       EditingInFlatTreeStrategy::RootUserSelectAllForNode(target_node);
-  if (!root_user_select_all)
+  if (!root_user_select_all) {
+    DVLOG(1) << __func__ << " !root_user_select_all, returning selection from input";
     return selection;
+  }
+
+  DVLOG(1) << __func__ << " returning SelectAll selection";
   return SelectionInFlatTree::Builder(selection)
       .Collapse(MostBackwardCaretPosition(
           PositionInFlatTree::BeforeNode(*root_user_select_all),
@@ -272,6 +280,8 @@ bool SelectionController::HandleSingleClick(
   TRACE_EVENT0("blink",
                "SelectionController::handleMousePressEventSingleClick");
 
+  DVLOG(1) << __func__ << " begin";
+
   DCHECK(!frame_->GetDocument()->NeedsLayoutTreeUpdate());
   Node* inner_node = event.InnerNode();
   if (!(inner_node && inner_node->GetLayoutObject() &&
@@ -298,16 +308,40 @@ bool SelectionController::HandleSingleClick(
     const LayoutPoint v_point = view->RootFrameToContents(
         FlooredIntPoint(event.Event().PositionInRootFrame()));
     if (!extend_selection && this->Selection().Contains(v_point)) {
+
+      DVLOG(1) << __func__ << " setting mouse_down_was_single_click_in_selection_ = true";
+
       mouse_down_was_single_click_in_selection_ = true;
       if (!event.Event().FromTouch())
         return false;
 
+
+      // If the event comes inside the selection that was expanded programmatically
+      // (SmartText selection), select the closest word instead of clearing the selection.
+      if (this->Selection().IsAutoExpanded()) {
+        // Prevent clearing the selection in HandleMouseReleaseEvent().
+        mouse_down_was_single_click_in_selection_ = false;
+
+        SelectClosestWordFromHitTestResult(event.GetHitTestResult(),
+                                           AppendTrailingWhitespace::kDontAppend,
+                                           SelectInputEventType::kTouch);
+        const bool selection_did_change = !this->Selection().IsAutoExpanded();
+        if (selection_did_change) {
+          frame_->GetEventHandler().ShowNonLocatedContextMenu(
+              nullptr, kMenuSourceTouch, SelectionProperties::kSmartSelectionReset);
+        }
+
+        return false;
+      }
+
       if (!this->Selection().IsHandleVisible()) {
+        DVLOG(1) << __func__ << " handles are not visible, calling UpdateSelectionForMouseDownDispatchingSelectStart()";
         const bool did_select =
             UpdateSelectionForMouseDownDispatchingSelectStart(
                 inner_node, selection.AsSelection(),
                 TextGranularity::kCharacter, HandleVisibility::kVisible);
         if (did_select) {
+          DVLOG(1) << __func__ << "calling  ShowNonLocatedContextMenu()";
           frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
                                                               kMenuSourceTouch);
         }
@@ -317,6 +351,7 @@ bool SelectionController::HandleSingleClick(
   }
 
   if (extend_selection && !selection.IsNone()) {
+    DVLOG(1) << __func__ << " extend_selection && !selection.IsNone()";
     // Note: "fast/events/shift-click-user-select-none.html" makes
     // |pos.isNull()| true.
     const PositionInFlatTree& pos = AdjustPositionRespectUserSelectAll(
@@ -339,6 +374,7 @@ bool SelectionController::HandleSingleClick(
   }
 
   if (selection_state_ == SelectionState::kExtendedSelection) {
+    DVLOG(1) << __func__ << " selection_state_ == SelectionState::kExtendedSelection";
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, selection.AsSelection(), TextGranularity::kCharacter,
         HandleVisibility::kNotVisible);
@@ -346,6 +382,7 @@ bool SelectionController::HandleSingleClick(
   }
 
   if (visible_pos.IsNull()) {
+    DVLOG(1) << __func__ << " visible_pos.IsNull()";
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, SelectionInFlatTree(), TextGranularity::kCharacter,
         HandleVisibility::kNotVisible);
@@ -363,6 +400,7 @@ bool SelectionController::HandleSingleClick(
       is_handle_visible = event.Event().FromTouch();
   }
 
+  DVLOG(1) << __func__ << " UpdateSelectionForMouseDownDispatchingSelectStart [end]";
   UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
       ExpandSelectionToRespectUserSelectAll(
@@ -515,11 +553,14 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
     const HitTestResult& result,
     AppendTrailingWhitespace append_trailing_whitespace,
     SelectInputEventType select_input_event_type) {
+  DVLOG(1) << __func__;
   Node* const inner_node = result.InnerNode();
 
   if (!inner_node || !inner_node->GetLayoutObject() ||
-      !inner_node->GetLayoutObject()->IsSelectable())
+      !inner_node->GetLayoutObject()->IsSelectable()) {
+    DVLOG(1) << __func__ << " no inner_node, returning";
     return false;
+  }
 
   // Special-case image local offset to always be zero, to avoid triggering
   // LayoutReplaced::positionFromPoint's advancement of the position at the
@@ -568,6 +609,7 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
           ? AdjustSelectionWithTrailingWhitespace(new_selection.AsSelection())
           : new_selection.AsSelection();
 
+  DVLOG(1) << __func__ << " calling UpdateSelectionForMouseDownDispatchingSelectStart";
   return UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
       ExpandSelectionToRespectUserSelectAll(inner_node, adjusted_selection),
@@ -631,6 +673,7 @@ bool SelectionController::SelectClosestWordFromMouseEvent(
 
   DCHECK(!frame_->GetDocument()->NeedsLayoutTreeUpdate());
 
+  DVLOG(1) << __func__ << " calling SelectClosestWordFromHitTestResult";
   return SelectClosestWordFromHitTestResult(
       result.GetHitTestResult(), append_trailing_whitespace,
       result.Event().FromTouch() ? SelectInputEventType::kTouch
@@ -812,6 +855,7 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
           CreateVisibleSelection(selection_in_flat_tree) &&
       Selection().IsHandleVisible() == should_show_handle)
     return;
+  DVLOG(1) << __func__ << " calling Selection().SetSelection()";
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
       SetSelectionData::Builder()
@@ -934,6 +978,7 @@ bool SelectionController::HandleTripleClick(
 
 bool SelectionController::HandleMousePressEvent(
     const MouseEventWithHitTestResults& event) {
+  DVLOG(1) << __func__;
   TRACE_EVENT0("blink", "SelectionController::handleMousePressEvent");
 
   // If we got the event back, that must mean it wasn't prevented,
@@ -967,6 +1012,7 @@ void SelectionController::HandleMouseDraggedEvent(
     const LayoutPoint& drag_start_pos,
     Node* mouse_press_node,
     const IntPoint& last_known_mouse_position) {
+  DVLOG(1) << __func__;
   TRACE_EVENT0("blink", "SelectionController::handleMouseDraggedEvent");
 
   if (!Selection().IsAvailable())
@@ -1006,6 +1052,7 @@ void SelectionController::UpdateSelectionForMouseDrag(
 bool SelectionController::HandleMouseReleaseEvent(
     const MouseEventWithHitTestResults& event,
     const LayoutPoint& drag_start_pos) {
+  DVLOG(1) << __func__;
   TRACE_EVENT0("blink", "SelectionController::handleMouseReleaseEvent");
 
   if (!Selection().IsAvailable())
@@ -1037,6 +1084,7 @@ bool SelectionController::HandleMouseReleaseEvent(
 
     if (Selection().ComputeVisibleSelectionInFlatTree() !=
         CreateVisibleSelection(builder.Build())) {
+      DVLOG(1) << __func__ << " calling Selection().SetSelection()";
       Selection().SetSelection(ConvertToSelectionInDOMTree(builder.Build()));
     }
 
@@ -1094,6 +1142,8 @@ bool SelectionController::HandleGestureLongPress(
     const HitTestResult& hit_test_result) {
   TRACE_EVENT0("blink", "SelectionController::handleGestureLongPress");
 
+  DVLOG(1) << __func__;
+
   if (!Selection().IsAvailable())
     return false;
   if (hit_test_result.IsLiveLink())
@@ -1107,6 +1157,7 @@ bool SelectionController::HandleGestureLongPress(
   if (!inner_node_is_selectable)
     return false;
 
+  DVLOG(1) << __func__ << " calling SelectClosestWordFromHitTestResult";
   if (SelectClosestWordFromHitTestResult(hit_test_result,
                                          AppendTrailingWhitespace::kDontAppend,
                                          SelectInputEventType::kTouch))
@@ -1121,6 +1172,7 @@ bool SelectionController::HandleGestureLongPress(
 void SelectionController::HandleGestureTwoFingerTap(
     const GestureEventWithHitTestResults& targeted_event) {
   TRACE_EVENT0("blink", "SelectionController::handleGestureTwoFingerTap");
+  DVLOG(1) << __func__;
 
   SetCaretAtHitTestResult(targeted_event.GetHitTestResult());
 }
@@ -1128,6 +1180,7 @@ void SelectionController::HandleGestureTwoFingerTap(
 void SelectionController::HandleGestureLongTap(
     const GestureEventWithHitTestResults& targeted_event) {
   TRACE_EVENT0("blink", "SelectionController::handleGestureLongTap");
+  DVLOG(1) << __func__;
 
   SetCaretAtHitTestResult(targeted_event.GetHitTestResult());
 }
@@ -1195,9 +1248,11 @@ void SelectionController::PassMousePressEventToSubframe(
   const VisiblePositionInFlatTree& visible_pos =
       VisiblePositionOfHitTestResult(mev.GetHitTestResult());
   if (visible_pos.IsNull()) {
+    DVLOG(1) << __func__ << " calling Selection().SetSelection()";
     Selection().SetSelection(SelectionInDOMTree());
     return;
   }
+  DVLOG(1) << __func__ << " calling Selection().SetSelection()";
   Selection().SetSelection(ConvertToSelectionInDOMTree(
       SelectionInFlatTree::Builder()
           .Collapse(visible_pos.ToPositionWithAffinity())

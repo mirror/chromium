@@ -95,13 +95,14 @@ MouseEvent* MouseEvent::Create(const AtomicString& event_type,
                                const WebMouseEvent& event,
                                int detail,
                                const String& canvas_region_id,
-                               Node* related_target) {
+                               Node* related_target,
+                               unsigned event_data) {
   bool is_mouse_enter_or_leave = event_type == EventTypeNames::mouseenter ||
                                  event_type == EventTypeNames::mouseleave;
   bool is_cancelable = !is_mouse_enter_or_leave;
   bool is_bubbling = !is_mouse_enter_or_leave;
   return new MouseEvent(event_type, is_bubbling, is_cancelable, view, event,
-                        detail, canvas_region_id, related_target);
+                        detail, canvas_region_id, related_target, event_data);
 }
 
 MouseEvent* MouseEvent::Create(const AtomicString& event_type,
@@ -148,7 +149,8 @@ MouseEvent::MouseEvent()
       button_(0),
       buttons_(0),
       related_target_(nullptr),
-      synthetic_event_type_(kRealOrIndistinguishable) {}
+      synthetic_event_type_(kRealOrIndistinguishable),
+      event_data_(0) {}
 
 MouseEvent::MouseEvent(const AtomicString& event_type,
                        bool can_bubble,
@@ -157,7 +159,8 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
                        const WebMouseEvent& event,
                        int detail,
                        const String& region,
-                       EventTarget* related_target)
+                       EventTarget* related_target,
+                       unsigned event_data)
     : UIEventWithKeyState(
           event_type,
           can_bubble,
@@ -179,6 +182,7 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
       synthetic_event_type_(event.FromTouch() ? kFromTouch
                                               : kRealOrIndistinguishable),
       region_(region),
+      event_data_(event_data),
       menu_source_type_(event.menu_source_type) {
   IntPoint root_frame_coordinates =
       FlooredIntPoint(event.PositionInRootFrame());
@@ -225,7 +229,8 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
       buttons_(buttons),
       related_target_(related_target),
       synthetic_event_type_(synthetic_event_type),
-      region_(region) {
+      region_(region),
+      event_data_(0) {
   InitCoordinatesFromRootFrame(window_x, window_y);
 }
 
@@ -242,7 +247,8 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
       buttons_(initializer.buttons()),
       related_target_(initializer.relatedTarget()),
       synthetic_event_type_(kRealOrIndistinguishable),
-      region_(initializer.region()) {
+      region_(initializer.region()),
+      event_data_(0) {
   InitCoordinates(initializer.clientX(), initializer.clientY());
 }
 

@@ -143,6 +143,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     // arrives or till the selection is adjusted based on the classification result.
     private boolean mPendingShowActionMode;
 
+    private boolean mIsSmartSelectionReset;
+
     // Whether a scroll is in progress.
     private boolean mScrollInProgress;
 
@@ -233,7 +235,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @CalledByNative
     private void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
             boolean isPasswordType, String selectionText, boolean canSelectAll,
-            boolean canRichlyEdit, boolean shouldSuggest) {
+                                   boolean canRichlyEdit, boolean shouldSuggest,
+                                   boolean isSmartSelectionReset) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
@@ -242,17 +245,21 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
+        mIsSmartSelectionReset = isSmartSelectionReset;
         if (hasSelection()) {
+            Log.v("timav", "showSelectionMenu: selection already exists");
             if (mSelectionClient != null
                     && mSelectionClient.requestSelectionPopupUpdates(shouldSuggest)) {
                 // Rely on |mSelectionClient| sending a classification request and the request
                 // always calling onClassified() callback.
+                Log.v("timav", "showSelectionMenu:  mPendingShowActionMode = true");
                 mPendingShowActionMode = true;
             } else {
                 showActionModeOrClearOnFailure();
             }
 
         } else {
+            Log.v("timav", "showSelectionMenu: selection does not exist");
             createAndShowPastePopup();
         }
     }
@@ -265,7 +272,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      * <p> If the action mode cannot be created the selection is cleared.
      */
     public void showActionModeOrClearOnFailure() {
+        Log.v("timav", "showActionModeOrClearOnFailure");
         mPendingShowActionMode = false;
+        mIsSmartSelectionReset = false;
 
         if (!isActionModeSupported() || !hasSelection()) return;
 
@@ -273,6 +282,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (isActionModeValid()) {
             // Try/catch necessary for framework bug, crbug.com/446717.
             try {
+                Log.v("timav", "mActionMode.invalidate()");
                 mActionMode.invalidate();
             } catch (NullPointerException e) {
                 Log.w(TAG, "Ignoring NPE from ActionMode.invalidate() as workaround for L", e);
@@ -308,6 +318,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         }
 
         if (!supportsFloatingActionMode() && !canPaste() && mNonSelectionCallback == null) return;
+
+        Log.v("timav", "createAndShowPastePopup");
+
         destroyPastePopup();
         PastePopupMenuDelegate delegate = new PastePopupMenuDelegate() {
             @Override
@@ -389,6 +402,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (mView != null) mView.removeCallbacks(mRepeatingHideRunnable);
 
         if (isActionModeValid()) {
+            Log.v("timav", "mActionMode.finish()");
             mActionMode.finish();
 
             // Should be nulled out in case #onDestroyActionMode() is not invoked in response.
@@ -402,6 +416,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     public void invalidateContentRect() {
         if (supportsFloatingActionMode() && isActionModeValid()) {
+            Log.v("timav", "mActionMode.invalidateContentRect()");
             mActionMode.invalidateContentRect();
         }
     }
@@ -411,6 +426,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     void onWindowFocusChanged(boolean hasWindowFocus) {
         if (supportsFloatingActionMode() && isActionModeValid()) {
+            Log.v("timav", "mActionMode.onWindowFocusChanged()");
             mActionMode.onWindowFocusChanged(hasWindowFocus);
         }
     }
@@ -448,7 +464,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private void hideActionModeTemporarily(long duration) {
         assert canHideActionMode();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isActionModeValid()) mActionMode.hide(duration);
+            if (isActionModeValid()) {
+                Log.v("timav", "mActionMode.hide()");
+                mActionMode.hide(duration);
+            }
         }
     }
 
@@ -974,18 +993,22 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (top == bottom) ++bottom;
         switch (eventType) {
             case SelectionEventType.SELECTION_HANDLES_SHOWN:
+                Log.v("timav", "SELECTION_HANDLES_SHOWN");
                 break;
 
             case SelectionEventType.SELECTION_HANDLES_MOVED:
                 mSelectionRect.set(left, top, right, bottom);
                 if (mPendingShowActionMode) {
+                    Log.v("timav", "SELECTION_HANDLES_MOVED showActionModeOrClearOnFailure");
                     showActionModeOrClearOnFailure();
                 } else {
+                    Log.v("timav", "SELECTION_HANDLES_MOVED invalidateContentRect");
                     invalidateContentRect();
                 }
                 break;
 
             case SelectionEventType.SELECTION_HANDLES_CLEARED:
+                Log.v("timav", "SELECTION_HANDLES_CLEARED");
                 mLastSelectedText = "";
                 mHasSelection = false;
                 mUnselectAllOnDismiss = false;
@@ -995,10 +1018,12 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 break;
 
             case SelectionEventType.SELECTION_HANDLE_DRAG_STARTED:
+                Log.v("timav", "SELECTION_HANDLES_DRAG_STATED");
                 hideActionMode(true);
                 break;
 
             case SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED:
+                Log.v("timav", "SELECTION_HANDLES_DRAG_STOPPED");
                 mWebContents.showContextMenuAtTouchHandle(left, bottom);
                 break;
 
@@ -1069,6 +1094,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @CalledByNative
     private void onSelectionChanged(String text) {
+        Log.v("timav", "onSelectionChanged: " + text);
         mLastSelectedText = text;
         if (mSelectionClient != null) {
             mSelectionClient.onSelectionChanged(text);
@@ -1114,7 +1140,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (editable != isSelectionEditable() || isPassword != isSelectionPassword()) {
             mEditable = editable;
             mIsPasswordType = isPassword;
-            if (isActionModeValid()) mActionMode.invalidate();
+            if (isActionModeValid()) {
+                Log.v("timav", "mActionMode.invalidate()");
+                mActionMode.invalidate();
+            }
         }
     }
 
@@ -1168,11 +1197,13 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private class SmartSelectionCallback implements SmartSelectionProvider.ResultCallback {
         @Override
         public void onClassified(SmartSelectionProvider.Result result) {
+            Log.v("timav", "onClassified");
             // If the selection does not exist any more, discard |result|.
             if (!hasSelection()) {
                 assert !mHidden;
                 assert mClassificationResult == null;
                 mPendingShowActionMode = false;
+                mIsSmartSelectionReset = false;
                 return;
             }
 
@@ -1207,6 +1238,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 // Remain pending until SELECTION_HANDLES_MOVED arrives.
                 if (mPendingShowActionMode) return;
             }
+
+            if (mPendingShowActionMode && mIsSmartSelectionReset) return;
 
             // Rely on this method to clear |mHidden| and unhide the action mode.
             showActionModeOrClearOnFailure();

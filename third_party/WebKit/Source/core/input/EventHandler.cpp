@@ -1753,7 +1753,8 @@ void EventHandler::ApplyTouchAdjustment(WebGestureEvent* gesture_event,
 
 WebInputEventResult EventHandler::SendContextMenuEvent(
     const WebMouseEvent& event,
-    Node* override_target_node) {
+    Node* override_target_node,
+    unsigned event_data) {
   LocalFrameView* v = frame_->View();
   if (!v)
     return WebInputEventResult::kNotHandled;
@@ -1777,8 +1778,13 @@ WebInputEventResult EventHandler::SendContextMenuEvent(
   Node* target_node =
       override_target_node ? override_target_node : mev.InnerNode();
   return mouse_event_manager_->DispatchMouseEvent(
-      UpdateMouseEventTargetNode(target_node), EventTypeNames::contextmenu,
-      event, mev.GetHitTestResult().CanvasRegionId(), 0);
+      UpdateMouseEventTargetNode(target_node),
+      EventTypeNames::contextmenu,
+      event,
+      mev.GetHitTestResult().CanvasRegionId(),
+      nullptr,
+      false,
+      event_data);
 }
 
 static bool ShouldShowContextMenuAtSelection(const FrameSelection& selection) {
@@ -1791,7 +1797,8 @@ static bool ShouldShowContextMenuAtSelection(const FrameSelection& selection) {
 
 WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
     Element* override_target_element,
-    WebMenuSourceType source_type) {
+    WebMenuSourceType source_type,
+    unsigned event_data) {
   LocalFrameView* view = frame_->View();
   if (!view)
     return WebInputEventResult::kNotHandled;
@@ -1878,7 +1885,7 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
   // coordinates instead of root frame coordinates.
   mouse_event.SetFrameScale(1);
 
-  return SendContextMenuEvent(mouse_event, override_target_element);
+  return SendContextMenuEvent(mouse_event, override_target_element, event_data);
 }
 
 void EventHandler::ScheduleHoverStateUpdate() {
