@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ded8317e_c4b2821a",
+        "filename": ".gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1225355
+      },
+      "writtenOn": "2017-08-15T09:56:09Z",
+      "side": 1,
+      "message": "You\u0027re right, there are a bunch of \u0027app_mode_loader*\u0027 nested components.",
+      "parentUuid": "95200980_cfec7702",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "b276eccb879394be689b76bbcd7929646573337a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcacea2_f8026a8a",
         "filename": "chrome/app_shim/BUILD.gn",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T18:04:07Z",
       "side": 1,
       "message": "You only need to specify the last part if it differs from the directory. So, //chrome/common works fine, as does //ipc.",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "b276eccb879394be689b76bbcd7929646573337a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e55250_a2f22322",
+        "filename": "chrome/app_shim/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225355
+      },
+      "writtenOn": "2017-08-15T09:56:09Z",
+      "side": 1,
+      "message": "Ah, nice convention. Thanks!",
+      "parentUuid": "4bcacea2_f8026a8a",
       "range": {
         "startLine": 19,
         "startChar": 20,
