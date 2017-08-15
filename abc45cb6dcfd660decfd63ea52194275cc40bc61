@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39a8841c_d0a9cafd",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "Do we need to add TODO comment here for title alignment, back arrow (imageNamed:@\"bookmark_gray_back\"), and font size of \u0027Done\u0027?",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3944cd65_d29f3aea",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "I guess we will get rid of BookmarkControllerFactory eventually and directly create BookmarkHomeViewController here later?",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 27
+      },
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f226f9_a9e77dcc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "// TODO(crbug.com/695749) Add promo section check here.",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a6a117_01b142e6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "// TODO(crbug.com/695749) Implement the deletion of bookmark/folder and insertion of folder here.",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d6e3b4_c2b99237",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "seems more clear if\n// then reset it to bookmark model\u0027s root node.",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c247d3ba_1ff42c0d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "It seems this is used in one place only.  Do we need this function? (sorry I didn\u0027t catch this when working on bookmark_collection_view.mm : textWhenCollectionIsEmpty)",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c50a20_213b08f3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T05:00:39Z",
+      "side": 1,
+      "message": "It seems our experiment will break the following tests as well:\nkeyboard_commands_egtest.mm # testKeyboardCommandsNotRegistered_BookmarksPresented\nnew_tab_page_egtest.mm # testAccessibilityOnBookmarks\nsignin_interaction_controller_egtest.mm # testSignInCancelFromBookmarks",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
