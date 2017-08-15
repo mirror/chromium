@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441b32e6_ddde6044",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-15T15:45:35Z",
+      "side": 1,
+      "message": "nit: expand the comment to clarify the expected invariants (WebUI contexts should have no extension, etc.).",
+      "revId": "e51c73293df50de91313fb19a7d4554cc3917630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8473492e_e817faa1",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-15T15:45:35Z",
+      "side": 1,
+      "message": "By \"static\", you mean that they do not require invalidation? (I was a little confused because my mind jumped to static storage lifetime, but that may be my bias.)",
+      "revId": "e51c73293df50de91313fb19a7d4554cc3917630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
