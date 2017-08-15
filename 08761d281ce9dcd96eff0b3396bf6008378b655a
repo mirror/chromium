@@ -16,6 +16,24 @@
       "revId": "08761d281ce9dcd96eff0b3396bf6008378b655a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6ca4f2_bc3e992c",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T19:43:21Z",
+      "side": 1,
+      "message": "Done. I changed the variable name to |use_half_with_tiles_for_gpu_rasterization|, and moved the comments from render_widget_compositor.cc to here.",
+      "parentUuid": "17922648_68ed42c7",
+      "revId": "08761d281ce9dcd96eff0b3396bf6008378b655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
