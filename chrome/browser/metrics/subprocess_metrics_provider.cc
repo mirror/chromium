@@ -79,6 +79,15 @@ void SubprocessMetricsProvider::DeregisterSubprocessAllocator(int id) {
   allocators_by_id_.Remove(id);
   DCHECK(allocator);
 
+  // Experiment with not doing final merge of persistent histograms in order
+  // to try to find source of memory overwrites.
+  // TODO(bcwhite): Remove after crbug/736675
+  if (base::GetFieldTrialParamValueByFeature(base::kPersistentHistogramsFeature,
+                                             "skip_subprocess_cleanup") ==
+      "yes") {
+    return;
+  }
+
   // Merge the last deltas from the allocator before it is released.
   MergeHistogramDeltasFromAllocator(id, allocator.get());
 }
@@ -110,6 +119,14 @@ void SubprocessMetricsProvider::MergeHistogramDeltasFromAllocator(
 
 void SubprocessMetricsProvider::MergeHistogramDeltas() {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  // Experiment with forcing histogram reporting via IPC rather than persistent
+  // memory in order to try to find source of memory overwrites.
+  // TODO(bcwhite): Remove after crbug/736675
+  if (base::GetFieldTrialParamValueByFeature(base::kPersistentHistogramsFeature,
+                                             "use_subprocess_ipc") == "yes") {
+    return;
+  }
 
   for (AllocatorByIdMap::iterator iter(&allocators_by_id_); !iter.IsAtEnd();
        iter.Advance()) {

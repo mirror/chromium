@@ -11,6 +11,7 @@
 #include "base/json/string_escape.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_params.h"  // for crbug/736675
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_snapshot_manager.h"
 #include "base/metrics/metrics_hashes.h"
@@ -336,6 +337,14 @@ void StatisticsRecorder::PrepareDeltas(
   // call back into this object to register histograms. Those called methods
   // will acquire the lock at that time.
   ImportGlobalPersistentHistograms();
+
+  // Experiment with forcing histogram reporting via IPC rather than persistent
+  // memory in order to try to find source of memory overwrites.
+  // TODO(bcwhite): Remove after crbug/736675
+  if (base::GetFieldTrialParamValueByFeature(base::kPersistentHistogramsFeature,
+                                             "use_subprocess_ipc") == "yes") {
+    include_persistent = true;
+  }
 
   base::AutoLock auto_lock(lock_.Get());
   snapshot_manager->PrepareDeltas(begin(include_persistent), end(),

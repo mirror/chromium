@@ -293,6 +293,15 @@ void PersistentSystemProfile::SetSystemProfile(
   if (allocators_.empty() || serialized_profile.empty())
     return;
 
+  // Experiment with disabling system profile in order to try to find source
+  // of memory overwrites.
+  // TODO(bcwhite): Remove after crbug/736675
+  if (base::GetFieldTrialParamValueByFeature(base::kPersistentHistogramsFeature,
+                                             "disable_persistent_profile") ==
+      "yes") {
+    return;
+  }
+
   for (auto& allocator : allocators_) {
     // Don't overwrite a complete profile with an incomplete one.
     if (!complete && allocator.has_complete_profile())
