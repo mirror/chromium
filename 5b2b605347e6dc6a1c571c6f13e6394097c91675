@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "45943fc8_b457fca6",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T00:45:11Z",
+      "side": 1,
+      "message": "Goofy! Can you add a comment about that for the main binary, since I bet I\u0027ll forget.",
+      "parentUuid": "ec978abc_0d7cb5d1",
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1317a591_80a2761b",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 4
