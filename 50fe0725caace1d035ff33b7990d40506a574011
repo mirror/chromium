@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f4a529d_a57b7abf",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "test_data_dir_ already points to chrome/test/data/extensions/api_test, doesn\u0027t it?  So could we just use test_data_dir_.AppendASCII(\"context_menus/item_visibility\")?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5829852_df749a3b",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "I don\u0027t think menu can be null, right?\n\nAlso, this method is only used once on line 77 - maybe just inline the call to menu-\u003eextension_items().ConvertToExtensoinsCustomCommandId() there?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb63247_494cc73b",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "This is strange - why would we want to ASSERT_FALSE(success)?  Should we rename success, or change what it means?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a952a5_b6b83c7e",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "c++ style: numItems -\u003e num_items",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dcd595_83c4cd7d",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "Looks like this is the only use of CountItemsInMenu - maybe just inline the functionality here?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8e68fa_d505107f",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "nit: prefer unix_hacker_style() for simple accessors",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940ae140_af8ed729",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "Does this need to be a unique_ptr?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8461dcc4_fd22db09",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e30ae9_b7fba490",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "nit: prefer nullptr in new code, but also this would be simpler as:\nEXPECT_FALSE(submodel);\nor even\nEXPECT_FALSE(top_level_model_-\u003eGetSubmenuModelAt(GetTopLevelIndex()));",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d7966b_b11d6613",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "I don\u0027t follow this comment - it looks like this is only testing that the visibility is correctly set to false?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d084f0_b839dd28",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "Similarly here, I only see that visibility is tested, not anything about items being added?  In fact, this seems to be the case for most of these tests - am I missing something?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c67849_3e1fc4e9",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T23:39:26Z",
+      "side": 1,
+      "message": "Is checking the parent necessary?  What happens in the views code if we don\u0027t?",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
