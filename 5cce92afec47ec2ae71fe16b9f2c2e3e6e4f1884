@@ -22,6 +22,30 @@
       "revId": "5cce92afec47ec2ae71fe16b9f2c2e3e6e4f1884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f371c3_d6c0e4e0",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-15T15:30:28Z",
+      "side": 1,
+      "message": "Object.defineProperty(....) lines fix some of tests here: https://w3c-test.org/credential-management/idl.https.html\nI have sent you complete test results and hope to discuss today the ones that still fail.",
+      "parentUuid": "39961e52_5830bae3",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 22
+      },
+      "revId": "5cce92afec47ec2ae71fe16b9f2c2e3e6e4f1884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

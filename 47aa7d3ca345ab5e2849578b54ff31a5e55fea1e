@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a47c0456_c7607a05",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-15T15:30:28Z",
+      "side": 1,
+      "message": "I think it is useful to declare Credential because we use it in JSDoc @param and @return annotations.",
+      "parentUuid": "1f808374_acd3fec5",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08157894_4eb70f5a",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 6
