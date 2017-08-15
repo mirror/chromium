@@ -1534,6 +1534,7 @@ test("browser_tests") {
       "../browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc",
       "../browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
       "../browser/ui/views/hung_renderer_view_browsertest.cc",
+      "../browser/ui/views/message_center/web_notification_tray_browsertest.cc",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
       "../browser/ui/webui/chrome_url_data_manager_browsertest.cc",
       "../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest-inl.h",
@@ -2672,6 +2673,9 @@ test("browser_tests") {
           "../../extensions/browser/api/display_source/display_source_apitestbase.h",
           "../browser/extensions/api/display_source/display_source_wifi_display_apitest.cc",
         ]
+      }
+      if (!is_chromeos) {
+        sources += [ "../browser/ui/views/message_center/web_notification_tray_browsertest.cc" ]
       }
     }
 
