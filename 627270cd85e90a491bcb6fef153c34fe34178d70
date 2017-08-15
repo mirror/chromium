@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa6f173d_2a65b280",
+        "filename": "ash/wm/lock_layout_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-15T05:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd18f007_88f7ecc7",
+      "revId": "627270cd85e90a491bcb6fef153c34fe34178d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "313c60e9_44de219f",
         "filename": "ash/wm/lock_layout_manager_unittest.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6a7bba00_7c2dbf62",
+        "filename": "ash/wm/lock_layout_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-15T05:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "313c60e9_44de219f",
+      "range": {
+        "startLine": 370,
+        "startChar": 16,
+        "endLine": 370,
+        "endChar": 22
+      },
+      "revId": "627270cd85e90a491bcb6fef153c34fe34178d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66f70514_27308805",
         "filename": "ash/wm/lock_window_state.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-14T23:12:20Z",
       "side": 1,
       "message": "just q: we don\u0027t have to worry about this case?",
+      "revId": "627270cd85e90a491bcb6fef153c34fe34178d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8b0065_74bc2105",
+        "filename": "ash/wm/lock_window_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-15T05:26:36Z",
+      "side": 1,
+      "message": "we care about this case, but the current code already handles accessibility panel (i.e. ScreenUtil::GetDisplayWorkAreaBoundsInParentForLockScreen already takes accessibility panel height into account when determining bounds)",
+      "parentUuid": "66f70514_27308805",
       "revId": "627270cd85e90a491bcb6fef153c34fe34178d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
