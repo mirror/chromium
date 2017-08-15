@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ebb1bd_43dfa897",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2852,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T18:04:03Z",
+      "side": 1,
+      "message": "As the body is multiple lines please use {}",
+      "range": {
+        "startLine": 2852,
+        "startChar": 4,
+        "endLine": 2852,
+        "endChar": 28
+      },
+      "revId": "4ef0cfc8eef2134f81dbe96c4ff332c4d54dbae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76196a8_f3e3ad22",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T18:04:03Z",
+      "side": 1,
+      "message": "I can\u0027t readily tell, if we generate a MOUSE_PRESSED, are we guaranteed to generate a MOUSE_RELEASED?",
+      "range": {
+        "startLine": 2864,
+        "startChar": 11,
+        "endLine": 2864,
+        "endChar": 45
+      },
+      "revId": "4ef0cfc8eef2134f81dbe96c4ff332c4d54dbae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
