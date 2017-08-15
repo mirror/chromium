@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "948154d4_0578cc94",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-15T00:41:36Z",
+      "side": 1,
+      "message": "doens\u0027t help cause you\u0027re just holding a raw pointer which was valid at one point but you may be pointing to garbage if it\u0027s deleted in the interim. I realize now that the idiomatic way to do this for WebContents is probably to make WebApkInstallService have a WebContentsObserver and listen to WebContentsDestroyed",
+      "parentUuid": "3d3ee0d0_637c076f",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 61
+      },
+      "revId": "07b947646f8b8f2c6492e3567f77ab6f0279c278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c3d61c_56098526",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
         "patchSetId": 10
