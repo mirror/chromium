@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35cf8c65_91b2aa61",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T01:15:57Z",
+      "side": 1,
+      "message": "This now being a test-only class, I don\u0027t think that would be necessary.",
+      "parentUuid": "7a6f2fc5_f03b1444",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adc8aaf6_e974731b",
         "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208b10a1_1836d73a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T01:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc8aaf6_e974731b",
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b4e016aa_53ce53aa",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T01:15:57Z",
+      "side": 1,
+      "message": "I couldn\u0027t find a way to do that using the SQLite API.",
+      "parentUuid": "b4f669f1_b610d206",
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1db61bf8_c1a65df7",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43002daa_cb5c417e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T01:15:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db61bf8_c1a65df7",
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
