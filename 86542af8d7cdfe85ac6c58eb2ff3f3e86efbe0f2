@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193b534e_baecf82f",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/service_client/test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-15T21:13:48Z",
+      "side": 1,
+      "message": "This is testing win/mac/linux behavior which uses networking_private_service_client.cc. That behavior shouldn\u0027t change.",
+      "revId": "86542af8d7cdfe85ac6c58eb2ff3f3e86efbe0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
