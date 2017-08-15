@@ -52,12 +52,14 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 #pragma mark - Initialization
 
-- (instancetype)initWithPrefs:(PrefService*)prefs {
+- (instancetype)initWithPrefs:(PrefService*)prefs
+                   dispatcher:(id<ApplicationCommands>)dispatcher {
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
   if (self) {
     self.title = l10n_util::GetNSString(IDS_IOS_OPTIONS_DO_NOT_TRACK_MOBILE);
+    self.dispatcher = dispatcher;
     _doNotTrackEnabled.Init(prefs::kEnableDoNotTrack, prefs);
     self.collectionViewAccessibilityIdentifier = @"Do Not Track";
     [self loadModel];

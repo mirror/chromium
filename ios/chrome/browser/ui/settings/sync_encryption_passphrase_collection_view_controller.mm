@@ -104,7 +104,8 @@ const CGFloat kSpinnerButtonPadding = 18;
 @synthesize processingMessage = processingMessage_;
 @synthesize syncErrorMessage = syncErrorMessage_;
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(browserState);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
@@ -112,6 +113,7 @@ const CGFloat kSpinnerButtonPadding = 18;
   if (self) {
     self.title = l10n_util::GetNSString(IDS_IOS_SYNC_ENTER_PASSPHRASE_TITLE);
     self.shouldHideDoneButton = YES;
+    self.dispatcher = dispatcher;
     browserState_ = browserState;
     NSString* userEmail =
         AuthenticationServiceFactory::GetForBrowserState(browserState_)
@@ -146,6 +148,10 @@ const CGFloat kSpinnerButtonPadding = 18;
     [self loadModel];
   }
   return self;
+}
+
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+  return [self initWithBrowserState:browserState dispatcher:nil];
 }
 
 - (UITextField*)passphrase {

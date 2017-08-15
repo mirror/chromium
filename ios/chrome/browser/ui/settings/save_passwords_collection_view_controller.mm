@@ -151,7 +151,8 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
 #pragma mark - Initialization
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(browserState);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
@@ -164,6 +165,7 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
     self.collectionViewAccessibilityIdentifier =
         @"SavePasswordsCollectionViewController";
     self.shouldHideDoneButton = YES;
+    self.dispatcher = dispatcher;
     passwordStore_ = IOSChromePasswordStoreFactory::GetForBrowserState(
         browserState_, ServiceAccessType::EXPLICIT_ACCESS);
     DCHECK(passwordStore_);

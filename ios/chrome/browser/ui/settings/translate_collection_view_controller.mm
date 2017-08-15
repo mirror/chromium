@@ -68,7 +68,8 @@ NSString* const kTranslateSettingsCategory = @"ChromeTranslateSettings";
 
 #pragma mark - Initialization
 
-- (instancetype)initWithPrefs:(PrefService*)prefs {
+- (instancetype)initWithPrefs:(PrefService*)prefs
+                   dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(prefs);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
@@ -77,6 +78,7 @@ NSString* const kTranslateSettingsCategory = @"ChromeTranslateSettings";
     self.title = l10n_util::GetNSString(IDS_IOS_TRANSLATE_SETTING);
     self.collectionViewAccessibilityIdentifier =
         @"translate_settings_view_controller";
+    self.dispatcher = dispatcher;
     _prefs = prefs;
     _translationEnabled =
         [[PrefBackedBoolean alloc] initWithPrefService:_prefs
