@@ -121,6 +121,12 @@ class CC_EXPORT LayerTreeSettings {
   // completed the current BeginFrame before triggering their own BeginFrame
   // deadlines.
   bool wait_for_all_pipeline_stages_before_draw = false;
+
+  // On a low-end android devices where the GPU memory is low, we are reducing
+  // the tile width to half in the cases where the content width > screen width.
+  // This doesn't impact CPU tile size, and we should see an obvious GPU memory
+  // saving.
+  bool use_half_width_tiles_for_gpu_rasterization = false;
 };
 
 }  // namespace cc
