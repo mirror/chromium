@@ -21,6 +21,8 @@
 #include "base/strings/string_piece.h"
 #include "extensions/common/extension_paths.h"
 #include "extensions/common/feature_switch.h"
+#include "extensions/common/extension_builder.h"
+#include "extensions/common/value_builder.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/logging_native_handler.h"
 #include "extensions/renderer/native_extension_bindings_system.h"
@@ -122,10 +124,12 @@ class ModuleSystemTestEnvironment::AssertNatives
 
 ModuleSystemTestEnvironment::ModuleSystemTestEnvironment(
     v8::Isolate* isolate,
-    ScriptContextSet* context_set)
+    ScriptContextSet* context_set,
+    scoped_refptr<const Extension> extension)
     : isolate_(isolate),
       context_holder_(new gin::ContextHolder(isolate_)),
       handle_scope_(isolate_),
+      extension_(extension),
       context_set_(context_set),
       source_map_(new StringSourceMap()) {
   context_holder_->SetContext(v8::Context::New(
@@ -135,9 +139,9 @@ ModuleSystemTestEnvironment::ModuleSystemTestEnvironment(
     auto context =
         base::MakeUnique<ScriptContext>(context_holder_->context(),
                                         nullptr,  // WebFrame
-                                        nullptr,  // Extension
+                                        extension_.get(),
                                         Feature::BLESSED_EXTENSION_CONTEXT,
-                                        nullptr,  // Effective Extension
+                                        extension_.get(),  // Effective Extension
                                         Feature::BLESSED_EXTENSION_CONTEXT);
     context_ = context.get();
     context_set_->AddForTesting(std::move(context));
@@ -242,6 +246,7 @@ ModuleSystemTest::~ModuleSystemTest() {
 }
 
 void ModuleSystemTest::SetUp() {
+  extension_ = CreateExtension();
   env_ = CreateEnvironment();
   base::CommandLine::ForCurrentProcess()->AppendSwitch("test-type");
 }
@@ -269,9 +274,18 @@ void ModuleSystemTest::TearDown() {
   }
 }
 
+scoped_refptr<const Extension> ModuleSystemTest::CreateExtension() {
+    std::unique_ptr<base::DictionaryValue> manifest =
+        DictionaryBuilder()
+            .Set("name", "test")
+            .Set("version", "1.0")
+            .Set("manifest_version", 2).Build();
+    return ExtensionBuilder().SetManifest(std::move(manifest)).Build();
+}
+
 std::unique_ptr<ModuleSystemTestEnvironment>
 ModuleSystemTest::CreateEnvironment() {
-  return base::MakeUnique<ModuleSystemTestEnvironment>(isolate_, &context_set_);
+  return base::MakeUnique<ModuleSystemTestEnvironment>(isolate_, &context_set_, extension_);
 }
 
 void ModuleSystemTest::ExpectNoAssertionsMade() {

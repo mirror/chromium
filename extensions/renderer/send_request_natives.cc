@@ -37,6 +37,8 @@ void SendRequestNatives::StartRequest(
   bool for_io_thread = args[3]->BooleanValue();
   bool preserve_null_in_objects = args[4]->BooleanValue();
 
+  LOG(WARNING) << "\n\nERROR: Sending request: " << name;
+
   int request_id = request_sender_->GetNextRequestId();
   args.GetReturnValue().Set(static_cast<int32_t>(request_id));
 
