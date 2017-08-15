@@ -4,9 +4,12 @@
 
 #include "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h"
 
+#include "base/files/file_path.h"
 #include "base/guid.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "components/offline_pages/core/client_id.h"
 #include "url/gurl.h"
 
@@ -24,6 +27,8 @@ const std::string MockPrefetchItemGenerator::kOperationNamePrefix(
     "test_operation_name_");
 const std::string MockPrefetchItemGenerator::kArchiveBodyNamePrefix(
     "test_archive_body_name_");
+const std::string MockPrefetchItemGenerator::kTitlePrefix("test_title_");
+const std::string MockPrefetchItemGenerator::kFilePathPrefix("test_file_path_");
 
 MockPrefetchItemGenerator::MockPrefetchItemGenerator() = default;
 
@@ -56,6 +61,24 @@ PrefetchItem MockPrefetchItemGenerator::CreateItem(PrefetchItemState state) {
     new_item.archive_body_name =
         archive_body_name_prefix_ + base::IntToString(item_counter);
     new_item.archive_body_length = item_counter * 100;
+  }
+
+  if (title_prefix_.length()) {
+    new_item.title =
+        base::UTF8ToUTF16(title_prefix_ + base::IntToString(item_counter));
+  }
+
+  if (file_path_prefix_.length()) {
+#if defined(OS_POSIX)
+    base::FilePath::StringType file_path_string(
+        file_path_prefix_ + base::IntToString(item_counter));
+#elif defined(OS_WIN)
+    base::FilePath::StringType file_path_string(
+        base::UTF8ToUTF16(file_path_prefix_) +
+        base::IntToString16(item_counter));
+#endif  // OS_WIN
+    new_item.file_path = base::FilePath(file_path_string);
+    new_item.file_size = item_counter * 100;
   }
 
   ++item_counter;
