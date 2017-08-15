@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "0c4e3497_af454183",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T15:35:03Z",
+      "side": 1,
+      "message": "I thought it seemed unnecessary to use a BuildHooksImpl class given that we don\u0027t need to supply a different version downstream and that there isn\u0027t code that won\u0027t compile in the existing BuildHooks.java (the two main reasons to use *HooksImpl I think?).\n\nMy plan was to leave this for now since I\u0027m not sure whether or not anyone is actively working on the assertion enabled-for-canary stuff.\n\nI think the Callback approach is better in this case. If we use BuildHooksImpl, we\u0027ll still need to solve the WebView/Chrome part right? But if we use the Callback, if it isn\u0027t set we know we\u0027re in Chrome and we could just plumb through a GN variable \"silent_assert_reporting\" to determine what kind of assert handling we want.\n\nIf that makes sense to you, I\u0027ll revert my changes to this file and Callback.java.",
+      "parentUuid": "622956e0_e5baee76",
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68f46403_ce41e37e",
         "filename": "build/config/android/rules.gni",
         "patchSetId": 3
@@ -53,6 +71,24 @@
       "writtenOn": "2017-08-15T00:37:20Z",
       "side": 1,
       "message": "I don\u0027t think it should be added to deps. Just possible_config_deps.",
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d45fde_47152345",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T15:35:03Z",
+      "side": 1,
+      "message": "If we don\u0027t, this can fail since nothing actually has this target as a dep - is there a better place to put it?",
+      "parentUuid": "68f46403_ce41e37e",
       "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
