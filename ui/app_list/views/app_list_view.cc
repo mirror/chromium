@@ -659,6 +659,21 @@ void AppListView::EndDrag(const gfx::Point& location) {
   }
 }
 
+void AppListView::RecordStateTransitionForUma(AppListState new_state) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  AppListStateTransitionSource transition =
+      GetAppListStateTransitionSource(new_state);
+  // kMaxAppListStateTransition denotes a transition we are not interested in
+  // recording (ie. PEEKING->PEEKING).
+  if (transition == kMaxAppListStateTransition)
+    return;
+
+  UMA_HISTOGRAM_ENUMERATION(kAppListStateTransitionSourceHistogram, transition,
+                            kMaxAppListStateTransition);
+}
+
 display::Display AppListView::GetDisplayNearestView() const {
   return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
 }
@@ -667,6 +682,88 @@ AppsGridView* AppListView::GetAppsGridView() const {
   return app_list_main_view_->contents_view()
       ->apps_container_view()
       ->apps_grid_view();
+}
+
+AppListStateTransitionSource AppListView::GetAppListStateTransitionSource(
+    AppListState target_state) const {
+  switch (app_list_state_) {
+    case CLOSED:
+      // All state transitions from CLOSED are invalid.
+      NOTREACHED();
+      return kMaxAppListStateTransition;
+    case PEEKING:
+      switch (target_state) {
+        case CLOSED:
+          return kPeekingToClosed;
+        case HALF:
+          return kPeekingToHalf;
+        case FULLSCREEN_ALL_APPS:
+          return kPeekingToFullscreenAllApps;
+        case PEEKING:
+          // PEEKING->PEEKING is used when resetting the widget position after a
+          // failed state transition. Not useful for UMA.
+          return kMaxAppListStateTransition;
+        case FULLSCREEN_SEARCH:
+          // PEEKING->FULLSCREEN_SEARCH is not a valid transition.
+          NOTREACHED();
+          return kMaxAppListStateTransition;
+      }
+    case HALF:
+      switch (target_state) {
+        case CLOSED:
+          return kHalfToClosed;
+        case PEEKING:
+          return kHalfToPeeking;
+        case FULLSCREEN_SEARCH:
+          return KHalfToFullscreenSearch;
+        case HALF:
+          // HALF->HALF is used when resetting the widget position after a
+          // failed state transition. Not useful for UMA.
+          return kMaxAppListStateTransition;
+        case FULLSCREEN_ALL_APPS:
+          // HALF->FULLSCREEN_ALL_APPS is not a valid transition.
+          NOTREACHED();
+          return kMaxAppListStateTransition;
+      }
+
+    case FULLSCREEN_ALL_APPS:
+      switch (target_state) {
+        case CLOSED:
+          return kFullscreenAllAppsToClosed;
+        case PEEKING:
+          return kFullscreenAllAppsToPeeking;
+        case FULLSCREEN_SEARCH:
+          return kFullscreenAllAppsToFullscreenSearch;
+        case HALF:
+          // FULLSCREEN_ALL_APPS->HALF is not a valid transition.
+          NOTREACHED();
+          return kMaxAppListStateTransition;
+        case FULLSCREEN_ALL_APPS:
+          // FULLSCREEN_ALL_APPS->FULLSCREEN_ALL_APPS is used when resetting the
+          // widget positon after a failed state transition. Not useful for UMA.
+          return kMaxAppListStateTransition;
+      }
+    case FULLSCREEN_SEARCH:
+      switch (target_state) {
+        case CLOSED:
+          return kFullscreenSearchToClosed;
+        case FULLSCREEN_ALL_APPS:
+          return kFullscreenSearchToFullscreenAllApps;
+        case FULLSCREEN_SEARCH:
+          // FULLSCREEN_SEARCH->FULLSCREEN_SEARCH is used when resetting the
+          // widget position after a failed state transition. Not useful for
+          // UMA.
+          return kMaxAppListStateTransition;
+        case PEEKING:
+          // FULLSCREEN_SEARCH->PEEKING is not a valid transition.
+          NOTREACHED();
+          return kMaxAppListStateTransition;
+        case HALF:
+          // FULLSCREEN_SEARCH->HALF is not a valid transition.
+          NOTREACHED();
+          return kMaxAppListStateTransition;
+      }
+  }
 }
 
 void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
@@ -785,6 +882,9 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 void AppListView::OnWidgetDestroying(views::Widget* widget) {
+  if (is_fullscreen_app_list_enabled_)
+    return;
+
   BubbleDialogDelegateView::OnWidgetDestroying(widget);
   if (delegate_ && widget == GetWidget())
     delegate_->ViewClosing();
@@ -792,6 +892,9 @@ void AppListView::OnWidgetDestroying(views::Widget* widget) {
 
 void AppListView::OnWidgetVisibilityChanged(views::Widget* widget,
                                             bool visible) {
+  if (is_fullscreen_app_list_enabled_)
+    return;
+
   BubbleDialogDelegateView::OnWidgetVisibilityChanged(widget, visible);
 
   if (widget != GetWidget())
@@ -957,6 +1060,7 @@ void AppListView::SetState(AppListState new_state) {
       break;
   }
   StartAnimationForState(new_state_override);
+  RecordStateTransitionForUma(new_state_override);
   app_list_state_ = new_state_override;
 }
 
