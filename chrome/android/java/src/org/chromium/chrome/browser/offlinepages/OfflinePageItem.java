@@ -11,6 +11,8 @@ import org.chromium.base.VisibleForTesting;
  */
 public class OfflinePageItem {
     private final String mUrl;
+    private final String mOriginalUrl;
+    private final boolean mDoesAutoExpire;
     private final long mOfflineId;
     private final ClientId mClientId;
     private final String mFilePath;
@@ -20,10 +22,12 @@ public class OfflinePageItem {
     private final long mLastAccessTimeMs;
     private final String mRequestOrigin;
 
-    public OfflinePageItem(String url, long offlineId, String clientNamespace, String clientId,
-            String filePath, long fileSize, long creationTimeMs, int accessCount,
-            long lastAccessTimeMs, String requestOrigin) {
+    public OfflinePageItem(String url, String originalUrl, boolean doesAutoExpire, long offlineId,
+            String clientNamespace, String clientId, String filePath, long fileSize,
+            long creationTimeMs, int accessCount, long lastAccessTimeMs, String requestOrigin) {
         mUrl = url;
+        mOriginalUrl = originalUrl;
+        mDoesAutoExpire = doesAutoExpire;
         mOfflineId = offlineId;
         mClientId = new ClientId(clientNamespace, clientId);
         mFilePath = filePath;
@@ -38,6 +42,18 @@ public class OfflinePageItem {
     @VisibleForTesting
     public String getUrl() {
         return mUrl;
+    }
+
+    /** @return original URL of the offline page. */
+    @VisibleForTesting
+    public String getOriginalUrl() {
+        return mOriginalUrl;
+    }
+
+    /** @return whether the page will automatically expire. */
+    @VisibleForTesting
+    public boolean getDoesAutoExpire() {
+        return mDoesAutoExpire;
     }
 
     /** @return offline id for this offline page. */
