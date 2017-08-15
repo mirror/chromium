@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f6e3d5_e967236a",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-15T14:44:13Z",
+      "side": 1,
+      "message": "Should this say Android? The description says that Mac and iOS use title case.",
+      "range": {
+        "startLine": 9,
+        "startChar": 139,
+        "endLine": 9,
+        "endChar": 142
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e7a587_f3fc6042",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-15T14:44:13Z",
+      "side": 1,
+      "message": "Should this say MacOS? Windows, Linux, and Chrome OS are also desktop operating systems, but they use sentence case.",
+      "range": {
+        "startLine": 78,
+        "startChar": 127,
+        "endLine": 78,
+        "endChar": 134
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98060620_51115392",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-15T14:44:13Z",
+      "side": 1,
+      "message": "It\u0027s awkward to see unicode quotes inside of ASCII quotes :-/",
+      "range": {
+        "startLine": 151,
+        "startChar": 211,
+        "endLine": 151,
+        "endChar": 222
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55414ea5_3b7d59f0",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-15T14:44:13Z",
+      "side": 1,
+      "message": "If Android uses sentence case, then you can reduce this file size by removing formatter_data\u003d\"android_java\" in title case sections.",
+      "range": {
+        "startLine": 185,
+        "startChar": 248,
+        "endLine": 185,
+        "endChar": 278
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
