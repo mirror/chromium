@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3284e93_7e0a983c",
+        "filename": "chrome/browser/extensions/extension_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-15T18:33:34Z",
+      "side": 1,
+      "message": "I am not sure if this is entirely correct. Do you have context about this code? Else I\u0027ll investigate more.",
+      "range": {
+        "startLine": 197,
+        "startChar": 16,
+        "endLine": 197,
+        "endChar": 35
+      },
+      "revId": "ebf1ba0ae847ffb2e4c673d5443303e6b2da2953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8dd010_c3a770d5",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-15T18:33:34Z",
+      "side": 1,
+      "message": "Have also refactored this slightly.",
+      "range": {
+        "startLine": 174,
+        "startChar": 22,
+        "endLine": 174,
+        "endChar": 26
+      },
+      "revId": "ebf1ba0ae847ffb2e4c673d5443303e6b2da2953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a115151_5489034f",
+        "filename": "extensions/browser/management_policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-15T18:33:34Z",
+      "side": 1,
+      "message": "IMO, an extension which fails UserMayLoad should also always remain MustRemainDisabled. This helps with more consistency and cleaner code at some call sites.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "ebf1ba0ae847ffb2e4c673d5443303e6b2da2953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
