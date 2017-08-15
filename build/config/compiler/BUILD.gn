@@ -1230,6 +1230,11 @@ config("default_warnings") {
 config("chromium_code") {
   if (is_win) {
     cflags = [ "/W4" ]  # Warning level 4.
+
+    if (is_clang) {
+      # TODO(thakis): Enable this on non-win too, https://crbug.com/346399
+      cflags += [ "-Wunreachable-code" ]
+    }
   } else {
     cflags = [ "-Wall" ]
     if (treat_warnings_as_errors) {
