@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1be7206b_9f0bb168",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T20:17:11Z",
+      "side": 1,
+      "message": "Ah!... thanks for catching this. Yes, this is for testing purpose.",
+      "parentUuid": "d8a29403_65acee48",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8c0c40b_706237d8",
         "filename": "chrome/browser/resources/settings/change_password_page/change_password_browser_proxy.js",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e6b7e3_c1ead233",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_browser_proxy.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T20:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c0c40b_706237d8",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73e66422_78aa0711",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T20:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a84b6e_9c5f8a3f",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0edc1d1e_aec98247",
         "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ca95c1_b38e9c1a",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T20:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0edc1d1e_aec98247",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "35ad1996_c029545b",
+        "filename": "chrome/browser/resources/settings/change_password_page/compiled_resources2.gyp",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T20:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f158188_1cf1b400",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77414d34_03524fef",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408781bc_3d4de94f",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T20:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77414d34_03524fef",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
