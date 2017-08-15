@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ba56d4_b0e0179c",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "nit: Please make a sentence in comments.\ns/unused./Unused./",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629680e0_120d4c7d",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "nit: Optimization:",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5356cef2_856f4694",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "// Send non-sanitized ... if needed.\n\n- Please use imperative form in inline comments.\n- Trailing period is needed.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6a6b3a_abaf28ee",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f704db_5265afd3",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "Let\u0027s split DCHECK, so that what is wrong is more cleaner in the log.\nDCHECK(repr);\nDCHECK(repr-\u003evalue-\u003eis_text());",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c07342_c67d5d51",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7eb6af_9d0b00c3",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "// Ignore this event, ..., and not by Host.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80666190_529f7e6f",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "Should ... to the clipboard.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ef899a_48c24f49",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "Trailing period is missing.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a0eda7_ca3bb026",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf63e57_77a50c20",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "// Populate ... ClipRepresentations.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c8cbee_3b7f802e",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "This looks TODO? Then\n\n// TODO(ricardoq): Add other supported mime_types here.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e498a13_923557f2",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "// Invoke the callback, even if ... response.\n\nor\n\n// Invoke |callback|, even if ... response.\n\nIn ARC, we sometimes use |var_name| form.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6575c3f_360e00b1",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db18402c_33f934b5",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T18:17:07Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "769e9d430e8278027cdb1cc106dd6dc98acbe9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
