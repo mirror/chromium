@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82284e2_26cd7d0e",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T03:34:46Z",
+      "side": 1,
+      "message": "|provisional_host| could have bars too",
+      "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e044a1c_d7ff2cd8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T03:34:46Z",
+      "side": 1,
+      "message": "don\u0027t feel strongly, but I\u0027d just remove the |version| param and have this function use controlling_version_",
+      "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57304a0_43c67720",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T03:34:46Z",
+      "side": 1,
+      "message": "While here, can you just change this to \"Sends information about the controller\"\n\n(\"Notifies X to Y\" sounds a bit wrong)",
+      "range": {
+        "startLine": 401,
+        "startChar": 5,
+        "endLine": 401,
+        "endChar": 50
+      },
+      "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
