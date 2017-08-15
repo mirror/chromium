@@ -37,6 +37,7 @@ CONTENT_EXPORT extern const base::Feature kFetchKeepaliveTimeoutSetting;
 CONTENT_EXPORT extern const base::Feature kFontCacheScaling;
 CONTENT_EXPORT extern const base::Feature
     kFramebustingNeedsSameOriginOrUserGesture;
+CONTENT_EXPORT extern const base::Feature kFrameSizeFeature;
 CONTENT_EXPORT extern const base::Feature kGamepadExtensions;
 CONTENT_EXPORT extern const base::Feature kGuestViewCrossProcessFrames;
 CONTENT_EXPORT extern const base::Feature kHeapCompaction;
