@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3747d2_229a039f",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecICU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T17:07:13Z",
+      "side": 1,
+      "message": "Maybe add a comment along the lines of \"bundled ICU already doesn\u0027t return these\"?",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 17
+      },
+      "revId": "66af818729ac1b9b3e32aa35674a33a7d8ad9f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff7470e_31dabd2b",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecICU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T17:07:13Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 255,
+        "startChar": 9,
+        "endLine": 255,
+        "endChar": 16
+      },
+      "revId": "66af818729ac1b9b3e32aa35674a33a7d8ad9f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
