@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1f808374_acd3fec5",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-15T02:01:16Z",
+      "side": 1,
+      "message": "May be we don\u0027t need to declare Credential at then. I\u0027ll leave it up to Mike as an author.",
+      "parentUuid": "a10104fa_36700a26",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08157894_4eb70f5a",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 6
