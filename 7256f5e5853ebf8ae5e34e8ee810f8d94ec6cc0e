@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12b379e3_790c4dca",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T15:55:42Z",
+      "side": 1,
+      "message": "Instead of having both createIntent() and createSlowLoadingIntent(), can startWebappActivityAndWaitForSplashScreen() instead change ShortcutHelper.EXTRA_URL in the intent passed to startWebappActivityAndWaitForSplashScreen().",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87865f4_c58af1a2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T15:55:42Z",
+      "side": 1,
+      "message": "Can you inline waitUntilSplashScreenFinish() into this method?",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9614185b_299a019c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T15:55:42Z",
+      "side": 1,
+      "message": "Nit: Remove the getActivity() on line 191 and initialize WebappActivity inside the isSatisfied() block (both on line 196 and line 197)",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8e0766_ae20ce6c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T15:55:42Z",
+      "side": 1,
+      "message": "Please comment that we are waiting for WebappActivity#getActivityTab() to be non-null because we want to ensure that native has been loaded",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd925ae_9502db35",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T15:55:42Z",
+      "side": 1,
+      "message": "Should we use startWebappActivityAndWaitForSplashScreen() here too?",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
