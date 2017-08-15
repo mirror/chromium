@@ -34,6 +34,24 @@
       "revId": "b5ccef476d203b329942e3265e262a2f47e723a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3a6ef51_8dde8586",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-15T20:55:17Z",
+      "side": 1,
+      "message": "Misread that somehow. Thanks for the explanation. Looks good.",
+      "parentUuid": "7852e27f_eeee71b4",
+      "revId": "b5ccef476d203b329942e3265e262a2f47e723a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
