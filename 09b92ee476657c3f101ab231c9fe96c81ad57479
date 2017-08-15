@@ -436,6 +436,24 @@
     },
     {
       "key": {
+        "uuid": "c72b5626_2eceef16",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T15:39:42Z",
+      "side": 1,
+      "message": "I see, thanks for clarifying. Yes it\u0027s OK to call from the UI thread. socketpair() itself doesn\u0027t do any I/O and cannot block.",
+      "parentUuid": "f1a6a61f_61ef88c4",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f6db67f_dfea80c2",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 2
