@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "061e3b43_9e59fdf9",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T06:38:16Z",
+      "side": 1,
+      "message": "I feel this should be like the following actually (this is not related to this patch, though):\n\nif (!browser_side_navigation) {\n  DCHECK_EQ(kInvalidSWProviderId, provider_id)\n  ...\n} else {\n  DCHECK_NE(kInvalidSWProviderId, provider_id)\n  DCHECK(ServiceWorkerUtils::IsBrowserAssignedProviderId(service_worker_provider_id));\n}",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6ecc98_3faa5dae",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T06:38:16Z",
+      "side": 1,
+      "message": "DCHECK(event_dispatcher_)",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66afcf8d_f8f94b51",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T06:38:16Z",
+      "side": 1,
+      "message": "This patch has already implemented the basic path, so why don\u0027t you consider making simplest unittest like the following?\n1: calling CreateAndBind with passing mocked mojom::SWEventDispatcher, 2: calling CreateLoaderAndStart 3: checking the param passed to the mocked SWEventDispatcher.",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c004181_cafee82e",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T06:38:16Z",
+      "side": 1,
+      "message": "Could you tell me a bit why this needs to be destructed by itself?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
