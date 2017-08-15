@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57a2f4b9_7e3920dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T01:53:02Z",
+      "side": 1,
+      "message": "CL description changed.",
+      "parentUuid": "6710c195_150d829f",
+      "range": {
+        "startLine": 10,
+        "startChar": 53,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e88553_18dddc19",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a88554d_a155fcce",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T01:53:02Z",
+      "side": 1,
+      "message": "Right, reducing the height is probably not beneficial. In the new patch, I removed the height change, and reduce the width by half only in the case when the content is \u003e screen_width. PTAL",
+      "parentUuid": "87e88553_18dddc19",
+      "range": {
+        "startLine": 791,
+        "startChar": 6,
+        "endLine": 791,
+        "endChar": 25
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0a113f_a9c8ab0e",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T01:53:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1f973220_32628dfd",
+      "range": {
+        "startLine": 797,
+        "startChar": 8,
+        "endLine": 797,
+        "endChar": 34
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
