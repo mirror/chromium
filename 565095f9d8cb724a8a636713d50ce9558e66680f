@@ -46,6 +46,30 @@
       "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7648b5e_581dc953",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T22:51:40Z",
+      "side": 1,
+      "message": "Why not use `bool is_from_session_restore`?",
+      "parentUuid": "97301f91_6d3c2632",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
