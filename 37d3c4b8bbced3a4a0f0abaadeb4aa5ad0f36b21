@@ -22,6 +22,30 @@
       "revId": "37d3c4b8bbced3a4a0f0abaadeb4aa5ad0f36b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73042888_40f21e64",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2017-08-15T18:35:48Z",
+      "side": 1,
+      "message": "\u003e Do you know why dump_syms works with arm debug info on chromeos but not on android?\n\nandroid doesn\u0027t use debug fission but CrOS does.  i suspect that if android switched to debug fission, it\u0027d have the same problem since we\u0027re using the same breakpad \u0026 toolchain (llvm/clang).",
+      "parentUuid": "3e27a621_0eb1b5bc",
+      "range": {
+        "startLine": 1773,
+        "startChar": 22,
+        "endLine": 1773,
+        "endChar": 25
+      },
+      "revId": "37d3c4b8bbced3a4a0f0abaadeb4aa5ad0f36b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
