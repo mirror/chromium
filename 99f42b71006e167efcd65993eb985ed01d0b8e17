@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f344098_5e10806e",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-15T12:46:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c438697e_3a573bfd",
+      "range": {
+        "startLine": 131,
+        "startChar": 10,
+        "endLine": 131,
+        "endChar": 24
+      },
+      "revId": "99f42b71006e167efcd65993eb985ed01d0b8e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aef267b_e274ce62",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T16:10:02Z",
       "side": 1,
       "message": "So this would fetch favicons again for all in-page navigations that happen after the load commits? It\u0027s hard for me to understand in what circumstances the favicon would be different in those cases, or what would be the possibly negative effect of not re-fetching in those cases. Can you go into that more?",
+      "range": {
+        "startLine": 224,
+        "startChar": 46,
+        "endLine": 224,
+        "endChar": 50
+      },
+      "revId": "99f42b71006e167efcd65993eb985ed01d0b8e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ce978a_310f1985",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-15T12:46:25Z",
+      "side": 1,
+      "message": "I tried to describe the specific problem this patch solves in the CL description. I\u0027ll describe it again in different words, let me know if that helps and how the CL description can be improved.\n\nThe patch doesn\u0027t actually change which favicons are fetched (exactly the same number is fetched before and after), but instead which page URLs are used for the pageUrl-\u003eiconUrl mappings. In the current form, many pages (see linked bugs, including maps.google.com) consistently display a gray icon in the mobile NTP, because by the time the icons are reported by Content, the page URL has already been changed into something different. In other words, the page URL where the NTP points to doesn\u0027t have an associated icon.\n\nOne could probably solve this very same problem by addressing crbug.com/708517, that is, making sure Content reports favicons for every page URL. However, changing that seemed quite complicated.\n\nAs a side comment, I believe this change also makes some existing workarounds unnecessary: https://cs.chromium.org/chromium/src/components/history/core/browser/history_backend.cc?l\u003d2129",
+      "parentUuid": "4aef267b_e274ce62",
       "range": {
         "startLine": 224,
         "startChar": 46,
