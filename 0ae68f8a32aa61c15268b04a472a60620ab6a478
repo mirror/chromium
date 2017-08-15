@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f37a0e3_ac123150",
+        "filename": "sandbox/win/src/sandbox_policy_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-15T23:30:33Z",
+      "side": 1,
+      "message": "nullptr, and elsewhere NULL should be replaced by nullptr in new code.",
+      "range": {
+        "startLine": 231,
+        "startChar": 30,
+        "endLine": 231,
+        "endChar": 34
+      },
+      "revId": "0ae68f8a32aa61c15268b04a472a60620ab6a478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9852b3_435bebf1",
+        "filename": "sandbox/win/src/sandbox_policy_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-15T23:30:33Z",
+      "side": 1,
+      "message": "I find this code hard to grok, might it be better to split this if statement into\n\nif (use_alternate_winstation_)\n{\n // do stuff with alternate_desktop_handle_ and use_alternate_winstation_\n} else {\n// do stuff with the alternate_desktop_local_winstation_handle_\n}\n\nthen it matches your other changes..?",
+      "range": {
+        "startLine": 449,
+        "startChar": 6,
+        "endLine": 449,
+        "endChar": 28
+      },
+      "revId": "0ae68f8a32aa61c15268b04a472a60620ab6a478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
