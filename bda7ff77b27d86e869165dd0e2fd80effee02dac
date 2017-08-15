@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b60db7be_223a3564",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-15T18:16:33Z",
+      "side": 1,
+      "message": "This was carried over from the original string description (back before I introduced the differently-cased variants), and I think was just meant to indicate that this particular string was not used for the title of the Android dialog. But I\u0027m not sure why that\u0027s salient, so I\u0027ll remove it.",
+      "parentUuid": "78f6e3d5_e967236a",
+      "range": {
+        "startLine": 9,
+        "startChar": 139,
+        "endLine": 9,
+        "endChar": 142
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48e7a587_f3fc6042",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ae6e8e_4c3bdfc3",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-15T18:16:33Z",
+      "side": 1,
+      "message": "see comment above",
+      "parentUuid": "48e7a587_f3fc6042",
+      "range": {
+        "startLine": 78,
+        "startChar": 127,
+        "endLine": 78,
+        "endChar": 134
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3b10a8d9_3ea2c51d",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-15T18:16:33Z",
+      "side": 1,
+      "message": "Oh yeah, yuck. Replaced with single-quotes, WDYT?",
+      "parentUuid": "98060620_51115392",
+      "range": {
+        "startLine": 151,
+        "startChar": 211,
+        "endLine": 151,
+        "endChar": 222
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55414ea5_3b7d59f0",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57801778_bff8e34d",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-15T18:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55414ea5_3b7d59f0",
+      "range": {
+        "startLine": 185,
+        "startChar": 248,
+        "endLine": 185,
+        "endChar": 278
+      },
+      "revId": "bda7ff77b27d86e869165dd0e2fd80effee02dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
