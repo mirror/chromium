@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2235005_2ef222bc",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-15T19:20:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79f031bc_76e2f421",
+      "range": {
+        "startLine": 395,
+        "startChar": 5,
+        "endLine": 395,
+        "endChar": 29
+      },
+      "revId": "8db8fb70fbd51086c1847767bee2d3b561e843ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6320acd_8d01ce08",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T18:19:14Z",
       "side": 1,
       "message": "So you found that the frame owner element\u0027s computed style effective touch action was incorrect after style recalc? This doesn\u0027t seem right, it should always inherit from the parent style.\n\nThe old code seemed to assume that it always changed, always triggering a style recalc on the child document. I\u0027m not sure I understand why tracking when it changes is more correct.",
+      "range": {
+        "startLine": 167,
+        "startChar": 13,
+        "endLine": 167,
+        "endChar": 77
+      },
+      "revId": "8db8fb70fbd51086c1847767bee2d3b561e843ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419afa04_b8ba2fae",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-15T19:20:48Z",
+      "side": 1,
+      "message": "I found that every time when we recalc the style, the effective touch action of an iframe is set to auto by default.\n\nFor example:\n\n\u003cdiv touch-action\u003d\u0027auto\u0027\u003e\n\u003ciframe touch-action\u003d\u0027none\u0027\u003e\n\u003c/iframe\u003e\n\u003c/div\u003e\n\nThe iframe\u0027s effective touch action is \u0027pan\u0027 at first. If later we run the script that changes the touch-action from \u0027none\u0027 to \u0027auto\u0027. There is no way for us to know that the effective touch action of the iframe is changed in style recalc, since its parent\u0027s touch-action is not changed and iframe\u0027s effective touch action is reset to auto by default, so we will stop propagating the new \u0027auto\u0027 property to iframe\u0027s children.\n\nThe old code is always conservative by recalculating every time, but this is not expected in the unit tests we were looking at yesterday. I\u0027m not sure if it\u0027s only a test specific failure or a general one, but triggering recalc only when style actually changes can not be wrong.",
+      "parentUuid": "f6320acd_8d01ce08",
       "range": {
         "startLine": 167,
         "startChar": 13,
