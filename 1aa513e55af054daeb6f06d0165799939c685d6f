@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a429915_1363c743",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-15T23:29:08Z",
+      "side": 1,
+      "message": "This probably didn\u0027t need to be abstract.",
+      "range": {
+        "startLine": 634,
+        "startChar": 8,
+        "endLine": 634,
+        "endChar": 78
+      },
+      "revId": "1aa513e55af054daeb6f06d0165799939c685d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b88aa2_efeb1858",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-15T23:29:08Z",
+      "side": 1,
+      "message": "This probably shouldn\u0027t be in the layout code at all.",
+      "range": {
+        "startLine": 706,
+        "startChar": 4,
+        "endLine": 706,
+        "endChar": 76
+      },
+      "revId": "1aa513e55af054daeb6f06d0165799939c685d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
