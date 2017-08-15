@@ -7,7 +7,6 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -15,6 +14,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/containers/flat_map.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -757,7 +757,7 @@ class SQL_EXPORT Connection {
 
   // All cached statements. Keeping a reference to these statements means that
   // they'll remain active.
-  typedef std::map<StatementID, scoped_refptr<StatementRef> >
+  typedef base::flat_map<StatementID, scoped_refptr<StatementRef>>
       CachedStatementMap;
   CachedStatementMap statement_cache_;
 
