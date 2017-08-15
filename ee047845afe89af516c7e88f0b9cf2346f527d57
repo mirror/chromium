@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "107e1eca_5600a61e",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0562642e_3b993467",
+      "range": {
+        "startLine": 209,
+        "startChar": 40,
+        "endLine": 209,
+        "endChar": 46
+      },
+      "revId": "ee047845afe89af516c7e88f0b9cf2346f527d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d55b683_b42ce339",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:16:31Z",
+      "side": 1,
+      "message": "Good question. It actually led me to trying to recreate the condition in a test program and finding another issue with the ModuleWatcher. (See https://chromium-review.googlesource.com/c/616170)\n\nTo your actual question, this can be detected by checking that the filename + module size fits the module that is expected inside that same SEH. (I wasn\u0027t doing this but I\u0027ve added it now).\n\nThis works because of the way the dll notifications are synchronized. The only 2 possible races are either:\n1. The module was already unloaded, a new module can take it place at any moment. \n2. The module was still loaded, it can unload at any moment.\nwhen any of the 2 happen, the dll notification is stuck waiting on the enumeration to finish (waiting on the global module watcher lock), so no further loading and unloading can happen because of the loader lock (Note that if you read it all, the comment where I said that the loader lock was *not* held inside a dll notification callback was wrong).\n\nThanks!",
+      "parentUuid": "bf2e7f3e_6698cebc",
+      "range": {
+        "startLine": 209,
+        "startChar": 19,
+        "endLine": 209,
+        "endChar": 34
+      },
+      "revId": "ee047845afe89af516c7e88f0b9cf2346f527d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dae46a51_588ed5e9",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 8
@@ -92,6 +140,30 @@
       "revId": "ee047845afe89af516c7e88f0b9cf2346f527d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53b2043_638383fd",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:16:31Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll pass the feedback to gab@. I always have to think about what it means when I see it.\n\nCONTINUE_ON_SHUTDOWN: let the task continue running even during shutdown i.e. Don\u0027t wait for it.",
+      "parentUuid": "e512df12_dc873816",
+      "range": {
+        "startLine": 363,
+        "startChar": 57,
+        "endLine": 363,
+        "endChar": 77
+      },
+      "revId": "ee047845afe89af516c7e88f0b9cf2346f527d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
