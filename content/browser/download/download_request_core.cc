@@ -17,6 +17,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_interrupt_reasons_impl.h"
@@ -42,6 +43,10 @@
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/wake_lock_provider.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+
+#if defined(OS_ANDROID)
+#include "components/offline_pages/core/downloads/offline_page_download_data.h"
+#endif
 
 namespace content {
 
@@ -94,6 +99,12 @@ void DownloadRequestData::Attach(net::URLRequest* request,
   request_data->transient_ = parameters->is_transient();
   request_data->on_started_callback_ = parameters->callback();
   request->SetUserData(&kKey, std::move(request_data));
+
+#if defined(OS_ANDROID)
+  // Also attach OfflinePages related data in android.
+  offline_pages::downloads::OfflinePageDownloadData::Attach(
+      request, parameters->request_origin());
+#endif
 }
 
 // static
