@@ -230,6 +230,9 @@ extern const char kEnableHttpFormWarningDescription[];
 extern const char kEnableIdleTimeSpellCheckingName[];
 extern const char kEnableIdleTimeSpellCheckingDescription[];
 
+extern const char kEnableMacMaterialDesignDownloadShelfName[];
+extern const char kEnableMacMaterialDesignDownloadShelfDescription[];
+
 extern const char kEnableManualFallbacksFillingName[];
 extern const char kEnableManualFallbacksFillingDescription[];
 
