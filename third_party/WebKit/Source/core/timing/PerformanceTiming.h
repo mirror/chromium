@@ -62,54 +62,62 @@ class CORE_EXPORT PerformanceTiming final
     return new PerformanceTiming(frame);
   }
 
-  unsigned long long navigationStart() const;
-  unsigned long long unloadEventStart() const;
-  unsigned long long unloadEventEnd() const;
-  unsigned long long redirectStart() const;
-  unsigned long long redirectEnd() const;
-  unsigned long long fetchStart() const;
-  unsigned long long domainLookupStart() const;
-  unsigned long long domainLookupEnd() const;
-  unsigned long long connectStart() const;
-  unsigned long long connectEnd() const;
-  unsigned long long secureConnectionStart() const;
-  unsigned long long requestStart() const;
-  unsigned long long responseStart() const;
-  unsigned long long responseEnd() const;
-  unsigned long long domLoading() const;
-  unsigned long long domInteractive() const;
-  unsigned long long domContentLoadedEventStart() const;
-  unsigned long long domContentLoadedEventEnd() const;
-  unsigned long long domComplete() const;
-  unsigned long long loadEventStart() const;
-  unsigned long long loadEventEnd() const;
+#define PERFORMANCE_TIMING_SPEC_LIST(V) \
+  V(navigationStart)                    \
+  V(unloadEventStart)                   \
+  V(unloadEventEnd)                     \
+  V(redirectStart)                      \
+  V(redirectEnd)                        \
+  V(fetchStart)                         \
+  V(domainLookupStart)                  \
+  V(domainLookupEnd)                    \
+  V(connectStart)                       \
+  V(connectEnd)                         \
+  V(secureConnectionStart)              \
+  V(requestStart)                       \
+  V(responseStart)                      \
+  V(responseEnd)                        \
+  V(domLoading)                         \
+  V(domInteractive)                     \
+  V(domContentLoadedEventStart)         \
+  V(domContentLoadedEventEnd)           \
+  V(domComplete)                        \
+  V(loadEventStart)                     \
+  V(loadEventEnd)
 
-  // The below are non-spec timings, for Page Load UMA metrics.
+// The below are non-spec timings, for Page Load UMA metrics.
+#define PERFORMANCE_TIMING_NON_SPEC_LIST(V)                                   \
+  /* The time the first document layout is performed. */                      \
+  V(FirstLayout)                                                              \
+  /* The time the first paint operation was performed. */                     \
+  V(FirstPaint)                                                               \
+  /* The time the first paint operation for visible text was performed. */    \
+  V(FirstTextPaint)                                                           \
+  /* The time the first paint operation for image was performed. */           \
+  V(FirstImagePaint)                                                          \
+  /* The time of the first 'contentful' paint. A contentful paint is a paint  \
+     that includes content of some kind (for example, text or image content). \
+   */                                                                         \
+  V(FirstContentfulPaint)                                                     \
+  /* The time of the first 'meaningful' paint. A meaningful paint is a paint  \
+     where the page's primary content is visible. */                          \
+  V(FirstMeaningfulPaint)                                                     \
+  V(ParseStart)                                                               \
+  V(ParseStop)                                                                \
+  V(ParseBlockedOnScriptLoadDuration)                                         \
+  V(ParseBlockedOnScriptLoadFromDocumentWriteDuration)                        \
+  V(ParseBlockedOnScriptExecutionDuration)                                    \
+  V(ParseBlockedOnScriptExecutionFromDocumentWriteDuration)                   \
+  V(AuthorStyleSheetParseDurationBeforeFCP)                                   \
+  V(UpdateStyleDurationBeforeFCP)
 
-  // The time the first document layout is performed.
-  unsigned long long FirstLayout() const;
-  // The time the first paint operation was performed.
-  unsigned long long FirstPaint() const;
-  // The time the first paint operation for visible text was performed.
-  unsigned long long FirstTextPaint() const;
-  // The time the first paint operation for image was performed.
-  unsigned long long FirstImagePaint() const;
-  // The time of the first 'contentful' paint. A contentful paint is a paint
-  // that includes content of some kind (for example, text or image content).
-  unsigned long long FirstContentfulPaint() const;
-  // The time of the first 'meaningful' paint, A meaningful paint is a paint
-  // where the page's primary content is visible.
-  unsigned long long FirstMeaningfulPaint() const;
+#define PERFORMANCE_TIMING_LIST(V) \
+  PERFORMANCE_TIMING_SPEC_LIST(V)  \
+  PERFORMANCE_TIMING_NON_SPEC_LIST(V)
 
-  unsigned long long ParseStart() const;
-  unsigned long long ParseStop() const;
-  unsigned long long ParseBlockedOnScriptLoadDuration() const;
-  unsigned long long ParseBlockedOnScriptLoadFromDocumentWriteDuration() const;
-  unsigned long long ParseBlockedOnScriptExecutionDuration() const;
-  unsigned long long ParseBlockedOnScriptExecutionFromDocumentWriteDuration()
-      const;
-  unsigned long long AuthorStyleSheetParseDurationBeforeFCP() const;
-  unsigned long long UpdateStyleDurationBeforeFCP() const;
+#define DECLARE_SPEC_TIMING_ACCESSOR(name) unsigned long long name() const;
+  PERFORMANCE_TIMING_LIST(DECLARE_SPEC_TIMING_ACCESSOR)
+#undef DECLARE_SPEC_TIMING_ACCESSOR
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 

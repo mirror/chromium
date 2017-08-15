@@ -492,27 +492,9 @@ ResourceLoadTiming* PerformanceTiming::GetResourceLoadTiming() const {
 ScriptValue PerformanceTiming::toJSONForBinding(
     ScriptState* script_state) const {
   V8ObjectBuilder result(script_state);
-  result.AddNumber("navigationStart", navigationStart());
-  result.AddNumber("unloadEventStart", unloadEventStart());
-  result.AddNumber("unloadEventEnd", unloadEventEnd());
-  result.AddNumber("redirectStart", redirectStart());
-  result.AddNumber("redirectEnd", redirectEnd());
-  result.AddNumber("fetchStart", fetchStart());
-  result.AddNumber("domainLookupStart", domainLookupStart());
-  result.AddNumber("domainLookupEnd", domainLookupEnd());
-  result.AddNumber("connectStart", connectStart());
-  result.AddNumber("connectEnd", connectEnd());
-  result.AddNumber("secureConnectionStart", secureConnectionStart());
-  result.AddNumber("requestStart", requestStart());
-  result.AddNumber("responseStart", responseStart());
-  result.AddNumber("responseEnd", responseEnd());
-  result.AddNumber("domLoading", domLoading());
-  result.AddNumber("domInteractive", domInteractive());
-  result.AddNumber("domContentLoadedEventStart", domContentLoadedEventStart());
-  result.AddNumber("domContentLoadedEventEnd", domContentLoadedEventEnd());
-  result.AddNumber("domComplete", domComplete());
-  result.AddNumber("loadEventStart", loadEventStart());
-  result.AddNumber("loadEventEnd", loadEventEnd());
+#define APPEND_SPEC_TIMING_VALUE(name) result.AddNumber(#name, name());
+  PERFORMANCE_TIMING_SPEC_LIST(APPEND_SPEC_TIMING_VALUE)
+#undef APPEND_SPEC_TIMING_VALUE
   return result.GetScriptValue();
 }
 
