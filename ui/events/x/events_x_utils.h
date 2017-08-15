@@ -14,6 +14,7 @@
 #include "ui/events/event_constants.h"
 #include "ui/events/x/events_x_export.h"
 #include "ui/gfx/geometry/point.h"
+#include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/x/x11_types.h"
 
 namespace ui {
@@ -31,7 +32,7 @@ EVENTS_X_EXPORT base::TimeTicks EventTimeFromXEvent(const XEvent& xev);
 // |Point| has the origin at top-left of the "root window".  The nature of
 // this "root window" and how it maps to platform-specific drawing surfaces is
 // defined in ui/aura/root_window.* and ui/aura/window_tree_host*.
-EVENTS_X_EXPORT gfx::Point EventLocationFromXEvent(const XEvent& xev);
+EVENTS_X_EXPORT gfx::PointF EventLocationFromXEvent(const XEvent& xev);
 
 // Gets the location in native system coordinate space.
 EVENTS_X_EXPORT gfx::Point EventSystemLocationFromXEvent(const XEvent& xev);
