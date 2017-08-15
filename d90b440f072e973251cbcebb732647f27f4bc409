@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "eeac99df_2a5ba56c",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-15T04:58:24Z",
+      "side": 1,
+      "message": "In this case, we don\u0027t need the testServer to be a property anymore?  I think the instance method would do the work.",
+      "parentUuid": "83f22892_4c4d86b5",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "d90b440f072e973251cbcebb732647f27f4bc409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93495249_39346f41",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
         "patchSetId": 8
