@@ -22,6 +22,30 @@
       "revId": "0397923942806c69d71902a065a19632a8886110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8cc637_3a2d6877",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20637,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-08-15T22:28:08Z",
+      "side": 1,
+      "message": "It looks like \"git cl format\" doesn\u0027t work with .xml files. Anyway, thanks for pointing out, I\u0027ve manually fixed the file.",
+      "parentUuid": "d09ef091_a81a5a3f",
+      "range": {
+        "startLine": 20637,
+        "startChar": 83,
+        "endLine": 20637,
+        "endChar": 0
+      },
+      "revId": "0397923942806c69d71902a065a19632a8886110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
