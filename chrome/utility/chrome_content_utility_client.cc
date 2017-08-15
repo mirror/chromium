@@ -229,6 +229,9 @@ void CreateResourceUsageReporter(
 }
 #endif  // !defined(OS_ANDROID)
 
+ChromeContentUtilityClient::NetworkBinderProvider* g_network_binder_provider =
+    nullptr;
+
 }  // namespace
 
 ChromeContentUtilityClient::ChromeContentUtilityClient()
@@ -339,9 +342,21 @@ void ChromeContentUtilityClient::RegisterServices(
 #endif
 }
 
+void ChromeContentUtilityClient::RegisterNetworkBinders(
+    service_manager::BinderRegistry* registry) {
+  if (g_network_binder_provider)
+    g_network_binder_provider->RegisterNetworkBinders(registry);
+}
+
 // static
 void ChromeContentUtilityClient::PreSandboxStartup() {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::ExtensionsHandler::PreSandboxStartup();
 #endif
+}
+
+// static
+void ChromeContentUtilityClient::SetNetworkBinderProvider(
+    NetworkBinderProvider* provider) {
+  g_network_binder_provider = provider;
 }

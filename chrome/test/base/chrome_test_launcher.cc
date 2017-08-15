@@ -24,9 +24,11 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/install_static/test/scoped_install_details.h"
 #include "chrome/test/base/chrome_test_suite.h"
+#include "chrome/utility/chrome_content_utility_client.h"
 #include "components/crash/content/app/crashpad.h"
 #include "content/public/app/content_main.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/test/network_service_test_helper.h"
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_utils.h"
 #include "services/service_manager/runner/common/switches.h"
@@ -54,6 +56,28 @@
 #include "chrome/app/chrome_crash_reporter_client_win.h"
 #include "chrome/install_static/install_util.h"
 #endif
+
+namespace {
+
+class NetworkBinderProviderImpl
+    : public ChromeContentUtilityClient::NetworkBinderProvider {
+ public:
+  NetworkBinderProviderImpl() = default;
+  ~NetworkBinderProviderImpl() override = default;
+
+  // ChromeContentUtilityClient::NetworkBinderProvider:
+  void RegisterNetworkBinders(
+      service_manager::BinderRegistry* registry) override {
+    helper_.RegisterNetworkBinders(registry);
+  }
+
+ private:
+  content::NetworkServiceTestHelper helper_;
+
+  DISALLOW_COPY_AND_ASSIGN(NetworkBinderProviderImpl);
+};
+
+}  // namespace
 
 ChromeTestSuiteRunner::ChromeTestSuiteRunner() {}
 ChromeTestSuiteRunner::~ChromeTestSuiteRunner() {}
@@ -145,6 +169,11 @@ int LaunchChromeTests(size_t parallel_jobs,
   ANNOTATE_LEAKING_OBJECT_PTR(crash_client);
   crash_reporter::SetCrashReporterClient(crash_client);
 #endif
+
+  // Setup a working test environment for the network service in case it's used.
+  NetworkBinderProviderImpl network_binder_provider;
+  ChromeContentUtilityClient::SetNetworkBinderProvider(
+      &network_binder_provider);
 
   return content::LaunchTests(delegate, parallel_jobs, argc, argv);
 }

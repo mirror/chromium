@@ -15,6 +15,16 @@ class UtilityMessageHandler;
 
 class ChromeContentUtilityClient : public content::ContentUtilityClient {
  public:
+  // Allows different Chrome-based executables (e.g. browser_tests) to override
+  // the network binder(s) registered by this ContentUtilityClient impl.
+  class NetworkBinderProvider {
+   public:
+    virtual ~NetworkBinderProvider() {}
+
+    virtual void RegisterNetworkBinders(
+        service_manager::BinderRegistry* registry) = 0;
+  };
+
   ChromeContentUtilityClient();
   ~ChromeContentUtilityClient() override;
 
@@ -22,8 +32,13 @@ class ChromeContentUtilityClient : public content::ContentUtilityClient {
   void UtilityThreadStarted() override;
   bool OnMessageReceived(const IPC::Message& message) override;
   void RegisterServices(StaticServiceMap* services) override;
+  void RegisterNetworkBinders(
+      service_manager::BinderRegistry* registry) override;
 
   static void PreSandboxStartup();
+
+  // See NetworkBinderProvider above.
+  static void SetNetworkBinderProvider(NetworkBinderProvider* provider);
 
  private:
   // IPC message handlers.
