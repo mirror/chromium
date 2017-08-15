@@ -104,6 +104,24 @@
       "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20ee3d3_61b69100",
+        "filename": "ui/compositor/scoped_layer_animation_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-15T21:33:10Z",
+      "side": 1,
+      "message": "I have thought about two ways to guard on this:\n1. Pass the layer weak ptr to the new observer.\n2. Set layer through the animator-\u003edelegate_, so it will not take random layer to the observer. \nBut a. Can the layer also be destroyed during animation? b. another problem is that, animator could be attached to other delegate_(layer). Will this happen during animation? Will this operation stop the previous animation and change the delegate_? I just worry about we need manually take care of some clear up work such as to reset previous cache flag, and set the cache on new layer.",
+      "parentUuid": "49e1f2f6_96a16d4c",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
