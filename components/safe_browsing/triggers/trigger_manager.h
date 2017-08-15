@@ -74,6 +74,11 @@ class TriggerManager {
       const PrefService& pref_service,
       const content::WebContents& web_contents);
 
+  // Returns whether data collection can be started for the |trigger_type| based
+  // on the settings specified in |error_display_options| as well as quota.
+  bool CanStartDataCollection(const SBErrorOptions& error_display_options,
+                              const TriggerType trigger_type);
+
   // Begins collecting a ThreatDetails report on the specified |web_contents|.
   // |resource| is the unsafe resource that cause the collection to occur.
   // |request_context_getter| is used to retrieve data from the HTTP cache.
