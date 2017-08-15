@@ -77,7 +77,10 @@ class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
   // performance.
   int ContextGroupId(LocalFrame*);
   void DidClearContextsForFrame(LocalFrame*);
-  void ContextCreated(ScriptState*, LocalFrame*, SecurityOrigin*);
+  void ContextCreated(ScriptState*,
+                      LocalFrame*,
+                      SecurityOrigin*,
+                      String& world_type);
   void ContextWillBeDestroyed(ScriptState*);
   void ExceptionThrown(ExecutionContext*, ErrorEvent*);
 

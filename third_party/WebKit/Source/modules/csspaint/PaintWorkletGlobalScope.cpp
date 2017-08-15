@@ -36,10 +36,14 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
   context_name.append(String::Number(global_scope_number));
   paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded(
       context_name);
+  DOMWrapperWorld& world =
+      paint_worklet_global_scope->ScriptController()->GetScriptState()->World();
+  String world_type = "{\"isWorklet\":";
+  world_type.append(world.IsWorkerWorld() ? "true" : "false");
   MainThreadDebugger::Instance()->ContextCreated(
       paint_worklet_global_scope->ScriptController()->GetScriptState(),
       paint_worklet_global_scope->GetFrame(),
-      paint_worklet_global_scope->GetSecurityOrigin());
+      paint_worklet_global_scope->GetSecurityOrigin(), world_type);
   return paint_worklet_global_scope;
 }
 
