@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "8e7137c5_ad9e6cac",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T04:36:45Z",
+      "side": 1,
+      "message": "BIKESHEDDING - I understand your point. I would make the argument that letting users know that the process is finished is a positive thing. I think that users will be confused regardless of what we do. It is weird that a user can get different behavior when they tap a the \"Add to home screen\" menu item for a given page based on things like their network speed and offline status",
+      "parentUuid": "b5f21c96_a3bd4918",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c43a0066_72705ac3",
         "filename": "chrome/browser/android/webapk/webapk_install_service.h",
         "patchSetId": 6

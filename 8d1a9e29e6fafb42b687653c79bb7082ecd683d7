@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "721b778e_c3e23dfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T04:36:45Z",
+      "side": 1,
+      "message": "Nit: I think that the notification should be shown by WebApkInstallService from native. This is more in line with native calling WebApkInstaller#cancel() if the install fails.\n\nAs a meta point, I am not a fan of having multiple functions with the same name but different numbers of arguments.",
+      "revId": "8d1a9e29e6fafb42b687653c79bb7082ecd683d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4975eb62_ed4d6623",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T04:36:45Z",
+      "side": 1,
+      "message": "The comment does not seem to be correct anymore",
+      "revId": "8d1a9e29e6fafb42b687653c79bb7082ecd683d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5914c2ff_ef26041a",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T04:36:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the logic be run regardless of whether |webapk_package| is empty. As mentioned in a later comment, I think that this logic should be in WebApkInstallService.",
+      "revId": "8d1a9e29e6fafb42b687653c79bb7082ecd683d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984408a3_93fc046b",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T04:36:45Z",
+      "side": 1,
+      "message": "Nit: I think that it would be slightly clearer if WebApkInstallService showed the notification. WebApkInstallService is responsible for showing the toast if an install is already in progress",
+      "revId": "8d1a9e29e6fafb42b687653c79bb7082ecd683d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
