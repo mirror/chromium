@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7e511b_a88e73c3",
+        "filename": "chromeos/components/tether/host_scan_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-15T23:39:37Z",
+      "side": 1,
+      "message": "Please remove this note since it\u0027s obsolete (and actually is exactly the opposite of what you\u0027ve written here :P).",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "3088ae82fd948415b7976ed4fa6c46e253085300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
