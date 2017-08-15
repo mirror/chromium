@@ -136,12 +136,11 @@ void FlushQueue(disk_cache::Backend* cache) {
 }
 
 bool CreateCache(const base::FilePath& path,
-                 base::Thread* thread,
                  disk_cache::Backend** cache,
                  net::TestCompletionCallback* cb) {
   int size = 1024 * 1024;
   disk_cache::BackendImpl* backend = new disk_cache::BackendImpl(
-      path, /* cleanup_tracker = */ nullptr, thread->task_runner().get(),
+      path, /* cleanup_tracker = */ nullptr, /* cache_thread = */ nullptr,
       /* net_log = */ nullptr);
   backend->SetMaxSize(size);
   backend->SetType(net::DISK_CACHE);
@@ -152,11 +151,10 @@ bool CreateCache(const base::FilePath& path,
 }
 
 // Generates the files for an empty and one item cache.
-int SimpleInsert(const base::FilePath& path, RankCrashes action,
-                 base::Thread* cache_thread) {
+int SimpleInsert(const base::FilePath& path, RankCrashes action) {
   net::TestCompletionCallback cb;
   disk_cache::Backend* cache;
-  if (!CreateCache(path, cache_thread, &cache, &cb))
+  if (!CreateCache(path, &cache, &cb))
     return GENERIC;
 
   const char* test_name = "some other key";
@@ -186,14 +184,13 @@ int SimpleInsert(const base::FilePath& path, RankCrashes action,
 }
 
 // Generates the files for a one item cache, and removing the head.
-int SimpleRemove(const base::FilePath& path, RankCrashes action,
-                 base::Thread* cache_thread) {
+int SimpleRemove(const base::FilePath& path, RankCrashes action) {
   DCHECK(action >= disk_cache::REMOVE_ONE_1);
   DCHECK(action <= disk_cache::REMOVE_TAIL_3);
 
   net::TestCompletionCallback cb;
   disk_cache::Backend* cache;
-  if (!CreateCache(path, cache_thread, &cache, &cb))
+  if (!CreateCache(path, &cache, &cb))
     return GENERIC;
 
   disk_cache::Entry* entry;
@@ -225,14 +222,13 @@ int SimpleRemove(const base::FilePath& path, RankCrashes action,
   return NOT_REACHED;
 }
 
-int HeadRemove(const base::FilePath& path, RankCrashes action,
-               base::Thread* cache_thread) {
+int HeadRemove(const base::FilePath& path, RankCrashes action) {
   DCHECK(action >= disk_cache::REMOVE_HEAD_1);
   DCHECK(action <= disk_cache::REMOVE_HEAD_4);
 
   net::TestCompletionCallback cb;
   disk_cache::Backend* cache;
-  if (!CreateCache(path, cache_thread, &cache, &cb))
+  if (!CreateCache(path, &cache, &cb))
     return GENERIC;
 
   disk_cache::Entry* entry;
@@ -262,13 +258,12 @@ int HeadRemove(const base::FilePath& path, RankCrashes action,
 }
 
 // Generates the files for insertion and removals on heavy loaded caches.
-int LoadOperations(const base::FilePath& path, RankCrashes action,
-                   base::Thread* cache_thread) {
+int LoadOperations(const base::FilePath& path, RankCrashes action) {
   DCHECK(action >= disk_cache::INSERT_LOAD_1);
 
   // Work with a tiny index table (16 entries).
-  disk_cache::BackendImpl* cache = new disk_cache::BackendImpl(
-      path, 0xf, cache_thread->task_runner().get(), NULL);
+  disk_cache::BackendImpl* cache =
+      new disk_cache::BackendImpl(path, 0xf, nullptr, nullptr);
   if (!cache->SetMaxSize(0x100000))
     return GENERIC;
 
@@ -330,28 +325,23 @@ int SlaveCode(const base::FilePath& path, RankCrashes action) {
     return CRASH_OVERWRITE;
   }
 
-  base::Thread cache_thread("CacheThread");
-  if (!cache_thread.StartWithOptions(
-          base::Thread::Options(base::MessageLoop::TYPE_IO, 0)))
-    return GENERIC;
-
   if (action <= disk_cache::INSERT_ONE_3)
-    return SimpleInsert(full_path, action, &cache_thread);
+    return SimpleInsert(full_path, action);
 
   if (action <= disk_cache::INSERT_LOAD_2)
-    return LoadOperations(full_path, action, &cache_thread);
+    return LoadOperations(full_path, action);
 
   if (action <= disk_cache::REMOVE_ONE_4)
-    return SimpleRemove(full_path, action, &cache_thread);
+    return SimpleRemove(full_path, action);
 
   if (action <= disk_cache::REMOVE_HEAD_4)
-    return HeadRemove(full_path, action, &cache_thread);
+    return HeadRemove(full_path, action);
 
   if (action <= disk_cache::REMOVE_TAIL_3)
-    return SimpleRemove(full_path, action, &cache_thread);
+    return SimpleRemove(full_path, action);
 
   if (action <= disk_cache::REMOVE_LOAD_3)
-    return LoadOperations(full_path, action, &cache_thread);
+    return LoadOperations(full_path, action);
 
   return NOT_REACHED;
 }
