@@ -495,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "7eb95015_afe6871d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-15T14:18:24Z",
+      "side": 1,
+      "message": "Makes sense. I\u0027m fine with using ContextLifecycleObserver for now.\n\nThat said, it\u0027s unfortunate that we have to ask developers to inherit from ContextLifecycleObserver and manually reset all Mojo ptrs...\n\nRandom idea: Would it be crazy to associate Mojo ptrs with frames and automatically reset the Mojo ptrs when the frame is detached? It would be possible to associate Mojo ptrs with frames because most Mojo ptrs are created by a per-frame interface provider...?",
+      "parentUuid": "484426ac_41a759c7",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01be1bdc_f3ab95d5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
         "patchSetId": 24
