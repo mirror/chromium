@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deabec72_7041a951",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T18:50:19Z",
+      "side": 1,
+      "message": "Super minor, but consider using \"arbitrary\" instead of \"random\" here (it\u0027s nit-picky, but \"random\" can require a double-take (as I just did) to register that this is an informal use of the word random).",
+      "revId": "cefe2e7aad4176b95fa15050b7a8cd329cac5073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee22988_41453570",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T18:50:19Z",
+      "side": 1,
+      "message": "Consider saying something like, \"Also, make sure it didn\u0027t change the setting\". (\"setting\" could be something else, like \"preference\" or \"permission settings\" or whatever -- I\u0027m just suggesting something more specific than \"didn\u0027t work\").",
+      "revId": "cefe2e7aad4176b95fa15050b7a8cd329cac5073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea64ad74_7f998aae",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T18:50:19Z",
+      "side": 1,
+      "message": "Will an arrow function \u003d\u003e work here?",
+      "revId": "cefe2e7aad4176b95fa15050b7a8cd329cac5073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
