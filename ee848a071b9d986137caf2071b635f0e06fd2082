@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678e0006_ccebe7fd",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T19:39:47Z",
+      "side": 0,
+      "message": "also link this bug in the description to update it?",
+      "range": {
+        "startLine": 962,
+        "startChar": 12,
+        "endLine": 962,
+        "endChar": 36
+      },
+      "revId": "ee848a071b9d986137caf2071b635f0e06fd2082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

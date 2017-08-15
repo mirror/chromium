@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1355d24b_52cbd4be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T19:39:47Z",
+      "side": 1,
+      "message": "yeah it\u0027s not too bad. That being said, we added optional leaves partly to avoid having to deal with null checking everywhere, I\u0027m a bit disappointed we got back there again. They are not the solution here, probably new parent nodes and subclassing would be more the thing, but that would be a much bigger change...  I suppose we can check if it\u0027s worth it to ease maintenance once the bulk of the modern implementation is in.",
+      "parentUuid": "7a2fbc12_a9e517d9",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c2ac947_b36fbed8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
