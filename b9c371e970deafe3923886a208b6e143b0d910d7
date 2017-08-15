@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24cbce2c_5170ed77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-15T16:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3721d91_3976ffc1",
+      "revId": "b9c371e970deafe3923886a208b6e143b0d910d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fdde464_a6e7caad",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b9c371e970deafe3923886a208b6e143b0d910d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47afd04e_bd79c450",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-15T16:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fdde464_a6e7caad",
+      "revId": "b9c371e970deafe3923886a208b6e143b0d910d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17edbaad_868c407b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-15T16:25:04Z",
+      "side": 1,
+      "message": "I thought about it, but the following code will need the access to |global_scope| to retrieve the data.",
+      "parentUuid": "2d7bfade_33730a15",
+      "revId": "b9c371e970deafe3923886a208b6e143b0d910d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f7bcaab_b1f69bb9",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "b9c371e970deafe3923886a208b6e143b0d910d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b29c4c_61e15b21",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-15T16:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7bcaab_b1f69bb9",
+      "revId": "b9c371e970deafe3923886a208b6e143b0d910d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
