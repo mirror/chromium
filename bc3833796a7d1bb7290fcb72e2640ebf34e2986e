@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "73043036_1b567956",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-15T22:32:44Z",
+      "side": 1,
+      "message": "Sure, I added more comments to highlight that |mLastPlaybackHeadPosition| could overflow.",
+      "parentUuid": "316caa78_db4a839e",
+      "range": {
+        "startLine": 269,
+        "startChar": 35,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60c643cd_417ffc3e",
         "filename": "media/base/audio_buffer.cc",
         "patchSetId": 8
