@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "435443ef_c4ce3726",
+        "filename": "third_party/WebKit/Source/core/events/MessageEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-15T16:57:21Z",
+      "side": 1,
+      "message": "You can find it in other parts of Blink and it\u0027s allowed per \"Non-Static Class Member Initializers\" in https://chromium-cpp.appspot.com/\n\nIt\u0027s fine to leave this CL alone, but if you also prefer `\u003d true` here, you might ask Matt to elaborate, if there are cases where it\u0027s a bad idea. I didn\u0027t read the whole discussion thread on chromium-dev.",
+      "parentUuid": "a24cdc71_b3057d5d",
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54b1ccb7_a31b28aa",
         "filename": "third_party/WebKit/Source/core/events/MessageEventInit.idl",
         "patchSetId": 3
