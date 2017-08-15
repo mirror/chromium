@@ -16,6 +16,24 @@
       "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4175abe9_b7ae9588",
+        "filename": "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-15T17:24:22Z",
+      "side": 1,
+      "message": "I suggest using a new pattern that I proposed in the forum and below. eugenebut@ and rohitrao@, please weigh in.\n// The super\u0027s accessor is used instead of the covariant self.\nsuper.dispatcher \u003d dispatcher;",
+      "parentUuid": "b4142b77_7f327960",
+      "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
