@@ -85,13 +85,14 @@ void TextCodecICU::RegisterEncodingNames(EncodingNameRegistrar registrar) {
         continue;
     }
 
+#if defined(USING_SYSTEM_ICU)
     // Explicitly do not support UTF-32. https://crbug.com/417850
-    // TODO(jshin): Remove when ICU is updated.
     if (!strcmp(standard_name, "UTF-32") ||
         !strcmp(standard_name, "UTF-32LE") ||
         !strcmp(standard_name, "UTF-32BE")) {
       continue;
     }
+#endif
 
 // A number of these aliases are handled in Chrome's copy of ICU, but
 // Chromium can be compiled with the system ICU.
@@ -250,13 +251,14 @@ void TextCodecICU::RegisterCodecs(TextCodecRegistrar registrar) {
       if (!U_SUCCESS(error) || !standard_name)
         continue;
     }
+#if defined(USING_SYSTEM_ICU)
     // Explicitly do not support UTF-32. https://crbug.com/417850
-    // TODO(jshin): Remove when ICU is updated.
     if (!strcmp(standard_name, "UTF-32") ||
         !strcmp(standard_name, "UTF-32LE") ||
         !strcmp(standard_name, "UTF-32BE")) {
       continue;
     }
+#endif
     registrar(standard_name, Create, 0);
   }
 }
