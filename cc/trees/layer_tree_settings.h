@@ -121,6 +121,8 @@ class CC_EXPORT LayerTreeSettings {
   // completed the current BeginFrame before triggering their own BeginFrame
   // deadlines.
   bool wait_for_all_pipeline_stages_before_draw = false;
+
+  bool use_quater_tile_size = false;
 };
 
 }  // namespace cc
