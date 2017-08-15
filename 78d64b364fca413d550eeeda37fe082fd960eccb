@@ -134,6 +134,24 @@
       "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22de1276_0a73a3df",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 81572,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T17:44:26Z",
+      "side": 1,
+      "message": "jwd@: we are now using only one histogram in the latest patch.",
+      "parentUuid": "5d910c7a_86c4c1ed",
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
