@@ -360,6 +360,24 @@
     },
     {
       "key": {
+        "uuid": "ed56600c_55e6e718",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-15T17:47:10Z",
+      "side": 1,
+      "message": "I would be in favor of renaming OnClose() to RequestClose() if it\u0027s the code path for the other end of the connection closing this connection.  Otherwise the current names are fine.",
+      "parentUuid": "b642b7e8_3f957f0e",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49455ab_7e29f26a",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 12
