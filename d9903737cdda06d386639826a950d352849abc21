@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1bf43d7e_4e440188",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T23:01:16Z",
+      "side": 1,
+      "message": "Declaring as a char[] requires you to define the storage out-of-line as well, whereas this arrangement simply makes a constexpr pointing to the literal data. Hence the linkage difference. Using an explicit char[] does seem to be almost universal convention in chrome and related repos FWIW, but I guess I don\u0027t see a practical difference either.",
+      "parentUuid": "9f3bd4b6_42e61919",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a273a09_e889c813",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 3
