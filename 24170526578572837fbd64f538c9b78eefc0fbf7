@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ce017851_7b60bd79",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T18:35:47Z",
+      "side": 1,
+      "message": "I don\u0027t understand the purpose of the DCHECK(isGraphOwner).  The AutoLocker is supposed to make this the graph owner.  Are we going to have to do this everywhere else?",
+      "parentUuid": "a38f21ed_5531cf74",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29bd518d_f88ff705",
         "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
         "patchSetId": 3
