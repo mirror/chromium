@@ -6,6 +6,8 @@
 
 #include <errno.h>
 #include <netinet/in.h>
+#include <poll.h>
+#include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <utility>
 
@@ -229,6 +231,7 @@ bool SocketPosix::IsConnected() const {
   if (socket_fd_ == kInvalidSocket || waiting_connect_)
     return false;
 
+#if !defined(OS_FUCHSIA)
   // Checks if connection is alive.
   char c;
   int rv = HANDLE_EINTR(recv(socket_fd_, &c, 1, MSG_PEEK));
@@ -238,6 +241,31 @@ bool SocketPosix::IsConnected() const {
     return false;
 
   return true;
+
+#else   // OS_FUCHSIA
+  // Fuchsia currently doesn't support MSG_PEEK flag in recv(). Use poll() to
+  // determine if the socket is connected.
+  // TODO(bug 738275): Remove once MSG_PEEK is implemented.
+  struct pollfd pollfd;
+  pollfd.fd = socket_fd_;
+  pollfd.events = POLLRDHUP;
+  pollfd.revents = 0;
+  const int poll_result = poll(&pollfd, 1, 0);
+
+  if (poll_result == 1) {
+    // IsConnected() must return true if the connection was terminated, but
+    // there is still some data in the incoming buffer. poll() always signals
+    // POLLIN when POLLRDHUP is signaled, i.e. it doesn't allow to distinguish
+    // between "closed by peer" and "closed by peer with data still to read"
+    // states. So we poll only for POLLRDHUP and then call ioctl(FIONREAD) to
+    // determine buffer state when POLLRDHUP is signaled.
+    int bytes_available;
+    int ioctl_result = ioctl(socket_fd_, FIONREAD, &bytes_available);
+    return ioctl_result == 0 && bytes_available > 0;
+  }
+
+  return poll_result == 0;
+#endif  // OS_FUCHSIA
 }
 
 bool SocketPosix::IsConnectedAndIdle() const {
@@ -246,6 +274,7 @@ bool SocketPosix::IsConnectedAndIdle() const {
   if (socket_fd_ == kInvalidSocket || waiting_connect_)
     return false;
 
+#if !defined(OS_FUCHSIA)
   // Check if connection is alive and we haven't received any data
   // unexpectedly.
   char c;
@@ -256,6 +285,21 @@ bool SocketPosix::IsConnectedAndIdle() const {
     return false;
 
   return true;
+
+#else   // OS_FUCHSIA
+  // Fuchsia currently doesn't support MSG_PEEK flag in recv(). Use poll() to
+  // determine if the socket is connected.
+  // POLLIN signaled if the socket is readable or if it was closed by the peer,
+  // i.e. the socket is connected and idle if and only if POLLIN is not
+  // signaled.
+  // TODO(bug 738275): Remove once MSG_PEEK is implemented.
+  struct pollfd pollfd;
+  pollfd.fd = socket_fd_;
+  pollfd.events = POLLIN;
+  pollfd.revents = 0;
+  const int poll_result = poll(&pollfd, 1, 0);
+  return poll_result == 0;
+#endif  // OS_FUCHSIA
 }
 
 int SocketPosix::Read(IOBuffer* buf,
