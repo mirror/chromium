@@ -52,6 +52,24 @@
       "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66919233_bba6b59f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T12:19:45Z",
+      "side": 1,
+      "message": "Yea, I agree samus is a high-end device :) I also tested on minnie and it took 10s. And the system was responsive during the scan (I can navigate to google.com without problems).\n\nSince the scan happens only when the user opens \"Recent\" view or reloads it, I think taking 10s on devices with many files is kind of acceptable.",
+      "parentUuid": "04c26bb6_83733475",
+      "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
