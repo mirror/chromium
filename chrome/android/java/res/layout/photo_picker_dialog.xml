@@ -3,9 +3,23 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
-<org.chromium.chrome.browser.widget.selection.SelectableListLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<org.chromium.chrome.browser.widget.selection.SelectableListLayout
     android:id="@+id/selectable_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_primary_color" />
+
+<View
+    android:id="@+id/lights_out"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:visibility="gone" />
+</LinearLayout>
