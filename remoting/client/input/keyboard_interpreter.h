@@ -23,15 +23,17 @@ class KeyboardInterpreter {
   ~KeyboardInterpreter();
 
   // Delegates to |KeyboardInputStrategy| to covert and send the input.
-  void HandleTextEvent(const std::string& text, uint8_t modifiers);
+  void HandleTextEvent(const std::string& text,
+                       const std::vector<uint32_t>& modifiers);
   // Delegates to |KeyboardInputStrategy| to covert and send the delete.
-  void HandleDeleteEvent(uint8_t modifiers);
+  void HandleDeleteEvent(const std::vector<uint32_t>& modifiers);
   // Assembles CTRL+ALT+DEL key event and then delegates to
   // |KeyboardInputStrategy| send the keys.
   void HandleCtrlAltDeleteEvent();
   // Assembles PRINT_SCREEN key event and then delegates to
   // |KeyboardInputStrategy| send the keys.
   void HandlePrintScreenEvent();
+  void HandleKeyCombination(const std::vector<uint32_t>& combination);
 
  private:
   std::unique_ptr<KeyboardInputStrategy> input_strategy_;

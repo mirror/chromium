@@ -17,21 +17,17 @@ KeyboardInterpreter::KeyboardInterpreter(ClientInputInjector* input_injector) {
 
 KeyboardInterpreter::~KeyboardInterpreter() {}
 
-void KeyboardInterpreter::HandleTextEvent(const std::string& text,
-                                          uint8_t modifiers) {
+void KeyboardInterpreter::HandleTextEvent(
+    const std::string& text,
+    const std::vector<uint32_t>& modifiers) {
   input_strategy_->HandleTextEvent(text, modifiers);
 }
 
-void KeyboardInterpreter::HandleDeleteEvent(uint8_t modifiers) {
-  std::queue<KeyEvent> keys;
-  // TODO(nicholss): Handle modifers.
-  // Key press.
-  keys.push({static_cast<uint32_t>(ui::DomCode::BACKSPACE), true});
-
-  // Key release.
-  keys.push({static_cast<uint32_t>(ui::DomCode::BACKSPACE), false});
-
-  input_strategy_->HandleKeysEvent(keys);
+void KeyboardInterpreter::HandleDeleteEvent(
+    const std::vector<uint32_t>& modifiers) {
+  std::vector<uint32_t> keys = modifiers;
+  keys.push_back(static_cast<uint32_t>(ui::DomCode::BACKSPACE));
+  HandleKeyCombination(keys);
 }
 
 void KeyboardInterpreter::HandleCtrlAltDeleteEvent() {
@@ -58,6 +54,21 @@ void KeyboardInterpreter::HandlePrintScreenEvent() {
 
   // Key release.
   keys.push({static_cast<uint32_t>(ui::DomCode::PRINT_SCREEN), false});
+
+  input_strategy_->HandleKeysEvent(keys);
+}
+
+void KeyboardInterpreter::HandleKeyCombination(
+    const std::vector<uint32_t>& combination) {
+  std::queue<KeyEvent> keys;
+
+  for (uint32_t key : combination) {
+    keys.push({key, true});
+  }
+
+  for (uint32_t key : combination) {
+    keys.push({key, false});
+  }
 
   input_strategy_->HandleKeysEvent(keys);
 }
