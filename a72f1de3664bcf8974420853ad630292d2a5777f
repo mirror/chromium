@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a756a6e_788807b1",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 3799,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "Sanity check: I just want to make sure there\u0027s a good reason to store the value in so many places.  If I understand correctly, the rationale is that UpdateProcessPriority is called frequently (e.g., for every widget creation/deletion, plus every importance change on a widget), so looping over the number of importance values (small) is better than looping over all widgets (large) to ask them each for their importance value.\n\nIs that correct?",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7acce4_e85aa21d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 3837,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "Sanity check: Does this only affect the value at process launch?  Do we need to update the importance value at runtime if it changes, and are we doing that anywhere?",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001fd885_f550d4cf",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11059,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "nit: in a different domain",
+      "range": {
+        "startLine": 11059,
+        "startChar": 40,
+        "endLine": 11059,
+        "endChar": 60
+      },
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54963e6a_6c2d64cf",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 17
@@ -19,6 +76,127 @@
     },
     {
       "key": {
+        "uuid": "279ac001_962d25ff",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11068,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "To confirm, was it failing because WebContentsImpl::SetImportance found no RenderWidgetHostViews, and thus was a no-op?  There should still have been RenderWidgetHosts.",
+      "parentUuid": "54963e6a_6c2d64cf",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3f7f5d_8e307298",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11097,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "nit: navigates",
+      "range": {
+        "startLine": 11097,
+        "startChar": 45,
+        "endLine": 11097,
+        "endChar": 54
+      },
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c7dd79_7be79bc3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11112,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "nit: navigates",
+      "range": {
+        "startLine": 11112,
+        "startChar": 44,
+        "endLine": 11112,
+        "endChar": 53
+      },
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da9c3bb_2feed104",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "nit: should be set",
+      "range": {
+        "startLine": 1547,
+        "startChar": 58,
+        "endLine": 1547,
+        "endChar": 65
+      },
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd359f21_d0cc0d9c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "Can we just put static_cast\u003c...\u003e(rfh)-\u003eGetRenderWidgetHost() into a set of RenderWidgetHosts?  That would let us skip RWHV entirely, which is the part that\u0027s missing before the first navigation.\n\nShould work in the interstitial case above as well.",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f1d08e_491de161",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "Let\u0027s be more specific here about which part is missing.  I think we have a RenderFrameHost, RenderWidgetHost, and even RenderProcessHost before the first navigation, but we don\u0027t have a RenderWidgetHostView.\n\nI still think we can get by without this.  It may help in general for us to add a way to iterate over all RPHs in a WebContents without going through RenderWidgetHostView, but I don\u0027t think that\u0027s even needed in your case.  See my suggestion in the .cc file to see if it would work here.",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34758f77_910618ee",
         "filename": "content/public/browser/render_process_host.h",
         "patchSetId": 17
@@ -30,6 +208,24 @@
       "writtenOn": "2017-08-14T14:45:03Z",
       "side": 1,
       "message": "I wasn\u0027t sure if it\u0027s safe to case to RHPI in the browser tests, so added this here for now as well",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672b1e8c_f593fb30",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "Thanks.  I confirmed with Nick-- \"browser tests are the only circumstances it\u0027s safe to cast to RenderProcessHostImpl.\"  Feel free to switch to a cast and remove the ForTesting method here.",
+      "parentUuid": "34758f77_910618ee",
       "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

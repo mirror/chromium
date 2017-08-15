@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "66e1781f_91df90ee",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5428,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-15T20:32:17Z",
+      "side": 1,
+      "message": "\u003e \u003e I don\u0027t think this main frame case is necessary, is it?  Inductively, |old_host|\u0027s widget should have the correct importance level whether |old_host| the main frame or not, so we can always inherit the importance from it.  (The assumption is that all widgets had the right importance before the navigation, so only the new one needs to update after a swap.)\n\u003e \n\u003e non-root old_host can be null though, when a new frame is added to the tree?\n\nAh, you\u0027re totally right.  In that case, we should be able to ask the parent frame for its GetRenderWidgetHost() to inherit the value, without needing to store it on WebContents.\n\n\u003e \n\u003e \u003e \n\u003e \u003e And in that case, I think putting it in NotifyFrameSwapped is probably better.",
+      "parentUuid": "67a61fb3_cc8b4fb4",
+      "revId": "fde37f72280ba4d227651eb422c7688990338368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21f8b9d1_2e3cd353",
         "filename": "content/public/browser/DEPS",
         "patchSetId": 14
