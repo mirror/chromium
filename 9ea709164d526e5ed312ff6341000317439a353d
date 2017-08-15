@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "20fc3dd8_8bf7a569",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-15T22:59:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45f6a21b_cb834808",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a9a83c_7bccc03b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
         "patchSetId": 6
