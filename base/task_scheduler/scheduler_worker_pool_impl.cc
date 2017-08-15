@@ -24,6 +24,7 @@
 #include "base/task_scheduler/task_tracker.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"
 
@@ -139,7 +140,8 @@ bool ContainsWorker(const std::vector<scoped_refptr<SchedulerWorker>>& workers,
 }  // namespace
 
 class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
-    : public SchedulerWorker::Delegate {
+    : public SchedulerWorker::Delegate,
+      public BlockingObserver {
  public:
   // |outer| owns the worker for which this delegate is constructed.
   SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer);
@@ -152,6 +154,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   void ReEnqueueSequence(scoped_refptr<Sequence> sequence) override;
   TimeDelta GetSleepTimeout() override;
   void OnMainExit(SchedulerWorker* worker) override;
+
+  // BlockingObserver:
+  void BlockingScopeEntered(BlockingType blocking_type) override;
+  void BlockingScopeExited(BlockingType blocking_type) override;
 
   // Sets |is_active_| to be true.
   void SetIsActive();
@@ -182,9 +188,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // TaskScheduler.NumTasksBeforeDetach histogram was recorded.
   size_t num_tasks_since_last_detach_ = 0;
 
-  // Indicates whether the worker is on the idle worker's stack. This is only
-  // written under the protection of |outer_->lock_|.
-  subtle::Atomic32 is_active_;
+  // Indicates whether the worker holding this delegate is not on the idle
+  // worker's stack. This should only be accessed under the protection of
+  // |outer_->lock_|.
+  bool is_active_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
@@ -238,6 +245,7 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   DCHECK(workers_.empty());
 
   worker_capacity_ = params.max_threads();
+  initial_worker_capacity_ = worker_capacity_;
   suggested_reclaim_time_ = params.suggested_reclaim_time();
   backward_compatibility_ = params.backward_compatibility();
 
@@ -348,22 +356,24 @@ void SchedulerWorkerPoolImpl::GetHistograms(
   histograms->push_back(num_tasks_between_waits_histogram_);
 }
 
-// TODO(jeffreyhe): Add and return an |initial_worker_capacity_| member when
-// worker capacity becomes dynamic.
 int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
 #if DCHECK_IS_ON()
   AutoSchedulerLock auto_lock(lock_);
-  DCHECK_NE(worker_capacity_, 0U) << "GetMaxConcurrentTasksDeprecated() should "
-                                     "only be called after the worker pool has "
-                                     "started.";
+  DCHECK_NE(initial_worker_capacity_, 0U)
+      << "GetMaxConcurrentTasksDeprecated() should only be called after the "
+      << "worker pool has started.";
 #endif
-  return worker_capacity_;
+  return initial_worker_capacity_;
+}
+
+void SchedulerWorkerPoolImpl::WaitForWorkersIdleForTesting(size_t n) {
+  AutoSchedulerLock auto_lock(lock_);
+  WaitForWorkersIdleAssertLockForTesting(n);
 }
 
 void SchedulerWorkerPoolImpl::WaitForAllWorkersIdleForTesting() {
   AutoSchedulerLock auto_lock(lock_);
-  while (idle_workers_stack_.Size() < workers_.size())
-    idle_workers_stack_cv_for_testing_->Wait();
+  WaitForWorkersIdleAssertLockForTesting(workers_.size());
 }
 
 void SchedulerWorkerPoolImpl::JoinForTesting() {
@@ -408,13 +418,17 @@ size_t SchedulerWorkerPoolImpl::GetWorkerCapacityForTesting() {
   return worker_capacity_;
 }
 
+size_t SchedulerWorkerPoolImpl::NumberOfIdleWorkersForTesting() {
+  AutoSchedulerLock auto_lock(lock_);
+  return idle_workers_stack_.Size();
+}
+
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer)
     : outer_(outer) {
 #if DCHECK_IS_ON()
   idle_start_time_ = TimeTicks::Now();
 #endif
-  subtle::NoBarrier_Store(&is_active_, false);
 }
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
@@ -434,6 +448,8 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
   PlatformThread::SetName(
       StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
+  SetBlockingObserverForCurrentThread(this);
+
   DCHECK(!tls_current_worker_pool.Get().Get());
   tls_current_worker_pool.Get().Set(outer_);
 }
@@ -442,19 +458,14 @@ scoped_refptr<Sequence>
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     SchedulerWorker* worker) {
   {
-#if DCHECK_IS_ON()
     AutoSchedulerLock auto_lock(outer_->lock_);
-#endif
+
     DCHECK(ContainsWorker(outer_->workers_, worker));
-  }
 
   // Calling GetWork() when |is_active_| is false indicates that we must've
   // reached GetWork() because of the WaitableEvent timing out. In which case,
   // we return no work and possibly cleanup the worker.
-  subtle::Atomic32 local_is_active = subtle::NoBarrier_Load(&is_active_);
-  if (!local_is_active) {
-    AutoSchedulerLock auto_pool_lock(outer_->lock_);
-    if (!subtle::NoBarrier_Load(&is_active_)) {
+    if (!is_active_) {
 #if DCHECK_IS_ON()
       DCHECK(outer_->idle_workers_stack_.Contains(worker));
       DCHECK(!idle_start_time_.is_null());
@@ -467,6 +478,14 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
       outer_->num_tasks_between_waits_histogram_->Add(
           num_tasks_since_last_wait_);
       DCHECK_EQ(num_tasks_since_last_wait_, 0U);
+      return nullptr;
+    }
+
+    if (outer_->NeedMoreSuspendedWorkers()) {
+      outer_->num_tasks_between_waits_histogram_->Add(
+          num_tasks_since_last_wait_);
+      is_active_ = false;
+      outer_->AddToIdleWorkersStack(worker);
       return nullptr;
     }
   }
@@ -499,8 +518,9 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
           num_tasks_since_last_wait_);
       num_tasks_since_last_wait_ = 0;
 
-      outer_->AddToIdleWorkersStack(worker);
-      subtle::NoBarrier_Store(&is_active_, false);
+      if (is_active_)
+        outer_->AddToIdleWorkersStack(worker);
+      is_active_ = false;
 
 #if DCHECK_IS_ON()
       if (idle_start_time_.is_null())
@@ -580,20 +600,44 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
 #endif
 }
 
-void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::SetIsActive() {
-  outer_->lock_.AssertAcquired();
-  subtle::NoBarrier_Store(&is_active_, true);
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
+    BlockingType blocking_type) {
+  if (blocking_type != BlockingType::WILL_BLOCK)
+    return;
+  std::unique_ptr<PriorityQueue::Transaction> shared_transaction(
+      outer_->shared_priority_queue_.BeginTransaction());
+  AutoSchedulerLock auto_lock(outer_->lock_);
+
+  ++outer_->worker_capacity_;
+  if (!shared_transaction->IsEmpty())
+    outer_->WakeUpOneWorkerAssertLockAcquired();
+
+  outer_->MaintainAtLeastOneIdleWorker();
 }
 
-void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
-  SchedulerWorker* worker = nullptr;
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeExited(
+    BlockingType blocking_type) {
+  if (blocking_type != BlockingType::WILL_BLOCK)
+    return;
+  AutoSchedulerLock pool_auto_lock(outer_->lock_);
+  --outer_->worker_capacity_;
+}
 
-  AutoSchedulerLock auto_lock(lock_);
+void SchedulerWorkerPoolImpl::WaitForWorkersIdleAssertLockForTesting(size_t n) {
+  lock_.AssertAcquired();
+  while (idle_workers_stack_.Size() < n)
+    idle_workers_stack_cv_for_testing_->Wait();
+}
+
+void SchedulerWorkerPoolImpl::WakeUpOneWorkerAssertLockAcquired() {
+  lock_.AssertAcquired();
 
   if (workers_.empty()) {
     ++num_wake_ups_before_start_;
     return;
   }
+
+  SchedulerWorker* worker = nullptr;
 
   // Add a new worker if we're below capacity and there are no idle workers.
   if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_)
@@ -607,14 +651,27 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
     delegate->SetIsActive();
     worker->WakeUp();
   }
+  MaintainAtLeastOneIdleWorker();
+}
 
-  // Try to keep at least one idle worker at all times for better
-  // responsiveness.
+void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
+  AutoSchedulerLock auto_lock(lock_);
+  WakeUpOneWorkerAssertLockAcquired();
+}
+
+void SchedulerWorkerPoolImpl::MaintainAtLeastOneIdleWorker() {
+  lock_.AssertAcquired();
+
   if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_) {
     SchedulerWorker* new_worker = CreateRegisterAndStartSchedulerWorker();
     if (new_worker)
       idle_workers_stack_.Push(new_worker);
   }
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::SetIsActive() {
+  outer_->lock_.AssertAcquired();
+  is_active_ = true;
 }
 
 void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
@@ -626,8 +683,7 @@ void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
 
   DCHECK_LE(idle_workers_stack_.Size(), workers_.size());
 
-  if (idle_workers_stack_.Size() == workers_.size())
-    idle_workers_stack_cv_for_testing_->Broadcast();
+  idle_workers_stack_cv_for_testing_->Broadcast();
 }
 
 const SchedulerWorker* SchedulerWorkerPoolImpl::PeekAtIdleWorkersStack() const {
@@ -662,6 +718,7 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
     return nullptr;
 
   workers_.push_back(worker);
+  DCHECK_LE(workers_.size(), worker_capacity_);
 
   if (!cleanup_timestamps_.empty()) {
     detach_duration_histogram_->AddTime(TimeTicks::Now() -
@@ -669,6 +726,22 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
     cleanup_timestamps_.pop();
   }
   return worker.get();
+}
+
+bool SchedulerWorkerPoolImpl::NeedMoreSuspendedWorkers() const {
+  lock_.AssertAcquired();
+  // It is important this is an int because this quantity will be negative if
+  // the pool is not yet at capacity.
+  const int target_suspended_workers = workers_.size() - worker_capacity_;
+
+  if (target_suspended_workers <= 0)
+    return false;
+
+  // Note: all suspended workers exist in the |idle_workers_stack_|. Returns
+  // whether there are not enough workers in |idle_workers_stack_| for there
+  // to be enough suspended workers.
+  return static_cast<int>(idle_workers_stack_.Size()) <
+         target_suspended_workers;
 }
 
 }  // namespace internal
