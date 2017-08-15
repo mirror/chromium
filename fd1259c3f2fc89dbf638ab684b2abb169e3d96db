@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5999b166_7aa4189e",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "static initializer is not allowed.",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20115ec_e4249591",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_delegate_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "I don\u0027t think the long class name badge applies to Chromium code, so you can stop trying so hard :)",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42658178_b157d283",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_delegate_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "Can this be declared/defined in an anonymous namespace in the cc file for StaleEntryFinalizerTask?",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20521e6c_1da2cab8",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "nit: enum class\nnit: BUCKET_1 etc are not very useful names without reference to the design doc. Can you give them meaningful names?",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21531944_593202d1",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "I don\u0027t love this pattern, why have the other methods on the delegate at all? If the others are in reality hard-coded then it is confusing to have those things on a delegate.",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4235287_68d816ca",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "Can you add a test that finalizes stale entries in every state but FIN and ZOMBIE?",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3872ac_95a35e95",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T18:11:00Z",
+      "side": 1,
+      "message": "initializer lists should be like:\nstd::set\u003c...\u003e initial_items \u003d { ... }\n(note the equal sign)\n\nSame elsewhere",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
