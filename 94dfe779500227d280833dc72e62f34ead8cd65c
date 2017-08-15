@@ -16,6 +16,24 @@
       "revId": "94dfe779500227d280833dc72e62f34ead8cd65c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19729943_8c080837",
+        "filename": "components/metrics/proto/omnibox_input_type.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-15T23:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cd13d80_1deac136",
+      "revId": "94dfe779500227d280833dc72e62f34ead8cd65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
