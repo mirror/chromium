@@ -24,7 +24,9 @@ import org.chromium.base.PathUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -34,6 +36,13 @@ import java.io.IOException;
  */
 public class AwVariationsWebViewSeedHandler extends Handler {
     private static final String TAG = "AwVariatnsWVHdlr";
+
+    // Cache variations seed meta-data so a series of jni calls won't all read the data from
+    // storage.
+    private static Boolean sHasCachedPrefData = false;
+    private static String sVariationsSeedDate = "";
+    private static String sVariationsSeedSignature = "";
+    private static String sVariationsSeedCountry = "";
 
     private ServiceConnection mConnection;
 
@@ -106,31 +115,55 @@ public class AwVariationsWebViewSeedHandler extends Handler {
         }
     }
 
-    // TODO(kmilka): Implement the JNI read seed data and preference function for native code to
-    // call.
     @CalledByNative
-    public static String getVariationsSeedData() {
-        return "";
+    public static String getVariationsSeedData() throws IOException {
+        File webViewVariationsDir = getOrCreateVariationsDirectory();
+        File seedDataFile = new File(webViewVariationsDir, AwVariationsUtils.SEED_DATA_FILENAME);
+
+        BufferedReader seedDataReader = new BufferedReader(new FileReader(seedDataFile));
+        String seedData = "";
+        try {
+            seedData = seedDataReader.readLine();
+        } finally {
+            seedDataReader.close();
+        }
+        return seedData;
+    }
+
+    private static void readVariationsSeedPref() throws IOException {
+        if (sHasCachedPrefData) return;
+
+        File webViewVariationsDir = getOrCreateVariationsDirectory();
+        File seedPrefFile = new File(webViewVariationsDir, AwVariationsUtils.SEED_PREF_FILENAME);
+        BufferedReader seedPrefReader = new BufferedReader(new FileReader(seedPrefFile));
+
+        try {
+            sVariationsSeedSignature = seedPrefReader.readLine();
+            sVariationsSeedCountry = seedPrefReader.readLine();
+            sVariationsSeedDate = seedPrefReader.readLine();
+        } finally {
+            seedPrefReader.close();
+        }
+
+        sHasCachedPrefData = true;
     }
 
     @CalledByNative
-    public static String getVariationsSeedSignature() {
-        return "";
+    public static String getVariationsSeedSignature() throws IOException {
+        readVariationsSeedPref();
+        return sVariationsSeedSignature;
     }
 
     @CalledByNative
-    public static String getVariationsSeedCountry() {
-        return "";
+    public static String getVariationsSeedCountry() throws IOException {
+        readVariationsSeedPref();
+        return sVariationsSeedCountry;
     }
 
     @CalledByNative
-    public static String getVariationsSeedDate() {
-        return "";
-    }
-
-    @CalledByNative
-    public static String getVariationsSeedIsGzipCompressed() {
-        return "";
+    public static String getVariationsSeedDate() throws IOException {
+        readVariationsSeedPref();
+        return sVariationsSeedDate;
     }
 
     /**

@@ -4,7 +4,13 @@
 
 #include "android_webview/browser/aw_field_trial_creator.h"
 
+#include <jni.h>
+
 #include "android_webview/browser/aw_metrics_service_client.h"
+#include "base/android/jni_android.h"
+#include "base/android/jni_array.h"
+#include "base/android/jni_string.h"
+#include "base/android/jni_weak_ref.h"
 #include "base/base_switches.h"
 #include "base/feature_list.h"
 #include "base/path_service.h"
@@ -17,6 +23,11 @@
 #include "components/variations/entropy_provider.h"
 #include "components/variations/pref_names.h"
 #include "content/public/common/content_switches.h"
+#include "jni/AwVariationsWebViewSeedHandler_jni.h"
+
+using base::android::AttachCurrentThread;
+using base::android::ConvertJavaStringToUTF8;
+using base::android::ScopedJavaLocalRef;
 
 namespace android_webview {
 namespace {
@@ -39,9 +50,43 @@ CreateLowEntropyProvider() {
 // enough to have minimal impact on startup time, and is behind the
 // webview-enable-finch flag.
 bool ReadVariationsSeedDataFromFile(PrefService* local_state) {
-  // TODO(kmilka): The data read is being moved to java and the data will be
-  // passed in via JNI.
-  return false;
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jstring> j_seed_data =
+      Java_AwVariationsWebViewSeedHandler_getVariationsSeedData(env);
+  ScopedJavaLocalRef<jstring> j_seed_signature =
+      Java_AwVariationsWebViewSeedHandler_getVariationsSeedSignature(env);
+  ScopedJavaLocalRef<jstring> j_seed_country =
+      Java_AwVariationsWebViewSeedHandler_getVariationsSeedCountry(env);
+  ScopedJavaLocalRef<jstring> j_seed_date =
+      Java_AwVariationsWebViewSeedHandler_getVariationsSeedDate(env);
+
+  std::string data_str = ConvertJavaStringToUTF8(j_seed_data);
+  std::string signature_str = ConvertJavaStringToUTF8(j_seed_signature);
+  std::string country_str = ConvertJavaStringToUTF8(j_seed_country);
+  std::string date_str = ConvertJavaStringToUTF8(j_seed_date);
+
+  if (country_str.length() != 2) {
+    LOG(ERROR) << "Variations country code has invalid length";
+    return false;
+  }
+
+  base::Time fetch_date;
+  if (!base::Time::FromUTCString(date_str.c_str(), &fetch_date)) {
+    LOG(ERROR) << "Failed to parse seed last fetch date from string";
+    return false;
+  }
+
+  local_state->SetString(variations::prefs::kVariationsCompressedSeed,
+                         data_str);
+  local_state->SetString(variations::prefs::kVariationsSeedSignature,
+                         signature_str);
+  local_state->SetString(variations::prefs::kVariationsCountry, country_str);
+  local_state->SetInt64(variations::prefs::kVariationsSeedDate,
+                        fetch_date.ToInternalValue());
+  local_state->SetInt64(variations::prefs::kVariationsLastFetchTime,
+                        fetch_date.ToInternalValue());
+
+  return true;
 }
 
 }  // anonymous namespace
