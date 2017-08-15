@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6aaf757c_1db51ce8",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T07:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148b1e81_6a211903",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5186842f_ccebd2d5",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c31043_d6553dec",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T07:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5186842f_ccebd2d5",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9750eaaa_76a435d4",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T07:49:10Z",
+      "side": 1,
+      "message": "Because this is base::string16 and not std::string, we cannot use std::string directly. I defined base::string16 version of RefCountedMemory in the file instead.",
+      "parentUuid": "5cfecf11_2aac775e",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bda37579_4fbd22e6",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd00916_a71af11e",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T07:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda37579_4fbd22e6",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
