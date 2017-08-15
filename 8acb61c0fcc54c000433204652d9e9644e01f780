@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ec7e6ca_32b700ee",
+        "filename": "ash/system/palette/palette_ids.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-15T21:05:06Z",
+      "side": 1,
+      "message": "Add that this is used for UMA and is append only",
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6aa16b_8af593b3",
+        "filename": "ash/system/palette/palette_ids.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-15T21:05:06Z",
+      "side": 1,
+      "message": "Explicitly set to 0",
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
