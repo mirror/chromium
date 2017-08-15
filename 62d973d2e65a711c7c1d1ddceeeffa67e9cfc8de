@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14484a14_177f7501",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T21:17:01Z",
+      "side": 1,
+      "message": "Make this a DCHECK since failure here indicates a bug.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
