@@ -955,7 +955,10 @@ class SSLClientSocketTest : public PlatformTest {
                                        int* result) {
     std::unique_ptr<StreamSocket> transport(
         new TCPClientSocket(addr_, NULL, &log_, NetLogSource()));
-    int rv = callback_.GetResult(transport->Connect(callback_.callback()));
+
+    TestCompletionCallback tcp_callback;
+    int rv =
+        tcp_callback.GetResult(transport->Connect(tcp_callback.callback()));
     if (rv != OK) {
       LOG(ERROR) << "Could not connect to SpawnedTestServer";
       return false;
@@ -966,7 +969,8 @@ class SSLClientSocketTest : public PlatformTest {
                                   ssl_config);
     EXPECT_FALSE(sock_->IsConnected());
 
-    *result = callback_.GetResult(sock_->Connect(callback_.callback()));
+    TestCompletionCallback ssl_callback;
+    *result = ssl_callback.GetResult(sock_->Connect(ssl_callback.callback()));
     return true;
   }
 
@@ -996,7 +1000,6 @@ class SSLClientSocketTest : public PlatformTest {
 
  private:
   std::unique_ptr<SpawnedTestServer> spawned_test_server_;
-  TestCompletionCallback callback_;
   AddressList addr_;
 };
 
