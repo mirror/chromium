@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5bba910c_07a8bd0d",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-15T22:56:59Z",
+      "side": 1,
+      "message": "Thanks for suggesting. I was reluctant to move the feedback_uploader_factory to chrome, but it actually makes sense. So I move it to chrome along with feedback_uploader_chrome and its unit tests. This moves makes things much simpler, the feedback uploader doesn\u0027t even need to know about oauth service or signin manager. This is all done in chrome, where it belongs.\n\nDone.",
+      "parentUuid": "7f550456_90398ece",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 58
+      },
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df2d01f_cd82aeaa",
         "filename": "components/feedback/feedback_uploader.h",
         "patchSetId": 6
