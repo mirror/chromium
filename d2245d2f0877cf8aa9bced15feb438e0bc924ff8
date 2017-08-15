@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ba0e32fb_18d7ef66",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "483cbf0c_afe60084",
+      "range": {
+        "startLine": 117,
+        "startChar": 18,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c37a2603_c7602554",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 13
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b2cc22b6_22a9685a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c37a2603_c7602554",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d19d03c_d7c4fa83",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 13
@@ -79,6 +121,24 @@
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01025a8_28591687",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d19d03c_d7c4fa83",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "16e89bce_98a6a07d",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "259ca7b0_cff55589",
+      "range": {
+        "startLine": 271,
+        "startChar": 39,
+        "endLine": 271,
+        "endChar": 54
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f64526d5_897d87e0",
         "filename": "media/blink/webmediaplayer_impl.h",
         "patchSetId": 13
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "dd9a0dc8_361838d0",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f64526d5_897d87e0",
+      "range": {
+        "startLine": 116,
+        "startChar": 33,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37a3ea3b_110bf5a2",
         "filename": "media/blink/webmediaplayer_impl.h",
         "patchSetId": 13
@@ -148,6 +256,30 @@
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224ecab7_c1a6a3e1",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a3ea3b_110bf5a2",
+      "range": {
+        "startLine": 644,
+        "startChar": 10,
+        "endLine": 644,
+        "endChar": 20
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "dfbcd65f_9d3aee7c",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e39930_9c3d4f78",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 75
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6720d354_9407727a",
         "filename": "third_party/WebKit/Source/platform/BUILD.gn",
         "patchSetId": 13
@@ -217,6 +373,30 @@
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1081396_0c078724",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6720d354_9407727a",
+      "range": {
+        "startLine": 1921,
+        "startChar": 55,
+        "endLine": 1921,
+        "endChar": 56
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "d7ea13ab_2ada7dce",
+        "filename": "third_party/WebKit/Source/platform/exported/WebSurfaceLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "983b4555_c24d6b84",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a0a944_f59d24d4",
         "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
         "patchSetId": 13
@@ -260,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "5db50fde_ae5a7935",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a0a944_f59d24d4",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9641942_c35060a6",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
         "patchSetId": 13
@@ -271,6 +493,30 @@
       "writtenOn": "2017-08-11T10:13:41Z",
       "side": 1,
       "message": "Style nit: in Blink, never-null params are passed as mutable references.",
+      "range": {
+        "startLine": 14,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 60
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1a3062_85cecc2f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Can you show me an example of this?",
+      "parentUuid": "f9641942_c35060a6",
       "range": {
         "startLine": 14,
         "startChar": 59,
@@ -300,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "8113d138_4c33cbb3",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Yeah, this version of VideoFrameResourceProvider is just for test.",
+      "parentUuid": "d73fcc71_0882c631",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21de072d_14d66fc6",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 13
@@ -317,6 +581,24 @@
     },
     {
       "key": {
+        "uuid": "7a4ff092_2268ff56",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21de072d_14d66fc6",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1435fad6_d5c5bc99",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 13
@@ -328,6 +610,24 @@
       "writtenOn": "2017-08-11T10:13:41Z",
       "side": 1,
       "message": "Can you help me understand the purpose of |task_runner| here? This parameter is usually omitted unless there\u0027s a specific task runner that things need to be posted to.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4b9cd3_1d5e0708",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Didn\u0027t need it. Done.",
+      "parentUuid": "1435fad6_d5c5bc99",
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -351,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "54a40910_768ba234",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Who would make this CompositorFrameSinkPtr?",
+      "parentUuid": "f6360df6_f0dc8c1c",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a5314eb_0a46314a",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 13
@@ -362,6 +680,24 @@
       "writtenOn": "2017-08-11T10:13:41Z",
       "side": 1,
       "message": "Is there significance to the 10000 x 10000 size that we use here and elsewhere? Perhaps we could add it in a comment / put this in a constant as appropriate?",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef68969_09e5113e",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "It is not significant. It is just for test, will be replaced by real information in another CL. Put a comment stating so.",
+      "parentUuid": "3a5314eb_0a46314a",
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -385,6 +721,24 @@
     },
     {
       "key": {
+        "uuid": "86be382a_42e2053f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c22c4a6_c62786c3",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4901d703_343e1263",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
         "patchSetId": 13
@@ -402,6 +756,24 @@
     },
     {
       "key": {
+        "uuid": "fcd7380e_c98702aa",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4901d703_343e1263",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e9b3f27_9201c063",
         "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
         "patchSetId": 13
@@ -416,6 +788,24 @@
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6eebecc_ec5b12b1",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-15T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e9b3f27_9201c063",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
