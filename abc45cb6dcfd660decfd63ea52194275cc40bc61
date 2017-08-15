@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da10b3be_b420bf7c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T06:37:09Z",
+      "side": 1,
+      "message": "Sure thx",
+      "parentUuid": "24063b3f_3733adc7",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3944cd65_d29f3aea",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 11
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Yes, that\u0027s mostly the idea, but I don\u0027t want to make that decision yet, before Amy gives us final mocks for iPad which will affect that decision",
       "parentUuid": "3944cd65_d29f3aea",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 27
+      },
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de8b1471_a9f51cd3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T06:37:09Z",
+      "side": 1,
+      "message": "got it thx.",
+      "parentUuid": "39dffe22_5b2465e8",
       "range": {
         "startLine": 404,
         "startChar": 2,
