@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "d4ca8b93_eb91d52e",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-15T23:19:32Z",
+      "side": 1,
+      "message": "nit: \"is empty\"?  The use of \"them\" following makes it sound as if this was meant to be \"is not empty\"?",
+      "range": {
+        "startLine": 434,
+        "startChar": 62,
+        "endLine": 434,
+        "endChar": 64
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ac91aff_aa15d74a",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 6

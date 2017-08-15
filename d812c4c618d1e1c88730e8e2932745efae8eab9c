@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "38bb8e50_284ccc68",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-15T23:19:32Z",
+      "side": 1,
+      "message": "1) Ah, good point.  This would require making one of the nested classes non-nested.\n2) Well, in an ideal world we\u0027d design things so there was cleaner separation than that.  But yes, agreed, this is probably more complex than it\u0027s worth.",
+      "parentUuid": "4fa1916c_93c639d5",
+      "range": {
+        "startLine": 434,
+        "startChar": 17,
+        "endLine": 434,
+        "endChar": 24
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1d60583_7481acb2",
         "filename": "net/http/http_cache.h",
         "patchSetId": 3
@@ -578,6 +602,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "5013b814_a2644564",
+      "range": {
+        "startLine": 393,
+        "startChar": 22,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd3c8e6c_77d24ab8",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-15T23:19:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a583a6aa_cc8a6322",
       "range": {
         "startLine": 393,
         "startChar": 22,
