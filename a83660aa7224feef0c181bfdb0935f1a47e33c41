@@ -292,6 +292,29 @@
     },
     {
       "key": {
+        "uuid": "52416153_404ba4b7",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Don\u0027t need |this-\u003e|?",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 14
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd3d74ed_b8db5008",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 14
@@ -326,6 +349,46 @@
     },
     {
       "key": {
+        "uuid": "1483c95b_7f4f97c1",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "sentence got cut off\n\nAlso are you sure this helper is needed? ServiceWorkerFetchDispatcher::ResponseCallback was needed because of a kinda strange sequence where the URLRequestJob got aborted but the ServiceWorkerVersion was still expecting the event to settle. I dunno if that\u0027s still relevant in the mojo loading case. I don\u0027t see this class calling version-\u003eFinishRequest() so it looks like it might not be relevant.\n\nAlso would be good to add a comment about the lifetime of this class, and how it\u0027s able to outlive ServiceWorkerSubresourceLoader.",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bc882b_194c3fa3",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b6ecc98_3faa5dae",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -337,6 +400,80 @@
       "writtenOn": "2017-08-15T06:38:16Z",
       "side": 1,
       "message": "DCHECK(event_dispatcher_)",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45aca64_85ecf8ce",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "This is a bit subtle so maybe worth a longer comment:\n\nPer spec, redirects after this point are not intercepted by the service worker again. (https://crbug.com/517364)",
+      "range": {
+        "startLine": 180,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 29
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9fdbda_845481e8",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "I\u0027m a little confused since response.blob doesn\u0027t seem used. When kMojoBlobs is on, does the code still work... i.e., is response.blob_uuid still set?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dea658_a8bdb978",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "ditto about dvlog",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29dc84a_9baee182",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Little confused, when do redirects get re-sent to the SW as opposed to skipping SW as per the comment in FallbackToNetwork?",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -360,6 +497,40 @@
     },
     {
       "key": {
+        "uuid": "74af40b7_2b9ebb48",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "I believe the header can just say \u003d default",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1feeaae_1dd0a013",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Ah I was wonderingn all along why loader_factory_container_ became a WeakPtr... could we put this comment in the member declaration also?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c004181_cafee82e",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -371,6 +542,24 @@
       "writtenOn": "2017-08-15T06:38:16Z",
       "side": 1,
       "message": "Could you tell me a bit why this needs to be destructed by itself?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d30207_a7ebbd8b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Yea seems ideally someone (this class) would own it, unless there\u0027s a good reason we can\u0027t do that.",
+      "parentUuid": "3c004181_cafee82e",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -457,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "a03d216a_81a7afe5",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Having read the code now, maybe name it something like SaveExtraResponseInfo or SaveServiceWorkerResponseInfo, to make clear this is setting all those SW only fields in ResponseHead? And make the comment say that instead.",
+      "parentUuid": "7e1462db_24700646",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c11e613f_b3784f46",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -526,6 +739,166 @@
     },
     {
       "key": {
+        "uuid": "9fd2f91b_b4262efc",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "let\u0027s just write out \"service worker\" in the committed code",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 11
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44894e17_169a763d",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "nit: \"Blob\" for consistency",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c74f73_e47bb700",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "init to 0?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc09be84_d059e607",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "This seems not part of \"To load a blob\" as it\u0027s used in FallbackToNetwork()?",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717c3408_f15d8229",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "bikeshedding: Phase may be better to distinguish from ServiceWorekrStatusCode and HTTP status code etc",
+      "range": {
+        "startLine": 124,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 19
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7790ef07_19990fb2",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "class level comment here seems useful too.",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25a82fe_2b5a5544",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "mojom::URLLoaderFactory overrides",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62e856e_8f70334f",
+        "filename": "content/child/url_loader_factory_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Why do we need WeakPtrs? Also, I think SupportsWeakPtr is somewhat deprecated, see https://groups.google.com/a/chromium.org/d/msg/chromium-dev/99pKNd2kCcg/jxou0_0SCQAJ",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "deef8d14_3b5dae15",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 14
@@ -537,6 +910,23 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "Just \"Returns non-null\"?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf7865f_d97d6a7b",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T08:28:25Z",
+      "side": 1,
+      "message": "Seems worth making a crbug for this and blocking the SWServicifaction on it so we don\u0027t lose track.",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
