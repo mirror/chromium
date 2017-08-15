@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661fb006_1c7c1b82",
+        "filename": "ui/message_center/message_center_style.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-15T15:30:23Z",
+      "side": 1,
+      "message": "Here and above:\n\nSince the different styles of notifications can be used on all platforms (with the command line flag), should we add a method that returns a value based on MessageCenter::IsNewStyleNotificationEnabled()?",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164ab5e5_eea961fc",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-15T15:30:23Z",
+      "side": 1,
+      "message": "Can we use kSmallIconSize from message_center_style.h? This is the size that\u0027s communicated to other features (e.g. extensions) so that they can resize the image appropriately. Extensions will now downscale the icon to 16x16, after which the ImageView here will upscale them to 18x18.\n\n(Given the limited use of this property on desktop I\u0027m fine changing the value in that file.)",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073a8b9d_3f60eae6",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-15T15:30:23Z",
+      "side": 1,
+      "message": "Here too, and out of scope of this CL since this will be much harder to align, but message_center_style.h contradicts this...",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bee8d91_7babc695",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-15T15:30:23Z",
+      "side": 1,
+      "message": "This seems like quite a fragile way of saying \"one size larger than the default font style\"? Is there any way we can explicitly set a value? Would the following work?\n\nviews::style::GetFont(views::style::CONTEXT_LABEL, views::style::STYLE_PRIMARY);",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
