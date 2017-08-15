@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "a3eff717_6bf6b5ab",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:41:54Z",
+      "side": 1,
+      "message": "Ack; maybe add a one-line comment to that effect, or a TODO(bug#) referring to removing this once we have more stuff converted, if that\u0027s the plan?",
+      "parentUuid": "4172acc5_f9eb5b3e",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaa760fc_d962ebd3",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:41:54Z",
+      "side": 1,
+      "message": "nit: poweroff -\u003e power_off",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c15fcc5_9b9b9081",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -30,6 +65,24 @@
       "writtenOn": "2017-08-15T18:11:46Z",
       "side": 1,
       "message": "Passing through TERM gets things echo\u0027d. I couldn\u0027t figure out a way to get both echo\u0027ing and filtering through backtrace, so we\u0027ll have to manually paste backtraces to get symbolization from interactive crashes for now.",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac77de90_5af9ea3f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:41:54Z",
+      "side": 1,
+      "message": "So things don\u0027t get echo\u0027d if you set TERM to dumb..? And that\u0027s not just to do with the -serial or -monitor options in the else case?\n\nBrief comment here, or at the check_call() point below, would be good, so we remember why we\u0027re doing that.",
+      "parentUuid": "9c15fcc5_9b9b9081",
       "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
