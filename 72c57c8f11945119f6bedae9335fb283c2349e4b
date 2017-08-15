@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f884583_3d34e764",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-15T23:46:48Z",
+      "side": 1,
+      "message": "Drop lock and just DCHECK kUninitialized?",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1376973f_e669e4f7",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-15T23:46:48Z",
+      "side": 1,
+      "message": "Did this trigger a presubmit warning?",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85056f64_0813348d",
+        "filename": "media/renderers/audio_renderer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-15T23:46:48Z",
+      "side": 1,
+      "message": "Why repeating vs base::OnceCallback?",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ef7840_4e1a6800",
+        "filename": "media/test/pipeline_integration_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-15T23:46:48Z",
+      "side": 1,
+      "message": "Maybe just always set this and store as a test member when received?",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
