@@ -863,6 +863,9 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
     this._cache = cache;
     var icon = UI.Icon.create('mediumicon-table', 'resource-tree-item');
     this.setLeadingIcons([icon]);
+
+    this._model.addEventListener(
+        SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdated, this._cacheContentDirty, this);
   }
 
   get itemURL() {
@@ -876,6 +879,19 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
   onattach() {
     super.onattach();
     this.listItemElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), true);
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _cacheContentDirty(event) {
+    var origin = /** @type {string} */ (event.data.origin);
+    var cacheName = /** @type {string} */ (event.data.cacheName);
+    if (origin.endsWith('/'))
+      origin = origin.slice(0, -1);
+
+    if (this._cache.securityOrigin === origin && this._cache.cacheName === cacheName && this._view)
+      this._view.markDirty();
   }
 
   _handleContextMenuEvent(event) {

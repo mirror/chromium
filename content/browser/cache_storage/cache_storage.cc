@@ -1126,4 +1126,9 @@ void CacheStorage::SizeImpl(SizeCallback callback) {
   }
 }
 
+void CacheStorage::NotifyCacheContentChanged(const std::string& cache_name) {
+  if (cache_storage_manager_)
+    cache_storage_manager_->NotifyCacheContentChanged(origin_, cache_name);
+}
+
 }  // namespace content
