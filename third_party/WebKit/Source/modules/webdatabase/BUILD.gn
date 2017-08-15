@@ -5,6 +5,11 @@
 import("//third_party/WebKit/Source/modules/modules.gni")
 
 blink_modules_sources("webdatabase") {
+  visibility = [
+    "//content/child:child",
+    "//content/renderer:renderer",
+    "//third_party/WebKit/Source/modules/*",
+  ]
   sources = [
     "ChangeVersionData.h",
     "ChangeVersionWrapper.cpp",
@@ -61,6 +66,8 @@ blink_modules_sources("webdatabase") {
     "SQLTransactionStateMachine.cpp",
     "SQLTransactionStateMachine.h",
     "StorageLog.h",
+    "WebDatabase.cpp",
+    "WebDatabase.h",
     "sqlite/SQLLog.h",
     "sqlite/SQLValue.cpp",
     "sqlite/SQLValue.h",
