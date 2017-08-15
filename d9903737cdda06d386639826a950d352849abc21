@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a273a09_e889c813",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T14:55:37Z",
+      "side": 1,
+      "message": "nit: You can drop this.",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22335c08_95fd1816",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T14:55:37Z",
+      "side": 1,
+      "message": "(Sorry overlooked in the previous iteration): Looks double close (both child_handle and fd refer the same FD and try close it on destruction). Maybe:\n\nbase::ScopedFD fd(child_handle.release().handle);",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caaaf45c_914de567",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T14:55:37Z",
+      "side": 1,
+      "message": "nit/style: oem_crypto_host_ptr_  (snake_case please).",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

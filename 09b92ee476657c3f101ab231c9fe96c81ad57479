@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "7a247040_dcce3292",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T14:55:37Z",
+      "side": 1,
+      "message": "Thank you for sharing the references!\n\nSo in https://chrome-internal-review.googlesource.com/c/411928, the mojom interface is already defined.\nIs it possible to put the file in the repository which can be rolled to chrome and refer it?\n\nOr, if it makes maintaining a bit more complex, could you document somewhere that this file is copied from the ChromeOS repository?",
+      "parentUuid": "c1567d28_8b9fd165",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b6627d_6e967787",
         "filename": "components/arc/common/oemcrypto.mojom",
         "patchSetId": 2
@@ -394,6 +412,24 @@
       "side": 1,
       "message": "BTW this API is completely safe to call from any thread. It does not do any IO operations directly. Please do not add needless complexity by moving the work to another thread.\n\nHidehiko if there is some documentation you\u0027ve found which suggests otherwise, can you please point me to it so I can fix it?",
       "parentUuid": "98d4f514_e0507974",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1a6a61f_61ef88c4",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T14:55:37Z",
+      "side": 1,
+      "message": "My main questionable point was socketpair creation done in PlatformChannelPair ctor.\nIs it ok to call on UI thread in Chrome?",
+      "parentUuid": "a1e9fa36_a7cd7925",
       "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
