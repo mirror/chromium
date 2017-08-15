@@ -70,6 +70,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18a9c8e_2a333565",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T21:56:46Z",
+      "side": 1,
+      "message": "SCANOUT_CAMERA_READ_WRITE is good. It\u0027s fine that this also means CPU_READ_WRITE implicitly if you include a comment next to the enum value that makes this clear.\n\nThe format can\u0027t be different depending on the platform. However, what formats are supported for this usage can of course change and Chrome can be configured to use a different format depending on the platform and device. But allocating e.g. a YVU_420 buffer with usage SCANOUT_CAMERA_READ_WRITE should always give you a buffer with the same format.\n\nNote that a new usage is only needed for buffers that need to be allocated by Chrome. If a buffer is allocated on the ARC++ side then there\u0027s no need for a new usage to be able to display it in chrome. I assume this is going to be used to allocate buffers in Chrome, right?",
+      "parentUuid": "686816d3_2974389d",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
