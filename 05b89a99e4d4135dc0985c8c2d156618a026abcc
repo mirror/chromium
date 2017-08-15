@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de19902c_5d059284",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection_image_after_alignment_change.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-15T17:53:29Z",
+      "side": 1,
+      "message": "Please also fix the test description.",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "05b89a99e4d4135dc0985c8c2d156618a026abcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
