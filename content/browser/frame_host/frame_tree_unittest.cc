@@ -518,4 +518,16 @@ TEST_F(FrameTreeTest, ProcessCrashClearsGlobalMap) {
   EXPECT_FALSE(FrameTreeNode::GloballyFindByID(id3));
 }
 
+TEST_F(FrameTreeTest, ImmediateLocalRoot) {
+  main_test_rfh()->InitializeRenderFrameIfNeeded();
+
+  // Use the FrameTree of the WebContents so that it has all the delegates it
+  // needs.  We may want to consider a test version of this.
+  FrameTree* frame_tree = contents()->GetFrameTree();
+  FrameTreeNode* root = frame_tree->root();
+
+  int process_id =
+  frame_tree->AddFrame(root,
+}
+
 }  // namespace content

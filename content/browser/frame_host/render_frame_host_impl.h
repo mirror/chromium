@@ -642,6 +642,33 @@ class CONTENT_EXPORT RenderFrameHostImpl
   service_manager::InterfaceProvider* GetJavaInterfaces() override;
 #endif
 
+  // TODO(ekaramad): One major purpose behind the API is to traverse the frame
+  // tree top-down to visit the  RenderWidgetHostViews of interest in the most
+  // efficient way. We might want to revisit this API, remove it from RFHImpl,
+  // and perhaps consolidate it with some of the existing ones such as
+  // WebContentsImpl::GetRenderWidgetHostViewsInTree() into a new more
+  // appropriate API for dealing with (virtual) RenderWidgetHost(View) tree.
+  // (see https://crbug.com/754726).
+  // Runs |callback| for all the local roots immediately under this frame, i.e.
+  // local roots which are under this frame and their first ancestor which is a
+  // local root is either this frame or this frame's local root. For instance,
+  // in a frame tree such as:
+  //                    A0
+  //                 /  |   \
+  //                B   A1   E
+  //               /   /  \   \
+  //              D  A2    C   F
+  // RFHs at nodes B, E, D, C, and F are all local roots in the given frame tree
+  // under the root at A0, but only B, C, and E are considered immediate local
+  // roots of A0. Note that this will exclude any speculative or pending RFHs.
+  void ForEachImmediateLocalRoot(
+      const base::Callback<void(RenderFrameHostImpl*)>& callback);
+
+  // Propagates the visibility state along the immediate local roots by calling
+  // RenderWidgetHostViewChildFrame::Show()/Hide(). Calling this on a pending
+  // or speculative RenderFrameHost (that has not committed) should be avoided.
+  void SetVisibilityForChildViews(bool visible);
+
   // Returns an unguessable token for this RFHI.  This provides a temporary way
   // to identify a RenderFrameHost that's compatible with IPC.  Else, one needs
   // to send pid + RoutingID, but one cannot send pid.  One can get it from the
