@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fed52d3_f4715e3d",
+        "filename": "ash/system/palette/palette_ids.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-15T21:11:01Z",
+      "side": 1,
+      "message": "I am afraid that would be misleading. This type is not directly mapped to an UMA enum. The value of this type is checked against a literal in PaletteTray::RecordPaletteOptionsUsage, and depending on that one or another histogram name is used (and that is the only usage).",
+      "parentUuid": "6ec7e6ca_32b700ee",
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f6aa16b_8af593b3",
         "filename": "ash/system/palette/palette_ids.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T21:05:06Z",
       "side": 1,
       "message": "Explicitly set to 0",
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba62e8d_08c37db3",
+        "filename": "ash/system/palette/palette_ids.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-15T21:11:01Z",
+      "side": 1,
+      "message": "Would it still be necessary if this enum is not mapped to an UMA enum?",
+      "parentUuid": "7f6aa16b_8af593b3",
       "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
