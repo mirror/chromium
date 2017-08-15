@@ -210,6 +210,12 @@ bool IsSimpleSelectorValidAfterPseudoElement(
     return true;
   if (compound_pseudo_element == CSSSelector::kPseudoContent)
     return simple_selector.Match() != CSSSelector::kPseudoElement;
+  if (compound_pseudo_element == CSSSelector::kPseudoSlotted) {
+    return simple_selector.Match() == CSSSelector::kPseudoElement &&
+           simple_selector.GetPseudoType() != CSSSelector::kPseudoContent &&
+           simple_selector.GetPseudoType() != CSSSelector::kPseudoShadow &&
+           simple_selector.GetPseudoType() != CSSSelector::kPseudoSlotted;
+  }
   if (simple_selector.Match() != CSSSelector::kPseudoClass)
     return false;
   CSSSelector::PseudoType pseudo = simple_selector.GetPseudoType();
