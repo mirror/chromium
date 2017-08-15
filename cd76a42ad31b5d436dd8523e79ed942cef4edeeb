@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62978a68_63706a82",
+        "filename": "chrome/app/nibs/DownloadItem.xib",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 0,
+      "message": "If we\u0027re running the new downloads behind a flag, why a change to the xib?",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "cd76a42ad31b5d436dd8523e79ed942cef4edeeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c645b814_a27cb056",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2510,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 1,
+      "message": "Huh, would have thought we already had a harmony button based on our progress with the dialogs.",
+      "range": {
+        "startLine": 2510,
+        "startChar": 7,
+        "endLine": 2510,
+        "endChar": 29
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48dc595_f573451f",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 1,
+      "message": "why not constexpr like below?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee905a3_5fa243fc",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 1,
+      "message": "Don\u0027t we use @available nowadays?",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51071f1_841b59cc",
+        "filename": "chrome/browser/ui/cocoa/download/download_started_animation_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 1,
+      "message": "const of some kind?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6923d34a_985114a5",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 1,
+      "message": "static initializer?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3204a0_988031ce",
+        "filename": "ui/base/cocoa/nsview_additions.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-15T23:12:26Z",
+      "side": 1,
+      "message": "@available?",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
