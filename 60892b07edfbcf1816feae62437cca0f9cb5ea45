@@ -250,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "3b96c87c_183662fa",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-15T13:39:38Z",
+      "side": 1,
+      "message": "I misread your original comment.\n\nThe heuristics proposed by this CL require 3 fields only if number is NOT present. Number stands on its own and allows any other cc fields detected to stand with it. If number is NOT present, the bar goes up considerably to predict the other CC fields alongside non-CC fields.\n\ni.e., Number + expiry WILL work with these rules.\n\nWhat won\u0027t work (if there are non-CC fields other than ZIP present) is any two of {Name, Expiry, CVC, Type}\n\nGoing back to \u003e2.",
+      "parentUuid": "69c737a1_74436441",
+      "range": {
+        "startLine": 1114,
+        "startChar": 22,
+        "endLine": 1114,
+        "endChar": 46
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93b78553_68b5ca11",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
