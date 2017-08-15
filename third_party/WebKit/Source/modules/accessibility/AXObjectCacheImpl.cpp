@@ -82,8 +82,11 @@
 #include "modules/accessibility/AXTableColumn.h"
 #include "modules/accessibility/AXTableHeaderContainer.h"
 #include "modules/accessibility/AXTableRow.h"
+#include "modules/permissions/PermissionUtils.h"
 #include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/modules/permissions/permission.mojom-blink.h"
+#include "public/platform/modules/permissions/permission_status.mojom-blink.h"
 #include "public/web/WebFrameClient.h"
 
 namespace blink {
@@ -101,7 +104,18 @@ AXObjectCacheImpl::AXObjectCacheImpl(Document& document)
       notification_post_timer_(
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &document),
           this,
-          &AXObjectCacheImpl::NotificationPostTimerFired) {}
+          &AXObjectCacheImpl::NotificationPostTimerFired),
+      accessibility_event_permission_(mojom::PermissionStatus::ASK) {
+  ConnectToPermissionService(document_->GetExecutionContext(),
+                             mojo::MakeRequest(&permission_service_));
+
+  permission_service_->HasPermission(
+      CreatePermissionDescriptor(
+          mojom::blink::PermissionName::ACCESSIBILITY_EVENTS),
+      document_->GetExecutionContext()->GetSecurityOrigin(),
+      ConvertToBaseCallback(WTF::Bind(&AXObjectCacheImpl::OnPermissionsUpdated,
+                                      WrapPersistent(this))));
+}
 
 AXObjectCacheImpl::~AXObjectCacheImpl() {
 #if DCHECK_IS_ON()
@@ -1285,6 +1299,27 @@ void AXObjectCacheImpl::SetCanvasObjectBounds(HTMLCanvasElement* canvas,
     return;
 
   obj->SetElementRect(rect, ax_canvas);
+}
+
+void AXObjectCacheImpl::OnPermissionsUpdated(mojom::PermissionStatus status) {
+  accessibility_event_permission_ = status;
+}
+
+bool AXObjectCacheImpl::CanCallAOMEventListeners() {
+  return accessibility_event_permission_ == mojom::PermissionStatus::GRANTED;
+}
+
+void AXObjectCacheImpl::RequestAOMEventListenerPermission() {
+  if (accessibility_event_permission_ != mojom::PermissionStatus::ASK)
+    return;
+
+  permission_service_->RequestPermission(
+      CreatePermissionDescriptor(
+          mojom::blink::PermissionName::ACCESSIBILITY_EVENTS),
+      document_->GetExecutionContext()->GetSecurityOrigin(),
+      UserGestureIndicator::ProcessingUserGesture(),
+      ConvertToBaseCallback(WTF::Bind(&AXObjectCacheImpl::OnPermissionsUpdated,
+                                      WrapPersistent(this))));
 }
 
 DEFINE_TRACE(AXObjectCacheImpl) {
