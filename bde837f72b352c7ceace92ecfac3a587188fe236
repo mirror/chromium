@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2146d5_6392b8a1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLEmbedElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T11:26:52Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing that |did_override_url_| is only set for one of the override paths.",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
