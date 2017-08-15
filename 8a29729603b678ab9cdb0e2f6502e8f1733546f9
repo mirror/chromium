@@ -22,6 +22,30 @@
       "revId": "8a29729603b678ab9cdb0e2f6502e8f1733546f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7069036b_a5189ef5",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-15T23:12:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b0cd0fa_11f49289",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "8a29729603b678ab9cdb0e2f6502e8f1733546f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
