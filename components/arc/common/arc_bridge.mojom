@@ -21,6 +21,7 @@ import "metrics.mojom";
 import "net.mojom";
 import "notifications.mojom";
 import "obb_mounter.mojom";
+import "oemcrypto.mojom";
 import "policy.mojom";
 import "power.mojom";
 import "print.mojom";
@@ -34,9 +35,9 @@ import "voice_interaction_framework.mojom";
 import "volume_mounter.mojom";
 import "wallpaper.mojom";
 
-// Next MinVersion: 26
+// Next MinVersion: 27
 // Deprecated method IDs: 101, 105
-// Next method ID: 132
+// Next method ID: 133
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
@@ -98,6 +99,9 @@ interface ArcBridgeHost {
 
   // Notifies Chrome that the ObbMounter interface is ready.
   [MinVersion=14] OnObbMounterInstanceReady@120(ObbMounterInstance instance_ptr);
+
+  // Notifies Chrome that the OemCryptoInstance interface is ready.
+  [MinVersion=26] OnOemCryptoInstanceReady@132(OemCryptoInstance instance_ptr);
 
   // Notifies Chrome that the PolicyInstance interface is ready.
   [MinVersion=7] OnPolicyInstanceReady@114(PolicyInstance instance_ptr);
