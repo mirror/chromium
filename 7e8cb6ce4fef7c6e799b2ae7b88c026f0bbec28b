@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68a649eb_2a3ca168",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T17:45:51Z",
+      "side": 1,
+      "message": "Reverted.",
+      "parentUuid": "5a2b74f0_4617d32a",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8319d2b_a354e955",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T00:21:28Z",
       "side": 1,
       "message": "The node constructor itself does not do much right? Is it easier to just make the children invisible to not have to deal with checking for the state everywhere?",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2fbc12_a9e517d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T17:45:51Z",
+      "side": 1,
+      "message": "I wanted to distinguish between configuration (in the modern layout, there never is a status item) and state (there is a status item, but it just happens to be hidden). You do raise a good point about not having to check the config everywhere, but if I add the more button back, it\u0027s actually not that bad. WDYT?",
+      "parentUuid": "c8319d2b_a354e955",
       "range": {
         "startLine": 97,
         "startChar": 12,
