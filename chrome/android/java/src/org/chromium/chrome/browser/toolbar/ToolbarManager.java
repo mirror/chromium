@@ -514,13 +514,13 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 mTextBubble.addOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        mHandler.post(new Runnable() {
+                        mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 tracker.dismissed(FeatureConstants.DOWNLOAD_PAGE_FEATURE);
                                 activity.getAppMenuHandler().setMenuHighlight(null);
                             }
-                        });
+                        }, 200);
                     }
                 });
                 activity.getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);
