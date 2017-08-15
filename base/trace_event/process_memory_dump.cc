@@ -192,7 +192,19 @@ ProcessMemoryDump::ProcessMemoryDump(
           std::move(heap_profiler_serialization_state)),
       dump_args_(dump_args) {}
 
+ProcessMemoryDump::ProcessMemoryDump(ProcessMemoryDump&& other)
+    : dump_args_(other.dump_args_) {
+  *this = std::move(other);
+}
+
 ProcessMemoryDump::~ProcessMemoryDump() {}
+
+ProcessMemoryDump& ProcessMemoryDump::operator=(ProcessMemoryDump&& other) {
+  heap_profiler_serialization_state_ =
+      other.heap_profiler_serialization_state();
+  TakeAllDumpsFrom(&other);
+  return *this;
+}
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateAllocatorDump(
     const std::string& absolute_name) {
