@@ -26,9 +26,7 @@ namespace {
 
 class SpdyDeframerVisitorTest : public ::testing::Test {
  protected:
-  SpdyDeframerVisitorTest()
-      : encoder_(SpdyFramer::ENABLE_COMPRESSION),
-        decoder_(SpdyFramer::ENABLE_COMPRESSION) {
+  SpdyDeframerVisitorTest() : encoder_(SpdyFramer::ENABLE_COMPRESSION) {
     decoder_.set_process_single_input_frame(true);
     auto collector =
         SpdyMakeUnique<DeframerCallbackCollector>(&collected_frames_);
@@ -76,7 +74,7 @@ class SpdyDeframerVisitorTest : public ::testing::Test {
   //       bool
 
   SpdyFramer encoder_;
-  SpdyFramer decoder_;
+  Http2DecoderAdapter decoder_;
   std::vector<CollectedFrame> collected_frames_;
   std::unique_ptr<SpdyTestDeframer> deframer_;
 };

@@ -13,7 +13,6 @@
 #include <utility>
 
 #include "base/sys_byteorder.h"
-#include "net/spdy/core/hpack/hpack_decoder_adapter.h"
 #include "net/spdy/core/hpack/hpack_encoder.h"
 #include "net/spdy/core/spdy_alt_svc_wire_format.h"
 #include "net/spdy/core/spdy_header_block.h"
@@ -26,7 +25,6 @@
 
 namespace net {
 
-class Http2DecoderAdapter;
 class HttpNetworkLayer;
 class HttpNetworkTransactionTest;
 class HttpProxyClientSocketPoolTest;
@@ -189,40 +187,10 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
 
   virtual ~SpdyFramer();
 
-  // Set callbacks to be called from the framer.  A visitor must be set, or
-  // else the framer will likely crash.  It is acceptable for the visitor
-  // to do nothing.  If this is called multiple times, only the last visitor
-  // will be used.
-  void set_visitor(SpdyFramerVisitorInterface* visitor);
-
-  // Set extension callbacks to be called from the framer. (Optional.)
-  void set_extension_visitor(ExtensionVisitorInterface* extension);
-
   // Set debug callbacks to be called from the framer. The debug visitor is
   // completely optional and need not be set in order for normal operation.
   // If this is called multiple times, only the last visitor will be used.
   void set_debug_visitor(SpdyFramerDebugVisitorInterface* debug_visitor);
-
-  // Sets whether or not ProcessInput returns after finishing a frame, or
-  // continues processing additional frames. Normally ProcessInput processes
-  // all input, but this method enables the caller (and visitor) to work with
-  // a single frame at a time (or that portion of the frame which is provided
-  // as input). Reset() does not change the value of this flag.
-  void set_process_single_input_frame(bool v);
-
-  // Pass data into the framer for parsing.
-  // Returns the number of bytes consumed. It is safe to pass more bytes in
-  // than may be consumed.
-  size_t ProcessInput(const char* data, size_t len);
-
-  // Resets the framer state after a frame has been successfully decoded.
-  // TODO(mbelshe): can we make this private?
-  void Reset();
-
-  // Check the state of the framer.
-  SpdyFramerError spdy_framer_error() const;
-  SpdyState state() const;
-  bool HasError() const { return state() == SPDY_ERROR; }
 
   // Create a SpdyFrameSequence to serialize |frame_ir|.
   static std::unique_ptr<SpdyFrameSequence> CreateIterator(
@@ -376,10 +344,6 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   static const char* StateToString(int state);
   static const char* SpdyFramerErrorToString(SpdyFramerError spdy_framer_error);
 
-  // Did the most recent frame header appear to be an HTTP/1.x (or earlier)
-  // response (i.e. start with "HTTP/")?
-  bool probable_http_response() const;
-
   SpdyPriority GetLowestPriority() const { return kV3LowestPriority; }
 
   SpdyPriority GetHighestPriority() const { return kV3HighestPriority; }
@@ -393,15 +357,10 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   // Returns the maximum size of the header encoder compression table.
   size_t header_encoder_table_size() const;
 
-  void set_max_decode_buffer_size_bytes(size_t max_decode_buffer_size_bytes);
-
   size_t send_frame_size_limit() const { return send_frame_size_limit_; }
   void set_send_frame_size_limit(size_t send_frame_size_limit) {
     send_frame_size_limit_ = send_frame_size_limit;
   }
-
-  void SetDecoderHeaderTableDebugVisitor(
-      std::unique_ptr<HpackHeaderTable::DebugVisitorInterface> visitor);
 
   void SetEncoderHeaderTableDebugVisitor(
       std::unique_ptr<HpackHeaderTable::DebugVisitorInterface> visitor);
@@ -630,14 +589,7 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
 
   std::unique_ptr<HpackEncoder> hpack_encoder_;
 
-  SpdyFramerVisitorInterface* visitor_;
-  ExtensionVisitorInterface* extension_;
   SpdyFramerDebugVisitorInterface* debug_visitor_;
-
-  SpdyHeadersHandlerInterface* header_handler_;
-
-  // Decoder to use instead of this instance.
-  std::unique_ptr<Http2DecoderAdapter> decoder_adapter_;
 
   // Determines whether HPACK compression is used.
   const CompressionOption compression_option_;
