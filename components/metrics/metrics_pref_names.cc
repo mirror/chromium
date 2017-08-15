@@ -202,5 +202,10 @@ const char kUmaCellDataUse[] = "user_experience_metrics.uma_cell_datause";
 // per day.
 const char kUserCellDataUse[] = "user_experience_metrics.user_call_datause";
 
+// DO NOT SUBMIT
+const char kTabStatsTotalTabCountMax[] = "tab_stats.total_tab_count_max";
+const char kTabStatsMaxTabsPerWindow[] = "tab_stats.max_tabs_per_window";
+const char kTabStatsBrowserCountMax[] = "tab_stats.browser_count_max";
+
 }  // namespace prefs
 }  // namespace metrics

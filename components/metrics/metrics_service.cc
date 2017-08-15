@@ -206,6 +206,10 @@ void MetricsService::RegisterPrefs(PrefRegistrySimple* registry) {
 
   registry->RegisterInt64Pref(prefs::kUninstallLaunchCount, 0);
   registry->RegisterInt64Pref(prefs::kUninstallMetricsUptimeSec, 0);
+
+  registry->RegisterIntegerPref(prefs::kTabStatsTotalTabCountMax, 0);
+  registry->RegisterIntegerPref(prefs::kTabStatsMaxTabsPerWindow, 0);
+  registry->RegisterIntegerPref(prefs::kTabStatsBrowserCountMax, 0);
 }
 
 MetricsService::MetricsService(MetricsStateManager* state_manager,
