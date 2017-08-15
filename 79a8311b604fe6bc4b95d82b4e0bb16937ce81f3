@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a288a242_f65eb670",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c664b2a_f08c34c4",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f42b1646_90273969",
         "filename": "base/metrics/histogram_uploading_checker.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "58244845_d9aa5319",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f42b1646_90273969",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7082152_28428362",
         "filename": "base/metrics/histogram_uploading_checker.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-15T19:13:45Z",
       "side": 1,
       "message": "What\u0027s the reason for two functions?",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedbcb7b_3bb22921",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "I think, it is easier to change the logic of ShouldUpload method if it is separated from filter(). For example, to temporarily disable this feature, we can put \"return True\" in ShouldUpload instead of changing code in implementations or in other places. Does that make sense?",
+      "parentUuid": "c7082152_28428362",
       "range": {
         "startLine": 23,
         "startChar": 22,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "eca6e174_77af13b6",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27632e26_19fa7c41",
+      "range": {
+        "startLine": 503,
+        "startChar": 38,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9797805_6dcdb744",
         "filename": "base/metrics/statistics_recorder.h",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1708879_8d673286",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9797805_6dcdb744",
+      "range": {
+        "startLine": 223,
+        "startChar": 59,
+        "endLine": 223,
+        "endChar": 60
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "68e6009c_5705afc7",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "231ba22d_4e9b865d",
+      "range": {
+        "startLine": 227,
+        "startChar": 14,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1714fd40_3654febc",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf61e845_e7a68f76",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1714fd40_3654febc",
+      "range": {
+        "startLine": 740,
+        "startChar": 32,
+        "endLine": 740,
+        "endChar": 49
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f9e814c2_d2df9983",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0edfd8db_ad52bd44",
+      "range": {
+        "startLine": 414,
+        "startChar": 5,
+        "endLine": 414,
+        "endChar": 31
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6cfbc6_9bcbd306",
         "filename": "chrome/browser/expired_histograms_checker.h",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9033de6_409ac159",
+        "filename": "chrome/browser/expired_histograms_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-15T22:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6cfbc6_9bcbd306",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
