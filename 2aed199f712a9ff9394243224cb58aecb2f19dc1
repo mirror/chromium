@@ -16,6 +16,24 @@
       "revId": "2aed199f712a9ff9394243224cb58aecb2f19dc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d51af21_3a047551",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-15T16:25:16Z",
+      "side": 1,
+      "message": "This is the idea I started with because non-null frames makes perfect sense in our new model (and even for current \"sticky\" use cases).  The main problem is that current UGI model is only loosely associate with frames/document.  For example, saved UGTs are frame agnostic.  To be frank, I think current call-sites are confused about it, and I have plan to fix it (crbug.com/730690).  Since that could change some behavior around saved tokens and at least I will have to change lot of tests, I will make the change isolated from this no-op CL.",
+      "parentUuid": "65ae5a60_42b93573",
+      "revId": "2aed199f712a9ff9394243224cb58aecb2f19dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
