@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "1df7248d_9013dff1",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-15T16:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c8a63f_122fd6c6",
+      "range": {
+        "startLine": 514,
+        "startChar": 37,
+        "endLine": 514,
+        "endChar": 45
+      },
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fedda5ac_32c20ec0",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 5
@@ -76,6 +100,24 @@
       "writtenOn": "2017-08-14T23:44:43Z",
       "side": 1,
       "message": "This feels a bit odd, like it\u0027s not testing the actual logic which is supposed to kill the renderer.  If that part regressed, we might not know it because the test would go on killing.  I don\u0027t suppose there\u0027s any alternatives?",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfb253c_5eb8c27a",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-15T16:58:20Z",
+      "side": 1,
+      "message": "There is an actual separate test which ensures that Mojo kills the renderer process if ReportBadMessage is called during processing of an interface method call.\n\nBecause I am acting as a man-in-the-middle on the interface, the connection to the real StoragePartitionService is lacking the process id, so Mojo cannot kill the process. However, the call that does process termination works with callbacks and if a generic error handler is registered, it will call it. \n\nThe goal of this part is to register this default callback, which basically restores the process termination behavior.\n\nI looked at alternatives, but couldn\u0027t find a good one. Without some support for man-in-the-middle type testing in Mojo, the only way is to add testing hooks in the actual StoragePartitionImpl code. I don\u0027t think that approach is the right way to go, as I would like us to test the real implementation without it branching on test hooks and prefer this workaround. We also have a thread on chromium-mojo@ to see if there is a way to solve this a bit more generically.",
+      "parentUuid": "fedda5ac_32c20ec0",
       "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "be416f46_a94ef8e3",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-15T16:58:20Z",
+      "side": 1,
+      "message": "It calls ReceivedBadMessage as far as I\u0027ve traced it, but doesn\u0027t specify a different termination reason (I think it maps it all to RPH_MOJO_PROCESS_ERROR \u003d 123). Maybe a good bug to file to allow for the reason code to be plumbed through.",
+      "parentUuid": "f89daa50_f88a096c",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b20fe634_c11981ab",
         "filename": "content/browser/storage_partition_impl.h",
         "patchSetId": 5
@@ -131,6 +191,24 @@
       "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ab67bc_bdf61f37",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-15T16:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20fe634_c11981ab",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
