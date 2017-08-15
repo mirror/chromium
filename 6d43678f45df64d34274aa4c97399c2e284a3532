@@ -68,6 +68,24 @@
       "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bde689f_e5c74d82",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T18:14:11Z",
+      "side": 1,
+      "message": "How would you feel about using REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE() to force the refcount to start at 1?",
+      "parentUuid": "537cb7fb_17a09160",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
