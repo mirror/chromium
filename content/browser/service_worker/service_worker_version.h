@@ -70,9 +70,19 @@ class CONTENT_EXPORT ServiceWorkerVersion
     : NON_EXPORTED_BASE(public base::RefCounted<ServiceWorkerVersion>),
       public EmbeddedWorkerInstance::Listener {
  public:
-  using StatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
+  using StatusOnceCallback =
+      base::OnceCallback<void(ServiceWorkerStatusCode)>;
+
+  // TODO: Use StatusOnceCallback wherever possible
+  //       and remove this if it is no longer used
+  using StatusRepeatingCallback =
+      base::RepeatingCallback<void(ServiceWorkerStatusCode)>;
+
+  // TODO: Remove this
+  using StatusCallback = StatusRepeatingCallback;
+
   using SimpleEventCallback =
-      base::Callback<void(ServiceWorkerStatusCode, base::Time)>;
+      base::RepeatingCallback<void(ServiceWorkerStatusCode, base::Time)>;
 
   // Current version status; some of the status (e.g. INSTALLED and ACTIVATED)
   // should be persisted unlike running status.
@@ -203,11 +213,11 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // This returns OK (success) if the worker is already running.
   // |purpose| is recorded in UMA.
   void StartWorker(ServiceWorkerMetrics::EventType purpose,
-                   const StatusCallback& callback);
+                   const StatusRepeatingCallback& callback);
 
   // Stops an embedded worker for this version.
   // This returns OK (success) if the worker is already stopped.
-  void StopWorker(const StatusCallback& callback);
+  void StopWorker(const StatusRepeatingCallback& callback);
 
   // Skips waiting and forces this version to become activated.
   void SkipWaitingFromDevTools();
@@ -229,7 +239,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // |purpose| is used for UMA.
   void RunAfterStartWorker(ServiceWorkerMetrics::EventType purpose,
                            const base::Closure& task,
-                           const StatusCallback& error_callback);
+                           const StatusRepeatingCallback& error_callback);
 
   // Call this while the worker is running before dispatching an event to the
   // worker. This informs ServiceWorkerVersion about the event in progress. The
@@ -245,12 +255,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // killed before the request finishes. In this case, the caller should not
   // call FinishRequest.
   int StartRequest(ServiceWorkerMetrics::EventType event_type,
-                   const StatusCallback& error_callback);
+                   const StatusRepeatingCallback& error_callback);
 
   // Same as StartRequest, but allows the caller to specify a custom timeout for
   // the event, as well as the behavior for when the request times out.
   int StartRequestWithCustomTimeout(ServiceWorkerMetrics::EventType event_type,
-                                    const StatusCallback& error_callback,
+                                    const StatusRepeatingCallback& error_callback,
                                     const base::TimeDelta& timeout,
                                     TimeoutBehavior timeout_behavior);
 
@@ -474,7 +484,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   };
 
   struct PendingRequest {
-    PendingRequest(const StatusCallback& error_callback,
+    PendingRequest(const StatusRepeatingCallback& error_callback,
                    base::Time time,
                    const base::TimeTicks& time_ticks,
                    ServiceWorkerMetrics::EventType event_type);
@@ -483,7 +493,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
     // ------------------------------------------------------------------------
     // For all requests. Set by StartRequest.
     // ------------------------------------------------------------------------
-    StatusCallback error_callback;
+    StatusRepeatingCallback error_callback;
     base::Time start_time;
     base::TimeTicks start_time_ticks;
     ServiceWorkerMetrics::EventType event_type;
@@ -631,7 +641,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
       ServiceWorkerMetrics::EventType purpose,
       Status prestart_status,
       bool is_browser_startup_complete,
-      const StatusCallback& callback,
+      const StatusRepeatingCallback& callback,
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration);
   void StartWorkerInternal();
@@ -717,8 +727,8 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   Status status_ = NEW;
   std::unique_ptr<EmbeddedWorkerInstance> embedded_worker_;
-  std::vector<StatusCallback> start_callbacks_;
-  std::vector<StatusCallback> stop_callbacks_;
+  std::vector<StatusRepeatingCallback> start_callbacks_;
+  std::vector<StatusRepeatingCallback> stop_callbacks_;
   std::vector<base::Closure> status_change_callbacks_;
 
   // Holds in-flight requests, including requests due to outstanding push,
