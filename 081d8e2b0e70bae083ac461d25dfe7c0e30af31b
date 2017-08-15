@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b3dbc04_2bd71d45",
+        "filename": "third_party/ots/include/opentype-sanitiser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-15T02:07:12Z",
+      "side": 1,
+      "message": "Not related to this CL but I\u0027m wondering this change is okay...",
+      "revId": "081d8e2b0e70bae083ac461d25dfe7c0e30af31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
