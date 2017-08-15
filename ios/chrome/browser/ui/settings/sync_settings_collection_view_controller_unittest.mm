@@ -191,7 +191,8 @@ class SyncSettingsCollectionViewControllerTest
   CollectionViewController* InstantiateController() override {
     return [[SyncSettingsCollectionViewController alloc]
           initWithBrowserState:chrome_browser_state_.get()
-        allowSwitchSyncAccount:YES];
+        allowSwitchSyncAccount:YES
+                    dispatcher:nil];
   }
 
   SyncSettingsCollectionViewController* CreateSyncController() {

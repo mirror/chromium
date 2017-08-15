@@ -95,7 +95,8 @@ class ClearBrowsingDataCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[ClearBrowsingDataCollectionViewController alloc]
-        initWithBrowserState:browser_state_.get()];
+        initWithBrowserState:browser_state_.get()
+                  dispatcher:nil];
   }
 
   void SelectItem(int item, int section) {

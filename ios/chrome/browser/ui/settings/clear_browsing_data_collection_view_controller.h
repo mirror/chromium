@@ -27,6 +27,7 @@ extern NSString* const kClearAutofillCellId;
     : SettingsRootCollectionViewController
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
