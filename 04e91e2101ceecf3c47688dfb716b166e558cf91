@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8912c54b_2e42fad5",
+        "filename": "build/android/buildhooks/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T00:19:14Z",
+      "side": 1,
+      "message": "build_hooks_android_impl_deps",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdba651e_969c31c8",
+        "filename": "build/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c51a845f_f1bb4a26",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "433e54c3_6df22e62",
         "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d158cc055e91669edbacf67765888f374cab52d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3622c460_07da68b9",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433e54c3_6df22e62",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a8b86c7_39e87a22",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f257f52a_74af0cb3",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4803351f_509a20cc",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d158cc055e91669edbacf67765888f374cab52d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4236b02a_ba9488b8",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2470,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-15T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4803351f_509a20cc",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
