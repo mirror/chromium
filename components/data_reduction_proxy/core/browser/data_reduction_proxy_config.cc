@@ -449,7 +449,7 @@ void DataReductionProxyConfig::InitializeOnIOThread(
   PopulateAutoLoFiParams();
   AddDefaultProxyBypassRules();
   net::NetworkChangeNotifier::AddIPAddressObserver(this);
-  net::NetworkChangeNotifier::AddConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
 
   // Record accuracy at 3 different intervals. The values used here must remain
   // in sync with the suffixes specified in
@@ -835,10 +835,13 @@ void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
   }
 }
 
-void DataReductionProxyConfig::OnConnectionTypeChanged(
+void DataReductionProxyConfig::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  connection_type_changed_ = true;
+  if (connection_type_ == net::NetworkChangeNotifier::CONNECTION_NONE)
+    return;
+
+  connection_type_changed_ = (type != connection_type_);
   connection_type_ = type;
   FetchWarmupURL();
 }
