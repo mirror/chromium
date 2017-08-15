@@ -16,6 +16,24 @@
       "revId": "49e69313995741ec8423a2f7e4a27bcb8e626773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e2b99f_ba98c0bd",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-15T14:20:20Z",
+      "side": 0,
+      "message": "It\u0027s a good question. The answer is that yes, this patch will change behaviour (but not in the sense you think).\n\nThe biggest change here is that all tasks here become pausable during things like javascript alert dialogs. That wasn\u0027t the case (due to naming confusion, for UnthrottledButBlockable), but this should definitely be fixed.\n\nThe second question is what should we do with deferrable (used to be called \"blockable\") tasks. I believe that we should stick to the same principle — everything goes into \"deferrable\" queue except things that went to unthrottled queue.",
+      "parentUuid": "b3f34fc6_a37ded48",
+      "revId": "49e69313995741ec8423a2f7e4a27bcb8e626773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
