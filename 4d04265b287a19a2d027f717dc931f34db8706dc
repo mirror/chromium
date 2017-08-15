@@ -16,6 +16,24 @@
       "revId": "4d04265b287a19a2d027f717dc931f34db8706dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70998998_7a7c3f21",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T17:34:51Z",
+      "side": 1,
+      "message": "Done. Thanks, I didn\u0027t know about this one.",
+      "parentUuid": "2f157e21_dc21a59e",
+      "revId": "4d04265b287a19a2d027f717dc931f34db8706dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
