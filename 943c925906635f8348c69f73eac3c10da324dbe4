@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7c81ef_6f70fcc5",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T18:22:30Z",
+      "side": 1,
+      "message": "Can you make this a named function with a comment?  It\u0027s not obvious why this implies that a setup was automatic as it requires knowing how PpdReferences are assigned to DetectedPrinters (I think?).",
+      "range": {
+        "startLine": 253,
+        "startChar": 10,
+        "endLine": 253,
+        "endChar": 70
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4903860_86dc08fc",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T18:22:30Z",
+      "side": 1,
+      "message": "It looks like this is now unused and can be deleted.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e0336c_9995e8da",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T18:22:30Z",
+      "side": 1,
+      "message": "This is a bit of a misnomer as manual has meant \"user picked the PPD\" where you\u0027re now defining it as \"user specified IP address\"",
+      "range": {
+        "startLine": 459,
+        "startChar": 48,
+        "endLine": 459,
+        "endChar": 68
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a7adc1_a2d05118",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T18:22:30Z",
+      "side": 1,
+      "message": "Please leave a comment here. This is easy to miss.",
+      "range": {
+        "startLine": 497,
+        "startChar": 1,
+        "endLine": 497,
+        "endChar": 51
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
