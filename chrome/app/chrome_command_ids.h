@@ -12,6 +12,10 @@
 // than the corresponding #define labels.  If you change a given command's
 // number, any NIB files that refer to it will also need to be updated.
 
+// ash::AcceleratorController uses the same ID numbers to communicate with
+// views::BrowserView.  If you change a given command's number,
+// //ash/accelerators/accelerator_table.h will also need to be updated.
+
 // Values below IDC_MinimumLabelValue are reserved for dynamic menu items.
 #define IDC_MinimumLabelValue           4000
 
