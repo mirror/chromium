@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024e26d0_6519c486",
+        "filename": "ui/base/ime/ime_text_span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-15T00:10:30Z",
+      "side": 1,
+      "message": "Is this used at all? Can you try to remove this one?",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "bb7b436922bf7bdc711c6e8f6ccf42c5a207a886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
