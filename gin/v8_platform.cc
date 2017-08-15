@@ -209,6 +209,10 @@ void V8Platform::CallOnBackgroundThread(
 }
 
 void V8Platform::CallOnForegroundThread(v8::Isolate* isolate, v8::Task* task) {
+  // TODO(crbug.com/493452): Convert to DCHECK once the crash around here is
+  // resolved.
+  CHECK(task);
+
   PerIsolateData* data = PerIsolateData::From(isolate);
   if (data->access_mode() == IsolateHolder::kUseLocker) {
     data->task_runner()->PostTask(
