@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6482abc_5094d0f9",
+        "filename": "chrome/app_shim/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T17:39:44Z",
+      "side": 1,
+      "message": "You don\u0027t need the \":base\" here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 19
+      },
+      "revId": "c731f040cd5fc3275631bc6ba18215811016d520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
