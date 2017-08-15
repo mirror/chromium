@@ -16,6 +16,75 @@
       "revId": "747587e281d3ce621d511dc21fb308ca166910ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0027c40f_e179305c",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-15T00:05:14Z",
+      "side": 1,
+      "message": "nit: Is it possible to use \"for(const auto\u0026 origin: *storage_dict)\" to be consistent with the other loops?",
+      "range": {
+        "startLine": 219,
+        "startChar": 12,
+        "endLine": 219,
+        "endChar": 21
+      },
+      "revId": "747587e281d3ce621d511dc21fb308ca166910ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e2f2de_dc04d3d7",
+        "filename": "media/base/android/media_drm_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-15T00:05:14Z",
+      "side": 1,
+      "message": "nit:s/happen/to happen/",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 11
+      },
+      "revId": "747587e281d3ce621d511dc21fb308ca166910ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dfcc7e_7d49b306",
+        "filename": "media/base/android/media_drm_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-15T00:05:14Z",
+      "side": 1,
+      "message": "nit: s/functions/function/",
+      "range": {
+        "startLine": 148,
+        "startChar": 73,
+        "endLine": 148,
+        "endChar": 74
+      },
+      "revId": "747587e281d3ce621d511dc21fb308ca166910ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
