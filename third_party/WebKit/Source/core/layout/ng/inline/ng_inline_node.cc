@@ -24,6 +24,7 @@
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/inline/ng_text_fragment.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
+#include "core/layout/ng/legacy_layout_tree_walking.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_fragment_builder.h"
@@ -263,7 +264,8 @@ LayoutBox* CollectInlinesInternal(
     LayoutBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
   builder->EnterBlock(block->Style());
-  LayoutObject* node = block->FirstChild();
+  // |block| will change here if the child returned isn't a direct child.
+  LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
   LayoutBox* next_box = nullptr;
   while (node) {
     if (node->IsText()) {
@@ -321,7 +323,7 @@ LayoutBox* CollectInlinesInternal(
         node = next;
         break;
       }
-      node = node->Parent();
+      node = GetLayoutObjectForParentNode(node);
       if (node == block) {
         // Set |node| to |nullptr| to break out of the outer loop.
         node = nullptr;

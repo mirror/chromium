@@ -1,0 +1,37 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "core/layout/ng/legacy_layout_tree_walking.h"
+
+#include "core/layout/LayoutMultiColumnFlowThread.h"
+
+namespace blink {
+
+// We still have the legacy layout tree structure, which means that a multicol
+// container LayoutBlockFlow will consist of a LayoutFlowThread child, followed
+// by zero or more siblings of type LayoutMultiColumnSet and/or
+// LayoutMultiColumnSpannerPlaceholder. NG needs to skip these special
+// objects. The actual content is inside the flow thread.
+
+LayoutObject* GetLayoutObjectForFirstChildNode(LayoutBlockFlow*& parent) {
+  LayoutObject* child = parent->FirstChild();
+  if (!child)
+    return nullptr;
+  if (child->IsLayoutFlowThread()) {
+    parent = ToLayoutBlockFlow(child);
+    return child->SlowFirstChild();
+  }
+  return child;
+}
+
+LayoutObject* GetLayoutObjectForParentNode(LayoutObject* object) {
+  LayoutObject* parent = object->Parent();
+  if (!parent)
+    return nullptr;
+  if (parent->IsLayoutFlowThread())
+    return parent->Parent();
+  return parent;
+}
+
+}  // namespace blink
