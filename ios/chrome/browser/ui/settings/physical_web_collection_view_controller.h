@@ -15,7 +15,9 @@
     : SettingsRootCollectionViewController
 
 // The designated initializer.
-- (instancetype)initWithPrefs:(PrefService*)prefs NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPrefs:(PrefService*)prefs
+                   dispatcher:(id<ApplicationCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 

@@ -80,7 +80,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ios::ChromeBrowserState* browserState_;  // weak
 }
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(browserState);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
@@ -88,6 +89,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (self) {
     browserState_ = browserState;
     self.title = l10n_util::GetNSString(IDS_IOS_CONTENT_SETTINGS_TITLE);
+    self.dispatcher = dispatcher;
 
     _prefChangeRegistrar.Init(browserState->GetPrefs());
     _prefObserverBridge.reset(new PrefObserverBridge(self));
@@ -197,7 +199,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
     }
     case ItemTypeSettingsTranslate: {
       UIViewController* controller = [[TranslateCollectionViewController alloc]
-          initWithPrefs:browserState_->GetPrefs()];
+          initWithPrefs:browserState_->GetPrefs()
+             dispatcher:self.dispatcher];
       [self.navigationController pushViewController:controller animated:YES];
       break;
     }
