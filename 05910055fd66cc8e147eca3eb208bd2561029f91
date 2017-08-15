@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ade5998_08618b3e",
+        "filename": "chrome/app/vector_icons/security_alert.icon",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18f4507_b63424da",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2e2f84_1a3f7890",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eec56bf_083049a9",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc2e2f84_1a3f7890",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c5a91b8e_7781b92f",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec3b5beb_5306110a",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efc79196_2c11f014",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93169561_333663c1",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Inlined.",
+      "parentUuid": "efc79196_2c11f014",
+      "range": {
+        "startLine": 156,
+        "startChar": 48,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "18711eda_1f668c90",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58105b21_d6032087",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37114a07_82556132",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Because this dialog has an icon in front of title text. Although TabModalConfirmDialogDelegate  has a GetIcon() function, overriding it doesn\u0027t do anything. Maybe I missed something here. But so far this is the only way I know to show an icon in front of title text.",
+      "parentUuid": "5a738769_6e7a6e54",
+      "range": {
+        "startLine": 18,
+        "startChar": 55,
+        "endLine": 18,
+        "endChar": 76
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af595d88_60ab57d1",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 9
@@ -160,6 +304,30 @@
       "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0dda787_db25add0",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "af595d88_60ab57d1",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "49bde438_078c7cbf",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "GetTitle() and GetDialogMessage() are pure virtual functions in TabModalConfirmDialogDelegate that need to be overriden anyway, so I used them as helper function in the Init().\n\nGetIcon() is not needed. Removed.",
+      "parentUuid": "4ea239b8_ceccd038",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eea5438_dd878e61",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 9
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "b1d16662_d232e420",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eea5438_dd878e61",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce9e25b_3b69cb60",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 9
@@ -229,6 +445,30 @@
       "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd8dadf_1a381a6a",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-15T23:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ce9e25b_3b69cb60",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "05910055fd66cc8e147eca3eb208bd2561029f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
