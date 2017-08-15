@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "200bf9fb_24741927",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-15T01:32:09Z",
+      "side": 1,
+      "message": "Re: overhead, is SetView() called in a common codepath? I looked around and it doesn\u0027t seem like it would cause overhead on real pages. I think it would be easier to understand this code if we don\u0027t have to special-case the replaced case and just always deregister when the view changes. If view changes without registration changes are common though, LGTM for this patch.",
+      "parentUuid": "36396288_5d3a7e68",
+      "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "883f1c79_2ca0d2b9",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 3
