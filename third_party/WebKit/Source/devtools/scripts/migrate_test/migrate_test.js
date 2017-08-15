@@ -230,7 +230,7 @@ function transformTestScript(
   if (domFixture) {
     headerLines.push(createAwaitExpressionNode(`await TestRunner.loadHTML(\`
 ${domFixture.split('\n').map(line => '    ' + line).join('\n')}
-  \`)`));
+\`);`));
   }
 
   stylesheetPaths.forEach(p => {
@@ -260,7 +260,7 @@ ${domFixture.split('\n').map(line => '    ' + line).join('\n')}
   if (nonTestCode.trim()) {
     headerLines.push((createAwaitExpressionNode(`await TestRunner.evaluateInPagePromise(\`
   ${nonTestCode}
-  \`)`)));
+\`);`)));
   }
 
   headerLines.push(createNewLineNode());
@@ -299,7 +299,7 @@ function processScriptCode(code, javascriptFixtures, onloadFunctionName) {
                             .replace(/\s*runTest\(\);?\s*/, '');
 
   javascriptFixtures.push(createAwaitExpressionNode(`await TestRunner.evaluateInPagePromise(\`${formattedCode}
-  \`)`));
+\`);`));
   return;
 }
 
@@ -341,7 +341,7 @@ function print(ast) {
    * Not using clang-format because certain tests look bad when formatted by it.
    * Recast pretty print is smarter about preserving existing spacing.
    */
-  let code = recast.prettyPrint(ast, {tabWidth: 2, wrapColumn: 120, quote: 'single'}).code;
+  let code = recast.print(ast).code;
   code = code.replace(/(\/\/\#\s*sourceURL=[\w-]+)\.html/, '$1.js');
   code = code.replace(/\s*\$\$SECRET_IDENTIFIER_FOR_LINE_BREAK\$\$\(\);/g, '\n');
   const copyrightedCode = copyrightNotice + code + '\n';
@@ -448,7 +448,10 @@ function createExpressionNode(code) {
  * Hack to quickly create an AST node
  */
 function createAwaitExpressionNode(code) {
-  return recast.parse(`(async function(){${code}})`).program.body[0].expression.body.body[0];
+  code = code.split('\n').map(line => line.trimRight()).join('\n');
+  var prettyPrintedCode =
+      recast.prettyPrint(recast.parse(`(async function(){${code}});`)).code.split('    ').join('  ');
+  return recast.parse(prettyPrintedCode).program.body[0].expression.body.body[0];
 }
 
 function createNewLineNode() {
