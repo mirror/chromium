@@ -201,7 +201,7 @@
 #define PACKAGE_NAME "google-perftools"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "google-perftools 1.7"
+#define PACKAGE_STRING "google-perftools 2.2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "google-perftools"
@@ -210,7 +210,7 @@
 #undef PACKAGE_URL
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.7"
+#define PACKAGE_VERSION "2.2"
 
 /* How to access the PC from a struct ucontext */
 /* TODO(asharif): configure.ac should be changed such that this define gets
@@ -249,7 +249,7 @@
 #define STL_NAMESPACE std
 
 /* Version number of package */
-#define VERSION "1.7"
+#define VERSION "2.2"
 
 /* C99 says: define this to get the PRI... macros from stdint.h */
 #ifndef __STDC_FORMAT_MACROS
