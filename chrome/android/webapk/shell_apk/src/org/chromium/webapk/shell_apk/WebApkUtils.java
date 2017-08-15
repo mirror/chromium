@@ -150,6 +150,20 @@ public class WebApkUtils {
             return null;
         }
 
+        int availableBrowserCounter = 0;
+        String lastSupportedBrowser = null;
+        for (String packageName : installedBrowsers) {
+            if (availableBrowserCounter > 1) break;
+            if (sBrowsersSupportingWebApk.contains(packageName)) {
+                availableBrowserCounter++;
+                lastSupportedBrowser = packageName;
+            }
+        }
+
+        if (availableBrowserCounter == 1) {
+            return lastSupportedBrowser;
+        }
+
         // Gets the package name of the default browser on the Android device.
         // TODO(hanxi): Investigate the best way to know which browser supports WebAPKs.
         String defaultBrowser = getDefaultBrowserPackageName(context.getPackageManager());
