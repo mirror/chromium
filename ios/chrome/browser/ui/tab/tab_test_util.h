@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_SHARED_CHROME_BROWSER_UI_TAB_TAB_TEST_UTIL_H_
-#define IOS_SHARED_CHROME_BROWSER_UI_TAB_TAB_TEST_UTIL_H_
+#ifndef IOS_CHROME_BROWSER_UI_TAB_TAB_TEST_UTIL_H_
+#define IOS_CHROME_BROWSER_UI_TAB_TAB_TEST_UTIL_H_
 
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
 
@@ -22,4 +22,4 @@ class TabNavigationManager : public web::TestNavigationManager {
   bool has_loaded_url_;
 };
 
-#endif  // IOS_SHARED_CHROME_BROWSER_UI_TAB_TAB_TEST_UTIL_H_
+#endif  // IOS_CHROME_BROWSER_UI_TAB_TAB_TEST_UTIL_H_

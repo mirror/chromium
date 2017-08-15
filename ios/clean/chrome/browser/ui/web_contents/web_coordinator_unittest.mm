@@ -5,8 +5,8 @@
 #import "ios/clean/chrome/browser/ui/web_contents/web_coordinator.h"
 
 #include "base/memory/ptr_util.h"
+#import "ios/chrome/browser/ui/tab/tab_test_util.h"
 #import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
-#import "ios/shared/chrome/browser/ui/tab/tab_test_util.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
