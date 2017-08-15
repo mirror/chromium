@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b033f688_b96bc7cf",
+        "filename": "third_party/WebKit/Source/core/html/HTMLElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-08-15T19:10:47Z",
+      "side": 1,
+      "message": "nit: move this one-off to use your generic mechanism too?",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 14
+      },
+      "revId": "2f2337e328eb4b400061c9e0c906353e836fe849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7792d11f_cbffff6a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-08-15T19:10:47Z",
+      "side": 1,
+      "message": "If you\u0027re designing this as a generic (not-aria-specific) mechanism then perhaps it shouldn\u0027t be inside the else block?",
+      "revId": "2f2337e328eb4b400061c9e0c906353e836fe849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
