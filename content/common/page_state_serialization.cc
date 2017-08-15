@@ -765,7 +765,8 @@ ExplodedPageState::ExplodedPageState() {
 ExplodedPageState::~ExplodedPageState() {
 }
 
-bool DecodePageState(const std::string& encoded, ExplodedPageState* exploded) {
+int DecodePageStateInternal(const std::string& encoded,
+                            ExplodedPageState* exploded) {
   *exploded = ExplodedPageState();
 
   if (encoded.empty())
@@ -773,7 +774,16 @@ bool DecodePageState(const std::string& encoded, ExplodedPageState* exploded) {
 
   SerializeObject obj(encoded.data(), static_cast<int>(encoded.size()));
   ReadPageState(&obj, exploded);
-  return !obj.parse_error;
+  return obj.parse_error ? -1 : obj.version;
+}
+
+bool DecodePageState(const std::string& encoded, ExplodedPageState* exploded) {
+  return DecodePageStateInternal(encoded, exploded) != -1;
+}
+
+int DecodePageStateForTesting(const std::string& encoded,
+                              ExplodedPageState* exploded) {
+  return DecodePageStateInternal(encoded, exploded);
 }
 
 static void EncodePageStateInternal(const ExplodedPageState& exploded,

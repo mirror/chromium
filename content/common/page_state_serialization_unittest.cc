@@ -227,7 +227,7 @@ class PageStateSerializationTest : public testing::Test {
         kPresetDeviceScaleFactor,
         &output));
 #else
-    EXPECT_TRUE(DecodePageState(encoded, &output));
+    EXPECT_EQ(version, DecodePageStateForTesting(encoded, &output));
 #endif
 
     ExplodedPageState expected;
