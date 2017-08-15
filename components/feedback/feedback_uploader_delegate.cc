@@ -61,8 +61,7 @@ void FeedbackUploaderDelegate::OnURLFetchComplete(
       error_stream << "Unknown error: HTTP response code " << response_code;
     }
 
-    if (should_retry)
-      error_callback_.Run(pending_report_);
+    error_callback_.Run(pending_report_, should_retry);
   }
 
   LOG(WARNING) << "FEEDBACK: Submission to feedback server ("

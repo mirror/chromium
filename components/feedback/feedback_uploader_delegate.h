@@ -13,8 +13,13 @@
 
 namespace feedback {
 
+// Type of the callback that gets invoked when uploading a feedback report
+// fails. |report| is the feedback report that failed to be uploaded.
+// |should_retry| is set to true when it's OK to retry sending the report; e.g.
+// when the failure is not a client error and retries is likely to fail again.
 using ReportFailureCallback =
-    base::Callback<void(scoped_refptr<FeedbackReport>)>;
+    base::Callback<void(scoped_refptr<FeedbackReport> report,
+                        bool should_retry)>;
 
 // FeedbackUploaderDelegate is a simple HTTP uploader for a feedback report.
 // When finished, it runs the appropriate callback passed in via the

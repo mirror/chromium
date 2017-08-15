@@ -67,7 +67,7 @@ class MockFeedbackUploader : public FeedbackUploaderChrome {
     dispatched_reports_count_++;
 
     if (simulate_failure_)
-      OnReportUploadFailure(report);
+      OnReportUploadFailure(report, true /* should_retry */);
     else
       OnReportUploadSuccess();
 
