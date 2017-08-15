@@ -89,6 +89,10 @@ def main():
   parser.add_argument('--resource-whitelist',
                       help='Merge all resource whitelists into a single file.',
                       metavar='PATH')
+  parser.add_argument('--strip-debug',
+                      help=('Strip debug info of unstripped symbols file'
+                            'to reduce size and make it easier to upload'),
+                      action='store_true')
   parser.add_argument('command', nargs='+',
                       help='Linking command')
   args = parser.parse_args()
@@ -121,6 +125,9 @@ def main():
 
   # Finally, strip the linked shared object file (if desired).
   if args.strip:
+    if args.strip_debug:
+      subprocess.check_call(wrapper_utils.CommandToRun(
+        [args.strip, '--strip-debug', args.sofile]))
     result = subprocess.call(wrapper_utils.CommandToRun(
         [args.strip, '--strip-unneeded', '-o', args.output, args.sofile]))
 
