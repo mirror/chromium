@@ -258,6 +258,30 @@
       "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaba578_2235b1a4",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-15T06:09:30Z",
+      "side": 1,
+      "message": "Oops.. I\u0027ve changed line 729 instead of this. Now it\u0027s really done.",
+      "parentUuid": "2bfc75d6_7f9be27d",
+      "range": {
+        "startLine": 1036,
+        "startChar": 9,
+        "endLine": 1036,
+        "endChar": 18
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
