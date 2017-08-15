@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ef69e2_7e357484",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-15T15:24:41Z",
+      "side": 1,
+      "message": "This is really gross, and crbug.com/681867 has no specific milestone.  Any idea how long this will last for?",
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
