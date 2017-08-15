@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1b059bf_bea1fd49",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8462b1_f68ef9c7",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55145aa2_b09f90c6",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 4
@@ -30,6 +48,41 @@
       "writtenOn": "2017-08-15T18:23:58Z",
       "side": 1,
       "message": "I don\u0027t think this is guaranteed at all. A misbehaving process could send a message with no space for extra header bytes, in which case this call will receive a null extra_header.",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31407623_820b0524",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T22:32:07Z",
+      "side": 1,
+      "message": "Wouldn\u0027t |extra_header_size| then be zero, though, so the |handles_size \u003e extra_header_size| check above will cause us to return false immediately before this check?  And we shouldn\u0027t see this API called at all if there are no handles in the incoming message.\n\nTurned this into an earlier early-exit condition.",
+      "parentUuid": "55145aa2_b09f90c6",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8ba2df_b90f5b80",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T22:32:07Z",
+      "side": 1,
+      "message": "This mirrors a check in the POSIX implementation; is there a reason that we don\u0027t check for the two values actually being equal?  I\u0027d expect that if they differ then something fishy is going on?",
       "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
