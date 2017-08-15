@@ -233,6 +233,10 @@ void TestWebState::SetCurrentURL(const GURL& url) {
   url_ = url;
 }
 
+void TestWebState::SetTitle(const base::string16& title) {
+  title_ = title;
+}
+
 void TestWebState::SetTrustLevel(URLVerificationTrustLevel trust_level) {
   trust_level_ = trust_level;
 }
