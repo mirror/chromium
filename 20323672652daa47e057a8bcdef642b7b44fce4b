@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4d0886c_b0df5f76",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T00:49:24Z",
+      "side": 1,
+      "message": "We need to populate layer_id_map_ for both SPv1 and SPv2, I think, since it\u0027s used by SynchronizeTreesInternal:\n\nhttps://cs.chromium.org/chromium/src/cc/trees/tree_synchronizer.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d40",
+      "parentUuid": "77a0219e_2e8345ec",
+      "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8da9c0f1_f372ec80",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T23:23:48Z",
       "side": 1,
       "message": "I think this makes sense but I\u0027m unsure of the bigger picture. Why don\u0027t we need to do the unregistration process anytime PaintArtifactCompostitor is destroyed? In other words, when would SetView(nullptr) not want to unregister the layer element ids?\n\nCould the PaintArtifactCompostitor destructor DCHECK that there are no layers with element ids left registered?",
+      "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36396288_5d3a7e68",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T00:49:24Z",
+      "side": 1,
+      "message": "I think you\u0027re right that we\u0027d be fine unregistering any time PAC is destroyed, but the issue is where the best place to do that is. I didn\u0027t want to add to SetParentVisible(false) or DetachLayout since those are called in many other situations than this one.\n\nI have yet to see the dtor actually get called, probably because it\u0027s garbage collected and I\u0027ve not triggered a GC, and we do need to know that the elements will have been unregistered before we proceed on to animation ticking.\n\nI don\u0027t think it would ever be problematic for SetView(nullptr) to unregister the layer element ids, but it could be unnecessary overhead since I\u0027ve only seen it cause a crash for layout tests with the Blink TestRunner OnReset.\n\nAdded DCHECK to ~PAC, but note that I expect sometimes (potentially frequently?) we may shut down a Chrome process and things get killed and the dtor still won\u0027t be called so the value is somewhat limited, and (b) this code path (when we know we\u0027re replacing a view) is the only one I know of currently where the unregistering of element ids is necessary, and then only maybe for the Blink test runner.",
+      "parentUuid": "8da9c0f1_f372ec80",
       "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d74fc03_7752eab2",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T00:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883f1c79_2ca0d2b9",
+      "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
