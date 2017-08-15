@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64208429_3bf4ccab",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T21:27:30Z",
+      "side": 1,
+      "message": "Maybe std::move here also? wonder if we might end up keeping the state alive for longer than needed.",
+      "range": {
+        "startLine": 203,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 48
+      },
+      "revId": "981047410972c17ac7a41cab805a493c883f657a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753aa220_3255250c",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T21:27:30Z",
+      "side": 1,
+      "message": "This method actually tries to merge the dumps. ie, takes much longer because it checks for conflicts between the dumps from one to another.\n\nSince we are looking at move here, why not do std::move() of all the members.\nI am not sure if the compiler will let you do it, but can we just do \u003d default for both these cases, which would just move each member efficiently I believe.\nIf not, you can just do a std::move or swap on each member.",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 18
+      },
+      "revId": "981047410972c17ac7a41cab805a493c883f657a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
