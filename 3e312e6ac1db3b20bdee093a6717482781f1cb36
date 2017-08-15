@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e23192_8dd5762b",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:35:46Z",
+      "side": 1,
+      "message": "nit: char kName[]",
+      "range": {
+        "startLine": 35,
+        "startChar": 25,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "3e312e6ac1db3b20bdee093a6717482781f1cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e6bffd_45e1b78a",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:35:46Z",
+      "side": 1,
+      "message": "nit:\n\n // Next MinVersion: 1",
+      "revId": "3e312e6ac1db3b20bdee093a6717482781f1cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
