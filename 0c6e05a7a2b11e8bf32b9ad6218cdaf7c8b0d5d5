@@ -105,6 +105,24 @@
       "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e53d2ef_8cbf0183",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T07:30:47Z",
+      "side": 1,
+      "message": "Thanks for your detail explanation. I think I can understand what you want to mention here.\n\nI\u0027m guessing the underlying problem causing the wrong ordering is the race condition of the IPCs (DidSkipWaiting and DispatchActivateEvent) rather than setTimeout.\nAh, or, if the test doesn\u0027t have another active worker, delayed skipWaiting() is just useless since the installing process immediately goes to the activation just after the end of install event. \n\nCould you check the code like the following?\n--\noninstall \u003d e \u003d\u003e {\n  e.waitUntil(new Promise(resolve \u003d\u003e {\n    setTimeout(() \u003d\u003e {\n      self.skipWaiting().then(resolve);\n    }, 0);\n  }));\n}",
+      "parentUuid": "4dbc2525_f20f1b03",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
