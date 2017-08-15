@@ -454,7 +454,7 @@ IN_PROC_BROWSER_TEST_F(PolicyPrefsTest, PolicyToPrefsMapping) {
       if (!(*test_case)->IsSupported() || pref_mappings.empty())
         continue;
 
-      LOG(INFO) << "Testing policy: " << policy->first;
+      SCOPED_TRACE(policy->first);
 
       for (const auto& pref_mapping : pref_mappings) {
         // Skip Chrome OS preferences that use a different backend and cannot be
