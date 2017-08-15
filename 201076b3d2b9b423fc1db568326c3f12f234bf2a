@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "755d8d17_ef03eb93",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:33:03Z",
+      "side": 1,
+      "message": "nit: Do we need this?",
+      "range": {
+        "startLine": 93,
+        "startChar": 1,
+        "endLine": 93,
+        "endChar": 8
+      },
+      "revId": "201076b3d2b9b423fc1db568326c3f12f234bf2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
