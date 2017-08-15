@@ -52,6 +52,7 @@ class ProguardCmdBuilder(object):
     self._libraries = None
     self._injars = None
     self._configs = None
+    self._negative_configs = None
     self._outjar = None
     self._cmd = None
     self._verbose = False
@@ -90,9 +91,12 @@ class ProguardCmdBuilder(object):
   def configs(self, paths):
     assert self._cmd is None
     assert self._configs is None
-    for p in paths:
+    # TODO(agrieve): Remove negative configs logic once obfuscation is fully
+    #     enabled.
+    self._negative_configs = [p[:-1] for p in paths if p.endswith('!')]
+    self._configs = [p for p in paths if not p.endswith('!')]
+    for p in self._configs:
       assert os.path.exists(p), p
-    self._configs = paths
 
   def verbose(self, verbose):
     assert self._cmd is None
@@ -115,6 +119,9 @@ class ProguardCmdBuilder(object):
     if self._tested_apk_info_path:
       tested_apk_info = build_utils.ReadJson(self._tested_apk_info_path)
       self._configs += tested_apk_info['configs']
+
+    for path in self._negative_configs:
+      self._configs.remove(path)
 
     if self._mapping:
       cmd += [

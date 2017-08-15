@@ -47,7 +47,6 @@ public class IntentionalCrashTest {
         }
     }
 
-    @DisabledTest
     @Test
     public void testJavaCrash() {
         try {

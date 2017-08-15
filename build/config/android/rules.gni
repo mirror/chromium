@@ -2091,9 +2091,9 @@ if (enable_java_templates) {
           ":$process_resources_target",
         ]
         inputs = [
-                   _build_config,
-                   _jar_path,
-                 ] + _proguard_configs
+          _build_config,
+          _jar_path,
+        ]
 
         output_jar_path = _proguard_output_jar_path
         _rebased_proguard_configs =
@@ -2595,6 +2595,7 @@ if (enable_java_templates) {
                                  "data_deps",
                                  "deps",
                                  "ignore_all_data_deps",
+                                 "proguard_enabled",
                                  "public_deps",
                                ])
         test_name = invoker.target_name
@@ -2645,6 +2646,7 @@ if (enable_java_templates) {
           proguard_configs = []
         }
         proguard_configs += [ "//testing/android/proguard_for_test.flags" ]
+        data_deps += [ "//build/android/stacktrace:java_deobfuscate" ]
       }
 
       dist_ijar_path = _dist_ijar_path
