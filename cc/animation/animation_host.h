@@ -43,8 +43,8 @@ enum class ThreadInstance { MAIN, IMPL };
 // (PushPropertiesTo).
 // An AnimationHost talks to its correspondent LayerTreeHost via
 // MutatorHostClient interface.
-class CC_ANIMATION_EXPORT AnimationHost
-    : public NON_EXPORTED_BASE(MutatorHost) {
+class CC_ANIMATION_EXPORT AnimationHost : public NON_EXPORTED_BASE(MutatorHost),
+                                          public LayerTreeMutatorClient {
  public:
   using ElementToAnimationsMap =
       std::unordered_map<ElementId,
@@ -92,6 +92,9 @@ class CC_ANIMATION_EXPORT AnimationHost
 
   void SetMutatorHostClient(MutatorHostClient* client) override;
 
+  void SetLayerTreeMutator(std::unique_ptr<LayerTreeMutator> mutator) override;
+  // LayerTreeMutator* mutator() { return mutator_.get(); }
+
   void PushPropertiesTo(MutatorHost* host_impl) override;
 
   void SetSupportsScrollAnimations(bool supports_scroll_animations) override;
@@ -99,8 +102,11 @@ class CC_ANIMATION_EXPORT AnimationHost
 
   bool ActivateAnimations() override;
   bool TickAnimations(base::TimeTicks monotonic_time) override;
+  void TickScrollAnimations(base::TimeTicks monotonic_time) override;
   bool UpdateAnimationState(bool start_ready_animations,
                             MutatorEvents* events) override;
+
+  base::Closure TakeMutations() override;
 
   std::unique_ptr<MutatorEvents> CreateEvents() override;
   void SetAnimationEvents(std::unique_ptr<MutatorEvents> events) override;
@@ -184,6 +190,9 @@ class CC_ANIMATION_EXPORT AnimationHost
   const PlayersList& ticking_players_for_testing() const;
   const ElementToAnimationsMap& element_animations_for_testing() const;
 
+  // LayerTreeMutatorClient.
+  void SetNeedsMutate() override;
+
  private:
   explicit AnimationHost(ThreadInstance thread_instance);
 
@@ -192,6 +201,9 @@ class CC_ANIMATION_EXPORT AnimationHost
   void PushPropertiesToImplThread(AnimationHost* host_impl);
 
   void EraseTimeline(scoped_refptr<AnimationTimeline> timeline);
+
+  bool NeedsTickAnimationPlayers() const;
+  bool NeedsTickMutator() const;
 
   ElementToAnimationsMap element_to_animations_map_;
   PlayersList ticking_players_;
@@ -210,6 +222,9 @@ class CC_ANIMATION_EXPORT AnimationHost
 
   bool supports_scroll_animations_;
   bool needs_push_properties_;
+  bool mutator_needs_mutate_;
+
+  std::unique_ptr<LayerTreeMutator> mutator_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationHost);
 };
