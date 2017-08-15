@@ -1,0 +1,67 @@
+Tests asynchronous call stacks for async functions.
+
+Set timer for test function.
+Captured call stacks in no particular order:
+Call stack:
+    0) doTestChainedPromises (async-callstack-async-await2.js:65)
+    [async function]
+    0) testFunctionTimeout (async-callstack-async-await2.js:51)
+    [setTimeout]
+    0) testFunction (async-callstack-async-await2.js:45)
+    [setTimeout]
+    0) scheduleTestFunction <omitted>
+    <... skipped remaining frames ...>
+
+Call stack:
+    0) doTestChainedPromises (async-callstack-async-await2.js:67)
+    [async function]
+    0) testFunctionTimeout (async-callstack-async-await2.js:51)
+    [setTimeout]
+    0) testFunction (async-callstack-async-await2.js:45)
+    [setTimeout]
+    0) scheduleTestFunction <omitted>
+    <... skipped remaining frames ...>
+
+Call stack:
+    0) doTestChainedPromises (async-callstack-async-await2.js:69)
+    [async function]
+    0) testFunctionTimeout (async-callstack-async-await2.js:51)
+    [setTimeout]
+    0) testFunction (async-callstack-async-await2.js:45)
+    [setTimeout]
+    0) scheduleTestFunction <omitted>
+    <... skipped remaining frames ...>
+
+Call stack:
+    0) doTestChainedPromises (async-callstack-async-await2.js:71)
+    [async function]
+    0) testFunctionTimeout (async-callstack-async-await2.js:51)
+    [setTimeout]
+    0) testFunction (async-callstack-async-await2.js:45)
+    [setTimeout]
+    0) scheduleTestFunction <omitted>
+    <... skipped remaining frames ...>
+
+Call stack:
+    0) thenCallback (async-callstack-async-await2.js:55)
+    1) doTestChainedPromises (async-callstack-async-await2.js:72)
+    [async function]
+    0) testFunctionTimeout (async-callstack-async-await2.js:51)
+    [setTimeout]
+    0) testFunction (async-callstack-async-await2.js:45)
+    [setTimeout]
+    0) scheduleTestFunction <omitted>
+    <... skipped remaining frames ...>
+
+Call stack:
+    0) thenCallback (async-callstack-async-await2.js:55)
+    1) doTestChainedPromisesJSON (async-callstack-async-await2.js:83)
+    [async function]
+    0) testFunctionTimeout (async-callstack-async-await2.js:51)
+    [setTimeout]
+    0) testFunction (async-callstack-async-await2.js:45)
+    [setTimeout]
+    0) scheduleTestFunction <omitted>
+    <... skipped remaining frames ...>
+
+
