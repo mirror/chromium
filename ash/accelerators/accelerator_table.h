@@ -51,6 +51,11 @@ namespace ash {
 //
 // Please put if/def sections at the end of the bare section and keep the list
 // within each section in alphabetical order.
+//
+// ash::AcceleratorController uses the integer forms of several
+// AcceleratorAction (with specified initializers) to communicate with
+// views::BrowserView. These integer values need to be consistent with
+// their cooresponding browser command id in //chrome/app/chrome_command_ids.h.
 enum AcceleratorAction {
   BRIGHTNESS_DOWN,
   BRIGHTNESS_UP,
@@ -95,19 +100,19 @@ enum AcceleratorAction {
   MEDIA_NEXT_TRACK,
   MEDIA_PLAY_PAUSE,
   MEDIA_PREV_TRACK,
-  NEW_INCOGNITO_WINDOW,
-  NEW_TAB,
-  NEW_WINDOW,
+  NEW_INCOGNITO_WINDOW = 34001,
+  NEW_TAB = 34014,
+  NEW_WINDOW = 34000,
   NEXT_IME,
   OPEN_CROSH,
-  OPEN_FEEDBACK_PAGE,
+  OPEN_FEEDBACK_PAGE = 40008,
   OPEN_FILE_MANAGER,
   OPEN_GET_HELP,
   POWER_PRESSED,
   POWER_RELEASED,
   PREVIOUS_IME,
   PRINT_UI_HIERARCHIES,
-  RESTORE_TAB,
+  RESTORE_TAB = 34028,
   ROTATE_SCREEN,
   ROTATE_WINDOW,
   SCALE_UI_DOWN,
@@ -117,7 +122,7 @@ enum AcceleratorAction {
   SHOW_KEYBOARD_OVERLAY,
   SHOW_MESSAGE_CENTER_BUBBLE,
   SHOW_STYLUS_TOOLS,
-  SHOW_TASK_MANAGER,
+  SHOW_TASK_MANAGER = 40006,
   START_VOICE_INTERACTION,
   SUSPEND,
   SWAP_PRIMARY_DISPLAY,
