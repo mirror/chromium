@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e39db45_ed153ad3",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T19:46:17Z",
+      "side": 1,
+      "message": "This is not this CL\u0027s problem. But we can just fix it in this CL as this function is touched.\n\nTabManagerStatsCollector also has is_session_restore_loading_tabs_. Which one should be used? If both are fine. Let\u0027s just use one version to be consistent.",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a885ca76_cf774c63",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T19:46:17Z",
+      "side": 1,
+      "message": "s/data/new_data/",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d1f21b_46b7bfdc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T19:46:17Z",
+      "side": 1,
+      "message": "Can you also upload UMA for background tab open case?",
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55e826e_b33823cf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T19:46:17Z",
+      "side": 1,
+      "message": "This should not be inside IsSessionRestoreLoadingTabs(), so that bg tab open can also use it.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 5
+      },
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccb73fd_3c275968",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T19:46:17Z",
+      "side": 1,
+      "message": "You can also upload UMA for background tab open here. Just use TabManager::IsLoadingBackgroundTabs() for now. I will change this in my CL if your CL lands first.",
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0894ae5a_fa68f941",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T19:46:17Z",
+      "side": 1,
+      "message": "Comments needed to explain why we need a map, e.g., there can be multiple foreground tabs because there can be multiple browser windows, etc.",
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
