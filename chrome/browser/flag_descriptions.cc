@@ -363,6 +363,11 @@ const char kEnableMaterialDesignFeedbackName[] =
 const char kEnableMaterialDesignFeedbackDescription[] =
     "If enabled, reporting an issue will load the Material Design feedback UI.";
 
+const char kEnablePolicyAdminPageName[] = "Enable policy-admin page";
+const char kEnablePolicyAdminPageDescription[] =
+    "If enabled, the chrome://policy-admin URL loads a page for managing "
+    "policies.";
+
 const char kEnableMidiManagerDynamicInstantiationName[] =
     "MIDIManager dynamic instantiation for Web MIDI.";
 const char kEnableMidiManagerDynamicInstantiationDescription[] =

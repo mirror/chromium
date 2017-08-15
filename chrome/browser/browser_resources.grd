@@ -123,6 +123,9 @@
       <include name="IDR_BLUETOOTH_INTERNALS_SNACKBAR_JS" file="resources\bluetooth_internals\snackbar.js" type="BINDATA" compress="gzip" />
       <include name="IDR_BLUETOOTH_INTERNALS_VALUE_CONTROL_JS" file="resources\bluetooth_internals\value_control.js" type="BINDATA" compress="gzip" />
       <include name="IDR_BOOKMARKS_MANIFEST" file="resources\bookmark_manager\manifest.json" type="BINDATA" />
+      <include name="IDR_POLICY_ADMIN_HTML" file="resources\policy_admin.html" flattenhtml="true" allowexternalscript="true" type="BINDATA" />
+      <include name="IDR_POLICY_ADMIN_CSS" file="resources\policy_admin.css" type="BINDATA"/>
+      <include name="IDR_POLICY_ADMIN_JS" file="resources\policy_admin.js" type="BINDATA"/>
       <if expr="is_posix and not is_macosx and not is_ios">
         <include name="IDR_CERTIFICATE_VIEWER_HTML" file="resources\certificate_viewer.html" type="BINDATA" />
         <include name="IDR_CERTIFICATE_VIEWER_JS" file="resources\certificate_viewer.js" type="BINDATA" />
