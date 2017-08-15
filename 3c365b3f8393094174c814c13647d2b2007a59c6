@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba5f250_75885611",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T04:31:06Z",
+      "side": 1,
+      "message": "who calls this function? Clients are not trusted so we should never DCHECK on values that can control.",
+      "revId": "3c365b3f8393094174c814c13647d2b2007a59c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c49b47f_3bcef441",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T04:31:06Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "3c365b3f8393094174c814c13647d2b2007a59c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
