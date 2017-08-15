@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c664b2a_f08c34c4",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "No need for (c) on new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42b1646_90273969",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "The base/ code doesn\u0027t do any uploading. And I think the way we\u0027re thinking of this, we actually want to not *record* the metric based on this - i.e. FactoryGet() would return a no-op object, right?\n\nSo maybe you can name it something like RecordHistogramChecker?",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7082152_28428362",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "What\u0027s the reason for two functions?",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27632e26_19fa7c41",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s for single-line ifs.",
+      "range": {
+        "startLine": 503,
+        "startChar": 38,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9797805_6dcdb744",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "Pass by unique_ptr to indicate transfer of ownership.",
+      "range": {
+        "startLine": 223,
+        "startChar": 59,
+        "endLine": 223,
+        "endChar": 60
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231ba22d_4e9b865d",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "Suggest naming it ShouldRecordHistogram().",
+      "range": {
+        "startLine": 227,
+        "startChar": 14,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1714fd40_3654febc",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "Use unique_ptr",
+      "range": {
+        "startLine": 740,
+        "startChar": 32,
+        "endLine": 740,
+        "endChar": 49
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edfd8db_ad52bd44",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "Suggest putting this file in components/metrics and reference chrome_metrics::kExpiredHistogramsHashes and chrome_metrics::kNumExpiredHistograms when it\u0027s constructed in chrome/browser code (rather than in its own file.)",
+      "range": {
+        "startLine": 414,
+        "startChar": 5,
+        "endLine": 414,
+        "endChar": 31
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6cfbc6_9bcbd306",
+        "filename": "chrome/browser/expired_histograms_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:13:45Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
