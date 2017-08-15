@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e79159_274571e2",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3246,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-15T02:01:01Z",
+      "side": 1,
+      "message": "Add a comment saying this is a speculative fix but we don\u0027t know how GetScrollAnchor can return null here.",
+      "range": {
+        "startLine": 3246,
+        "startChar": 20,
+        "endLine": 3246,
+        "endChar": 28
+      },
+      "revId": "f1a39c084cd7834443c6a6b4e9e115d35686c2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
