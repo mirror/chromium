@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "28847b63_df13e03d",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-15T19:03:13Z",
+      "side": 1,
+      "message": "Actually it has to be a char* because the generated code wants a char*",
+      "parentUuid": "9faf6800_66d142b5",
+      "range": {
+        "startLine": 35,
+        "startChar": 25,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "3e312e6ac1db3b20bdee093a6717482781f1cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9e6bffd_45e1b78a",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 24
