@@ -22,6 +22,30 @@
       "revId": "f64cc4657eea3f720901b4a8a3bfe09327163763",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0aeb97e_c9dbde3b",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-15T18:35:15Z",
+      "side": 1,
+      "message": "Yes, but in practice the window that has shape installed on it also has the shaped targeter and vice versa (when a shape is removed, the targeter is restored to default). Still prudent to check here and the events could be asynchronous so what I said above might be subject to race.",
+      "parentUuid": "cff6eeeb_793bc4b2",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "f64cc4657eea3f720901b4a8a3bfe09327163763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
