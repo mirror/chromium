@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf8cb56_cfb0c3ff",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T21:22:07Z",
+      "side": 1,
+      "message": "Can we use instead of this flag variable:\n\napp_list_animation_duration_ms \nand set it to 0 for test?\n\nBTW. What it the problem to have animation in test?",
+      "range": {
+        "startLine": 986,
+        "startChar": 6,
+        "endLine": 986,
+        "endChar": 41
+      },
+      "revId": "c2ca5f61913b31824afbc59d24c29f987a828cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
