@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82f61092_94483283",
+        "filename": "components/download/public/download_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-15T20:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48e87f06_575a6d9b",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "cf4f559e22defb2ce6b715500e96ec7fa6e5c280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "776df9ba_8fbf7025",
         "filename": "components/download/public/download_metadata.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "cf4f559e22defb2ce6b715500e96ec7fa6e5c280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65d74e6_6bcab737",
+        "filename": "components/download/public/download_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-15T20:44:30Z",
+      "side": 1,
+      "message": "Done, moved after guid. Yeah, it\u0027s better logical sequence.",
+      "parentUuid": "776df9ba_8fbf7025",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "cf4f559e22defb2ce6b715500e96ec7fa6e5c280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
