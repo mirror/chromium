@@ -983,6 +983,12 @@ void AppListView::StartAnimationForState(AppListState target_state) {
   gfx::Rect target_bounds = fullscreen_widget_->GetNativeView()->bounds();
   target_bounds.set_y(target_state_y);
 
+  if (is_for_test_) {
+    // Immediately transition to target state if this class is used for test.
+    fullscreen_widget_->GetNativeView()->SetBounds(target_bounds);
+    Layout();
+  }
+
   std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
       ui::LayerAnimationElement::CreateBoundsElement(
           target_bounds,

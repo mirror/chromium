@@ -185,6 +185,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   int work_area_bottom() const { return work_area_bottom_; }
 
+  void set_is_for_test(bool is_for_test) { is_for_test_ = is_for_test; }
+
  private:
   // A widget observer that is responsible for keeping the AppListView state up
   // to date on closing.
@@ -317,6 +319,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // For UMA and testing. If non-null, triggered when the app list is painted.
   base::Closure next_paint_callback_;
+
+  // Whether this class is used for test.
+  bool is_for_test_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };
