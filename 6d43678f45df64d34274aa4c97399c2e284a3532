@@ -50,6 +50,24 @@
       "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537cb7fb_17a09160",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T18:06:07Z",
+      "side": 1,
+      "message": "Ha this one threw me for a loop on the tsan bots.. So this object is ref counted and binding and passing it to another thread is dangerous inside the constructor... because in the ctor the ref count is 0... but bind it and it is now one.. If the other thread executes before this function returns then the refcount goes to 0 and this object is destroyed..",
+      "parentUuid": "e13f2672_fa349c14",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
