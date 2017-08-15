@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82b00353_6f5f918c",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "o_O\n\nWhy is this not a method?",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534783b5_99a1cdd1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "std::remove_if() ?",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 3
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2948ab_10c91d8c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "Please define helper classes in an anonymous namespace.",
+      "range": {
+        "startLine": 275,
+        "startChar": 9,
+        "endLine": 275,
+        "endChar": 21
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba54983e_a7ea5a11",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "This would be better readable without the nesting (which is unnecessary).\n\nif (result.IsOK())\n  DoSomething1();\n\nif (result.IsOK())\n  DoSomething2();\n\nif (result.IsOK())\n  EverythingIsOK();\nelse\n  HandleError();",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 535,
+        "endChar": 9
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee6dc95_879fa36c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "nit: Again, inconsistency between \"ForTesting\" and \"ForTest\".",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0496a37_297a5b7c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "Ehm... Please just rewrite it as two blocks. I know that I typically suggest avoiding duplication, but repeating EXPECT_FALSE() and push_back() twice is significantly less boilerplate than \n\nfor (int i \u003d 0; i \u003c 2; i++)\n  if (i) ...",
+      "range": {
+        "startLine": 323,
+        "startChar": 4,
+        "endLine": 323,
+        "endChar": 43
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03b3a5f_a206fa75",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-15T16:51:22Z",
+      "side": 1,
+      "message": "Why not -1? :)",
+      "range": {
+        "startLine": 689,
+        "startChar": 18,
+        "endLine": 689,
+        "endChar": 20
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
