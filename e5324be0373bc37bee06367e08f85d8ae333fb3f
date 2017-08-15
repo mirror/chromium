@@ -16,6 +16,24 @@
       "revId": "e5324be0373bc37bee06367e08f85d8ae333fb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbea169_0a243251",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T10:09:14Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "142ec406_b803c8cb",
+      "revId": "e5324be0373bc37bee06367e08f85d8ae333fb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
