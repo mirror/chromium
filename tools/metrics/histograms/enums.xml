@@ -5970,6 +5970,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="35" label="Media engagement setting"/>
   <int value="36" label="Sound setting"/>
   <int value="37" label="Client hints setting"/>
+  <int value="38" label="Sensors setting"/>
+  <int value="39" label="Accessibility events setting"/>
 </enum>
 
 <enum name="ContentTypeParseableResult">
