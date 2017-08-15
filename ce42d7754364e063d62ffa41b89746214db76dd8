@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5fcccf6_e9403023",
+        "filename": "chrome/browser/notifications/notification_display_service_tester.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-15T13:42:51Z",
+      "side": 1,
+      "message": "nit: delete \"being\" unless you really want to make it explicit that the callback is called during the actual adding process.\n\nIf you fix this one then also fix the header file that has the same comment.",
+      "range": {
+        "startLine": 28,
+        "startChar": 59,
+        "endLine": 28,
+        "endChar": 64
+      },
+      "revId": "ce42d7754364e063d62ffa41b89746214db76dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
