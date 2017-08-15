@@ -1477,7 +1477,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   if (self.navigationManagerImpl->GetPendingItem()) {
     // Update the existing pending entry.
     // Typically on PAGE_TRANSITION_CLIENT_REDIRECT.
-    [[self sessionController] updatePendingItem:requestURL];
+    self.navigationManagerImpl->UpdatePendingItemURL(requestURL);
   } else {
     // A new session history entry needs to be created.
     self.navigationManagerImpl->AddPendingItem(
@@ -4458,7 +4458,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
       _documentURL != _lastRegisteredRequestURL) {
     // if |_lastRegisteredRequestURL| is an invalid URL, then |_documentURL|
     // will be "about:blank".
-    [[self sessionController] updatePendingItem:_documentURL];
+    self.navigationManagerImpl->UpdatePendingItemURL(_documentURL);
   }
 
   // If |navigation| is nil (which happens for windows open by DOM), then it
