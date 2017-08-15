@@ -134,6 +134,7 @@ Network.NetworkLogView = class extends UI.VBox {
 
     this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys);
     this._resetSuggestionBuilder();
+    this._filterParser = new TextUtils.FilterParser(Network.NetworkLogView._searchKeys, false /* supportRegex */);
 
     this._dataGrid = this._columns.dataGrid();
     this._setupDataGrid();
@@ -1430,57 +1431,26 @@ Network.NetworkLogView = class extends UI.VBox {
    * @param {string} query
    */
   _parseFilterQuery(query) {
-    var parsedQuery;
-    if (this._textFilterUI.isRegexChecked() && query !== '')
-      parsedQuery = {text: [query], filters: []};
-    else
-      parsedQuery = this._suggestionBuilder.parseQuery(query);
-
-    this._filters = parsedQuery.text.map(this._createTextFilter, this);
-
-    var n = parsedQuery.filters.length;
-    for (var i = 0; i < n; ++i) {
-      var filter = parsedQuery.filters[i];
-      var filterType = /** @type {!Network.NetworkLogView.FilterType} */ (filter.type.toLowerCase());
-      this._filters.push(this._createFilter(filterType, filter.data, filter.negative));
-    }
-  }
-
-  /**
-   * @param {string} text
-   * @return {!Network.NetworkLogView.Filter}
-   */
-  _createTextFilter(text) {
-    var negative = false;
-    /** @type {?RegExp} */
-    var regex;
-    if (!this._textFilterUI.isRegexChecked() && text[0] === '-' && text.length > 1) {
-      negative = true;
-      text = text.substring(1);
-      regex = new RegExp(text.escapeForRegExp(), 'i');
-    } else {
-      regex = this._textFilterUI.regex();
-    }
-
-    var filter = Network.NetworkLogView._requestPathFilter.bind(null, regex);
-    if (negative)
-      filter = Network.NetworkLogView._negativeFilter.bind(null, filter);
-    return filter;
-  }
-
-  /**
-   * @param {!Network.NetworkLogView.FilterType} type
-   * @param {string} value
-   * @param {boolean} negative
-   * @return {!Network.NetworkLogView.Filter}
-   */
-  _createFilter(type, value, negative) {
-    var filter = this._createSpecialFilter(type, value);
-    if (!filter)
-      return this._createTextFilter((negative ? '-' : '') + type + ':' + value);
-    if (negative)
-      return Network.NetworkLogView._negativeFilter.bind(null, filter);
-    return filter;
+    var parsedQuery = this._filterParser.parse(query);
+    var filters = [];
+    var regexChecked = this._textFilterUI.isRegexChecked();
+    parsedQuery.text.forEach(filter => {
+      var source = regexChecked ? filter.data : filter.data.escapeForRegExp();
+      var regex;
+      try {
+        regex = new RegExp(source, 'i');
+      } catch (e) {
+        regex = new RegExp(filter.data.escapeForRegExp(), 'i');
+      }
+      var result = Network.NetworkLogView._requestPathFilter.bind(null, regex);
+      filters.push(filter.negative ? Network.NetworkLogView._negativeFilter.bind(null, result) : result);
+    });
+    parsedQuery.filters.forEach(filter => {
+      var result = this._createSpecialFilter(filter.type.toLowerCase(), filter.data);
+      if (result)
+        filters.push(filter.negative ? Network.NetworkLogView._negativeFilter.bind(null, result) : result);
+    });
+    this._filters = filters;
   }
 
   /**

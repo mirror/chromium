@@ -1,0 +1,157 @@
+This tests a utility's ability to parse filter queries.
+
+Query: text
+Text: [{"data":"text","negative":false}]
+Regex: []
+Filters: []
+
+Query: text with spaces
+Text: [{"data":"text","negative":false},{"data":"with","negative":false},{"data":"spaces","negative":false}]
+Regex: []
+Filters: []
+
+Query: -
+Text: [{"data":"-","negative":false}]
+Regex: []
+Filters: []
+
+Query: -text
+Text: [{"data":"text","negative":true}]
+Regex: []
+Filters: []
+
+Query: //
+Text: [{"data":"//","negative":false}]
+Regex: []
+Filters: []
+
+Query: /regex/
+Text: [{"data":"/regex/","negative":false}]
+Regex: []
+Filters: []
+
+Query: /regex/ /another/
+Text: [{"data":"/regex/","negative":false},{"data":"/another/","negative":false}]
+Regex: []
+Filters: []
+
+Query: /complex/regex/
+Text: [{"data":"/complex/regex/","negative":false}]
+Regex: []
+Filters: []
+
+Query: /regex/ text
+Text: [{"data":"/regex/","negative":false},{"data":"text","negative":false}]
+Regex: []
+Filters: []
+
+Query: key1:foo
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false}]
+
+Query: -key1:foo
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":true}]
+
+Query: key1:foo key2:bar
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false},{"type":"key2","data":"bar","negative":false}]
+
+Query: -key1:foo key2:bar
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":true},{"type":"key2","data":"bar","negative":false}]
+
+Query: key1:foo -key2:bar
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false},{"type":"key2","data":"bar","negative":true}]
+
+Query: -key1:foo -key2:bar
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":true},{"type":"key2","data":"bar","negative":true}]
+
+Query: key1:/regex/
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"/regex/","negative":false}]
+
+Query: key1:foo innerText key2:bar
+Text: [{"data":"innerText","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false},{"type":"key2","data":"bar","negative":false}]
+
+Query: bar key1 foo
+Text: [{"data":"bar","negative":false},{"data":"key1","negative":false},{"data":"foo","negative":false}]
+Regex: []
+Filters: []
+
+Query: bar key1:foo
+Text: [{"data":"bar","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false}]
+
+Query: bar key1:foo baz
+Text: [{"data":"bar","negative":false},{"data":"baz","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false}]
+
+Query: bar key1:foo yek:roo baz
+Text: [{"data":"bar","negative":false},{"data":"yek:roo","negative":false},{"data":"baz","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false}]
+
+Query: bar key1:foo -yek:roo baz
+Text: [{"data":"bar","negative":false},{"data":"yek:roo","negative":true},{"data":"baz","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false}]
+
+Query: bar baz key1:foo goo zoo
+Text: [{"data":"bar","negative":false},{"data":"baz","negative":false},{"data":"goo","negative":false},{"data":"zoo","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"foo","negative":false}]
+
+Query: bar key1:key1:foo
+Text: [{"data":"bar","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"key1:foo","negative":false}]
+
+Query: bar :key1:foo baz
+Text: [{"data":"bar","negative":false},{"data":":key1:foo","negative":false},{"data":"baz","negative":false}]
+Regex: []
+Filters: []
+
+Query: bar -:key1:foo baz
+Text: [{"data":"bar","negative":false},{"data":"-:key1:foo","negative":false},{"data":"baz","negative":false}]
+Regex: []
+Filters: []
+
+Query: bar key1:-foo baz
+Text: [{"data":"bar","negative":false},{"data":"baz","negative":false}]
+Regex: []
+Filters: [{"type":"key1","data":"-foo","negative":false}]
+
+Query: /regex/
+Text: []
+Regex: [{"data":"regex","negative":false}]
+Filters: []
+
+Query: /regex/ /another/
+Text: []
+Regex: [{"data":"regex","negative":false},{"data":"another","negative":false}]
+Filters: []
+
+Query: /complex/regex/
+Text: []
+Regex: [{"data":"complex\\/regex","negative":false}]
+Filters: []
+
+Query: /regex/ text
+Text: [{"data":"text","negative":false}]
+Regex: [{"data":"regex","negative":false}]
+Filters: []
+

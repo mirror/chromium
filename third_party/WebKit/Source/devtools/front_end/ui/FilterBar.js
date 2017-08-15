@@ -173,7 +173,6 @@ UI.TextFilterUI = class extends Common.Object {
   constructor(supportRegex) {
     super();
     this._supportRegex = !!supportRegex;
-    this._regex = null;
 
     this._filterElement = createElement('div');
     this._filterElement.className = 'filter-text-filter';
@@ -210,7 +209,7 @@ UI.TextFilterUI = class extends Common.Object {
    * @return {!Promise<!UI.SuggestBox.Suggestions>}
    */
   _completions(expression, prefix, force) {
-    if (this._suggestionProvider && !this.isRegexChecked())
+    if (this._suggestionProvider)
       return this._suggestionProvider(expression, prefix, force);
     return Promise.resolve([]);
   }
@@ -260,13 +259,6 @@ UI.TextFilterUI = class extends Common.Object {
       this._regexCheckBox.checked = checked;
   }
 
-  /**
-   * @return {?RegExp}
-   */
-  regex() {
-    return this._regex;
-  }
-
   focus() {
     this._filterInputElement.focus();
   }
@@ -280,22 +272,6 @@ UI.TextFilterUI = class extends Common.Object {
   }
 
   _valueChanged() {
-    var filterQuery = this.value();
-
-    this._regex = null;
-    this._filterInputElement.classList.remove('filter-text-invalid');
-    if (filterQuery) {
-      if (this.isRegexChecked()) {
-        try {
-          this._regex = new RegExp(filterQuery, 'i');
-        } catch (e) {
-          this._filterInputElement.classList.add('filter-text-invalid');
-        }
-      } else {
-        this._regex = createPlainTextSearchRegex(filterQuery, 'i');
-      }
-    }
-
     this._dispatchFilterChanged();
   }
 
