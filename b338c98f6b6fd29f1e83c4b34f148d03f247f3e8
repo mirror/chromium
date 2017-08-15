@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d65276_974458ab",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T04:55:33Z",
+      "side": 1,
+      "message": "Could you share the plan a bit more details?\nBecause of the lack of background, it is difficult for me to review.\nSpecifically, what feature/APIs are you implementing/supporting? The linked bug looks also not informative enough to me, unfortunately.\n\nJust according to your commit message, at the moment, I do not think Timer is needed,\nbecause you can just extend power.mojom?\n\nAlso, it sounds a bit weird to me that you\u0027re exposing raw syscalls because they are prohibited in container for security purpose? More precise explanation is appreciated.",
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
