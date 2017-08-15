@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a40d94d0_aa6c491a",
+        "filename": "cc/layers/picture_layer_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T18:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2bf747_0c287cee",
+      "range": {
+        "startLine": 4773,
+        "startChar": 6,
+        "endLine": 4773,
+        "endChar": 24
+      },
+      "revId": "0b82e4bf49d727abd15f555648a0eac25d896e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fceaa3f_bb14afd2",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "0b82e4bf49d727abd15f555648a0eac25d896e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c51877_56ec91d0",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T18:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fceaa3f_bb14afd2",
+      "range": {
+        "startLine": 516,
+        "startChar": 13,
+        "endLine": 516,
+        "endChar": 33
+      },
+      "revId": "0b82e4bf49d727abd15f555648a0eac25d896e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
