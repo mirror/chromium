@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f444a7de_402e730c",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "Do we want to limit this query with download_initiation_attempts \u003c\u003d kMaxAttempts?",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79080769_5447eb8a",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "We can bait out earlier if |ready_items| is empty.",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc6ecd5_2e317604",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "This means that we\u0027re going to update guid each time when we ask the download service to retry the download. If so, we need to update the comment for this in PrefetchItem.\n\nAlso, guid is only valid in the sense of download.",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838af8d7_baa46118",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "This can be moved into private section.",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24deca8_a828297c",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e459be95_06093d26",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d23b42_384f3fae",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "Do we also want to validate guid and download_initiation_attempts?",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592eac4b_bbe7faf8",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T23:41:55Z",
+      "side": 1,
+      "message": "This should be ASSERT_TRUE.",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
