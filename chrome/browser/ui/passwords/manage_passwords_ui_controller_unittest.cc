@@ -835,7 +835,8 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
   }
 }
 
-TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_HideFallback) {
+TEST_F(ManagePasswordsUIControllerTest,
+       ManualFallbackForSaving_HideFallback_NoPassword) {
   for (bool is_update : {false, true}) {
     SCOPED_TRACE(testing::Message("is_update = ") << is_update);
     std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
@@ -855,6 +856,47 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_HideFallback) {
     // A user clears the password field. It hides the fallback.
     EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
     controller()->OnHideManualFallbackForSaving();
+    ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
+    testing::Mock::VerifyAndClearExpectations(controller());
+  }
+}
+
+TEST_F(ManagePasswordsUIControllerTest,
+       ManualFallbackForSaving_HideFallback_Timeout) {
+  for (bool survive_navigation : {false, true}) {
+    SCOPED_TRACE(testing::Message("survive_navigation = ")
+                 << survive_navigation);
+    ManagePasswordsUIController::set_save_fallback_timeout_in_seconds(0);
+
+    std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
+        CreateFormManager());
+    test_form_manager->ProvisionallySave(
+        test_local_form(),
+        password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
+
+    EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
+    controller()->OnShowManualFallbackForSaving(
+        std::move(test_form_manager), false /* has_generated_password */,
+        false /* is_update */);
+    ExpectIconAndControllerStateIs(
+        password_manager::ui::PENDING_PASSWORD_STATE);
+    testing::Mock::VerifyAndClearExpectations(controller());
+    if (survive_navigation) {
+      // Fake-navigate. The fallback should persist.
+      std::unique_ptr<content::NavigationHandle> navigation_handle =
+          content::NavigationHandle::CreateNavigationHandleForTesting(
+              GURL(), main_rfh(), true);
+      navigation_handle.reset();  // Calls DidFinishNavigation.
+      ExpectIconAndControllerStateIs(
+          password_manager::ui::PENDING_PASSWORD_STATE);
+    }
+
+    // As the timeout is zero, the fallback will be hidden right after show.
+    // Visibility update confirms that hiding event happened.
+    EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
+    scoped_task_environment()->RunUntilIdle();
+
+    EXPECT_FALSE(controller()->opened_bubble());
     ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
     testing::Mock::VerifyAndClearExpectations(controller());
   }
