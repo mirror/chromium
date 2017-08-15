@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0415c11a_77c3b687",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-15T18:06:50Z",
+      "side": 0,
+      "message": "seems like there is no way to disable it? Is this intended?\nMay be keep the default value as enabled, and disable it if the group_name starts with Control or Disabled?",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 56
+      },
+      "revId": "d6c4f0023b6e51d726d7265afc9112cf3396cdfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

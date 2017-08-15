@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01de1820_09d05280",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-15T18:06:50Z",
+      "side": 1,
+      "message": "Why not use GetFieldTrialParamByFeatureAsBool?\nIIUC, all these checks are inbuilt in GetFieldTrialParamByFeatureAsBool.",
+      "range": {
+        "startLine": 139,
+        "startChar": 42,
+        "endLine": 139,
+        "endChar": 64
+      },
+      "revId": "a558d16452b2d1ea0e5226522126f8698cd59069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
