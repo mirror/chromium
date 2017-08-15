@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "779fcd6e_0fe30a12",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-15T14:40:06Z",
+      "side": 1,
+      "message": ": disk_entry(entry), writers(base::MakeUnique\u003cWriters\u003e(cache, this)) {}",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 16
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2965f31_7d6dd29d",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 6
