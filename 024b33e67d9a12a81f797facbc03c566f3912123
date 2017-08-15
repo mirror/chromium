@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e6f046e3_55630c1d",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T22:42:08Z",
+      "side": 1,
+      "message": "Right... good point",
+      "parentUuid": "31407623_820b0524",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb8ba2df_b90f5b80",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 4
@@ -83,6 +101,24 @@
       "writtenOn": "2017-08-15T22:32:07Z",
       "side": 1,
       "message": "This mirrors a check in the POSIX implementation; is there a reason that we don\u0027t check for the two values actually being equal?  I\u0027d expect that if they differ then something fishy is going on?",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43895a8_6e976f40",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T22:42:08Z",
+      "side": 1,
+      "message": "It\u0027s possible for the number of handles attached to a message to exceed some limit imposed by the system. In that case we may send follow-up messages with more handles. Thus incoming_handles_ accumulates handles over potentially multiple physical messages, and thus it\u0027s possible for incoming_handles_.size() to be smaller than |num_handles|.\n\nReturning |true| but leaving |handles| as null is an indication (to Channel) that there is nothing wrong yet, but we don\u0027t have enough handles to complete the message currently being built from incoming data.\n\nIt may not in fact be possible under non-fishy circumstances for incoming_handles_.size() to legitimately *exceed* num_handles, but that\u0027s not entirely clear to me without reading kernel source, so this errs on the side of less strict behavior.",
+      "parentUuid": "bb8ba2df_b90f5b80",
       "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
