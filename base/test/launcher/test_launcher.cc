@@ -1141,7 +1141,10 @@ void TestLauncher::MaybeSaveSummaryAsJSON(
     FilePath summary_path(command_line->GetSwitchValuePath(
                               switches::kTestLauncherSummaryOutput));
     if (!results_tracker_.SaveSummaryAsJSON(summary_path, additional_tags)) {
-      LOG(ERROR) << "Failed to save test launcher output summary.";
+      LOG(ERROR) << "Failed to save summary as JSON to "
+                 << summary_path.value().c_str();
+    } else {
+      LOG(INFO) << "Saved summary as JSON to " << summary_path.value().c_str();
     }
   }
   if (command_line->HasSwitch(switches::kTestLauncherTrace)) {
