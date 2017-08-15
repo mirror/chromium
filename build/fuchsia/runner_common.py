@@ -291,7 +291,22 @@ def _ParallelSymbolizeBacktrace(backtrace, file_mapping):
   return symbolized
 
 
-def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
+def NetCp(src, dest, dry_run):
+  try:
+    # Run netaddr first to ensure that we can find fuchsia.
+    # netcp will hang in netboot_discover if we can't.
+    _RunAndCheck(
+        dry_run,
+        [os.path.join(SDK_ROOT, 'tools', 'netaddr'), '--fuchsia'])
+    _RunAndCheck(
+        dry_run,
+        [os.path.join(SDK_ROOT, 'tools', 'netcp'), src, dest])
+  except subprocess.CalledProcessError as e:
+    print 'Failed to pull %s from fuchsia to %s: %s' % (src, dest, str(e))
+
+
+def RunFuchsia(bootfs_and_manifest, use_device, dry_run,
+               test_launcher_summary_output=None):
   bootfs, bootfs_manifest = bootfs_and_manifest
   kernel_path = os.path.join(SDK_ROOT, 'kernel', 'magenta.bin')
 
@@ -332,6 +347,18 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
   else:
     qemu_command += ['-cpu', 'Haswell,+smap,-check']
 
+  if test_launcher_summary_output:
+    # Set up local-only network to allow the host to retrieve the result JSON
+    # from the guest. Assumes the existence of a tun/tap interface named
+    # qemu. See https://goo.gl/SEqaXV for directions on setting up such an
+    # interface.
+    qemu_command += [
+        '-netdev', 'type=tap,ifname=qemu,script=no,downscript=no,id=net0',
+        '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7a',
+    ]
+  else:
+    qemu_command += [ '-net', 'none' ]
+
   if dry_run:
     print 'Run:', ' '.join(qemu_command)
     return 0
@@ -362,6 +389,9 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
   # pc_offset: memory offset within the executable.
   backtrace_entries = []
 
+  summary_json_re = re.compile(r'Saved summary as JSON to ([^ ]+)')
+  summary_json = None
+
   success = False
   while True:
     line = qemu_popen.stdout.readline().strip()
@@ -376,6 +406,12 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       print line
       continue
     guest_line = line[matched.end():]
+
+    m = summary_json_re.search(line)
+    if m:
+      NetCp(':%s' % m.group(1), test_launcher_summary_output,
+            dry_run)
+      continue
 
     # Look for the back-trace prefix, otherwise just print the line.
     matched = backtrace_prefix.match(guest_line)
