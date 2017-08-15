@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4cb2361f_29326e06",
+        "filename": "tools/perf/contrib/vr_benchmarks/run_benchmark",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-15T17:33:56Z",
+      "side": 1,
+      "message": "Follow up CL SGTM. I also prefer go/small-cl as well :-)",
+      "parentUuid": "c3b64525_4bea0fc9",
+      "revId": "b1ea50450614c87ba96bbedbd97666c4939ea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4becd69a_7765de5a",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
         "patchSetId": 3
