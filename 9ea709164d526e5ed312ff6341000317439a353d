@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "be122866_156a6471",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-15T21:12:18Z",
+      "side": 1,
+      "message": "just to be clear, the reason i would like to pull duplicate code out into common functions is not to save on lines of code. it is to reduce the number of places that changes need to occur if the algorithm is updated in the future (as having to change multiple places is error prone)",
+      "parentUuid": "c79515ed_d00279de",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a9a83c_7bccc03b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
         "patchSetId": 6
