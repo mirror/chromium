@@ -128,6 +128,12 @@ class ExtensionApiTest : public ExtensionBrowserTest {
                            const std::string& page_url,
                            int flags);
 
+  // Same as RunExtensionSubtest, except sets an additional string argument
+  // |custom_arg| to the test config object.
+  bool RunExtensionSubtestWithArg(const std::string& extension_name,
+                                  const std::string& page_url,
+                                  const char* custom_arg);
+
   // Load |page_url| and wait for pass / fail notification from the extension
   // API on the page.
   bool RunPageTest(const std::string& page_url);
