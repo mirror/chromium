@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "331eee3d_9601fa12",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T23:01:04Z",
+      "side": 1,
+      "message": "Can you help me understand why we don\u0027t need to check this anymore? MessagePump / MessagePump::Delegate is pretty convoluted and it\u0027s not really obvious why this is a correct change.",
+      "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
