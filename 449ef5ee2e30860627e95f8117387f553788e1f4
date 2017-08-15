@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "edfe35a9_e46a29f3",
+        "filename": "ui/events/devices/touch_device_transform.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-15T21:03:03Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "70e172c5_0ffc4cac",
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80d02306_48cd1314",
         "filename": "ui/events/devices/touchscreen_device.cc",
         "patchSetId": 3
