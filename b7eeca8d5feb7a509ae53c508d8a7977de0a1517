@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e9041ce_6737477e",
+        "filename": "content/browser/appcache/appcache_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "is this check for test where the feature flag is not set?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98827aec_9ce84d68",
+        "filename": "content/browser/appcache/appcache_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "Can you point me at where the new methods are called? Is this because unittests coded to work with net::URLRequest need these methods?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2252456_6967259e",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "when is the subresource_load_info_ expected to be null and if it is null, what resource are we supposed to load?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f09d65_136b5e60",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "is this local used?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5f5531_f1b2f0ad",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "comment is out of place since the 2nd dcheck is no longer adjacent",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b5e326_d60708c5",
+        "filename": "content/browser/appcache/appcache_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "what changed to require this?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91193e0_bb3fa856",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "When/why is this expected to be null? Is this because the AppCacheRequest unittests cause update jobs to start as a side affect?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755282d9_ef5a1c0f",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-15T21:25:07Z",
+      "side": 1,
+      "message": "is this also for unittests?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
