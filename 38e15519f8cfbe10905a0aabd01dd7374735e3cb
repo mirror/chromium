@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "5bf076b9_3e89ae86",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-15T14:15:12Z",
+      "side": 1,
+      "message": "There are a few things that I still don\u0027t understand here.\nWhy is the value 0.5(dp) chosen?\nWhy is it used on 3 sides of the rectangle out of 4?\nIf you still need to use the 0.5 distance, would it be possible to inset the rect by -0.5 above the line 258, this way you don\u0027t have to repeat the math more than necessary.",
+      "parentUuid": "a2d30c64_2df80b0c",
+      "range": {
+        "startLine": 263,
+        "startChar": 56,
+        "endLine": 263,
+        "endChar": 60
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62fe591_ac81ad64",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 11
