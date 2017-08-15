@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b033702_060bd144",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "is_on_idle_stack_\nSee my comment on previous CL.",
+      "range": {
+        "startLine": 194,
+        "startChar": 7,
+        "endLine": 194,
+        "endChar": 17
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8105aa8c_61fb80ef",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "Make a helper method that records the histogram, sets |is_active_| to false, adds the worker to the idle stack and resets |num_tasks_since_last_wait_|. Use this method here and at line 517-523.",
+      "range": {
+        "startLine": 485,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 21
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7fada2_25e766d4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "This is always true. When !is_active_, you return nullptr at line 481.",
+      "range": {
+        "startLine": 521,
+        "startChar": 6,
+        "endLine": 521,
+        "endChar": 21
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d827a9f_5a095030",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "SchedulerWorker* worker;\n\nThe variable is always initialized at line 644 or 646. If it\u0027s used and there is a possibility that it\u0027s not initialized, the compiler will complain.",
+      "range": {
+        "startLine": 640,
+        "startChar": 2,
+        "endLine": 640,
+        "endChar": 36
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248e0fa9_4b9e3443",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "This is not really needed. \n\nIf |target_suspended_workers| is negative, the condition below will be false (idle_workers_stack_.Size() is \u003e 0).",
+      "range": {
+        "startLine": 737,
+        "startChar": 2,
+        "endLine": 738,
+        "endChar": 17
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389e3dc1_53cd1b53",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "We usually don\u0027t mention private members in the comments of public methods (someone who wants to use public methods shouldn\u0027t have to know about implementation details).\n\nChange this comment to:\n// Returns the number of workers that are idle (i.e. not running tasks).",
+      "range": {
+        "startLine": 122,
+        "startChar": 42,
+        "endLine": 122,
+        "endChar": 63
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5d7166_9aa91eb1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "more workers should be suspended\n\n(need more suspended workers sounds like if we should create workers and suspend them)",
+      "range": {
+        "startLine": 164,
+        "startChar": 21,
+        "endLine": 164,
+        "endChar": 63
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f629de9_95e109ae",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "NeedsToSuspendMoreWorkers",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e3350c_6ef9742f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "()",
+      "range": {
+        "startLine": 914,
+        "startChar": 67,
+        "endLine": 914,
+        "endChar": 68
+      },
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4333c098_890443a0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:39:32Z",
+      "side": 1,
+      "message": "Remove empty line.",
+      "revId": "aba8d2d994fd1d881505124f6691af70f8f43247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
