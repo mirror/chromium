@@ -68,6 +68,7 @@ generate_jni("native_jni") {
     "java/src/org/chromium/android_webview/JavaBrowserViewRendererHelper.java",
     "java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
     "java/src/org/chromium/android_webview/permission/AwPermissionRequest.java",
+    "java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
   ]
   jni_package = "android_webview"
 
