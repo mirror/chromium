@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bfb43d4_648d86f0",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-15T20:40:54Z",
+      "side": 1,
+      "message": "nit maybe: let this fall through to line 255? I\u0027m not sure which is better stylistically (I\u0027m guessing your current approach could be better), but I thought I\u0027d ask in case you have a preference and didn\u0027t consider this.",
+      "revId": "b5ccef476d203b329942e3265e262a2f47e723a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
