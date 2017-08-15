@@ -591,6 +591,12 @@ void AudioRendererImpl::OnResume() {
   is_suspending_ = false;
 }
 
+void AudioRendererImpl::SetFirstPacketTimestampCBForTesting(
+    FirstPacketTimestampCBForTesting cb) {
+  base::AutoLock auto_lock(lock_);
+  first_packet_timestamp_cb_for_testing_ = std::move(cb);
+}
+
 void AudioRendererImpl::DecodedAudioReady(
     AudioBufferStream::Status status,
     const scoped_refptr<AudioBuffer>& buffer) {
@@ -714,8 +720,11 @@ bool AudioRendererImpl::HandleDecodedBuffer_Locked(
 
   // Store the timestamp of the first packet so we know when to start actual
   // audio playback.
-  if (first_packet_timestamp_ == kNoTimestamp)
+  if (first_packet_timestamp_ == kNoTimestamp) {
     first_packet_timestamp_ = buffer->timestamp();
+    if (!first_packet_timestamp_cb_for_testing_.is_null())
+      first_packet_timestamp_cb_for_testing_.Run(first_packet_timestamp_);
+  }
 
   const size_t memory_usage = algorithm_->GetMemoryUsage();
   PipelineStatistics stats;

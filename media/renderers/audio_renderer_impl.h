@@ -56,6 +56,9 @@ class MEDIA_EXPORT AudioRendererImpl
       public base::PowerObserver,
       NON_EXPORTED_BASE(public AudioRendererSink::RenderCallback) {
  public:
+  using FirstPacketTimestampCBForTesting =
+      base::RepeatingCallback<void(base::TimeDelta)>;
+
   // |task_runner| is the thread on which AudioRendererImpl will execute.
   //
   // |sink| is used as the destination for the rendered audio.
@@ -92,9 +95,10 @@ class MEDIA_EXPORT AudioRendererImpl
   void OnSuspend() override;
   void OnResume() override;
 
+  void SetFirstPacketTimestampCBForTesting(FirstPacketTimestampCBForTesting cb);
+
  private:
   friend class AudioRendererImplTest;
-  friend class PipelineIntegrationTestBase;  // For |first_packet_timestamp_|.
 
   // Important detail: being in kPlaying doesn't imply that audio is being
   // rendered. Rather, it means that the renderer is ready to go. The actual
@@ -316,6 +320,11 @@ class MEDIA_EXPORT AudioRendererImpl
   // Set by OnSuspend() and OnResume() to indicate when the system is about to
   // suspend/is suspended and when it resumes.
   bool is_suspending_;
+
+  // Set and used only in tests to report |first_packet_timestamp_| values.
+  // If set, it is run only when |first_packet_timestamp_| is set to something
+  // other than kNoTimestamp.
+  FirstPacketTimestampCBForTesting first_packet_timestamp_cb_for_testing_;
 
   // End variables which must be accessed under |lock_|. ----------------------
 
