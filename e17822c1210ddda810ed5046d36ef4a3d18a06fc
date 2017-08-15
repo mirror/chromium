@@ -235,6 +235,30 @@
       "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59885b7c_aca9af55",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-15T00:15:10Z",
+      "side": 1,
+      "message": "\u003e So:\n\u003e \n\u003e I\u0027ve refactored everything below NavigationURLLoaderImplCore to have parallel functions.\n\u003e \n\u003e 1) As discussed in person, the network service calls needs a parallel implementation. I\u0027ve added that.\n\u003e \n\u003e 2) What do you think of including net_error with ssl_info and fatal in the struct? That way, the 3-field struct replaces one of its fields.\n\nSure, that seems fine to me.\n\n\u003e \n\u003e 3) How do you have in mind we call TransportSecurityState::ShouldSSLErrorsBeFatal here (and in the network service?)\n\u003e \n\u003e The existing calculation [1] gets the TransportSecurityState from an URLRequestContext. Maybe I\u0027m not looking correctly, but I cant find something like that near this function – or, for that matter, the hostname.\n\nBoth of those things are known by |resource_handler_|. Within NavigationResoureHandler, you could call request()-\u003econtext()-\u003etransport_security_state() and get the hostname from request()-\u003eurl(). So one option would be to add a method to NavigationResourceHandler and call it from here.\n\nAnother option would be to plumb through `fatal` alongside SSLInfo from ResourceLoader::OnSSLCertificateError, as you said. That just seems like a bummer to me to have these two weird optional arguments that only apply to certificate errors... but TBH neither of these options seems exactly elegant, so we should probably just pick one and go with it. (Also note that you\u0027d have to stash the `fatal` value on ResourceLoader so that you can read it in later when the request is complete.)\n\n\u003e \n\u003e We have the `fatal` value in ResourceLoader::OnSSLCertificateError() – can we use that?\n\u003e \n\u003e \n\u003e [1] https://cs.chromium.org/chromium/src/net/url_request/url_request_http_job.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d997",
+      "parentUuid": "e221b222_025d59b7",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
