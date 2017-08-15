@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5eb22da_f84bafff",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "I\u0027m actually happy that you asked this question.\n\nEven though it may be interesting to test a wide range of images, there is no guarantees if the current range of values (i.e. colors) in a given image would trigger any ill condition where the checksum would fail.\n\nIt would test the client code (e.g. libpng) for a given image but not necessarily the correctness of the checksum computation for *any* values.\n\nInstead, I validated this implementation by comparing the calculated checksum of the C code versus the results of the NEON implementation in vectors of random data.\n\nThe tests were written along the implementation of the code, please check:\nhttps://gist.github.com/Adenilson/a238ffb82ea36c19a275f340091e1d30\n\nAnd the expected result:\nhttps://gist.github.com/Adenilson/5e76240d45d385bcb941ea866d18a084\n\nIt is a bit sad that zlib doesn\u0027t have support for unit tests, it would be nice to have this added as gtests.\n\nSo for the near 90 lines of code (LOCs) in the NEON implementation, I had close to 400 LOCs in tests, with random generated values and vectors ranging from 16 to 20K in size, comparing the computed checksums (C x NEON).\n\nI also validated the implementation using the prime zlib client, libpng. It has a helper app called \u0027pngtest\u0027 that will open/decompress a PNG file and next create from the raw data a new png and compare if they match. The results for image validation were the same while using the C X NEON implementation.\n\nConcerning *what* the code does, please refer to the \u0027Algorithm\u0027 section of: https://en.wikipedia.org/wiki/Adler-32\n\nHere, \u0027taps\u0027 represents the \u0027n\u0027 scalar multiplier of \u0027B\u0027, which will be multiplied and accumulated. Think of it as a vectorized form of the code implemented to handle the tail.\n\nIf the checksum fails in a PNG file, the image will fail to be displayed in a client app (e.g. Chromium).\n\nGiven that a PNG file may have multiple IDAT segments representing the compressed zlib stream, but only a single stream with a single Adler-32 checksum of the whole uncompressed data, in case of failure (i.e. mismatch in the checksum), the png decoder must (https://www.w3.org/TR/PNG/#13Decoders.Errors):\n\"When a fatal condition occurs, the decoder should fail immediately, signal an error to the user if appropriate, and optionally continue displaying any image data already visible to the user (i.e. \"fail gracefully\"). The application as a whole need not terminate.\"",
+      "parentUuid": "1f76c25f_83053b8c",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5621126_9985a2e5",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "cfeb072c_746d880a",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "Any good compiler should identify that and move the code outside of the loop, please see (check lines 24 and 27): https://godbolt.org/g/KMeBAJ\n\nUnless this is a main issue, I prefer the keep the code as it is.",
+      "parentUuid": "0e89ec9c_ff79c5a1",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee598156_a4f2c7ac",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-15T04:41:44Z",
       "side": 1,
       "message": "Odd comment.  This function definition won\u0027t work in K\u0026R, so commenting that the body is K\u0026R seems at odds with that.",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3bc610_e40353e6",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "It is being a little while (over 7 months), but IIRC in one of the first experiments integrating this code in one of the multiple zlib forks, the build would fail unless I had the code in this way.\n\nI tested current zlib (with CMake buildsystem) and current Chromium build for Android and it works fine without the K\u0026R code.\n\nTherefore, I\u0027m updating the code as you suggested.",
+      "parentUuid": "ee598156_a4f2c7ac",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "55b01dc3_0e93c397",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "Nice catch! :-)",
+      "parentUuid": "8bdc543b_c13850cd",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00954fc6_fa1d0908",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -98,6 +170,24 @@
       "writtenOn": "2017-08-15T04:41:44Z",
       "side": 1,
       "message": "Comment is odd.  There\u0027s code before this block of declaration (line 91) and that\u0027d prevent compilation with a K\u0026R compiler, no?",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aff3d3e_3a90d706",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "See previous comment.",
+      "parentUuid": "00954fc6_fa1d0908",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "03de89f2_85d71191",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "Here I followed the Blink coding style: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Comments",
+      "parentUuid": "2b15538f_90e9e1ea",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b258551c_76a74e73",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -132,6 +240,24 @@
       "writtenOn": "2017-08-15T04:41:44Z",
       "side": 1,
       "message": "Could |alder|\u0027s type be changed to unsigned int?  Wouldn\u0027t need the \u0026 0xffff here if so.",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ccaeea_960aa2d6",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-08-15T18:51:27Z",
+      "side": 1,
+      "message": "Nopes, because it may be passed along to the function from a previous computation.\n\nThat would require to change the public function interface (e.g. the NEON implementation must be a drop-in replacement) as also call sites in zlib (and maybe client code in libpng).",
+      "parentUuid": "b258551c_76a74e73",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
