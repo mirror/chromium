@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ff113c26_4dcc5cfe",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-15T18:40:20Z",
+      "side": 1,
+      "message": "This is a great idea.  I\u0027ll ask Sylvain tomorrow about adding a new constructor to LegacyTabHelper to support this case.",
+      "parentUuid": "22415313_05798918",
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e43ab7c3_aa9e73fe",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
         "patchSetId": 2
