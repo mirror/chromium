@@ -5,12 +5,14 @@
 package org.chromium.chrome.browser.offlinepages;
 
 import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.components.offlinepages.DeletePageResult;
 import org.chromium.content_public.browser.WebContents;
 
@@ -144,6 +146,15 @@ public class OfflinePageBridge {
     }
 
     /**
+     * @Return the string representing the origin of the tab.
+     */
+    @CalledByNative
+    private static String getAppAssociatedWith(Tab tab) {
+        return new OfflinePageOrigin(ContextUtils.getApplicationContext(), tab)
+                .encodeAsJsonString();
+    }
+
+    /**
      * Adds an observer to offline page model changes.
      * @param observer The observer to be added.
      */
@@ -190,6 +201,17 @@ public class OfflinePageBridge {
 
         List<OfflinePageItem> result = new ArrayList<>();
         nativeGetPagesByClientId(mNativeOfflinePageBridge, result, namespaces, ids, callback);
+    }
+
+    /**
+     * Gets the offline pages associated with the provided origin.
+     * @param origin The JSON-like string of the app's package name and encrypted signature hash.
+     * @return A list of {@link OfflinePageItem} matching the provided origin, or an empty
+     *         list if none exist.
+     */
+    public void getPagesByRequestOrigin(String origin, Callback<List<OfflinePageItem>> callback) {
+        List<OfflinePageItem> result = new ArrayList<>();
+        nativeGetPagesByRequestOrigin(mNativeOfflinePageBridge, result, origin, callback);
     }
 
     /**
@@ -644,6 +666,9 @@ public class OfflinePageBridge {
     @VisibleForTesting
     native void nativeGetPagesByClientId(long nativeOfflinePageBridge, List<OfflinePageItem> result,
             String[] namespaces, String[] ids, Callback<List<OfflinePageItem>> callback);
+    native void nativeGetPagesByRequestOrigin(long nativeOfflinePageBridge,
+            List<OfflinePageItem> result, String requestOrigin,
+            Callback<List<OfflinePageItem>> callback);
     native void nativeGetPagesForNamespace(long nativeOfflinePageBridge,
             List<OfflinePageItem> result, String nameSpace,
             Callback<List<OfflinePageItem>> callback);
