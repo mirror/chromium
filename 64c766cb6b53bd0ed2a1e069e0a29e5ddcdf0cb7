@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f27c26f9_6d555fb1",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T16:57:47Z",
+      "side": 1,
+      "message": "Nit: explicit \u003d)",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89c8a63f_122fd6c6",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 5
@@ -76,6 +93,24 @@
       "writtenOn": "2017-08-14T23:44:43Z",
       "side": 1,
       "message": "There\u0027s no documentation on ReportBadMessage.  How closely does it compare with content::ReceivedBadMessage, which kills the renderer, installs a crash key for the code, and updates a UMA metric?",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345d050f_07353040",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T16:57:47Z",
+      "side": 1,
+      "message": "ReportBadMessage is a lot more abstract than ReceivedBadMessage. AFAICT, it invokes the error callback associated with the current message dispatch context: for messages dispatched from a message pipe associated with a renderer, this is suppose to be hooked up to kill the renderer.\n\nUnfortunately, I don\u0027t think it does a UMA today like content does, given that we\u0027re just logging a string.\n\nThat being said, I\u0027m not sure *where* the actual plumbing that sets up the callback is; rockot@ might know \u003d)",
+      "parentUuid": "f89daa50_f88a096c",
       "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
