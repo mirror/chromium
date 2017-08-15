@@ -16,6 +16,24 @@
       "revId": "8b695f10674f82dffdd43507ccd9a68240dbd86c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eef0a8e_0053ae6d",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T23:43:19Z",
+      "side": 1,
+      "message": "Also, can you link to the discussion thread for this? (See all the other allowed things, they all link back to where they were discussed)",
+      "parentUuid": "ed818eb6_78fd9c62",
+      "revId": "8b695f10674f82dffdd43507ccd9a68240dbd86c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
