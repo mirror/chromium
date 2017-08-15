@@ -76,6 +76,7 @@ NSArray* whiteListedMultitaskingTests = @[
 ];
 
 const CFTimeInterval kDrainTimeout = 5;
+
 }  // namespace
 
 @interface ChromeTestCase () {
@@ -84,6 +85,7 @@ const CFTimeInterval kDrainTimeout = 5;
 
   BOOL _isHTTPServerStopped;
   BOOL _isMockAuthenticationDisabled;
+  std::unique_ptr<net::EmbeddedTestServer> _aTestServer;
 }
 
 // Cleans up mock authentication.
@@ -107,6 +109,8 @@ const CFTimeInterval kDrainTimeout = 5;
 @end
 
 @implementation ChromeTestCase
+
+@synthesize testServer = _testServer;
 
 // Overrides testInvocations so the set of tests run can be modified, as
 // necessary.
@@ -163,6 +167,10 @@ const CFTimeInterval kDrainTimeout = 5;
   _isMockAuthenticationDisabled = NO;
   _tearDownHandler = nil;
 
+  _aTestServer = base::MakeUnique<net::EmbeddedTestServer>();
+  _aTestServer->AddDefaultHandlers(
+      base::FilePath(FILE_PATH_LITERAL("ios/testing/data/http_server_files/")));
+  _testServer = _aTestServer.get();
   chrome_test_util::OpenNewTab();
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 }
