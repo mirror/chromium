@@ -22,6 +22,30 @@
       "revId": "a71ebbc90fd4a4fe955f58d83f144e0f9a968349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab132c7_e424cfc6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T23:11:56Z",
+      "side": 1,
+      "message": "This method is about JavaScript dialog, alert is one of the dialog. You can follow the code path from Blink https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp?l\u003d729 all the way to here.",
+      "parentUuid": "4e27f54b_c4aead67",
+      "range": {
+        "startLine": 1972,
+        "startChar": 44,
+        "endLine": 1972,
+        "endChar": 55
+      },
+      "revId": "a71ebbc90fd4a4fe955f58d83f144e0f9a968349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
