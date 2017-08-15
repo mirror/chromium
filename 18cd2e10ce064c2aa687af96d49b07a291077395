@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe299301_04542716",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T17:30:09Z",
+      "side": 1,
+      "message": "I kind of went down a rabbit hole trying to understand why this would be constexpr, but I don\u0027t really understand it either. I guess if std::equal can ever become constexpr, this would be able to be used in a constexpr context? Either that or the intent was to just compare memory address and count, but then that isn\u0027t what it is specced as ¯\\_(ツ)_/¯",
+      "parentUuid": "87583456_4885de4c",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540fbf53_393b72c1",
         "filename": "base/containers/span.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "359c65df_38859421",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T17:30:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "540fbf53_393b72c1",
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0720a2ab_48b99f13",
         "filename": "base/containers/span.h",
         "patchSetId": 1
@@ -53,6 +95,41 @@
       "writtenOn": "2017-08-11T22:07:33Z",
       "side": 1,
       "message": "This technically isn\u0027t needed, but is provided for symmetry.",
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ca2573_cbc6c72e",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T17:30:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0720a2ab_48b99f13",
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8771e9f9_2507997e",
+        "filename": "base/containers/span_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T17:30:09Z",
+      "side": 1,
+      "message": "nit: can you change some of these to be for (int value : span) to ensure begin/end are working correctly?",
       "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
