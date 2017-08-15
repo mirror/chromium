@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9554e7_545eb9b2",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T22:25:05Z",
+      "side": 1,
+      "message": "scoped_refptr\u003cPlatformSensor\u003e",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 8
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db85cabf_dd20e3a5",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T22:25:05Z",
+      "side": 1,
+      "message": "DCHECK(base::ContainsValue(source_types_, which_sensor_changes));",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
