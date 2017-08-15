@@ -70,6 +70,9 @@ CC_FILE_END = """
 }  // namespace extensions
 """
 
+def ListDoesNotContainIds(l):
+  return len(filter(lambda s: len(s) == 32, l)) == 0
+
 # A "grammar" for what is and isn't allowed in the features.json files. This
 # grammar has to list all possible keys and the requirements for each. The
 # format of each entry is:
@@ -110,7 +113,12 @@ FEATURE_GRAMMAR = (
       'shared': True
     },
     'blacklist': {
-      list: {'subtype': unicode}
+      list: {
+        'subtype': unicode,
+        'validators': [
+          (ListDoesNotContainIds, 'blacklist should have hashed ids only')
+        ]
+      }
     },
     'channel': {
       unicode: {
@@ -211,7 +219,12 @@ FEATURE_GRAMMAR = (
       'shared': True
     },
     'whitelist': {
-      list: {'subtype': unicode}
+      list: {
+        'subtype': unicode,
+        'validators': [
+          (ListDoesNotContainIds, 'whitelist should have hashed ids only')
+        ]
+      }
     },
   })
 
@@ -477,6 +490,12 @@ class Feature(object):
     else:
       cpp_value = self._GetCheckedValue(key, expected_type, expected_values,
                                         enum_map, v)
+
+    if 'validators' in expected:
+      validators = expected['validators']
+      for validator, error in validators:
+        if not validator(v):
+          self._AddKeyError(key, error)
 
     if cpp_value:
       if 'shared' in grammar:
