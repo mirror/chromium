@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72cb5002_ea8f58c8",
+        "filename": "chrome/app/settings_chromium_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:26:38Z",
+      "side": 1,
+      "message": "When a user signs in, to sync their data: are they signing into Chrome/Chromium or Google? I thought it was a Google sign in?",
+      "revId": "1904247e60e6cf3d830260f5893a74fe5cf67352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a37e6d_acd2b432",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:26:38Z",
+      "side": 1,
+      "message": "No big deal, but it\u0027s common (52 hits in code search) to use \u003cdiv class\u003d\"start\"\u003e here rather than \u003cspan\u003e.",
+      "revId": "1904247e60e6cf3d830260f5893a74fe5cf67352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
