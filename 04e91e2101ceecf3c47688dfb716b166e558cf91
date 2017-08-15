@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "b3f6973b_b5d552b9",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-15T15:59:08Z",
+      "side": 1,
+      "message": "Let\u0027s leave this as-is for now then. The way it was before wasn\u0027t quite right either since we\u0027d want it to no-op until a setter has been called.",
+      "parentUuid": "0c4e3497_af454183",
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68f46403_ce41e37e",
         "filename": "build/config/android/rules.gni",
         "patchSetId": 3
@@ -89,6 +107,24 @@
       "side": 1,
       "message": "If we don\u0027t, this can fail since nothing actually has this target as a dep - is there a better place to put it?",
       "parentUuid": "68f46403_ce41e37e",
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3215fd_8ac51f2c",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-15T15:59:08Z",
+      "side": 1,
+      "message": "Ah, okay. The reason to not put it on write_build_config(), is that generate_gradle() builds the build_config files, and so we want as little compilation as possible.\n\nIn this case, it should go on the java_library_impl() target\u0027s deps",
+      "parentUuid": "20d45fde_47152345",
       "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
