@@ -96,6 +96,7 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
         ui::ResourceBundle::GetSharedInstance().GetFontList(
             ui::ResourceBundle::BaseFont);
     title_->SetFontList(base_font.DeriveWithSizeDelta(1));
+    title_->SetMaximumWidth(kAppTitleMaxTextWidth);
     title_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
     title_->SetEnabledColor(kGridTitleColorFullscreen);
   } else {

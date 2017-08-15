@@ -96,6 +96,8 @@ const int kPreferredRows = 4;
 const int kPreferredRowsFullscreen = 5;
 const int kGridIconDimension = 48;
 
+const int kAppTitleMaxTextWidth = 80;
+
 // The preferred app badge icon size.
 const int kAppBadgeIconSize = 12;
 // The preferred badge background(circle) radius.

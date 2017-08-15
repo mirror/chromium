@@ -111,14 +111,15 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
         ui::ResourceBundle::GetSharedInstance().GetFontList(
             ui::ResourceBundle::BaseFont);
 
+    title()->SetFontList(base_font.DeriveWithSizeDelta(1));
+    title()->SetMaximumWidth(kAppTitleMaxTextWidth);
     if (item_->display_type() == SearchResult::DISPLAY_RECOMMENDATION) {
       set_is_recommendation(true);
-
-      title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kGridTitleColorFullscreen);
     } else if (item_->display_type() == SearchResult::DISPLAY_TILE) {
-      title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kSearchTitleColor);
+      if (!rating_->visible() && !price_->visible())
+        title()->SetMultiLine(true);
     }
   }
 
