@@ -50,7 +50,8 @@ class NotificationDispatcher;
 class ThreadSafeSender;
 class WebCryptoImpl;
 
-class CONTENT_EXPORT BlinkPlatformImpl : public blink::Platform {
+class CONTENT_EXPORT BlinkPlatformImpl
+    : NON_EXPORTED_BASE(public blink::Platform) {
  public:
   BlinkPlatformImpl();
   explicit BlinkPlatformImpl(

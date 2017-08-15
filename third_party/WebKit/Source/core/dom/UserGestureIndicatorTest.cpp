@@ -4,7 +4,6 @@
 
 #include "core/dom/UserGestureIndicator.h"
 
-#include "core/frame/LocalFrame.h"
 #include "platform/wtf/CurrentTime.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -28,8 +27,8 @@ TEST(UserGestureIndicatorTest, InitialState) {
 }
 
 TEST(UserGestureIndicatorTest, ConstructedWithNewUserGesture) {
-  std::unique_ptr<UserGestureIndicator> user_gesture_scope =
-      LocalFrame::CreateUserGesture(nullptr, UserGestureToken::kNewGesture);
+  UserGestureIndicator user_gesture_scope(
+      UserGestureToken::Create(nullptr, UserGestureToken::kNewGesture));
 
   EXPECT_TRUE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_NE(nullptr, UserGestureIndicator::CurrentToken());
@@ -38,8 +37,7 @@ TEST(UserGestureIndicatorTest, ConstructedWithNewUserGesture) {
 }
 
 TEST(UserGestureIndicatorTest, ConstructedWithUserGesture) {
-  std::unique_ptr<UserGestureIndicator> user_gesture_scope =
-      LocalFrame::CreateUserGesture(nullptr);
+  UserGestureIndicator user_gesture_scope(UserGestureToken::Create(nullptr));
 
   EXPECT_TRUE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_NE(nullptr, UserGestureIndicator::CurrentToken());
@@ -59,8 +57,7 @@ TEST(UserGestureIndicatorTest, ConstructedWithNoUserGesture) {
 // Check that after UserGestureIndicator destruction state will be cleared.
 TEST(UserGestureIndicatorTest, DestructUserGestureIndicator) {
   {
-    std::unique_ptr<UserGestureIndicator> user_gesture_scope =
-        LocalFrame::CreateUserGesture(nullptr);
+    UserGestureIndicator user_gesture_scope(UserGestureToken::Create(nullptr));
 
     EXPECT_TRUE(UserGestureIndicator::ProcessingUserGesture());
     EXPECT_NE(nullptr, UserGestureIndicator::CurrentToken());
@@ -74,16 +71,16 @@ TEST(UserGestureIndicatorTest, DestructUserGestureIndicator) {
 // Tests creation of scoped UserGestureIndicator objects.
 TEST(UserGestureIndicatorTest, ScopedNewUserGestureIndicators) {
   // Root GestureIndicator and GestureToken.
-  std::unique_ptr<UserGestureIndicator> user_gesture_scope =
-      LocalFrame::CreateUserGesture(nullptr, UserGestureToken::kNewGesture);
+  UserGestureIndicator user_gesture_scope(
+      UserGestureToken::Create(nullptr, UserGestureToken::kNewGesture));
 
   EXPECT_TRUE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_NE(nullptr, UserGestureIndicator::CurrentToken());
   {
     // Construct inner UserGestureIndicator.
     // It should share GestureToken with the root indicator.
-    std::unique_ptr<UserGestureIndicator> inner_user_gesture =
-        LocalFrame::CreateUserGesture(nullptr, UserGestureToken::kNewGesture);
+    UserGestureIndicator inner_user_gesture(
+        UserGestureToken::Create(nullptr, UserGestureToken::kNewGesture));
 
     EXPECT_TRUE(UserGestureIndicator::ProcessingUserGesture());
     EXPECT_NE(nullptr, UserGestureIndicator::CurrentToken());
@@ -102,8 +99,8 @@ TEST(UserGestureIndicatorTest, ScopedNewUserGestureIndicators) {
 }
 
 TEST(UserGestureIndicatorTest, MultipleGesturesWithTheSameToken) {
-  std::unique_ptr<UserGestureIndicator> indicator =
-      LocalFrame::CreateUserGesture(nullptr, UserGestureToken::kNewGesture);
+  UserGestureIndicator indicator(
+      UserGestureToken::Create(nullptr, UserGestureToken::kNewGesture));
   EXPECT_TRUE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_NE(nullptr, UserGestureIndicator::CurrentToken());
   {

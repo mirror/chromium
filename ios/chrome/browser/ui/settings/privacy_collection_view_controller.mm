@@ -380,11 +380,13 @@ typedef NS_ENUM(NSInteger, ItemType) {
       break;
     case ItemTypeWebServicesDoNotTrack:
       controller = [[DoNotTrackCollectionViewController alloc]
-          initWithPrefs:_browserState->GetPrefs()];
+          initWithPrefs:_browserState->GetPrefs()
+             dispatcher:self.dispatcher];
       break;
     case ItemTypeWebServicesPhysicalWeb:
       controller = [[PhysicalWebCollectionViewController alloc]
-          initWithPrefs:GetApplicationContext()->GetLocalState()];
+          initWithPrefs:GetApplicationContext()->GetLocalState()
+             dispatcher:self.dispatcher];
       break;
     case ItemTypeClearBrowsingDataClear:
       controller = [[ClearBrowsingDataCollectionViewController alloc]

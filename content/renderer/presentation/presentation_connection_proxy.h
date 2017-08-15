@@ -69,8 +69,8 @@ namespace content {
 // Instance of this class is created for both offscreen and non offscreen
 // presentations.
 class CONTENT_EXPORT PresentationConnectionProxy
-    : public blink::WebPresentationConnectionProxy,
-      public blink::mojom::PresentationConnection {
+    : public NON_EXPORTED_BASE(blink::WebPresentationConnectionProxy),
+      public NON_EXPORTED_BASE(blink::mojom::PresentationConnection) {
  public:
   using OnMessageCallback = base::OnceCallback<void(bool)>;
 

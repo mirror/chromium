@@ -72,14 +72,6 @@ PopupBlockerTabHelper::PopupBlockerTabHelper(
 PopupBlockerTabHelper::~PopupBlockerTabHelper() {
 }
 
-void PopupBlockerTabHelper::AddObserver(Observer* observer) {
-  observers_.AddObserver(observer);
-}
-
-void PopupBlockerTabHelper::RemoveObserver(Observer* observer) {
-  observers_.RemoveObserver(observer);
-}
-
 void PopupBlockerTabHelper::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   // Clear all page actions, blocked content notifications and browser actions
@@ -144,12 +136,10 @@ void PopupBlockerTabHelper::AddBlockedPopup(
   if (blocked_popups_.size() >= kMaximumNumberOfPopups)
     return;
 
-  auto id = blocked_popups_.Add(
+  blocked_popups_.Add(
       base::MakeUnique<BlockedRequest>(params, window_features));
   TabSpecificContentSettings::FromWebContents(web_contents())->
       OnContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS);
-  for (auto& observer : observers_)
-    observer.BlockedPopupAdded(id, params.url);
 }
 
 void PopupBlockerTabHelper::ShowBlockedPopup(
@@ -175,7 +165,6 @@ void PopupBlockerTabHelper::ShowBlockedPopup(
         popup->params.target_contents->GetRenderViewHost()->GetRoutingID(),
         popup->window_features));
   }
-
   blocked_popups_.Remove(id);
   if (blocked_popups_.IsEmpty())
     PopupNotificationVisibilityChanged(false);

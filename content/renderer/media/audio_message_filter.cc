@@ -20,7 +20,8 @@ namespace {
 const int kStreamIDNotSet = -1;
 }
 
-class AudioMessageFilter::AudioOutputIPCImpl : public media::AudioOutputIPC {
+class AudioMessageFilter::AudioOutputIPCImpl
+    : public NON_EXPORTED_BASE(media::AudioOutputIPC) {
  public:
   AudioOutputIPCImpl(const scoped_refptr<AudioMessageFilter>& filter,
                      int render_frame_id);

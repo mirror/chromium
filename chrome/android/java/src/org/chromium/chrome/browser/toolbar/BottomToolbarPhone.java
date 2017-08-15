@@ -816,7 +816,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
         int extraTopMargin = getExtraTopMargin();
         otherToolbar.setMinimumHeight(getHeight() - extraTopMargin);
 
-        otherToolbar.setTitleTextAppearance(otherToolbar.getContext(), R.style.BlackHeadline1);
+        otherToolbar.setTitleTextAppearance(
+                otherToolbar.getContext(), R.style.BottomSheetContentTitle);
         ApiCompatibilityUtils.setPaddingRelative(otherToolbar,
                 ApiCompatibilityUtils.getPaddingStart(otherToolbar),
                 otherToolbar.getPaddingTop() + extraTopMargin,

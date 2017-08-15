@@ -508,8 +508,7 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
   }
 
   FeatureCache::FeatureNameVector features =
-      feature_cache_.GetAvailableFeatures(context->context_type(),
-                                          context->extension(), context->url());
+      feature_cache_.GetAvailableFeatures(context);
   base::StringPiece last_accessor;
   for (const std::string& feature : features) {
     // If we've already set up an accessor for the immediate property of the

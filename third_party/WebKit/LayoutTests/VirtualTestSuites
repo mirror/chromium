@@ -149,11 +149,6 @@
   },
   {
     "prefix": "off-main-thread-fetch",
-    "base": "http/tests/devtools/network",
-    "args": ["--enable-features=OffMainThreadFetch"]
-  },
-  {
-    "prefix": "off-main-thread-fetch",
     "base": "http/tests/inspector/service-workers",
     "args": ["--enable-features=OffMainThreadFetch"]
   },
@@ -349,11 +344,6 @@
   {
     "prefix": "scalefactor200",
     "base": "fast/hidpi/static",
-    "args": ["--force-device-scale-factor=2"]
-  },
-  {
-    "prefix": "scalefactor200",
-    "base": "external/wpt/css-paint-api/hidpi",
     "args": ["--force-device-scale-factor=2"]
   },
   {

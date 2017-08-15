@@ -21,8 +21,9 @@ class WindowPort;
 
 // The unified WindowTreeHost implementation for platforms
 // that implement PlatformWindow.
-class AURA_EXPORT WindowTreeHostPlatform : public WindowTreeHost,
-                                           public ui::PlatformWindowDelegate {
+class AURA_EXPORT WindowTreeHostPlatform
+    : public WindowTreeHost,
+      public NON_EXPORTED_BASE(ui::PlatformWindowDelegate) {
  public:
   explicit WindowTreeHostPlatform(const gfx::Rect& bounds);
   ~WindowTreeHostPlatform() override;

@@ -758,7 +758,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       break;
     case ItemTypeSavedPasswords: {
       controller = [[SavePasswordsCollectionViewController alloc]
-          initWithBrowserState:_browserState];
+          initWithBrowserState:_browserState
+                    dispatcher:self.dispatcher];
       break;
     }
     case ItemTypeAutofill:
@@ -777,11 +778,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       break;
     case ItemTypeContentSettings:
       controller = [[ContentSettingsCollectionViewController alloc]
-          initWithBrowserState:_browserState];
+          initWithBrowserState:_browserState
+                    dispatcher:self.dispatcher];
       break;
     case ItemTypeBandwidth:
       controller = [[BandwidthManagementCollectionViewController alloc]
-          initWithBrowserState:_browserState];
+          initWithBrowserState:_browserState
+                    dispatcher:self.dispatcher];
       break;
     case ItemTypeAboutChrome:
       controller = [[AboutChromeCollectionViewController alloc]

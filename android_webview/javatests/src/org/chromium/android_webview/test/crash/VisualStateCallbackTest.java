@@ -89,7 +89,12 @@ public class VisualStateCallbackTest extends AwTestBase {
 
         public void doInvokeVisualStateCallbackOnUiThread() {
             final VisualStateCallbackTestAwContents awContents = this;
-            ThreadUtils.runOnUiThread(() -> awContents.doInvokeVisualStateCallback());
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    awContents.doInvokeVisualStateCallback();
+                }
+            });
         }
 
         private void doInvokeVisualStateCallback() {
@@ -151,8 +156,12 @@ public class VisualStateCallbackTest extends AwTestBase {
     @SkipCommandLineParameterization
     public void testAddVisualStateCallbackAfterRendererGone() throws Throwable {
         final VisualStateCallbackImpl vsImpl = new VisualStateCallbackImpl();
-        mHelper.setOnRenderProcessGoneTask(
-                () -> mAwContents.insertVisualStateCallback(vsImpl.requestId(), vsImpl));
+        mHelper.setOnRenderProcessGoneTask(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.insertVisualStateCallback(vsImpl.requestId(), vsImpl);
+            }
+        });
         loadUrlAsync(mAwContents, "chrome://kill");
 
         mHelper.waitForRenderProcessGoneNotifiedToAwContentsClient();

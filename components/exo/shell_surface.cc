@@ -21,7 +21,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/output/layer_tree_frame_sink.h"
 #include "components/exo/surface.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
@@ -652,11 +651,8 @@ void ShellSurface::SetRectangularShadow_DEPRECATED(
   TRACE_EVENT1("exo", "ShellSurface::SetRectangularShadow_DEPRECATED",
                "content_bounds", content_bounds.ToString());
   pending_shadow_underlay_in_surface_ = false;
-  if (content_bounds != shadow_content_bounds_) {
-    shadow_content_bounds_ = content_bounds;
-    shadow_content_bounds_changed_ = true;
-    shadow_enabled_ = !content_bounds.IsEmpty();
-  }
+  shadow_content_bounds_ = content_bounds;
+  shadow_enabled_ = !content_bounds.IsEmpty();
 }
 
 void ShellSurface::SetRectangularSurfaceShadow(
@@ -664,11 +660,8 @@ void ShellSurface::SetRectangularSurfaceShadow(
   TRACE_EVENT1("exo", "ShellSurface::SetRectangularSurfaceShadow",
                "content_bounds", content_bounds.ToString());
   pending_shadow_underlay_in_surface_ = true;
-  if (content_bounds != shadow_content_bounds_) {
-    shadow_content_bounds_ = content_bounds;
-    shadow_content_bounds_changed_ = true;
-    shadow_enabled_ = !content_bounds.IsEmpty();
-  }
+  shadow_content_bounds_ = content_bounds;
+  shadow_enabled_ = !content_bounds.IsEmpty();
 }
 
 void ShellSurface::SetRectangularShadowBackgroundOpacity(float opacity) {
@@ -748,16 +741,17 @@ std::unique_ptr<base::trace_event::TracedValue> ShellSurface::AsTracedValue()
 // SurfaceDelegate overrides:
 
 void ShellSurface::OnSurfaceCommit() {
-  // When the shadow underlay is in surface coordinate space and the surface's
-  // bounds have changed, shadow API requires that we synchronize the shadow
-  // bounds change with the next frame, so we have to submit the next frame to a
-  // new surface, and let the host_window() use the new surface.
-  if (pending_shadow_underlay_in_surface_ && shadow_content_bounds_changed_) {
-    layer_tree_frame_sink_holder()->frame_sink()->SetLocalSurfaceId(
-        viz::LocalSurfaceId());
-  }
-
   SurfaceTreeHost::OnSurfaceCommit();
+
+  if (enabled() && !widget_) {
+    // Defer widget creation until surface contains some contents.
+    if (host_window()->bounds().size().IsEmpty()) {
+      Configure();
+      return;
+    }
+
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+  }
 
   // Apply the accumulated pending origin offset to reflect acknowledged
   // configure requests.
@@ -825,19 +819,6 @@ void ShellSurface::OnSurfaceCommit() {
       compositor_lock_.reset();
   } else {
     compositor_lock_.reset();
-  }
-}
-
-void ShellSurface::OnSurfaceContentSizeChanged() {
-  SurfaceTreeHost::OnSurfaceContentSizeChanged();
-  if (enabled() && !widget_) {
-    // Defer widget creation until surface contains some contents.
-    if (root_surface()->content_size().IsEmpty()) {
-      Configure();
-      return;
-    }
-
-    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
   }
 }
 
@@ -1708,8 +1689,6 @@ void ShellSurface::UpdateShadow() {
     shadow_overlay_.reset();
     shadow_underlay_.reset();
   }
-
-  shadow_content_bounds_changed_ = false;
 
   aura::Window* window = widget_->GetNativeWindow();
 

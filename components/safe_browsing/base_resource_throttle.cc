@@ -10,7 +10,6 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "components/safe_browsing/base_ui_manager.h"
-#include "components/safe_browsing/common/utils.h"
 #include "components/safe_browsing/web_ui/constants.h"
 #include "components/safe_browsing_db/util.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
@@ -239,10 +238,10 @@ void BaseResourceThrottle::OnCheckBrowseUrlResult(
   if (threat_type == SB_THREAT_TYPE_SAFE) {
     if (defer_state_ != DEFERRED_NONE) {
       // Log how much time the safe browsing check cost us.
-      LogDelay(base::TimeTicks::Now() - defer_start_time_);
+      ui_manager_->LogPauseDelay(base::TimeTicks::Now() - defer_start_time_);
       ResumeRequest();
     } else {
-      LogDelay(base::TimeDelta());
+      ui_manager_->LogPauseDelay(base::TimeDelta());
     }
     return;
   }
@@ -332,7 +331,7 @@ bool BaseResourceThrottle::CheckUrl(const GURL& url) {
 
   if (database_manager_->CheckBrowseUrl(url, threat_types_, this)) {
     threat_type_ = SB_THREAT_TYPE_SAFE;
-    LogDelay(base::TimeDelta());  // No delay.
+    ui_manager_->LogPauseDelay(base::TimeDelta());  // No delay.
     return true;
   }
 

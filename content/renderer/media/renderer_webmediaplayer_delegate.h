@@ -32,7 +32,7 @@ enum class MediaContentType;
 // the MediaPlayerDelegateHost.
 class CONTENT_EXPORT RendererWebMediaPlayerDelegate
     : public content::RenderFrameObserver,
-      public WebMediaPlayerDelegate,
+      public NON_EXPORTED_BASE(WebMediaPlayerDelegate),
       public NON_EXPORTED_BASE(
           base::SupportsWeakPtr<RendererWebMediaPlayerDelegate>) {
  public:

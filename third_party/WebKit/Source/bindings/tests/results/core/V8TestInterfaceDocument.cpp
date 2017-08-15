@@ -19,7 +19,6 @@
 #include "core/fullscreen/DocumentFullscreen.h"
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/xml/DocumentXPathEvaluator.h"
-#include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
 #include "platform/wtf/RefPtr.h"
@@ -103,14 +102,10 @@ static void locationAttributeSetter(v8::Local<v8::Value> v8Value, const v8::Func
 } // namespace TestInterfaceDocumentV8Internal
 
 void V8TestInterfaceDocument::locationAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceDocument_location_Getter");
-
   TestInterfaceDocumentV8Internal::locationAttributeGetter(info);
 }
 
 void V8TestInterfaceDocument::locationAttributeSetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceDocument_location_Setter");
-
   v8::Local<v8::Value> v8Value = info[0];
 
   TestInterfaceDocumentV8Internal::locationAttributeSetter(v8Value, info);

@@ -25,7 +25,7 @@ static const int kFirstTabLoadTimeoutMS = 60000;
 
 class TabLoaderDelegateImpl
     : public TabLoaderDelegate,
-      public net::NetworkChangeNotifier::NetworkChangeObserver {
+      public net::NetworkChangeNotifier::ConnectionTypeObserver {
  public:
   explicit TabLoaderDelegateImpl(TabLoaderCallback* callback);
   ~TabLoaderDelegateImpl() override;
@@ -40,8 +40,8 @@ class TabLoaderDelegateImpl
     return timeout_;
   }
 
-  // net::NetworkChangeNotifier::NetworkChangeObserver implementation:
-  void OnNetworkChanged(
+  // net::NetworkChangeNotifier::ConnectionTypeObserver:
+  void OnConnectionTypeChanged(
       net::NetworkChangeNotifier::ConnectionType type) override;
 
  private:
@@ -57,7 +57,7 @@ class TabLoaderDelegateImpl
 
 TabLoaderDelegateImpl::TabLoaderDelegateImpl(TabLoaderCallback* callback)
     : callback_(callback) {
-  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  net::NetworkChangeNotifier::AddConnectionTypeObserver(this);
   if (net::NetworkChangeNotifier::IsOffline()) {
     // When we are off-line we do not allow loading of tabs, since each of
     // these tabs would start loading simultaneously when going online.
@@ -71,15 +71,14 @@ TabLoaderDelegateImpl::TabLoaderDelegateImpl(TabLoaderCallback* callback)
 }
 
 TabLoaderDelegateImpl::~TabLoaderDelegateImpl() {
-  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
+  net::NetworkChangeNotifier::RemoveConnectionTypeObserver(this);
 }
 
-void TabLoaderDelegateImpl::OnNetworkChanged(
+void TabLoaderDelegateImpl::OnConnectionTypeChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
   callback_->SetTabLoadingEnabled(
       type != net::NetworkChangeNotifier::CONNECTION_NONE);
 }
-
 }  // namespace
 
 // static

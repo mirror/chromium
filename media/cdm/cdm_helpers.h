@@ -42,7 +42,8 @@ class DecryptedBlockImpl : public cdm::DecryptedBlock {
   DISALLOW_COPY_AND_ASSIGN(DecryptedBlockImpl);
 };
 
-class MEDIA_CDM_EXPORT VideoFrameImpl : public cdm::VideoFrame {
+class MEDIA_CDM_EXPORT VideoFrameImpl
+    : NON_EXPORTED_BASE(public cdm::VideoFrame) {
  public:
   VideoFrameImpl();
   ~VideoFrameImpl() override;

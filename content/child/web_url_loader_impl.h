@@ -49,7 +49,8 @@ struct CONTENT_EXPORT StreamOverrideParameters {
   base::OnceCallback<void(const GURL&)> on_delete;
 };
 
-class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
+class CONTENT_EXPORT WebURLLoaderImpl
+    : public NON_EXPORTED_BASE(blink::WebURLLoader) {
  public:
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,

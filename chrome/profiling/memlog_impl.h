@@ -30,9 +30,7 @@ class MemlogImpl : public mojom::Memlog {
   MemlogImpl();
   ~MemlogImpl() override;
 
-  void AddSender(base::ProcessId pid,
-                 mojo::ScopedHandle sender_pipe,
-                 AddSenderCallback callback) override;
+  void AddSender(base::ProcessId pid, mojo::ScopedHandle sender_pipe) override;
   void DumpProcess(base::ProcessId pid,
                    mojo::ScopedHandle output_file) override;
 

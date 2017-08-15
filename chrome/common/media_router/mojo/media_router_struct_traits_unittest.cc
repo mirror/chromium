@@ -68,11 +68,12 @@ TEST_F(MediaRouterStructTraitsTest, CastMediaSink) {
   MediaSink::Id sink_id("sinkId123");
   std::string sink_name("The sink");
   SinkIconType icon_type(SinkIconType::CAST);
+  std::string ip_address("192.168.1.2");
   std::string model_name("model name");
 
   MediaSink sink(sink_id, sink_name, icon_type);
   CastSinkExtraData extra_data;
-  extra_data.ip_endpoint = net::IPEndPoint(net::IPAddress(192, 168, 1, 2), 0);
+  EXPECT_TRUE(extra_data.ip_address.AssignFromIPLiteral(ip_address));
   extra_data.model_name = model_name;
   extra_data.capabilities = 2;
   extra_data.cast_channel_id = 3;

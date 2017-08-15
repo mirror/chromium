@@ -10,8 +10,6 @@
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSSyntaxDescriptor.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/frame/LocalDOMWindow.h"
-#include "core/frame/LocalFrame.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
@@ -241,10 +239,6 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
 CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(
     const String& name) {
   return paint_definitions_.at(name);
-}
-
-double PaintWorkletGlobalScope::devicePixelRatio() const {
-  return GetFrame()->DevicePixelRatio();
 }
 
 DEFINE_TRACE(PaintWorkletGlobalScope) {

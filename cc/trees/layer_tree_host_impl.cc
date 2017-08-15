@@ -4435,7 +4435,9 @@ bool LayerTreeHostImpl::SupportsImplScrolling() const {
 }
 
 bool LayerTreeHostImpl::CommitToActiveTree() const {
-  return settings_.commit_to_active_tree;
+  // In single threaded mode we skip the pending tree and commit directly to the
+  // active tree.
+  return !task_runner_provider_->HasImplThread();
 }
 
 void LayerTreeHostImpl::SetContextVisibility(bool is_visible) {

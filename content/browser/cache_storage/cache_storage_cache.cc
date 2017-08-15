@@ -43,6 +43,7 @@
 #include "storage/browser/quota/quota_manager_proxy.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "storage/common/storage_histograms.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 
 namespace content {
 

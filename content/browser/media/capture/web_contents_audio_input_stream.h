@@ -35,7 +35,7 @@ class AudioMirroringManager;
 class WebContentsTracker;
 
 class CONTENT_EXPORT WebContentsAudioInputStream
-    : public media::AudioInputStream {
+    : NON_EXPORTED_BASE(public media::AudioInputStream) {
  public:
   // media::AudioInputStream implementation
   bool Open() override;

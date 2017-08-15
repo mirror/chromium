@@ -42,12 +42,13 @@ enum ResourceRequestAction {
   CANCEL
 };
 
-class CONTENT_EXPORT InterstitialPageImpl : public InterstitialPage,
-                                            public NotificationObserver,
-                                            public RenderFrameHostDelegate,
-                                            public RenderViewHostDelegate,
-                                            public RenderWidgetHostDelegate,
-                                            public NavigatorDelegate {
+class CONTENT_EXPORT InterstitialPageImpl
+    : public NON_EXPORTED_BASE(InterstitialPage),
+      public NotificationObserver,
+      public NON_EXPORTED_BASE(RenderFrameHostDelegate),
+      public RenderViewHostDelegate,
+      public RenderWidgetHostDelegate,
+      public NON_EXPORTED_BASE(NavigatorDelegate) {
  public:
   // The different state of actions the user can take in an interstitial.
   enum ActionState {

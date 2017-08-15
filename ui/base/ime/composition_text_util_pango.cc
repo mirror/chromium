@@ -18,7 +18,7 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
                                           PangoAttrList* attrs,
                                           int cursor_position,
                                           CompositionText* composition) {
-  *composition = CompositionText();
+  composition->Clear();
   composition->text = base::UTF8ToUTF16(utf8_text);
 
   if (composition->text.empty())

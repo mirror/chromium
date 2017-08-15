@@ -340,7 +340,7 @@ void WebRemoteFrameImpl::WillEnterFullscreen() {
 }
 
 void WebRemoteFrameImpl::SetHasReceivedUserGesture() {
-  GetFrame()->UpdateUserActivationInFrameTree();
+  GetFrame()->SetDocumentHasReceivedUserGesture();
 }
 
 v8::Local<v8::Object> WebRemoteFrameImpl::GlobalProxy() const {

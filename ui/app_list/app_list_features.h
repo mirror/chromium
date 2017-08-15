@@ -40,6 +40,8 @@ bool APP_LIST_EXPORT IsBackgroundBlurEnabled();
 bool APP_LIST_EXPORT IsFullscreenAppListEnabled();
 bool APP_LIST_EXPORT IsTouchFriendlySearchResultsPageEnabled();
 bool APP_LIST_EXPORT IsPlayStoreAppSearchEnabled();
+int APP_LIST_EXPORT AnswerCardMaxWidth();
+int APP_LIST_EXPORT AnswerCardMaxHeight();
 std::string APP_LIST_EXPORT AnswerServerUrl();
 std::string APP_LIST_EXPORT AnswerServerQuerySuffix();
 

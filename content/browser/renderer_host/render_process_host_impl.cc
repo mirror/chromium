@@ -2659,7 +2659,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kBrowserControlsHideThreshold,
     cc::switches::kBrowserControlsShowThreshold,
     cc::switches::kRunAllCompositorStagesBeforeDraw,
-    switches::kDisableSurfaceReferences,
+    switches::kEnableSurfaceReferences,
     switches::kEnableSurfaceSynchronization,
 
 #if BUILDFLAG(ENABLE_PLUGINS)

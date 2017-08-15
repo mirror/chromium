@@ -17,15 +17,13 @@
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h"
 #endif
 
-namespace content {
-class WebUIMessageHandler;
-}
-
 namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
 namespace settings {
+
+class SettingsPageUIHandler;
 
 // The WebUI handler for chrome://settings.
 class MdSettingsUI : public content::WebUIController,
@@ -44,8 +42,10 @@ class MdSettingsUI : public content::WebUIController,
   void DocumentOnLoadCompletedInMainFrame() override;
 
  private:
-  void AddSettingsPageUIHandler(
-      std::unique_ptr<content::WebUIMessageHandler> handler);
+  void AddSettingsPageUIHandler(std::unique_ptr<SettingsPageUIHandler> handler);
+
+  // Weak references; all |handlers_| are owned by |web_ui()|.
+  std::unordered_set<SettingsPageUIHandler*> handlers_;
 
   base::Time load_start_time_;
 

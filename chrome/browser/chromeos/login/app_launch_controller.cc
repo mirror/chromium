@@ -15,7 +15,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
-#include "base/syslog_logging.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/values.h"
@@ -164,7 +163,7 @@ AppLaunchController::~AppLaunchController() {
 }
 
 void AppLaunchController::StartAppLaunch(bool is_auto_launch) {
-  SYSLOG(INFO) << "Starting kiosk mode...";
+  DVLOG(1) << "Starting kiosk mode...";
 
   RecordKioskLaunchUMA(is_auto_launch);
 
@@ -308,7 +307,7 @@ void AppLaunchController::OnNetworkStateChanged(bool online) {
 }
 
 void AppLaunchController::OnProfileLoaded(Profile* profile) {
-  SYSLOG(INFO) << "Profile loaded... Starting app launch.";
+  DVLOG(1) << "Profile loaded... Starting app launch.";
   profile_ = profile;
 
   // This is needed to trigger input method extensions being loaded.
@@ -354,8 +353,8 @@ void AppLaunchController::CleanUp() {
 
 void AppLaunchController::OnNetworkWaitTimedout() {
   DCHECK(waiting_for_network_);
-  SYSLOG(WARNING) << "OnNetworkWaitTimedout... connection = "
-                  << net::NetworkChangeNotifier::GetConnectionType();
+  LOG(WARNING) << "OnNetworkWaitTimedout... connection = "
+               <<  net::NetworkChangeNotifier::GetConnectionType();
   network_wait_timedout_ = true;
 
   MaybeShowNetworkConfigureUI();
@@ -365,7 +364,7 @@ void AppLaunchController::OnNetworkWaitTimedout() {
 }
 
 void AppLaunchController::OnAppWindowCreated() {
-  SYSLOG(INFO) << "App window created, closing splash screen.";
+  DVLOG(1) << "App window created, closing splash screen.";
   CleanUp();
 }
 
@@ -509,7 +508,7 @@ void AppLaunchController::OnReadyToLaunch() {
 }
 
 void AppLaunchController::OnLaunchSucceeded() {
-  SYSLOG(INFO) << "Kiosk launch succeeded, wait for app window.";
+  DVLOG(1) << "Kiosk launch succeeded, wait for app window.";
   app_launch_splash_screen_view_->UpdateAppLaunchState(
       AppLaunchSplashScreenView::APP_LAUNCH_STATE_WAITING_APP_WINDOW);
 
@@ -519,7 +518,7 @@ void AppLaunchController::OnLaunchSucceeded() {
 
 void AppLaunchController::OnLaunchFailed(KioskAppLaunchError::Error error) {
   DCHECK_NE(KioskAppLaunchError::NONE, error);
-  SYSLOG(ERROR) << "Kiosk launch failed, error=" << error;
+  LOG(ERROR) << "Kiosk launch failed, error=" << error;
 
   // Reboot on the recoverable cryptohome errors.
   if (error == KioskAppLaunchError::CRYPTOHOMED_NOT_RUNNING ||

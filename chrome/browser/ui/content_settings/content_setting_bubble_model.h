@@ -79,15 +79,6 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
   };
   typedef std::vector<ListItem> ListItems;
 
-  class Owner {
-   public:
-    virtual void OnListItemAdded(const ListItem& item) {}
-    virtual void OnListItemRemovedAt(int index) {}
-
-   protected:
-    virtual ~Owner() = default;
-  };
-
   typedef std::vector<base::string16> RadioItems;
   struct RadioGroup {
     RadioGroup();
@@ -156,8 +147,6 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
 
   const BubbleContent& bubble_content() const { return bubble_content_; }
 
-  void set_owner(Owner* owner) { owner_ = owner; }
-
   // content::NotificationObserver:
   void Observe(int type,
                const content::NotificationSource& source,
@@ -216,8 +205,13 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
   void set_message(const base::string16& message) {
     bubble_content_.message = message;
   }
-  void AddListItem(const ListItem& item);
-  void RemoveListItem(int index);
+  void add_list_item(const ListItem& item) {
+    bubble_content_.list_items.push_back(item);
+  }
+  void remove_list_item(int index) {
+    bubble_content_.list_items.erase(
+        bubble_content_.list_items.begin() + index);
+  }
   void set_radio_group(const RadioGroup& radio_group) {
     bubble_content_.radio_group = radio_group;
   }
@@ -259,7 +253,6 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
 
   content::WebContents* web_contents_;
   Profile* profile_;
-  Owner* owner_;
   Delegate* delegate_;
   BubbleContent bubble_content_;
   // A registrar for listening for WEB_CONTENTS_DESTROYED notifications.

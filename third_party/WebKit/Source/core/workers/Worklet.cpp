@@ -89,7 +89,6 @@ ScriptPromise Worklet::addModule(ScriptState* script_state,
 
 void Worklet::ContextDestroyed(ExecutionContext* execution_context) {
   DCHECK(IsMainThread());
-  module_responses_map_->Dispose();
   for (const auto& proxy : proxies_)
     proxy->TerminateWorkletGlobalScope();
 }

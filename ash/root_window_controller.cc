@@ -778,8 +778,7 @@ void RootWindowController::InitLayoutManagers() {
   aura::Window* lock_container =
       GetContainer(kShellWindowId_LockScreenContainer);
   DCHECK(lock_container);
-  lock_container->SetLayoutManager(
-      new LockLayoutManager(lock_container, shelf_.get()));
+  lock_container->SetLayoutManager(new LockLayoutManager(lock_container));
 
   aura::Window* always_on_top_container =
       GetContainer(kShellWindowId_AlwaysOnTopContainer);

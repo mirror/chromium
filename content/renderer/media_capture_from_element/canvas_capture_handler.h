@@ -37,7 +37,7 @@ namespace content {
 // i.e. the Main Render thread. Note that a CanvasCaptureHandlerDelegate is
 // used to send back frames to |io_task_runner_|, i.e. IO thread.
 class CONTENT_EXPORT CanvasCaptureHandler final
-    : public blink::WebCanvasCaptureHandler {
+    : public NON_EXPORTED_BASE(blink::WebCanvasCaptureHandler) {
  public:
   ~CanvasCaptureHandler() override;
 

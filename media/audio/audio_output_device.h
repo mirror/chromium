@@ -83,9 +83,10 @@ class OneShotTimer;
 
 namespace media {
 
-class MEDIA_EXPORT AudioOutputDevice : public AudioRendererSink,
-                                       public AudioOutputIPCDelegate,
-                                       public ScopedTaskRunnerObserver {
+class MEDIA_EXPORT AudioOutputDevice
+    : NON_EXPORTED_BASE(public AudioRendererSink),
+      NON_EXPORTED_BASE(public AudioOutputIPCDelegate),
+      NON_EXPORTED_BASE(public ScopedTaskRunnerObserver) {
  public:
   // NOTE: Clients must call Initialize() before using.
   AudioOutputDevice(

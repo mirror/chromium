@@ -30,9 +30,7 @@ media_router::CastSinkExtraData CreateCastSinkExtraData(
     uint8_t capabilities,
     int cast_channel_id) {
   media_router::CastSinkExtraData cast_extra_data;
-  net::IPAddress ip;
-  EXPECT_TRUE(ip.AssignFromIPLiteral(ip_address));
-  cast_extra_data.ip_endpoint = net::IPEndPoint(ip, 1234);
+  EXPECT_TRUE(cast_extra_data.ip_address.AssignFromIPLiteral(ip_address));
   cast_extra_data.model_name = model_name;
   cast_extra_data.capabilities = 2;
   cast_extra_data.cast_channel_id = 3;

@@ -49,7 +49,7 @@ class WebMediaPlayerMS;
 // Otherwise, WebMediaPlayerMSCompositor will simply store the most recent
 // frame, and submit it whenever asked by the compositor.
 class CONTENT_EXPORT WebMediaPlayerMSCompositor
-    : public cc::VideoFrameProvider,
+    : public NON_EXPORTED_BASE(cc::VideoFrameProvider),
       public base::RefCountedThreadSafe<WebMediaPlayerMSCompositor> {
  public:
   // This |url| represents the media stream we are rendering. |url| is used to

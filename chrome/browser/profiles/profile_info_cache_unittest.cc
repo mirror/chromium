@@ -793,7 +793,7 @@ TEST_F(ProfileInfoCacheTest, GetGaiaImageForAvatarMenu) {
   GetCache()->SetGAIAPictureOfProfileAtIndex(0, &gaia_image);
 
   // Make sure everything has completed, and the file has been written to disk.
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   // Make sure this profile is using GAIA picture.
   EXPECT_TRUE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(0));
@@ -813,7 +813,7 @@ TEST_F(ProfileInfoCacheTest, GetGaiaImageForAvatarMenu) {
   EXPECT_FALSE(gfx::test::AreImagesEqual(gaia_image, image_loaded));
 
   // Wait until the async image load finishes.
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   // Since the GAIA image is loaded now, we can get it this time.
   EXPECT_EQ(AvatarMenu::ImageLoadStatus::LOADED,

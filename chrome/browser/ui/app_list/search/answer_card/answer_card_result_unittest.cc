@@ -31,6 +31,10 @@ class AnswerCardTestContents : public AnswerCardContents {
 
   // AnswerCardContents overrides:
   void LoadURL(const GURL& url) override { NOTREACHED(); }
+  bool IsLoading() const override {
+    NOTREACHED();
+    return true;
+  }
   views::View* GetView() override { return &view_; }
 
  private:

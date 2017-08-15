@@ -8,7 +8,7 @@
 self.testRunner;
 
 TestRunner.executeTestScript = function() {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  const testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   fetch(testScriptURL)
       .then(data => data.text())
       .then(testScript => {

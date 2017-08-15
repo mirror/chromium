@@ -78,6 +78,7 @@ enum class EngagementLevel : int32_t;
 }
 
 class AnimationClock;
+class DocumentTimeline;
 class AXObjectCache;
 class Attr;
 class CDATASection;
@@ -96,10 +97,8 @@ class DocumentFragment;
 class DocumentLoader;
 class DocumentMarkerController;
 class DocumentNameCollection;
-class DocumentOutliveTimeReporter;
 class DocumentParser;
 class DocumentState;
-class DocumentTimeline;
 class DocumentType;
 class Element;
 class ElementDataCache;
@@ -579,9 +578,6 @@ class CORE_EXPORT Document : public ContainerNode,
   void open(Document* entered_document, ExceptionState&);
   // This is used internally and does not handle exceptions.
   void open();
-  void OpenForNavigation(ParserSynchronizationPolicy,
-                         const AtomicString& mime_type,
-                         const AtomicString& encoding);
   DocumentParser* ImplicitOpen(ParserSynchronizationPolicy);
 
   // This is the DOM API document.close()
@@ -1725,7 +1721,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   bool has_high_media_engagement_;
 
-  std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
+  int gc_age_when_document_detached_ = 0;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

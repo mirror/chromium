@@ -89,8 +89,8 @@ using EventResultCallback = base::Callback<void(ui::mojom::EventResult)>;
 // When WindowTreeClient is deleted all windows are deleted (and observers
 // notified).
 class AURA_EXPORT WindowTreeClient
-    : public ui::mojom::WindowTreeClient,
-      public ui::mojom::WindowManager,
+    : NON_EXPORTED_BASE(public ui::mojom::WindowTreeClient),
+      NON_EXPORTED_BASE(public ui::mojom::WindowManager),
       public CaptureSynchronizerDelegate,
       public FocusSynchronizerDelegate,
       public DragDropControllerHost,

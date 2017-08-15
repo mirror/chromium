@@ -30,7 +30,8 @@ namespace content {
 // the "capture thread"). It owns an internal thread to use for encoding, on
 // which lives an AudioEncoder (a private nested class of ATR) with its own
 // threading subtleties, see the implementation file.
-class CONTENT_EXPORT AudioTrackRecorder : public MediaStreamAudioSink {
+class CONTENT_EXPORT AudioTrackRecorder
+    : NON_EXPORTED_BASE(public MediaStreamAudioSink) {
  public:
   using OnEncodedAudioCB =
       base::Callback<void(const media::AudioParameters& params,

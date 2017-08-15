@@ -22,17 +22,23 @@ class JsResultHandler implements JsResultReceiver, JsPromptResultReceiver {
 
     @Override
     public void confirm(final String promptResult) {
-        ThreadUtils.runOnUiThread(() -> {
-            if (mBridge != null) mBridge.confirmJsResult(mId, promptResult);
-            mBridge = null;
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mBridge != null) mBridge.confirmJsResult(mId, promptResult);
+                mBridge = null;
+            }
         });
     }
 
     @Override
     public void cancel() {
-        ThreadUtils.runOnUiThread(() -> {
-            if (mBridge != null) mBridge.cancelJsResult(mId);
-            mBridge = null;
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mBridge != null) mBridge.cancelJsResult(mId);
+                mBridge = null;
+            }
         });
     }
 }

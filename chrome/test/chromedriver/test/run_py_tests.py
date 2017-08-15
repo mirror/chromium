@@ -69,8 +69,6 @@ _NEGATIVE_FILTER = [
     'ChromeDriverTest.testHoverOverElement',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=833
     'ChromeDriverTest.testAlertOnNewWindow',
-    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1882
-    'PerfTest.testColdExecuteScript',
 ]
 
 _VERSION_SPECIFIC_FILTER = {}

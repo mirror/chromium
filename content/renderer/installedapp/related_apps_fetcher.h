@@ -17,7 +17,8 @@ struct Manifest;
 struct ManifestDebugInfo;
 class ManifestManager;
 
-class CONTENT_EXPORT RelatedAppsFetcher : public blink::WebRelatedAppsFetcher {
+class CONTENT_EXPORT RelatedAppsFetcher
+    : public NON_EXPORTED_BASE(blink::WebRelatedAppsFetcher) {
  public:
   explicit RelatedAppsFetcher(ManifestManager* manifest_manager);
   ~RelatedAppsFetcher() override;

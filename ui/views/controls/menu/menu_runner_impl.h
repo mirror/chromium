@@ -32,8 +32,9 @@ class MenuRunnerDestructionTest;
 namespace internal {
 
 // A menu runner implementation that uses views::MenuItemView to show a menu.
-class VIEWS_EXPORT MenuRunnerImpl : public MenuRunnerImplInterface,
-                                    public MenuControllerDelegate {
+class VIEWS_EXPORT MenuRunnerImpl
+    : NON_EXPORTED_BASE(public MenuRunnerImplInterface),
+      NON_EXPORTED_BASE(public MenuControllerDelegate) {
  public:
   explicit MenuRunnerImpl(MenuItemView* menu);
 

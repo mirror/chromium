@@ -77,15 +77,31 @@ public class AwContentsClientBridge {
         }
 
         public void proceed(final PrivateKey privateKey, final X509Certificate[] chain) {
-            ThreadUtils.runOnUiThread(() -> proceedOnUiThread(privateKey, chain));
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    proceedOnUiThread(privateKey, chain);
+                }
+            });
         }
 
         public void ignore() {
-            ThreadUtils.runOnUiThread(() -> ignoreOnUiThread());
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ignoreOnUiThread();
+                }
+            });
         }
 
         public void cancel() {
-            ThreadUtils.runOnUiThread(() -> cancelOnUiThread());
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    cancelOnUiThread();
+                }
+
+            });
         }
 
         private void proceedOnUiThread(PrivateKey privateKey, X509Certificate[] chain) {
@@ -157,13 +173,27 @@ public class AwContentsClientBridge {
             return false;
         }
         final SslError sslError = SslUtil.sslErrorFromNetErrorCode(certError, cert, url);
-        final ValueCallback<Boolean> callback = value -> ThreadUtils.runOnUiThread(
-                () -> proceedSslError(value.booleanValue(), id));
+        final ValueCallback<Boolean> callback = new ValueCallback<Boolean>() {
+            @Override
+            public void onReceiveValue(final Boolean value) {
+                ThreadUtils.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        proceedSslError(value.booleanValue(), id);
+                    }
+                });
+            }
+        };
         // Post the application callback back to the current thread to ensure the application
         // callback is executed without any native code on the stack. This so that any exception
         // thrown by the application callback won't have to be propagated through a native call
         // stack.
-        new Handler().post(() -> mClient.onReceivedSslError(callback, sslError));
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mClient.onReceivedSslError(callback, sslError);
+            }
+        });
         return true;
     }
 
@@ -216,9 +246,12 @@ public class AwContentsClientBridge {
         // callback is executed without any native code on the stack. This so that any exception
         // thrown by the application callback won't have to be propagated through a native call
         // stack.
-        new Handler().post(() -> {
-            JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
-            mClient.handleJsAlert(url, message, handler);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
+                mClient.handleJsAlert(url, message, handler);
+            }
         });
     }
 
@@ -228,9 +261,12 @@ public class AwContentsClientBridge {
         // callback is executed without any native code on the stack. This so that any exception
         // thrown by the application callback won't have to be propagated through a native call
         // stack.
-        new Handler().post(() -> {
-            JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
-            mClient.handleJsConfirm(url, message, handler);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
+                mClient.handleJsConfirm(url, message, handler);
+            }
         });
     }
 
@@ -241,9 +277,12 @@ public class AwContentsClientBridge {
         // callback is executed without any native code on the stack. This so that any exception
         // thrown by the application callback won't have to be propagated through a native call
         // stack.
-        new Handler().post(() -> {
-            JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
-            mClient.handleJsPrompt(url, message, defaultValue, handler);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
+                mClient.handleJsPrompt(url, message, defaultValue, handler);
+            }
         });
     }
 
@@ -253,9 +292,12 @@ public class AwContentsClientBridge {
         // callback is executed without any native code on the stack. This so that any exception
         // thrown by the application callback won't have to be propagated through a native call
         // stack.
-        new Handler().post(() -> {
-            JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
-            mClient.handleJsBeforeUnload(url, message, handler);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                JsResultHandler handler = new JsResultHandler(AwContentsClientBridge.this, id);
+                mClient.handleJsBeforeUnload(url, message, handler);
+            }
         });
     }
 
@@ -335,9 +377,18 @@ public class AwContentsClientBridge {
         }
 
         ValueCallback<AwSafeBrowsingResponse> callback =
-                response -> ThreadUtils.runOnUiThread(
-                        () -> nativeTakeSafeBrowsingAction(mNativeContentsClientBridge,
-                                response.action(), response.reporting(), requestId));
+                new ValueCallback<AwSafeBrowsingResponse>() {
+                    @Override
+                    public void onReceiveValue(final AwSafeBrowsingResponse response) {
+                        ThreadUtils.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nativeTakeSafeBrowsingAction(mNativeContentsClientBridge,
+                                        response.action(), response.reporting(), requestId);
+                            }
+                        });
+                    }
+                };
 
         mClient.getCallbackHelper().postOnSafeBrowsingHit(
                 request, AwSafeBrowsingConversionHelper.convertThreatType(threatType), callback);

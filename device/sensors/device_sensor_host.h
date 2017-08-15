@@ -17,7 +17,7 @@ namespace device {
 
 // A base class for device sensor related mojo interface implementations.
 template <typename MojoInterface, ConsumerType consumer_type>
-class DeviceSensorHost : public MojoInterface {
+class DeviceSensorHost : NON_EXPORTED_BASE(public MojoInterface) {
  public:
   static void Create(mojo::InterfaceRequest<MojoInterface> request);
 

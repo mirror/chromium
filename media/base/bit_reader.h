@@ -15,7 +15,8 @@
 
 namespace media {
 
-class MEDIA_EXPORT BitReader : private BitReaderCore::ByteStreamProvider {
+class MEDIA_EXPORT BitReader
+    : NON_EXPORTED_BASE(private BitReaderCore::ByteStreamProvider)  {
  public:
   // Initialize the reader to start reading at |data|, |size| being size
   // of |data| in bytes.

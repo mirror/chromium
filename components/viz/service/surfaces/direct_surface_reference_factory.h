@@ -20,7 +20,7 @@ class SurfaceManager;
 // You probably don't need to instantiate this class directly.
 // Use SurfaceManager::reference_factory() instead.
 class VIZ_SERVICE_EXPORT DirectSurfaceReferenceFactory final
-    : public SequenceSurfaceReferenceFactory {
+    : public NON_EXPORTED_BASE(SequenceSurfaceReferenceFactory) {
  public:
   explicit DirectSurfaceReferenceFactory(base::WeakPtr<SurfaceManager> manager);
 

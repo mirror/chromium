@@ -31,7 +31,6 @@ namespace fileManagerPrivateInternal {
   callback ZipSelectionCallback = void(optional boolean success);
   callback ValidatePathNameLengthCallback = void(boolean result);
   callback GetDirectorySizeCallback = void(double size);
-  callback GetRecentFilesCallback = void(EntryDescription[] entries);
 
   interface Functions {
     static void resolveIsolatedEntries(DOMString[] urls,
@@ -93,6 +92,5 @@ namespace fileManagerPrivateInternal {
         ValidatePathNameLengthCallback callback);
     static void getDirectorySize(DOMString url,
                                  GetDirectorySizeCallback callback);
-    static void getRecentFiles(GetRecentFilesCallback callback);
   };
 };

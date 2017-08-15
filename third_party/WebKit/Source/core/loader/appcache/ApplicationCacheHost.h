@@ -48,7 +48,7 @@ class ResourceResponse;
 
 class CORE_EXPORT ApplicationCacheHost final
     : public GarbageCollectedFinalized<ApplicationCacheHost>,
-      public WebApplicationCacheHostClient {
+      NON_EXPORTED_BASE(public WebApplicationCacheHostClient) {
   WTF_MAKE_NONCOPYABLE(ApplicationCacheHost);
 
  public:

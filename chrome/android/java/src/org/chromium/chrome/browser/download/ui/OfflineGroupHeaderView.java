@@ -92,6 +92,7 @@ public class OfflineGroupHeaderView
         mFileSizeView.setText(Formatter.formatFileSize(getContext(), header.getTotalFileSize()));
         updateExpandIcon(header.isExpanded());
         setChecked(mSelectionDelegate.isHeaderSelected(header));
+        setBackgroundResourceForGroupPosition(mHeader.isFirstInGroup(), mHeader.isLastInGroup());
     }
 
     private void updateExpandIcon(boolean expanded) {

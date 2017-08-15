@@ -152,7 +152,12 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         mFocused = mContentViewCore.getContainerView().hasWindowFocus();
 
         mParentPositionObserver = new ViewPositionObserver(mContentViewCore.getContainerView());
-        mParentPositionListener = (x, y) -> updateParentPosition(x, y);
+        mParentPositionListener = new PositionObserver.Listener() {
+            @Override
+            public void onPositionChanged(int x, int y) {
+                updateParentPosition(x, y);
+            }
+        };
         mGestureStateListener = new GestureStateListener() {
             @Override
             public void onScrollStarted(int scrollOffsetX, int scrollOffsetY) {
@@ -389,7 +394,12 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         mTemporarilyHidden = hidden;
         if (mTemporarilyHidden) {
             if (mTemporarilyHiddenExpiredRunnable == null) {
-                mTemporarilyHiddenExpiredRunnable = () -> setTemporarilyHidden(false);
+                mTemporarilyHiddenExpiredRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        setTemporarilyHidden(false);
+                    }
+                };
             }
             removeCallbacks(mTemporarilyHiddenExpiredRunnable);
             long now = SystemClock.uptimeMillis();
@@ -409,7 +419,12 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         cancelFadeIn();
         if (allowed) {
             if (mDeferredHandleFadeInRunnable == null) {
-                mDeferredHandleFadeInRunnable = () -> beginFadeIn();
+                mDeferredHandleFadeInRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        beginFadeIn();
+                    }
+                };
             }
             postOnAnimation(mDeferredHandleFadeInRunnable);
         } else {
@@ -440,9 +455,12 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
 
     private void scheduleInvalidate() {
         if (mInvalidationRunnable == null) {
-            mInvalidationRunnable = () -> {
-                mHasPendingInvalidate = false;
-                doInvalidate();
+            mInvalidationRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    mHasPendingInvalidate = false;
+                    doInvalidate();
+                }
             };
         }
 

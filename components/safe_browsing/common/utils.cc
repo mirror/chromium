@@ -4,7 +4,6 @@
 
 #include "components/safe_browsing/common/utils.h"
 
-#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "crypto/sha2.h"
 
@@ -21,10 +20,6 @@ std::string ShortURLForReporting(const GURL& url) {
     }
   }
   return spec;
-}
-
-void LogDelay(base::TimeDelta time) {
-  UMA_HISTOGRAM_LONG_TIMES("SB2.Delay", time);
 }
 
 }  // namespace safe_browsing

@@ -27,8 +27,9 @@ class AppendQuadsData;
 class MicroBenchmarkImpl;
 class Tile;
 
-class CC_EXPORT PictureLayerImpl : public LayerImpl,
-                                   public PictureLayerTilingClient {
+class CC_EXPORT PictureLayerImpl
+    : public LayerImpl,
+      NON_EXPORTED_BASE(public PictureLayerTilingClient) {
  public:
   static std::unique_ptr<PictureLayerImpl>
   Create(LayerTreeImpl* tree_impl, int id, Layer::LayerMaskType mask_type) {

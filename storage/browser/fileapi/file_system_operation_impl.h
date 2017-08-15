@@ -28,7 +28,8 @@ class FileSystemContext;
 class RecursiveOperationDelegate;
 
 // The default implementation of FileSystemOperation for file systems.
-class STORAGE_EXPORT FileSystemOperationImpl : public FileSystemOperation {
+class STORAGE_EXPORT FileSystemOperationImpl
+    : public NON_EXPORTED_BASE(FileSystemOperation) {
  public:
   ~FileSystemOperationImpl() override;
 

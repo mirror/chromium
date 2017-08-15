@@ -18,7 +18,7 @@ namespace content {
 //
 // This class is thread-safe.
 class CONTENT_EXPORT WebTrialTokenValidatorImpl
-    : public blink::WebTrialTokenValidator {
+    : public NON_EXPORTED_BASE(blink::WebTrialTokenValidator) {
  public:
   WebTrialTokenValidatorImpl();
   ~WebTrialTokenValidatorImpl() override;

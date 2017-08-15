@@ -39,7 +39,7 @@ class SiteInstance;
 class ResourceRequestBody;
 
 class CONTENT_EXPORT ChildProcessSecurityPolicyImpl
-    : public ChildProcessSecurityPolicy {
+    : NON_EXPORTED_BASE(public ChildProcessSecurityPolicy) {
  public:
   // Object can only be created through GetInstance() so the constructor is
   // private.

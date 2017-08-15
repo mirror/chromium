@@ -8,9 +8,9 @@
 
 #include "base/command_line.h"
 #include "content/public/common/content_switches.h"
-#include "extensions/common/extension.h"
 #include "extensions/common/extension_api.h"
 #include "extensions/common/features/feature_provider.h"
+#include "extensions/renderer/script_context.h"
 
 namespace extensions {
 
@@ -18,18 +18,8 @@ FeatureCache::FeatureCache() {}
 FeatureCache::~FeatureCache() = default;
 
 FeatureCache::FeatureNameVector FeatureCache::GetAvailableFeatures(
-    Feature::Context context_type,
-    const Extension* extension,
-    const GURL& url) {
-  DCHECK_NE(context_type == Feature::WEBUI_CONTEXT, !!extension)
-      << "WebUI contexts shouldn't have extensions.";
-  DCHECK_NE(Feature::WEB_PAGE_CONTEXT, context_type)
-      << "FeatureCache shouldn't be used for web contexts.";
-  DCHECK_NE(Feature::UNSPECIFIED_CONTEXT, context_type)
-      << "FeatureCache shouldn't be used for unspecified contexts.";
-
-  const FeatureVector& features =
-      GetFeaturesFromCache(context_type, extension, url.GetOrigin());
+    ScriptContext* context) {
+  const FeatureVector& features = GetFeaturesFromCache(context);
   FeatureNameVector names;
   names.reserve(features.size());
   for (const Feature* feature : features) {
@@ -40,9 +30,8 @@ FeatureCache::FeatureNameVector FeatureCache::GetAvailableFeatures(
     // *may* be available, rather than all known features.
     // TODO(devlin): Optimize this - we should be able to tell if a feature may
     // change based on additional context attributes.
-    if (ExtensionAPI::GetSharedInstance()->IsAnyFeatureAvailableToContext(
-            *feature, extension, context_type, url,
-            CheckAliasStatus::NOT_ALLOWED)) {
+    if (context->IsAnyFeatureAvailableToContext(
+            *feature, CheckAliasStatus::NOT_ALLOWED)) {
       names.push_back(feature->name());
     }
   }
@@ -50,52 +39,27 @@ FeatureCache::FeatureNameVector FeatureCache::GetAvailableFeatures(
 }
 
 void FeatureCache::InvalidateExtension(const ExtensionId& extension_id) {
-  for (auto iter = extension_cache_.begin(); iter != extension_cache_.end();) {
+  for (auto iter = feature_cache_.begin(); iter != feature_cache_.end();) {
     if (iter->first.first == extension_id)
-      iter = extension_cache_.erase(iter);
+      iter = feature_cache_.erase(iter);
     else
       ++iter;
   }
 }
 
 const FeatureCache::FeatureVector& FeatureCache::GetFeaturesFromCache(
-    Feature::Context context_type,
-    const Extension* extension,
-    const GURL& origin) {
-  if (context_type == Feature::WEBUI_CONTEXT) {
-    auto iter = webui_cache_.find(origin);
-    if (iter != webui_cache_.end())
-      return iter->second;
-    return webui_cache_
-        .emplace(origin, CreateCacheEntry(context_type, extension, origin))
-        .first->second;
-  }
+    ScriptContext* context) {
+  CacheMapKey key(context->GetExtensionID(), context->context_type());
 
-  DCHECK(extension);
-  ExtensionCacheMapKey key(extension->id(), context_type);
-  auto iter = extension_cache_.find(key);
-  if (iter != extension_cache_.end())
+  auto iter = feature_cache_.find(key);
+  if (iter != feature_cache_.end())
     return iter->second;
-  return extension_cache_
-      .emplace(key, CreateCacheEntry(context_type, extension, origin))
-      .first->second;
-}
 
-FeatureCache::FeatureVector FeatureCache::CreateCacheEntry(
-    Feature::Context context_type,
-    const Extension* extension,
-    const GURL& origin) {
-  bool is_webui = context_type == Feature::WEBUI_CONTEXT;
   FeatureVector features;
   const FeatureProvider* api_feature_provider =
       FeatureProvider::GetAPIFeatures();
   GURL empty_url;
-  // We ignore the URL if this is an extension context in order to maximize
-  // cache hits. For WebUI, we key on origin.
-  // Note: Currently, we only ever have matches based on origin, so this is
-  // okay. If this changes, we'll have to get more creative about our WebUI
-  // caching.
-  const GURL& url_to_use = is_webui ? origin : empty_url;
+  const Extension* extension = context->extension();
   for (const auto& map_entry : api_feature_provider->GetAllFeatures()) {
     const Feature* feature = map_entry.second.get();
     // Exclude internal APIs.
@@ -117,7 +81,7 @@ FeatureCache::FeatureVector FeatureCache::CreateCacheEntry(
     }
 
     if (!ExtensionAPI::GetSharedInstance()->IsAnyFeatureAvailableToContext(
-            *feature, extension, context_type, url_to_use,
+            *feature, extension, context->context_type(), empty_url,
             CheckAliasStatus::NOT_ALLOWED)) {
       continue;
     }
@@ -130,7 +94,7 @@ FeatureCache::FeatureVector FeatureCache::CreateCacheEntry(
       [](const Feature* a, const Feature* b) { return a->name() < b->name(); });
   DCHECK(std::unique(features.begin(), features.end()) == features.end());
 
-  return features;
+  return feature_cache_.emplace(key, std::move(features)).first->second;
 }
 
 }  // namespace extensions

@@ -324,20 +324,6 @@ TEST_F(BaseFetchContextTest, CanRequestWhenDetached) {
                 FetchParameters::kNoOriginRestriction,
                 ResourceRequest::RedirectStatus::kNoRedirect));
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kNone,
-            fetch_context_->CanRequest(
-                Resource::kRaw, request, url, ResourceLoaderOptions(),
-                SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction,
-                ResourceRequest::RedirectStatus::kFollowedRedirect));
-
-  EXPECT_EQ(ResourceRequestBlockedReason::kNone,
-            fetch_context_->CanRequest(
-                Resource::kRaw, keepalive_request, url, ResourceLoaderOptions(),
-                SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction,
-                ResourceRequest::RedirectStatus::kFollowedRedirect));
-
   fetch_context_->SetIsDetached(true);
 
   EXPECT_EQ(ResourceRequestBlockedReason::kOther,
@@ -347,26 +333,12 @@ TEST_F(BaseFetchContextTest, CanRequestWhenDetached) {
                 FetchParameters::kNoOriginRestriction,
                 ResourceRequest::RedirectStatus::kNoRedirect));
 
-  EXPECT_EQ(ResourceRequestBlockedReason::kOther,
-            fetch_context_->CanRequest(
-                Resource::kRaw, keepalive_request, url, ResourceLoaderOptions(),
-                SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction,
-                ResourceRequest::RedirectStatus::kNoRedirect));
-
-  EXPECT_EQ(ResourceRequestBlockedReason::kOther,
-            fetch_context_->CanRequest(
-                Resource::kRaw, request, url, ResourceLoaderOptions(),
-                SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction,
-                ResourceRequest::RedirectStatus::kFollowedRedirect));
-
   EXPECT_EQ(ResourceRequestBlockedReason::kNone,
             fetch_context_->CanRequest(
                 Resource::kRaw, keepalive_request, url, ResourceLoaderOptions(),
                 SecurityViolationReportingPolicy::kSuppressReporting,
                 FetchParameters::kNoOriginRestriction,
-                ResourceRequest::RedirectStatus::kFollowedRedirect));
+                ResourceRequest::RedirectStatus::kNoRedirect));
 }
 
 }  // namespace blink

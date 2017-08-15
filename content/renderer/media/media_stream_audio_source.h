@@ -56,7 +56,8 @@ class MediaStreamAudioTrack;
 //   // Regardless of whether ConnectToTrack() succeeds, there will always be a
 //   // MediaStreamAudioTrack instance created.
 //   CHECK(MediaStreamAudioTrack::From(blink_track));
-class CONTENT_EXPORT MediaStreamAudioSource : public MediaStreamSource {
+class CONTENT_EXPORT MediaStreamAudioSource
+    : NON_EXPORTED_BASE(public MediaStreamSource) {
  public:
   explicit MediaStreamAudioSource(bool is_local_source);
   ~MediaStreamAudioSource() override;

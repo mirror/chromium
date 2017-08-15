@@ -25,17 +25,13 @@ import org.chromium.chrome.browser.tab.Tab;
  * {@link OverlayPanel} implementation when Chrome Home is enabled.
  */
 public class ReaderModeInfoBar extends InfoBar {
-    /** If the infobar has started hiding. */
-    private boolean mIsHiding;
-
     /**
      * Navigate to Reader Mode when the icon or the message text is clicked.
      */
     private View.OnClickListener mNavigateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (getReaderModeManager() == null || mIsHiding) return;
-            getReaderModeManager().activateReaderMode();
+            if (getReaderModeManager() != null) getReaderModeManager().activateReaderMode();
         }
     };
 
@@ -49,11 +45,6 @@ public class ReaderModeInfoBar extends InfoBar {
     @Override
     protected boolean usesCompactLayout() {
         return true;
-    }
-
-    @Override
-    protected void onStartedHiding() {
-        mIsHiding = true;
     }
 
     @Override

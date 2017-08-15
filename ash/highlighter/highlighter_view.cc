@@ -155,7 +155,8 @@ void HighlighterView::FadeOut(const gfx::PointF& pivot,
   animation_timer_->Start(FROM_HERE, duration, done);
 }
 
-void HighlighterView::OnRedraw(gfx::Canvas& canvas) {
+void HighlighterView::OnRedraw(gfx::Canvas& canvas,
+                               const gfx::Vector2d& offset) {
   const int num_points =
       points_.GetNumberOfPoints() + predicted_points_.GetNumberOfPoints();
   if (num_points < 2)
@@ -183,10 +184,11 @@ void HighlighterView::OnRedraw(gfx::Canvas& canvas) {
   for (int i = 0; i < num_points; ++i) {
     gfx::PointF current_point;
     if (i < points_.GetNumberOfPoints()) {
-      current_point = points_.points()[i].location;
+      current_point = points_.points()[i].location - offset;
     } else {
       current_point =
-          predicted_points_.points()[i - points_.GetNumberOfPoints()].location;
+          predicted_points_.points()[i - points_.GetNumberOfPoints()].location -
+          offset;
     }
 
     if (i != 0) {

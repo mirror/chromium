@@ -22,7 +22,7 @@ namespace content {
 // a separate unit is to make WebRtcAudioDeviceImpl more readable and easier
 // to maintain.
 class CONTENT_EXPORT WebRtcAudioDeviceNotImpl
-    : public webrtc::AudioDeviceModule {
+    : NON_EXPORTED_BASE(public webrtc::AudioDeviceModule) {
  public:
   WebRtcAudioDeviceNotImpl();
 

@@ -196,7 +196,12 @@ public class AwSettings {
         }
 
         void updateWebkitPreferencesLocked() {
-            runOnUiThreadBlockingAndLocked(() -> updateWebkitPreferencesOnUiThreadLocked());
+            runOnUiThreadBlockingAndLocked(new Runnable() {
+                @Override
+                public void run() {
+                    updateWebkitPreferencesOnUiThreadLocked();
+                }
+            });
         }
     }
 
@@ -441,9 +446,12 @@ public class AwSettings {
         synchronized (mAwSettingsLock) {
             if (mInitialPageScalePercent != scaleInPercent) {
                 mInitialPageScalePercent = scaleInPercent;
-                mEventHandler.runOnUiThreadBlockingAndLocked(() -> {
-                    if (mNativeAwSettings != 0) {
-                        nativeUpdateInitialPageScaleLocked(mNativeAwSettings);
+                mEventHandler.runOnUiThreadBlockingAndLocked(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mNativeAwSettings != 0) {
+                            nativeUpdateInitialPageScaleLocked(mNativeAwSettings);
+                        }
                     }
                 });
             }
@@ -537,9 +545,12 @@ public class AwSettings {
         synchronized (mAwSettingsLock) {
             if (mAutoCompleteEnabled != enable) {
                 mAutoCompleteEnabled = enable;
-                mEventHandler.runOnUiThreadBlockingAndLocked(() -> {
-                    if (mNativeAwSettings != 0) {
-                        nativeUpdateFormDataPreferencesLocked(mNativeAwSettings);
+                mEventHandler.runOnUiThreadBlockingAndLocked(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mNativeAwSettings != 0) {
+                            nativeUpdateFormDataPreferencesLocked(mNativeAwSettings);
+                        }
                     }
                 });
             }
@@ -591,9 +602,12 @@ public class AwSettings {
                 mUserAgent = ua;
             }
             if (!oldUserAgent.equals(mUserAgent)) {
-                mEventHandler.runOnUiThreadBlockingAndLocked(() -> {
-                    if (mNativeAwSettings != 0) {
-                        nativeUpdateUserAgentLocked(mNativeAwSettings);
+                mEventHandler.runOnUiThreadBlockingAndLocked(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mNativeAwSettings != 0) {
+                            nativeUpdateUserAgentLocked(mNativeAwSettings);
+                        }
                     }
                 });
             }
@@ -623,10 +637,13 @@ public class AwSettings {
         synchronized (mAwSettingsLock) {
             if (mLoadWithOverviewMode != overview) {
                 mLoadWithOverviewMode = overview;
-                mEventHandler.runOnUiThreadBlockingAndLocked(() -> {
-                    if (mNativeAwSettings != 0) {
-                        updateWebkitPreferencesOnUiThreadLocked();
-                        nativeResetScrollAndScaleState(mNativeAwSettings);
+                mEventHandler.runOnUiThreadBlockingAndLocked(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mNativeAwSettings != 0) {
+                            updateWebkitPreferencesOnUiThreadLocked();
+                            nativeResetScrollAndScaleState(mNativeAwSettings);
+                        }
                     }
                 });
             }
@@ -1563,11 +1580,14 @@ public class AwSettings {
     private void onGestureZoomSupportChanged(
             final boolean supportsDoubleTapZoom, final boolean supportsMultiTouchZoom) {
         // Always post asynchronously here, to avoid doubling back onto the caller.
-        mEventHandler.maybePostOnUiThread(() -> {
-            synchronized (mAwSettingsLock) {
-                if (mZoomChangeListener != null) {
-                    mZoomChangeListener.onGestureZoomSupportChanged(
-                            supportsDoubleTapZoom, supportsMultiTouchZoom);
+        mEventHandler.maybePostOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (mAwSettingsLock) {
+                    if (mZoomChangeListener != null) {
+                        mZoomChangeListener.onGestureZoomSupportChanged(
+                                supportsDoubleTapZoom, supportsMultiTouchZoom);
+                    }
                 }
             }
         });
@@ -1692,9 +1712,12 @@ public class AwSettings {
         synchronized (mAwSettingsLock) {
             if (enabled != mOffscreenPreRaster) {
                 mOffscreenPreRaster = enabled;
-                mEventHandler.runOnUiThreadBlockingAndLocked(() -> {
-                    if (mNativeAwSettings != 0) {
-                        nativeUpdateOffscreenPreRasterLocked(mNativeAwSettings);
+                mEventHandler.runOnUiThreadBlockingAndLocked(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mNativeAwSettings != 0) {
+                            nativeUpdateOffscreenPreRasterLocked(mNativeAwSettings);
+                        }
                     }
                 });
             }
@@ -1716,9 +1739,12 @@ public class AwSettings {
     @VisibleForTesting
     public void updateAcceptLanguages() {
         synchronized (mAwSettingsLock) {
-            mEventHandler.runOnUiThreadBlockingAndLocked(() -> {
-                if (mNativeAwSettings != 0) {
-                    nativeUpdateRendererPreferencesLocked(mNativeAwSettings);
+            mEventHandler.runOnUiThreadBlockingAndLocked(new Runnable() {
+                @Override
+                public void run() {
+                    if (mNativeAwSettings != 0) {
+                        nativeUpdateRendererPreferencesLocked(mNativeAwSettings);
+                    }
                 }
             });
         }

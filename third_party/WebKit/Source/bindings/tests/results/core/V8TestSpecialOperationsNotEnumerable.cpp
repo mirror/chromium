@@ -113,8 +113,6 @@ static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallback
 } // namespace TestSpecialOperationsNotEnumerableV8Internal
 
 void V8TestSpecialOperationsNotEnumerable::namedPropertyGetterCallback(v8::Local<v8::Name> name, const v8::PropertyCallbackInfo<v8::Value>& info) {
-  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestSpecialOperationsNotEnumerable_NamedPropertyGetter");
-
   if (!name->IsString())
     return;
   const AtomicString& propertyName = ToCoreAtomicString(name.As<v8::String>());
@@ -123,8 +121,6 @@ void V8TestSpecialOperationsNotEnumerable::namedPropertyGetterCallback(v8::Local
 }
 
 void V8TestSpecialOperationsNotEnumerable::indexedPropertyGetterCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
-  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestSpecialOperationsNotEnumerable_IndexedPropertyGetter");
-
   TestSpecialOperationsNotEnumerableV8Internal::indexedPropertyGetter(index, info);
 }
 

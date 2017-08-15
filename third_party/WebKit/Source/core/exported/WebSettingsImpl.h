@@ -41,7 +41,8 @@ namespace blink {
 class DevToolsEmulator;
 class Settings;
 
-class CORE_EXPORT WebSettingsImpl final : public WebSettings {
+class CORE_EXPORT WebSettingsImpl final
+    : NON_EXPORTED_BASE(public WebSettings) {
  public:
   WebSettingsImpl(Settings*, DevToolsEmulator*);
   virtual ~WebSettingsImpl() {}

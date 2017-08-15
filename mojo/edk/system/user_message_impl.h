@@ -32,7 +32,8 @@ namespace edk {
 // A UserMessageImpl may be either serialized or unserialized. Unserialized
 // instances are serialized lazily only when necessary, i.e., if and when
 // Serialize() is called to obtain a serialized message for wire transfer.
-class MOJO_SYSTEM_IMPL_EXPORT UserMessageImpl : public ports::UserMessage {
+class MOJO_SYSTEM_IMPL_EXPORT UserMessageImpl
+    : public NON_EXPORTED_BASE(ports::UserMessage) {
  public:
   static const TypeInfo kUserMessageTypeInfo;
 

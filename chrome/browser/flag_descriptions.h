@@ -181,9 +181,6 @@ extern const char kEnableAutofillCreditCardLastUsedDateDisplayDescription[];
 extern const char kEnableAutofillCreditCardUploadCvcPromptName[];
 extern const char kEnableAutofillCreditCardUploadCvcPromptDescription[];
 
-extern const char kEnableAutofillCreditCardUploadGoogleLogoName[];
-extern const char kEnableAutofillCreditCardUploadGoogleLogoDescription[];
-
 extern const char kEnableAutofillCreditCardUploadNewUiName[];
 extern const char kEnableAutofillCreditCardUploadNewUiDescription[];
 

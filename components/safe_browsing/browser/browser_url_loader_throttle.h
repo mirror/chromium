@@ -10,7 +10,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/time/time.h"
 #include "content/public/common/url_loader_throttle.h"
 
 namespace content {
@@ -60,10 +59,6 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
 
   size_t pending_checks_ = 0;
   bool blocked_ = false;
-
-  // The time when we started deferring the request.
-  base::TimeTicks defer_start_time_;
-  bool deferred_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserURLLoaderThrottle);
 };

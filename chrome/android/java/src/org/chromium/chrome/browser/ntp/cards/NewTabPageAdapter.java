@@ -23,10 +23,10 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
-import org.chromium.chrome.browser.suggestions.SiteSection;
 import org.chromium.chrome.browser.suggestions.SuggestionsCarousel;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
+import org.chromium.chrome.browser.suggestions.TileGrid;
 import org.chromium.chrome.browser.suggestions.TileGroup;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
@@ -54,7 +54,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     @Nullable
     private final AboveTheFoldItem mAboveTheFold;
     @Nullable
-    private final SiteSection mSiteSection;
+    private final TileGrid mTileGrid;
     private final SuggestionsCarousel mSuggestionsCarousel;
     private final SectionList mSections;
     private final SignInPromo mSigninPromo;
@@ -71,7 +71,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
      * @param uiConfig the NTP UI configuration, to be passed to created views.
      * @param offlinePageBridge used to determine if articles are available.
      * @param contextMenuManager used to build context menus.
-     * @param tileGroupDelegate if not null this is used to build a {@link SiteSection}.
+     * @param tileGroupDelegate if not null this is used to build a {@link TileGrid}.
      * @param suggestionsCarousel if not null this is used to build a carousel showing contextual
      *         suggestions.
      */
@@ -105,11 +105,11 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         }
 
         if (tileGroupDelegate == null) {
-            mSiteSection = null;
+            mTileGrid = null;
         } else {
-            mSiteSection = new SiteSection(uiDelegate, mContextMenuManager, tileGroupDelegate,
+            mTileGrid = new TileGrid(uiDelegate, mContextMenuManager, tileGroupDelegate,
                     offlinePageBridge, uiConfig);
-            mRoot.addChild(mSiteSection);
+            mRoot.addChild(mTileGrid);
         }
 
         mRoot.addChildren(mSections, mSigninPromo, mAllDismissed, mFooter);
@@ -142,8 +142,8 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             case ItemViewType.ABOVE_THE_FOLD:
                 return new NewTabPageViewHolder(mAboveTheFoldView);
 
-            case ItemViewType.SITE_SECTION:
-                return SiteSection.createViewHolder(parent);
+            case ItemViewType.TILE_GRID:
+                return new TileGrid.ViewHolder(mRecyclerView);
 
             case ItemViewType.HEADER:
                 return new SectionHeaderViewHolder(mRecyclerView, mUiConfig);
@@ -213,8 +213,8 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mSections.refreshSuggestions();
         }
 
-        if (mSiteSection != null) {
-            mSiteSection.getTileGroup().onSwitchToForeground(/* trackLoadTasks = */ true);
+        if (mTileGrid != null) {
+            mTileGrid.getTileGroup().onSwitchToForeground(/* trackLoadTasks = */ true);
         }
     }
 

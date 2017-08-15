@@ -46,7 +46,7 @@ class WebRtcAudioDeviceImpl;
 
 // Object factory for RTC PeerConnections.
 class CONTENT_EXPORT PeerConnectionDependencyFactory
-    : base::MessageLoop::DestructionObserver {
+    : NON_EXPORTED_BASE(base::MessageLoop::DestructionObserver) {
  public:
   PeerConnectionDependencyFactory(
       P2PSocketDispatcher* p2p_socket_dispatcher);

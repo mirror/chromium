@@ -55,8 +55,8 @@ class TouchSelectionControllerClientChildFrame;
 class CONTENT_EXPORT RenderWidgetHostViewChildFrame
     : public RenderWidgetHostViewBase,
       public TouchSelectionControllerClientManager::Observer,
-      public viz::CompositorFrameSinkSupportClient,
-      public viz::HostFrameSinkClient {
+      public NON_EXPORTED_BASE(viz::CompositorFrameSinkSupportClient),
+      public NON_EXPORTED_BASE(viz::HostFrameSinkClient) {
  public:
   static RenderWidgetHostViewChildFrame* Create(RenderWidgetHost* widget);
   ~RenderWidgetHostViewChildFrame() override;

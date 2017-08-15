@@ -82,7 +82,9 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
 
   if (!context->GetSecurityOrigin()->IsSameSchemeHostPortAndSuborigin(
           SecurityOrigin::Create(parsed_url_to_open).Get())) {
-    resolver->Resolve(v8::Null(script_state->GetIsolate()));
+    resolver->Reject(DOMException::Create(
+        kSecurityError,
+        "'" + parsed_url_to_open.ElidedString() + "' is not allowed."));
     return promise;
   }
 

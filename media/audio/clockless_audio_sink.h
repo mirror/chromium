@@ -17,7 +17,8 @@ class ClocklessAudioSinkThread;
 
 // Implementation of an AudioRendererSink that consumes the audio as fast as
 // possible. This class does not support multiple Play()/Pause() events.
-class MEDIA_EXPORT ClocklessAudioSink : public AudioRendererSink {
+class MEDIA_EXPORT ClocklessAudioSink
+    : NON_EXPORTED_BASE(public AudioRendererSink) {
  public:
   ClocklessAudioSink();
   explicit ClocklessAudioSink(const OutputDeviceInfo& device_info);

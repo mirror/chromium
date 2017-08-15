@@ -151,12 +151,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     SecurityViolationReportingPolicy reporting_policy,
     FetchParameters::OriginRestriction origin_restriction,
     ResourceRequest::RedirectStatus redirect_status) const {
-  if (IsDetached()) {
-    if (!resource_request.GetKeepalive() ||
-        redirect_status == ResourceRequest::RedirectStatus::kNoRedirect) {
-      return ResourceRequestBlockedReason::kOther;
-    }
-  }
+  if (IsDetached() && !resource_request.GetKeepalive())
+    return ResourceRequestBlockedReason::kOther;
 
   if (ShouldBlockRequestByInspector(resource_request.Url()))
     return ResourceRequestBlockedReason::kInspector;

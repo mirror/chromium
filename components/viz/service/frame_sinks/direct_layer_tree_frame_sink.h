@@ -28,9 +28,9 @@ class Display;
 // client's frame being the root surface of the Display.
 class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
     : public cc::LayerTreeFrameSink,
-      public CompositorFrameSinkSupportClient,
+      public NON_EXPORTED_BASE(CompositorFrameSinkSupportClient),
       public ExternalBeginFrameSourceClient,
-      public DisplayClient {
+      public NON_EXPORTED_BASE(DisplayClient) {
  public:
   // The underlying Display, FrameSinkManagerImpl, and LocalSurfaceIdAllocator
   // must outlive this class.

@@ -20,7 +20,6 @@ import errno
 import logging
 import optparse
 import os
-import platform
 import shutil
 import subprocess
 import sys
@@ -89,13 +88,6 @@ def run_build(tempdir, options):
     # Preserve the executable permission bit.
     shutil.copy2(out_gn, options.output)
 
-def windows_target_build_arch():
-    # Target build architecture set by vcvarsall.bat
-    target_arch = os.environ.get('Platform')
-    if target_arch in ['x64', 'x86']: return target_arch
-
-    if platform.machine().lower() in ['x86_64', 'amd64']: return 'x64'
-    return 'x86'
 
 def main(argv):
   parser = optparse.OptionParser(description=sys.modules[__name__].__doc__)
@@ -371,12 +363,8 @@ def write_gn_ninja(path, root_gen_dir, options):
         '/GR-',
         '/D_HAS_EXCEPTIONS=0',
     ])
-
-    target_arch = windows_target_build_arch()
-    if target_arch == 'x64':
-        ldflags.extend(['/MACHINE:x64'])
-    else:
-        ldflags.extend(['/MACHINE:x86'])
+    # TODO(tim): Support for 64bit builds?
+    ldflags.extend(['/MACHINE:x86', '/DEBUG'])
 
   static_libraries = {
       'base': {'sources': [], 'tool': 'cxx', 'include_dirs': []},
@@ -448,7 +436,6 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/memory/ref_counted_memory.cc',
       'base/memory/singleton.cc',
       'base/memory/shared_memory_handle.cc',
-      'base/memory/shared_memory_tracker.cc',
       'base/memory/weak_ptr.cc',
       'base/message_loop/incoming_task_queue.cc',
       'base/message_loop/message_loop.cc',
@@ -579,7 +566,6 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/unguessable_token.cc',
       'base/value_iterators.cc',
       'base/values.cc',
-      'base/value_iterators.cc',
       'base/vlog.cc',
   ])
 
@@ -811,7 +797,6 @@ def write_gn_ninja(path, root_gen_dir, options):
         'version.lib',
         'winmm.lib',
         'ws2_32.lib',
-        'Shlwapi.lib',
     ])
 
   # we just build static libraries that GN needs

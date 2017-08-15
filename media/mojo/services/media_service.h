@@ -28,8 +28,9 @@ namespace media {
 
 class MojoMediaClient;
 
-class MEDIA_MOJO_EXPORT MediaService : public service_manager::Service,
-                                       public mojom::MediaService {
+class MEDIA_MOJO_EXPORT MediaService
+    : public NON_EXPORTED_BASE(service_manager::Service),
+      public NON_EXPORTED_BASE(mojom::MediaService) {
  public:
   explicit MediaService(std::unique_ptr<MojoMediaClient> mojo_media_client);
   ~MediaService() final;

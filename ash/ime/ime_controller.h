@@ -21,7 +21,8 @@ namespace ash {
 
 // Connects ash IME users (e.g. the system tray) to the IME implementation,
 // which might live in Chrome browser or in a separate mojo service.
-class ASH_EXPORT ImeController : public mojom::ImeController {
+class ASH_EXPORT ImeController
+    : public NON_EXPORTED_BASE(mojom::ImeController) {
  public:
   ImeController();
   ~ImeController() override;

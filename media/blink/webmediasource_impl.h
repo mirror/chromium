@@ -15,7 +15,8 @@
 namespace media {
 class ChunkDemuxer;
 
-class MEDIA_BLINK_EXPORT WebMediaSourceImpl : public blink::WebMediaSource {
+class MEDIA_BLINK_EXPORT WebMediaSourceImpl
+    : NON_EXPORTED_BASE(public blink::WebMediaSource) {
  public:
   WebMediaSourceImpl(ChunkDemuxer* demuxer);
   ~WebMediaSourceImpl() override;

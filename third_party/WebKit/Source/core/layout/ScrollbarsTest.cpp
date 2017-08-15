@@ -242,11 +242,8 @@ class StubWebThemeEngine : public WebThemeEngine {
     }
   }
   void GetOverlayScrollbarStyle(ScrollbarStyle* style) override {
-    style->fade_out_delay_seconds = 0;
-    style->fade_out_duration_seconds = 0;
     style->thumb_thickness = 3;
     style->scrollbar_margin = 0;
-    style->color = SkColorSetARGB(128, 64, 64, 64);
   }
   static constexpr int kMinimumHorizontalLength = 51;
   static constexpr int kMinimumVerticalLength = 52;

@@ -47,7 +47,8 @@ class AudioDebugRecorder {
 // soundcard thread -> control thread -> file thread,
 // and with the merge we should be able to do
 // soundcard thread -> file thread.
-class MEDIA_EXPORT AudioDebugRecordingHelper : public AudioDebugRecorder {
+class MEDIA_EXPORT AudioDebugRecordingHelper
+    : public NON_EXPORTED_BASE(AudioDebugRecorder) {
  public:
   AudioDebugRecordingHelper(
       const AudioParameters& params,

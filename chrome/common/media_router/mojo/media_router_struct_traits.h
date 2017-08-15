@@ -12,7 +12,6 @@
 #include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "chrome/common/media_router/route_request_result.h"
 #include "mojo/common/common_custom_types_struct_traits.h"
-#include "net/base/ip_endpoint.h"
 
 namespace mojo {
 
@@ -137,9 +136,9 @@ struct StructTraits<media_router::mojom::CastMediaSinkDataView,
     return extra_data.model_name;
   }
 
-  static const net::IPEndPoint& ip_endpoint(
+  static const net::IPAddress& ip_address(
       const media_router::CastSinkExtraData& extra_data) {
-    return extra_data.ip_endpoint;
+    return extra_data.ip_address;
   }
 
   static uint8_t capabilities(

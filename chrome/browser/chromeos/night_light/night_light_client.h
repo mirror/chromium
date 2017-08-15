@@ -24,7 +24,8 @@ class URLRequestContextGetter;
 
 // Periodically requests the IP-based geolocation and provides it to the
 // NightLightController running in ash.
-class NightLightClient : public ash::mojom::NightLightClient {
+class NightLightClient
+    : public NON_EXPORTED_BASE(ash::mojom::NightLightClient) {
  public:
   NightLightClient(net::URLRequestContextGetter* url_context_getter);
   ~NightLightClient() override;

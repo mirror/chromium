@@ -2094,7 +2094,7 @@ void WebLocalFrameImpl::SetCommittedFirstRealLoad() {
 
 void WebLocalFrameImpl::SetHasReceivedUserGesture() {
   if (GetFrame())
-    GetFrame()->UpdateUserActivationInFrameTree();
+    GetFrame()->SetDocumentHasReceivedUserGesture();
 }
 
 void WebLocalFrameImpl::BlinkFeatureUsageReport(const std::set<int>& features) {

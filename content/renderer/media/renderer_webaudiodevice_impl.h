@@ -28,8 +28,8 @@ class SilentSinkSuspender;
 
 namespace content {
 class CONTENT_EXPORT RendererWebAudioDeviceImpl
-    : public blink::WebAudioDevice,
-      public media::AudioRendererSink::RenderCallback {
+    : NON_EXPORTED_BASE(public blink::WebAudioDevice),
+      NON_EXPORTED_BASE(public media::AudioRendererSink::RenderCallback) {
  public:
   ~RendererWebAudioDeviceImpl() override;
 

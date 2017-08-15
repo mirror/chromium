@@ -40,7 +40,7 @@ class WebSpeechRecognizer;
 class WebString;
 
 class MODULES_EXPORT SpeechRecognitionClientProxy final
-    : public SpeechRecognitionClient,
+    : public NON_EXPORTED_BASE(SpeechRecognitionClient),
       public WebSpeechRecognizerClient {
  public:
   ~SpeechRecognitionClientProxy() override;

@@ -65,8 +65,9 @@ class UIResourceManager;
 struct RenderingStats;
 struct ScrollAndScaleSet;
 
-class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
-                                public MutatorHostClient {
+class CC_EXPORT LayerTreeHost
+    : public NON_EXPORTED_BASE(viz::SurfaceReferenceOwner),
+      public NON_EXPORTED_BASE(MutatorHostClient) {
  public:
   struct CC_EXPORT InitParams {
     LayerTreeHostClient* client = nullptr;

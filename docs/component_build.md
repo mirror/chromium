@@ -136,7 +136,7 @@ If you don’t use the base class outside of the component, Chrome supplies the
 For example:
 
 ```c++
-class YourClass : public Base { ... };
+class YourClass : public NON_EXPORTED_BASE(Base) { ... };
 ```
 
 ## Creating components from multiple targets

@@ -5,7 +5,6 @@
 #include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 
 #include "base/logging.h"
-#include "components/safe_browsing/common/utils.h"
 #include "content/public/common/resource_request.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/url_request/redirect_info.h"
@@ -67,15 +66,8 @@ void RendererURLLoaderThrottle::WillProcessResponse(bool* defer) {
   // shouldn't be such a notification.
   DCHECK(!blocked_);
 
-  if (pending_checks_ == 0) {
-    LogDelay(base::TimeDelta());
-    return;
-  }
-
-  DCHECK(!deferred_);
-  deferred_ = true;
-  defer_start_time_ = base::TimeTicks::Now();
-  *defer = true;
+  if (pending_checks_ > 0)
+    *defer = true;
 }
 
 void RendererURLLoaderThrottle::OnCheckUrlResult(bool proceed,
@@ -87,9 +79,9 @@ void RendererURLLoaderThrottle::OnCheckUrlResult(bool proceed,
   pending_checks_--;
 
   if (proceed) {
-    if (pending_checks_ == 0 && deferred_) {
-      LogDelay(base::TimeTicks::Now() - defer_start_time_);
-      deferred_ = false;
+    if (pending_checks_ == 0) {
+      // The resource load is not necessarily deferred, in that case Resume() is
+      // a no-op.
       delegate_->Resume();
     }
   } else {
@@ -106,12 +98,7 @@ void RendererURLLoaderThrottle::OnConnectionError() {
   // If a service-side disconnect happens, treat all URLs as if they are safe.
   url_checker_.reset();
   pending_checks_ = 0;
-
-  if (deferred_) {
-    deferred_ = false;
-    LogDelay(base::TimeTicks::Now() - defer_start_time_);
-    delegate_->Resume();
-  }
+  delegate_->Resume();
 }
 
 }  // namespace safe_browsing

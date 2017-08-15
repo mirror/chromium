@@ -71,11 +71,8 @@ void ChromePaymentRequestDelegate::ShowErrorMessage() {
 
 autofill::PersonalDataManager*
 ChromePaymentRequestDelegate::GetPersonalDataManager() {
-  // Autofill uses the original profile's PersonalDataManager to make data
-  // available in incognito, so PaymentRequest should do the same.
   return autofill::PersonalDataManagerFactory::GetForProfile(
-      Profile::FromBrowserContext(web_contents_->GetBrowserContext())
-          ->GetOriginalProfile());
+      Profile::FromBrowserContext(web_contents_->GetBrowserContext()));
 }
 
 const std::string& ChromePaymentRequestDelegate::GetApplicationLocale() const {

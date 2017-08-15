@@ -22,8 +22,6 @@ class METRICS_EXPORT UkmEntryBuilderBase {
  public:
   virtual ~UkmEntryBuilderBase();
 
-  // Records the complete entry into the recorder.  If recorder is null, the
-  // entry is simply discarded.
   void Record(UkmRecorder* recorder);
 
  protected:

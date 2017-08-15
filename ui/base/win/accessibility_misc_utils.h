@@ -17,7 +17,7 @@ namespace win {
 
   // UIA Text provider implementation for edit controls.
 class UI_BASE_EXPORT UIATextProvider
-    : public CComObjectRootEx<CComMultiThreadModel>,
+    : public NON_EXPORTED_BASE(CComObjectRootEx<CComMultiThreadModel>),
       public IValueProvider,
       public ITextProvider {
  public:

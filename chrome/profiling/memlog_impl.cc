@@ -23,8 +23,7 @@ MemlogImpl::MemlogImpl()
 MemlogImpl::~MemlogImpl() {}
 
 void MemlogImpl::AddSender(base::ProcessId pid,
-                           mojo::ScopedHandle sender_pipe,
-                           AddSenderCallback callback) {
+                           mojo::ScopedHandle sender_pipe) {
   base::PlatformFile platform_file;
   CHECK_EQ(MOJO_RESULT_OK,
            mojo::UnwrapPlatformFile(std::move(sender_pipe), &platform_file));
@@ -35,8 +34,6 @@ void MemlogImpl::AddSender(base::ProcessId pid,
       FROM_HERE, base::BindOnce(&MemlogConnectionManager::OnNewConnection,
                                 base::Unretained(connection_manager_.get()),
                                 base::ScopedPlatformFile(platform_file), pid));
-
-  std::move(callback).Run();
 }
 
 void MemlogImpl::DumpProcess(base::ProcessId pid,

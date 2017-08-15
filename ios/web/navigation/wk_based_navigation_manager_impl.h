@@ -82,7 +82,12 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   BrowserState* GetBrowserState() const override;
   WebState* GetWebState() const override;
   NavigationItem* GetVisibleItem() const override;
+  NavigationItem* GetLastCommittedItem() const override;
+  // Returns the pending navigation item in the main frame.
+  NavigationItem* GetPendingItem() const override;
+  NavigationItem* GetTransientItem() const override;
   void DiscardNonCommittedItems() override;
+  void LoadURLWithParams(const NavigationManager::WebLoadParams&) override;
   int GetItemCount() const override;
   NavigationItem* GetItemAtIndex(size_t index) const override;
   int GetIndexOfItem(const NavigationItem* item) const override;
@@ -105,12 +110,11 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   // NavigationManagerImpl.
   friend SessionStorageBuilder;
 
-  // NavigationManagerImpl:
+  // NavigationManagerImpl methods used by SessionStorageBuilder.
   NavigationItemImpl* GetNavigationItemImplAtIndex(size_t index) const override;
-  NavigationItemImpl* GetLastCommittedItemImpl() const override;
-  // Returns the pending navigation item in the main frame.
-  NavigationItemImpl* GetPendingItemImpl() const override;
-  NavigationItemImpl* GetTransientItemImpl() const override;
+
+  // NavigationManagerImpl version of GetPendingItem().
+  NavigationItemImpl* GetPendingItemImpl() const;
 
   // Returns the absolute index of WKBackForwardList's |currentItem|. Returns -1
   // if |currentItem| is nil.

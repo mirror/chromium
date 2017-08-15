@@ -10,7 +10,6 @@
 #include "base/memory/manual_constructor.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "net/base/ip_address.h"
-#include "net/base/ip_endpoint.h"
 #include "url/gurl.h"
 
 namespace media_router {
@@ -34,7 +33,7 @@ struct DialSinkExtraData {
 
 // Extra data for Cast media sink.
 struct CastSinkExtraData {
-  net::IPEndPoint ip_endpoint;
+  net::IPAddress ip_address;
 
   int port = 0;
 

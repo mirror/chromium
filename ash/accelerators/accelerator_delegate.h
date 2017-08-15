@@ -16,7 +16,8 @@ namespace ash {
 
 class AcceleratorRouter;
 
-class ASH_EXPORT AcceleratorDelegate : public ::wm::AcceleratorDelegate {
+class ASH_EXPORT AcceleratorDelegate
+    : NON_EXPORTED_BASE(public ::wm::AcceleratorDelegate) {
  public:
   AcceleratorDelegate();
   ~AcceleratorDelegate() override;

@@ -14,8 +14,9 @@
 
 namespace content {
 
-class CONTENT_EXPORT GpuFeatureCheckerImpl : public GpuFeatureChecker,
-                                             public GpuDataManagerObserver {
+class CONTENT_EXPORT GpuFeatureCheckerImpl
+    : public NON_EXPORTED_BASE(GpuFeatureChecker),
+      public GpuDataManagerObserver {
  public:
   GpuFeatureCheckerImpl(gpu::GpuFeatureType feature,
                         FeatureAvailableCallback callback);

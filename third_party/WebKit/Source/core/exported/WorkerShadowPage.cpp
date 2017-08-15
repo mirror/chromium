@@ -6,8 +6,6 @@
 
 #include "core/exported/WebViewImpl.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/loader/FrameLoadRequest.h"
-#include "platform/loader/fetch/SubstituteData.h"
 #include "public/platform/Platform.h"
 #include "public/web/WebSettings.h"
 

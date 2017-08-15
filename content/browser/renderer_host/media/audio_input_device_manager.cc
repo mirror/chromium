@@ -174,10 +174,7 @@ void AudioInputDeviceManager::OpenedOnIOThread(
                           ? input_params
                           : media::AudioParameters::UnavailableDeviceParams();
   info.device.matched_output_device_id = matched_output_device_id;
-  info.device.matched_output =
-      matched_output_params.IsValid()
-          ? matched_output_params
-          : media::AudioParameters::UnavailableDeviceParams();
+  info.device.matched_output = matched_output_params;
 
   devices_.push_back(info);
 

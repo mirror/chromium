@@ -40,7 +40,8 @@ class CacheStorageManager;
 // child processes/origins. Most logic is delegated to the owned
 // CacheStorageManager instance, which is only accessed on the IO
 // thread.
-class CONTENT_EXPORT CacheStorageContextImpl : public CacheStorageContext {
+class CONTENT_EXPORT CacheStorageContextImpl
+    : NON_EXPORTED_BASE(public CacheStorageContext) {
  public:
   explicit CacheStorageContextImpl(BrowserContext* browser_context);
 

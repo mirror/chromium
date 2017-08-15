@@ -258,6 +258,7 @@ bool AccessibilityControlPredicate(
   if (node->HasState(ui::AX_STATE_FOCUSABLE) &&
       node->GetRole() != ui::AX_ROLE_IFRAME &&
       node->GetRole() != ui::AX_ROLE_IFRAME_PRESENTATIONAL &&
+      node->GetRole() != ui::AX_ROLE_IMAGE_MAP_LINK &&
       node->GetRole() != ui::AX_ROLE_LINK &&
       node->GetRole() != ui::AX_ROLE_WEB_AREA &&
       node->GetRole() != ui::AX_ROLE_ROOT_WEB_AREA) {
@@ -362,7 +363,8 @@ bool AccessibilityLandmarkPredicate(
 
 bool AccessibilityLinkPredicate(
     BrowserAccessibility* start, BrowserAccessibility* node) {
-  return node->GetRole() == ui::AX_ROLE_LINK;
+  return (node->GetRole() == ui::AX_ROLE_LINK ||
+          node->GetRole() == ui::AX_ROLE_IMAGE_MAP_LINK);
 }
 
 bool AccessibilityListPredicate(
@@ -441,14 +443,16 @@ bool AccessibilityTreePredicate(
 
 bool AccessibilityUnvisitedLinkPredicate(
     BrowserAccessibility* start, BrowserAccessibility* node) {
-  return node->GetRole() == ui::AX_ROLE_LINK &&
-         !node->HasState(ui::AX_STATE_VISITED);
+  return ((node->GetRole() == ui::AX_ROLE_LINK ||
+           node->GetRole() == ui::AX_ROLE_IMAGE_MAP_LINK) &&
+          !node->HasState(ui::AX_STATE_VISITED));
 }
 
 bool AccessibilityVisitedLinkPredicate(
     BrowserAccessibility* start, BrowserAccessibility* node) {
-  return node->GetRole() == ui::AX_ROLE_LINK &&
-         node->HasState(ui::AX_STATE_VISITED);
+  return ((node->GetRole() == ui::AX_ROLE_LINK ||
+           node->GetRole() == ui::AX_ROLE_IMAGE_MAP_LINK) &&
+          node->HasState(ui::AX_STATE_VISITED));
 }
 
 }  // namespace content

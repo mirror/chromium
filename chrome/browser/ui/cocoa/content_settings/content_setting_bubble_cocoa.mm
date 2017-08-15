@@ -246,51 +246,7 @@ class ContentSettingBubbleWebContentsObserverBridge
 - (void)popupLinkClicked:(id)sender;
 - (void)clearGeolocationForCurrentHost:(id)sender;
 - (void)clearMIDISysExForCurrentHost:(id)sender;
-- (void)adjustFrameHeight:(int)delta;
-
-// if |row| is negative, append the subview to the end.
-- (void)addSubViewForListItem:(bool)hasLink
-                        title:(NSString*)title
-                        image:(NSImage*)image
-                          row:(int)row;
 @end
-
-class ContentSettingBubbleModelOwnerBridge
-    : public ContentSettingBubbleModel::Owner {
- public:
-  ContentSettingBubbleModelOwnerBridge(
-      std::unique_ptr<ContentSettingBubbleModel> model,
-      ContentSettingBubbleController* controller)
-      : model_(std::move(model)), controller_(controller) {
-    model_->set_owner(this);
-  }
-  ~ContentSettingBubbleModelOwnerBridge() override = default;
-
-  ContentSettingBubbleModel* model() const { return model_.get(); }
-
- private:
-  void OnListItemAdded(
-      const ContentSettingBubbleModel::ListItem& item) override {
-    [controller_ adjustFrameHeight:kLinkLineHeight];
-
-    bool hasLink = item.has_link;
-    NSString* title = base::SysUTF16ToNSString(item.title);
-    NSImage* image = hasLink ? item.image.AsNSImage() : nil;
-    [controller_ addSubViewForListItem:hasLink title:title image:image row:-1];
-  }
-
-  void OnListItemRemovedAt(int index) override {
-    // Do nothing. If a list item is removed from popup blocker,
-    // this bubble will disappear.
-  }
-
-  std::unique_ptr<ContentSettingBubbleModel> model_;
-
-  // |controller_| owns this object and can therefore be a raw pointer.
-  ContentSettingBubbleController* controller_;
-
-  DISALLOW_COPY_AND_ASSIGN(ContentSettingBubbleModelOwnerBridge);
-};
 
 @implementation ContentSettingBubbleController
 
@@ -349,8 +305,7 @@ const ContentTypeToNibPath kNibPaths[] = {
   if ((self = [super initWithWindowNibPath:nibPath
                               parentWindow:parentWindow
                                 anchoredAt:anchoredAt])) {
-    modelOwnerBridge_.reset(
-        new ContentSettingBubbleModelOwnerBridge(std::move(model), self));
+    contentSettingBubbleModel_ = std::move(model);
     decoration_ = decoration;
     [self showWindow:nil];
   }
@@ -369,8 +324,7 @@ const ContentTypeToNibPath kNibPaths[] = {
   observerBridge_.reset(
       new ContentSettingBubbleWebContentsObserverBridge(webContents, self));
 
-  modelOwnerBridge_.reset(
-      new ContentSettingBubbleModelOwnerBridge(std::move(model), self));
+  contentSettingBubbleModel_ = std::move(model);
 
   if ((self = [super initWithWindow:window
                        parentWindow:parentWindow
@@ -430,8 +384,8 @@ const ContentTypeToNibPath kNibPaths[] = {
   if (!titleLabel_)
     return;
 
-  NSString* label =
-      base::SysUTF16ToNSString([self model]->bubble_content().title);
+  NSString* label = base::SysUTF16ToNSString(
+      contentSettingBubbleModel_->bubble_content().title);
   [titleLabel_ setStringValue:label];
 
   // Layout title post-localization.
@@ -450,8 +404,8 @@ const ContentTypeToNibPath kNibPaths[] = {
   if (!messageLabel_)
     return;
 
-  NSString* label =
-      base::SysUTF16ToNSString([self model]->bubble_content().message);
+  NSString* label = base::SysUTF16ToNSString(
+      contentSettingBubbleModel_->bubble_content().message);
   [messageLabel_ setStringValue:label];
 
   CGFloat deltaY = [GTMUILocalizerAndLayoutTweaker
@@ -469,7 +423,7 @@ const ContentTypeToNibPath kNibPaths[] = {
   // NOTE! Tags in the xib files must match the order of the radio buttons
   // passed in the radio_group and be 1-based, not 0-based.
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
-      [self model]->bubble_content();
+      contentSettingBubbleModel_->bubble_content();
   const ContentSettingBubbleModel::RadioGroup& radio_group =
       bubble_content.radio_group;
 
@@ -560,12 +514,11 @@ const ContentTypeToNibPath kNibPaths[] = {
   // I didn't put the buttons into a NSMatrix because then they are only one
   // entity in the key view loop. This way, one can tab through all of them.
   const ContentSettingBubbleModel::ListItems& listItems =
-      [self model]->bubble_content().list_items;
+      contentSettingBubbleModel_->bubble_content().list_items;
 
   // Get the pre-resize frame of the radio group. Its origin is where the
   // popup list should go.
   NSRect radioFrame = [allowBlockRadioGroup_ frame];
-  topLinkY_ = NSMaxY(radioFrame) - kLinkHeight;
 
   // Make room for the popup list. The bubble view and its subviews autosize
   // themselves when the window is enlarged.
@@ -573,16 +526,36 @@ const ContentTypeToNibPath kNibPaths[] = {
   // so only 1 * kLinkOuterPadding more is needed.
   int delta =
       listItems.size() * kLinkLineHeight - kLinkPadding + kLinkOuterPadding;
-  [self adjustFrameHeight:delta];
+  NSSize deltaSize = NSMakeSize(0, delta);
+  deltaSize = [[[self window] contentView] convertSize:deltaSize toView:nil];
+  NSRect windowFrame = [[self window] frame];
+  windowFrame.size.height += deltaSize.height;
+  [[self window] setFrame:windowFrame display:NO];
 
   // Create item list.
+  int topLinkY = NSMaxY(radioFrame) + delta - kLinkHeight;
   int row = 0;
   for (const ContentSettingBubbleModel::ListItem& listItem : listItems) {
-    bool hasLink = listItem.has_link;
-    NSString* title = base::SysUTF16ToNSString(listItem.title);
-    NSImage* image = hasLink ? listItem.image.AsNSImage() : nil;
-    [self addSubViewForListItem:hasLink title:title image:image row:row];
-    row++;
+    NSImage* image = listItem.image.AsNSImage();
+    NSRect frame = NSMakeRect(
+        NSMinX(radioFrame), topLinkY - kLinkLineHeight * row, 200, kLinkHeight);
+    if (listItem.has_link) {
+      NSButton* button = [self
+          hyperlinkButtonWithFrame:frame
+                             title:base::SysUTF16ToNSString(listItem.title)
+                              icon:image
+                    referenceFrame:radioFrame];
+      [button setAutoresizingMask:NSViewMinYMargin];
+      [[self bubble] addSubview:button];
+      popupLinks_[button] = row++;
+    } else {
+      NSTextField* label =
+          LabelWithFrame(base::SysUTF16ToNSString(listItem.title), frame);
+      SetControlSize(label, NSSmallControlSize);
+      [label setAutoresizingMask:NSViewMinYMargin];
+      [[self bubble] addSubview:label];
+      row++;
+    }
   }
 }
 
@@ -591,7 +564,7 @@ const ContentTypeToNibPath kNibPaths[] = {
   // added from bottom to top, which explains why loops run backwards and the
   // order of operations is the other way than on Linux/Windows.
   const ContentSettingBubbleModel::BubbleContent& content =
-      [self model]->bubble_content();
+      contentSettingBubbleModel_->bubble_content();
   NSRect containerFrame = [contentsContainer_ frame];
   NSRect frame = NSMakeRect(0, 0, NSWidth(containerFrame), kGeoLabelHeight);
 
@@ -672,7 +645,7 @@ const ContentTypeToNibPath kNibPaths[] = {
 
 - (void)initializeMediaMenus {
   const ContentSettingBubbleModel::MediaMenuMap& media_menus =
-      [self model]->bubble_content().media_menus;
+      contentSettingBubbleModel_->bubble_content().media_menus;
 
   // Calculate the longest width of the labels and menus menus to avoid
   // truncation by the window's edge.
@@ -709,7 +682,7 @@ const ContentTypeToNibPath kNibPaths[] = {
     content_setting_bubble::MediaMenuParts* menuParts =
         new content_setting_bubble::MediaMenuParts(map_entry.first, label);
     menuParts->model.reset(new ContentSettingMediaMenuModel(
-        map_entry.first, [self model],
+        map_entry.first, contentSettingBubbleModel_.get(),
         ContentSettingMediaMenuModel::MenuLabelChangedCallback()));
     mediaMenus_[button] = base::WrapUnique(menuParts);
     CGFloat width = BuildPopUpMenuFromModel(
@@ -729,8 +702,8 @@ const ContentTypeToNibPath kNibPaths[] = {
   // enlarged.
   int delta = media_menus.size() * maxMenuHeight +
       (media_menus.size() - 1) * kMediaMenuElementVerticalPadding;
-  NSSize deltaSize =
-      [[[self window] contentView] convertSize:NSMakeSize(0, delta) toView:nil];
+  NSSize deltaSize = NSMakeSize(0, delta);
+  deltaSize = [[[self window] contentView] convertSize:deltaSize toView:nil];
   NSRect windowFrame = [[self window] frame];
   windowFrame.size.height += deltaSize.height;
   // If the media menus are wider than the window, widen the window.
@@ -765,7 +738,7 @@ const ContentTypeToNibPath kNibPaths[] = {
 
 - (void)initializeMIDISysExLists {
   const ContentSettingBubbleModel::BubbleContent& content =
-      [self model]->bubble_content();
+      contentSettingBubbleModel_->bubble_content();
   NSRect containerFrame = [contentsContainer_ frame];
   NSRect frame =
       NSMakeRect(0, 0, NSWidth(containerFrame), kMIDISysExLabelHeight);
@@ -850,7 +823,7 @@ const ContentTypeToNibPath kNibPaths[] = {
     return;
 
   const ContentSettingBubbleModel::BubbleContent& content =
-      [self model]->bubble_content();
+      contentSettingBubbleModel_->bubble_content();
 
   CGFloat requiredWidthForManageButton = 0.0;
   if (manageButton_) {
@@ -923,8 +896,8 @@ const ContentTypeToNibPath kNibPaths[] = {
     API_AVAILABLE(macos(10.12.2)) {
   NSButton* button = nil;
   if ([identifier hasSuffix:kManageTouchBarId]) {
-    NSString* title =
-        base::SysUTF16ToNSString([self model]->bubble_content().manage_text);
+    NSString* title = base::SysUTF16ToNSString(
+        contentSettingBubbleModel_->bubble_content().manage_text);
     button = [NSButton buttonWithTitle:title
                                 target:self
                                 action:@selector(manageBlocking:)];
@@ -943,14 +916,14 @@ const ContentTypeToNibPath kNibPaths[] = {
 
 - (void)layoutView {
   ContentSettingSimpleBubbleModel* simple_bubble =
-      [self model]->AsSimpleBubbleModel();
+      contentSettingBubbleModel_->AsSimpleBubbleModel();
 
   [[self bubble] setArrowLocation:info_bubble::kTopTrailing];
 
   // Adapt window size to bottom buttons. Do this before all other layouting.
   if ((simple_bubble && !simple_bubble->bubble_content().manage_text.empty()) ||
-      [self model]->AsDownloadsBubbleModel() ||
-      [self model]->AsSubresourceFilterBubbleModel()) {
+      contentSettingBubbleModel_->AsDownloadsBubbleModel() ||
+      contentSettingBubbleModel_->AsSubresourceFilterBubbleModel()) {
     [self initManageDoneButtons];
   }
 
@@ -993,7 +966,7 @@ const ContentTypeToNibPath kNibPaths[] = {
     }
   }
 
-  if ([self model]->AsMediaStreamBubbleModel())
+  if (contentSettingBubbleModel_->AsMediaStreamBubbleModel())
     [self initializeMediaMenus];
 
   // RTL-ize NIBS:
@@ -1016,84 +989,46 @@ const ContentTypeToNibPath kNibPaths[] = {
 
 - (IBAction)allowBlockToggled:(id)sender {
   NSButtonCell *selectedCell = [sender selectedCell];
-  [self model]->OnRadioClicked([selectedCell tag] - 1);
+  contentSettingBubbleModel_->OnRadioClicked([selectedCell tag] - 1);
 }
 
 - (void)popupLinkClicked:(id)sender {
   content_setting_bubble::PopupLinks::iterator i(popupLinks_.find(sender));
   DCHECK(i != popupLinks_.end());
   const int event_flags = ui::EventFlagsFromModifiers([NSEvent modifierFlags]);
-  [self model]->OnListItemClicked(i->second, event_flags);
+  contentSettingBubbleModel_->OnListItemClicked(i->second, event_flags);
 }
 
 - (void)clearGeolocationForCurrentHost:(id)sender {
-  [self model]->OnCustomLinkClicked();
+  contentSettingBubbleModel_->OnCustomLinkClicked();
   [self close];
 }
 
 - (void)clearMIDISysExForCurrentHost:(id)sender {
-  [self model]->OnCustomLinkClicked();
+  contentSettingBubbleModel_->OnCustomLinkClicked();
   [self close];
 }
 
-- (void)adjustFrameHeight:(int)delta {
-  topLinkY_ += delta;
-
-  NSSize deltaSize =
-      [[[self window] contentView] convertSize:NSMakeSize(0, delta) toView:nil];
-  NSRect windowFrame = [[self window] frame];
-  windowFrame.size.height += deltaSize.height;
-  windowFrame.origin.y -= deltaSize.height;
-  [[self window] setFrame:windowFrame display:NO];
-}
-
-- (void)addSubViewForListItem:(bool)hasLink
-                        title:(NSString*)title
-                        image:(NSImage*)image
-                          row:(int)row {
-  if (row < 0)
-    row = [self model]->bubble_content().list_items.size() - 1;
-
-  NSRect referenceFrame = [allowBlockRadioGroup_ frame];
-  NSRect frame =
-      NSMakeRect(NSMinX(referenceFrame), topLinkY_ - kLinkLineHeight * row, 200,
-                 kLinkHeight);
-  if (hasLink) {
-    NSButton* button = [self hyperlinkButtonWithFrame:frame
-                                                title:title
-                                                 icon:image
-                                       referenceFrame:referenceFrame];
-    [button setAutoresizingMask:NSViewMinYMargin];
-    [[self bubble] addSubview:button];
-    popupLinks_[button] = row;
-  } else {
-    NSTextField* label = LabelWithFrame(title, frame);
-    SetControlSize(label, NSSmallControlSize);
-    [label setAutoresizingMask:NSViewMinYMargin];
-    [[self bubble] addSubview:label];
-  }
-}
-
 - (IBAction)showMoreInfo:(id)sender {
-  [self model]->OnCustomLinkClicked();
+  contentSettingBubbleModel_->OnCustomLinkClicked();
   [self close];
 }
 
 - (IBAction)load:(id)sender {
-  [self model]->OnCustomLinkClicked();
+  contentSettingBubbleModel_->OnCustomLinkClicked();
   [self close];
 }
 
 - (IBAction)learnMoreLinkClicked:(id)sender {
-  [self model]->OnLearnMoreClicked();
+  contentSettingBubbleModel_->OnLearnMoreClicked();
 }
 
 - (IBAction)manageBlocking:(id)sender {
-  [self model]->OnManageLinkClicked();
+  contentSettingBubbleModel_->OnManageLinkClicked();
 }
 
 - (IBAction)closeBubble:(id)sender {
-  [self model]->OnDoneClicked();
+  contentSettingBubbleModel_->OnDoneClicked();
   [self close];
 }
 
@@ -1107,10 +1042,6 @@ const ContentTypeToNibPath kNibPaths[] = {
       button, base::SysUTF16ToNSString(it->second->model->GetLabelAt(index)));
 
   it->second->model->ExecuteCommand(index, 0);
-}
-
-- (ContentSettingBubbleModel*)model {
-  return modelOwnerBridge_->model();
 }
 
 - (content_setting_bubble::MediaMenuPartsMap*)mediaMenus {

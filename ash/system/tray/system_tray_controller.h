@@ -23,7 +23,8 @@ namespace ash {
 //
 // TODO: Consider renaming this to SystemTrayClient or renaming the current
 // SystemTray to SystemTrayView and making this class SystemTray.
-class ASH_EXPORT SystemTrayController : public mojom::SystemTray {
+class ASH_EXPORT SystemTrayController
+    : NON_EXPORTED_BASE(public mojom::SystemTray) {
  public:
   SystemTrayController();
   ~SystemTrayController() override;

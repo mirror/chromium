@@ -51,9 +51,9 @@ class RenderWidgetCompositorDelegate;
 struct ScreenInfo;
 
 class CONTENT_EXPORT RenderWidgetCompositor
-    : public blink::WebLayerTreeView,
-      public cc::LayerTreeHostClient,
-      public cc::LayerTreeHostSingleThreadClient {
+    : NON_EXPORTED_BASE(public blink::WebLayerTreeView),
+      NON_EXPORTED_BASE(public cc::LayerTreeHostClient),
+      NON_EXPORTED_BASE(public cc::LayerTreeHostSingleThreadClient) {
   using ReportTimeCallback =
       base::Callback<void(blink::WebLayerTreeView::SwapResult, double)>;
 
@@ -71,8 +71,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
       CompositorDependencies* compositor_deps,
       float device_scale_factor,
       bool is_for_subframe,
-      const ScreenInfo& screen_info,
-      bool is_threaded);
+      const ScreenInfo& screen_info);
   static std::unique_ptr<cc::LayerTreeHost> CreateLayerTreeHost(
       cc::LayerTreeHostClient* client,
       cc::LayerTreeHostSingleThreadClient* single_thread_client,

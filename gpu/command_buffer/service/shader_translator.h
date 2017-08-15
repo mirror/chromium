@@ -74,7 +74,8 @@ class ShaderTranslatorInterface
 };
 
 // Implementation of ShaderTranslatorInterface
-class GPU_EXPORT ShaderTranslator : public ShaderTranslatorInterface {
+class GPU_EXPORT ShaderTranslator
+    : NON_EXPORTED_BASE(public ShaderTranslatorInterface) {
  public:
   class DestructionObserver {
    public:

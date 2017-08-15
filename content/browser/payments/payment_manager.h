@@ -18,7 +18,8 @@ namespace content {
 
 class PaymentAppContextImpl;
 
-class CONTENT_EXPORT PaymentManager : public payments::mojom::PaymentManager {
+class CONTENT_EXPORT PaymentManager
+    : public NON_EXPORTED_BASE(payments::mojom::PaymentManager) {
  public:
   PaymentManager(
       PaymentAppContextImpl* payment_app_context,

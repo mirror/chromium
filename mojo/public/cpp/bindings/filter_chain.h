@@ -16,7 +16,8 @@
 
 namespace mojo {
 
-class MOJO_CPP_BINDINGS_EXPORT FilterChain : public MessageReceiver {
+class MOJO_CPP_BINDINGS_EXPORT FilterChain
+    : NON_EXPORTED_BASE(public MessageReceiver) {
  public:
   // Doesn't take ownership of |sink|. Therefore |sink| has to stay alive while
   // this object is alive.

@@ -38,15 +38,10 @@ const base::Feature kAutofillCreditCardLastUsedDateDisplay{
 const base::Feature kAutofillOfferLocalSaveIfServerCardManuallyEntered{
     "AutofillOfferLocalSaveIfServerCardManuallyEntered",
     base::FEATURE_DISABLED_BY_DEFAULT};
-const base::Feature kAutofillRationalizeFieldTypePredictions{
-    "AutofillRationalizeFieldTypePredictions",
-    base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillSuppressDisusedAddresses{
     "AutofillSuppressDisusedAddresses", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamRequestCvcIfMissing{
     "AutofillUpstreamRequestCvcIfMissing", base::FEATURE_DISABLED_BY_DEFAULT};
-const base::Feature kAutofillUpstreamShowGoogleLogo{
-    "AutofillUpstreamShowGoogleLogo", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamShowNewUi{
     "AutofillUpstreamShowNewUi", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamUseAutofillProfileComparator{
@@ -267,14 +262,6 @@ bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled() {
   return false;
 #else
   return base::FeatureList::IsEnabled(kAutofillUpstreamRequestCvcIfMissing);
-#endif
-}
-
-bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled() {
-#if defined(OS_ANDROID)
-  return false;
-#else
-  return base::FeatureList::IsEnabled(kAutofillUpstreamShowGoogleLogo);
 #endif
 }
 

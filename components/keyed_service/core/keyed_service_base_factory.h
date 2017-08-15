@@ -28,7 +28,8 @@ class PrefRegistrySyncable;
 //
 // This object describes general dependency management between factories while
 // direct subclasses react to lifecycle events and implement memory management.
-class KEYED_SERVICE_EXPORT KeyedServiceBaseFactory : public DependencyNode {
+class KEYED_SERVICE_EXPORT KeyedServiceBaseFactory
+    : NON_EXPORTED_BASE(public DependencyNode) {
  public:
 #ifndef NDEBUG
   // Returns our name. We don't keep track of this in release mode.

@@ -11,6 +11,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/ui/app_list/search/answer_card/answer_card_contents.h"
 #include "ui/app_list/search_provider.h"
+#include "ui/gfx/geometry/size.h"
 #include "url/gurl.h"
 
 class AppListControllerDelegate;
@@ -30,8 +31,7 @@ class AnswerCardSearchProvider : public SearchProvider,
   AnswerCardSearchProvider(Profile* profile,
                            app_list::AppListModel* model,
                            AppListControllerDelegate* list_controller,
-                           std::unique_ptr<AnswerCardContents> contents0,
-                           std::unique_ptr<AnswerCardContents> contents1);
+                           std::unique_ptr<AnswerCardContents> contents);
 
   ~AnswerCardSearchProvider() override;
 
@@ -40,54 +40,20 @@ class AnswerCardSearchProvider : public SearchProvider,
   void Stop() override {}
 
   // AnswerCardContents::Delegate overrides:
-  void UpdatePreferredSize(const AnswerCardContents* source) override;
-  void DidFinishNavigation(const AnswerCardContents* source,
-                           const GURL& url,
+  void UpdatePreferredSize(const gfx::Size& pref_size) override;
+  void DidFinishNavigation(const GURL& url,
                            bool has_error,
                            bool has_answer_card,
                            const std::string& result_title,
                            const std::string& issued_query) override;
-  void DidStopLoading(const AnswerCardContents* source) override;
+  void DidStopLoading() override;
 
  private:
-  enum class RequestState {
-    NO_RESULT,
-    HAVE_RESULT_LOADING,
-    HAVE_RESULT_LOADED
-  };
-
-  // State of navigation for a single AnswerCardContents. There are 2 instances
-  // of AnswerCardContents: one is used to show the current answer, and the
-  // other for loading an answer for the next query. Once the answer has been
-  // loaded, the roles of contents instances get swapped.
-  struct NavigationContext {
-    NavigationContext();
-    ~NavigationContext();
-
-    void StartServerRequest(const GURL& url);
-    void Clear();
-
-    // The source of answer card contents.
-    std::unique_ptr<AnswerCardContents> contents;
-
-    // State of a server request.
-    RequestState state = RequestState::NO_RESULT;
-
-    // Url to open when the user clicks at the result.
-    std::string result_url;
-
-    // Title of the result.
-    std::string result_title;
-
-    DISALLOW_COPY_AND_ASSIGN(NavigationContext);
-  };
-
-  void UpdateResult();
+  bool IsCardSizeOk() const;
+  void RecordReceivedAnswerFinalResult();
+  void OnResultAvailable(bool is_available);
   // Returns Url to open when the user clicks at the result for |query|.
   std::string GetResultUrl(const base::string16& query) const;
-  void DeleteCurrentResult();
-  NavigationContext& GetCurrentNavigationContext();
-  NavigationContext& GetNavigationContextForLoading();
 
   // Unowned pointer to the associated profile.
   Profile* const profile_;
@@ -98,15 +64,12 @@ class AnswerCardSearchProvider : public SearchProvider,
   // Unowned pointer to app list controller.
   AppListControllerDelegate* const list_controller_;
 
-  // Index of the navigation contents corresponding to the current result. 1 -
-  // |current_navigation_context_| will be used for loading the next card, or is
-  // already used loading a new card. This pointer switches to the other
-  // contents after the card gets successfully loaded.
-  int current_navigation_context_ = 0;
+  // The source of answer card contents.
+  const std::unique_ptr<AnswerCardContents> contents_;
 
-  // States of card navigation. one is used to show the current answer, and
-  // another for loading an answer for the next query.
-  NavigationContext navigation_contexts_[2];
+  // Whether have received a server response for the current query string, and
+  // the response contains an answer.
+  bool received_answer_ = false;
 
   // If valid, URL of the answer server. Otherwise, search answers are disabled.
   GURL answer_server_url_;
@@ -123,6 +86,15 @@ class AnswerCardSearchProvider : public SearchProvider,
   // When in the dark run mode, indicates whether we mimic that the server
   // response contains an answer.
   bool dark_run_received_answer_ = false;
+
+  // Url to open when the user clicks at the result.
+  std::string result_url_;
+
+  // Title of the result.
+  std::string result_title_;
+
+  // Current preferred size of the contents.
+  gfx::Size preferred_size_;
 
   // Unowned pointer to template URL service.
   TemplateURLService* const template_url_service_;

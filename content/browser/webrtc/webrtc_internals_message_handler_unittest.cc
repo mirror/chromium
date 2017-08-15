@@ -36,7 +36,7 @@ class WebRTCInternalsMessageHandlerForTest
   ~WebRTCInternalsMessageHandlerForTest() override {}
 };
 
-class WebRTCInternalsForTest : public WebRTCInternals {
+class WebRTCInternalsForTest : public NON_EXPORTED_BASE(WebRTCInternals) {
  public:
   WebRTCInternalsForTest() : WebRTCInternals(0, false) {}
   ~WebRTCInternalsForTest() override {}

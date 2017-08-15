@@ -42,8 +42,9 @@ class ChromeClient;
 class DateTimeChooserClient;
 class PagePopup;
 
-class CORE_EXPORT DateTimeChooserImpl final : public DateTimeChooser,
-                                              public PagePopupClient {
+class CORE_EXPORT DateTimeChooserImpl final
+    : public NON_EXPORTED_BASE(DateTimeChooser),
+      public NON_EXPORTED_BASE(PagePopupClient) {
  public:
   static DateTimeChooserImpl* Create(ChromeClient*,
                                      DateTimeChooserClient*,

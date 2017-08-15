@@ -81,7 +81,8 @@ class CONTENT_EXPORT SyntheticWebGestureEventBuilder {
       blink::WebGestureDevice source_device);
 };
 
-class CONTENT_EXPORT SyntheticWebTouchEvent : public blink::WebTouchEvent {
+class CONTENT_EXPORT SyntheticWebTouchEvent
+    : public NON_EXPORTED_BASE(blink::WebTouchEvent) {
  public:
   SyntheticWebTouchEvent();
 

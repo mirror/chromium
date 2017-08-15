@@ -451,7 +451,8 @@ class EmptyContextMenuClient final : public ContextMenuClient {
   void ClearContextMenu() override {}
 };
 
-class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
+class CORE_EXPORT EmptyRemoteFrameClient
+    : NON_EXPORTED_BASE(public RemoteFrameClient) {
   WTF_MAKE_NONCOPYABLE(EmptyRemoteFrameClient);
 
  public:

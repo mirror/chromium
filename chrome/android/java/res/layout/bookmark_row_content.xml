@@ -12,9 +12,7 @@
         android:id="@+id/bookmark_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/list_item_default_margin"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <ImageView
@@ -24,30 +22,18 @@
             android:contentDescription="@null"
             android:scaleType="center"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="20dp" >
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textAppearance="@style/BlackTitle1"  />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textAppearance="@style/BlackBody" />
-
-        </LinearLayout>
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:textAlignment="viewStart"
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:paddingStart="16dp"  />
 
         <org.chromium.chrome.browser.widget.TintedImageButton
             android:id="@+id/more"

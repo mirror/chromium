@@ -17,7 +17,8 @@ class ClipboardObserver;
 
 // A singleton instance to monitor and notify ClipboardObservers for clipboard
 // changes.
-class UI_BASE_EXPORT ClipboardMonitor : public base::ThreadChecker {
+class UI_BASE_EXPORT ClipboardMonitor
+    : NON_EXPORTED_BASE(public base::ThreadChecker) {
  public:
   static ClipboardMonitor* GetInstance();
 

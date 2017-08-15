@@ -1271,11 +1271,9 @@ bool ChromeContentRendererClient::WillSendRequest(
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     InitSafeBrowsingIfNecessary();
     RenderFrame* render_frame = content::RenderFrame::FromWebFrame(frame);
-    int render_frame_id =
-        render_frame ? render_frame->GetRoutingID() : MSG_ROUTING_NONE;
     throttles->push_back(
         base::MakeUnique<safe_browsing::RendererURLLoaderThrottle>(
-            safe_browsing_.get(), render_frame_id));
+            safe_browsing_.get(), render_frame->GetRoutingID()));
   }
 
 // Check whether the request should be allowed. If not allowed, we reset the

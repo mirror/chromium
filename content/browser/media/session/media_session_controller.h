@@ -24,7 +24,7 @@ class MediaWebContentsObserver;
 // browser side MediaSession commands back to a player hosted in the renderer
 // process.
 class CONTENT_EXPORT MediaSessionController
-    : public MediaSessionPlayerObserver {
+    : NON_EXPORTED_BASE(public MediaSessionPlayerObserver) {
  public:
   MediaSessionController(const WebContentsObserver::MediaPlayerId& id,
                          MediaWebContentsObserver* media_web_contents_observer);

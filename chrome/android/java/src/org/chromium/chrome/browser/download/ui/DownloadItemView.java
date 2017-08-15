@@ -24,8 +24,6 @@ import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.ui.UiUtils;
 
-import java.util.Locale;
-
 /**
  * The view for a downloaded item displayed in the Downloads list.
  */
@@ -48,7 +46,8 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     // Controls for completed downloads.
     private View mLayoutCompleted;
     private TextView mFilenameCompletedView;
-    private TextView mDescriptionView;
+    private TextView mHostnameView;
+    private TextView mFilesizeView;
 
     // Controls for in-progress downloads.
     private View mLayoutInProgress;
@@ -83,7 +82,8 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         mLayoutInProgress = findViewById(R.id.progress_layout);
 
         mFilenameCompletedView = (TextView) findViewById(R.id.filename_completed_view);
-        mDescriptionView = (TextView) findViewById(R.id.description_view);
+        mHostnameView = (TextView) findViewById(R.id.hostname_view);
+        mFilesizeView = (TextView) findViewById(R.id.filesize_view);
 
         mFilenameInProgressView = (TextView) findViewById(R.id.filename_progress_view);
         mDownloadStatusView = (TextView) findViewById(R.id.status_view);
@@ -160,13 +160,12 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
 
         if (mThumbnailBitmap == null) updateIconView();
 
-        Context context = mDescriptionView.getContext();
+        Context context = mFilesizeView.getContext();
         mFilenameCompletedView.setText(item.getDisplayFileName());
         mFilenameInProgressView.setText(item.getDisplayFileName());
-
-        String description = String.format(Locale.getDefault(), "%s - %s",
-                Formatter.formatFileSize(context, item.getFileSize()), item.getDisplayHostname());
-        mDescriptionView.setText(description);
+        mHostnameView.setText(item.getDisplayHostname());
+        mFilesizeView.setText(
+                Formatter.formatFileSize(context, item.getFileSize()));
 
         if (item.isComplete()) {
             showLayout(mLayoutCompleted);
@@ -208,6 +207,8 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
             }
         }
 
+        setBackgroundResourceForGroupPosition(
+                getItem().isFirstInGroup(), getItem().isLastInGroup());
         setLongClickable(item.isComplete());
     }
 

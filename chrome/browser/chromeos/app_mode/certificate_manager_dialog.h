@@ -21,10 +21,6 @@ class CertificateManagerDialog : public LoginWebDialog {
                            gfx::NativeWindow window);
   ~CertificateManagerDialog() override;
 
-  // ui::WebDialogDelegate
-  base::string16 GetDialogTitle() const override;
-  void GetDialogSize(gfx::Size* size) const override;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(CertificateManagerDialog);
 };

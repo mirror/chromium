@@ -25,6 +25,7 @@ import static org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedS
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -35,10 +36,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -76,22 +81,26 @@ public class TileGroupUnitTest {
 
     private FakeMostVisitedSites mMostVisitedSites;
     private FakeImageFetcher mImageFetcher;
-    private TileRenderer mTileRenderer;
 
     @Before
     public void setUp() {
-        CardsVariationParameters.setTestVariationParams(new HashMap<>());
+        CardsVariationParameters.setTestVariationParams(new HashMap<String, String>());
+
+        // TODO(galinap): Should not be needed once we stop statically trying to guess column count.
+        ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
+
         MockitoAnnotations.initMocks(this);
 
         mImageFetcher = new FakeImageFetcher();
-        mTileRenderer = new TileRenderer(
-                RuntimeEnvironment.application, Style.CLASSIC, TILE_TITLE_LINES, mImageFetcher);
         mMostVisitedSites = new FakeMostVisitedSites();
 
-        doAnswer(invocation -> {
-            mMostVisitedSites.setObserver(
-                    invocation.getArgument(0), invocation.<Integer>getArgument(1));
-            return null;
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                mMostVisitedSites.setObserver(invocation.<MostVisitedSites.Observer>getArgument(0),
+                        invocation.<Integer>getArgument(1));
+                return null;
+            }
         })
                 .when(mTileGroupDelegate)
                 .setMostVisitedSitesObserver(any(MostVisitedSites.Observer.class), anyInt());
@@ -106,15 +115,16 @@ public class TileGroupUnitTest {
     public void testInitialiseWithTileList() {
         mMostVisitedSites.setTileSuggestions(URLS);
 
-        TileGroup tileGroup = new TileGroup(mTileRenderer, mock(SuggestionsUiDelegate.class),
-                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
-                mock(OfflinePageBridge.class));
+        TileGroup tileGroup =
+                new TileGroup(RuntimeEnvironment.application, mock(SuggestionsUiDelegate.class),
+                        mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                        mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
 
         verify(mTileGroupObserver).onTileCountChanged();
         verify(mTileGroupObserver).onTileDataChanged();
 
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.FETCH_DATA));
     }
@@ -125,15 +135,16 @@ public class TileGroupUnitTest {
      */
     @Test
     public void testInitialiseWithEmptyTileList() {
-        TileGroup tileGroup = new TileGroup(mTileRenderer, mock(SuggestionsUiDelegate.class),
-                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
-                mock(OfflinePageBridge.class));
+        TileGroup tileGroup =
+                new TileGroup(RuntimeEnvironment.application, mock(SuggestionsUiDelegate.class),
+                        mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                        mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
 
         verify(mTileGroupObserver).onTileCountChanged();
         verify(mTileGroupObserver).onTileDataChanged();
 
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.FETCH_DATA));
     }
@@ -175,7 +186,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver).onTileDataChanged(); // Data DID change.
 
         // No load task the second time.
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
     }
 
@@ -192,7 +203,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver, never()).onTileCountChanged(); // Tile count is still 2.
 
         // We should now have a pending task.
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
     }
 
@@ -205,7 +216,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver).onTileCountChanged(); // Tile count DID change.
         verify(mTileGroupObserver).onTileDataChanged(); // Data DID change.
         verify(mTileGroupDelegate, never())
-                .onLoadingComplete(any()); // No load task the second time.
+                .onLoadingComplete(Mockito.<List<Tile>>any()); // No load task the second time.
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
     }
 
@@ -213,9 +224,9 @@ public class TileGroupUnitTest {
     public void testTileLoadingWhenVisibleNotBlockedForInit() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.isVisible()).thenReturn(true);
-        TileGroup tileGroup =
-                new TileGroup(mTileRenderer, uiDelegate, mock(ContextMenuManager.class),
-                        mTileGroupDelegate, mTileGroupObserver, mock(OfflinePageBridge.class));
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
 
         mMostVisitedSites.setTileSuggestions(URLS);
@@ -228,9 +239,9 @@ public class TileGroupUnitTest {
     public void testTileLoadingWhenVisibleBlocked() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.isVisible()).thenReturn(true);
-        TileGroup tileGroup =
-                new TileGroup(mTileRenderer, uiDelegate, mock(ContextMenuManager.class),
-                        mTileGroupDelegate, mTileGroupObserver, mock(OfflinePageBridge.class));
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
 
         mMostVisitedSites.setTileSuggestions(URLS);
@@ -267,20 +278,18 @@ public class TileGroupUnitTest {
     @Test
     public void testRenderTileView() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
-        when(uiDelegate.getImageFetcher()).thenReturn(mImageFetcher);
-        TileGroup tileGroup =
-                new TileGroup(mTileRenderer, uiDelegate, mock(ContextMenuManager.class),
-                        mTileGroupDelegate, mTileGroupObserver, mock(OfflinePageBridge.class));
+        when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
-
-        TileGridViewHolder tileGrid = setupView(tileGroup);
-        TileGridLayout layout = (TileGridLayout) tileGrid.itemView;
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
 
         // Initialise the internal list of tiles
         mMostVisitedSites.setTileSuggestions(URLS);
 
         // Render them to the layout.
-        tileGrid.refreshData();
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(((TileView) layout.getChildAt(0)).getUrl(), is(URLS[0]));
         assertThat(((TileView) layout.getChildAt(1)).getUrl(), is(URLS[1]));
@@ -291,32 +300,31 @@ public class TileGroupUnitTest {
     public void testRenderTileViewWithDuplicatedUrl() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
-        TileGroup tileGroup =
-                new TileGroup(mTileRenderer, uiDelegate, mock(ContextMenuManager.class),
-                        mTileGroupDelegate, mTileGroupObserver, mock(OfflinePageBridge.class));
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
-        TileGridViewHolder tileGrid = setupView(tileGroup);
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
 
         // Initialise the internal list of tiles
         mMostVisitedSites.setTileSuggestions(URLS[0], URLS[1], URLS[0]);
 
         // Render them to the layout. The duplicated URL should trigger the exception.
-        tileGrid.refreshData();
+        tileGroup.renderTiles(layout);
     }
 
     @Test
     public void testRenderTileViewReplacing() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
-        TileGroup tileGroup =
-                new TileGroup(mTileRenderer, uiDelegate, mock(ContextMenuManager.class),
-                        mTileGroupDelegate, mTileGroupObserver, mock(OfflinePageBridge.class));
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
         mMostVisitedSites.setTileSuggestions(URLS);
 
         // Initialise the layout with views whose URLs don't match the ones of the new tiles.
-        TileGridViewHolder tileGrid = setupView(tileGroup);
-        TileGridLayout layout = (TileGridLayout) tileGrid.itemView;
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
         TileView view1 = mock(TileView.class);
         layout.addView(view1);
 
@@ -324,7 +332,7 @@ public class TileGroupUnitTest {
         layout.addView(view2);
 
         // The tiles should be updated, the old ones removed.
-        tileGrid.refreshData();
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.indexOfChild(view1), is(-1));
         assertThat(layout.indexOfChild(view2), is(-1));
@@ -334,13 +342,15 @@ public class TileGroupUnitTest {
     public void testRenderTileViewRecycling() {
         mMostVisitedSites.setTileSuggestions(URLS);
         List<SiteSuggestion> sites = mMostVisitedSites.getCurrentSites();
-        TileGroup tileGroup = new TileGroup(mTileRenderer, mock(SuggestionsUiDelegate.class),
-                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
-                mock(OfflinePageBridge.class));
+
+        TileGroup tileGroup =
+                new TileGroup(RuntimeEnvironment.application, mock(SuggestionsUiDelegate.class),
+                        mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                        mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
 
         // Initialise the layout with views whose URLs match the ones of the new tiles.
-        TileGridLayout layout = new TileGridLayout(RuntimeEnvironment.application, null);
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
         TileView view1 = mock(TileView.class);
         when(view1.getData()).thenReturn(sites.get(0));
         layout.addView(view1);
@@ -350,24 +360,24 @@ public class TileGroupUnitTest {
         layout.addView(view2);
 
         // The tiles should be updated, the old ones reused.
-        setupView(tileGroup).refreshData();
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
-        assertThat(layout.getChildAt(0), CoreMatchers.is(view1));
-        assertThat(layout.getChildAt(1), CoreMatchers.is(view2));
+        assertThat(layout.getChildAt(0), CoreMatchers.<View>is(view1));
+        assertThat(layout.getChildAt(1), CoreMatchers.<View>is(view2));
     }
 
     @Test
     public void testIconLoadingForInit() {
         TileGroup tileGroup = initialiseTileGroup(URLS);
-        Tile tile = tileGroup.getTiles().get(TileSectionType.PERSONALIZED).get(0);
+        Tile tile = tileGroup.getAllTiles().get(0);
 
         // Loading complete should be delayed until the icons are done loading.
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
 
         mImageFetcher.fulfillLargeIconRequests();
 
         // The load should now be complete.
-        verify(mTileGroupDelegate).onLoadingComplete(any());
+        verify(mTileGroupDelegate).onLoadingComplete(Mockito.<List<Tile>>any());
         verify(mTileGroupObserver).onTileIconChanged(eq(tile));
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
     }
@@ -378,20 +388,13 @@ public class TileGroupUnitTest {
         Tile tile = new Tile(createSiteSuggestion("title", URLS[0]), 0);
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        mTileRenderer.buildTileView(tile, layout, tileGroup.getTileSetupDelegate());
+        buildTileView(tile, layout, tileGroup);
 
         // Ensure we run the callback for the new tile.
         assertEquals(1, mImageFetcher.getPendingIconCallbackCount());
         mImageFetcher.fulfillLargeIconRequests();
 
         verify(mTileGroupObserver, never()).onTileIconChanged(tile);
-    }
-
-    private TileGridViewHolder setupView(TileGroup tileGroup) {
-        TileGridLayout layout = new TileGridLayout(RuntimeEnvironment.application, null);
-        TileGridViewHolder tileGrid = new TileGridViewHolder(layout, 4, 2);
-        tileGrid.bindDataSource(tileGroup, mTileRenderer);
-        return tileGrid;
     }
 
     @Test
@@ -402,13 +405,14 @@ public class TileGroupUnitTest {
 
         // Notify for a second set.
         mMostVisitedSites.setTileSuggestions(URLS);
-        setupView(tileGroup).refreshData();
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
+        tileGroup.renderTiles(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent
         verify(mTileGroupObserver).onTileDataChanged();
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
     }
 
     @Test
@@ -420,13 +424,14 @@ public class TileGroupUnitTest {
         // Notify for a second set.
         mMostVisitedSites.setTileSuggestions(URLS);
         tileGroup.onSwitchToForeground(/* trackLoadTask: */ false);
-        setupView(tileGroup).refreshData();
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
+        tileGroup.renderTiles(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent (same as sync)
         verify(mTileGroupObserver).onTileDataChanged();
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any());
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
     }
 
     @Test
@@ -438,13 +443,14 @@ public class TileGroupUnitTest {
         // Notify for a second set.
         mMostVisitedSites.setTileSuggestions(URLS);
         tileGroup.onSwitchToForeground(/* trackLoadTask: */ true);
-        setupView(tileGroup).refreshData();
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
+        tileGroup.renderTiles(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent
         verify(mTileGroupObserver).onTileDataChanged();
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
-        verify(mTileGroupDelegate).onLoadingComplete(any());
+        verify(mTileGroupDelegate).onLoadingComplete(Mockito.<List<Tile>>any());
     }
 
     /** {@link #initialiseTileGroup(boolean, String...)} override that does not defer loads. */
@@ -465,15 +471,21 @@ public class TileGroupUnitTest {
 
         mMostVisitedSites.setTileSuggestions(urls);
 
-        TileGroup tileGroup =
-                new TileGroup(mTileRenderer, uiDelegate, mock(ContextMenuManager.class),
-                        mTileGroupDelegate, mTileGroupObserver, mock(OfflinePageBridge.class));
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES, TileView.Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
-        setupView(tileGroup).refreshData();
+
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
+        tileGroup.renderTiles(layout);
 
         reset(mTileGroupObserver);
         reset(mTileGroupDelegate);
         return tileGroup;
+    }
+
+    private void buildTileView(Tile tile, ViewGroup layout, TileGroup tileGroup) {
+        tileGroup.getTileRenderer().buildTileView(tile, layout, tileGroup.getTileSetupDelegate());
     }
 
     private class FakeImageFetcher extends ImageFetcher {

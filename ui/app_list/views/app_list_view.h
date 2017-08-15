@@ -51,11 +51,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // The opacity of the app list background.
   static constexpr float kAppListOpacity = 0.8;
 
-  // The opacity of the app list background with blur.
-  static constexpr float kAppListOpacityWithBlur = 0.7;
-
   // The preferred blend alpha with wallpaper color for background.
-  static constexpr int kDarkMutedBlendAlpha = 0x3f;
+  static constexpr int kDarkMutedBlendAlpha = 0x7F;
 
   // The defualt color of the app list background.
   static constexpr SkColor kDefaultBackgroundColor = SK_ColorBLACK;

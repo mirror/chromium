@@ -26,7 +26,8 @@ namespace viz {
 class Display;
 
 // In-process implementation of DisplayProvider.
-class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
+class VIZ_SERVICE_EXPORT GpuDisplayProvider
+    : public NON_EXPORTED_BASE(DisplayProvider) {
  public:
   GpuDisplayProvider(
       scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,

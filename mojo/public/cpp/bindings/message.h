@@ -290,7 +290,8 @@ class MessageReceiverWithResponderStatus : public MessageReceiver {
                                        responder) WARN_UNUSED_RESULT = 0;
 };
 
-class MOJO_CPP_BINDINGS_EXPORT PassThroughFilter : public MessageReceiver {
+class MOJO_CPP_BINDINGS_EXPORT PassThroughFilter
+    : NON_EXPORTED_BASE(public MessageReceiver) {
  public:
   PassThroughFilter();
   ~PassThroughFilter() override;

@@ -35,7 +35,8 @@ struct CommonNavigationParams;
 struct RequestNavigationParams;
 struct StartNavigationParams;
 
-class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
+class CONTENT_EXPORT NavigationEntryImpl
+    : public NON_EXPORTED_BASE(NavigationEntry) {
  public:
   // Represents a tree of FrameNavigationEntries that make up this joint session
   // history item.  The tree currently only tracks the main frame by default,

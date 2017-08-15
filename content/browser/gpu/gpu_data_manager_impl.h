@@ -41,7 +41,8 @@ namespace content {
 class GpuDataManagerImplPrivate;
 struct WebPreferences;
 
-class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
+class CONTENT_EXPORT GpuDataManagerImpl
+    : public NON_EXPORTED_BASE(GpuDataManager) {
  public:
   // Indicates the guilt level of a domain which caused a GPU reset.
   // If a domain is 100% known to be guilty of resetting the GPU, then

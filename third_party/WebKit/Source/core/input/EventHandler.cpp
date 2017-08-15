@@ -624,8 +624,8 @@ WebInputEventResult EventHandler::HandleMousePressEvent(
     return result;
   }
 
-  std::unique_ptr<UserGestureIndicator> gesture_indicator =
-      LocalFrame::CreateUserGesture(frame_);
+  UserGestureIndicator gesture_indicator(
+      UserGestureToken::Create(frame_->GetDocument()));
   frame_->LocalFrameRoot()
       .GetEventHandler()
       .last_mouse_down_user_gesture_token_ =
@@ -1007,7 +1007,8 @@ WebInputEventResult EventHandler::HandleMouseReleaseEvent(
                       .GetEventHandler()
                       .last_mouse_down_user_gesture_token_)));
   } else {
-    gesture_indicator = LocalFrame::CreateUserGesture(frame_);
+    gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
+        UserGestureToken::Create(frame_->GetDocument())));
   }
 
   WebInputEventResult event_result = UpdatePointerTargetAndDispatchEvents(

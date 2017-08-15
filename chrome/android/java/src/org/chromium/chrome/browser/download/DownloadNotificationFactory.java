@@ -231,10 +231,10 @@ public final class DownloadNotificationFactory {
                     }
 
                     ComponentName component = new ComponentName(
-                            context.getPackageName(), DownloadBroadcastManager.class.getName());
+                            context.getPackageName(), DownloadBroadcastReceiver.class.getName());
                     intent.setComponent(component);
                     builder.setContentIntent(
-                            PendingIntent.getService(context, downloadUpdate.getNotificationId(),
+                            PendingIntent.getBroadcast(context, downloadUpdate.getNotificationId(),
                                     intent, PendingIntent.FLAG_UPDATE_CURRENT));
                 }
                 builder.setDeleteIntent(
@@ -292,15 +292,14 @@ public final class DownloadNotificationFactory {
      */
     private static PendingIntent buildPendingIntent(
             Context context, Intent intent, int notificationId) {
-        return PendingIntent.getService(
+        return PendingIntent.getBroadcast(
                 context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private static PendingIntent buildSummaryIconIntent(Context context, int notificationId) {
         Intent intent = new Intent(context, DownloadBroadcastReceiver.class);
         intent.setAction(ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON);
-        return PendingIntent.getBroadcast(
-                context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return buildPendingIntent(context, intent, notificationId);
     }
 
     /**
@@ -313,7 +312,7 @@ public final class DownloadNotificationFactory {
     public static Intent buildActionIntent(
             Context context, String action, ContentId id, boolean isOffTheRecord) {
         ComponentName component = new ComponentName(
-                context.getPackageName(), DownloadBroadcastManager.class.getName());
+                context.getPackageName(), DownloadBroadcastReceiver.class.getName());
         Intent intent = new Intent(action);
         intent.setComponent(component);
         intent.putExtra(EXTRA_DOWNLOAD_CONTENTID_ID, id != null ? id.id : "");

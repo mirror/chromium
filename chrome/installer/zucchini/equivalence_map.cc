@@ -168,13 +168,6 @@ EquivalenceCandidate VisitEquivalenceSeed(const ImageIndex& old_image,
 /******** EquivalenceMap ********/
 
 EquivalenceMap::EquivalenceMap() = default;
-
-EquivalenceMap::EquivalenceMap(
-    const std::vector<EquivalenceCandidate>& equivalences)
-    : candidates_(equivalences) {
-  SortByDestination();
-}
-
 EquivalenceMap::~EquivalenceMap() = default;
 
 void EquivalenceMap::Build(const std::vector<offset_t>& old_sa,

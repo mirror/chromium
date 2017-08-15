@@ -11,7 +11,6 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/media_stream_request.h"
@@ -21,6 +20,8 @@
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
 #include "ui/views/controls/link_listener.h"
+
+class ContentSettingBubbleModel;
 
 namespace chrome {
 class ContentSettingBubbleViewsBridge;
@@ -45,8 +46,7 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
                                      public views::BubbleDialogDelegateView,
                                      public views::ButtonListener,
                                      public views::LinkListener,
-                                     public views::ComboboxListener,
-                                     public ContentSettingBubbleModel::Owner {
+                                     public views::ComboboxListener {
  public:
   ContentSettingBubbleContents(
       ContentSettingBubbleModel* content_setting_bubble_model,
@@ -57,11 +57,6 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
 
   // views::BubbleDialogDelegateView:
   gfx::Size CalculatePreferredSize() const override;
-
-  // ContentSettingBubbleModel::Owner:
-  void OnListItemAdded(
-      const ContentSettingBubbleModel::ListItem& item) override;
-  void OnListItemRemovedAt(int index) override;
 
  protected:
   // views::BubbleDialogDelegateView:

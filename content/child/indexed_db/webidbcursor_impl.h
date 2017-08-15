@@ -27,7 +27,8 @@ class SingleThreadTaskRunner;
 
 namespace content {
 
-class CONTENT_EXPORT WebIDBCursorImpl : public blink::WebIDBCursor {
+class CONTENT_EXPORT WebIDBCursorImpl
+    : NON_EXPORTED_BASE(public blink::WebIDBCursor) {
  public:
   WebIDBCursorImpl(indexed_db::mojom::CursorAssociatedPtrInfo cursor,
                    int64_t transaction_id,

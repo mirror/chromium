@@ -46,7 +46,8 @@ class RemoteMediaStreamImpl;
 class RtcDataChannelHandler;
 
 // Mockable wrapper for blink::WebRTCStatsResponse
-class CONTENT_EXPORT LocalRTCStatsResponse : public rtc::RefCountInterface {
+class CONTENT_EXPORT LocalRTCStatsResponse
+    : public NON_EXPORTED_BASE(rtc::RefCountInterface) {
  public:
   explicit LocalRTCStatsResponse(const blink::WebRTCStatsResponse& impl)
       : impl_(impl) {
@@ -65,7 +66,8 @@ class CONTENT_EXPORT LocalRTCStatsResponse : public rtc::RefCountInterface {
 };
 
 // Mockable wrapper for blink::WebRTCStatsRequest
-class CONTENT_EXPORT LocalRTCStatsRequest : public rtc::RefCountInterface {
+class CONTENT_EXPORT LocalRTCStatsRequest
+    : public NON_EXPORTED_BASE(rtc::RefCountInterface) {
  public:
   explicit LocalRTCStatsRequest(blink::WebRTCStatsRequest impl);
   // Constructor for testing.
@@ -90,7 +92,7 @@ class CONTENT_EXPORT LocalRTCStatsRequest : public rtc::RefCountInterface {
 // Callbacks to the webrtc::PeerConnectionObserver implementation also occur on
 // the main render thread.
 class CONTENT_EXPORT RTCPeerConnectionHandler
-    : public blink::WebRTCPeerConnectionHandler {
+    : NON_EXPORTED_BASE(public blink::WebRTCPeerConnectionHandler) {
  public:
   RTCPeerConnectionHandler(
       blink::WebRTCPeerConnectionHandlerClient* client,

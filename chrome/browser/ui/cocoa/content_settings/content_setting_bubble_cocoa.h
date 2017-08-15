@@ -17,7 +17,6 @@
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
 
 class ContentSettingBubbleModel;
-class ContentSettingBubbleModelOwnerBridge;
 class ContentSettingBubbleWebContentsObserverBridge;
 class ContentSettingDecoration;
 class ContentSettingMediaMenuModel;
@@ -69,7 +68,7 @@ using MediaMenuPartsMap =
   IBOutlet NSButton* loadButton_;
   IBOutlet NSButton* infoButton_;
 
-  std::unique_ptr<ContentSettingBubbleModelOwnerBridge> modelOwnerBridge_;
+  std::unique_ptr<ContentSettingBubbleModel> contentSettingBubbleModel_;
 
  @private
   // The container for the bubble contents of the geolocation bubble.
@@ -81,9 +80,6 @@ using MediaMenuPartsMap =
       observerBridge_;
   content_setting_bubble::PopupLinks popupLinks_;
   content_setting_bubble::MediaMenuPartsMap mediaMenus_;
-
-  // Y coordinate of the first list item.
-  int topLinkY_;
 
   // The omnibox icon the bubble is anchored to.
   ContentSettingDecoration* decoration_;  // weak
@@ -135,12 +131,6 @@ parentWindow:(NSWindow*)parentWindow
 
 // Callback for "media menu" button.
 - (IBAction)mediaMenuChanged:(id)sender;
-
-@end
-
-@interface ContentSettingBubbleController (Protected)
-
-- (ContentSettingBubbleModel*)model;
 
 @end
 

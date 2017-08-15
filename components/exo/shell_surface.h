@@ -57,7 +57,7 @@ class ShellSurface : public SurfaceTreeHost,
                      public ash::wm::WindowStateObserver,
                      public WMHelper::ActivationObserver,
                      public WMHelper::DisplayConfigurationObserver,
-                     public ui::CompositorLockClient {
+                     NON_EXPORTED_BASE(public ui::CompositorLockClient) {
  public:
   enum class BoundsMode { SHELL, CLIENT, FIXED };
 
@@ -231,7 +231,6 @@ class ShellSurface : public SurfaceTreeHost,
 
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
-  void OnSurfaceContentSizeChanged() override;
 
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
@@ -393,7 +392,6 @@ class ShellSurface : public SurfaceTreeHost,
   std::unique_ptr<aura::Window> shadow_overlay_;
   std::unique_ptr<aura::Window> shadow_underlay_;
   gfx::Rect shadow_content_bounds_;
-  bool shadow_content_bounds_changed_ = false;
   float shadow_background_opacity_ = 1.0;
   std::deque<Config> pending_configs_;
   std::unique_ptr<ash::WindowResizer> resizer_;

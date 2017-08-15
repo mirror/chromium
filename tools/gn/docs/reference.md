@@ -6090,13 +6090,6 @@
   itself).
 ```
 
-#### **Shared libraries**
-
-```
-  The results of shared_library targets are runtime dependencies, unless the
-  targets are depended upon only through action/action_foreach.
-```
-
 #### **Multiple outputs**
 
 ```
@@ -6242,3 +6235,4 @@
     *   [-v: Verbose logging.](#-v)
     *   [--version: Prints the GN version number and exits.](#--version)
 ```
+

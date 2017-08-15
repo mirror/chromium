@@ -29,7 +29,8 @@ void LogMessage(int stream_id, const std::string& msg) {
 
 namespace content {
 
-class AudioInputMessageFilter::AudioInputIPCImpl : public media::AudioInputIPC {
+class AudioInputMessageFilter::AudioInputIPCImpl
+    : public NON_EXPORTED_BASE(media::AudioInputIPC) {
  public:
   AudioInputIPCImpl(const scoped_refptr<AudioInputMessageFilter>& filter,
                     int render_frame_id);

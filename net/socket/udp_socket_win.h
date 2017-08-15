@@ -34,7 +34,8 @@ class IPAddress;
 class NetLog;
 struct NetLogSource;
 
-class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
+class NET_EXPORT UDPSocketWin
+    : NON_EXPORTED_BASE(public base::win::ObjectWatcher::Delegate) {
  public:
   UDPSocketWin(DatagramSocket::BindType bind_type,
                const RandIntCallback& rand_int_cb,

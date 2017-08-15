@@ -30,8 +30,9 @@ class BrowserPluginDelegate;
 class BrowserPluginManager;
 class ChildFrameCompositingHelper;
 
-class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
-                                     public MouseLockDispatcher::LockTarget {
+class CONTENT_EXPORT BrowserPlugin :
+    NON_EXPORTED_BASE(public blink::WebPlugin),
+    public MouseLockDispatcher::LockTarget {
  public:
   static BrowserPlugin* GetFromNode(blink::WebNode& node);
 

@@ -6,7 +6,6 @@
 #define ASH_WM_LOCK_LAYOUT_MANAGER_H_
 
 #include "ash/ash_export.h"
-#include "ash/shelf/shelf_observer.h"
 #include "ash/shell_observer.h"
 #include "ash/wm/wm_snap_to_pixel_layout_manager.h"
 #include "ash/wm/wm_types.h"
@@ -18,9 +17,6 @@
 #include "ui/keyboard/keyboard_controller_observer.h"
 
 namespace ash {
-
-class Shelf;
-
 namespace wm {
 class WindowState;
 class WMEvent;
@@ -41,10 +37,9 @@ class ASH_EXPORT LockLayoutManager
     : public wm::WmSnapToPixelLayoutManager,
       public aura::WindowObserver,
       public ShellObserver,
-      public ShelfObserver,
       public keyboard::KeyboardControllerObserver {
  public:
-  LockLayoutManager(aura::Window* window, Shelf* shelf);
+  explicit LockLayoutManager(aura::Window* window);
   ~LockLayoutManager() override;
 
   // Overridden from WmSnapToPixelLayoutManager:
@@ -67,9 +62,6 @@ class ASH_EXPORT LockLayoutManager
   void OnVirtualKeyboardStateChanged(bool activated,
                                      aura::Window* root_window) override;
 
-  // ShelfObserver:
-  void WillChangeVisibilityState(ShelfVisibilityState visibility) override;
-
   // keyboard::KeyboardControllerObserver overrides:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
   void OnKeyboardClosed() override;
@@ -86,7 +78,6 @@ class ASH_EXPORT LockLayoutManager
   aura::Window* window_;
   aura::Window* root_window_;
 
-  ScopedObserver<Shelf, ShelfObserver> shelf_observer_;
   ScopedObserver<keyboard::KeyboardController,
                  keyboard::KeyboardControllerObserver>
       keyboard_observer_;

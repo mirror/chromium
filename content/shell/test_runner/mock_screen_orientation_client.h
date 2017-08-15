@@ -22,7 +22,7 @@ class WebLocalFrame;
 namespace test_runner {
 
 class TEST_RUNNER_EXPORT MockScreenOrientationClient
-    : public blink::WebScreenOrientationClient {
+    : public NON_EXPORTED_BASE(blink::WebScreenOrientationClient) {
  public:
   explicit MockScreenOrientationClient();
   ~MockScreenOrientationClient() override;

@@ -19,6 +19,7 @@ import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
 import org.chromium.chrome.browser.bookmarks.BookmarkPromoHeader.PromoHeaderShowingChangeListener;
 import org.chromium.chrome.browser.widget.displaystyle.MarginResizer;
+import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.components.bookmarks.BookmarkId;
 
 import java.util.ArrayList;
@@ -153,6 +154,18 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         assert section == mFolderSection || section == mBookmarkSection;
         section.remove(toSectionPosition(position));
         notifyItemRemoved(position);
+
+        if (section == mBookmarkSection && !mBookmarkSection.isEmpty()) {
+            for (BookmarkRow row : mBookmarkRows) {
+                BookmarkId id = row.getItem();
+                setBackgroundResourceForBookmarkRow(row, id);
+            }
+        } else if (!mFolderSection.isEmpty()) {
+            for (BookmarkRow row : mFolderRows) {
+                BookmarkId id = row.getItem();
+                setBackgroundResourceForFolderRow(row, id);
+            }
+        }
     }
 
     // RecyclerView.Adapter implementation.
@@ -193,18 +206,21 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mDelegate.getSelectableListLayout().getUiConfig(),
                         parent.getResources().getDimensionPixelSize(
                                 R.dimen.signin_and_sync_view_padding),
-                        0);
+                        SelectableListLayout.getDefaultListItemLateralShadowSizePx(
+                                parent.getResources()));
                 return promoView;
             case FOLDER_VIEW:
                 BookmarkFolderRow folder = (BookmarkFolderRow) LayoutInflater.from(
                         parent.getContext()).inflate(R.layout.bookmark_folder_row, parent, false);
                 folder.onBookmarkDelegateInitialized(mDelegate);
+                folder.configureWideDisplayStyle(mDelegate.getSelectableListLayout().getUiConfig());
                 mFolderRows.add(folder);
                 return new ItemViewHolder(folder);
             case BOOKMARK_VIEW:
                 BookmarkItemRow item = (BookmarkItemRow) LayoutInflater.from(
                         parent.getContext()).inflate(R.layout.bookmark_item_row, parent, false);
                 item.onBookmarkDelegateInitialized(mDelegate);
+                item.configureWideDisplayStyle(mDelegate.getSelectableListLayout().getUiConfig());
                 mBookmarkRows.add(item);
                 return new ItemViewHolder(item);
             default:
@@ -223,9 +239,11 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             case FOLDER_VIEW:
                 ((BookmarkRow) holder.itemView).setBookmarkId(id);
+                setBackgroundResourceForFolderRow(((BookmarkRow) holder.itemView), id);
                 break;
             case BOOKMARK_VIEW:
                 ((BookmarkRow) holder.itemView).setBookmarkId(id);
+                setBackgroundResourceForBookmarkRow((BookmarkRow) holder.itemView, id);
                 break;
             default:
                 assert false : "View type not supported!";
@@ -353,5 +371,15 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @VisibleForTesting
     public BookmarkDelegate getDelegateForTesting() {
         return mDelegate;
+    }
+
+    private void setBackgroundResourceForBookmarkRow(BookmarkRow row, BookmarkId id) {
+        row.setBackgroundResourceForGroupPosition(id.equals(mBookmarkSection.get(0)),
+                id.equals(mBookmarkSection.get(mBookmarkSection.size() - 1)));
+    }
+
+    private void setBackgroundResourceForFolderRow(BookmarkRow row, BookmarkId id) {
+        row.setBackgroundResourceForGroupPosition(id.equals(mFolderSection.get(0)),
+                id.equals(mFolderSection.get(mFolderSection.size() - 1)));
     }
 }

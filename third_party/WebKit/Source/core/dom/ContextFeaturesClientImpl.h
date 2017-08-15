@@ -40,7 +40,7 @@
 namespace blink {
 
 class CORE_EXPORT ContextFeaturesClientImpl final
-    : public ContextFeaturesClient {
+    : public NON_EXPORTED_BASE(ContextFeaturesClient) {
  public:
   static std::unique_ptr<ContextFeaturesClientImpl> Create() {
     return WTF::WrapUnique(new ContextFeaturesClientImpl());

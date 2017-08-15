@@ -13265,7 +13265,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1186" label="WEBVIEWINTERNAL_SETAUDIOMUTED"/>
   <int value="1187" label="WEBVIEWINTERNAL_ISAUDIOMUTED"/>
   <int value="1188" label="WEBVIEWINTERNAL_GETAUDIOSTATE"/>
-  <int value="1189" label="FILEMANAGERPRIVATE_GETRECENTFILES"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -17939,11 +17938,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="Parrot Drone; 9a66fd51-0800-9191-11e4-012d1540cb8e"/>
   <int value="2132514937" label="feec"/>
   <int value="2136716957" label="fe69"/>
-</enum>
-
-<enum name="GCCount">
-  <int value="0" label="5"/>
-  <int value="1" label="10"/>
 </enum>
 
 <enum name="GCMCheckinRequestStatus">
@@ -22812,7 +22806,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1887862464" label="SpannableInlineAutocomplete:disabled"/>
   <int value="-1887053262"
       label="enable-zero-suggest-most-visited-without-serp"/>
-  <int value="-1884385890" label="AutofillUpstreamShowGoogleLogo:enabled"/>
   <int value="-1882330924" label="NTPArticleSuggestions:enabled"/>
   <int value="-1880355454" label="disable-topchrome-md"/>
   <int value="-1876881908"
@@ -23805,7 +23798,6 @@ from previous Chrome versions.
   <int value="1318073661" label="MaterialDesignExtensions:enabled"/>
   <int value="1319725131" label="enable-distance-field-text"/>
   <int value="1320201920" label="enable-touchpad-three-finger-click"/>
-  <int value="1330029351" label="AutofillUpstreamShowGoogleLogo:disabled"/>
   <int value="1330264457" label="OmniboxUIExperimentVerticalLayout:disabled"/>
   <int value="1340690624" label="WebPaymentsMethodSectionOrderV2:disabled"/>
   <int value="1344833841" label="ImeThread:enabled"/>

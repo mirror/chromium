@@ -29,7 +29,8 @@ class SessionObserver;
 // Implements mojom::SessionController to cache session related info such as
 // session state, meta data about user sessions to support synchronous
 // queries for ash.
-class ASH_EXPORT SessionController : public mojom::SessionController {
+class ASH_EXPORT SessionController
+    : NON_EXPORTED_BASE(public mojom::SessionController) {
  public:
   SessionController();
   ~SessionController() override;

@@ -412,7 +412,7 @@ void InputMethodEngineBase::KeyEventHandled(const std::string& extension_id,
       input_context->UpdateCompositionText(
           composition_, composition_.selection.start(), true);
     }
-    composition_ = ui::CompositionText();
+    composition_.Clear();
     composition_changed_ = false;
   }
 

@@ -20,7 +20,7 @@ namespace content {
 
 // This class is a WebDataConsumerHandle that accepts RequestPeer::ReceivedData.
 class CONTENT_EXPORT SharedMemoryDataConsumerHandle final
-    : public blink::WebDataConsumerHandle {
+    : public NON_EXPORTED_BASE(blink::WebDataConsumerHandle) {
  private:
   class Context;
 

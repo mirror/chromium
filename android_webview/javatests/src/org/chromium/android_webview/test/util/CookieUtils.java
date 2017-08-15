@@ -72,7 +72,12 @@ public class CookieUtils {
         final TestValueCallback<Boolean> callback = new TestValueCallback<Boolean>();
         int callCount = callback.getOnReceiveValueHelper().getCallCount();
 
-        awTestBase.runTestOnUiThread(() -> cookieManager.removeAllCookies(callback));
+        awTestBase.runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cookieManager.removeAllCookies(callback);
+            }
+        });
         callback.getOnReceiveValueHelper().waitForCallback(callCount);
         Assert.assertFalse(cookieManager.hasCookies());
     }

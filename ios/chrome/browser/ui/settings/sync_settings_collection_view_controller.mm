@@ -697,10 +697,12 @@ typedef NS_ENUM(NSInteger, ItemType) {
   // Otherwise, show the full encryption options.
   if (syncService->IsPassphraseRequired()) {
     controllerToPush = [[SyncEncryptionPassphraseCollectionViewController alloc]
-        initWithBrowserState:_browserState];
+        initWithBrowserState:_browserState
+                  dispatcher:self.dispatcher];
   } else {
     controllerToPush = [[SyncEncryptionCollectionViewController alloc]
-        initWithBrowserState:_browserState];
+        initWithBrowserState:_browserState
+                  dispatcher:self.dispatcher];
   }
   [self.navigationController pushViewController:controllerToPush animated:YES];
 }

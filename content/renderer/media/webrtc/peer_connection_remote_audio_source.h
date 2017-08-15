@@ -21,7 +21,8 @@ namespace content {
 
 // PeerConnectionRemoteAudioTrack is a WebRTC specific implementation of an
 // audio track whose data is sourced from a PeerConnection.
-class PeerConnectionRemoteAudioTrack final : public MediaStreamAudioTrack {
+class PeerConnectionRemoteAudioTrack final
+    : NON_EXPORTED_BASE(public MediaStreamAudioTrack) {
  public:
   explicit PeerConnectionRemoteAudioTrack(
       scoped_refptr<webrtc::AudioTrackInterface> track_interface);
@@ -53,8 +54,8 @@ class PeerConnectionRemoteAudioTrack final : public MediaStreamAudioTrack {
 
 // Represents the audio provided by the receiving end of a PeerConnection.
 class PeerConnectionRemoteAudioSource final
-    : public MediaStreamAudioSource,
-      protected webrtc::AudioTrackSinkInterface {
+    : NON_EXPORTED_BASE(public MediaStreamAudioSource),
+      NON_EXPORTED_BASE(protected webrtc::AudioTrackSinkInterface) {
  public:
   explicit PeerConnectionRemoteAudioSource(
       scoped_refptr<webrtc::AudioTrackInterface> track_interface);

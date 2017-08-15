@@ -34,8 +34,9 @@ class VideoRendererSink;
 
 // A mojom::Renderer implementation that use a media::Renderer to render
 // media streams.
-class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
-                                              public RendererClient {
+class MEDIA_MOJO_EXPORT MojoRendererService
+    : NON_EXPORTED_BASE(public mojom::Renderer),
+      public RendererClient {
  public:
   using InitiateSurfaceRequestCB = base::Callback<base::UnguessableToken()>;
 

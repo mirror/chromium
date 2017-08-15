@@ -14,7 +14,6 @@
 -DiskCache*
 -EffectiveConnectionTypeTest*
 -EmbeddedTestServer*
--HttpCache.RangeGET_ParallelValidationDifferentRanges  # crbug.com/755552
 -HttpNetworkTransactionTest.UploadUnreadableFile
 -HttpServerTest.*
 -NetworkInterfacesTest.GetNetworkList

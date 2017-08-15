@@ -95,7 +95,12 @@ public final class AwGeolocationPermissions {
      */
     public void getAllowed(String origin, final ValueCallback<Boolean> callback) {
         final boolean finalAllowed = isOriginAllowed(origin);
-        ThreadUtils.postOnUiThread(() -> callback.onReceiveValue(finalAllowed));
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                callback.onReceiveValue(finalAllowed);
+            }
+        });
     }
 
     /**
@@ -108,7 +113,12 @@ public final class AwGeolocationPermissions {
                 origins.add(name.substring(PREF_PREFIX.length()));
             }
         }
-        ThreadUtils.postOnUiThread(() -> callback.onReceiveValue(origins));
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                callback.onReceiveValue(origins);
+            }
+        });
     }
 
     /**

@@ -126,11 +126,11 @@ class RenderFrameImpl;
 // ResourceTracker.
 class CONTENT_EXPORT PepperPluginInstanceImpl
     : public base::RefCounted<PepperPluginInstanceImpl>,
-      public PepperPluginInstance,
+      public NON_EXPORTED_BASE(PepperPluginInstance),
       public ppapi::PPB_Instance_Shared,
-      public cc::TextureLayerClient,
+      public NON_EXPORTED_BASE(cc::TextureLayerClient),
       public RenderFrameObserver,
-      public PluginInstanceThrottler::Observer {
+      public NON_EXPORTED_BASE(PluginInstanceThrottler::Observer) {
  public:
   // Create and return a PepperPluginInstanceImpl object which supports the most
   // recent version of PPP_Instance possible by querying the given

@@ -258,7 +258,7 @@ bool MockInputMethod::HasComposition() {
 }
 
 void MockInputMethod::ClearComposition() {
-  composition_ = ui::CompositionText();
+  composition_.Clear();
   result_text_.clear();
 }
 

@@ -83,7 +83,7 @@ class MockMediaRoutesObserver : public MediaRoutesObserver {
 };
 
 class MockPresentationConnectionProxy
-    : public blink::mojom::PresentationConnection {
+    : public NON_EXPORTED_BASE(blink::mojom::PresentationConnection) {
  public:
   // PresentationConnectionMessage is move-only.
   // TODO(crbug.com/729950): Use MOCK_METHOD directly once GMock gets the

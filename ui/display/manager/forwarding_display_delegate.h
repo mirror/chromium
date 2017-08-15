@@ -26,7 +26,7 @@ class DisplaySnapshotMojo;
 // implemented by Ozone DRM, other method won't do anything.
 class DISPLAY_MANAGER_EXPORT ForwardingDisplayDelegate
     : public NativeDisplayDelegate,
-      public mojom::NativeDisplayObserver {
+      public NON_EXPORTED_BASE(mojom::NativeDisplayObserver) {
  public:
   explicit ForwardingDisplayDelegate(mojom::NativeDisplayDelegatePtr delegate);
   ~ForwardingDisplayDelegate() override;

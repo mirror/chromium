@@ -60,10 +60,13 @@ public class AwTestTouchUtils {
      */
     public static void dragCompleteView(final View view, final int fromX, final int toX,
             final int fromY, final int toY, final int stepCount) {
-        view.post(() -> {
-            long downTime = dragStart(view, fromX, fromY);
-            dragTo(view, fromX, toX, fromY, toY, stepCount, downTime);
-            dragEnd(view, toX, toY, downTime);
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                long downTime = dragStart(view, fromX, fromY);
+                dragTo(view, fromX, toX, fromY, toY, stepCount, downTime);
+                dragEnd(view, toX, toY, downTime);
+            }
         });
     }
 
@@ -75,16 +78,19 @@ public class AwTestTouchUtils {
      * @param view The view the coordinates are relative to.
      */
     public static void simulateTouchCenterOfView(final View view) throws Throwable {
-        view.post(() -> {
-            long eventTime = SystemClock.uptimeMillis();
-            float x = (float) (view.getRight() - view.getLeft()) / 2;
-            float y = (float) (view.getBottom() - view.getTop()) / 2;
-            view.onTouchEvent(MotionEvent.obtain(
-                    eventTime, eventTime, MotionEvent.ACTION_DOWN,
-                    x, y, 0));
-            view.onTouchEvent(MotionEvent.obtain(
-                    eventTime, eventTime, MotionEvent.ACTION_UP,
-                    x, y, 0));
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                long eventTime = SystemClock.uptimeMillis();
+                float x = (float) (view.getRight() - view.getLeft()) / 2;
+                float y = (float) (view.getBottom() - view.getTop()) / 2;
+                view.onTouchEvent(MotionEvent.obtain(
+                        eventTime, eventTime, MotionEvent.ACTION_DOWN,
+                        x, y, 0));
+                view.onTouchEvent(MotionEvent.obtain(
+                        eventTime, eventTime, MotionEvent.ACTION_UP,
+                        x, y, 0));
+            }
         });
     }
 }

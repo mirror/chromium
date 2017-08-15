@@ -11,7 +11,8 @@
 
 namespace content {
 
-class CONTENT_EXPORT WebFileUtilitiesImpl : public blink::WebFileUtilities {
+class CONTENT_EXPORT WebFileUtilitiesImpl
+    : NON_EXPORTED_BASE(public blink::WebFileUtilities) {
  public:
   WebFileUtilitiesImpl();
   virtual ~WebFileUtilitiesImpl();

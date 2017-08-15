@@ -198,10 +198,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #   define SK_SUPPORT_LEGACY_ANISOTROPIC_MIPMAP_SCALE
 #endif
 
-#ifndef SK_SUPPORT_LEGACY_BILERP2
-#define SK_SUPPORT_LEGACY_BILERP2
-#endif
-
 // Remove this after we fixed all the issues related to the new SDF algorithm
 // (https://codereview.chromium.org/1643143002)
 #ifndef    SK_USE_LEGACY_DISTANCE_FIELDS
@@ -226,11 +222,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 
 #ifndef SK_SUPPORT_LEGACY_RP_BLENDS
 #define SK_SUPPORT_LEGACY_RP_BLENDS
-#endif
-
-// Transition from Gaussian filtering for small sigma to linear filtering
-#ifndef SK_SUPPORT_LEGACY_USE_GAUSS_FOR_SMALL_RADII
-#define SK_SUPPORT_LEGACY_USE_GAUSS_FOR_SMALL_RADII
 #endif
 
 ///////////////////////// Imported from BUILD.gn and skia_common.gypi

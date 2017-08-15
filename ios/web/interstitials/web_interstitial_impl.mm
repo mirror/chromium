@@ -56,7 +56,7 @@ void WebInterstitialImpl::Show() {
 }
 
 void WebInterstitialImpl::Hide() {
-  GetWebStateImpl()->ClearTransientContent();
+  GetWebStateImpl()->ClearTransientContentView();
 }
 
 void WebInterstitialImpl::DontProceed() {

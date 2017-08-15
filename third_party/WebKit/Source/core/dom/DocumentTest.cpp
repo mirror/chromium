@@ -319,7 +319,8 @@ class MockDocumentValidationMessageClient
   // DEFINE_INLINE_VIRTUAL_TRACE() { ValidationMessageClient::trace(visitor); }
 };
 
-class MockWebApplicationCacheHost : public blink::WebApplicationCacheHost {
+class MockWebApplicationCacheHost
+    : NON_EXPORTED_BASE(public blink::WebApplicationCacheHost) {
  public:
   MockWebApplicationCacheHost() {}
   ~MockWebApplicationCacheHost() override {}

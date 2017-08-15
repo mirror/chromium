@@ -682,15 +682,18 @@ public class AwContents implements SmartClipProvider {
         public void onTrimMemory(final int level) {
             boolean visibleRectEmpty = getGlobalVisibleRect().isEmpty();
             final boolean visible = mIsViewVisible && mIsWindowVisible && !visibleRectEmpty;
-            ThreadUtils.runOnUiThreadBlocking(() -> {
-                if (isDestroyedOrNoOperation(NO_WARN)) return;
-                if (level >= TRIM_MEMORY_MODERATE) {
-                    mInitialFunctor.deleteHardwareRenderer();
-                    if (mFullScreenFunctor != null) {
-                        mFullScreenFunctor.deleteHardwareRenderer();
+            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                @Override
+                public void run() {
+                    if (isDestroyedOrNoOperation(NO_WARN)) return;
+                    if (level >= TRIM_MEMORY_MODERATE) {
+                        mInitialFunctor.deleteHardwareRenderer();
+                        if (mFullScreenFunctor != null) {
+                            mFullScreenFunctor.deleteHardwareRenderer();
+                        }
                     }
+                    nativeTrimMemory(mNativeAwContents, level, visible);
                 }
-                nativeTrimMemory(mNativeAwContents, level, visible);
             });
         }
 
@@ -771,7 +774,12 @@ public class AwContents implements SmartClipProvider {
         mCurrentFunctor = mInitialFunctor;
         mContentsClient = contentsClient;
         mContentsClient.getCallbackHelper().setCancelCallbackPoller(
-                () -> AwContents.this.isDestroyedOrNoOperation(NO_WARN));
+                new AwContentsClientCallbackHelper.CancelCallbackPoller() {
+                    @Override
+                    public boolean cancelAllCallbacks() {
+                        return AwContents.this.isDestroyedOrNoOperation(NO_WARN);
+                    }
+                });
         mAwViewMethods = new AwViewMethodsImpl();
         mFullScreenTransitionsState = new FullScreenTransitionsState(
                 mContainerView, mInternalAccessAdapter, mAwViewMethods);
@@ -787,13 +795,23 @@ public class AwContents implements SmartClipProvider {
         mIoThreadClient = new IoThreadClientImpl();
         mInterceptNavigationDelegate = new InterceptNavigationDelegateImpl();
         mDisplayObserver = new AwDisplayAndroidObserver();
-        mUpdateVisibilityRunnable = () -> updateContentViewCoreVisibility();
+        mUpdateVisibilityRunnable = new Runnable() {
+            @Override
+            public void run() {
+                updateContentViewCoreVisibility();
+            }
+        };
 
         AwSettings.ZoomSupportChangeListener zoomListener =
-                (supportsDoubleTapZoom, supportsMultiTouchZoom) -> {
-                    if (isDestroyedOrNoOperation(NO_WARN)) return;
-                    mContentViewCore.updateDoubleTapSupport(supportsDoubleTapZoom);
-                    mContentViewCore.updateMultiTouchZoomSupport(supportsMultiTouchZoom);
+                new AwSettings.ZoomSupportChangeListener() {
+                    @Override
+                    public void onGestureZoomSupportChanged(
+                            boolean supportsDoubleTapZoom, boolean supportsMultiTouchZoom) {
+                        if (isDestroyedOrNoOperation(NO_WARN)) return;
+                        mContentViewCore.updateDoubleTapSupport(supportsDoubleTapZoom);
+                        mContentViewCore.updateMultiTouchZoomSupport(supportsMultiTouchZoom);
+                    }
+
                 };
         mSettings.setZoomListener(zoomListener);
         mDefaultVideoPosterRequestHandler = new DefaultVideoPosterRequestHandler(mContentsClient);
@@ -1218,7 +1236,12 @@ public class AwContents implements SmartClipProvider {
         }
         mIsNoOperation = true;
         mIsDestroyed = true;
-        mHandler.post(() -> destroyNatives());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                destroyNatives();
+            }
+        });
     }
 
     /**
@@ -1409,7 +1432,12 @@ public class AwContents implements SmartClipProvider {
         if (invalidationOnly) {
             mPictureListenerContentProvider = null;
         } else if (enabled && mPictureListenerContentProvider == null) {
-            mPictureListenerContentProvider = () -> capturePicture();
+            mPictureListenerContentProvider = new Callable<Picture>() {
+                @Override
+                public Picture call() {
+                    return capturePicture();
+                }
+            };
         }
         nativeEnableOnNewPicture(mNativeAwContents, enabled);
     }
@@ -1444,20 +1472,26 @@ public class AwContents implements SmartClipProvider {
     }
 
     private void requestVisitedHistoryFromClient() {
-        ValueCallback<String[]> callback = value -> {
-            if (value != null) {
-                // Replace null values with empty strings, because they can't be represented as
-                // native strings.
-                for (int i = 0; i < value.length; i++) {
-                    if (value[i] == null) value[i] = "";
+        ValueCallback<String[]> callback = new ValueCallback<String[]>() {
+            @Override
+            public void onReceiveValue(final String[] value) {
+                if (value != null) {
+                    // Replace null values with empty strings, because they can't be represented as
+                    // native strings.
+                    for (int i = 0; i < value.length; i++) {
+                        if (value[i] == null) value[i] = "";
+                    }
                 }
-            }
 
-            ThreadUtils.runOnUiThread(() -> {
-                if (!isDestroyedOrNoOperation(NO_WARN)) {
-                    nativeAddVisitedLinks(mNativeAwContents, value);
-                }
-            });
+                ThreadUtils.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isDestroyedOrNoOperation(NO_WARN)) {
+                            nativeAddVisitedLinks(mNativeAwContents, value);
+                        }
+                    }
+                });
+            }
         };
         mContentsClient.getVisitedHistory(callback);
     }
@@ -2251,12 +2285,20 @@ public class AwContents implements SmartClipProvider {
         if (isDestroyedOrNoOperation(WARN)) return;
         JavaScriptCallback jsCallback = null;
         if (callback != null) {
-            jsCallback = jsonResult -> {
-                // Post the application callback back to the current thread to ensure the
-                // application callback is executed without any native code on the stack. This
-                // so that any exception thrown by the application callback won't have to be
-                // propagated through a native call stack.
-                mHandler.post(() -> callback.onReceiveValue(jsonResult));
+            jsCallback = new JavaScriptCallback() {
+                @Override
+                public void handleJavaScriptResult(final String jsonResult) {
+                    // Post the application callback back to the current thread to ensure the
+                    // application callback is executed without any native code on the stack. This
+                    // so that any exception thrown by the application callback won't have to be
+                    // propagated through a native call stack.
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onReceiveValue(jsonResult);
+                        }
+                    });
+                }
             };
         }
 
@@ -2268,7 +2310,12 @@ public class AwContents implements SmartClipProvider {
         if (isDestroyedOrNoOperation(NO_WARN)) return;
         JavaScriptCallback jsCallback = null;
         if (callback != null) {
-            jsCallback = jsonResult -> callback.onReceiveValue(jsonResult);
+            jsCallback = new JavaScriptCallback() {
+                @Override
+                public void handleJavaScriptResult(String jsonResult) {
+                    callback.onReceiveValue(jsonResult);
+                }
+            };
         }
 
         mWebContents.evaluateJavaScriptForTests(script, jsCallback);
@@ -2814,7 +2861,12 @@ public class AwContents implements SmartClipProvider {
         if (isDestroyedOrNoOperation(NO_WARN)) return;
         // Posting avoids invoking the callback inside invoking_composite_
         // (see synchronous_compositor_impl.cc and crbug/452530).
-        mHandler.post(() -> callback.onComplete(requestId));
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.onComplete(requestId);
+            }
+        });
     }
 
     // Called as a result of nativeUpdateLastHitTestData.
@@ -2972,7 +3024,12 @@ public class AwContents implements SmartClipProvider {
         if (isDestroyedOrNoOperation(WARN)) return;
         JavaScriptCallback jsCallback = null;
         if (callback != null) {
-            jsCallback = jsonResult -> callback.onReceiveValue(jsonResult);
+            jsCallback = new JavaScriptCallback() {
+                @Override
+                public void handleJavaScriptResult(String jsonResult) {
+                    callback.onReceiveValue(jsonResult);
+                }
+            };
         }
 
         // mWebContents.evaluateJavaScript(script, jsCallback);
@@ -3009,7 +3066,12 @@ public class AwContents implements SmartClipProvider {
 
     private void saveWebArchiveInternal(String path, final ValueCallback<String> callback) {
         if (path == null || isDestroyedOrNoOperation(WARN)) {
-            ThreadUtils.runOnUiThread(() -> callback.onReceiveValue(null));
+            ThreadUtils.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onReceiveValue(null);
+                }
+            });
         } else {
             nativeGenerateMHTML(mNativeAwContents, path, callback);
         }

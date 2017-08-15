@@ -33,7 +33,10 @@ class DataDeviceDelegate {
 
   // Called when DataOffer object is delivered from a client. DataDeviceDelegate
   // has responsibility to release the returned DataOffer object.
-  virtual DataOffer* OnDataOffer() = 0;
+  virtual DataOffer* OnDataOffer(
+      const std::vector<std::string>& mime_types,
+      const base::flat_set<DndAction>& source_actions,
+      DndAction dnd_action) = 0;
 
   // Called during a drag operation when pointer enters |surface|.
   virtual void OnEnter(Surface* surface,

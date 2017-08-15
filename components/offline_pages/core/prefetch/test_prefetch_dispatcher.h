@@ -43,7 +43,6 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
   std::vector<std::string> operation_list;
 
   int new_suggestions_count = 0;
-  int processing_schedule_count = 0;
   int remove_all_suggestions_count = 0;
   int remove_by_client_id_count = 0;
 };

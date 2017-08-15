@@ -195,7 +195,6 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
-#include "core/loader/TextResourceDecoderBuilder.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/page/ChromeClient.h"
@@ -273,55 +272,6 @@ static WeakDocumentSet& liveDocumentSet();
 namespace blink {
 
 using namespace HTMLNames;
-
-class DocumentOutliveTimeReporter : public BlinkGCObserver {
- public:
-  DocumentOutliveTimeReporter()
-      : BlinkGCObserver(ThreadState::Current()),
-        gc_age_when_document_detached_(ThreadState::Current()->GcAge()) {}
-
-  ~DocumentOutliveTimeReporter() override {
-    // As not all documents are destroyed before the process dies, this might
-    // miss some long-lived documents or leaked documents.
-    // TODO(hajimehoshi): There are some cases that a document can live after
-    // shutting down because the document can still be reffed (e.g. a document
-    // opened via window.open can be reffed by the opener even after shutting
-    // down). Detect those cases and record them independently.
-    UMA_HISTOGRAM_EXACT_LINEAR(
-        "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
-        ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
-        101);
-  }
-
-  void OnCompleteSweepDone() override {
-    enum GCCount {
-      kGCCount5,
-      kGCCount10,
-      kGCCountMax,
-    };
-
-    int diff = ThreadState::Current()->GcAge() - gc_age_when_document_detached_;
-    if (diff == 5 || diff == 10) {
-      GCCount count = kGCCount5;
-      switch (diff) {
-        case 5:
-          count = kGCCount5;
-          break;
-        case 10:
-          count = kGCCount10;
-          break;
-        default:
-          NOTREACHED();
-          break;
-      }
-      UMA_HISTOGRAM_ENUMERATION("Document.OutliveTimeAfterShutdown.GCCount",
-                                count, kGCCountMax);
-    }
-  }
-
- private:
-  int gc_age_when_document_detached_ = 0;
-};
 
 static const unsigned kCMaxWriteRecursionDepth = 21;
 
@@ -713,6 +663,19 @@ Document::~Document() {
   // If a top document with a cache, verify that it was comprehensively
   // cleared during detach.
   DCHECK(!ax_object_cache_);
+
+  // As not all documents are destroyed before the process dies, this might miss
+  // some long-lived documents or leaked documents.
+  // TODO(hajimehoshi): Record outlive time of documents that are not destroyed
+  // before the process dies.
+  // TODO(hajimehoshi): There are some cases that a document can live after
+  // shutting down because the document can still be reffed (e.g. a document
+  // opened via window.open can be reffed by the opener even after shutting
+  // down). Detect those cases and record them independently.
+  UMA_HISTOGRAM_EXACT_LINEAR(
+      "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
+      ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
+      101);
 
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
 }
@@ -1487,7 +1450,7 @@ String Document::SuggestedMIMEType() const {
     return "text/html";
 
   if (DocumentLoader* document_loader = Loader())
-    return document_loader->MimeType();
+    return document_loader->ResponseMIMEType();
   return String();
 }
 
@@ -2730,8 +2693,7 @@ void Document::Shutdown() {
   // explicit in each of the callers of Document::detachLayoutTree().
   frame_ = nullptr;
 
-  document_outlive_time_reporter_ =
-      WTF::WrapUnique(new DocumentOutliveTimeReporter());
+  gc_age_when_document_detached_ = ThreadState::Current()->GcAge();
 }
 
 void Document::RemoveAllEventListeners() {
@@ -2915,14 +2877,6 @@ void Document::CancelParsing() {
   SetParsingState(kFinishedParsing);
   SetReadyState(kComplete);
   SuppressLoadEvent();
-}
-
-void Document::OpenForNavigation(ParserSynchronizationPolicy parser_sync_policy,
-                                 const AtomicString& mime_type,
-                                 const AtomicString& encoding) {
-  ImplicitOpen(parser_sync_policy);
-  if (parser_->NeedsDecoder())
-    parser_->SetDecoder(BuildTextResourceDecoderFor(this, mime_type, encoding));
 }
 
 DocumentParser* Document::ImplicitOpen(

@@ -152,9 +152,6 @@ class SmoothnessToughCanvasCases(_Smoothness):
         self.DisableStory('http://geoapis.appspot.com/agdnZW9hcGlzchMLEgtFeGFtcGxlQ29kZRjh1wIM',
                           [story_module.expectations.ANDROID_NEXUS5],
                           'crbug.com/364248')
-        self.DisableStory('tough_canvas_cases/canvas_toBlob.html',
-                          [story_module.expectations.ANDROID_ONE],
-                          'crbug.com/755657')
     return StoryExpectations()
 
 
@@ -258,19 +255,6 @@ class SmoothnessToughAnimationCases(_Smoothness):
       def SetExpectations(self):
         self.DisableStory('robohornetpro', [story_module.expectations.ALL],
                           'crbug.com/350692')
-        self.DisableStory(
-            'balls_css_keyframe_animations_composited_transform.html',
-            [story_module.expectations.ALL_MOBILE],
-            'crbug.com/755556')
-        self.DisableStory(
-            'mix_blend_mode_animation_difference.html',
-            [story_module.expectations.ALL_MAC],
-            'crbug.com/755556')
-        self.DisableStory(
-            'mix_blend_mode_animation_hue.html',
-            [story_module.expectations.ALL_MAC],
-            'crbug.com/755556')
-
     return StoryExpectations()
 
 

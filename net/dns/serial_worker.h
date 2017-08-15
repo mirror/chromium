@@ -38,7 +38,7 @@ namespace net {
 //
 // TODO(szym): update to WorkerPool::PostTaskAndReply once available.
 class NET_EXPORT_PRIVATE SerialWorker
-    : public base::RefCountedThreadSafe<SerialWorker> {
+  : NON_EXPORTED_BASE(public base::RefCountedThreadSafe<SerialWorker>) {
  public:
   SerialWorker();
 

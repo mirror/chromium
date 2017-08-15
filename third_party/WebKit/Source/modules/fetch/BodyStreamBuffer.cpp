@@ -19,7 +19,6 @@
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/blob/BlobData.h"
 #include "platform/network/EncodedFormData.h"
-#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
@@ -210,8 +209,7 @@ ScriptPromise BodyStreamBuffer::pull(ScriptState* script_state) {
   if (stream_needs_more_)
     return ScriptPromise::CastUndefined(script_state);
   stream_needs_more_ = true;
-  if (!in_process_data_)
-    ProcessData();
+  ProcessData();
   return ScriptPromise::CastUndefined(script_state);
 }
 
@@ -313,9 +311,6 @@ void BodyStreamBuffer::CancelConsumer() {
 
 void BodyStreamBuffer::ProcessData() {
   DCHECK(consumer_);
-  DCHECK(!in_process_data_);
-
-  AutoReset<bool> auto_reset(&in_process_data_, true);
   while (stream_needs_more_) {
     const char* buffer = nullptr;
     size_t available = 0;

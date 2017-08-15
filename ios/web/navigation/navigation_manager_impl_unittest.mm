@@ -13,15 +13,12 @@
 #import "ios/web/navigation/legacy_navigation_manager_impl.h"
 #import "ios/web/navigation/navigation_manager_delegate.h"
 #import "ios/web/navigation/wk_based_navigation_manager_impl.h"
-#include "ios/web/public/load_committed_details.h"
 #include "ios/web/public/navigation_item.h"
 #include "ios/web/public/test/fakes/test_browser_state.h"
 #import "ios/web/test/fakes/crw_test_back_forward_list.h"
 #include "ios/web/test/test_url_constants.h"
 #import "ios/web/web_state/ui/crw_web_view_navigation_proxy.h"
-#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#import "testing/gtest_mac.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
 #include "url/scheme_host_port.h"
@@ -60,40 +57,34 @@ bool AppendingUrlRewriter(GURL* url, BrowserState* browser_state) {
   return false;
 }
 
-// Mock class for NavigationManagerDelegate.
+// Stub class for NavigationManagerDelegate.
 class TestNavigationManagerDelegate : public NavigationManagerDelegate {
  public:
+  bool reload_called() { return reload_called_; }
   void SetSessionController(CRWSessionController* session_controller) {
     session_controller_ = session_controller;
   }
-
   void SetWKWebView(id web_view) { mock_web_view_ = web_view; }
 
-  MOCK_METHOD0(ClearTransientContent, void());
-  MOCK_METHOD0(RecordPageStateInNavigationItem, void());
-  MOCK_METHOD2(WillLoadCurrentItemWithParams,
-               void(const NavigationManager::WebLoadParams&, bool));
-  MOCK_METHOD0(LoadCurrentItem, void());
-  MOCK_METHOD0(Reload, void());
-  MOCK_METHOD1(OnNavigationItemsPruned, void(size_t));
-  MOCK_METHOD0(OnNavigationItemChanged, void());
-  MOCK_METHOD1(OnNavigationItemCommitted, void(const LoadCommittedDetails&));
-
  private:
+  // NavigationManagerDelegate overrides.
   void GoToIndex(int index) override {
     [session_controller_ goToItemAtIndex:index discardNonCommittedItems:NO];
   }
-
+  void LoadURLWithParams(const NavigationManager::WebLoadParams&) override {}
+  void Reload() override { reload_called_ = true; }
+  void OnNavigationItemsPruned(size_t pruned_item_count) override {}
+  void OnNavigationItemChanged() override {}
+  void OnNavigationItemCommitted(const LoadCommittedDetails&) override {}
   WebState* GetWebState() override { return nullptr; }
-
   id<CRWWebViewNavigationProxy> GetWebViewNavigationProxy() const override {
     return mock_web_view_;
   }
 
+  bool reload_called_ = false;
   CRWSessionController* session_controller_;
   id mock_web_view_;
 };
-
 }  // namespace
 
 // NavigationManagerTest is parameterized on this enum to test both the legacy
@@ -124,7 +115,6 @@ class NavigationManagerTest
       OCMStub([mock_web_view_ backForwardList]).andReturn(mock_wk_list_);
       delegate_.SetWKWebView(mock_web_view_);
     }
-
     // Setup rewriter.
     BrowserURLRewriter::GetInstance()->AddURLRewriter(UrlRewriter);
     url::AddStandardScheme(kSchemeToRewrite, url::SCHEME_WITHOUT_PORT);
@@ -137,7 +127,7 @@ class NavigationManagerTest
   CRWSessionController* session_controller() { return controller_; }
   NavigationManagerImpl* navigation_manager() { return manager_.get(); }
 
-  TestNavigationManagerDelegate& navigation_manager_delegate() {
+  TestNavigationManagerDelegate navigation_manager_delegate() {
     return delegate_;
   }
 
@@ -1449,9 +1439,9 @@ TEST_P(NavigationManagerTest, ReloadEmptyWithNormalType) {
   ASSERT_FALSE(navigation_manager()->GetPendingItem());
   ASSERT_FALSE(navigation_manager()->GetLastCommittedItem());
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(0);
   navigation_manager()->Reload(web::ReloadType::NORMAL,
                                false /* check_for_repost */);
+  EXPECT_FALSE(navigation_manager_delegate().reload_called());
 
   ASSERT_FALSE(navigation_manager()->GetTransientItem());
   ASSERT_FALSE(navigation_manager()->GetPendingItem());
@@ -1467,9 +1457,9 @@ TEST_P(NavigationManagerTest, ReloadRendererPendingItemWithNormalType) {
       web::NavigationInitiationType::RENDERER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::NORMAL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetPendingItem());
   EXPECT_EQ(url_before_reload,
@@ -1485,9 +1475,9 @@ TEST_P(NavigationManagerTest, ReloadUserPendingItemWithNormalType) {
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::NORMAL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetPendingItem());
   EXPECT_EQ(url_before_reload,
@@ -1516,9 +1506,9 @@ TEST_P(NavigationManagerTest, ReloadLastCommittedItemWithNormalType) {
                forwardListURLs:nil];
   navigation_manager()->CommitPendingItem();
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::NORMAL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetLastCommittedItem());
   EXPECT_EQ(url_before_reload,
@@ -1569,9 +1559,9 @@ TEST_P(NavigationManagerTest,
   navigation_manager()->GoToIndex(1);
   EXPECT_EQ(1, navigation_manager()->GetLastCommittedItemIndex());
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::NORMAL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetLastCommittedItem());
   EXPECT_EQ(url_before_reload,
@@ -1585,9 +1575,9 @@ TEST_P(NavigationManagerTest, ReloadEmptyWithOriginalType) {
   ASSERT_FALSE(navigation_manager()->GetPendingItem());
   ASSERT_FALSE(navigation_manager()->GetLastCommittedItem());
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(0);
   navigation_manager()->Reload(web::ReloadType::ORIGINAL_REQUEST_URL,
                                false /* check_for_repost */);
+  EXPECT_FALSE(navigation_manager_delegate().reload_called());
 
   ASSERT_FALSE(navigation_manager()->GetTransientItem());
   ASSERT_FALSE(navigation_manager()->GetPendingItem());
@@ -1607,9 +1597,9 @@ TEST_P(NavigationManagerTest, ReloadRendererPendingItemWithOriginalType) {
   navigation_manager()->GetPendingItem()->SetOriginalRequestURL(
       expected_original_url);
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::ORIGINAL_REQUEST_URL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetPendingItem());
   EXPECT_EQ(expected_original_url,
@@ -1629,9 +1619,9 @@ TEST_P(NavigationManagerTest, ReloadUserPendingItemWithOriginalType) {
   navigation_manager()->GetPendingItem()->SetOriginalRequestURL(
       expected_original_url);
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::ORIGINAL_REQUEST_URL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetPendingItem());
   EXPECT_EQ(expected_original_url,
@@ -1664,9 +1654,9 @@ TEST_P(NavigationManagerTest, ReloadLastCommittedItemWithOriginalType) {
                forwardListURLs:nil];
   navigation_manager()->CommitPendingItem();
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::ORIGINAL_REQUEST_URL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetLastCommittedItem());
   EXPECT_EQ(expected_original_url,
@@ -1720,9 +1710,9 @@ TEST_P(NavigationManagerTest,
   navigation_manager()->GoToIndex(1);
   EXPECT_EQ(1, navigation_manager()->GetLastCommittedItemIndex());
 
-  EXPECT_CALL(navigation_manager_delegate(), Reload()).Times(1);
   navigation_manager()->Reload(web::ReloadType::ORIGINAL_REQUEST_URL,
                                false /* check_for_repost */);
+  EXPECT_TRUE(navigation_manager_delegate().reload_called());
 
   ASSERT_TRUE(navigation_manager()->GetLastCommittedItem());
   EXPECT_EQ(expected_original_url,
@@ -2085,70 +2075,6 @@ TEST_P(NavigationManagerTest, VisibleItemDefaultsToLastCommittedItem) {
   ASSERT_TRUE(navigation_manager()->GetVisibleItem());
   EXPECT_EQ("http://www.url.com/0",
             navigation_manager()->GetVisibleItem()->GetURL().spec());
-}
-
-// Tests that |extra_headers| and |post_data| from WebLoadParams are added to
-// the new navigation item if they are present.
-TEST_P(NavigationManagerTest, LoadURLWithParamsWithExtraHeadersAndPostData) {
-  NavigationManager::WebLoadParams params(GURL("http://www.url.com/0"));
-  params.transition_type = ui::PAGE_TRANSITION_TYPED;
-  params.extra_headers.reset(@{@"Content-Type" : @"text/plain"});
-  params.post_data.reset([NSData data]);
-
-  EXPECT_CALL(navigation_manager_delegate(), RecordPageStateInNavigationItem())
-      .Times(1);
-  EXPECT_CALL(navigation_manager_delegate(), ClearTransientContent()).Times(1);
-  EXPECT_CALL(navigation_manager_delegate(),
-              WillLoadCurrentItemWithParams(::testing::Ref(params),
-                                            true /* is_initial_navigation */));
-  EXPECT_CALL(navigation_manager_delegate(), LoadCurrentItem()).Times(1);
-
-  navigation_manager()->LoadURLWithParams(params);
-
-  NavigationItem* pending_item = navigation_manager()->GetPendingItem();
-  ASSERT_TRUE(pending_item);
-  EXPECT_EQ("http://www.url.com/0", pending_item->GetURL().spec());
-  EXPECT_TRUE(ui::PageTransitionCoreTypeIs(pending_item->GetTransitionType(),
-                                           ui::PAGE_TRANSITION_TYPED));
-  EXPECT_NSEQ(pending_item->GetHttpRequestHeaders(),
-              @{@"Content-Type" : @"text/plain"});
-  EXPECT_TRUE(pending_item->HasPostData());
-}
-
-// Tests that LoadURLWithParams() calls RecordPageStateInNavigationItem() on the
-// navigation manager deleget before navigating to the new URL.
-TEST_P(NavigationManagerTest, LoadURLWithParamsSavesStateOnCurrentItem) {
-  navigation_manager()->AddPendingItem(
-      GURL("http://www.url.com/0"), Referrer(), ui::PAGE_TRANSITION_TYPED,
-      web::NavigationInitiationType::USER_INITIATED,
-      web::NavigationManager::UserAgentOverrideOption::INHERIT);
-
-  [mock_wk_list_ setCurrentURL:@"http://www.url.com/0"];
-  navigation_manager()->CommitPendingItem();
-
-  NavigationManager::WebLoadParams params(GURL("http://www.url.com/1"));
-  params.transition_type = ui::PAGE_TRANSITION_TYPED;
-
-  EXPECT_CALL(navigation_manager_delegate(), RecordPageStateInNavigationItem())
-      .Times(1);
-  EXPECT_CALL(navigation_manager_delegate(), ClearTransientContent()).Times(1);
-  EXPECT_CALL(navigation_manager_delegate(),
-              WillLoadCurrentItemWithParams(::testing::Ref(params),
-                                            false /* is_initial_navigation */));
-  EXPECT_CALL(navigation_manager_delegate(), LoadCurrentItem()).Times(1);
-
-  navigation_manager()->LoadURLWithParams(params);
-
-  NavigationItem* last_committed_item =
-      navigation_manager()->GetLastCommittedItem();
-  ASSERT_TRUE(last_committed_item);
-  EXPECT_EQ("http://www.url.com/0", last_committed_item->GetURL().spec());
-  NavigationItem* pending_item = navigation_manager()->GetPendingItem();
-  ASSERT_TRUE(pending_item);
-  EXPECT_EQ("http://www.url.com/1", pending_item->GetURL().spec());
-  EXPECT_TRUE(ui::PageTransitionCoreTypeIs(pending_item->GetTransitionType(),
-                                           ui::PAGE_TRANSITION_TYPED));
-  EXPECT_FALSE(pending_item->HasPostData());
 }
 
 INSTANTIATE_TEST_CASE_P(
