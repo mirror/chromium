@@ -93,6 +93,30 @@
       "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e95d35_bba82ca1",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-15T22:36:37Z",
+      "side": 1,
+      "message": "sorry I don\u0027t understand - compute is only called once because it does a DCHECK that histogram_ is empty - so what preallocation is needed for what? Also, Distance requires that both objects have a non-empty histogram_ and thus requires Compute to be called on both before calling Distance.\n\nI must admit your reply completely confused me. I\u0027m just saying move the code currently in Compute() into the constructor. Can you explain when you would want to construct the object and not immediately call Compute?",
+      "parentUuid": "d1853162_0c01c72a",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
