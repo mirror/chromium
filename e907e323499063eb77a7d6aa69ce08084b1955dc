@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4ed50c_32f5113b",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-15T06:25:07Z",
+      "side": 1,
+      "message": "break;",
+      "revId": "e907e323499063eb77a7d6aa69ce08084b1955dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28472c0_208f7abf",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-15T06:25:07Z",
+      "side": 1,
+      "message": "remove \"retval \u003d\" on line 574.\nAnd please add comment why H264 is handled differently.",
+      "revId": "e907e323499063eb77a7d6aa69ce08084b1955dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
