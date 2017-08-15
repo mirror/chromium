@@ -662,6 +662,10 @@ const url::Origin& RenderFrameHostImpl::GetLastCommittedOrigin() {
   return last_committed_origin_;
 }
 
+int64_t RenderFrameHostImpl::GetLastCommittedNavigationId() {
+  return last_committed_navigation_id_;
+}
+
 gfx::NativeView RenderFrameHostImpl::GetNativeView() {
   RenderWidgetHostView* view = render_view_host_->GetWidget()->GetView();
   if (!view)
@@ -1307,6 +1311,10 @@ void RenderFrameHostImpl::OnCreateChildFrame(
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   last_committed_origin_ = origin;
   CSPContext::SetSelf(origin);
+}
+
+void RenderFrameHostImpl::SetLastCommittedNavigationId(int64_t navigation_id) {
+  last_committed_navigation_id_ = navigation_id;
 }
 
 void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {

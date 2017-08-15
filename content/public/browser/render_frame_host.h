@@ -137,6 +137,9 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // Returns the last committed origin of the frame.
   virtual const url::Origin& GetLastCommittedOrigin() = 0;
 
+  // Returns the id of the last navigation to commit in the frame.
+  virtual int64_t GetLastCommittedNavigationId() = 0;
+
   // Returns the associated widget's native view.
   virtual gfx::NativeView GetNativeView() = 0;
 
