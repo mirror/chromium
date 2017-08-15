@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877d2d79_079cd114",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-15T01:47:31Z",
+      "side": 1,
+      "message": "Optional: I prefer this and HasValidContext() below in public, but I guess this is more of a personal preference.",
+      "revId": "6324c63cd759c5e1d084fc86ca2b9a7a8b331820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee3d1d5_84b4047b",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-15T01:47:31Z",
+      "side": 1,
+      "message": "Would you make this\nbool HasValidContext() const { return modulator_-\u003eHasValidContext(); } instead?",
+      "revId": "6324c63cd759c5e1d084fc86ca2b9a7a8b331820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
