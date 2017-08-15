@@ -52,6 +52,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686816d3_2974389d",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-15T01:45:13Z",
+      "side": 1,
+      "message": "If we want to describe the capability of the camera buffer then it\u0027s SCANOUT_CPU_READ_WRITE_CAMERA_READ_WRITE.\n\n- The buffer is accessible by GPU. This should be a valid assumption on all platforms otherwise it\u0027d be a very bad hardware design. We\u0027ve also been thinking to send the buffer to GPU for processing, such as cropping, rotation, or scaling.\n- The buffer is accessible by CPU. The camera HAL may need to inspect / manipulate the buffer. In Chrome we need to map the buffer and convert the buffer to I420 and memcpy to another SharedMemory buffer.\n- The buffer is accessible by the camera subsystem. The actual format of the buffer is platform-dependent. We may have Intel using one format and some other ARM devices using another format, but in general the buffer should also be accessible by GPU and CPU.\n\nOn ChromeOS with ARC++, the camera HAL gets DMA-buf from cros-gralloc on Android side. Since the camera HAL is providing camera service to both Chrome and ARC++, we want to feed the same type of buffer from Chrome to the camera HAL. My understanding is that in Chrome we need to get the GPU buffers from the GPU process, thus I\u0027m doing these plumbing. Another option would be to let the media capture service to access the DRM render node directly and allocate buffer with minigbm.",
+      "parentUuid": "b0700a00_f4279646",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
