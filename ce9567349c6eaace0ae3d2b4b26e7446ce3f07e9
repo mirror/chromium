@@ -33,6 +33,98 @@
       "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef46fb3f_ba432611",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T20:44:08Z",
+      "side": 1,
+      "message": "Not totally inclined with the fact that we create global dumps for all the databases.\nthe global dump is required only for the mojo case where the mojo service can \"exist in any process\". For this case the old version of suballocation just works fine.\nWe do not really require global dump for session storage and indexeddb and others.",
+      "range": {
+        "startLine": 1255,
+        "startChar": 17,
+        "endLine": 1255,
+        "endChar": 48
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce96a86_77a6987b",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T20:44:08Z",
+      "side": 1,
+      "message": "This dump provider does both expose the dump name it creates for other providers to sub-allocate, but also creates a global dump edge for the case of globally shared dumps.\nIt doesn\u0027t feel clean to have both these functionalities in this class.",
+      "range": {
+        "startLine": 1297,
+        "startChar": 0,
+        "endLine": 1301,
+        "endChar": 1
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94b5aae_378022dc",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T20:44:08Z",
+      "side": 1,
+      "message": "this should be called global_dump_id,\nAdd comment about:\nThe |global_dump_id| is the id of the global dump created by the client/embedder which is associated specifically with the current database. The tracker uses the |global_dump_id| to create global dump with appropriate database size.",
+      "range": {
+        "startLine": 265,
+        "startChar": 65,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8e59d5_ec02801c",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T20:44:08Z",
+      "side": 1,
+      "message": "Maybe a test to check if the global dump is created with the size.",
+      "range": {
+        "startLine": 254,
+        "startChar": 21,
+        "endLine": 254,
+        "endChar": 62
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
