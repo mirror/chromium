@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0672cc6_08994517",
+        "filename": "chrome/browser/ui/app_list/search/omnibox_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-15T17:55:37Z",
+      "side": 1,
+      "message": "nit: use a const bool since this condition is used more than once.\ne.g.\n  const bool use_directly \u003d\n      !is_fullscreen_app_list_enabled_ || !IsUrlResultWithDescription();\n  if (use_directly) {\n   ...",
+      "range": {
+        "startLine": 238,
+        "startChar": 6,
+        "endLine": 238,
+        "endChar": 71
+      },
+      "revId": "0df68754e3877538c2d334138d57ad5102ea4e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3423f90d_bc628d95",
+        "filename": "chrome/browser/ui/app_list/search/omnibox_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-15T17:55:37Z",
+      "side": 1,
+      "message": "nit: move this and the one in \"else\" out",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "0df68754e3877538c2d334138d57ad5102ea4e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c10aa5_5eabeb85",
+        "filename": "chrome/browser/ui/app_list/search/omnibox_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-15T17:55:37Z",
+      "side": 1,
+      "message": "nit: move this and the one in \"else\" out.",
+      "range": {
+        "startLine": 255,
+        "startChar": 4,
+        "endLine": 255,
+        "endChar": 35
+      },
+      "revId": "0df68754e3877538c2d334138d57ad5102ea4e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
