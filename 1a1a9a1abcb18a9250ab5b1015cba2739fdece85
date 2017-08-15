@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac410a0_47b7eb73",
+        "filename": "third_party/WebKit/Source/core/style/FillLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-15T02:14:21Z",
+      "side": 1,
+      "message": "I thought there might be a case where a background image is null but there\u0027s still a visual effect due to blend-mode, but I couldn\u0027t come up with a case that would fail. I think this is correct.",
+      "revId": "1a1a9a1abcb18a9250ab5b1015cba2739fdece85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
