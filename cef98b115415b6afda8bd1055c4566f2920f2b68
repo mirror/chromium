@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2b0fe851_b97aea50",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-15T03:01:40Z",
+      "side": 1,
+      "message": "Hmm.. introducing a placeholder API seems highly unusual to me, TBH.\n\nI\u0027d defer to Jorge since this is security related, but I believe we usually (at very least) try to have an actual API in .mojom although Chrome side implementation can be initially empty on rare occasions.",
+      "parentUuid": "61f42020_fb6404cd",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ede6b0a7_14cdb7a5",
         "filename": "components/arc/timer/DEPS",
         "patchSetId": 2
