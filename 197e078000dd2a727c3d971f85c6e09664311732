@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18011c89_0041ddba",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T23:47:06Z",
+      "side": 1,
+      "message": "That should be done in the reconciler, since nothing should get into RECEIVED_BUNDLE with too many attempts.",
+      "parentUuid": "f444a7de_402e730c",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79080769_5447eb8a",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -47,6 +65,23 @@
       "writtenOn": "2017-08-15T23:41:55Z",
       "side": 1,
       "message": "This means that we\u0027re going to update guid each time when we ask the download service to retry the download. If so, we need to update the comment for this in PrefetchItem.\n\nAlso, guid is only valid in the sense of download.",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae713b9a_102c9e9c",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T23:47:06Z",
+      "side": 1,
+      "message": "nit: blank line after }",
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
