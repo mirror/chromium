@@ -133,6 +133,17 @@ public class WebApkUtils {
             return null;
         }
 
+        List<String> installedSupportingBrowserList = new ArrayList<String>();
+        for (String packageName : installedBrowsers) {
+            if (sBrowsersSupportingWebApk.contains(packageName)) {
+                installedSupportingBrowserList.add(packageName);
+            }
+        }
+
+        if (installedSupportingBrowserList.size() == 1) {
+            return installedSupportingBrowserList.get(0);
+        }
+
         // Gets the package name of the host browser if it is stored in the SharedPreference.
         String cachedHostBrowser = getHostBrowserFromSharedPreference(context);
         if (!TextUtils.isEmpty(cachedHostBrowser)
@@ -153,8 +164,8 @@ public class WebApkUtils {
         // Gets the package name of the default browser on the Android device.
         // TODO(hanxi): Investigate the best way to know which browser supports WebAPKs.
         String defaultBrowser = getDefaultBrowserPackageName(context.getPackageManager());
-        if (!TextUtils.isEmpty(defaultBrowser) && installedBrowsers.contains(defaultBrowser)
-                && sBrowsersSupportingWebApk.contains(defaultBrowser)) {
+        if (!TextUtils.isEmpty(defaultBrowser)
+                && installedSupportingBrowserList.contains(defaultBrowser)) {
             return defaultBrowser;
         }
 
