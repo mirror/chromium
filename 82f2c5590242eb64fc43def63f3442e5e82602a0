@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c50a299_6b6b7cda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-15T23:33:19Z",
+      "side": 1,
+      "message": "nit: Could you please make a BUG to track this change?",
+      "revId": "82f2c5590242eb64fc43def63f3442e5e82602a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c842bb2c_ab188d53",
+        "filename": "gpu/command_buffer/client/shared_memory_limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-15T23:33:19Z",
+      "side": 1,
+      "message": "Reducing max_transfer_buffer_size may lead to things failing to render.  Something to keep an eye on.",
+      "revId": "82f2c5590242eb64fc43def63f3442e5e82602a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
