@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3fa6c8b_5e36b10a",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "This might be not useful because this histogram macro uses exponential bucket sizes.  You probably want equally-sized buckets, right?",
+      "range": {
+        "startLine": 110,
+        "startChar": 79,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a2bf74_f41a8726",
+        "filename": "ash/highlighter/highlighter_gesture_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "Why do you a \"no gesture\" gesture type?  This seems odd to me...  Is it meant to be unrecognized gesture?  Or do you really need to call functions that take a HighlighterGestureType but you want to give them \"no gesture\"?",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6f1cba_440d2028",
+        "filename": "ash/system/palette/common_palette_tool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "Is this a restriction that should be mentioned in the histogram description?",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a135bc_d7edf9cd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "I\u0027m surprised there are no other gestures like vertical line.  If you think you may want to expand this list later, please add an UNKNOWN entry as value \u003d 0.",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8083e324_9ea590e6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2579,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\n\nditto many places below",
+      "range": {
+        "startLine": 2579,
+        "startChar": 67,
+        "endLine": 2579,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36866282_a190b253",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "I see you used a histogram macro that goes up to 3 minutes.  Is it reasonable that gestures last more than a couple of seconds?",
+      "range": {
+        "startLine": 2585,
+        "startChar": 62,
+        "endLine": 2585,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0961dde0_77d4f06e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:18:37Z",
+      "side": 1,
+      "message": "nit: omit \"Tracks\"",
+      "range": {
+        "startLine": 2628,
+        "startChar": 11,
+        "endLine": 2628,
+        "endChar": 17
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
