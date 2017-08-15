@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b933950f_f63ebeb2",
+        "filename": "extensions/browser/api/serial/serial_connection.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T23:20:52Z",
+      "side": 1,
+      "message": "\"nullptr\" should work here.",
+      "range": {
+        "startLine": 337,
+        "startChar": 32,
+        "endLine": 337,
+        "endChar": 72
+      },
+      "revId": "f4229048b18849dfb14fff54281e51aeb45f37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b73dd3_b66654b9",
+        "filename": "extensions/browser/api/serial/serial_connection.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T23:20:52Z",
+      "side": 1,
+      "message": "Here as well.",
+      "range": {
+        "startLine": 366,
+        "startChar": 27,
+        "endLine": 366,
+        "endChar": 73
+      },
+      "revId": "f4229048b18849dfb14fff54281e51aeb45f37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbd2204_de87e446",
+        "filename": "extensions/browser/api/serial/serial_connection.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T23:20:52Z",
+      "side": 1,
+      "message": "Just \"connection_error_handler_\".",
+      "range": {
+        "startLine": 423,
+        "startChar": 6,
+        "endLine": 423,
+        "endChar": 42
+      },
+      "revId": "f4229048b18849dfb14fff54281e51aeb45f37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b793450_dd9eb158",
+        "filename": "services/device/serial/serial_io_handler_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T23:20:52Z",
+      "side": 1,
+      "message": "The setup and teardown methods above are unnecessary:\n\nTEST_F(SerialIoHandlerImplTest, SimpleConnectTest) {\n  mojom::SerialIoHandlerPtr io_handler;\n  connector()-\u003eBindInterface(mojom::kServiceName, \u0026io_handler);\n  io_handler.FlushForTesting();\n}",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "f4229048b18849dfb14fff54281e51aeb45f37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
