@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28550a09_6e139fb4",
+        "filename": "ui/gl/gl_egl_api_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-15T00:59:54Z",
+      "side": 1,
+      "message": "g_real_egl isn\u0027t visible in tests. Instead, per our offline discussion, allow Debug/Trace APIs to call into the underlying real API\u0027s SetDisabledExtensions().",
+      "parentUuid": "d4c8a2c9_871a0c59",
+      "revId": "4db8a01cc804bdf611e3f76d2c44c8edb1bf75b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f16b3e59_f7af511c",
         "filename": "ui/gl/gl_egl_api_implementation.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4db8a01cc804bdf611e3f76d2c44c8edb1bf75b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82838c4f_fa9f522a",
+        "filename": "ui/gl/gl_egl_api_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-15T00:59:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16b3e59_f7af511c",
+      "revId": "4db8a01cc804bdf611e3f76d2c44c8edb1bf75b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
