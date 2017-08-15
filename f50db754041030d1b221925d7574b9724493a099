@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7f550456_90398ece",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-15T13:54:27Z",
+      "side": 1,
+      "message": "It is not hard to do code-wise, see this for an example:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/signin/about_signin_internals_factory.cc?l\u003d50\n\nThe idea is to call ProfileOAuth2TokenServiceFactory::GetForProfile() and SigninManagerFactory::GetForProfile() inside of BuildServiceInstanceFor(), no need to change signature.\n\nWhat you need to do is move feedback_uploader_factory.cc from //components/feedback to //chrome/browser/feedback.  The rest of the feedback code can stay where it is.",
+      "parentUuid": "4ee507c1_e00b8b8f",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 58
+      },
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df2d01f_cd82aeaa",
         "filename": "components/feedback/feedback_uploader.h",
         "patchSetId": 6
