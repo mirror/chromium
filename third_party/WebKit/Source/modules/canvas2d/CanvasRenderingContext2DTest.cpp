@@ -22,6 +22,7 @@
 #include "modules/canvas2d/CanvasPattern.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
+#include "platform/graphics/ColorCorrectionTestUtils.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -1066,16 +1067,18 @@ enum class ColorSpaceConversion : uint8_t {
   DEFAULT_COLOR_CORRECTED = 2,
   SRGB = 3,
   LINEAR_RGB = 4,
+  P3 = 5,
+  REC2020 = 6,
 
-  LAST = LINEAR_RGB
+  LAST = REC2020
 };
 
 static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
     const ColorSpaceConversion& color_space_conversion) {
   // Set the color space conversion in ImageBitmapOptions
   ImageBitmapOptions options;
-  static const Vector<String> kConversions = {"none", "default", "default",
-                                              "srgb", "linear-rgb"};
+  static const Vector<String> kConversions = {
+      "none", "default", "default", "srgb", "linear-rgb", "p3", "rec2020"};
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
@@ -1085,20 +1088,13 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
   RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(flag);
   RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+
   return options;
 }
 
 TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
-  bool experimental_canvas_features_runtime_flag =
-      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-  bool color_correct_rendering_runtime_flag =
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
-  bool color_canvas_extensions_flag =
-      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  // enable color canvas extensions for this test
+  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
 
   Persistent<HTMLCanvasElement> canvas =
       Persistent<HTMLCanvasElement>(CanvasElement());
@@ -1185,17 +1181,9 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
                              color_format32, src_pixel, 1,
                              SkAlphaType::kPremul_SkAlphaType);
 
-    int compare = std::memcmp(converted_pixel.get(), transformed_pixel.get(),
-                              image_info.bytesPerPixel());
-    ASSERT_EQ(compare, 0);
+    CompareColorCorrectedPixels(converted_pixel, transformed_pixel,
+                                image_info.bytesPerPixel());
   }
-
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-      experimental_canvas_features_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
-      color_correct_rendering_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-      color_canvas_extensions_flag);
 }
 
 bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
@@ -1295,15 +1283,8 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
     HTMLCanvasElement& canvas_element,
     CanvasColorSpaceSettings canvas_colorspace_setting,
     float color_tolerance) {
-  bool experimental_canvas_features_runtime_flag =
-      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-  bool color_correct_rendering_runtime_flag =
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
-  bool color_canvas_extensions_flag =
-      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  // enable color canvas extensions for this test
+  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
 
   bool test_passed = true;
   unsigned num_image_data_color_spaces = 3;
@@ -1442,30 +1423,15 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
                 .getAsFloat32Array()
                 .View()
                 ->Data();
-        float* fpixels1 = nullptr;
-        float* fpixels2 = nullptr;
-        void* vpointer = pixels_converted_manually.get();
-        fpixels1 = static_cast<float*>(vpointer);
-        fpixels2 = static_cast<float*>(pixels_from_get_image_data);
-        for (unsigned m = 0; m < data_length; m++) {
-          if (fabs(fpixels1[m] - fpixels2[m]) > color_tolerance) {
-            test_passed = false;
-          }
-        }
-
-        ASSERT_TRUE(test_passed);
+        CompareColorCorrectedPixels(
+            static_cast<float*>((void*)(pixels_converted_manually.get())),
+            static_cast<float*>(pixels_from_get_image_data), data_length,
+            color_tolerance);
       }
     }
   }
   delete[] u16_pixels;
   delete[] f32_pixels;
-
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-      experimental_canvas_features_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
-      color_correct_rendering_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-      color_canvas_extensions_flag);
 }
 
 TEST_F(CanvasRenderingContext2DTest, ColorManagedPutImageDataOnSRGBCanvas) {

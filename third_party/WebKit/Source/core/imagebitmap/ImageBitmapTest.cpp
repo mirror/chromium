@@ -263,7 +263,7 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   return options;
 }
 
-float Float16ToFloat(const uint16_t& f16) {
+static float Float16ToFloat(const uint16_t& f16) {
   union FloatUIntUnion {
     uint32_t fUInt;
     float fFloat;
@@ -284,9 +284,10 @@ float Float16ToFloat(const uint16_t& f16) {
   return o.fFloat;
 }
 
-void CompareColorCorrectedPixels(std::unique_ptr<uint8_t[]>& converted_pixel,
-                                 std::unique_ptr<uint8_t[]>& transformed_pixel,
-                                 int bytes_per_pixel) {
+static void CompareColorCorrectedPixels(
+    std::unique_ptr<uint8_t[]>& converted_pixel,
+    std::unique_ptr<uint8_t[]>& transformed_pixel,
+    int bytes_per_pixel) {
   if (bytes_per_pixel == 4) {
     ASSERT_EQ(std::memcmp(converted_pixel.get(), transformed_pixel.get(), 4),
               0);
