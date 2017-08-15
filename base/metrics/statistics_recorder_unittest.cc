@@ -37,6 +37,14 @@ class LogStateSaver {
   DISALLOW_COPY_AND_ASSIGN(LogStateSaver);
 };
 
+// Test implementation of HistogramUploadingChecker interface.
+class OddHistogramUploadingChecker : public base::HistogramUploadingChecker {
+ private:
+  bool filter(uint64_t histogram_hash) const override {
+    return histogram_hash % 2;
+  }
+};
+
 }  // namespace
 
 namespace base {
@@ -726,6 +734,14 @@ TEST_P(StatisticsRecorderTest, ImportHistogramsTest) {
   EXPECT_EQ(3, snapshot->TotalCount());
   EXPECT_EQ(2, snapshot->GetCount(3));
   EXPECT_EQ(1, snapshot->GetCount(5));
+}
+
+TEST_P(StatisticsRecorderTest, HistogramUploadingChecker) {
+  OddHistogramUploadingChecker* uploading_checker =
+      new OddHistogramUploadingChecker;
+  base::StatisticsRecorder::SetUploadingChecker(uploading_checker);
+  EXPECT_TRUE(base::StatisticsRecorder::ShouldUpload(1));
+  EXPECT_FALSE(base::StatisticsRecorder::ShouldUpload(2));
 }
 
 }  // namespace base

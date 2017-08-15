@@ -87,6 +87,7 @@ StatisticsRecorder::~StatisticsRecorder() {
   callbacks_ = existing_callbacks_.release();
   ranges_ = existing_ranges_.release();
   providers_ = existing_providers_.release();
+  uploading_checker_ = existing_uploading_checker_.release();
 }
 
 // static
@@ -492,6 +493,20 @@ void StatisticsRecorder::UninitializeForTesting() {
 }
 
 // static
+void StatisticsRecorder::SetUploadingChecker(
+    HistogramUploadingChecker* uploading_checker) {
+  uploading_checker_ = uploading_checker;
+}
+
+// static
+bool StatisticsRecorder::ShouldUpload(uint64_t histogram_hash) {
+  if (uploading_checker_ == nullptr) {
+    return false;
+  }
+  return uploading_checker_->ShouldUpload(histogram_hash);
+}
+
+// static
 StatisticsRecorder::HistogramIterator StatisticsRecorder::begin(
     bool include_persistent) {
   DCHECK(histograms_);
@@ -530,11 +545,13 @@ StatisticsRecorder::StatisticsRecorder() {
   existing_callbacks_.reset(callbacks_);
   existing_ranges_.reset(ranges_);
   existing_providers_.reset(providers_);
+  existing_uploading_checker_.reset(uploading_checker_);
 
   histograms_ = new HistogramMap;
   callbacks_ = new CallbackMap;
   ranges_ = new RangesMap;
   providers_ = new HistogramProviders;
+  uploading_checker_ = nullptr;
 
   InitLogOnShutdownWithoutLock();
 }
@@ -553,16 +570,19 @@ void StatisticsRecorder::Reset() {
   std::unique_ptr<CallbackMap> callbacks_deleter;
   std::unique_ptr<RangesMap> ranges_deleter;
   std::unique_ptr<HistogramProviders> providers_deleter;
+  std::unique_ptr<HistogramUploadingChecker> uploading_checker_deleter;
   {
     base::AutoLock auto_lock(lock_.Get());
     histograms_deleter.reset(histograms_);
     callbacks_deleter.reset(callbacks_);
     ranges_deleter.reset(ranges_);
     providers_deleter.reset(providers_);
+    uploading_checker_deleter.reset(uploading_checker_);
     histograms_ = nullptr;
     callbacks_ = nullptr;
     ranges_ = nullptr;
     providers_ = nullptr;
+    uploading_checker_ = nullptr;
   }
   // We are going to leak the histograms and the ranges.
 }
@@ -583,6 +603,8 @@ StatisticsRecorder::CallbackMap* StatisticsRecorder::callbacks_ = nullptr;
 StatisticsRecorder::RangesMap* StatisticsRecorder::ranges_ = nullptr;
 // static
 StatisticsRecorder::HistogramProviders* StatisticsRecorder::providers_;
+// static
+HistogramUploadingChecker* StatisticsRecorder::uploading_checker_ = nullptr;
 // static
 base::LazyInstance<base::Lock>::Leaky StatisticsRecorder::lock_ =
     LAZY_INSTANCE_INITIALIZER;
