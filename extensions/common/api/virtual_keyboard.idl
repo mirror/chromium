@@ -12,18 +12,19 @@ namespace virtualKeyboard {
   //     or not.</p>
   // <p>On <b>Chrome 58</b> all properties are expected to have the same value.
   //     </p>
+  // <p>From <b>Chrome 62</b> the properties can be distinct and are optional.
+  //     </p>
   dictionary FeatureRestrictions {
     // Whether virtual keyboards can provide auto-complete.
-    boolean autoCompleteEnabled;
+    boolean? autoCompleteEnabled;
     // Whether virtual keyboards can provide auto-correct.
-    boolean autoCorrectEnabled;
+    boolean? autoCorrectEnabled;
+    // Whether virtual keyboards can provide input via handwriting recognition.
+    boolean? handwritingEnabled;
     // Whether virtual keyboards can provide spell-check.
-    boolean spellCheckEnabled;
+    boolean? spellCheckEnabled;
     // Whether virtual keyboards can provide voice input.
-    boolean voiceInputEnabled;
-    // Whether virtual keyboards can provide input via handwriting
-    // recognition.
-    boolean handwritingEnabled;
+    boolean? voiceInputEnabled;
   };
 
   interface Functions {
