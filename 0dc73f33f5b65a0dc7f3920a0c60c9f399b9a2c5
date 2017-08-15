@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e778bf8_a66fe385",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "I did not write here but I usually run git cl lint :)\n\nI\u0027ll add the line.",
+      "parentUuid": "6127872f_7fd657f2",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a019f963_bc4f3d87",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15b9507_b48799cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done, and caught a failure due to double-bind. :(",
+      "parentUuid": "a019f963_bc4f3d87",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b2b0664_0f6a2d2b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Yes this can be large... However at this moment ArcDocumentsProviderRoot::ReadDirectoryCallback is a typedef of AsyncFileUtil::ReadDirectoryCallback, so we can\u0027t avoid copying.\nhttps://cs.chromium.org/chromium/src/storage/browser/fileapi/async_file_util.h?rcl\u003d2bf070ee435877d5646c2bcecba160c9d72db6d4\u0026l\u003d73\n\nLet\u0027s update the API of ReadDirectory() to support moves later. I want to concentrate on converting to KeyedService in this CL, so let me do this in another CL. I filed a tracking bug: \nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d755451",
+      "parentUuid": "a559c017_d000be88",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336d7f05_66b2df7d",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_async_file_util.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-11T05:29:09Z",
       "side": 1,
       "message": "nit: This path is taken when ARC is not enabled for the profile, right? Is this considered a security error?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7034dd_12b99eba",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "\u003e This path is taken when ARC is not enabled for the profile, right?\n\nMore precisely, when ARC is not allowed for the profile.\n\n\u003e Is this considered a security error?\n\nMaybe. FILE_ERROR_SECURITY is often used to indicate unexpected accesses. But I\u0027m open to other codes too.",
+      "parentUuid": "336d7f05_66b2df7d",
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "8677726f_d771e9d2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "WatcherCallback: No because it can be called multiple times.\n\nStatusCallback: Yes. But I want to keep this the same as WatcherManager::StatusCallback (though I don\u0027t remember why I did not make this an alias)\n\nResolveToContentUrlCallback: Yes we can. But I want to do it in separate CL.",
+      "parentUuid": "f58c5585_053e2b2f",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b230d432_8e84f4d5",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
         "patchSetId": 3
@@ -127,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "1cf49066_c81a96e0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b230d432_8e84f4d5",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57a5636e_70eb41b9",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 3
@@ -141,6 +255,24 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d517fa1_38e34e90",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "That\u0027s a very good point! Fixed.",
+      "parentUuid": "57a5636e_70eb41b9",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +299,30 @@
     },
     {
       "key": {
+        "uuid": "afbf0419_33287553",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236b7145_a65ecc07",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef0a82ef_d348183d",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 3
@@ -181,6 +337,24 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1254cec_0199d57f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Hmm, maybe it was too aggressive to say \"get rid of this function\" because we need this function anyway for ArcDocumentsProviderBackendDelegate etc. I\u0027ve updated the comments.",
+      "parentUuid": "ef0a82ef_d348183d",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +392,42 @@
     },
     {
       "key": {
+        "uuid": "ea9d6eea_ccfe6b40",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb99e21_b2d902bb",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed0c1331_9127b465",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "This function will be called by another KeyedService I\u0027m soon introducing as a new user of ArcDocumentsProviderRootMap other than ArcDocumentsProvider{BackendDelegate,AsyncFileUtil,WatcherManager}. CL will be CL:588730 (but it\u0027s not updated yet, sorry).",
+      "parentUuid": "ccf6460c_b1a1774b",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9e7054_085df3b2",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
         "patchSetId": 3
@@ -238,6 +448,30 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6a3860_62a798f4",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9e7054_085df3b2",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -264,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "f4d6d6c1_d9c4df60",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc35bf93_909debbd",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6208e7ad_41a97696",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
         "patchSetId": 3
@@ -278,6 +536,24 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92bd2d1_060abdce",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Added a comment. I think it makes sense to allow accessing ARC files in incognito mode, but if you think otherwise please let me know.",
+      "parentUuid": "6208e7ad_41a97696",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -304,6 +580,30 @@
     },
     {
       "key": {
+        "uuid": "268e21ac_463aa378",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73f4d13_bc571732",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9825131_7f5da6c5",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h",
         "patchSetId": 3
@@ -327,6 +627,30 @@
     },
     {
       "key": {
+        "uuid": "0f6a1e74_4ceb0b28",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Sorry, my clock was too skewed... :(",
+      "parentUuid": "a9825131_7f5da6c5",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b36cc8ad_d5249c37",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h",
         "patchSetId": 3
@@ -341,6 +665,24 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44179644_e3e19b66",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b36cc8ad_d5249c37",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -361,6 +703,24 @@
     },
     {
       "key": {
+        "uuid": "0e1f3b22_df83b60a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Oops, I\u0027m not sure why I wrote like this... Thanks for catching.",
+      "parentUuid": "a17d21cd_c13768dc",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12c440af_dd0aec04",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
         "patchSetId": 3
@@ -378,6 +738,24 @@
     },
     {
       "key": {
+        "uuid": "f3ee254c_a48265fc",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12c440af_dd0aec04",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c203c6e_7841f0af",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
         "patchSetId": 3
@@ -392,6 +770,24 @@
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fc9135_419f405b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T08:39:34Z",
+      "side": 1,
+      "message": "I\u0027m fine with either way. Let\u0027s add a trampoline.",
+      "parentUuid": "8c203c6e_7841f0af",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
