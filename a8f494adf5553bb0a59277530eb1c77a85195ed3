@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb5d834a_81dff623",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T17:03:31Z",
+      "side": 1,
+      "message": "We\u0027ve had a pair programming session with dgozman@ and here\u0027s what he suggests :-)\n\nfor (var delta \u003d 1; delta \u003e 1e-9; delta /\u003d 2) {\n  var d \u003d fgLuminance(x) - desiredLuminance;\n  var newX \u003d Number.constrain(x + delta * (index \u003d\u003d\u003d V ? 1 : -1), 0, 1);\n  var newD \u003d fgLuminance(newX) - desiredLuminance;\n  if (Math.sign(d) \u003d\u003d\u003d Math.sign(newD))\n    x \u003d newX;\n}",
+      "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
