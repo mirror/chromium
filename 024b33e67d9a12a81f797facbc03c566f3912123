@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8462b1_f68ef9c7",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T18:23:58Z",
+      "side": 1,
+      "message": "Might be helpful to document where these types are defined",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55145aa2_b09f90c6",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T18:23:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this is guaranteed at all. A misbehaving process could send a message with no space for extra header bytes, in which case this call will receive a null extra_header.",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
