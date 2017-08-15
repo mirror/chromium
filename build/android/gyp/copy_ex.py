@@ -30,6 +30,8 @@ def CopyFile(f, dest, deps):
     shutil.copytree(f, os.path.join(dest, os.path.basename(f)))
     deps.extend(_get_all_files(f))
   else:
+    if os.path.exists(dest):
+      os.remove(dest)
     shutil.copy(f, dest)
     deps.append(f)
 
