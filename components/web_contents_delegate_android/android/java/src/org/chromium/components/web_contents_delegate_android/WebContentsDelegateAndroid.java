@@ -106,6 +106,16 @@ public class WebContentsDelegateAndroid {
     public void onUpdateUrl(String url) {
     }
 
+    /**
+     * Notification from the renderer host that a suspicious navigation of the
+     * main frame has been blocked. Allows the delegate to provide some UI to let
+     * the user know about the blocked navigation and give them the option to
+     * recover from it.
+     * @param url The target of the blocked navigation.
+     */
+    @CalledByNative
+    public void onDidBlockFramebust(String url) {}
+
     @CalledByNative
     public boolean takeFocus(boolean reverse) {
         return false;

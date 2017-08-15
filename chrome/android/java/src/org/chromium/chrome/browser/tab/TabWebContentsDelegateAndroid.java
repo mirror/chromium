@@ -35,6 +35,7 @@ import org.chromium.chrome.browser.document.DocumentWebContentsDelegate;
 import org.chromium.chrome.browser.findinpage.FindMatchRectsDetails;
 import org.chromium.chrome.browser.findinpage.FindNotificationDetails;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
+import org.chromium.chrome.browser.infobar.FramebustBlockInfoBar;
 import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
 import org.chromium.chrome.browser.policy.PolicyAuditor;
 import org.chromium.chrome.browser.policy.PolicyAuditor.AuditEvent;
@@ -207,6 +208,11 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
         while (observers.hasNext()) {
             observers.next().onUpdateUrl(mTab, url);
         }
+    }
+
+    @Override
+    public void onDidBlockFramebust(String url) {
+        FramebustBlockInfoBar.showFramebustBlockInfoBar(mTab, url);
     }
 
     @Override
