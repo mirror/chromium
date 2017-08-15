@@ -63,13 +63,15 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 @implementation SyncEncryptionCollectionViewController
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(browserState);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
   if (self) {
     self.title = l10n_util::GetNSString(IDS_IOS_SYNC_ENCRYPTION_TITLE);
+    self.dispatcher = dispatcher;
     _browserState = browserState;
     browser_sync::ProfileSyncService* syncService =
         IOSChromeProfileSyncServiceFactory::GetForBrowserState(_browserState);

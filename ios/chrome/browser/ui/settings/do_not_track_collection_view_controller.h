@@ -12,7 +12,9 @@ class PrefService;
 @interface DoNotTrackCollectionViewController
     : SettingsRootCollectionViewController
 
-- (instancetype)initWithPrefs:(PrefService*)prefs NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPrefs:(PrefService*)prefs
+                   dispatcher:(id<ApplicationCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;

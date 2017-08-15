@@ -124,8 +124,12 @@ const CGFloat kActivityIndicatorDimensionIPhone = 56;
 
 - (void)cell:(CollectionViewFooterCell*)cell didTapLinkURL:(GURL)URL {
   OpenUrlCommand* command = [[OpenUrlCommand alloc] initWithURLFromChrome:URL];
-  [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];
-  [self chromeExecuteCommand:command];
+  if (self.dispatcher) {
+    [self.dispatcher closeSettingsUIAndOpenURL:command];
+  } else {
+    [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];
+    [self chromeExecuteCommand:command];
+  }
 }
 
 #pragma mark - Status bar
