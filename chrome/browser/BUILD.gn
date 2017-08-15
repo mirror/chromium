@@ -1470,6 +1470,15 @@ split_static_library("browser") {
     "win/titlebar_config.h",
   ]
 
+  # Having the Mus bits of BrowserProcessPlatformPart factored out
+  # allows platforms to easily use it. For now, only ChromeOS does.
+  if (is_chromeos) {
+    sources += [
+      "browser_process_platform_part_mus.cc",
+      "browser_process_platform_part_mus.h",
+    ]
+  }
+
   configs += [
     "//build/config/compiler:wexit_time_destructors",
     "//build/config:precompiled_headers",
