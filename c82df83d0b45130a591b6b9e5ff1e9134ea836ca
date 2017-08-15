@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f82c4f0_8b22d387",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-15T02:56:50Z",
+      "side": 1,
+      "message": "Q: could all these base::Passed(\u0026x) become std::move(x) now?",
+      "revId": "c82df83d0b45130a591b6b9e5ff1e9134ea836ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
