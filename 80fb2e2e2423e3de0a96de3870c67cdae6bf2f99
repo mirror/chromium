@@ -181,6 +181,24 @@
       "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f700772a_f10b227b",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T19:28:17Z",
+      "side": 1,
+      "message": "\u003eIs that true? If you post a task immediately before stop, then that task (and any non-delayed task posted by that task) is guaranteed to run before stop returns, right?\n\nSorry, that was a typo. I meant that if the thread stops before the tasks are queue up.\n\nWhat I meant to imply by this is that if I call stop either before or after the posted task, I run into flakes, or at the very least coverage losses.\n\nI would prefer not to write a test with coverage loss problems as I think that could very easily become either a broken test or a useless test.",
+      "parentUuid": "409aaa76_ba444047",
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
