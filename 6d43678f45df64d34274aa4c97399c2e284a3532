@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7cd069c_01caede2",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T17:50:33Z",
+      "side": 1,
+      "message": "It seems like it\u0027d be confusing, but I wonder if we can say anything about a (web) frame here. I believe that\u0027s the intended use of the associated message pipe, right?",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff134c0_e7ac0a1d",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T17:50:33Z",
+      "side": 1,
+      "message": "Can we add some brief comments describing when the different fields are applicable? The main distinction that comes to mind is legacy vs mojo and then frame vs not-frame",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13f2672_fa349c14",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T17:50:33Z",
+      "side": 1,
+      "message": "What\u0027s the value of splitting out Init()?",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
