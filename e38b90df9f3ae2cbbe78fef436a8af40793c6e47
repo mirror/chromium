@@ -34,6 +34,24 @@
       "revId": "e38b90df9f3ae2cbbe78fef436a8af40793c6e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2848688_d925c108",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-15T16:37:09Z",
+      "side": 1,
+      "message": "Okay but you should also update IDL file I think :)\n\nPromise\u003cWindowClient\u003e -\u003e Promise\u003cWindowClient?\u003e",
+      "parentUuid": "dcf2b0be_45d925bd",
+      "revId": "e38b90df9f3ae2cbbe78fef436a8af40793c6e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
