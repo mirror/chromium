@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "5b503d1f_c67e5cbb",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Yeah, this adds a dependency on ICU, which is a pretty heavyweight library. So when building on Android and iOS we use system libraries that offer somewhat equivalent Unicode string functions.\n\nSo we\u0027d need to do something like this:\n\nIn this file:\n\n    + #include \"net/base/net_string_util.h\"\n\n    ! // switch use of base::i18n::ToUpper() with the new ToUpper function you are going to add to net/base/net_string_util.h.\n\nIn net/base/net_string_util.h:\n\n    + // some function to convert a string to uppercase.\n\nIn net/base/net_string_util_icu.cc\n\n    + // use the base/i18n/case_conversion.h function to implement the uppercase function.\n\nIn net/base/net_string_util_icu_alternatives_android.cc\n\n    + // use whatever Android API to implement uppercase function.\n\nIn net/base/net_string_util_icu_alternatives_ios.mm\n\n    + // use ... uh ... looks like we DCHECK() on iOS.\n\nIn net/base/net_string_util_unittest.cc\n\n    + // wait.. there are no unittests for net_string_util??? Let\u0027s add one.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7632c91f_87a40fe9",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -47,6 +64,108 @@
       "writtenOn": "2017-08-14T22:44:37Z",
       "side": 1,
       "message": "Document (for example, it was unclear whether |av_pairs| was in, in/out, or out)\n\nAnd newline between 21/22 :)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bac769_9611bd03",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that we need to pass through all incoming AVPairs including the kTimestamp value from the CHALLENGE message to the AUTHENTICATE message, which is what this function seems to be doing. Can you confirm if that\u0027s a requirement?\n\nOtherwise we can break this into read / write functions where the writer writes out kFlags, kChannelBindings, kTargetName, and perhaps MsAvNbComputerName and MsAvNbDomainName and nothing else. That\u0027ll simplify the code and would also be in line with my reading of the spec.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ae6c81_f93782a7",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "is_mic_enabled should be further conditioned on whether there\u0027s a kTimestamp AVPair present. Or are we assuming that the server will ignore the MIC in that case?",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef601a26_4ca9e233",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "for readability, can you use a \u0027switch\u0027 here?",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a200fb_e261b594",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Instead shall we convert |spn| to string16, calculate the correct buffer length based on that, and use WriteUtf16String()? It seems unnecessary to assume that |spn| is ASCII.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76e5fdc_4b7d4a3f",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "emplace_back()\n\nhere and below",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0516f83_38de242b",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "or rather, because the .buffer field isn\u0027t reliable for kFlags. It could be empty if the kFlags AVPair was added in UpdateTargetInfoAv...().",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +217,23 @@
       "writtenOn": "2017-08-14T22:44:37Z",
       "side": 1,
       "message": "DCHECK_EQ",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82d1cd6_3ea052bc",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Both of the above HMAC_Update calls are incorrect on big-endian platforms.",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +308,23 @@
     },
     {
       "key": {
+        "uuid": "74ebbbe9_f66565f9",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "This implementation isn\u0027t correct when channel bindings are unavailable. In that case, the channel binding hash should be Z(16)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ea377f_67e5c4fa",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -206,6 +359,193 @@
     },
     {
       "key": {
+        "uuid": "868dc233_53e3afb8",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "For consistency, say it\u0027s writing |kNtlmHashLen| bytes.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55729349_a5952595",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "|v2_proof_input|, or perhaps rename the argument to |v2_input| since it comes up again in the v2_proof expression below.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70595c7_2c5cd5bb",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Let\u0027s keep the comments in the same order as the arguments.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6ad582_d95608ea",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "The above two lines are redundant.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cfdc0b_723aaf91",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Using an unvalidated avlen. Should call CanRead() before reading buffer.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d80136_1f9dc908",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "switch",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb23cf50_a03c3086",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Can you also check for kChannelBindings and kTargetName and fail if those are found? Things will go badly if someone were to inject those AVPairs into the list of incoming AVPairs, since we pass incoming AVPairs through to the AUTHENTICATE message.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4213306a_6953b8dd",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "av_pairs-\u003eempty()",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bffa0e4_e2be32e0",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": ".. target info is properly ..",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4232599a_5d7fa249",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "not necessary since we have a |if| right above this ensuring that this is the case.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff673c10_42c259ca",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "This pattern would be easier if we construct a child NtlmBufferReader that uses the range sec_buf.offset ... sec_buf.offset + sec_buf.length as its entire buffer and then call ReadTargetInfo() of the child buffer.\n\nThis would ensure that no matter what, we don\u0027t touch anything outside of the range specified by sec_buf.\n\nUnfortunately NtlmBufferReader makes a copy of the buffer being read. Is that necessary? Otherwise you\u0027d be able to easily read embedded structures like this using child NtlmBufferReader instances with almost no overhead.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8c61eb5_d88b1a6f",
         "filename": "net/ntlm/ntlm_buffer_reader.h",
         "patchSetId": 8
@@ -234,6 +574,40 @@
       "writtenOn": "2017-08-14T22:44:37Z",
       "side": 1,
       "message": "ditto re: results on error \u0026 success (e.g. does it .clear() on success)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e590be8_5a626b34",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Where are the MatchUInt*(), and MatchBytes() methods used?",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cb7d67_640dad30",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "What if NTLMSSP_NEGOTIATE_TARGET_INFO is not set in challenge_flags? This code will result in a hard fail, correct? That might break our graceful deprecation policy since any servers that don\u0027t send target info will stop working.\n\nOne thing we can do is to add a UMA metric to measure how often we run into this case. We may not have much insight into what enterprises are doing, but we should at least try to measure the impact of failing non-v2 servers.",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -302,6 +676,23 @@
       "writtenOn": "2017-08-14T22:44:37Z",
       "side": 1,
       "message": "DCHECK_LT(kMicOffsetV2 + kMicLenV2, authenticate_message_len);",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a046a5_0f53dbfd",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-15T23:56:26Z",
+      "side": 1,
+      "message": "Not necessary to go this far for feature flags. You can use something like:\n\n  struct NtlmFeatures {\n    bool enable_NTLMv2 \u003d true;\n    bool enable_MIC \u003d true;\n    bool enable_EPA \u003d true\n  }",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
