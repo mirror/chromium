@@ -220,9 +220,11 @@ TransformDirective ParseRequestTransform(
   } else if (base::LowerCaseEqualsASCII(accept_transform_value,
                                         kIdentityDirective)) {
     return TRANSFORM_IDENTITY;
-  } else {
-    return TRANSFORM_NONE;
   }
+
+  NOTREACHED() << "Unexpected accept transform header: "
+               << accept_transform_value;
+  return TRANSFORM_UNKNOWN;
 }
 
 TransformDirective ParseResponseTransform(
@@ -236,6 +238,7 @@ TransformDirective ParseResponseTransform(
                                     &chrome_proxy_header_value)) {
       return ParsePagePolicyDirective(chrome_proxy_header_value);
     }
+    return TRANSFORM_NONE;
   } else if (base::LowerCaseEqualsASCII(content_transform_value,
                                         lite_page_directive())) {
     return TRANSFORM_LITE_PAGE;
@@ -245,11 +248,11 @@ TransformDirective ParseResponseTransform(
   } else if (base::LowerCaseEqualsASCII(content_transform_value,
                                         kIdentityDirective)) {
     return TRANSFORM_IDENTITY;
-  } else {
-    NOTREACHED() << "Unexpected content transform header: "
-                 << content_transform_value;
+  } else if (base::LowerCaseEqualsASCII(content_transform_value,
+                                        compressed_video_directive())) {
+    return TRANSFORM_COMPRESSED_VIDEO;
   }
-  return TRANSFORM_NONE;
+  return TRANSFORM_UNKNOWN;
 }
 
 bool IsEmptyImagePreview(const net::HttpResponseHeaders& headers) {
