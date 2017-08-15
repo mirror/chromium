@@ -22,6 +22,30 @@
       "revId": "082e3909a15048911e2ef93384ee8c56bc7ea05f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0003da8_d16dc42a",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/tests.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-15T21:34:25Z",
+      "side": 0,
+      "message": "Don’t worry about any changes in scripts/. These are one-time use scripts for this migration process and don’t need to be maintained afterwards",
+      "parentUuid": "01656d77_8f72d266",
+      "range": {
+        "startLine": 1,
+        "startChar": 45,
+        "endLine": 1,
+        "endChar": 52
+      },
+      "revId": "082e3909a15048911e2ef93384ee8c56bc7ea05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
