@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "827aa0bc_82dc82b5",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-15T21:57:47Z",
+      "side": 1,
+      "message": "Use existing file interaction methods instead. https://cs.chromium.org/chromium/src/base/files/file.h?rcl\u003df69c007458e5eb0e3c541674c781881c33b8540c\u0026l\u003d43  \nhttps://cs.chromium.org/chromium/src/base/files/file_util.h?rcl\u003df69c007458e5eb0e3c541674c781881c33b8540c\u0026l\u003d318",
+      "range": {
+        "startLine": 168,
+        "startChar": 15,
+        "endLine": 168,
+        "endChar": 21
+      },
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d78684e4_d4389d2b",
         "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
         "patchSetId": 1
