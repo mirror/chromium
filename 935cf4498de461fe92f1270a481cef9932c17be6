@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd3353cc_b5e62b58",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T00:24:19Z",
+      "side": 1,
+      "message": "nit: \"Returns all installed components.\"?",
+      "revId": "935cf4498de461fe92f1270a481cef9932c17be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024a8209_043fb085",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T00:24:19Z",
+      "side": 1,
+      "message": "nit: \"Registers |configs| to be updated.\" (if that\u0027s accurate)",
+      "revId": "935cf4498de461fe92f1270a481cef9932c17be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
