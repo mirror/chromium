@@ -68,51 +68,58 @@ struct RenderPageInfo {
 // prefetching process. They follow somewhat the order below, but some states
 // might be skipped.
 enum class PrefetchItemState {
-  // New request just received from the client.
-  NEW_REQUEST,
+  // New request just received from the client. Explicitly setting to 0 as that
+  // is the default value for the respective SQLite column.
+  NEW_REQUEST = 0,
   // The item has been included in a GeneratePageBundle RPC requesting the
   // creation of an archive for its URL.
-  SENT_GENERATE_PAGE_BUNDLE,
+  SENT_GENERATE_PAGE_BUNDLE = 100,
   // The archive was not immediately available (cached) upon the request and
   // is now waiting for a GCM message notifying of its archiving operation
   // completion.
-  AWAITING_GCM,
+  AWAITING_GCM = 200,
   // The GCM message notifying of the archiving operation completion was
   // received for this item.
-  RECEIVED_GCM,
+  RECEIVED_GCM = 300,
   // A GetOperation RPC was sent for this item to query for the final results
   // of its archiving request.
-  SENT_GET_OPERATION,
+  SENT_GET_OPERATION = 400,
   // Information was received about a successfully created archive for this
   // item that can now be downloaded.
-  RECEIVED_BUNDLE,
+  RECEIVED_BUNDLE = 500,
   // This item's archive is currently being downloaded.
-  DOWNLOADING,
+  DOWNLOADING = 600,
   // The archive has been downloaded, waiting to be imported into offline pages
   // model.
-  DOWNLOADED,
+  DOWNLOADED = 700,
   // The archive is being imported into offline pages model.
-  IMPORTING,
+  IMPORTING = 800,
   // Item has finished processing, successfully or otherwise, and is waiting to
   // be processed for stats reporting to UMA.
-  FINISHED,
+  FINISHED = 900,
   // UMA stats have been reported and the item is being kept just long enough
   // to confirm that the same URL is not being repeatedly requested by its
   // client.
-  ZOMBIE,
+  ZOMBIE = 1000,
 };
 
-// Error codes used to identify the reason why a prefetch item has finished
-// processing.
+// Error codes used to identify the reason why a prefetch entry has finished
+// processing in the pipeline. This values are only meaningful for entries in
+// the "finished" state.
 enum class PrefetchItemErrorCode {
-  // 0 used as default value for SQLite field.
+  // The entry had gone through the pipeline and successfully completed
+  // prefetching. Explicitly setting to 0 as that is the default value for the
+  // respective SQLite column.
   SUCCESS = 0,
-  EXPIRED,
-  // Got too many Urls from suggestions, canceled this one. See kMaxUrlsToSend
+  EXPIRED = 100,
+  // Got too many URLs from suggestions, canceled this one. See kMaxUrlsToSend
   // defined in GeneratePageBundleTask.
-  TOO_MANY_NEW_URLS,
-  DOWNLOAD_ERROR,
-  IMPORT_ERROR,
+  TOO_MANY_NEW_URLS = 200,
+  // An error happened while attempting to download the archive file.
+  DOWNLOAD_ERROR = 300,
+  // An error happened while importing the downloaded archive file int the
+  // Offline Pages system.
+  IMPORT_ERROR = 400,
 };
 
 // Callback invoked upon completion of a prefetch request.
