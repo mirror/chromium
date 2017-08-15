@@ -352,6 +352,53 @@
     },
     {
       "key": {
+        "uuid": "6812bfce_3b5d6bca",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T03:14:37Z",
+      "side": 1,
+      "message": "NVM, this one doesn\u0027t",
+      "parentUuid": "21e817bb_034ca922",
+      "range": {
+        "startLine": 31,
+        "startChar": 48,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9770fa95_aaa8a3e2",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T03:14:37Z",
+      "side": 1,
+      "message": "NIT: This examples violates our assumptions on equivalences, i.e., the |[dst_offset, dst_offset + length)| do not overlap. Check the other examples as well; I presume \"Overlap\" is meant to test overlap in |[src_offset, src_offset + length)| only?",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 66
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2038e73e_72b65e4b",
         "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
         "patchSetId": 6
