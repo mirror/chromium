@@ -833,11 +833,8 @@ bool AcceleratorController::ShouldCloseMenuAndRepostAccelerator(
 
 bool AcceleratorController::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
-  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
-      accelerators_.find(accelerator);
-  DCHECK(it != accelerators_.end());
-  AcceleratorAction action = it->second;
-  if (!CanPerformAction(action, accelerator))
+  AcceleratorAction action;
+  if (!GetAcceleratorAction(accelerator, &action))
     return false;
 
   // Handling the deprecated accelerators (if any) only if action can be
@@ -849,6 +846,28 @@ bool AcceleratorController::AcceleratorPressed(
 
   PerformAction(action, accelerator);
   return ShouldActionConsumeKeyEvent(action);
+}
+
+int AcceleratorController::GetAcceleratorId(
+    const ui::Accelerator& accelerator) const {
+  AcceleratorAction action;
+  if (!GetAcceleratorAction(accelerator, &action))
+    return kUnknownAcceleratorId;
+
+  // TODO(zijiehe): Most of the ash accelerators cannot be mapped to a browser
+  // command, so BrowserCommandController::IsReservedCommandOrKey() cannot make
+  // decision for these actions. Maybe add a kNotReservedAcceleratorId?
+  switch (action) {
+    case NEW_INCOGNITO_WINDOW:
+    case NEW_TAB:
+    case NEW_WINDOW:
+    case OPEN_FEEDBACK_PAGE:
+    case RESTORE_TAB:
+    case SHOW_TASK_MANAGER:
+      return action;
+  }
+
+  return kUnknownAcceleratorId;
 }
 
 bool AcceleratorController::CanHandleAccelerators() const {
@@ -1081,6 +1100,20 @@ bool AcceleratorController::CanPerformAction(
   }
   return delegate_ && delegate_->HandlesAction(action) &&
          delegate_->CanPerformAction(action, accelerator, previous_accelerator);
+}
+
+bool AcceleratorController::GetAcceleratorAction(
+    const ui::Accelerator& accelerator,
+    AcceleratorAction* action) const {
+  DCHECK(action);
+  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
+      accelerators_.find(accelerator);
+  DCHECK(it != accelerators_.end());
+  if (!CanPerformAction(it->second, accelerator))
+    return false;
+
+  *action = it->second;
+  return true;
 }
 
 void AcceleratorController::PerformAction(AcceleratorAction action,
