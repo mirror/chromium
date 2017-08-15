@@ -22,6 +22,47 @@
       "revId": "24626bc2b00d84c815dd56485569693c5d495376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84269e6_55edeebe",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/console/paintworklet-console-selector-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-15T23:25:13Z",
+      "side": 1,
+      "message": "This test dumps list of available for evaluation contexts in Console (if you run Chrome and open DevTools on [1] then you can see these contexts on top side of console, there is \"top\" by default and paint worklets should be in drop down menu as well.)\n\nIf you\u0027d like to test list of sources which are available inside of navigator view on the left side of sources panel please take a look on navigator view test [2]. When you dump navigator content on test page with paint worklet, worklet script should be available under top root.\n\n[1] http://rawgit.com/GoogleChrome/houdini-samples/master/paint-worklet/border-color/index.html\n[2] https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/inspector/sources/debugger/navigator-view.html",
+      "parentUuid": "c3317eef_bec23ec9",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 22
+      },
+      "revId": "24626bc2b00d84c815dd56485569693c5d495376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac680602_51d6eca3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-15T23:25:13Z",
+      "side": 1,
+      "message": "Sorry, I originally think about passing only world type as forth argument of ContextCreated, here it would be:\n\"default\" and \"isolated\". Or you can pass DOMWrapperWorld::WorldType as well.\nThen on ContextCreated side instead of {isDefault: (true|false), isWorklet: (true|false)} we will generate {type: (default|isolated|worker)}\nThen on DebuggerModel side you can just check if (type \u003d\u003d\u003d \u0027default\u0027) { ... } else if (type \u003d\u003d\u003d \u0027isolated\u0027) { ... }...",
+      "revId": "24626bc2b00d84c815dd56485569693c5d495376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
