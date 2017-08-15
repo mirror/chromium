@@ -25,6 +25,54 @@
     },
     {
       "key": {
+        "uuid": "4915bd1b_6aef3980",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-15T13:28:22Z",
+      "side": 1,
+      "message": "Done\nHow is the new one?",
+      "parentUuid": "8c890947_b24960dc",
+      "range": {
+        "startLine": 745,
+        "startChar": 49,
+        "endLine": 745,
+        "endChar": 77
+      },
+      "revId": "9671f986dc0559e13945cfc2206b0f751ff015c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e5339d2_9a46e391",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-15T13:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c890947_b24960dc",
+      "range": {
+        "startLine": 745,
+        "startChar": 49,
+        "endLine": 745,
+        "endChar": 77
+      },
+      "revId": "9671f986dc0559e13945cfc2206b0f751ff015c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676a37d9_7332a228",
         "filename": "third_party/WebKit/public/platform/WebGestureEvent.h",
         "patchSetId": 33
@@ -45,6 +93,30 @@
       "revId": "9671f986dc0559e13945cfc2206b0f751ff015c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a77393_2df93598",
+        "filename": "third_party/WebKit/public/platform/WebGestureEvent.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-15T13:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "676a37d9_7332a228",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "9671f986dc0559e13945cfc2206b0f751ff015c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
