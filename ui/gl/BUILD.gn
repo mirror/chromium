@@ -374,7 +374,12 @@ source_set("run_all_unittests") {
   ]
 
   if (use_ozone) {
-    deps += [ "//ui/ozone" ]
+    deps += [
+      "//mojo/edk/system",
+      "//services/service_manager/public/cpp/test:test_support",
+      "//services/service_manager/tests/service_manager",
+      "//ui/ozone",
+    ]
   }
 }
 
