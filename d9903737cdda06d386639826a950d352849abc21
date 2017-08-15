@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f3bd4b6_42e61919",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "If I change this to be \"char kName[]\" then I end up with the following linker error:\n\n../../components/arc/arc_browser_context_keyed_service_factory_base.h:0: error: undefined reference to \u0027arc::(anonymous namespace)::ArcOemCryptoBridgeFactory::kName\u0027\n\nApparently this trips over the subtle difference between char* foo and char foo[] (and while I understand the difference, I\u0027m not entirely sure why it matters here).",
+      "parentUuid": "c63cb435_92bd589d",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a273a09_e889c813",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "d9903737cdda06d386639826a950d352849abc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6873273_4d3f7443",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a273a09_e889c813",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "46ba7468_b0a7c9f8",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adca9fe4_573bc931",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 6
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda3670f_70faf726",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "d9903737cdda06d386639826a950d352849abc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bb6d3b_26b26835",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda3670f_70faf726",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 78
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f95e9fcb_7403a108",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9376eafe_c29c2640",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 10
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22335c08_95fd1816",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 3
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "385b7dd8_3f61a872",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22335c08_95fd1816",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caaaf45c_914de567",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.h",
         "patchSetId": 3
@@ -142,6 +274,24 @@
       "revId": "d9903737cdda06d386639826a950d352849abc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57aa114_758e3992",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caaaf45c_914de567",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

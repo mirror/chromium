@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "6365982b_0b753024",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-15T19:32:24Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any existing mechanism for me to roll stuff from that repo to Chrome; especially because that Chrome OS repo is internal only.\n\nI did add a comment into this file about it living originally in the Chrome OS repo and where at.",
+      "parentUuid": "7a247040_dcce3292",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b6627d_6e967787",
         "filename": "components/arc/common/oemcrypto.mojom",
         "patchSetId": 2
