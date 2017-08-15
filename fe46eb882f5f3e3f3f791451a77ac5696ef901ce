@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a847e491_deb4d9a5",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-15T21:47:02Z",
+      "side": 1,
+      "message": "line 158-162 are duplicate with the code in GetDeviceModelId(). I recommend we extract it to a new method \"ExtractFileNameFromDeviceId()\".",
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78684e4_d4389d2b",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-15T21:47:02Z",
+      "side": 1,
+      "message": "nit: Even though consistent with the rest of this file, this C-language solution for reading the contents of a text file into a C++ string looks painful. A C++ solution might be simpler, e.g. [1].\n\n[1] https://stackoverflow.com/questions/2912520/read-file-contents-into-a-string-in-c",
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc22cf5_4a0db069",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-15T21:47:02Z",
+      "side": 1,
+      "message": "nit: This method is similar to GetDeviceModelId(). For consistency, it would be nice to have both be next to each other, either as private methods of VideoCaptureDeviceFactoryLinux or in this anonymous namespace.",
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
