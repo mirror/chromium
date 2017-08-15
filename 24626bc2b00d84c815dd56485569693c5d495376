@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3317eef_bec23ec9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/console/paintworklet-console-selector-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T18:50:45Z",
+      "side": 1,
+      "message": "I am not sure what I did wrong in the DebuggerModel.js, but somehow the .js file doesn\u0027t show up anymore.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 22
+      },
+      "revId": "24626bc2b00d84c815dd56485569693c5d495376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
