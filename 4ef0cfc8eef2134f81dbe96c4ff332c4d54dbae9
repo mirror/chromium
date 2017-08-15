@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9ef2b97_717beead",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2852,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T21:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ebb1bd_43dfa897",
+      "range": {
+        "startLine": 2852,
+        "startChar": 4,
+        "endLine": 2852,
+        "endChar": 28
+      },
+      "revId": "4ef0cfc8eef2134f81dbe96c4ff332c4d54dbae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76196a8_f3e3ad22",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T18:04:03Z",
       "side": 1,
       "message": "I can\u0027t readily tell, if we generate a MOUSE_PRESSED, are we guaranteed to generate a MOUSE_RELEASED?",
+      "range": {
+        "startLine": 2864,
+        "startChar": 11,
+        "endLine": 2864,
+        "endChar": 45
+      },
+      "revId": "4ef0cfc8eef2134f81dbe96c4ff332c4d54dbae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa90500_755735ac",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T21:02:29Z",
+      "side": 1,
+      "message": "The OS is supposed to send WM_POINTERDOWN/WM_POINTERUP when buttons change we will only send touch events when there are no buttons (other than the tip down). But if a button went down while the tip was down we wouldn\u0027t send a mouse event for it but if you release after you release it from the digitizer we might send a mouse up for it.\n\nI\u0027m not certain we should increase the complexity of this code unless we determine it is necessary. \n\nThe Wacom digitizer generates all sorts of evnet sequences that are odd with its option settings, The default settings is to generate the in-range setting when any button is pressed and clear the in-range when any button is released. (which is odd cause you can be on the digitizer and in_range isn\u0027t set). Microsoft responded to that and said ya twiddle these settings and it will work. I much preferred this model where it worked with the default settings; I don\u0027t doubt we will revisit this code after we\u0027ve tried it on different devices.\n\nDo you have any other ideas? Do you want to track the button state and generate fake events?",
+      "parentUuid": "b76196a8_f3e3ad22",
       "range": {
         "startLine": 2864,
         "startChar": 11,
