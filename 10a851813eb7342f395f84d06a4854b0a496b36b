@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75b965b_48dbc2c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-15T17:11:16Z",
+      "side": 1,
+      "message": "Please add some more context to the patch:\n\nBefore this patch, when user did \u003cA\u003e, \u003cB\u003e happened because of \u003cC\u003e.\n\nThis patch changes \u003cD\u003e to do \u003cE\u003e instead.\n\nAfter this patch, when user does \u003cA\u003e, \u003cF\u003e happens.",
+      "revId": "10a851813eb7342f395f84d06a4854b0a496b36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
