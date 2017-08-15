@@ -22,6 +22,30 @@
       "revId": "496e04dd8d8a7fe7eed135b8a507af52b21b9535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707b1d4b_6b41d73c",
+        "filename": "gpu/command_buffer/service/framebuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-15T20:37:04Z",
+      "side": 1,
+      "message": "FTR: offline, we figured out DCHECK_NE doesn\u0027t seem to care about the order, though gtest EXPECT_NE might.",
+      "parentUuid": "b1984841_bf944034",
+      "range": {
+        "startLine": 989,
+        "startChar": 12,
+        "endLine": 989,
+        "endChar": 22
+      },
+      "revId": "496e04dd8d8a7fe7eed135b8a507af52b21b9535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
