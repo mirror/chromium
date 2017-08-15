@@ -89,7 +89,7 @@ void AwContentRendererClient::RenderThreadStarted() {
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   if (!spellcheck_) {
-    spellcheck_ = base::MakeUnique<SpellCheck>();
+    spellcheck_ = base::MakeUnique<SpellCheck>(this);
     thread->AddObserver(spellcheck_.get());
   }
 #endif
@@ -362,6 +362,14 @@ bool AwContentRendererClient::ShouldUseMediaPlayerForURL(const GURL& url) {
     }
   }
   return false;
+}
+
+void AwContentRendererClient::GetInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  RenderThread::Get()->GetConnector()->BindInterface(
+      service_manager::Identity(chrome::mojom::kServiceName), interface_name,
+      std::move(interface_pipe));
 }
 
 bool AwContentRendererClient::UsingSafeBrowsingMojoService() {
