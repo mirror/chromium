@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f85cfe5d_0665a0b9",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-15T22:11:33Z",
+      "side": 1,
+      "message": "Will undo change in next patch.",
+      "revId": "108e40e34b066c59da37ba34920853180c4b9e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
