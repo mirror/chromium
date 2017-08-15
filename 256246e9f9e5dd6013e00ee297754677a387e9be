@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "dd9c08a1_1c8432ad",
+        "filename": "ios/clean/chrome/browser/ui/overlays/browser_overlay_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629e13ff_f8601e43",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d134753_ef963779",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator+internal.h",
         "patchSetId": 2
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "12b1ba8c_c64ab454",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator+internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d134753_ef963779",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6762fe_dd9c7515",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.mm",
         "patchSetId": 2
@@ -73,6 +115,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f7a69c_26467a91",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6762fe_dd9c7515",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "b871ec67_db01f0bd",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c56f4d_c5d0600c",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9b0f42_4ad3c99f",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.h",
         "patchSetId": 2
@@ -107,6 +185,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644e3775_81fa21b8",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad9b0f42_4ad3c99f",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "53d47b58_60ed1c5f",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43bd0e9b_3548bf20",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d76fd9_ffc3a5cd",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager_unittest.mm",
         "patchSetId": 2
@@ -141,6 +255,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148e4bd3_6e58d427",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d76fd9_ffc3a5cd",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "59ca45dc_4b0e389d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f89898a_b2779e68",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09cace29_083ed648",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
         "patchSetId": 2
@@ -175,6 +325,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea650764_5b962b2d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09cace29_083ed648",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "c4956dce_b1033b46",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76c3632_4fc27ed5",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d41d3275_1b09054a",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h",
         "patchSetId": 2
@@ -212,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "849269d7_de876f3c",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d41d3275_1b09054a",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "709799b7_c285eb17",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.mm",
         "patchSetId": 2
@@ -226,6 +430,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04177ba_73d8b1b9",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "709799b7_c285eb17",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "36e62663_08581ef7",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb117182_047f45e9",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ff74282_ec5da2a7",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_impl.mm",
         "patchSetId": 2
@@ -266,6 +512,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaac1f6d_15c21f03",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff74282_ec5da2a7",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -286,6 +550,24 @@
     },
     {
       "key": {
+        "uuid": "7455f0b8_00491d41",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_observer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ccc0790_3778ee57",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75af2836_4a6289fa",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_observer_bridge.h",
         "patchSetId": 2
@@ -300,6 +582,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7095b070_327a276d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_observer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75af2836_4a6289fa",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -320,6 +620,24 @@
     },
     {
       "key": {
+        "uuid": "1e0f47fe_a40e661c",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b56db4_0867358a",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fdc1635_7d2ca868",
         "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_manager_observer.h",
         "patchSetId": 2
@@ -334,6 +652,24 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90f95d1_0a66342a",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_manager_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fdc1635_7d2ca868",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -354,6 +690,24 @@
     },
     {
       "key": {
+        "uuid": "1bb9dd5e_bb25518e",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c32aa94e_c7994fb6",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002b41a4_cb0b0870",
         "filename": "ios/clean/chrome/browser/ui/overlays/web_state_overlay_queue.h",
         "patchSetId": 2
@@ -371,6 +725,24 @@
     },
     {
       "key": {
+        "uuid": "37a52474_b20abd4d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/web_state_overlay_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002b41a4_cb0b0870",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da5100a_8595b8ed",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
         "patchSetId": 2
@@ -382,6 +754,30 @@
       "writtenOn": "2017-08-11T09:09:28Z",
       "side": 1,
       "message": "Can \"self.browser-\u003ebrowser_state()\" be an off-the-record ChromeBrowserState? If yes, then with the current code OverlayServiceFactory::GetForBrowserState() will return null and you\u0027ll have UB.",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cf9a08_82fdc50b",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Using GetBrowserStateOwnInstanceInIncognito() for GetBrowserStateToUse() handles this issue, right?",
+      "parentUuid": "7da5100a_8595b8ed",
       "range": {
         "startLine": 105,
         "startChar": 27,
@@ -417,6 +813,30 @@
     },
     {
       "key": {
+        "uuid": "a71093da_22adb7f3",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "670451f5_f114a773",
+      "range": {
+        "startLine": 117,
+        "startChar": 27,
+        "endLine": 117,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f4714b7_e7c274c0",
         "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
         "patchSetId": 2
@@ -440,6 +860,30 @@
     },
     {
       "key": {
+        "uuid": "4dcde6fb_ad1b53af",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f4714b7_e7c274c0",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9cdb815_afe3117b",
         "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
         "patchSetId": 2
@@ -460,6 +904,30 @@
       "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fc193a_5c4ef840",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-15T00:56:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9cdb815_afe3117b",
+      "range": {
+        "startLine": 144,
+        "startChar": 27,
+        "endLine": 144,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
