@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ae5a60_42b93573",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-15T16:07:04Z",
+      "side": 1,
+      "message": "Why not have this as non-static so `frame` can\u0027t be null? I\u0027m not sure I see the benefit of allowing no `frame.",
+      "revId": "2aed199f712a9ff9394243224cb58aecb2f19dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
