@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35eca323_23dee9b7",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/constructor/dynamicscompressor.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:58:23Z",
+      "side": 1,
+      "message": "Refactored in a different way.",
+      "parentUuid": "4402eb60_0261bbdc",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c118321_6519a2af",
         "filename": "third_party/WebKit/LayoutTests/webaudio/constructor/dynamicscompressor.html",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e78211b4_6fafa4aa",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/constructor/dynamicscompressor.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:58:23Z",
+      "side": 1,
+      "message": "Refactored in a different way.",
+      "parentUuid": "2c118321_6519a2af",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00759f43_61c79d92",
         "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-14T17:02:25Z",
       "side": 1,
       "message": "This call changes graph configuration. So I think any config change should be done under the graph ownership. Otherwise, the change should be queued by DeferredTaskHandler. Does this sound correct?\n\nIf this is what we should do instead of using locker, please add a comment here. Or if this lock means the graph lock, I think we need a DCHECK on it.",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acea8498_5395a5df",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:58:23Z",
+      "side": 1,
+      "message": "I\u0027m confused.  The AutoLocker should cause graph ownership, right?\n\nThis is exactly what SetChannelCount() does for other nodes, includind AudioHandler.",
+      "parentUuid": "00759f43_61c79d92",
       "range": {
         "startLine": 142,
         "startChar": 2,
