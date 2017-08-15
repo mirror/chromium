@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d36897_69991ffd",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T18:37:15Z",
+      "side": 1,
+      "message": "Should ScrollbarStyle initialize the values in its ctor? Or WebThemeEngine should clear all values in its base class? There are other derived classes for mocking of WebThemeEngine that could have the same problem but won\u0027t fire unless that code is called. See test_runner it has a mock theme engine but doesn\u0027t override GetOverlayScrollbarStyle.",
+      "range": {
+        "startLine": 247,
+        "startChar": 28,
+        "endLine": 247,
+        "endChar": 29
+      },
+      "revId": "4472b5bd821f8568e427daca4e36467a0d69687b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
