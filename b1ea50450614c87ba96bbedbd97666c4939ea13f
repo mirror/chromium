@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3b64525_4bea0fc9",
+        "filename": "tools/perf/contrib/vr_benchmarks/run_benchmark",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T16:58:05Z",
+      "side": 1,
+      "message": "It can, but I was planning on moving it to shared state, adding the code to find the correct APK, and fix any outstanding issues with the removal of this file in a follow-up CL. If you\u0027d prefer, I can do everything in this CL, or just move this current hard coded solution into shared state now and add the extra code later.",
+      "parentUuid": "f1a5f4d4_6483500a",
+      "revId": "b1ea50450614c87ba96bbedbd97666c4939ea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4becd69a_7765de5a",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b1ea50450614c87ba96bbedbd97666c4939ea13f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9561a8ea_8ad8003e",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T16:58:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4becd69a_7765de5a",
+      "revId": "b1ea50450614c87ba96bbedbd97666c4939ea13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
