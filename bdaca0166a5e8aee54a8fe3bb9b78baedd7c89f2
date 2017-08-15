@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60f010b3_2583c76e",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-15T20:02:27Z",
+      "side": 1,
+      "message": "Good point. I copied these from the framebuffer manager without thinking about it. I changed those too just for consistency.",
+      "parentUuid": "ca1725f6_4347c658",
+      "range": {
+        "startLine": 169,
+        "startChar": 23,
+        "endLine": 169,
+        "endChar": 50
+      },
+      "revId": "bdaca0166a5e8aee54a8fe3bb9b78baedd7c89f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baf93514_cd26557f",
         "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "bdaca0166a5e8aee54a8fe3bb9b78baedd7c89f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71653fd_692b6f97",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-15T20:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf93514_cd26557f",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 8
+      },
+      "revId": "bdaca0166a5e8aee54a8fe3bb9b78baedd7c89f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
