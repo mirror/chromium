@@ -22,6 +22,30 @@
       "revId": "8161719dc120aea6012486cc86119ebcc079ad9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de28a8a6_51eb3209",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-15T23:14:08Z",
+      "side": 1,
+      "message": "Hmm I\u0027m not familiar with spec language, but intuitively, the compiler should be able to evaluate A.B(C) in the order C, A, B, which triggers the bug since A has side effects that invalidates C.\n\nI added a new unit test for this, but I don\u0027t want to spend too much time on this as this method will soon be deleted.",
+      "parentUuid": "39b54969_772e1752",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "8161719dc120aea6012486cc86119ebcc079ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
