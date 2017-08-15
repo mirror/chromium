@@ -16,6 +16,24 @@
       "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dc2323_ec7a83b0",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-15T15:29:14Z",
+      "side": 1,
+      "message": "Hopefully less than three years?  I can try to prioritize getting rid of viewForPrinting and I think Ed is already looking at snapshots, but I don\u0027t have any idea how hard it will be.\n\nTab specifically returns a WebStateImpl, not a WebState, so it\u0027s basically impossible to use a TestWebState when you\u0027re passing around a Tab.",
+      "parentUuid": "d3ef69e2_7e357484",
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
