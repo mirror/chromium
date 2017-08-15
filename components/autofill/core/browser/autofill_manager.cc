@@ -609,6 +609,12 @@ void AutofillManager::OnQueryFormFieldAutofillImpl(
           GetProfileSuggestions(*form_structure, field, *autofill_field);
     }
 
+    // Logic for credit card autofill ablation.
+    if (!suggestions.empty() &&
+        base::FeatureList::IsEnabled(kAutofillCreditCardDisabled)) {
+      suggestions.clear();
+      return;
+    }
     if (!suggestions.empty()) {
       if (is_filling_credit_card)
         AutofillMetrics::LogIsQueriedCreditCardFormSecure(is_context_secure);
