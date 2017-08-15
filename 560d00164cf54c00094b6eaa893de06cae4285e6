@@ -22,6 +22,30 @@
       "revId": "560d00164cf54c00094b6eaa893de06cae4285e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89a80a9_a4ab00d6",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-15T00:10:18Z",
+      "side": 1,
+      "message": "Done\n\nPathService::Get logs failure on certain occasions and otherwise it uses dcheck to assert error msgs. Researching many call sites of PathService::Get, logging failures isn\u0027t common practice. So I\u0027m removing this here.",
+      "parentUuid": "58c31da0_820b1f8e",
+      "range": {
+        "startLine": 265,
+        "startChar": 24,
+        "endLine": 265,
+        "endChar": 42
+      },
+      "revId": "560d00164cf54c00094b6eaa893de06cae4285e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
