@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a12663e0_893ef471",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-15T14:57:54Z",
+      "side": 1,
+      "message": "Great question. It looks like there\u0027s a race. IIUC, HandleGetDefaultOutputBufferSize is called by dbus thread. GetDefaultOutputBufferSize is called by audio thread. The race can happen if dbus service is ready very late.\n\nI followed the code of GetNodes in InitializeAudioAfterCrasServiceAvailable(). It should have the same race problem on |audio_devices_|. Anyone thinks this is the case?\n- dbus thread calls HandleGetNodes()-\u003eUpdateDevicesAndSwitchActive()\n- audio thread calls \n(1) MicPositions() in audio_manager_cras.cc-\u003eGetAudioDevices()\n(2) AudioManagerCras::HasAudioInputDevices-\u003eGetAudioDevices()\n(3) AudioManagerCras::GetAudioDeviceNamesImpl\n(4) AudioManagerCras::GetAssociatedOutputDeviceID-\u003eGetAudioDevices()",
+      "parentUuid": "c8c5571a_62b008b1",
+      "revId": "b3e1cc8074c4296d6335559c1c0dcc2b9a20ea5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fedf7d4_71d546ab",
         "filename": "chromeos/dbus/cras_audio_client.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b0020a40_d39b1b7b",
+        "filename": "chromeos/dbus/cras_audio_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-15T14:57:54Z",
+      "side": 1,
+      "message": "I\u0027ll leave it for consistency.",
+      "parentUuid": "5fedf7d4_71d546ab",
+      "revId": "b3e1cc8074c4296d6335559c1c0dcc2b9a20ea5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024f503f_525b0f3a",
         "filename": "media/audio/cras/audio_manager_cras.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-15T13:28:32Z",
       "side": 1,
       "message": "Looks like an int* is used as an int32_t* here. This probably only works when the compiler is using 32 bit ints? I\u0027d recommend simply making GetDefaultOutputBufferSize return the int32_t, rather than messing around with a pointer like this.",
+      "revId": "b3e1cc8074c4296d6335559c1c0dcc2b9a20ea5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87685d0b_61ce60db",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-15T14:57:54Z",
+      "side": 1,
+      "message": "Thanks for catching this. I\u0027ll fix it.",
+      "parentUuid": "024f503f_525b0f3a",
       "revId": "b3e1cc8074c4296d6335559c1c0dcc2b9a20ea5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
