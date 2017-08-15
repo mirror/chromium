@@ -70,6 +70,7 @@ import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
@@ -134,7 +135,6 @@ public class NewTabPageAdapterTest {
 
         public SectionDescriptor withContentSuggestions(List<SnippetArticle> suggestions) {
             mSuggestions = suggestions;
-            mStatusCard = suggestions.isEmpty();
             return this;
         }
 
@@ -160,6 +160,11 @@ public class NewTabPageAdapterTest {
 
         public SectionDescriptor isSigninPromo() {
             mIsSignInPromo = true;
+            return this;
+        }
+
+        public SectionDescriptor withStatusCard() {
+            mStatusCard = true;
             return this;
         }
     }
@@ -400,8 +405,7 @@ public class NewTabPageAdapterTest {
     @Test
     @Feature({"Ntp"})
     public void testProgressIndicatorDisplay() {
-        SuggestionsSection section =
-                mAdapter.getSectionListForTesting().getSectionForTesting(TEST_CATEGORY);
+        SuggestionsSection section = mAdapter.getSectionListForTesting().getSection(TEST_CATEGORY);
         ProgressItem progress = section.getProgressItemForTesting();
 
         mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.INITIALIZING);
@@ -416,7 +420,7 @@ public class NewTabPageAdapterTest {
         // After the section gets disabled, it should gone completely, so checking the progress
         // indicator doesn't make sense anymore.
         mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.CATEGORY_EXPLICITLY_DISABLED);
-        assertEquals(mAdapter.getSectionListForTesting().getSectionForTesting(TEST_CATEGORY), null);
+        assertEquals(mAdapter.getSectionListForTesting().getSection(TEST_CATEGORY), null);
     }
 
     /**
@@ -493,7 +497,7 @@ public class NewTabPageAdapterTest {
         assertItemsFor(section(suggestions), section(otherSuggestions));
 
         // Bind the whole section - indicate that it is being viewed.
-        bindViewHolders(mAdapter.getSectionListForTesting().getSectionForTesting(otherCategory));
+        bindViewHolders(mAdapter.getSectionListForTesting().getSection(otherCategory));
 
         List<SnippetArticle> newSuggestions = createDummySuggestions(3, TEST_CATEGORY, "new");
         mSource.setSuggestionsForCategory(TEST_CATEGORY, newSuggestions);
@@ -526,8 +530,7 @@ public class NewTabPageAdapterTest {
         assertItemsFor(section(suggestions));
 
         // 1.3 - When all suggestions are dismissed
-        SuggestionsSection section =
-                mAdapter.getSectionListForTesting().getSectionForTesting(TEST_CATEGORY);
+        SuggestionsSection section = mAdapter.getSectionListForTesting().getSection(TEST_CATEGORY);
         assertSectionMatches(section(suggestions), section);
         section.removeSuggestionById(suggestions.get(0).mIdWithinCategory);
         section.removeSuggestionById(suggestions.get(1).mIdWithinCategory);
@@ -581,8 +584,7 @@ public class NewTabPageAdapterTest {
         assertItemsFor(section(suggestions).withViewAllButton());
 
         // 1.3 - When all suggestions are dismissed.
-        SuggestionsSection section =
-                mAdapter.getSectionListForTesting().getSectionForTesting(TEST_CATEGORY);
+        SuggestionsSection section = mAdapter.getSectionListForTesting().getSection(TEST_CATEGORY);
         assertSectionMatches(section(suggestions).withViewAllButton(), section);
         section.removeSuggestionById(suggestions.get(0).mIdWithinCategory);
         section.removeSuggestionById(suggestions.get(1).mIdWithinCategory);
@@ -606,7 +608,7 @@ public class NewTabPageAdapterTest {
         assertItemsFor(section(suggestions));
 
         // 2.3 - When all suggestions are dismissed.
-        section = mAdapter.getSectionListForTesting().getSectionForTesting(TEST_CATEGORY);
+        section = mAdapter.getSectionListForTesting().getSection(TEST_CATEGORY);
         assertSectionMatches(section(suggestions), section);
         section.removeSuggestionById(suggestions.get(0).mIdWithinCategory);
         section.removeSuggestionById(suggestions.get(1).mIdWithinCategory);
@@ -645,8 +647,7 @@ public class NewTabPageAdapterTest {
         assertItemsFor(section(articles).withFetchButton());
 
         // 1.3 - When all suggestions are dismissed.
-        SuggestionsSection section =
-                mAdapter.getSectionListForTesting().getSectionForTesting(category);
+        SuggestionsSection section = mAdapter.getSectionListForTesting().getSection(category);
         assertSectionMatches(section(articles).withFetchButton(), section);
         section.removeSuggestionById(articles.get(0).mIdWithinCategory);
         section.removeSuggestionById(articles.get(1).mIdWithinCategory);
@@ -670,7 +671,7 @@ public class NewTabPageAdapterTest {
         assertItemsFor(section(articles));
 
         // 2.3 - When all suggestions are dismissed.
-        section = mAdapter.getSectionListForTesting().getSectionForTesting(category);
+        section = mAdapter.getSectionListForTesting().getSection(category);
         assertSectionMatches(section(articles), section);
         section.removeSuggestionById(articles.get(0).mIdWithinCategory);
         section.removeSuggestionById(articles.get(1).mIdWithinCategory);
@@ -959,10 +960,7 @@ public class NewTabPageAdapterTest {
 
     @Test
     @Feature({"Ntp"})
-    // TODO(https://crbug.com/754778) improve annotation processor, flags repeated to enable modern.
-    @Features({@Features.Register(value = ChromeFeatureList.NTP_CONDENSED_LAYOUT, enabled = false),
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false),
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)})
+    @Features(@Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT))
     public void testSigninPromoModern() {
         when(mMockSigninManager.isSignInAllowed()).thenReturn(true);
         when(mMockSigninManager.isSignedInOnNative()).thenReturn(false);
@@ -971,7 +969,7 @@ public class NewTabPageAdapterTest {
         reloadNtp();
 
         // Special case of the modern layout: the signin promo comes before the content suggestions.
-        assertItemsFor(signinPromo(), sectionWithStatusCard().withProgress());
+        assertItemsFor(signinPromo(), emptySection().withProgress());
     }
 
     @Test
@@ -1176,8 +1174,8 @@ public class NewTabPageAdapterTest {
      * To be used with {@link #assertItemsFor(SectionDescriptor...)}, for a section with
      * {@code numSuggestions} cards in it.
      * @param suggestions The list of suggestions in the section. If the list is empty, use either
-     *                       no section at all (if it is not displayed) or
-     *                       {@link #sectionWithStatusCard()}.
+     *         no section at all (if it is not displayed) or {@link #sectionWithStatusCard()} /
+     *         {@link #emptySection()}.
      * @return A descriptor for the section.
      */
     private SectionDescriptor section(List<SnippetArticle> suggestions) {
@@ -1191,10 +1189,23 @@ public class NewTabPageAdapterTest {
 
     /**
      * To be used with {@link #assertItemsFor(SectionDescriptor...)}, for a section that has no
-     * suggestions, but a status card to be displayed.
+     * suggestions, but a status card to be displayed. Should not be used with the modern layout;
+     * use {@link #emptySection()} otherwise.
      * @return A descriptor for the section.
      */
     private SectionDescriptor sectionWithStatusCard() {
+        assertFalse(SuggestionsConfig.useModern());
+        return new SectionDescriptor(Collections.<SnippetArticle>emptyList()).withStatusCard();
+    }
+
+    /**
+     * To be used with {@link #assertItemsFor(SectionDescriptor...)}, for a section that has no
+     * suggestions. Should only be used with the modern layout; use {@link #sectionWithStatusCard()}
+     * otherwise.
+     * @return A descriptor for the section.
+     */
+    private SectionDescriptor emptySection() {
+        assertTrue(SuggestionsConfig.useModern());
         return new SectionDescriptor(Collections.<SnippetArticle>emptyList());
     }
 
