@@ -228,8 +228,4 @@ gfx::RectF AutofillProviderAndroid::ToClientAreaBound(
   return bounding_box + client_area.OffsetFromOrigin();
 }
 
-bool RegisterAutofillProvider(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace autofill
