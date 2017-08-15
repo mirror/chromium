@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "components/download/public/client.h"
+#include "components/download/public/download_metadata.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace download {
@@ -19,7 +20,7 @@ class MockClient : public Client {
 
   // Client implementation.
   MOCK_METHOD2(OnServiceInitialized,
-               void(bool, const std::vector<std::string>&));
+               void(bool, const std::vector<DownloadMetaData>&));
   MOCK_METHOD0(OnServiceUnavailable, void());
   MOCK_METHOD3(
       OnDownloadStarted,

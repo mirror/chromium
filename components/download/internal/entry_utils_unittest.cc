@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "components/download/internal/test/entry_utils.h"
 #include "components/download/public/clients.h"
+#include "components/download/public/download_metadata.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace download {
@@ -34,10 +35,17 @@ TEST(DownloadServiceEntryUtilsTest, MapEntriesToClients) {
   Entry entry5 = test::BuildBasicEntry(Entry::State::AVAILABLE);
 
   std::vector<Entry*> entries = {&entry1, &entry2, &entry3, &entry4, &entry5};
-  std::vector<std::string> expected_list = {
-      entry1.guid, entry2.guid, entry3.guid, entry4.guid, entry5.guid};
-  std::vector<std::string> expected_pruned_list = {entry1.guid, entry2.guid,
-                                                   entry3.guid, entry5.guid};
+  std::vector<DownloadMetaData> expected_list = {
+      util::BuildDownloadMetaData(&entry1),
+      util::BuildDownloadMetaData(&entry2),
+      util::BuildDownloadMetaData(&entry3),
+      util::BuildDownloadMetaData(&entry4),
+      util::BuildDownloadMetaData(&entry5)};
+  std::vector<DownloadMetaData> expected_pruned_list = {
+      util::BuildDownloadMetaData(&entry1),
+      util::BuildDownloadMetaData(&entry2),
+      util::BuildDownloadMetaData(&entry3),
+      util::BuildDownloadMetaData(&entry5)};
   // If DownloadClient::TEST isn't a valid Client, all of the associated entries
   // should move to the DownloadClient::INVALID bucket.
   auto mapped1 = util::MapEntriesToClients(std::set<DownloadClient>(), entries,

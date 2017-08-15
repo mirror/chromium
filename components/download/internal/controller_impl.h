@@ -33,6 +33,7 @@ class Model;
 class Scheduler;
 
 struct Configuration;
+struct DownloadMetaData;
 struct SchedulingParams;
 
 // The internal Controller implementation.  This class does all of the heavy
@@ -176,7 +177,7 @@ class ControllerImpl : public Controller,
   // meant to help prevent reentrancy.
   void SendOnServiceInitialized(DownloadClient client_id,
                                 bool state_lost,
-                                const std::vector<std::string>& guids);
+                                const std::vector<DownloadMetaData>& downloads);
   void SendOnServiceUnavailable();
   void SendOnDownloadUpdated(DownloadClient client_id,
                              const std::string& guid,
