@@ -5,6 +5,7 @@
 #include "chrome/common/conflicts/module_watcher_win.h"
 
 #include <windows.h>
+
 #include <tlhelp32.h>
 #include <winternl.h>  // For UNICODE_STRING.
 
@@ -105,13 +106,32 @@ base::FilePath ToFilePath(const UNICODE_STRING* str) {
 }
 
 template <typename NotificationDataType>
-void OnModuleEvent(mojom::ModuleEventType event_type,
-                   const NotificationDataType& notification_data,
-                   const ModuleWatcher::OnModuleEventCallback& callback) {
-  ModuleWatcher::ModuleEvent event(
+ModuleWatcher::ModuleEvent CreateModuleEvent(
+    mojom::ModuleEventType event_type,
+    const NotificationDataType& notification_data) {
+  return ModuleWatcher::ModuleEvent(
       event_type, ToFilePath(notification_data.FullDllName),
       notification_data.DllBase, notification_data.SizeOfImage);
-  callback.Run(event);
+}
+
+// Returns a snapshot that contains all the modules in the current process.
+base::win::ScopedHandle GetModuleListSnapshot() {
+  base::win::ScopedHandle snapshot_handle;
+
+  // According to MSDN, CreateToolhelp32Snapshot should be retried as long as
+  // it's returning ERROR_BAD_LENGTH. To avoid locking up here a retry limit is
+  // enforced.
+  DWORD process_id = ::GetCurrentProcessId();
+  for (size_t i = 0; i < 5; ++i) {
+    snapshot_handle.Set(::CreateToolhelp32Snapshot(
+        TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, process_id));
+    if (snapshot_handle.IsValid())
+      break;
+    if (::GetLastError() == ERROR_BAD_LENGTH)
+      continue;
+  }
+
+  return snapshot_handle;
 }
 
 }  // namespace
@@ -126,7 +146,13 @@ std::unique_ptr<ModuleWatcher> ModuleWatcher::Create(
 
   // This thread acquired the right to create a ModuleWatcher, so do so.
   g_module_watcher_instance = new ModuleWatcher(std::move(callback));
+
   return base::WrapUnique(g_module_watcher_instance);
+}
+
+void ModuleWatcher::Initialize() {
+  RegisterDllNotificationCallback();
+  EnumerateAlreadyLoadedModules();
 }
 
 ModuleWatcher::~ModuleWatcher() {
@@ -138,7 +164,17 @@ ModuleWatcher::~ModuleWatcher() {
   UnregisterDllNotificationCallback();
 }
 
+struct ModuleWatcher::ModuleEventCompare {
+  bool operator()(const ModuleWatcher::ModuleEvent& lhs,
+                  const ModuleWatcher::ModuleEvent& rhs) const {
+    return std::tie(lhs.module_path, lhs.module_load_address, lhs.module_size) <
+           std::tie(rhs.module_path, rhs.module_load_address, rhs.module_size);
+  }
+};
+
 void ModuleWatcher::RegisterDllNotificationCallback() {
+  register_dll_notification_callback_called_ = true;
+
   LdrRegisterDllNotificationFunc reg_fn =
       reinterpret_cast<LdrRegisterDllNotificationFunc>(::GetProcAddress(
           ::GetModuleHandle(kNtDll), kLdrRegisterDllNotification));
@@ -155,42 +191,83 @@ void ModuleWatcher::UnregisterDllNotificationCallback() {
 }
 
 void ModuleWatcher::EnumerateAlreadyLoadedModules() {
-  // Get all modules in the current process. According to MSDN,
-  // CreateToolhelp32Snapshot should be retried as long as its returning
-  // ERROR_BAD_LENGTH. To avoid locking up here a retry limit is enforced.
-  base::win::ScopedHandle snap;
-  DWORD process_id = ::GetCurrentProcessId();
-  for (size_t i = 0; i < 5; ++i) {
-    snap.Set(::CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32,
-                                        process_id));
-    if (snap.IsValid())
-      break;
-    if (::GetLastError() != ERROR_BAD_LENGTH)
-      return;
-  }
-  if (!snap.IsValid())
-    return;
+  // Sanity check for unittests.
+  DCHECK(register_dll_notification_callback_called_);
 
-  // Walk the module list.
+  base::win::ScopedHandle snapshot_handle = GetModuleListSnapshot();
+
+  // To prevent a lock priority inversion, |g_module_watcher_lock| cannot be
+  // held while calling into ::CreateToolhelp32Snapshot(). This does open up the
+  // possibility of a race where it is not possible to determine if a dll
+  // notification happened before or after the snapshot was taken.
+  base::AutoLock lock(g_module_watcher_lock.Get());
+
+  // Walk the module list snapshot.
   MODULEENTRY32 module = {sizeof(module)};
-  for (BOOL result = ::Module32First(snap.Get(), &module); result != FALSE;
-       result = ::Module32Next(snap.Get(), &module)) {
+  for (BOOL result = ::Module32First(snapshot_handle.Get(), &module);
+       result != FALSE;
+       result = ::Module32Next(snapshot_handle.Get(), &module)) {
     ModuleEvent event(mojom::ModuleEventType::MODULE_ALREADY_LOADED,
                       base::FilePath(module.szExePath), module.modBaseAddr,
                       module.modBaseSize);
-    callback_.Run(event);
+
+    // The snapshot must be reconciled with the pending module events to figure
+    // out the current state of loaded modules.
+    const auto& pending_event_iter = pending_events_->find(event);
+    if (pending_event_iter != pending_events_->end()) {
+      if (pending_event_iter->event_type ==
+          mojom::ModuleEventType::MODULE_LOADED) {
+        // If the module is in the snapshot, and it has a pending MODULE_LOADED
+        // event, just ignore the pending event.
+        callback_.Run(event);
+      } else {
+        // If the module is in the snapshot, and it has a pending
+        // MODULE_UNLOADED event, send the MODULE_ALREADY_LOADED event followed
+        // by the pending unload event.
+        callback_.Run(event);
+        callback_.Run(*pending_event_iter);
+      }
+
+      // The pending event was processed. Remove it from the list of pending
+      // events so that unprocessed events can be identified.
+      pending_events_->erase(pending_event_iter);
+    } else {
+      // There is no pending events associated to that module. Simply send the
+      // MODULE_ALREADY_LOADED event.
+      callback_.Run(event);
+    }
   }
 
-  return;
-}
+  // Process events that are still pending.
+  for (const auto& pending_event : *pending_events_) {
+    // A MODULE_ALREADY_LOADED event is sent in either case.
+    ModuleEvent already_loaded_module_event(
+        mojom::ModuleEventType::MODULE_ALREADY_LOADED,
+        pending_event.module_path, pending_event.module_load_address,
+        pending_event.module_size);
 
-// static
-ModuleWatcher::OnModuleEventCallback ModuleWatcher::GetCallbackForContext(
-    void* context) {
-  base::AutoLock lock(g_module_watcher_lock.Get());
-  if (context != g_module_watcher_instance)
-    return OnModuleEventCallback();
-  return g_module_watcher_instance->callback_;
+    if (pending_event.event_type == mojom::ModuleEventType::MODULE_LOADED) {
+      // If the module is not in the snapshot, and it has a pending
+      // MODULE_LOADED event, this means that the snapshot was taken before the
+      // event happened. Send a MODULE_ALREADY_LOADED event instead of
+      // MODULE_LOADED because the callback is not executed in the context of
+      // the dll notification.
+      callback_.Run(already_loaded_module_event);
+    } else {
+      // If the module is not in the snapshot, and it has a pending
+      // MODULE_UNLOADED event, this means that the snapshot was taken after the
+      // event happened, and the module was missed. Send a MODULE_ALREADY_LOADED
+      // followed by the pending MODULE_UNLOADED event so that the callback is
+      // aware of that module, event if it isn't loaded anymore.
+      callback_.Run(already_loaded_module_event);
+      callback_.Run(pending_event);
+    }
+  }
+
+  pending_events_.reset();
+  initialized_ = true;
+
+  return;
 }
 
 // static
@@ -198,30 +275,47 @@ void __stdcall ModuleWatcher::LoaderNotificationCallback(
     unsigned long notification_reason,
     const LDR_DLL_NOTIFICATION_DATA* notification_data,
     void* context) {
-  auto callback = GetCallbackForContext(context);
-  if (!callback)
+  base::AutoLock lock(g_module_watcher_lock.Get());
+
+  if (context != g_module_watcher_instance)
     return;
 
+  // Convert the notification to a ModuleEvent.
+  ModuleEvent module_event;
   switch (notification_reason) {
     case LDR_DLL_NOTIFICATION_REASON_LOADED:
-      OnModuleEvent(mojom::ModuleEventType::MODULE_LOADED,
-                    notification_data->Loaded, callback);
+      module_event = CreateModuleEvent(mojom::ModuleEventType::MODULE_LOADED,
+                                       notification_data->Loaded);
       break;
 
     case LDR_DLL_NOTIFICATION_REASON_UNLOADED:
-      OnModuleEvent(mojom::ModuleEventType::MODULE_UNLOADED,
-                    notification_data->Unloaded, callback);
+      module_event = CreateModuleEvent(mojom::ModuleEventType::MODULE_UNLOADED,
+                                       notification_data->Unloaded);
       break;
 
     default:
       // This is unexpected, but not a reason to crash.
       NOTREACHED() << "Unknown LDR_DLL_NOTIFICATION_REASON: "
                    << notification_reason;
+      return;
+  }
+
+  // Depending on the state the of module watcher, either save the event for
+  // later, or process it right now.
+  ModuleWatcher* module_watcher = reinterpret_cast<ModuleWatcher*>(context);
+  if (!module_watcher->initialized_) {
+    // Always update the record.
+    module_watcher->pending_events_->erase(module_event);
+    module_watcher->pending_events_->insert(module_event);
+  } else {
+    module_watcher->callback_.Run(module_event);
   }
 }
 
 ModuleWatcher::ModuleWatcher(OnModuleEventCallback callback)
-    : callback_(std::move(callback)) {
-  RegisterDllNotificationCallback();
-  EnumerateAlreadyLoadedModules();
-}
+    : callback_(std::move(callback)),
+      initialized_(false),
+      pending_events_(
+          base::MakeUnique<std::set<ModuleEvent, ModuleEventCompare>>()),
+      dll_notification_cookie_(nullptr),
+      register_dll_notification_callback_called_(false) {}

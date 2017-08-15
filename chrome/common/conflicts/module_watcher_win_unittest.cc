@@ -9,6 +9,15 @@
 #include "base/bind.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace {
+
+// This module should not be a static dependency of the unit-test
+// executable, but should be a build-system dependency or a module that is
+// present on any Windows machine.
+constexpr wchar_t kTestDllName[] = L"conflicts_dll.dll";
+
+}  // namespace
+
 class ModuleWatcherTest : public testing::Test {
  protected:
   ModuleWatcherTest()
@@ -16,7 +25,8 @@ class ModuleWatcherTest : public testing::Test {
         module_event_count_(0),
         module_already_loaded_event_count_(0),
         module_loaded_event_count_(0),
-        module_unloaded_event_count_(0) {}
+        module_unloaded_event_count_(0),
+        test_dll_event_count_(0) {}
 
   void OnModuleEvent(const ModuleWatcher::ModuleEvent& event) {
     ++module_event_count_;
@@ -31,6 +41,9 @@ class ModuleWatcherTest : public testing::Test {
         ++module_unloaded_event_count_;
         break;
     }
+
+    if (event.module_path.BaseName().value() == kTestDllName)
+      ++test_dll_event_count_;
   }
 
   void TearDown() override { UnloadModule(); }
@@ -38,14 +51,10 @@ class ModuleWatcherTest : public testing::Test {
   void LoadModule() {
     if (module_)
       return;
-    // This module should not be a static dependency of the unit-test
-    // executable, but should be a build-system dependency or a module that is
-    // present on any Windows machine.
-    static constexpr wchar_t kModuleName[] = L"conflicts_dll.dll";
     // The module should not already be loaded.
-    ASSERT_FALSE(::GetModuleHandle(kModuleName));
+    ASSERT_FALSE(::GetModuleHandle(kTestDllName));
     // It should load successfully.
-    module_ = ::LoadLibrary(kModuleName);
+    module_ = ::LoadLibrary(kTestDllName);
     ASSERT_TRUE(module_);
   }
 
@@ -71,6 +80,8 @@ class ModuleWatcherTest : public testing::Test {
   int module_loaded_event_count_;
   // Total number of MODULE_UNLOADED events seen.
   int module_unloaded_event_count_;
+  // Total number of module events related to kTestDllName.
+  int test_dll_event_count_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ModuleWatcherTest);
@@ -85,9 +96,10 @@ TEST_F(ModuleWatcherTest, SingleModuleWatcherOnly) {
 }
 
 TEST_F(ModuleWatcherTest, ModuleEvents) {
-  // Create the module watcher. This should immediately enumerate all already
-  // loaded modules.
   std::unique_ptr<ModuleWatcher> mw(Create());
+  // Initialize the module watcher. This should immediately enumerate all
+  // already loaded modules.
+  mw->Initialize();
   EXPECT_LT(0, module_event_count_);
   EXPECT_LT(0, module_already_loaded_event_count_);
   EXPECT_EQ(0, module_loaded_event_count_);
@@ -115,4 +127,38 @@ TEST_F(ModuleWatcherTest, ModuleEvents) {
   previous_module_unloaded_event_count = module_unloaded_event_count_;
   UnloadModule();
   EXPECT_EQ(previous_module_unloaded_event_count, module_unloaded_event_count_);
+}
+
+// Simulate a race where dll notifications happens before enumerating already
+// loaded dlls.
+TEST_F(ModuleWatcherTest, ReconcilePendingEvents) {
+  std::unique_ptr<ModuleWatcher> mw(Create());
+
+  // Do the first part of the initialization.
+  mw->RegisterDllNotificationCallback();
+
+  EXPECT_EQ(0, module_event_count_);
+  EXPECT_EQ(0, module_already_loaded_event_count_);
+  EXPECT_EQ(0, module_loaded_event_count_);
+  EXPECT_EQ(0, module_unloaded_event_count_);
+  EXPECT_EQ(0, test_dll_event_count_);
+
+  // Dynamically load a module and ensure no notification is received for it.
+  int previous_module_loaded_event_count = module_loaded_event_count_;
+  LoadModule();
+  EXPECT_EQ(previous_module_loaded_event_count, module_loaded_event_count_);
+
+  // Unload the module and ensure no notification is received for it.
+  int previous_module_unloaded_event_count = module_unloaded_event_count_;
+  UnloadModule();
+  EXPECT_EQ(previous_module_unloaded_event_count, module_unloaded_event_count_);
+
+  // Finish the initialization.
+  mw->EnumerateAlreadyLoadedModules();
+
+  // Even though the test dll was not loaded during enumeration, the
+  // ModuleWatcher should have sent a MODULE_ALREADY_LOADED and a
+  // MODULE_UNLOADED event for it.
+  EXPECT_EQ(1, module_unloaded_event_count_);
+  EXPECT_EQ(2, test_dll_event_count_);
 }

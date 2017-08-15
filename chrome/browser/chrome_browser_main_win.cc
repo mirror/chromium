@@ -225,6 +225,7 @@ void SetupModuleDatabase(std::unique_ptr<ModuleWatcher>* module_watcher) {
                                     content::PROCESS_TYPE_BROWSER);
   *module_watcher = ModuleWatcher::Create(
       base::BindRepeating(&OnModuleEvent, process_id, creation_time));
+  (*module_watcher)->Initialize();
 
   // Enumerate shell extensions and input method editors. It is safe to use
   // base::Unretained() here because the ModuleDatabase is never freed.

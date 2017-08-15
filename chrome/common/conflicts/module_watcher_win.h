@@ -6,6 +6,7 @@
 #define CHROME_COMMON_CONFLICTS_MODULE_WATCHER_WIN_H_
 
 #include <memory>
+#include <set>
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
@@ -70,6 +71,10 @@ class ModuleWatcher {
   // return nullptr when trying to create a second watcher.
   static std::unique_ptr<ModuleWatcher> Create(OnModuleEventCallback callback);
 
+  // The ModuleWatcher instance must be initialized after creation. This can be
+  // called on any thread.
+  void Initialize();
+
   // This can be called on any thread. After destruction the |callback|
   // provided to the constructor will no longer be invoked with module events.
   ~ModuleWatcher();
@@ -77,6 +82,9 @@ class ModuleWatcher {
  protected:
   // For unittesting.
   friend class ModuleWatcherTest;
+
+  // Comparison functor for ModuleEvent that ignores the event type.
+  struct ModuleEventCompare;
 
   // Registers a DllNotification callback with the OS. Modifies
   // |dll_notification_cookie_|. Can be called on any thread.
@@ -90,10 +98,6 @@ class ModuleWatcher {
   // on the current thread. Can be called on any thread.
   void EnumerateAlreadyLoadedModules();
 
-  // Helper function for retrieving the callback associated with a given
-  // LdrNotification context.
-  static OnModuleEventCallback GetCallbackForContext(void* context);
-
   // The loader notification callback. This is actually
   // void CALLBACK LoaderNotificationCallback(
   //     DWORD, const LDR_DLL_NOTIFICATION_DATA*, PVOID)
@@ -105,13 +109,28 @@ class ModuleWatcher {
       void* context);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(ModuleWatcherTest, ReconcilePendingEvents);
+
   // Private to enforce Singleton semantics. See Create above.
   explicit ModuleWatcher(OnModuleEventCallback callback);
 
   // The current callback. Can end up being invoked on any thread.
   OnModuleEventCallback callback_;
+
+  // Tracks whether the ModuleWatcher was fully initialized.
+  bool initialized_;
+
+  // Before initialization is complete, dll notifications are saved for later
+  // and will be processed after enumerating already loaded modules. Only the
+  // last event for a given ModuleEvent is needed to reconcile the current
+  // state of the process, thus the std::set.
+  std::unique_ptr<std::set<ModuleEvent, ModuleEventCompare>> pending_events_;
+
   // Used by the DllNotification mechanism.
-  void* dll_notification_cookie_ = nullptr;
+  void* dll_notification_cookie_;
+
+  // Used to DCHECK the correct initialization order.
+  bool register_dll_notification_callback_called_;
 
   DISALLOW_COPY_AND_ASSIGN(ModuleWatcher);
 };
