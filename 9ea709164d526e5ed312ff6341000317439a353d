@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "45f6a21b_cb834808",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-15T22:56:35Z",
+      "side": 1,
+      "message": "Reducing number of places that changes need to occur is indeed a good reason to remove duplicate, but it should be applied to common logic that is shared between different code. In this case, the logic that\u0027s actually being shared is the top level function, but sharing it would require passing property id as an argument, which goes against ribbon\u0027s philosophy (i.e. property ids shouldn\u0027t be passed as an arg to a util function). There isn\u0027t much \"logic\" shared within this function, and the only things that I could pull out are some shared code. It is arguable whether the shared code would remain being shared: since it doesn\u0027t stand for any stand-alone logic, there\u0027s a chance that properties\u0027 logic would differ in the future. But we can worry about it later.\n\nI\u0027d also suggest we don\u0027t over-do factoring out of the common code: if the code is a one-liner or if it\u0027s a simple function call inside a if-statement, then there\u0027s not much point to share it. Again, when factoring out common code, I think we should consider whether we\u0027re actually sharing some logic that\u0027s complex enough and we don\u0027t want to have multiple copies of it.",
+      "parentUuid": "be122866_156a6471",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a9a83c_7bccc03b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
         "patchSetId": 6
