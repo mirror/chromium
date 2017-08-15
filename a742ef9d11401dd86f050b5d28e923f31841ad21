@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71aa824d_1e2cf651",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47ad659a_4fb4476c",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1455516_46031087",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5408e4_aec7df6f",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1455516_46031087",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "24dc51d8_4bce1f2a",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done. The semicolons have already been there before, and git cl format somehow doesn\u0027t format these lines. But I will correct these lines anyway:)",
+      "parentUuid": "256e2351_a43e5ebc",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a3cbe3_a89714ec",
         "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a31ccc_79df3a86",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a3cbe3_a89714ec",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "697e2eee_6f7c517b",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6b570f7_0a672252",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ff8843f_2fa2f20e",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fbb95a_a532416c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff8843f_2fa2f20e",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "149dad3a_91cbf68f",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d04a4bb_913c7e61",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07fae2cc_bace2f1e",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
         "patchSetId": 20
@@ -135,6 +261,24 @@
       "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd4f8d0_dcc48113",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07fae2cc_bace2f1e",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a8147f02_1c7be1e5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d258b69_1931c81b",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881c06ec_6ea7ffa6",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.h",
         "patchSetId": 20
@@ -166,6 +328,24 @@
       "writtenOn": "2017-08-14T23:16:10Z",
       "side": 1,
       "message": "can you please make it return unique_ptr so we don\u0027t have raw pointers flying around.",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b553f9b_7119d05a",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "We had better do it in another CL, because PerformanceLongTaskTiming inherits from PerformanceEntry. it would be a much larger effort to clean up for PerformanceEntry.",
+      "parentUuid": "881c06ec_6ea7ffa6",
       "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b0343526_86c378bd",
+        "filename": "third_party/WebKit/Source/core/timing/SubTaskAttribution.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa91804_983abafc",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55ad7dd_f379fe08",
         "filename": "third_party/WebKit/Source/core/timing/SubTaskAttribution.h",
         "patchSetId": 20
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "26db5fb2_a50f7713",
+        "filename": "third_party/WebKit/Source/core/timing/SubTaskAttribution.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55ad7dd_f379fe08",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a549a6a_758feba0",
         "filename": "third_party/WebKit/Source/core/timing/TaskAttributionTiming.h",
         "patchSetId": 20
@@ -217,6 +433,24 @@
       "writtenOn": "2017-08-14T23:16:10Z",
       "side": 1,
       "message": "ditto. Make it unique_ptr",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd48f9aa_7bf831ff",
+        "filename": "third_party/WebKit/Source/core/timing/TaskAttributionTiming.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-15T16:25:26Z",
+      "side": 1,
+      "message": "Do we want to put it in this CL or in another CL? This will cause a lot of file changes.",
+      "parentUuid": "1a549a6a_758feba0",
       "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
