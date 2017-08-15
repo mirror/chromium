@@ -70,6 +70,24 @@
       "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c1f6ac_5581c3ce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T21:56:28Z",
+      "side": 1,
+      "message": "\u003e It finishes because it either gets out of the [0, 1] bounds or converges to within `epsilon` of the desired value.\nThis is still not obvious to me, but perhaps I am missing something. My main reason here is safety: we should not make DevTools unresponsive, and a guarding counter will not hurt. This is our protection against any bugs we might introduce during future refactoring of this code.\n\n\u003e I spent a lot of time working on this code, determining the balance between efficiency and getting a smooth line. In many cases, it\u0027s only one or two steps to get to within `epsilon` of the desired value with the code as it is.\nThat\u0027s really good!\n\n\u003e I\u0027d really like to commit it as-is, or with only minor changes, not start from scratch.\nSure, I\u0027d prefer to improve whatever we have right now.",
+      "parentUuid": "881cbd33_31949ccf",
+      "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
