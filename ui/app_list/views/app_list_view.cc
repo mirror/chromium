@@ -659,6 +659,21 @@ void AppListView::EndDrag(const gfx::Point& location) {
   }
 }
 
+void AppListView::RecordStateTransitionForUma(AppListState new_state) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  AppListStateTransitionSource transition =
+      valid_app_list_state_transitions[app_list_state_][new_state];
+  // kMaxAppListStateTransition denotes a transition we are not interested in
+  // recording (ie. PEEKING->PEEKING).
+  if (transition == kMaxAppListStateTransition)
+    return;
+
+  UMA_HISTOGRAM_ENUMERATION(kAppListStateTransitionSourceHistogram, transition,
+                            kMaxAppListStateTransition);
+}
+
 display::Display AppListView::GetDisplayNearestView() const {
   return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
 }
@@ -785,6 +800,9 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 void AppListView::OnWidgetDestroying(views::Widget* widget) {
+  if (is_fullscreen_app_list_enabled_)
+    return;
+
   BubbleDialogDelegateView::OnWidgetDestroying(widget);
   if (delegate_ && widget == GetWidget())
     delegate_->ViewClosing();
@@ -792,6 +810,9 @@ void AppListView::OnWidgetDestroying(views::Widget* widget) {
 
 void AppListView::OnWidgetVisibilityChanged(views::Widget* widget,
                                             bool visible) {
+  if (is_fullscreen_app_list_enabled_)
+    return;
+
   BubbleDialogDelegateView::OnWidgetVisibilityChanged(widget, visible);
 
   if (widget != GetWidget())
@@ -957,6 +978,7 @@ void AppListView::SetState(AppListState new_state) {
       break;
   }
   StartAnimationForState(new_state_override);
+  RecordStateTransitionForUma(new_state_override);
   app_list_state_ = new_state_override;
 }
 
