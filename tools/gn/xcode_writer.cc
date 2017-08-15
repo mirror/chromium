@@ -132,21 +132,10 @@ bool IsXCTestFile(const SourceFile& file) {
                         base::CompareCase::SENSITIVE);
 }
 
-// TODO(crbug.com/741147) Remove this function and switch to use
-// test_application_name once the bug is fixed and GN has rolled past it.
-const Target* FindXCTestApplicationTarget(
-    const Target* xctest_module_target,
-    const std::vector<const Target*>& targets) {
-  DCHECK(IsXCTestModuleTarget(xctest_module_target));
-  DCHECK(base::EndsWith(xctest_module_target->label().name(),
-                        kXCTestModuleTargetNamePostfix,
-                        base::CompareCase::SENSITIVE));
-  std::string application_target_name =
-      xctest_module_target->label().name().substr(
-          0, xctest_module_target->label().name().size() -
-                 strlen(kXCTestModuleTargetNamePostfix));
+const Target* FindTargetByName(const std::string& target_name,
+                               const std::vector<const Target*>& targets) {
   for (const Target* target : targets) {
-    if (target->label().name() == application_target_name) {
+    if (target->label().name() == target_name) {
       return target;
     }
   }
@@ -177,8 +166,9 @@ void AddDependencyTargetForXCModuleTargets(
     if (!IsXCTestModuleTarget(target))
       continue;
 
-    const Target* test_application_target =
-        FindXCTestApplicationTarget(target, targets);
+    const Target* test_application_target = FindTargetByName(
+        target->bundle_data().xcode_test_application_name(), targets);
+    DCHECK(IsApplicationTarget(test_application_target));
     const PBXTarget* test_application_pbxtarget =
         bundle_target_to_pbxtarget.at(test_application_target);
     PBXTarget* module_pbxtarget = bundle_target_to_pbxtarget.at(target);
