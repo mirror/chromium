@@ -86,8 +86,6 @@ void HTMLTrackElement::ParseAttribute(
   if (name == srcAttr) {
     if (!params.new_value.IsEmpty())
       ScheduleLoad();
-    else if (track_)
-      track_->RemoveAllCues();
 
     // 4.8.10.12.3 Sourcing out-of-band text tracks
     // As the kind, label, and srclang attributes are set, changed, or removed,
@@ -181,6 +179,16 @@ void HTMLTrackElement::LoadTimerFired(TimerBase*) {
   // be the state of the parent media element's crossorigin content attribute.
   // Otherwise, let CORS mode be No CORS.
   const AtomicString& cors_mode = MediaElementCrossOriginAttribute();
+
+  // Whenever a track element has its src attribute set, changed,
+  // or removed, the user agent must immediately empty the
+  // element's text track's text track list of cues.
+  // Currently there are no other implementations clearing cues
+  // list _immediately_, so we are trying to align with what they are
+  // doing and remove cues in this timer tick.
+  // See: https://github.com/whatwg/html/issues/2916
+  if (url != url_ && track_)
+    track_->RemoveAllCues();
 
   // 9. End the synchronous section, continuing the remaining steps in parallel.
 

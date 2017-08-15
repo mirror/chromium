@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<title>HTMLTrackElement 'src' attribute mutations</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<video>
+    <track src="captions-webvtt/tc013-settings.vtt" default>
+</video>
+<script>
+async_test(function(t) {
+    var cues = null;
+    var testTrack = document.querySelector("track");
+    var stage = 0;
+    function step(t) {
+        switch (stage) {
+            case 0:
+                cues = testTrack.track.cues;
+                assert_equals(cues.length, 4, "Number of cues after first loading of the track");
+                ++stage;
+                testTrack.src = "captions-webvtt/tc022-entities.vtt";
+                break;
+            case 1:
+                assert_equals(cues, testTrack.track.cues, ".cues object are the same after 'src' attr mutation");
+                assert_equals(cues.length, 7, "Number of cues after loading of the second track");
+                assert_equals(cues[cues.length-1].text, 'This & is parsed to the same as &amp;.', "Last cue content check");
+                ++stage;
+                testTrack.src = "captions-webvtt/tc013-settings.vtt";
+                break;
+            case 2:
+                assert_equals(cues, testTrack.track.cues, ".cues object are the same after 'src' attr mutation");
+                assert_equals(cues.length, 4, "Number of cues after loading of the first track again");
+                assert_equals(cues[cues.length-1].text, 'I said Bear is coming now!!!! Tab separators.', "Last cue content check");
+                ++stage;
+                testTrack.src = "file://captions-webvtt/tc022-entities.vtt";
+                break;
+            case 3:
+                assert_equals(cues, testTrack.track.cues, ".cues object are the same after 'src' attr mutation");
+                assert_equals(cues.length, 0, "Number of cues after trying to load URL blocked by CORS");
+                ++stage;
+                testTrack.src = "captions-webvtt/tc022-entities.vtt";
+                break;
+            case 4:
+                testTrack.src = "captions-webvtt/tc013-settings.vtt";
+                // Currently this types of asserts may be marked as failed. CuesList will be cleared in the next tick.
+                // No one implementation does fully comply with the standard in it.
+                assert_equals(cues.length, 0, "Number of cues immediately after 'src' mutation with the new URL");
+                break;
+            case 5:
+                assert_equals(cues, testTrack.track.cues, ".cues object are the same after 'src' attr mutation");
+                assert_equals(cues.length, 4, "Number of cues after changing 'src' to the same value");
+                testTrack.src = "captions-webvtt/tc013-settings.vtt";
+                // Currently this types of asserts may be marked as failed. Blink does not fully comply with
+                // the standard because of unclarified behavior in specs: https://github.com/whatwg/html/issues/2916
+                assert_equals(cues.length, 0, "Number of cues immediately after 'src' mutation with the same URL");
+                t.done();
+                break;
+        }
+    }
+    testTrack.onload = t.step_func(function () { step(t)} );
+    testTrack.onerror = t.step_func(function () { step(t)} );
+});
+</script>
