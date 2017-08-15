@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c46c9fcd_a0c170bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T15:08:00Z",
+      "side": 1,
+      "message": "nit: INCHES_TO_METERS",
+      "range": {
+        "startLine": 66,
+        "startChar": 31,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "2eb2d23f1c3f14c4850b23b1aec8ae31b9dd4b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c112f31d_9324a3a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T15:08:00Z",
+      "side": 1,
+      "message": "nit: Set the initial content size and DPR to be applied to reparented tabs.",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 47
+      },
+      "revId": "2eb2d23f1c3f14c4850b23b1aec8ae31b9dd4b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81427b69_d9670407",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T15:08:00Z",
+      "side": 1,
+      "message": "How was this number arrived at? Seems oddly large and precise.",
+      "range": {
+        "startLine": 85,
+        "startChar": 50,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "2eb2d23f1c3f14c4850b23b1aec8ae31b9dd4b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61df2cfa_f09bd8bf",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T15:08:00Z",
+      "side": 1,
+      "message": "nit: I would get rid of the eye_ prefixes, they\u0027re just confusing. (eg. what is an eye pixel?)\n\nI would call this width_pixels.",
+      "range": {
+        "startLine": 684,
+        "startChar": 6,
+        "endLine": 684,
+        "endChar": 21
+      },
+      "revId": "2eb2d23f1c3f14c4850b23b1aec8ae31b9dd4b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bf4ad6_28720034",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T15:08:00Z",
+      "side": 1,
+      "message": "nit: use non-jni types here. (float/int)",
+      "range": {
+        "startLine": 83,
+        "startChar": 10,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "2eb2d23f1c3f14c4850b23b1aec8ae31b9dd4b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca51487_4adb13e5",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T15:08:00Z",
+      "side": 1,
+      "message": "This looks like it\u0027s going to be constantly resizing the content window when it\u0027s beside/behind you or otherwise not visible.\n\nWhy don\u0027t we do something like compute the bounds based on only the size of the quad were it to be drawn directly in front of you for more stability?",
+      "range": {
+        "startLine": 553,
+        "startChar": 21,
+        "endLine": 553,
+        "endChar": 40
+      },
+      "revId": "2eb2d23f1c3f14c4850b23b1aec8ae31b9dd4b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
