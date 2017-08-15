@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b3c9d31_4fa17454",
+        "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-15T08:40:21Z",
+      "side": 1,
+      "message": "Please add {} here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 49,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "0ef46adce15b54c3650dc202e4162e101e94c513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
