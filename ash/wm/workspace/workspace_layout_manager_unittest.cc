@@ -109,11 +109,6 @@ display::Display GetDisplayNearestWindow(aura::Window* window) {
   return display::Screen::GetScreen()->GetDisplayNearestWindow(window);
 }
 
-void DisableNewVKMode() {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  command_line->AppendSwitch(::switches::kDisableNewVirtualKeyboardBehavior);
-}
-
 }  // namespace
 
 // NOTE: many of these tests use CustomFrameViewAshSizeLock. This is needed as
@@ -1428,9 +1423,6 @@ class WorkspaceLayoutManagerKeyboardTest : public AshTestBase {
 // Tests that when a child window gains focus the top level window containing it
 // is resized to fit the remaining workspace area.
 TEST_F(WorkspaceLayoutManagerKeyboardTest, ChildWindowFocused) {
-  // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
-
   // See comment at top of file for why this is needed.
   CustomFrameViewAshSizeLock min_size_lock;
 
@@ -1455,71 +1447,14 @@ TEST_F(WorkspaceLayoutManagerKeyboardTest, ChildWindowFocused) {
   EXPECT_EQ(initial_window_bounds.ToString(),
             parent_window->bounds().ToString());
   ShowKeyboard();
-  EXPECT_EQ(gfx::Rect(50, 0, 100, available_height).ToString(),
+  EXPECT_EQ(gfx::Rect(50, 50, 100, available_height).ToString(),
             parent_window->bounds().ToString());
   HideKeyboard();
-  EXPECT_EQ(initial_window_bounds.ToString(),
+  EXPECT_EQ(gfx::Rect(50, 50, 100, available_height).ToString(),
             parent_window->bounds().ToString());
-}
-
-TEST_F(WorkspaceLayoutManagerKeyboardTest, AdjustWindowForA11yKeyboard) {
-  // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
-
-  // See comment at top of file for why this is needed.
-  CustomFrameViewAshSizeLock min_size_lock;
-  InitKeyboardBounds();
-  gfx::Rect work_area(
-      display::Screen::GetScreen()->GetPrimaryDisplay().work_area());
-
-  std::unique_ptr<aura::Window> window(CreateToplevelTestWindow(work_area));
-  // The additional SetBounds() is needed as the aura-mus case uses Widget,
-  // which alters the supplied bounds.
-  window->SetBounds(work_area);
-
-  int available_height =
-      display::Screen::GetScreen()->GetPrimaryDisplay().bounds().height() -
-      keyboard_bounds().height();
-
-  wm::ActivateWindow(window.get());
-
-  EXPECT_EQ(gfx::Rect(work_area).ToString(), window->bounds().ToString());
-  ShowKeyboard();
-  EXPECT_EQ(gfx::Rect(work_area.origin(),
-                      gfx::Size(work_area.width(), available_height))
-                .ToString(),
-            window->bounds().ToString());
-  HideKeyboard();
-  EXPECT_EQ(gfx::Rect(work_area).ToString(), window->bounds().ToString());
-
-  gfx::Rect small_window_bound(50, 50, 100, 500);
-  window->SetBounds(small_window_bound);
-  EXPECT_EQ(small_window_bound.ToString(), window->bounds().ToString());
-  ShowKeyboard();
-  EXPECT_EQ(gfx::Rect(50, 0, 100, available_height).ToString(),
-            window->bounds().ToString());
-  HideKeyboard();
-  EXPECT_EQ(small_window_bound.ToString(), window->bounds().ToString());
-
-  gfx::Rect occluded_window_bounds(
-      50, keyboard_bounds().y() + keyboard_bounds().height() / 2, 50,
-      keyboard_bounds().height() / 2);
-  window->SetBounds(occluded_window_bounds);
-  EXPECT_EQ(occluded_window_bounds.ToString(),
-            occluded_window_bounds.ToString());
-  ShowKeyboard();
-  EXPECT_EQ(
-      gfx::Rect(50, keyboard_bounds().y() - keyboard_bounds().height() / 2,
-                occluded_window_bounds.width(), occluded_window_bounds.height())
-          .ToString(),
-      window->bounds().ToString());
-  HideKeyboard();
-  EXPECT_EQ(occluded_window_bounds.ToString(), window->bounds().ToString());
 }
 
 TEST_F(WorkspaceLayoutManagerKeyboardTest, IgnoreKeyboardBoundsChange) {
-  // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
   InitKeyboardBounds();
 
   std::unique_ptr<aura::Window> window(CreateTestWindow(keyboard_bounds()));

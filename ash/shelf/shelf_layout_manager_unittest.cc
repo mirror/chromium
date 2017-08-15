@@ -1988,9 +1988,6 @@ class ShelfLayoutManagerKeyboardTest : public AshTestBase {
 };
 
 TEST_F(ShelfLayoutManagerKeyboardTest, ShelfChangeWorkAreaInNonStickyMode) {
-  // Append the flag to cause work area change in non-sticky mode.
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  command_line->AppendSwitch(::switches::kDisableNewVirtualKeyboardBehavior);
 
   ShelfLayoutManager* layout_manager = GetShelfLayoutManager();
   keyboard::SetAccessibilityKeyboardEnabled(true);
@@ -2005,8 +2002,8 @@ TEST_F(ShelfLayoutManagerKeyboardTest, ShelfChangeWorkAreaInNonStickyMode) {
   kb_controller->ShowKeyboard(false);
   layout_manager->OnKeyboardBoundsChanging(keyboard_bounds());
 
-  // Work area should be changed.
-  EXPECT_NE(orig_work_area,
+  // Work area should not be changed.
+  EXPECT_EQ(orig_work_area,
             display::Screen::GetScreen()->GetPrimaryDisplay().work_area());
 
   kb_controller->HideKeyboard(
