@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7156ef74_5e7d492f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-15T16:53:12Z",
+      "side": 1,
+      "message": "While this existed before your changes, I think it is more common to see CallbackHelper used in cases like this instead of FutureTask.\n\nfinal CallbackHelper onWriteFinishedCompleted \u003d new CallbackHelper();\n\n.......\n             onWriteFinishedCompleted.notifyCalled();\n\n.......\n.......\n.......\n       onWriteFinishedCompleted.waitForCallback(\"Write callback never finished.\", 0);\n\n\nI like the callbackhelper because it provides an error message which makes it easier to see what failed in error logs on the bots.  Here we\u0027d just get a generic TimeoutException from FutureTask.get(...) below.",
+      "range": {
+        "startLine": 130,
+        "startChar": 25,
+        "endLine": 130,
+        "endChar": 32
+      },
+      "revId": "26448deaa07635d1573de94837dd938ec7ba6906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b885a06c_7d1244d7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-15T16:53:12Z",
+      "side": 1,
+      "message": "if currentTab \u003d\u003d null then it wasn\u0027t ever initialized above, which seems like that should be an error.  we aren\u0027t updating currentTab during the test run, so I think this should just be !isInitialized.",
+      "range": {
+        "startLine": 271,
+        "startChar": 20,
+        "endLine": 271,
+        "endChar": 30
+      },
+      "revId": "26448deaa07635d1573de94837dd938ec7ba6906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
