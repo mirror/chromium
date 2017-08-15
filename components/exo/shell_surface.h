@@ -16,6 +16,7 @@
 #include "components/exo/surface_observer.h"
 #include "components/exo/surface_tree_host.h"
 #include "components/exo/wm_helper.h"
+#include "ui/aura/client/window_types.h"
 #include "ui/base/hit_test.h"
 #include "ui/compositor/compositor_lock.h"
 #include "ui/display/display_observer.h"
@@ -164,6 +165,9 @@ class ShellSurface : public SurfaceTreeHost,
 
   // Set the application ID for the surface.
   void SetApplicationId(const std::string& application_id);
+
+  // Set the window type for the surface.
+  void SetWindowType(aura::client::WindowType type);
 
   // Start an interactive move of surface.
   void Move();

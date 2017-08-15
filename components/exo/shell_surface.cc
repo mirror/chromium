@@ -580,6 +580,11 @@ void ShellSurface::SetApplicationId(const std::string& application_id) {
     SetApplicationId(widget_->GetNativeWindow(), application_id);
 }
 
+void ShellSurface::SetWindowType(aura::client::WindowType type) {
+  if (widget_ && widget_->GetNativeWindow())
+    widget_->GetNativeWindow()->SetType(type);
+}
+
 void ShellSurface::Move() {
   TRACE_EVENT0("exo", "ShellSurface::Move");
 

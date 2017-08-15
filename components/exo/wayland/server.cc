@@ -75,6 +75,7 @@
 #include "components/exo/touch_stylus_delegate.h"
 #include "components/exo/wm_helper.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "ui/aura/client/window_types.h"
 #include "ui/base/class_property.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/ui_features.h"
@@ -2206,6 +2207,14 @@ void remote_surface_move(wl_client* client, wl_resource* resource) {
   GetUserDataAs<ShellSurface>(resource)->Move();
 }
 
+void remote_surface_set_window_type(wl_client* client,
+                                    wl_resource* resource,
+                                    uint32_t type) {
+  if (type == ZCR_REMOTE_SURFACE_V1_WINDOW_TYPE_SYSTEM_UI)
+    GetUserDataAs<ShellSurface>(resource)->SetWindowType(
+        aura::client::WindowType::WINDOW_TYPE_SYSTEM_UI);
+}
+
 const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_destroy,
     remote_surface_set_app_id,
@@ -2231,6 +2240,7 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_unset_always_on_top,
     remote_surface_ack_configure,
     remote_surface_move,
+    remote_surface_set_window_type,
     remote_surface_set_orientation};
 
 ////////////////////////////////////////////////////////////////////////////////

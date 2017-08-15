@@ -204,6 +204,14 @@
       <entry name="landscape" value="2" summary="landscape"/>
     </enum>
 
+    <enum name="window_type">
+      <description summary="window type">
+        The type of the window.
+      </description>
+      <entry name="normal" value="1" summary="normal app window"/>
+      <entry name="system_ui" value="2" summary="window is treated as systemui"/>
+    </enum>
+
     <request name="destroy" type="destructor">
       <description summary="Destroy the remote_surface">
 	Unmap and destroy the window. The window will be effectively
@@ -539,6 +547,14 @@
 	The compositor may ignore move requests depending on the state of the
 	surface, e.g. fullscreen or maximized.
       </description>
+    </request>
+
+    <request name="set_window_type" since="5">
+      <description summary="set the type of the window">
+        Set the type of window. This is only a hint to the compositor and the
+        compositor is free to ignore it.
+      </description>
+      <arg name="type" type="uint" summary="type of the window"/>
     </request>
 
     <!-- Version 6 additions -->
