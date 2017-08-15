@@ -34,6 +34,24 @@
       "revId": "49e69313995741ec8423a2f7e4a27bcb8e626773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aca87da6_c4431244",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-15T14:25:26Z",
+      "side": 0,
+      "message": "Would you help me understand why the kDatabaseAccess task was handled specially?\n\n(I vaguely remember that we added the special-casing to fix some issue...)",
+      "parentUuid": "27e2b99f_ba98c0bd",
+      "revId": "49e69313995741ec8423a2f7e4a27bcb8e626773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
