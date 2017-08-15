@@ -49,6 +49,74 @@
     },
     {
       "key": {
+        "uuid": "2a72e20c_9976bbd0",
+        "filename": "chrome/browser/resources/policy_admin.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-08-15T17:57:34Z",
+      "side": 1,
+      "message": "Because this CL creates a new UI, it will be awesome if you could attach some screenshots. Note that please do NOT use your google account to post the screenshots to avoid permission request spam.",
+      "revId": "82eca47ca3687096e8ca2a5dc4f68d4576b03d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73e34ad_1c1ab0ee",
+        "filename": "chrome/browser/resources/policy_admin.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-08-15T17:57:34Z",
+      "side": 1,
+      "message": "There is no \"(c)\" in the header:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers\n\nPlease do it for other new added file.",
+      "revId": "82eca47ca3687096e8ca2a5dc4f68d4576b03d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2c6180_e0344743",
+        "filename": "chrome/browser/resources/policy_admin.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-08-15T17:57:34Z",
+      "side": 1,
+      "message": "*Provide* a list of ...",
+      "revId": "82eca47ca3687096e8ca2a5dc4f68d4576b03d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7329bb07_7429e174",
+        "filename": "chrome/browser/resources/policy_admin.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-08-15T17:57:34Z",
+      "side": 1,
+      "message": "I think you could move \u0027Page\u0027, \u0027Policy\u0027 and \u0027Policy Table\u0027 to a separate file and create a base class for the shared code between policy_admin.js and policy.js. And override the function for the unique parts here.\n\nHere\u0027re some examples of how override works in Javascript.\nhttps://cs.chromium.org/search/?q\u003doverride+file:%5Esrc/chrome/browser/resources/+package:%5Echromium$\u0026type\u003dcs",
+      "revId": "82eca47ca3687096e8ca2a5dc4f68d4576b03d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e595d0a_1c8e2849",
         "filename": "chrome/browser/ui/webui/policy_admin_ui.cc",
         "patchSetId": 4
