@@ -29,13 +29,11 @@ class SensorReadingSharedBufferReader;
 
 namespace content {
 
-class RenderFrame;
-
 class CONTENT_EXPORT DeviceMotionEventPump
     : NON_EXPORTED_BASE(
           public PlatformEventObserver<blink::WebDeviceMotionListener>) {
  public:
-  DeviceMotionEventPump(RenderThread* thread, RenderFrame* render_frame);
+  DeviceMotionEventPump(RenderThread* thread);
   ~DeviceMotionEventPump() override;
 
   // PlatformEventObserver:
@@ -113,7 +111,6 @@ class CONTENT_EXPORT DeviceMotionEventPump
   void GetSensor(SensorEntry* sensor_entry);
   void HandleSensorProviderError();
 
-  RenderFrame* const render_frame_;
   device::mojom::SensorProviderPtr sensor_provider_;
   PumpState state_;
   base::RepeatingTimer timer_;
