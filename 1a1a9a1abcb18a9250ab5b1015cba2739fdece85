@@ -34,6 +34,24 @@
       "revId": "1a1a9a1abcb18a9250ab5b1015cba2739fdece85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826b74fc_d7aea5be",
+        "filename": "third_party/WebKit/Source/core/style/FillLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-15T13:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f59ad29_9fb06b75",
+      "revId": "1a1a9a1abcb18a9250ab5b1015cba2739fdece85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
