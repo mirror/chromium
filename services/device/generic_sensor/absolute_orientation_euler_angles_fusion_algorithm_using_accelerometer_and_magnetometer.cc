@@ -77,28 +77,6 @@ bool ComputeRotationMatrixFromGravityAndGeomagnetic(double gravity_x,
   return true;
 }
 
-bool ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
-    double gravity_x,
-    double gravity_y,
-    double gravity_z,
-    double geomagnetic_x,
-    double geomagnetic_y,
-    double geomagnetic_z,
-    double* alpha_in_degrees,
-    double* beta_in_degrees,
-    double* gamma_in_degrees) {
-  std::vector<double> rotation_matrix;
-  if (!ComputeRotationMatrixFromGravityAndGeomagnetic(
-          gravity_x, gravity_y, gravity_z, geomagnetic_x, geomagnetic_y,
-          geomagnetic_z, &rotation_matrix)) {
-    return false;
-  }
-
-  device::ComputeOrientationEulerAnglesFromRotationMatrix(
-      rotation_matrix, alpha_in_degrees, beta_in_degrees, gamma_in_degrees);
-  return true;
-}
-
 }  // namespace
 
 namespace device {
@@ -110,6 +88,30 @@ AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
 AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
     ~AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer() =
         default;
+
+// static
+bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
+    ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
+        double gravity_x,
+        double gravity_y,
+        double gravity_z,
+        double geomagnetic_x,
+        double geomagnetic_y,
+        double geomagnetic_z,
+        double* alpha_in_degrees,
+        double* beta_in_degrees,
+        double* gamma_in_degrees) {
+  std::vector<double> rotation_matrix;
+  if (!ComputeRotationMatrixFromGravityAndGeomagnetic(
+          gravity_x, gravity_y, gravity_z, geomagnetic_x, geomagnetic_y,
+          geomagnetic_z, &rotation_matrix)) {
+    return false;
+  }
+
+  device::ComputeOrientationEulerAnglesFromRotationMatrix(
+      rotation_matrix, alpha_in_degrees, beta_in_degrees, gamma_in_degrees);
+  return true;
+}
 
 bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
     GetFusedData(mojom::SensorType which_sensor_changed,
