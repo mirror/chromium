@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c179df5e_f814d506",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-15T09:13:57Z",
+      "side": 1,
+      "message": "Request is redirect to a bad URL.",
+      "revId": "e86fa31cc6a8e7fbbd2eaca5c813eefc2097a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85512ec9_1c3e7e33",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/redirect-cors.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-15T09:13:57Z",
+      "side": 1,
+      "message": "I think original \"redirect-preflight\" is easier to understand. What do you think?",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "e86fa31cc6a8e7fbbd2eaca5c813eefc2097a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
