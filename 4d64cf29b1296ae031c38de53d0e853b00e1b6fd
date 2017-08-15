@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "205922fd_b2b8d1fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-15T03:19:02Z",
+      "side": 1,
+      "message": "Hmm, I still feel \"add\" strange for this CL.\nIt actually converts test styles from pattern-matching style to unittest format.\n\nbashi@\nHow about \"Change test style for enum\" or like it?",
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e9e0937_ad703f60",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -19,6 +36,63 @@
         "endLine": 9,
         "endChar": 14
       },
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cee6cd_75356c94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-15T03:19:02Z",
+      "side": 1,
+      "message": "(optional) no need to write small fixes like this. :)",
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ab6b9f_5b895e81",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-15T03:19:02Z",
+      "side": 1,
+      "message": "\"testTrailingCommaIsAllowed\"?\n\nPlease name test cases shortly and descriptive.\nIt is difficult to detect if a trailing comma is necessary or not,\nand \"can be allowed\" seems to be able to be not-allowed in some cases.",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 46
+      },
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094d596a_65d6e9e7",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-15T03:19:02Z",
+      "side": 1,
+      "message": "testUnexpectedKeywordError?\n\n\u0027interface\u0027 in this example can be other keywords, e.g. enum, and dictionary.",
       "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
