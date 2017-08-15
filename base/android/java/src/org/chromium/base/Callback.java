@@ -11,33 +11,33 @@ import org.chromium.base.annotations.CalledByNative;
  *
  * @param <T> The type of the computation's result.
  */
-public abstract class Callback<T> {
+public interface Callback<T> {
     /**
      * Invoked with the result of a computation.
      */
-    public abstract void onResult(T result);
+    void onResult(T result);
 
     @SuppressWarnings("unchecked")
     @CalledByNative
-    private void onResultFromNative(Object result) {
-        onResult((T) result);
+    static void onResultFromNative(Callback callback, Object result) {
+        callback.onResult(result);
     }
 
     @SuppressWarnings("unchecked")
     @CalledByNative
-    private void onResultFromNative(boolean result) {
-        onResult((T) Boolean.valueOf(result));
+    static void onResultFromNative(Callback callback, boolean result) {
+        callback.onResult(Boolean.valueOf(result));
     }
 
     @SuppressWarnings("unchecked")
     @CalledByNative
-    private void onResultFromNative(int result) {
-        onResult((T) Integer.valueOf(result));
+    static void onResultFromNative(Callback callback, int result) {
+        callback.onResult(Integer.valueOf(result));
     }
 
     @SuppressWarnings("unchecked")
     @CalledByNative
-    private void onResultFromNative(byte[] result) {
-        onResult((T) result);
+    static void onResultFromNative(Callback callback, byte[] result) {
+        callback.onResult(result);
     }
 }
