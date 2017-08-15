@@ -39,8 +39,6 @@ ShellDownloadManagerDelegate::ShellDownloadManagerDelegate()
 
 ShellDownloadManagerDelegate::~ShellDownloadManagerDelegate() {
   if (download_manager_) {
-    DCHECK_EQ(static_cast<DownloadManagerDelegate*>(this),
-              download_manager_->GetDelegate());
     download_manager_->SetDelegate(NULL);
     download_manager_ = NULL;
   }
