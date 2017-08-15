@@ -43,11 +43,32 @@ PaintArtifactCompositor::PaintArtifactCompositor()
       root_layer_.get());
 }
 
-PaintArtifactCompositor::~PaintArtifactCompositor() {}
+PaintArtifactCompositor::~PaintArtifactCompositor() {
+  for (auto child : root_layer_->children())
+    DCHECK(!child->element_id());
+}
 
 void PaintArtifactCompositor::SetTracksRasterInvalidations(bool should_track) {
   for (auto& client : content_layer_clients_)
     client->SetTracksRasterInvalidations(should_track);
+}
+
+void PaintArtifactCompositor::WillBeRemovedFromFrame() {
+  RemoveChildLayers();
+}
+
+void PaintArtifactCompositor::RemoveChildLayers() {
+  // Unregister element ids for all layers. For now we rely on the
+  // element id being set on the layer, but we'll be removing that for
+  // SPv2 soon. We may also shift to having multiple element ids per
+  // layer. When we do either of these, we'll need to keep around the
+  // element ids for unregistering in some other manner.
+  cc::LayerTreeHost* host = root_layer_->layer_tree_host();
+  for (auto child : root_layer_->children()) {
+    host->UnregisterElement(child->element_id(), cc::ElementListType::ACTIVE,
+                            child.get());
+  }
+  root_layer_->RemoveAllChildren();
 }
 
 std::unique_ptr<JSONObject> PaintArtifactCompositor::LayersAsJSON(
@@ -512,17 +533,7 @@ void PaintArtifactCompositor::Update(
   if (extra_data_for_testing_enabled_)
     extra_data_for_testing_ = WTF::WrapUnique(new ExtraDataForTesting);
 
-  // Unregister element ids for all layers. For now we rely on the
-  // element id being set on the layer, but we'll both be removing
-  // that for SPv2 soon. We may also shift to having multiple element
-  // ids per layer. When we do either of these, we'll need to keep
-  // around the element ids for unregistering in some other manner.
-  for (auto child : root_layer_->children()) {
-    host->UnregisterElement(child->element_id(), cc::ElementListType::ACTIVE,
-                            child.get());
-  }
-  root_layer_->RemoveAllChildren();
-
+  RemoveChildLayers();
   root_layer_->set_property_tree_sequence_number(
       g_s_property_tree_sequence_number);
 
