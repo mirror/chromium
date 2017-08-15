@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3d712d2_47d322b7",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-15T16:46:10Z",
+      "side": 1,
+      "message": "nit: comment still refers to old behavior. Also, maybe call the flag \"use_half_width_tiles\"?",
+      "range": {
+        "startLine": 788,
+        "startChar": 16,
+        "endLine": 788,
+        "endChar": 21
+      },
+      "revId": "9d1ff70a3e32be1657c2eb941a0b92c7d4e58773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
