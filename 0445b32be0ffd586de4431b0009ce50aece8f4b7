@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d78d65_662f7947",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-15T18:49:21Z",
+      "side": 1,
+      "message": "should we move this check into isChromeHomeEnabled?",
+      "range": {
+        "startLine": 1364,
+        "startChar": 53,
+        "endLine": 1364,
+        "endChar": 54
+      },
+      "revId": "0445b32be0ffd586de4431b0009ce50aece8f4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
