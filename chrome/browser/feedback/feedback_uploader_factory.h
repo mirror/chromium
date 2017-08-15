@@ -2,17 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
-#define COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
+#ifndef CHROME_BROWSER_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
+#define CHROME_BROWSER_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
 namespace base {
-template<typename T> struct DefaultSingletonTraits;
+template <typename T>
+struct DefaultSingletonTraits;
 class SingleThreadTaskRunner;
-}
+}  // namespace base
 
 namespace content {
 class BrowserContext;
@@ -59,4 +60,4 @@ class FeedbackUploaderFactory : public BrowserContextKeyedServiceFactory {
 
 }  // namespace feedback
 
-#endif  // COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
+#endif  // CHROME_BROWSER_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
