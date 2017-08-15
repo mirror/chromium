@@ -139,8 +139,10 @@ var availableTests = [
           "Name": "wifi1",
           "Type": "WiFi",
           "WiFi": {
+            "HexSSID": "7769666931",
             "Security": "WEP-PSK",
-            "SignalStrength": 40
+            "SignalStrength": 40,
+            "SSID": "wifi1"
           }
         }, {
           "Connectable": true,
@@ -149,8 +151,10 @@ var availableTests = [
           "Name": "wifi2_PSK",
           "Type": "WiFi",
           "WiFi": {
+            "HexSSID": "77696669325F50534B",
             "Security": "WPA-PSK",
-            "SignalStrength": 80
+            "SignalStrength": 80,
+            "SSID": "wifi2_PSK"
           }
         }], result);
 
@@ -165,8 +169,10 @@ var availableTests = [
               "Name": "wifi1",
               "Type": "WiFi",
               "WiFi": {
-                    "Security": "WEP-PSK",
-                "SignalStrength": 40
+                "HexSSID": "7769666931",
+                "Security": "WEP-PSK",
+                "SignalStrength": 40,
+                "SSID": "wifi1"
               }
             }], result);
           }));
@@ -183,8 +189,10 @@ var availableTests = [
                     "Name": "wifi1",
                     "Type": "WiFi",
                     "WiFi": {
+                      "HexSSID": "7769666931",
                       "Security": "WEP-PSK",
-                      "SignalStrength": 40
+                      "SignalStrength": 40,
+                      "SSID": "wifi1"
                     }
                   },
                   {
@@ -194,8 +202,10 @@ var availableTests = [
                     "Name": "wifi2_PSK",
                     "Type": "WiFi",
                     "WiFi": {
+                      "HexSSID": "77696669325F50534B",
                       "Security": "WPA-PSK",
-                      "SignalStrength": 80
+                      "SignalStrength": 80,
+                      "SSID": "wifi2_PSK"
                     }
                   }], result);
       }));
@@ -211,8 +221,10 @@ var availableTests = [
                     "Name": "wifi1",
                     "Type": "WiFi",
                     "WiFi": {
+                      "HexSSID": "7769666931",
                       "Security": "WEP-PSK",
-                      "SignalStrength": 40
+                      "SignalStrength": 40,
+                      "SSID": "wifi1"
                     }
                   },
                   {
@@ -222,8 +234,10 @@ var availableTests = [
                     "Name": "wifi2_PSK",
                     "Type": "WiFi",
                     "WiFi": {
+                      "HexSSID": "77696669325F50534B",
                       "Security": "WPA-PSK",
                       "SignalStrength": 80
+                      "SSID": "wifi2_PSK"
                     }
                   }
                   ], result);
@@ -385,8 +399,10 @@ var availableTests = [
           "Name": "wifi2_PSK",
           "Type": "WiFi",
           "WiFi": {
+            "HexSSID": "77696669325F50534B",
             "Security": "WPA-PSK",
-            "SignalStrength": 80
+            "SignalStrength": 80,
+            "SSID": "wifi2_PSK"
           }
         }, result);
       }));
