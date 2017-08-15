@@ -43,10 +43,14 @@ bool ImportSensitiveKeyFromFile(const base::FilePath& dir,
 
 bool ImportClientCertToSlot(const scoped_refptr<X509Certificate>& cert,
                             PK11SlotInfo* slot) {
-  std::string nickname = x509_util::GetDefaultUniqueNickname(
-      cert->os_cert_handle(), USER_CERT, slot);
-  SECStatus rv = PK11_ImportCert(slot, cert->os_cert_handle(),
-                                 CK_INVALID_HANDLE, nickname.c_str(), PR_FALSE);
+  ScopedCERTCertificate nss_cert =
+      x509_util::CreateCERTCertificateFromX509Certificate(cert.get());
+  if (!nss_cert)
+    return false;
+  std::string nickname =
+      x509_util::GetDefaultUniqueNickname(nss_cert.get(), USER_CERT, slot);
+  SECStatus rv = PK11_ImportCert(slot, nss_cert.get(), CK_INVALID_HANDLE,
+                                 nickname.c_str(), PR_FALSE);
   if (rv != SECSuccess) {
     LOG(ERROR) << "Could not import cert";
     return false;

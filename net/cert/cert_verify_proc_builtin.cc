@@ -75,7 +75,7 @@ scoped_refptr<ParsedCertificate> ParseCertificateFromOSHandle(
                                    {}, errors);
 }
 
-void AddIntermediatesToIssuerSource(X509Certificate* x509_cert,
+bool AddIntermediatesToIssuerSource(X509Certificate* x509_cert,
                                     CertIssuerSourceStatic* intermediates) {
   const X509Certificate::OSCertHandles& cert_handles =
       x509_cert->GetIntermediateCertificates();
@@ -83,10 +83,12 @@ void AddIntermediatesToIssuerSource(X509Certificate* x509_cert,
   for (auto it = cert_handles.begin(); it != cert_handles.end(); ++it) {
     scoped_refptr<ParsedCertificate> cert =
         ParseCertificateFromOSHandle(*it, &errors);
-    if (cert)
-      intermediates->AddCert(std::move(cert));
+    if (!cert)
+      return false;
+    intermediates->AddCert(std::move(cert));
     // TODO(crbug.com/634443): Surface these parsing errors?
   }
+  return true;
 }
 
 // Appends the SHA256 hashes of |spki_bytes| to |*hashes|.
@@ -224,7 +226,12 @@ void DoVerify(X509Certificate* input_cert,
   // Allow the path builder to discover the explicitly provided intermediates in
   // |input_cert|.
   CertIssuerSourceStatic intermediates;
-  AddIntermediatesToIssuerSource(input_cert, &intermediates);
+  if (!AddIntermediatesToIssuerSource(input_cert, &intermediates)) {
+    // XXX this is required for
+    // CertVerifyProcInternalTest.InvalidIntermediate/CertVerifyProcBuiltin
+    verify_result->cert_status |= CERT_STATUS_INVALID;
+    return;
+  }
   path_builder.AddCertIssuerSource(&intermediates);
 
   // TODO(crbug.com/649017): Allow the path builder to discover intermediates
