@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeaf6072_2e29112b",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:29:30Z",
+      "side": 1,
+      "message": "Please update this comment.",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8012d30f_fe1e6f24",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:29:30Z",
+      "side": 1,
+      "message": "s/block/defer/",
+      "range": {
+        "startLine": 59,
+        "startChar": 65,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6abdaef_c46a3f7a",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:29:30Z",
+      "side": 1,
+      "message": "nit: /can be/are/ (or \"can be paused\")",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 10
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838c71ec_33015645",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:29:30Z",
+      "side": 1,
+      "message": "Idea for the future: we could set a debug scope while running tasks from this that disallows script execution.",
+      "range": {
+        "startLine": 86,
+        "startChar": 25,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed62d58d_8317b756",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:29:30Z",
+      "side": 1,
+      "message": "Is this a bugfix? Good find, but please mention it in the description.",
+      "range": {
+        "startLine": 323,
+        "startChar": 21,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "cee294d5669eafc8441f133be4bd1ce14af08f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
