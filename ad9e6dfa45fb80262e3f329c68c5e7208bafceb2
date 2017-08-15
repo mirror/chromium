@@ -175,6 +175,30 @@
       "revId": "ad9e6dfa45fb80262e3f329c68c5e7208bafceb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16514ef_51353bab",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-15T20:22:18Z",
+      "side": 1,
+      "message": "Ah you are right, I got confused by the {}.\n\nI think it would be clearer to use a var like:\n\n  bool did_restore \u003d ShouldSerializeScrollAnchor() \u0026\u0026 view-\u003eRestoreScrollAnchor(...);\n  if (!did_restore)\n    view-\u003eLayoutViewportScrollableArea()-\u003eSetScrollOffset(...);",
+      "parentUuid": "b85c5bd0_245c628e",
+      "range": {
+        "startLine": 1199,
+        "startChar": 14,
+        "endLine": 1199,
+        "endChar": 33
+      },
+      "revId": "ad9e6dfa45fb80262e3f329c68c5e7208bafceb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
