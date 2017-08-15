@@ -9,9 +9,9 @@ assert(enable_extensions,
 
 source_set("virtual_keyboard_private") {
   sources = [
-    "virtual_keyboard_delegate.h",
     "virtual_keyboard_private_api.cc",
     "virtual_keyboard_private_api.h",
+    "virtual_keyboard_private_delegate.h",
   ]
 
   deps = [

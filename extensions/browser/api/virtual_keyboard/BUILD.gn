@@ -11,10 +11,10 @@ source_set("virtual_keyboard") {
   sources = [
     "virtual_keyboard_api.cc",
     "virtual_keyboard_api.h",
+    "virtual_keyboard_delegate.h",
   ]
 
   deps = [
-    "//extensions/browser/api/virtual_keyboard_private",
     "//extensions/common/api",
   ]
 
