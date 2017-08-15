@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fdc444_c62c739f",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "Are we sure we don\u0027t get out of bounds with this?",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dd656f_03f39cc2",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "make a unique id for every generated event?",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1519029e_d5f104cb",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "Also for kTouchMove?",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acad33cd_7b4f91a7",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "auto\u0026 id_point : points",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b752cf8e_333aba25",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "nit: if (touch_points_.insert(it).second)\n  events.push_back(...)",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebfb51f_e71065c8",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9c6999_357a75eb",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "it \u003d touch_points_.erase(it);",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af14bf60_8cdc7529",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "Do we have a guarantee that the callbacks will be called in order?",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2ba30b_069441e7",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/input/dispatchTouchEvent.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-15T18:05:07Z",
+      "side": 1,
+      "message": "takeLogs()",
+      "revId": "5e401a8262cd07a4b385f6097096b6251b33d58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
