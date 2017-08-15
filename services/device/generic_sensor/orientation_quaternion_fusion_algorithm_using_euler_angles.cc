@@ -7,31 +7,8 @@
 #include <cmath>
 
 #include "base/logging.h"
+#include "services/device/generic_sensor/orientation_util.h"
 #include "services/device/generic_sensor/platform_sensor_fusion.h"
-
-namespace {
-
-void ComputeQuaternionFromEulerAngles(double alpha,
-                                      double beta,
-                                      double gamma,
-                                      double* x,
-                                      double* y,
-                                      double* z,
-                                      double* w) {
-  double cx = std::cos(beta / 2);
-  double cy = std::cos(gamma / 2);
-  double cz = std::cos(alpha / 2);
-  double sx = std::sin(beta / 2);
-  double sy = std::sin(gamma / 2);
-  double sz = std::sin(alpha / 2);
-
-  *x = sx * cy * cz - cx * sy * sz;
-  *y = cx * sy * cz + sx * cy * sz;
-  *z = cx * cy * sz + sx * sy * cz;
-  *w = cx * cy * cz - sx * sy * sz;
-}
-
-}  // namespace
 
 namespace device {
 
@@ -40,6 +17,32 @@ OrientationQuaternionFusionAlgorithmUsingEulerAngles::
 
 OrientationQuaternionFusionAlgorithmUsingEulerAngles::
     ~OrientationQuaternionFusionAlgorithmUsingEulerAngles() = default;
+
+// static
+void OrientationQuaternionFusionAlgorithmUsingEulerAngles::
+    ComputeQuaternionFromEulerAngles(double alpha_in_degrees,
+                                     double beta_in_degrees,
+                                     double gamma_in_degrees,
+                                     double* x,
+                                     double* y,
+                                     double* z,
+                                     double* w) {
+  double alpha_radians = device::kDegToRad * alpha_in_degrees;
+  double beta_radians = device::kDegToRad * beta_in_degrees;
+  double gamma_radians = device::kDegToRad * gamma_in_degrees;
+
+  double cx = std::cos(beta_radians / 2);
+  double cy = std::cos(gamma_radians / 2);
+  double cz = std::cos(alpha_radians / 2);
+  double sx = std::sin(beta_radians / 2);
+  double sy = std::sin(gamma_radians / 2);
+  double sz = std::sin(alpha_radians / 2);
+
+  *x = sx * cy * cz - cx * sy * sz;
+  *y = cx * sy * cz + sx * cy * sz;
+  *z = cx * cy * sz + sx * sy * cz;
+  *w = cx * cy * cz - sx * sy * sz;
+}
 
 bool OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
     mojom::SensorType which_sensor_changed,
@@ -52,11 +55,12 @@ bool OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
   if (!fusion_sensor_->GetLatestReading(0, &reading))
     return false;
 
-  double beta = reading.orientation_euler.x;
-  double gamma = reading.orientation_euler.y;
-  double alpha = reading.orientation_euler.z;
+  double beta_in_degrees = reading.orientation_euler.x;
+  double gamma_in_degrees = reading.orientation_euler.y;
+  double alpha_in_degrees = reading.orientation_euler.z;
   double x, y, z, w;
-  ComputeQuaternionFromEulerAngles(alpha, beta, gamma, &x, &y, &z, &w);
+  ComputeQuaternionFromEulerAngles(alpha_in_degrees, beta_in_degrees,
+                                   gamma_in_degrees, &x, &y, &z, &w);
   fused_reading->orientation_quat.x = x;
   fused_reading->orientation_quat.y = y;
   fused_reading->orientation_quat.z = z;

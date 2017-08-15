@@ -18,6 +18,14 @@ class OrientationQuaternionFusionAlgorithmUsingEulerAngles
   OrientationQuaternionFusionAlgorithmUsingEulerAngles();
   ~OrientationQuaternionFusionAlgorithmUsingEulerAngles() override;
 
+  static void ComputeQuaternionFromEulerAngles(double alpha_in_degrees,
+                                               double beta_in_degrees,
+                                               double gamma_in_degrees,
+                                               double* x,
+                                               double* y,
+                                               double* z,
+                                               double* w);
+
   bool GetFusedData(mojom::SensorType which_sensor_changed,
                     SensorReading* fused_reading) override;
 
