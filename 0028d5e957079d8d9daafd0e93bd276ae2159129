@@ -22,6 +22,30 @@
       "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77c855b_8e35836b",
+        "filename": "chrome/browser/media/media_storage_id_salt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-15T21:02:01Z",
+      "side": 1,
+      "message": "This will be a SHA256 hash of a bunch of values, so 32 bytes is all we get. Widevine is happy with the size.\n\nSecurity review will be done as part of the launch process (crbug.com/470190).",
+      "parentUuid": "a2c8cb8d_28482a41",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
