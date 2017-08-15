@@ -2597,6 +2597,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kForceDisplayList2dCanvas,
     switches::kForceGpuMemAvailableMb,
     switches::kForceGpuRasterization,
+    switches::kEnableLazyFrameLoading,
     switches::kForceOverlayFullscreenVideo,
     switches::kFullMemoryCrashReport,
     switches::kIgnoreAutoplayRestrictionsForTests,

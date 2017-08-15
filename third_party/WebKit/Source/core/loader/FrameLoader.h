@@ -34,6 +34,7 @@
 #define FrameLoader_h
 
 #include "core/CoreExport.h"
+#include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/IconURL.h"
 #include "core/dom/SandboxFlags.h"
 #include "core/dom/SecurityContext.h"
@@ -211,10 +212,12 @@ class CORE_EXPORT FrameLoader final {
   // have created a dummy provisional DocumentLoader, so this will return true
   // while the client handles the navigation.
   bool HasProvisionalNavigation() const {
-    return GetProvisionalDocumentLoader();
+    return GetProvisionalDocumentLoader() && !is_waiting_to_load_;
   }
 
   void DetachProvisionalDocumentLoader(DocumentLoader*);
+
+  void FrameVisible();
 
   DECLARE_TRACE();
 
@@ -240,6 +243,11 @@ class CORE_EXPORT FrameLoader final {
                  FrameLoadType,
                  NavigationPolicy,
                  HistoryItem*);
+
+  void CompleteLoad(FrameLoadRequest&,
+                    FrameLoadType,
+                    NavigationPolicy,
+                    HistoryItem*);
 
   void LoadInSameDocument(const KURL&,
                           PassRefPtr<SerializedScriptValue> state_object,
@@ -293,6 +301,10 @@ class CORE_EXPORT FrameLoader final {
   bool dispatching_did_clear_window_object_in_main_world_;
   bool protect_provisional_loader_;
   bool detached_;
+
+  bool is_waiting_to_load_;
+  NavigationType stashed_navigation_type_;
+  NavigationPolicy stashed_navigation_policy_;
 };
 
 }  // namespace blink

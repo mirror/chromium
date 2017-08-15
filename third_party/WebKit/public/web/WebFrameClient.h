@@ -351,6 +351,7 @@ class BLINK_EXPORT WebFrameClient {
     WebTriggeringEventInfo triggering_event_info;
     WebFormElement form;
     bool is_cache_disabled;
+    bool is_delayed_subframe_request;
     WebSourceLocation source_location;
     WebContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy;

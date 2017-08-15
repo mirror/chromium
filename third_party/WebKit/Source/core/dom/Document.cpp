@@ -3132,13 +3132,17 @@ static bool AllDescendantsAreComplete(Frame* frame) {
     return true;
   for (Frame* child = frame->Tree().FirstChild(); child;
        child = child->Tree().TraverseNext(frame)) {
-    if (child->IsLoading())
+    if (child->IsLoading() && !child->is_delayed)
       return false;
   }
   return true;
 }
 
 bool Document::ShouldComplete() {
+    if (frame_->IsMainFrame()) {
+    LOG(INFO) << load_event_progress_ << parsing_state_ << HaveImportsLoaded() << !IsDelayingLoadEvent();
+    LOG(INFO) << AllDescendantsAreComplete(frame_);
+    }
   return parsing_state_ == kFinishedParsing && HaveImportsLoaded() &&
          !fetcher_->BlockingRequestCount() && !IsDelayingLoadEvent() &&
          load_event_progress_ != kLoadEventInProgress &&
@@ -3146,9 +3150,12 @@ bool Document::ShouldComplete() {
 }
 
 void Document::CheckCompleted() {
+    if (frame_->IsMainFrame())
+    LOG(INFO) << "Before first ShouldComplete";
   if (!ShouldComplete())
     return;
-
+if (frame_->IsMainFrame())
+  LOG(INFO) << "After first ShouldComplete";
   if (frame_) {
     frame_->Client()->RunScriptsAtDocumentIdle();
 
@@ -3161,7 +3168,8 @@ void Document::CheckCompleted() {
     if (!ShouldComplete())
       return;
   }
-
+if (frame_->IsMainFrame())
+  LOG(INFO) << "after second ShouldComplete";
   // OK, completed. Fire load completion events as needed.
   SetReadyState(kComplete);
   if (LoadEventStillNeeded())
@@ -3174,6 +3182,8 @@ void Document::CheckCompleted() {
   View()->HandleLoadCompleted();
   // The document itself is complete, but if a child frame was restarted due to
   // an event, this document is still considered to be in progress.
+  if (frame_->IsMainFrame())
+  LOG(INFO) << "Checking descendents";
   if (!AllDescendantsAreComplete(frame_))
     return;
 
@@ -3186,6 +3196,8 @@ void Document::CheckCompleted() {
     if (!frame_)
       return;
   }
+  if (frame_->IsMainFrame())
+  LOG(INFO) << "Checked descendents";
 
   frame_->Loader().DidFinishNavigation();
 }

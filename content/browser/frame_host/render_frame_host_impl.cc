@@ -2310,6 +2310,10 @@ void RenderFrameHostImpl::OnBeginNavigation(
     return;
   }
 
+  if (common_params.is_delayed_subframe_request) {
+      LOG(INFO) << "Delaying request in the browser process for: " << common_params.url.possibly_invalid_spec();
+  }
+
   frame_tree_node()->navigator()->OnBeginNavigation(
       frame_tree_node(), validated_params, validated_begin_params);
 }
@@ -3099,7 +3103,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
   DCHECK(data_url.SchemeIs(url::kDataScheme));
   CommonNavigationParams common_params(
       data_url, Referrer(), ui::PAGE_TRANSITION_LINK,
-      FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT, false, false,
+      FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT, false, false, false,
       base::TimeTicks::Now(), FrameMsg_UILoadMetricsReportType::NO_REPORT,
       GURL(), GURL(), PREVIEWS_OFF, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),

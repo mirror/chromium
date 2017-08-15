@@ -16,6 +16,7 @@
 #include "content/browser/frame_host/data_url_navigation_throttle.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/browser/frame_host/form_submission_throttle.h"
+#include "content/browser/frame_host/delayed_subframe_throttle.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/mixed_content_navigation_throttle.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
@@ -582,8 +583,10 @@ void NavigationHandleImpl::WillStartRequest(
     return;
   }
 
-  if (!IsRendererDebugURL(url_))
+  if (!IsRendererDebugURL(url_)) {
+      LOG(INFO) << "Registering throttles for: " << url_;
     RegisterNavigationThrottles();
+  }
 
   if (IsBrowserSideNavigationEnabled())
     navigation_ui_data_ = GetDelegate()->GetNavigationUIData(this);
@@ -1199,6 +1202,8 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
 
   AddThrottle(AncestorThrottle::MaybeCreateThrottleFor(this));
   AddThrottle(FormSubmissionThrottle::MaybeCreateThrottleFor(this));
+
+  AddThrottle(DelayedSubframeThrottle::MaybeCreateThrottleFor(this));
 
   // Check for mixed content. This is done after the AncestorThrottle and the
   // FormSubmissionThrottle so that when folks block mixed content with a CSP

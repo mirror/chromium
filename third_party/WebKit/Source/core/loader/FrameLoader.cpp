@@ -64,7 +64,6 @@
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FormSubmission.h"
-#include "core/loader/FrameLoadRequest.h"
 #include "core/loader/LinkLoader.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/NetworkHintsInterface.h"
@@ -535,7 +534,7 @@ void FrameLoader::UpdateForSameDocumentNavigation(
   // handler. See https://bugs.webkit.org/show_bug.cgi?id=31838
   // Do not fire the notifications if the frame is concurrently navigating away
   // from the document, since a new document is already loading.
-  bool was_loading = frame_->IsLoading();
+  bool was_loading = frame_->IsLoading() && !provisional_document_loader_;
   if (!was_loading)
     Client()->DidStartLoading(kNavigationWithinSameDocument);
 
@@ -1449,6 +1448,10 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
                                 ? WebTriggeringEventInfo::kFromTrustedEvent
                                 : WebTriggeringEventInfo::kFromUntrustedEvent;
   }
+
+  if (navigation_policy == kNavigationPolicyCurrentTab && RuntimeEnabledFeatures::LazyFrameLoadingEnabled() &&
+         !frame_->IsMainFrame() && frame_load_request.getShouldDelayRequest() && !IsBackForwardLoadType(type)) {
+  }
   return ShouldContinueForNavigationPolicy(
       resource_request, frame_load_request.OriginDocument(),
       frame_load_request.GetSubstituteData(), nullptr,
@@ -1459,103 +1462,137 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       triggering_event_info, frame_load_request.Form());
 }
 
+void FrameLoader::FrameVisible() {
+   if (!is_waiting_to_load_) {
+     LOG(INFO) << "NO Resource request";
+     return;
+   }
+   if (stashed_navigation_policy_ == kNavigationPolicyCurrentTab) {
+     provisional_document_loader_->StartLoading();
+     // This should happen after the request is sent, so that the state
+     // the inspector stored in the matching frameScheduledClientNavigation()
+     // is available while sending the request.
+     probe::frameClearedScheduledClientNavigation(frame_);
+   }
+   is_waiting_to_load_ = false;
+   TakeObjectSnapshot();
+ }
+
+//void FrameLoader::CompleteLoad(FrameLoadRequest& frame_load_request,
+//                               FrameLoadType type,
+//                               NavigationPolicy navigation_policy
+////                               HistoryItem* history_item
+//                               ) {
+//    if (navigation_policy == kNavigationPolicyCurrentTab && RuntimeEnabledFeatures::LazyFrameLoadingEnabled() &&
+//           !frame_->IsMainFrame() && frame_load_request.getShouldDelayRequest() && !IsBackForwardLoadType(type)) {
+////        DLOG(INFO) << "Delaying request";
+////         stashed_navigation_type_ = navigation_type;
+////         stashed_navigation_policy_ = navigation_policy;
+////         is_waiting_to_load_ = true;
+////         TakeObjectSnapshot();
+////         return;
+//       }
+
+//}
+
 void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                             FrameLoadType type,
                             NavigationPolicy navigation_policy,
                             HistoryItem* history_item) {
-  DCHECK(Client()->HasWebView());
-  ResourceRequest& resource_request = frame_load_request.GetResourceRequest();
-  NavigationType navigation_type = DetermineNavigationType(
-      type, resource_request.HttpBody() || frame_load_request.Form(),
-      frame_load_request.TriggeringEvent());
-  resource_request.SetRequestContext(
-      DetermineRequestContextFromNavigationType(navigation_type));
-  resource_request.SetFrameType(frame_->IsMainFrame()
-                                    ? WebURLRequest::kFrameTypeTopLevel
-                                    : WebURLRequest::kFrameTypeNested);
+    DCHECK(Client()->HasWebView());
+    ResourceRequest& resource_request = frame_load_request.GetResourceRequest();
+    NavigationType navigation_type = DetermineNavigationType(
+        type, resource_request.HttpBody() || frame_load_request.Form(),
+        frame_load_request.TriggeringEvent());
+    resource_request.SetRequestContext(
+        DetermineRequestContextFromNavigationType(navigation_type));
+    resource_request.SetFrameType(frame_->IsMainFrame()
+                                      ? WebURLRequest::kFrameTypeTopLevel
+                                      : WebURLRequest::kFrameTypeNested);
 
-  bool had_placeholder_client_document_loader =
-      provisional_document_loader_ && !provisional_document_loader_->DidStart();
-  navigation_policy = CheckLoadCanStart(frame_load_request, type,
-                                        navigation_policy, navigation_type);
-  if (navigation_policy == kNavigationPolicyIgnore) {
-    if (had_placeholder_client_document_loader &&
-        !resource_request.CheckForBrowserSideNavigation()) {
-      DetachDocumentLoader(provisional_document_loader_);
+    bool had_placeholder_client_document_loader =
+        provisional_document_loader_ && !provisional_document_loader_->DidStart();
+    navigation_policy = CheckLoadCanStart(frame_load_request, type,
+                                          navigation_policy, navigation_type);
+    LOG(INFO) << "Policy: " << navigation_policy;
+    if (navigation_policy == kNavigationPolicyIgnore) {
+      if (had_placeholder_client_document_loader &&
+          !resource_request.CheckForBrowserSideNavigation()) {
+        DetachDocumentLoader(provisional_document_loader_);
+      }
+      return;
     }
-    return;
-  }
 
-  // For PlzNavigate placeholder DocumentLoaders, don't send failure callbacks
-  // for a placeholder simply being replaced with a new DocumentLoader.
-  if (had_placeholder_client_document_loader)
-    provisional_document_loader_->SetSentDidFinishLoad();
-  frame_->GetDocument()->CancelParsing();
-  DetachDocumentLoader(provisional_document_loader_);
+    // For PlzNavigate placeholder DocumentLoaders, don't send failure callbacks
+    // for a placeholder simply being replaced with a new DocumentLoader.
+    if (had_placeholder_client_document_loader)
+      provisional_document_loader_->SetSentDidFinishLoad();
+    frame_->GetDocument()->CancelParsing();
+    DetachDocumentLoader(provisional_document_loader_);
 
-  // beforeunload fired above, and detaching a DocumentLoader can fire events,
-  // which can detach this frame.
-  if (!frame_->GetPage())
-    return;
+    // beforeunload fired above, and detaching a DocumentLoader can fire events,
+    // which can detach this frame.
+    if (!frame_->GetPage())
+      return;
 
-  progress_tracker_->ProgressStarted(type);
-  // TODO(japhet): This case wants to flag the frame as loading and do nothing
-  // else. It'd be nice if it could go through the placeholder DocumentLoader
-  // path, too.
-  if (navigation_policy == kNavigationPolicyHandledByClientForInitialHistory)
-    return;
-  DCHECK(navigation_policy == kNavigationPolicyCurrentTab ||
-         navigation_policy == kNavigationPolicyHandledByClient);
+    progress_tracker_->ProgressStarted(type);
+    // TODO(japhet): This case wants to flag the frame as loading and do nothing
+    // else. It'd be nice if it could go through the placeholder DocumentLoader
+    // path, too.
+    if (navigation_policy == kNavigationPolicyHandledByClientForInitialHistory)
+      return;
+    DCHECK(navigation_policy == kNavigationPolicyCurrentTab ||
+           navigation_policy == kNavigationPolicyHandledByClient);
 
-  provisional_document_loader_ = CreateDocumentLoader(
-      resource_request, frame_load_request, type, navigation_type);
+    provisional_document_loader_ = CreateDocumentLoader(
+        resource_request, frame_load_request, type, navigation_type);
 
-  // PlzNavigate: We need to ensure that script initiated navigations are
-  // honored.
-  if (!had_placeholder_client_document_loader ||
-      navigation_policy == kNavigationPolicyHandledByClient) {
-    frame_->GetNavigationScheduler().Cancel();
-  }
+    // PlzNavigate: We need to ensure that script initiated navigations are
+    // honored.
+    if (!had_placeholder_client_document_loader ||
+        navigation_policy == kNavigationPolicyHandledByClient) {
+      frame_->GetNavigationScheduler().Cancel();
+    }
 
-  if (frame_load_request.Form())
-    Client()->DispatchWillSubmitForm(frame_load_request.Form());
+    if (frame_load_request.Form())
+      Client()->DispatchWillSubmitForm(frame_load_request.Form());
 
-  provisional_document_loader_->AppendRedirect(
-      provisional_document_loader_->Url());
+    provisional_document_loader_->AppendRedirect(
+        provisional_document_loader_->Url());
 
-  if (IsBackForwardLoadType(type)) {
-    DCHECK(history_item);
-    provisional_document_loader_->SetItemForHistoryNavigation(history_item);
-  }
+    if (IsBackForwardLoadType(type)) {
+      DCHECK(history_item);
+      provisional_document_loader_->SetItemForHistoryNavigation(history_item);
+    }
 
-  DCHECK(!frame_load_request.GetResourceRequest().IsSameDocumentNavigation());
-  frame_->FrameScheduler()->DidStartProvisionalLoad(frame_->IsMainFrame());
+    DCHECK(!frame_load_request.GetResourceRequest().IsSameDocumentNavigation());
+    frame_->FrameScheduler()->DidStartProvisionalLoad(frame_->IsMainFrame());
 
-  // TODO(ananta):
-  // We should get rid of the dependency on the DocumentLoader in consumers of
-  // the DidStartProvisionalLoad() notification.
-  Client()->DispatchDidStartProvisionalLoad(provisional_document_loader_,
-                                            resource_request);
-  DCHECK(provisional_document_loader_);
+    // TODO(ananta):
+    // We should get rid of the dependency on the DocumentLoader in consumers of
+    // the DidStartProvisionalLoad() notification.
+    Client()->DispatchDidStartProvisionalLoad(provisional_document_loader_,
+                                              resource_request);
+    DCHECK(provisional_document_loader_);
 
-  if (navigation_policy == kNavigationPolicyCurrentTab) {
-    provisional_document_loader_->StartLoading();
-    // This should happen after the request is sent, so that the state
-    // the inspector stored in the matching frameScheduledClientNavigation()
-    // is available while sending the request.
-    probe::frameClearedScheduledClientNavigation(frame_);
-  } else {
-    // PlzNavigate
-    // Check for usage of legacy schemes now. Unsupported schemes will be
-    // rewritten by the client, so the FrameFetchContext will not be able to
-    // check for those when the navigation commits.
-    if (navigation_policy == kNavigationPolicyHandledByClient)
-      CheckForLegacyProtocolInSubresource(resource_request,
-                                          frame_->GetDocument());
-    probe::frameScheduledClientNavigation(frame_);
-  }
+    if (navigation_policy == kNavigationPolicyCurrentTab) {
+      provisional_document_loader_->StartLoading();
+      // This should happen after the request is sent, so that the state
+      // the inspector stored in the matching frameScheduledClientNavigation()
+      // is available while sending the request.
+      probe::frameClearedScheduledClientNavigation(frame_);
+    } else {
+      // PlzNavigate
+      // Check for usage of legacy schemes now. Unsupported schemes will be
+      // rewritten by the client, so the FrameFetchContext will not be able to
+      // check for those when the navigation commits.
+      if (navigation_policy == kNavigationPolicyHandledByClient)
+        CheckForLegacyProtocolInSubresource(resource_request,
+                                            frame_->GetDocument());
+      probe::frameScheduledClientNavigation(frame_);
+    }
 
-  TakeObjectSnapshot();
+    TakeObjectSnapshot();
 }
 
 bool FrameLoader::ShouldTreatURLAsSameAsCurrent(const KURL& url) const {

@@ -547,6 +547,7 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
               kCheckContentSecurityPolicy
           ? kWebContentSecurityPolicyDispositionCheck
           : kWebContentSecurityPolicyDispositionDoNotCheck;
+  navigation_info.is_delayed_subframe_request = request.isDelayedSubframeRequest();
 
   // Can be null.
   LocalFrame* local_parent_frame = GetLocalParentFrame(web_frame_);
