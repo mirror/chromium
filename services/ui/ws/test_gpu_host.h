@@ -6,6 +6,8 @@
 #define SERVICES_UI_WS_TEST_GPU_HOST_H_
 
 #include "base/macros.h"
+#include "components/viz/test/test_frame_sink_manager.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/ws/gpu_host.h"
 
 namespace ui {
@@ -13,8 +15,8 @@ namespace ws {
 
 class TestGpuHost : public GpuHost {
  public:
-  TestGpuHost() = default;
-  ~TestGpuHost() override = default;
+  TestGpuHost();
+  ~TestGpuHost() override;
 
  private:
   void Add(mojom::GpuRequest request) override {}
@@ -22,7 +24,10 @@ class TestGpuHost : public GpuHost {
   void OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) override {}
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
-      viz::mojom::FrameSinkManagerClientPtr client) override {}
+      viz::mojom::FrameSinkManagerClientPtr client) override;
+
+  std::unique_ptr<viz::TestFrameSinkManagerImpl> frame_sink_manager_;
+  mojo::Binding<viz::mojom::FrameSinkManager> frame_sink_manager_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(TestGpuHost);
 };

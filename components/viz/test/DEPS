@@ -1,6 +1,7 @@
 include_rules = [
   "+cc",
   "+components/viz",
+  "+services/viz/compositing/privileged/interfaces",
   "+ui/gfx/geometry",
 ]
 
