@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "443b0294_e8df981e",
+        "filename": "chrome/test/vr/perf/latency/motopho_thread.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-15T15:01:05Z",
+      "side": 1,
+      "message": "s/is/it/",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "09dc17e89e687a0b93224018a783fc1656879f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4078591_c8a33f4c",
+        "filename": "chrome/test/vr/perf/latency/motopho_thread.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-15T15:01:05Z",
+      "side": 1,
+      "message": "This should probably be a bug rather than just a TODO.  From an outside perspective, I would heavily prioritize root-causing this, as it seems to cast doubt on validity of results in general.  Ie, how do you know the \"in range\" results are actually valid?",
+      "revId": "09dc17e89e687a0b93224018a783fc1656879f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
