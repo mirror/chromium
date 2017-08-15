@@ -383,12 +383,15 @@ bool DiscardableSharedMemory::Purge(Time current_time) {
     DPLOG(ERROR) << "madvise() failed";
   }
 #elif defined(OS_WIN)
-  // MEM_DECOMMIT the purged pages to release the physical storage,
-  // either in memory or in the paging file on disk.  Pages remain RESERVED.
-  if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
-                       AlignToPageSize(sizeof(SharedState)),
-                   AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
-    DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+  // Discard the purged pages to release the physical storage, either in memory
+  // or in the paging file on disk.  Pages remain RESERVED.
+  DWORD discard_result =
+      DiscardVirtualMemory(reinterpret_cast<char*>(shared_memory_.memory()) +
+                               AlignToPageSize(sizeof(SharedState)),
+                           AlignToPageSize(mapped_size_));
+  if (result != ERROR_SUCCESS) {
+    DLOG(ERROR) << "DiscardVirtualMemory() failed in Purge(): "
+                << logging::SystemErrorCodeToString(result);
   }
 #endif
 
