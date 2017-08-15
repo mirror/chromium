@@ -163,6 +163,24 @@
       "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "409aaa76_ba444047",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-15T18:55:28Z",
+      "side": 1,
+      "message": "\u003e I think it is necessary to avoid flakiness. We need to ensure two things: \n\u003e 1. That the posted tasks run after the thread has been stopped. If we stop the thread asynchronously I don\u0027t think we can guarantee this.\n\nTrue. Although that just loses a bit of coverage rather than cause flakes, so maybe not a big deal\n\n\u003e 2. That the thread doesn\u0027t stop before the tasks are queued up, erroneously failing the test.\n\nIs that true? If you post a task immediately before stop, then that task (and any non-delayed task posted by that task) is guaranteed to run before stop returns, right?\n\n\u003e \n\u003e I\u0027m not sure how we would do this without exposing the on-thread part of shutdown.",
+      "parentUuid": "28b9acbc_0382d3f5",
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
