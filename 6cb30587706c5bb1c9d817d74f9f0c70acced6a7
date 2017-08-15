@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9789161_a97ef1d7",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-15T08:27:09Z",
+      "side": 1,
+      "message": "What effect does this filtering have compared to the original code? I assume that more than one keydown event is sent, and they they don\u0027t all have e.code \u003d\u003d \u0027KeyS\u0027, or there would be no difference. So, how many times is webkitRequestFullScreen() called? Rather than filtering by e.code, can you try a counter and just letting through some event(s) in the sequence, to see what matters? I\u0027m guessing that either the problem is with the number of calls, or their timing.",
+      "range": {
+        "startLine": 334,
+        "startChar": 34,
+        "endLine": 334,
+        "endChar": 35
+      },
+      "revId": "6cb30587706c5bb1c9d817d74f9f0c70acced6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3352a9_b710ac93",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-15T08:27:09Z",
+      "side": 1,
+      "message": "http://software.hixie.ch/utilities/js/live-dom-viewer/saved/5302 illustrates that document.body is null at this point. If any keydown events are delivered before the \u003cbody\u003e element is reached, then this event handler would throw an exception. Is that what\u0027s happening?",
+      "range": {
+        "startLine": 342,
+        "startChar": 26,
+        "endLine": 342,
+        "endChar": 27
+      },
+      "revId": "6cb30587706c5bb1c9d817d74f9f0c70acced6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
