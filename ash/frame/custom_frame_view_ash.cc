@@ -12,8 +12,10 @@
 #include "ash/frame/header_view.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller_delegate.h"
+#include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/resize_handle_window_targeter.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_state_observer.h"
@@ -436,7 +438,14 @@ CustomFrameViewAsh::GetFrameCaptionButtonContainerViewForTest() {
 }
 
 int CustomFrameViewAsh::NonClientTopBorderHeight() const {
-  return frame_->IsFullscreen() ? 0 : header_view_->GetPreferredHeight();
+  const bool should_hide_titlebar_in_tablet_mode =
+      Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars() &&
+      frame_->IsMaximized();
+
+  if (frame_->IsFullscreen() || should_hide_titlebar_in_tablet_mode)
+    return 0;
+
+  return header_view_->GetPreferredHeight();
 }
 
 }  // namespace ash

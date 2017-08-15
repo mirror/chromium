@@ -13,6 +13,7 @@
 #include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "base/compiler_specific.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -43,6 +44,9 @@ class TabletModeControllerTest;
 class TabletModeObserver;
 class TabletModeWindowManager;
 class TabletModeWindowManagerTest;
+
+// Hides title bars in tablet mode.
+ASH_EXPORT extern const base::Feature kHideTitleBars;
 
 // TabletModeController listens to accelerometer events and automatically
 // enters and exits tablet mode when the lid is opened beyond the triggering
@@ -92,6 +96,10 @@ class ASH_EXPORT TabletModeController
 
   void AddObserver(TabletModeObserver* observer);
   void RemoveObserver(TabletModeObserver* observer);
+
+  // Checks if we should hide title bars in tablet mode. Returns true if the
+  // feature is enabled and we are in tablet mode.
+  bool ShouldHideTitlebars() const;
 
   // ShellObserver:
   void OnShellInitialized() override;
@@ -200,6 +208,9 @@ class ASH_EXPORT TabletModeController
 
   // Tracks when the lid is closed. Used to prevent entering tablet mode.
   bool lid_is_closed_;
+
+  // Whether title bars should be shown in tablet mode.
+  bool show_title_bars_ = true;
 
   // Tracks smoothed accelerometer data over time. This is done when the hinge
   // is approaching vertical to remove abrupt acceleration that can lead to

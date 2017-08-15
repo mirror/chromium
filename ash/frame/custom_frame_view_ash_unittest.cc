@@ -9,9 +9,11 @@
 #include "ash/ash_layout_constants.h"
 #include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
+#include "ash/frame/header_view.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "base/test/scoped_feature_list.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image_skia.h"
@@ -231,6 +233,62 @@ TEST_F(CustomFrameViewAshTest, HeaderViewNotifiedOfChildSizeChange) {
   const gfx::Rect after_restore =
       delegate->GetFrameCaptionButtonContainerViewBounds();
   EXPECT_EQ(initial, after_restore);
+}
+
+class HiddenTitlebarsCustomFrameViewAshTest : public CustomFrameViewAshTest {
+ public:
+  HiddenTitlebarsCustomFrameViewAshTest() {}
+  ~HiddenTitlebarsCustomFrameViewAshTest() override {}
+
+  void SetUp() override {
+    scoped_feature_list.InitAndEnableFeature(kHideTitleBars);
+    CustomFrameViewAshTest::SetUp();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list;
+
+  DISALLOW_COPY_AND_ASSIGN(HiddenTitlebarsCustomFrameViewAshTest);
+};
+
+// Verify that when in tablet mode with a maximized window, the height of the
+// header is zero.
+TEST_F(HiddenTitlebarsCustomFrameViewAshTest,
+       FrameHiddenInTabletModeForMaximizedWindows) {
+  TestWidgetDelegate* delegate = new TestWidgetDelegate;
+  std::unique_ptr<views::Widget> widget(CreateWidget(delegate));
+  widget->Maximize();
+
+  // Finish all setup tasks. In particular we want to finish the GetSwitchStates
+  // post task in (Fake)PowerManagerClient which is triggered by
+  // TabletModeController otherwise this will cause tablet mode to exit while we
+  // wait for animations in the test.
+  RunAllPendingInMessageLoop();
+
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  EXPECT_EQ(0, static_cast<HeaderView*>(
+                   delegate->custom_frame_view()->GetHeaderView())
+                   ->GetPreferredOnScreenHeight());
+}
+
+// Verify that when in tablet mode with a non maximized window, the height of
+// the header is non zero.
+TEST_F(HiddenTitlebarsCustomFrameViewAshTest,
+       FrameShownInTabletModeForNonMaximizedWindows) {
+  TestWidgetDelegate* delegate = new TestWidgetDelegate;
+  std::unique_ptr<views::Widget> widget(CreateWidget(delegate));
+
+  // Finish all setup tasks. In particular we want to finish the GetSwitchStates
+  // post task in (Fake)PowerManagerClient which is triggered by
+  // TabletModeController otherwise this will cause tablet mode to exit while we
+  // wait for animations in the test.
+  RunAllPendingInMessageLoop();
+
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  EXPECT_EQ(
+      GetAshLayoutSize(AshLayoutSize::NON_BROWSER_CAPTION_BUTTON).height(),
+      static_cast<HeaderView*>(delegate->custom_frame_view()->GetHeaderView())
+          ->GetPreferredOnScreenHeight());
 }
 
 }  // namespace ash
