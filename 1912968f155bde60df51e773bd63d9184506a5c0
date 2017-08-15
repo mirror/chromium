@@ -70,6 +70,30 @@
       "revId": "1912968f155bde60df51e773bd63d9184506a5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0919569e_8a120dcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-08-15T03:02:35Z",
+      "side": 1,
+      "message": "Probably, unless some workflow expects to the VDA/VDE/JDA tests to be built and gets broken because they are not anymore.\n\nAlso this means we would have to duplicate the conditions for enabling acceleration (either libva or v4l2 are used) into the build files, and update two places instead of one if these conditions change.\n\nThese are my concerns with this approach - I will leave the final call to you though.",
+      "parentUuid": "be338856_45ad1bf4",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "1912968f155bde60df51e773bd63d9184506a5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
