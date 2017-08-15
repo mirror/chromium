@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36b8d70d_115c5736",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-root-scroller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T00:08:19Z",
+      "side": 1,
+      "message": "Why do you specify overflow on the body?",
+      "revId": "cd70fac45ac412a3ed185eaaec06f13e393cb882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
