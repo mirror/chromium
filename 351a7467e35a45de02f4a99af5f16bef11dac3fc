@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "35ee5133_26f3ff0a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-15T18:25:19Z",
+      "side": 1,
+      "message": "Also, given that this test does touch scrolling, I\u0027m curious as to why enabling wheel scroll latching would affect this test. I\u0027m wondering if somewhere touch scroll gestures are accidentally going through a wheel latching code path when it\u0027s enabled.",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88ad97e7_b3d2aa4e",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 10
