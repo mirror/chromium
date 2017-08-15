@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f01cc19e_d9f890ee",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-15T16:16:22Z",
+      "side": 1,
+      "message": "If we move this code out of `FormatChromiumMediaControlsTime`, could we have the same method to format the current time and the duration?",
+      "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03057748_1857a8ec",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-15T16:16:22Z",
+      "side": 1,
+      "message": "Actually, while you are at it, could you move this out of LayoutTheme and move it to the util class in media_controls/elements/?",
+      "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
