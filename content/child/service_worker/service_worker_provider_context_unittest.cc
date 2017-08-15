@@ -100,7 +100,7 @@ TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
   const int kProviderId = 10;
   auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
-      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
+      mojom::ServiceWorkerContainerAssociatedRequest(), dispatcher());
 
   // The passed references should be adopted and owned by the provider context.
   provider_context->SetRegistration(std::move(registration),

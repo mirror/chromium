@@ -16,8 +16,8 @@ struct CONTENT_EXPORT ServiceWorkerProviderHostInfo {
   ServiceWorkerProviderHostInfo(ServiceWorkerProviderHostInfo&& other);
   ServiceWorkerProviderHostInfo(
       ServiceWorkerProviderHostInfo&& other,
-      mojom::ServiceWorkerProviderHostAssociatedRequest host_request,
-      mojom::ServiceWorkerProviderAssociatedPtrInfo client_ptr_info);
+      mojom::ServiceWorkerContainerHostAssociatedRequest host_request,
+      mojom::ServiceWorkerContainerAssociatedPtrInfo client_ptr_info);
   ServiceWorkerProviderHostInfo(int provider_id,
                                 int route_id,
                                 ServiceWorkerProviderType type,
@@ -57,14 +57,14 @@ struct CONTENT_EXPORT ServiceWorkerProviderHostInfo {
   // will be associated with ServiceWorkerDisptacherHost. |host_request| should
   // be valid when ServiceWorkerProviderHostInfo is passed to any Mojo methods.
   // After used to create the ServiceWorkerProviderHost, this will be invalid.
-  mojom::ServiceWorkerProviderHostAssociatedRequest host_request;
+  mojom::ServiceWorkerContainerHostAssociatedRequest host_request;
 
   // Mojo endpoint to send a message from the browser to the renderer. This
   // will be associated with ServiceWorkerDisptacherHost. |client_ptr_info|
   // should be valid when ServiceWorkerProviderHostInfo is passed to any Mojo
   // methods.
   // After used to create the ServiceWorkerProviderHost, this will be invalid.
-  mojom::ServiceWorkerProviderAssociatedPtrInfo client_ptr_info;
+  mojom::ServiceWorkerContainerAssociatedPtrInfo client_ptr_info;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderHostInfo);
