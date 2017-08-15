@@ -185,8 +185,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 
   ServiceWorkerProviderHostInfo host_info(provider_id_, route_id, provider_type,
                                           is_parent_frame_secure);
-  host_info.host_request = mojo::MakeRequest(&provider_host_);
-  mojom::ServiceWorkerProviderAssociatedRequest client_request =
+  host_info.host_request = mojo::MakeRequest(&container_host_);
+  mojom::ServiceWorkerContainerAssociatedRequest client_request =
       mojo::MakeRequest(&host_info.client_ptr_info);
 
   DCHECK(host_info.host_request.is_pending());
@@ -225,7 +225,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   dispatcher->OnAssociateRegistration(-1 /* unused thread_id */,
                                       info->provider_id, info->registration,
                                       info->attributes);
-  provider_host_.Bind(std::move(info->host_ptr_info));
+  container_host_.Bind(std::move(info->host_ptr_info));
 }
 
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider()
@@ -236,7 +236,7 @@ ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
     return;
   if (!ChildThreadImpl::current())
     return;  // May be null in some tests.
-  provider_host_.reset();
+  container_host_.reset();
 }
 
 bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {

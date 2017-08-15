@@ -457,7 +457,7 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
     return;
   }
 
-  provider_.Bind(std::move(info_.client_ptr_info));
+  container_.Bind(std::move(info_.client_ptr_info));
   binding_.Bind(std::move(info_.host_request));
   binding_.set_connection_error_handler(base::Bind(
       &RemoveProviderHost, context_, render_process_id, info_.provider_id));
@@ -842,7 +842,7 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
       base::WrapUnique(new ServiceWorkerProviderHost(
           process_id(),
           ServiceWorkerProviderHostInfo(std::move(info_), binding_.Unbind(),
-                                        provider_.PassInterface()),
+                                        container_.PassInterface()),
           context_, dispatcher_host()));
 
   for (const GURL& pattern : associated_patterns_)
@@ -877,9 +877,9 @@ void ServiceWorkerProviderHost::CompleteCrossSiteTransfer(
   info_ = std::move(provisional_host->info_);
 
   // Take the connection over from the provisional host.
-  DCHECK(!provider_.is_bound());
+  DCHECK(!container_.is_bound());
   DCHECK(!binding_.is_bound());
-  provider_.Bind(provisional_host->provider_.PassInterface());
+  container_.Bind(provisional_host->container_.PassInterface());
   binding_.Bind(provisional_host->binding_.Unbind());
   binding_.set_connection_error_handler(
       base::Bind(&RemoveProviderHost, context_, provisional_host->process_id(),
@@ -907,9 +907,9 @@ void ServiceWorkerProviderHost::CompleteNavigationInitialized(
   DCHECK_NE(MSG_ROUTING_NONE, info.route_id);
 
   // Connect with the provider on the renderer.
-  DCHECK(!provider_.is_bound());
+  DCHECK(!container_.is_bound());
   DCHECK(!binding_.is_bound());
-  provider_.Bind(std::move(info.client_ptr_info));
+  container_.Bind(std::move(info.client_ptr_info));
   binding_.Bind(std::move(info.host_request));
   binding_.set_connection_error_handler(
       base::Bind(&RemoveProviderHost, context_, process_id, provider_id()));
@@ -963,7 +963,7 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   provider_info->provider_id = provider_id();
   provider_info->attributes = std::move(attrs);
   provider_info->registration = std::move(info);
-  provider_info->client_request = mojo::MakeRequest(&provider_);
+  provider_info->client_request = mojo::MakeRequest(&container_);
   binding_.Bind(mojo::MakeRequest(&provider_info->host_ptr_info));
   binding_.set_connection_error_handler(
       base::Bind(&RemoveProviderHost, context_, process_id, provider_id()));

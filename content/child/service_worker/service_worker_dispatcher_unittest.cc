@@ -198,7 +198,7 @@ TEST_F(ServiceWorkerDispatcherTest,
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
+          mojom::ServiceWorkerContainerAssociatedRequest(),
           thread_safe_sender()));
 
   // The passed references should be adopted and owned by the provider context.
@@ -232,7 +232,7 @@ TEST_F(ServiceWorkerDispatcherTest,
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
+          mojom::ServiceWorkerContainerAssociatedRequest(),
           thread_safe_sender()));
 
   // The passed references should be adopted and only the registration reference
@@ -282,7 +282,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
+          mojom::ServiceWorkerContainerAssociatedRequest(),
           thread_safe_sender()));
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
   ipc_sink()->ClearMessages();
@@ -331,7 +331,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   // implementation.
   provider_context = new ServiceWorkerProviderContext(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender());
+      mojom::ServiceWorkerContainerAssociatedRequest(), thread_safe_sender());
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
   provider_client.reset(
       new MockWebServiceWorkerProviderClientImpl(kProviderId, dispatcher()));
@@ -363,7 +363,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker_Null) {
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
+          mojom::ServiceWorkerContainerAssociatedRequest(),
           thread_safe_sender()));
 
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
