@@ -9,12 +9,12 @@
 #include "base/macros.h"
 #include "content/browser/background_sync/background_sync.pb.h"
 #include "content/common/content_export.h"
-#include "net/base/network_change_notifier.h"
+#include "content/network/network_change_manager_client_impl.h"
 
 namespace content {
 
 class CONTENT_EXPORT BackgroundSyncNetworkObserver
-    : public net::NetworkChangeNotifier::NetworkChangeObserver {
+    : public NetworkChangeManagerClientImpl::NetworkChangeObserver {
  public:
   // Creates a BackgroundSyncNetworkObserver. |network_changed_callback| is
   // called when the network connection changes asynchronously via PostMessage.
@@ -32,21 +32,19 @@ class CONTENT_EXPORT BackgroundSyncNetworkObserver
   bool NetworkSufficient(SyncNetworkState network_state);
 
   // NetworkChangeObserver overrides
-  void OnNetworkChanged(
-      net::NetworkChangeNotifier::ConnectionType connection_type) override;
+  void OnNetworkChanged(mojom::ConnectionType connection_type) override;
 
   // Allow tests to call NotifyManagerIfNetworkChanged.
   void NotifyManagerIfNetworkChangedForTesting(
-      net::NetworkChangeNotifier::ConnectionType connection_type);
+      mojom::ConnectionType connection_type);
 
  private:
   // Calls NotifyNetworkChanged if the connection type has changed.
-  void NotifyManagerIfNetworkChanged(
-      net::NetworkChangeNotifier::ConnectionType connection_type);
+  void NotifyManagerIfNetworkChanged(mojom::ConnectionType connection_type);
 
   void NotifyNetworkChanged();
 
-  net::NetworkChangeNotifier::ConnectionType connection_type_;
+  mojom::ConnectionType connection_type_;
 
   // The callback to run when the network changes.
   base::RepeatingClosure network_changed_callback_;

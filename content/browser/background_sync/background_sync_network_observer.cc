@@ -22,17 +22,17 @@ void BackgroundSyncNetworkObserver::SetIgnoreNetworkChangeNotifierForTests(
 
 BackgroundSyncNetworkObserver::BackgroundSyncNetworkObserver(
     const base::RepeatingClosure& network_changed_callback)
-    : connection_type_(net::NetworkChangeNotifier::GetConnectionType()),
+    : connection_type_(NetworkChangeManagerClientImpl::GetConnectionType()),
       network_changed_callback_(network_changed_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  NetworkChangeManagerClientImpl::AddNetworkChangeObserver(this);
 }
 
 BackgroundSyncNetworkObserver::~BackgroundSyncNetworkObserver() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
+  NetworkChangeManagerClientImpl::RemoveNetworkChangeObserver(this);
 }
 
 bool BackgroundSyncNetworkObserver::NetworkSufficient(
@@ -45,11 +45,12 @@ bool BackgroundSyncNetworkObserver::NetworkSufficient(
     case NETWORK_STATE_AVOID_CELLULAR:
       // Note that this returns true for CONNECTION_UNKNOWN to avoid never
       // firing.
-      return connection_type_ != net::NetworkChangeNotifier::CONNECTION_NONE &&
-             !net::NetworkChangeNotifier::IsConnectionCellular(
+      return true;
+      return connection_type_ != mojom::ConnectionType::CONNECTION_NONE &&
+             !NetworkChangeManagerClientImpl::IsConnectionCellular(
                  connection_type_);
     case NETWORK_STATE_ONLINE:
-      return connection_type_ != net::NetworkChangeNotifier::CONNECTION_NONE;
+      return connection_type_ != mojom::ConnectionType::CONNECTION_NONE;
   }
 
   NOTREACHED();
@@ -57,7 +58,7 @@ bool BackgroundSyncNetworkObserver::NetworkSufficient(
 }
 
 void BackgroundSyncNetworkObserver::OnNetworkChanged(
-    net::NetworkChangeNotifier::ConnectionType connection_type) {
+    mojom::ConnectionType connection_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   if (ignore_network_change_notifier_)
@@ -66,12 +67,12 @@ void BackgroundSyncNetworkObserver::OnNetworkChanged(
 }
 
 void BackgroundSyncNetworkObserver::NotifyManagerIfNetworkChangedForTesting(
-    net::NetworkChangeNotifier::ConnectionType connection_type) {
+    mojom::ConnectionType connection_type) {
   NotifyManagerIfNetworkChanged(connection_type);
 }
 
 void BackgroundSyncNetworkObserver::NotifyManagerIfNetworkChanged(
-    net::NetworkChangeNotifier::ConnectionType connection_type) {
+    mojom::ConnectionType connection_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (connection_type == connection_type_)
     return;
