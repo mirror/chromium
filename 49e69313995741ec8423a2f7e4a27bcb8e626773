@@ -52,6 +52,24 @@
       "revId": "49e69313995741ec8423a2f7e4a27bcb8e626773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00d30895_c4809057",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-15T14:36:26Z",
+      "side": 0,
+      "message": "The problem was that the tasks from this queue were executed during print window when the execution context was paused. This let to us checking for this and dropping the callback.\n\nSo we moved this task type to SuspendableTaskRunner to ensure that this task is paused during dialogs. Now all tasks are paused during dialogs :).\n\nThere is a separate question why this task type doesn\u0027t go to PausableTaskQueue now, and I believe that the answer is the same as for the rest of the tasks: we don\u0027t have evidence that it shouldn\u0027t be in the deferrable task queue.",
+      "parentUuid": "aca87da6_c4431244",
+      "revId": "49e69313995741ec8423a2f7e4a27bcb8e626773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
