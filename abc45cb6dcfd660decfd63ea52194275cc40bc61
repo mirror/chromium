@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24063b3f_3733adc7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Actually UI wise there is a lot of TODO, I have added a few, but since there is so much more to do in the UI, I will just add a blanket TODO to polish UI according to mocks for now.",
+      "parentUuid": "39a8841c_d0a9cafd",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3944cd65_d29f3aea",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "39dffe22_5b2465e8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Yes, that\u0027s mostly the idea, but I don\u0027t want to make that decision yet, before Amy gives us final mocks for iPad which will affect that decision",
+      "parentUuid": "3944cd65_d29f3aea",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 27
+      },
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f226f9_a9e77dcc",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 11
@@ -56,6 +98,24 @@
       "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b25f7b5_a951d907",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Thanks done :)",
+      "parentUuid": "85f226f9_a9e77dcc",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9444ceed_c1c56f3a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22a6a117_01b142e6",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04d6e3b4_c2b99237",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 11
@@ -96,6 +180,24 @@
       "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f2b35d_7c8f1054",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04d6e3b4_c2b99237",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "3b1e0dad_a1a3d24e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Thanks, you are right, we don\u0027t need it.",
+      "parentUuid": "c247d3ba_1ff42c0d",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c50a20_213b08f3",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
         "patchSetId": 11
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-15T05:00:39Z",
       "side": 1,
       "message": "It seems our experiment will break the following tests as well:\nkeyboard_commands_egtest.mm # testKeyboardCommandsNotRegistered_BookmarksPresented\nnew_tab_page_egtest.mm # testAccessibilityOnBookmarks\nsignin_interaction_controller_egtest.mm # testSignInCancelFromBookmarks",
+      "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d05294_5b245b11",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-15T06:07:44Z",
+      "side": 1,
+      "message": "Thanks for pointing this out Marti. Made changes to those tests.",
+      "parentUuid": "80c50a20_213b08f3",
       "revId": "abc45cb6dcfd660decfd63ea52194275cc40bc61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
