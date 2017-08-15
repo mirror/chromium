@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "880b75dc_567b308e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T17:08:38Z",
+      "side": 1,
+      "message": "I believe some of the SetFocus APIs are called on the RWHI after the renderer is destroyed. At least that happened in some of the unit tests.\n\nSince a chrome IPC with a routing_id to no where doesn\u0027t fail. I return an unbound interface ptr. Which just dlogs the calls.",
+      "parentUuid": "9840946e_c998c3cb",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93c7d43_a53ddff2",
         "filename": "content/renderer/input/frame_input_handler_impl.cc",
         "patchSetId": 4
