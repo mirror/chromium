@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af2fda7a_cf995252",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T17:52:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4f6a48_5d57e0fb",
+      "revId": "bacfd0b442072787917c03cda78864537d3641b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa22ac29_aa86e9f4",
         "filename": "build/toolchain/gcc_toolchain.gni",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T00:46:27Z",
       "side": 1,
       "message": "So this is stripping the unstripped library?",
+      "revId": "bacfd0b442072787917c03cda78864537d3641b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c2b5bc_27116868",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T17:52:37Z",
+      "side": 1,
+      "message": "Yes. lib.unstripped is what previously is not uploaded to isolated and what is needed for symbolization.",
+      "parentUuid": "aa22ac29_aa86e9f4",
       "revId": "bacfd0b442072787917c03cda78864537d3641b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
