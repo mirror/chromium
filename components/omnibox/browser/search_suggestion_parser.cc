@@ -219,7 +219,7 @@ int SearchSuggestionParser::SuggestResult::CalculateRelevance(
     bool keyword_provider_requested) const {
   if (!from_keyword_provider_ && keyword_provider_requested)
     return 100;
-  return ((input.type() == metrics::OmniboxInputType::URL) ? 300 : 600);
+  return ((input.type() == metrics::omnibox::URL) ? 300 : 600);
 }
 
 // SearchSuggestionParser::NavigationResult ------------------------------------

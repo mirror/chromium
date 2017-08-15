@@ -115,8 +115,8 @@ void ShortcutsProvider::Start(const AutocompleteInput& input,
   matches_.clear();
 
   if (input.from_omnibox_focus() ||
-      (input.type() == metrics::OmniboxInputType::INVALID) ||
-      input.text().empty() || !initialized_)
+      (input.type() == metrics::omnibox::INVALID) || input.text().empty() ||
+      !initialized_)
     return;
 
   base::TimeTicks start_time = base::TimeTicks::Now();

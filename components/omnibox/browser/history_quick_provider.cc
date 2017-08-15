@@ -49,7 +49,7 @@ void HistoryQuickProvider::Start(const AutocompleteInput& input,
     return;
 
   // Don't bother with INVALID.
-  if ((input.type() == metrics::OmniboxInputType::INVALID))
+  if ((input.type() == metrics::omnibox::INVALID))
     return;
 
   autocomplete_input_ = input;
@@ -86,7 +86,7 @@ void HistoryQuickProvider::DoAutocomplete() {
   // provider won't promote the URL-what-you-typed match to first
   // for these inputs.
   const bool can_have_url_what_you_typed_match_first =
-      (autocomplete_input_.type() != metrics::OmniboxInputType::QUERY) &&
+      (autocomplete_input_.type() != metrics::omnibox::QUERY) &&
       (!autocomplete_input_.parts().username.is_nonempty() ||
        autocomplete_input_.parts().password.is_nonempty() ||
        autocomplete_input_.parts().path.is_nonempty());

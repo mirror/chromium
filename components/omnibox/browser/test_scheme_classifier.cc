@@ -14,7 +14,7 @@ TestSchemeClassifier::TestSchemeClassifier() {}
 
 TestSchemeClassifier::~TestSchemeClassifier() {}
 
-metrics::OmniboxInputType::Type TestSchemeClassifier::GetInputTypeForScheme(
+metrics::omnibox::OmniboxInputType TestSchemeClassifier::GetInputTypeForScheme(
     const std::string& scheme) const {
   // This doesn't check the preference but check some chrome-ish schemes.
   const char* kKnownURLSchemes[] = {
@@ -23,10 +23,10 @@ metrics::OmniboxInputType::Type TestSchemeClassifier::GetInputTypeForScheme(
   };
   for (size_t i = 0; i < arraysize(kKnownURLSchemes); ++i) {
     if (scheme == kKnownURLSchemes[i])
-      return metrics::OmniboxInputType::URL;
+      return metrics::omnibox::URL;
   }
   if (net::URLRequest::IsHandledProtocol(scheme))
-      return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
 
-  return metrics::OmniboxInputType::INVALID;
+  return metrics::omnibox::INVALID;
 }

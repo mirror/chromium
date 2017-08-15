@@ -162,7 +162,7 @@ void SearchProvider::RegisterDisplayedAnswers(
 
 // static
 int SearchProvider::CalculateRelevanceForKeywordVerbatim(
-    metrics::OmniboxInputType::Type type,
+    metrics::omnibox::OmniboxInputType type,
     bool allow_exact_keyword_match,
     bool prefer_keyword) {
   // This function is responsible for scoring verbatim query matches
@@ -171,9 +171,9 @@ int SearchProvider::CalculateRelevanceForKeywordVerbatim(
   // keyword verbatim matches.
   if (allow_exact_keyword_match && prefer_keyword)
     return 1500;
-  return (allow_exact_keyword_match &&
-          (type == metrics::OmniboxInputType::QUERY)) ?
-      1450 : 1100;
+  return (allow_exact_keyword_match && (type == metrics::omnibox::QUERY))
+             ? 1450
+             : 1100;
 }
 
 void SearchProvider::ResetSession() {
@@ -228,7 +228,7 @@ void SearchProvider::Start(const AutocompleteInput& input,
   // do anything useful for on-focus inputs or empty inputs.  Exit early.
   if (!base::FeatureList::IsEnabled(omnibox::kSearchProviderWarmUpOnFocus) &&
       (input.from_omnibox_focus() ||
-       input.type() == metrics::OmniboxInputType::INVALID)) {
+       input.type() == metrics::omnibox::INVALID)) {
     Stop(true, false);
     return;
   }
@@ -777,7 +777,7 @@ bool SearchProvider::IsQueryPotentionallyPrivate() const {
   if (!base::LowerCaseEqualsASCII(input_.scheme(), url::kHttpScheme) &&
       !base::LowerCaseEqualsASCII(input_.scheme(), url::kHttpsScheme) &&
       !base::LowerCaseEqualsASCII(input_.scheme(), url::kFtpScheme))
-    return (input_.type() != metrics::OmniboxInputType::QUERY);
+    return (input_.type() != metrics::omnibox::QUERY);
 
   // Don't send URLs with usernames, queries or refs.  Some of these are
   // private, and the Suggest server is unlikely to have any useful results
@@ -791,8 +791,7 @@ bool SearchProvider::IsQueryPotentionallyPrivate() const {
   const url::Parsed& parts = input_.parts();
   if (parts.username.is_nonempty() || parts.port.is_nonempty() ||
       parts.query.is_nonempty() ||
-      (parts.ref.is_nonempty() &&
-       (input_.type() == metrics::OmniboxInputType::URL)))
+      (parts.ref.is_nonempty() && (input_.type() == metrics::omnibox::URL)))
     return true;
 
   // Don't send anything for https except the hostname.  Hostnames are OK
@@ -1115,11 +1114,11 @@ void SearchProvider::RemoveExtraAnswers(ACMatches* matches) {
 bool SearchProvider::IsTopMatchSearchWithURLInput() const {
   ACMatches::const_iterator first_match =
       AutocompleteResult::FindTopMatch(matches_);
-  return (input_.type() == metrics::OmniboxInputType::URL) &&
-      (first_match != matches_.end()) &&
-      (first_match->relevance > CalculateRelevanceForVerbatim()) &&
-      (first_match->type != AutocompleteMatchType::NAVSUGGEST) &&
-      (first_match->type != AutocompleteMatchType::NAVSUGGEST_PERSONALIZED);
+  return (input_.type() == metrics::omnibox::URL) &&
+         (first_match != matches_.end()) &&
+         (first_match->relevance > CalculateRelevanceForVerbatim()) &&
+         (first_match->type != AutocompleteMatchType::NAVSUGGEST) &&
+         (first_match->type != AutocompleteMatchType::NAVSUGGEST_PERSONALIZED);
 }
 
 void SearchProvider::AddNavigationResultsToMatches(
@@ -1286,7 +1285,7 @@ void SearchProvider::ScoreHistoryResults(
   }
 
   bool prevent_inline_autocomplete = input_.prevent_inline_autocomplete() ||
-      (input_.type() == metrics::OmniboxInputType::URL);
+                                     (input_.type() == metrics::omnibox::URL);
   const base::string16 input_text = GetInput(is_keyword).text();
   bool input_multiple_words = HasMultipleWords(input_text);
 
@@ -1355,11 +1354,11 @@ int SearchProvider::CalculateRelevanceForVerbatim() const {
 int SearchProvider::
     CalculateRelevanceForVerbatimIgnoringKeywordModeState() const {
   switch (input_.type()) {
-    case metrics::OmniboxInputType::UNKNOWN:
-    case metrics::OmniboxInputType::QUERY:
+    case metrics::omnibox::UNKNOWN:
+    case metrics::omnibox::QUERY:
       return kNonURLVerbatimRelevance;
 
-    case metrics::OmniboxInputType::URL:
+    case metrics::omnibox::URL:
       return 850;
 
     default:
@@ -1427,7 +1426,7 @@ int SearchProvider::CalculateRelevanceForHistory(
   // a different way.
   int base_score;
   if (is_primary_provider)
-    base_score = (input_.type() == metrics::OmniboxInputType::URL) ? 750 : 1050;
+    base_score = (input_.type() == metrics::omnibox::URL) ? 750 : 1050;
   else
     base_score = 200;
   return std::max(0, base_score - score_discount);

@@ -359,7 +359,7 @@ KeywordProvider::~KeywordProvider() {}
 bool KeywordProvider::ExtractKeywordFromInput(const AutocompleteInput& input,
                                               base::string16* keyword,
                                               base::string16* remaining_input) {
-  if ((input.type() == metrics::OmniboxInputType::INVALID))
+  if ((input.type() == metrics::omnibox::INVALID))
     return false;
 
   *keyword = TemplateURLService::CleanUserInputKeyword(
@@ -368,7 +368,7 @@ bool KeywordProvider::ExtractKeywordFromInput(const AutocompleteInput& input,
 }
 
 // static
-int KeywordProvider::CalculateRelevance(metrics::OmniboxInputType::Type type,
+int KeywordProvider::CalculateRelevance(metrics::omnibox::OmniboxInputType type,
                                         bool complete,
                                         bool sufficiently_complete,
                                         bool supports_replacement,
@@ -381,7 +381,7 @@ int KeywordProvider::CalculateRelevance(metrics::OmniboxInputType::Type type,
     // do so.
     if (sufficiently_complete && (sufficiently_complete_score > -1))
       return sufficiently_complete_score;
-    return (type == metrics::OmniboxInputType::URL) ? 700 : 450;
+    return (type == metrics::omnibox::URL) ? 700 : 450;
   }
   if (!supports_replacement)
     return 1500;

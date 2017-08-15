@@ -67,13 +67,12 @@ void PopulateTermsPrefixedByHttpOrHttps(
 AutocompleteInput::AutocompleteInput()
     : cursor_position_(base::string16::npos),
       current_page_classification_(metrics::OmniboxEventProto::INVALID_SPEC),
-      type_(metrics::OmniboxInputType::INVALID),
+      type_(metrics::omnibox::INVALID),
       prevent_inline_autocomplete_(false),
       prefer_keyword_(false),
       allow_exact_keyword_match_(true),
       want_asynchronous_matches_(true),
-      from_omnibox_focus_(false) {
-}
+      from_omnibox_focus_(false) {}
 
 AutocompleteInput::AutocompleteInput(
     const base::string16& text,
@@ -112,11 +111,11 @@ AutocompleteInput::AutocompleteInput(
                 &canonicalized_url);
   PopulateTermsPrefixedByHttpOrHttps(text_, &terms_prefixed_by_http_or_https_);
 
-  if (type_ == metrics::OmniboxInputType::INVALID)
+  if (type_ == metrics::omnibox::INVALID)
     return;
 
-  if (((type_ == metrics::OmniboxInputType::UNKNOWN) ||
-       (type_ == metrics::OmniboxInputType::URL)) &&
+  if (((type_ == metrics::omnibox::UNKNOWN) ||
+       (type_ == metrics::omnibox::URL)) &&
       canonicalized_url.is_valid() &&
       (!canonicalized_url.IsStandard() || canonicalized_url.SchemeIsFile() ||
        canonicalized_url.SchemeIsFileSystem() ||
@@ -131,22 +130,26 @@ AutocompleteInput::~AutocompleteInput() {
 
 // static
 std::string AutocompleteInput::TypeToString(
-    metrics::OmniboxInputType::Type type) {
+    metrics::omnibox::OmniboxInputType type) {
   switch (type) {
-    case metrics::OmniboxInputType::INVALID:      return "invalid";
-    case metrics::OmniboxInputType::UNKNOWN:      return "unknown";
-    case metrics::OmniboxInputType::DEPRECATED_REQUESTED_URL:
+    case metrics::omnibox::INVALID:
+      return "invalid";
+    case metrics::omnibox::UNKNOWN:
+      return "unknown";
+    case metrics::omnibox::DEPRECATED_REQUESTED_URL:
       return "deprecated-requested-url";
-    case metrics::OmniboxInputType::URL:          return "url";
-    case metrics::OmniboxInputType::QUERY:        return "query";
-    case metrics::OmniboxInputType::DEPRECATED_FORCED_QUERY:
+    case metrics::omnibox::URL:
+      return "url";
+    case metrics::omnibox::QUERY:
+      return "query";
+    case metrics::omnibox::DEPRECATED_FORCED_QUERY:
       return "deprecated-forced-query";
   }
   return std::string();
 }
 
 // static
-metrics::OmniboxInputType::Type AutocompleteInput::Parse(
+metrics::omnibox::OmniboxInputType AutocompleteInput::Parse(
     const base::string16& text,
     const std::string& desired_tld,
     const AutocompleteSchemeClassifier& scheme_classifier,
@@ -155,7 +158,7 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
     GURL* canonicalized_url) {
   size_t first_non_white = text.find_first_not_of(base::kWhitespaceUTF16, 0);
   if (first_non_white == base::string16::npos)
-    return metrics::OmniboxInputType::INVALID;  // All whitespace.
+    return metrics::omnibox::INVALID;  // All whitespace.
 
   // Ask our parsing back-end to help us understand what the user typed.  We
   // use the URLFixerUpper here because we want to be smart about what we
@@ -178,13 +181,13 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
   *canonicalized_url =
       url_formatter::FixupURL(base::UTF16ToUTF8(text), desired_tld);
   if (!canonicalized_url->is_valid())
-    return metrics::OmniboxInputType::QUERY;
+    return metrics::omnibox::QUERY;
 
   if (base::LowerCaseEqualsASCII(parsed_scheme_utf8, url::kFileScheme)) {
     // A user might or might not type a scheme when entering a file URL.  In
     // either case, |parsed_scheme_utf8| will tell us that this is a file URL,
     // but |parts->scheme| might be empty, e.g. if the user typed "C:\foo".
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
   }
 
   // If the user typed a scheme, and it's HTTP or HTTPS, we know how to parse it
@@ -196,9 +199,9 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
   if (parts->scheme.is_nonempty() &&
       !base::LowerCaseEqualsASCII(parsed_scheme_utf8, url::kHttpScheme) &&
       !base::LowerCaseEqualsASCII(parsed_scheme_utf8, url::kHttpsScheme)) {
-    metrics::OmniboxInputType::Type type =
+    metrics::omnibox::OmniboxInputType type =
         scheme_classifier.GetInputTypeForScheme(parsed_scheme_utf8);
-    if (type != metrics::OmniboxInputType::INVALID)
+    if (type != metrics::omnibox::INVALID)
       return type;
 
     // We don't know about this scheme.  It might be that the user typed a
@@ -209,13 +212,13 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
     url::Parsed http_parts;
     base::string16 http_scheme;
     GURL http_canonicalized_url;
-    metrics::OmniboxInputType::Type http_type =
+    metrics::omnibox::OmniboxInputType http_type =
         Parse(http_scheme_prefix + text, desired_tld, scheme_classifier,
               &http_parts, &http_scheme, &http_canonicalized_url);
     DCHECK_EQ(std::string(url::kHttpScheme),
               base::UTF16ToUTF8(http_scheme));
 
-    if ((http_type == metrics::OmniboxInputType::URL) &&
+    if ((http_type == metrics::omnibox::URL) &&
         http_parts.username.is_nonempty() &&
         http_parts.password.is_nonempty()) {
       // Manually re-jigger the parsed parts to match |text| (without the
@@ -240,7 +243,7 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
         scheme->clear();
       *canonicalized_url = http_canonicalized_url;
 
-      return metrics::OmniboxInputType::URL;
+      return metrics::omnibox::URL;
     }
 
     // We don't know about this scheme and it doesn't look like the user
@@ -249,7 +252,7 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
     // the option of treating it as a URL if we're wrong.
     // Note that SegmentURL() is smart so we aren't tricked by "c:\foo" or
     // "www.example.com:81" in this case.
-    return metrics::OmniboxInputType::UNKNOWN;
+    return metrics::omnibox::UNKNOWN;
   }
 
   // Either the user didn't type a scheme, in which case we need to distinguish
@@ -300,15 +303,17 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
     // These might be possible in intranets, but we're not going to support them
     // without concrete evidence that doing so is necessary.
     return (parts->scheme.is_nonempty() ||
-        (has_known_tld && (original_host.find(' ') == base::string16::npos))) ?
-        metrics::OmniboxInputType::UNKNOWN : metrics::OmniboxInputType::QUERY;
+            (has_known_tld &&
+             (original_host.find(' ') == base::string16::npos)))
+               ? metrics::omnibox::UNKNOWN
+               : metrics::omnibox::QUERY;
   }
 
   // For hostnames that look like IP addresses, distinguish between IPv6
   // addresses, which are basically guaranteed to be navigations, and IPv4
   // addresses, which are much fuzzier.
   if (host_info.family == url::CanonHostInfo::IPV6)
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
   if (host_info.family == url::CanonHostInfo::IPV4) {
     // The host may be a real IP address, or something that looks a bit like it
     // (e.g. "1.2" or "3232235521").  We check whether it was convertible to an
@@ -346,26 +351,26 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
       net::CanonicalizeHost(base::UTF16ToUTF8(original_host), &host_info);
       if ((host_info.family == url::CanonHostInfo::IPV4) &&
           (host_info.num_ipv4_components == 4))
-        return metrics::OmniboxInputType::URL;
+        return metrics::omnibox::URL;
     }
 
     // By this point, if we have an "IP" with first octet zero, we know it
     // wasn't "0.0.0.0", so mark it as non-navigable.
     if (host_info.address[0] == 0)
-      return metrics::OmniboxInputType::QUERY;
+      return metrics::omnibox::QUERY;
   }
 
   // Now that we've ruled out all schemes other than http or https and done a
   // little more sanity checking, the presence of a scheme means this is likely
   // a URL.
   if (parts->scheme.is_nonempty())
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
 
   // Trailing slashes force the input to be treated as a URL.
   if (parts->path.is_nonempty()) {
     base::char16 c = text[parts->path.end() - 1];
     if ((c == '\\') || (c == '/'))
-      return metrics::OmniboxInputType::URL;
+      return metrics::omnibox::URL;
   }
 
   // Handle the cases we detected in the IPv4 code above as "almost certainly a
@@ -373,13 +378,13 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
   // scheme/trailing slash.
   if ((host_info.family == url::CanonHostInfo::IPV4) &&
       (host_info.num_ipv4_components > 1))
-    return metrics::OmniboxInputType::QUERY;
+    return metrics::omnibox::QUERY;
 
   // If there is more than one recognized non-host component, this is likely to
   // be a URL, even if the TLD is unknown (in which case this is likely an
   // intranet URL).
   if (NumNonHostComponents(*parts) > 1)
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
 
   // If we reach here with a username, our input looks something like
   // "user@host".  Unless there is a desired TLD, we think this is more likely
@@ -387,13 +392,13 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
   // there _is_ a desired TLD, the user hit ctrl-enter, and we assume that
   // implies an attempted navigation.)
   if (canonicalized_url->has_username() && desired_tld.empty())
-    return metrics::OmniboxInputType::UNKNOWN;
+    return metrics::omnibox::UNKNOWN;
 
   // If the host has a known TLD or a port, it's probably a URL.  Note that we
   // special-case "localhost" as a known hostname.
   if (has_known_tld || (canonicalized_url->host() == "localhost") ||
       canonicalized_url->has_port())
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
 
   // No scheme, username, port, and no known TLD on the host.
   // This could be:
@@ -409,7 +414,7 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
   //   QUERY.  Since this is indistinguishable from the case above, and this
   //   case is much more likely, claim these are UNKNOWN, which should default
   //   to the right thing and let users correct us on a case-by-case basis.
-  return metrics::OmniboxInputType::UNKNOWN;
+  return metrics::omnibox::UNKNOWN;
 }
 
 // static
@@ -518,7 +523,7 @@ void AutocompleteInput::Clear() {
   current_url_ = GURL();
   current_title_.clear();
   current_page_classification_ = metrics::OmniboxEventProto::INVALID_SPEC;
-  type_ = metrics::OmniboxInputType::INVALID;
+  type_ = metrics::omnibox::INVALID;
   parts_ = url::Parsed();
   scheme_.clear();
   canonicalized_url_ = GURL();

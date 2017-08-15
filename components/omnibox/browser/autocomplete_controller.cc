@@ -353,7 +353,7 @@ void AutocompleteController::Start(const AutocompleteInput& input) {
   // dereference.
   if (base::FeatureList::IsEnabled(
           omnibox::kSpeculativeServiceWorkerStartOnQueryInput) &&
-      (input.type() == metrics::OmniboxInputType::QUERY) &&
+      (input.type() == metrics::omnibox::QUERY) &&
       !search_service_worker_signal_sent_ &&
       (result_.default_match() != result_.end())) {
     search_service_worker_signal_sent_ = true;

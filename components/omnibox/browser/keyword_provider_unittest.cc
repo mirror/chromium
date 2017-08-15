@@ -34,11 +34,11 @@ namespace {
 
 class TestingSchemeClassifier : public AutocompleteSchemeClassifier {
  public:
-  metrics::OmniboxInputType::Type GetInputTypeForScheme(
+  metrics::omnibox::OmniboxInputType GetInputTypeForScheme(
       const std::string& scheme) const override {
     if (net::URLRequest::IsHandledProtocol(scheme))
-      return metrics::OmniboxInputType::URL;
-    return metrics::OmniboxInputType::INVALID;
+      return metrics::omnibox::URL;
+    return metrics::omnibox::INVALID;
   }
 };
 

@@ -19,7 +19,7 @@ ChromeAutocompleteSchemeClassifier::ChromeAutocompleteSchemeClassifier(
 ChromeAutocompleteSchemeClassifier::~ChromeAutocompleteSchemeClassifier() {
 }
 
-metrics::OmniboxInputType::Type
+metrics::omnibox::OmniboxInputType
 ChromeAutocompleteSchemeClassifier::GetInputTypeForScheme(
     const std::string& scheme) const {
   if (base::IsStringASCII(scheme) &&
@@ -27,7 +27,7 @@ ChromeAutocompleteSchemeClassifier::GetInputTypeForScheme(
        base::LowerCaseEqualsASCII(scheme, content::kViewSourceScheme) ||
        base::LowerCaseEqualsASCII(scheme, url::kJavaScriptScheme) ||
        base::LowerCaseEqualsASCII(scheme, url::kDataScheme))) {
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
   }
 
   // Also check for schemes registered via registerProtocolHandler(), which
@@ -35,7 +35,7 @@ ChromeAutocompleteSchemeClassifier::GetInputTypeForScheme(
   ProtocolHandlerRegistry* registry = profile_ ?
       ProtocolHandlerRegistryFactory::GetForBrowserContext(profile_) : NULL;
   if (registry && registry->IsHandledProtocol(scheme))
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
 
   // Not an internal protocol; check if it's an external protocol, i.e. one
   // that's registered on the user's OS and will shell out to another program.
@@ -48,14 +48,14 @@ ChromeAutocompleteSchemeClassifier::GetInputTypeForScheme(
       ExternalProtocolHandler::GetBlockState(scheme, profile_);
   switch (block_state) {
     case ExternalProtocolHandler::DONT_BLOCK:
-      return metrics::OmniboxInputType::URL;
+      return metrics::omnibox::URL;
 
     case ExternalProtocolHandler::BLOCK:
       // If we don't want the user to open the URL, don't let it be navigated
       // to at all.
-      return metrics::OmniboxInputType::QUERY;
+      return metrics::omnibox::QUERY;
 
     default:
-      return metrics::OmniboxInputType::INVALID;
+      return metrics::omnibox::INVALID;
   }
 }

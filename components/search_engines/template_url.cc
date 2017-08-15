@@ -168,7 +168,7 @@ bool IsTemplateParameterString(const std::string& param) {
 TemplateURLRef::SearchTermsArgs::SearchTermsArgs(
     const base::string16& search_terms)
     : search_terms(search_terms),
-      input_type(metrics::OmniboxInputType::INVALID),
+      input_type(metrics::omnibox::INVALID),
       accepted_suggestion(NO_SUGGESTIONS_AVAILABLE),
       cursor_position(base::string16::npos),
       page_classification(metrics::OmniboxEventProto::INVALID_SPEC),

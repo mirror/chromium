@@ -395,11 +395,10 @@ HistoryURLProvider::VisitClassifier::VisitClassifier(
   // Detect email addresses.  These cases will look like "http://user@site/",
   // and because the history backend strips auth creds, we'll get a bogus exact
   // match below if the user has visited "site".
-  if (!url.is_valid() ||
-      ((input.type() == metrics::OmniboxInputType::UNKNOWN) &&
-       input.parts().username.is_nonempty() &&
-       !input.parts().password.is_nonempty() &&
-       !input.parts().path.is_nonempty()))
+  if (!url.is_valid() || ((input.type() == metrics::omnibox::UNKNOWN) &&
+                          input.parts().username.is_nonempty() &&
+                          !input.parts().password.is_nonempty() &&
+                          !input.parts().path.is_nonempty()))
     return;
 
   if (db_->GetRowForURL(url, &url_row_)) {
@@ -467,8 +466,7 @@ void HistoryURLProvider::Start(const AutocompleteInput& input,
 
   matches_.clear();
 
-  if (input.from_omnibox_focus() ||
-      (input.type() == metrics::OmniboxInputType::INVALID))
+  if (input.from_omnibox_focus() || (input.type() == metrics::omnibox::INVALID))
     return;
 
   // Do some fixup on the user input before matching against it, so we provide
@@ -491,7 +489,7 @@ void HistoryURLProvider::Start(const AutocompleteInput& input,
   // URL DB; otherwise, we'll replace this match lower down.  Don't do this for
   // queries, though -- while we can sometimes mark up a match for them, it's
   // not what the user wants, and just adds noise.
-  if (fixed_up_input.type() != metrics::OmniboxInputType::QUERY)
+  if (fixed_up_input.type() != metrics::omnibox::QUERY)
     matches_.push_back(what_you_typed_match);
 
   // We'll need the history service to run both passes, so try to obtain it.
@@ -589,8 +587,7 @@ AutocompleteMatch HistoryURLProvider::SuggestExactInput(
        client()->GetTemplateURLService() &&
        client()->GetTemplateURLService()->GetDefaultSearchProvider();
     match.allowed_to_be_default_match =
-        (input.type() == metrics::OmniboxInputType::URL) ||
-        !has_default_search_provider;
+        (input.type() == metrics::omnibox::URL) || !has_default_search_provider;
     // NOTE: Don't set match.inline_autocompletion to something non-empty here;
     // it's surprising and annoying.
 
@@ -766,8 +763,8 @@ void HistoryURLProvider::DoAutocomplete(history::HistoryBackend* backend,
   // UNKNOWN, we'll still show an accidental search infobar if need be.
   VisitClassifier classifier(this, params->input, db);
   params->have_what_you_typed_match =
-      (params->input.type() != metrics::OmniboxInputType::QUERY) &&
-      ((params->input.type() != metrics::OmniboxInputType::UNKNOWN) ||
+      (params->input.type() != metrics::omnibox::QUERY) &&
+      ((params->input.type() != metrics::omnibox::UNKNOWN) ||
        (classifier.type() == VisitClassifier::UNVISITED_INTRANET) ||
        !params->trim_http ||
        (AutocompleteInput::NumNonHostComponents(params->input.parts()) > 0) ||
@@ -967,7 +964,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
   // will not distinguish between the input "c" and the input "c#", both of
   // which will have empty reference fragments.)
   if ((type == UNVISITED_INTRANET) &&
-      (params->input.type() != metrics::OmniboxInputType::URL) &&
+      (params->input.type() != metrics::omnibox::URL) &&
       url.username().empty() && url.password().empty() && url.port().empty() &&
       (url.path_piece() == "/") && url.query().empty() &&
       (parsed.CountCharactersBefore(url::Parsed::REF, true) !=
@@ -999,7 +996,7 @@ bool HistoryURLProvider::CanFindIntranetURL(
   // third condition, but because FixupUserInput() can run and modify the
   // input's text and parts between Parse() and here, it seems better to be
   // paranoid and check.
-  if ((input.type() != metrics::OmniboxInputType::UNKNOWN) ||
+  if ((input.type() != metrics::omnibox::UNKNOWN) ||
       !base::LowerCaseEqualsASCII(input.scheme(), url::kHttpScheme) ||
       !input.parts().host.is_nonempty())
     return false;

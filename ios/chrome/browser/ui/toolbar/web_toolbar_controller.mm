@@ -1794,10 +1794,10 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)loadURLForQuery:(NSString*)query {
   GURL searchURL;
-  metrics::OmniboxInputType::Type type = AutocompleteInput::Parse(
+  metrics::omnibox::OmniboxInputType type = AutocompleteInput::Parse(
       base::SysNSStringToUTF16(query), std::string(),
       AutocompleteSchemeClassifierImpl(), nullptr, nullptr, &searchURL);
-  if (type != metrics::OmniboxInputType::URL || !searchURL.is_valid()) {
+  if (type != metrics::omnibox::URL || !searchURL.is_valid()) {
     searchURL = GetDefaultSearchURLForSearchTerms(
         ios::TemplateURLServiceFactory::GetForBrowserState(_browserState),
         base::SysNSStringToUTF16(query));

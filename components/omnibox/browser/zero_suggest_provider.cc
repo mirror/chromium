@@ -105,7 +105,7 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
   TRACE_EVENT0("omnibox", "ZeroSuggestProvider::Start");
   matches_.clear();
   if (!input.from_omnibox_focus() || client()->IsOffTheRecord() ||
-      input.type() == metrics::OmniboxInputType::INVALID)
+      input.type() == metrics::omnibox::INVALID)
     return;
 
   Stop(true, false);

@@ -17,15 +17,15 @@ AutocompleteSchemeClassifierImpl::AutocompleteSchemeClassifierImpl() {}
 
 AutocompleteSchemeClassifierImpl::~AutocompleteSchemeClassifierImpl() {}
 
-metrics::OmniboxInputType::Type
+metrics::omnibox::OmniboxInputType
 AutocompleteSchemeClassifierImpl::GetInputTypeForScheme(
     const std::string& scheme) const {
   DCHECK_EQ(scheme, base::ToLowerASCII(scheme));
   if (base::IsStringASCII(scheme) &&
       (IsHandledProtocol(scheme) || (scheme == url::kJavaScriptScheme))) {
-    return metrics::OmniboxInputType::URL;
+    return metrics::omnibox::URL;
   }
 
   // iOS does not support registration of external schemes.
-  return metrics::OmniboxInputType::INVALID;
+  return metrics::omnibox::INVALID;
 }
