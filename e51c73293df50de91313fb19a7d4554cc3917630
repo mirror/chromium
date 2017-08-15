@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ac4c133f_b3399171",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-15T17:42:42Z",
+      "side": 1,
+      "message": "Fair enough. In my ideal world we would pass some struct or similar that contained (context_type, extension) and enforced suitable invariants, but that sounds like a lot of work. :)",
+      "parentUuid": "f51cc861_506979ca",
+      "revId": "e51c73293df50de91313fb19a7d4554cc3917630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8473492e_e817faa1",
         "filename": "extensions/renderer/feature_cache.h",
         "patchSetId": 4
