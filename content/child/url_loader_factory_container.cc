@@ -6,6 +6,8 @@
 
 namespace content {
 
+URLLoaderFactoryContainer::URLLoaderFactoryContainer() = default;
+
 URLLoaderFactoryContainer::URLLoaderFactoryContainer(
     PossiblyAssociatedURLLoaderFactory network_loader_factory,
     mojom::URLLoaderFactoryPtr blob_loader_factory)

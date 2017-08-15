@@ -5,21 +5,24 @@
 #ifndef CONTENT_CHILD_URL_LOADER_FACTORY_CONTAINER_H_
 #define CONTENT_CHILD_URL_LOADER_FACTORY_CONTAINER_H_
 
+#include "base/memory/ref_counted.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 
 namespace content {
 
-// Contains default URLLoaderFactory's.
-class URLLoaderFactoryContainer {
+// Contains default URLLoaderFactory's for a loading context
+// (e.g. a frame).
+class URLLoaderFactoryContainer
+    : public base::RefCounted<URLLoaderFactoryContainer> {
  public:
   using PossiblyAssociatedURLLoaderFactory =
       PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>;
 
+  URLLoaderFactoryContainer();
   URLLoaderFactoryContainer(
       PossiblyAssociatedURLLoaderFactory network_loader_factory,
       mojom::URLLoaderFactoryPtr blob_loader_factory);
-  ~URLLoaderFactoryContainer();
 
   mojom::URLLoaderFactory* network_loader_factory() const {
     return network_loader_factory_.get();
@@ -30,6 +33,9 @@ class URLLoaderFactoryContainer {
   }
 
  private:
+  friend class base::RefCounted<URLLoaderFactoryContainer>;
+  ~URLLoaderFactoryContainer();
+
   PossiblyAssociatedURLLoaderFactory network_loader_factory_;
   mojom::URLLoaderFactoryPtr blob_loader_factory_;
 };

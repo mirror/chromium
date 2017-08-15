@@ -11,12 +11,14 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner_helpers.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 
 namespace base {
@@ -25,9 +27,14 @@ class SingleThreadTaskRunner;
 
 namespace content {
 
+namespace mojom {
+class URLLoaderFactory;
+}
+
 class ServiceWorkerHandleReference;
 class ServiceWorkerRegistrationHandleReference;
 struct ServiceWorkerProviderContextDeleter;
+class URLLoaderFactoryContainer;
 
 // ServiceWorkerProviderContext has different roles depending on if it's for a
 // "controllee" (a Document or Worker execution context), or a "controller" (a
@@ -64,11 +71,19 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // content::ServiceWorkerProviderHost which notifies changes of the
   // registration's and workers' status. |request| is bound with |binding_|.
   // The new instance is registered to |dispatcher|, which is not owned.
+  //
+  // For Servicification:
+  // |default_loader_factory_container| contains a set of default loader
+  // factories for the associated loading context, and is used when we
+  // create a subresource loader for controllees. This is non-null only
+  // if the provider is created for controllees, and if the loading context,
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
-      ServiceWorkerDispatcher* dispatcher);
+      ServiceWorkerDispatcher* dispatcher,
+      scoped_refptr<URLLoaderFactoryContainer>
+          default_loader_factory_container);
 
   // For service worker execution contexts. Sets the registration for
   // ServiceWorkerGlobalScope#registration. Called on the main thread.
@@ -92,8 +107,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   int provider_id() const { return provider_id_; }
 
-  mojom::ServiceWorkerEventDispatcher* event_dispatcher() {
-    return event_dispatcher_.get();
+  mojom::URLLoaderFactory* subresource_loader_factory() {
+    return subresource_loader_factory_.get();
   }
 
   ServiceWorkerHandleReference* controller();
@@ -120,9 +135,19 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
 
-  // Only used for controllee contexts. Used to dispatch events to the
-  // controller ServiceWorker.
+  // For Servicification:
+  // Only used for controllee contexts. Used to intercept requests from the
+  // controllee and dispatch them as an event to the controller ServiceWorker.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
+  mojom::URLLoaderFactoryPtr subresource_loader_factory_;
+
+  // For Servicification:
+  // Contains a set of default loader factories for the associated loading
+  // context. Is used when we create a subresource loader for controllees.
+  // This is non-null only if the provider is created for controllees, and if
+  // the loading context, e.g. a frame, provides the loading factory container
+  // for default loaders.
+  scoped_refptr<URLLoaderFactoryContainer> default_loader_factory_container_;
 
   std::unique_ptr<Delegate> delegate_;
 
