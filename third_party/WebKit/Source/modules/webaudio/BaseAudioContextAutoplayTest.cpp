@@ -14,6 +14,8 @@
 #include "core/html/media/AutoplayPolicy.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/EmptyClients.h"
+#include "core/workers/GlobalScopeCreationParams.h"
+#include "core/workers/WorkerReportingProxy.h"
 #include "core/testing/DummyPageHolder.h"
 #include "modules/webaudio/AudioContextOptions.h"
 #include "modules/webaudio/AudioWorkletThread.h"
@@ -69,7 +71,7 @@ class MockWebAudioDeviceForBaseAudioContext : public WebAudioDevice {
   int frames_per_buffer_;
 };
 
-class BaseAudioContextTestPlatform : public TestingPlatformSupport {
+class BaseAudioContextAutoplayTestPlatform : public TestingPlatformSupport {
  public:
   std::unique_ptr<WebAudioDevice> CreateAudioDevice(
       unsigned number_of_input_channels,
@@ -83,7 +85,6 @@ class BaseAudioContextTestPlatform : public TestingPlatformSupport {
   }
 
   std::unique_ptr<WebThread> CreateThread(const char* name) override {
-    // return WTF::WrapUnique(old_platform_->CurrentThread());
     return old_platform_->CreateThread(name);
   }
 
@@ -110,10 +111,15 @@ class BaseAudioContextAutoplayTest
     ChildDocument().GetSettings()->SetAutoplayPolicy(GetParam());
 
     histogram_tester_ = WTF::MakeUnique<HistogramTester>();
+
     AudioWorkletThread::CreateSharedBackingThreadForTest();
+    worklet_thread_ = CreateAudioWorkletThread();
   }
 
   void TearDown() override {
+    worklet_thread_->Terminate();
+    worklet_thread_->WaitForShutdownForTesting();
+
     if (child_frame_)
       child_frame_->Detach(FrameDetachType::kRemove);
 
@@ -153,11 +159,30 @@ class BaseAudioContextAutoplayTest
   }
 
  private:
+  std::unique_ptr<AudioWorkletThread> CreateAudioWorkletThread() {
+    reporting_proxy_ = WTF::MakeUnique<WorkerReportingProxy>();
+    security_origin_ =
+        SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
+    std::unique_ptr<AudioWorkletThread> thread =
+        AudioWorkletThread::Create(nullptr, *reporting_proxy_);
+    thread->Start(
+        WTF::MakeUnique<GlobalScopeCreationParams>(
+            KURL(kParsedURLString, "http://fake.url/"), "fake user agent", "",
+            nullptr, kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
+            security_origin_.Get(), nullptr, kWebAddressSpaceLocal, nullptr,
+            nullptr, kV8CacheOptionsDefault),
+        WTF::nullopt, ParentFrameTaskRunners::Create());
+    return thread;
+  }
+
   std::unique_ptr<DummyPageHolder> dummy_page_holder_;
   Persistent<DummyFrameOwner> dummy_frame_owner_;
   Persistent<LocalFrame> child_frame_;
   std::unique_ptr<HistogramTester> histogram_tester_;
-  ScopedTestingPlatformSupport<BaseAudioContextTestPlatform> platform_;
+  RefPtr<SecurityOrigin> security_origin_;
+  std::unique_ptr<AudioWorkletThread> worklet_thread_;
+  std::unique_ptr<WorkerReportingProxy> reporting_proxy_;
+  ScopedTestingPlatformSupport<BaseAudioContextAutoplayTestPlatform> platform_;
 };
 
 // Creates an AudioContext without a gesture inside a x-origin child frame.
@@ -625,6 +650,7 @@ TEST_P(BaseAudioContextAutoplayTest,
 // document previous received a user gesture.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_DocumentReceivedGesture_Child) {
+
   ChildDocument().GetFrame()->SetDocumentHasReceivedUserGesture();
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -681,6 +707,7 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
 }
 
 // Attempts to autoplay an AudioContext in a main child frame when the
@@ -708,6 +735,7 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
 }
 
 INSTANTIATE_TEST_CASE_P(
