@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51dbc506_dcba5577",
+        "filename": "chrome/test/chromedriver/js/dispatch_touch_event.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T18:37:28Z",
+      "side": 1,
+      "message": "Sure!",
+      "parentUuid": "5efdf6b1_c195e5cf",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "a9c79e216f473608eef9f556a5c2121cad05ca75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7df44cc_f38ddaec",
         "filename": "chrome/test/chromedriver/js/dispatch_touch_event.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a9c79e216f473608eef9f556a5c2121cad05ca75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e049705e_c0fc4f44",
+        "filename": "chrome/test/chromedriver/js/dispatch_touch_event.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T18:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7df44cc_f38ddaec",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "a9c79e216f473608eef9f556a5c2121cad05ca75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
