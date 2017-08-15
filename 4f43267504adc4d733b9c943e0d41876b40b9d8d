@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55a87f0_654384fe",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T18:16:33Z",
+      "side": 1,
+      "message": "Sorry, should have suggested earlier. How about making this lazy?\n\n- (net::EmbeddedTestServer*)testServer {\n  if (!_testServer) {\n    _testServer \u003d base::MakeUnique\u003cnet::EmbeddedTestServer\u003e();\n    _testServer-\u003eAddDefaultHandlers(\n        base::FilePath(FILE_PATH_LITERAL(\"ios/testing/data/http_server_files/\")));\n  }\n  return _testServer.get();\n}",
+      "range": {
+        "startLine": 174,
+        "startChar": 21,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "4f43267504adc4d733b9c943e0d41876b40b9d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
