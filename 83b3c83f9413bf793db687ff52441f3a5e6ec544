@@ -16,6 +16,24 @@
       "revId": "83b3c83f9413bf793db687ff52441f3a5e6ec544",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727e5f4f_eeb9815e",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126851
+      },
+      "writtenOn": "2017-08-15T02:39:14Z",
+      "side": 1,
+      "message": "I didn\u0027t assign it, because I didn\u0027t know who would take over the proper cleaning. Any suggestions?",
+      "parentUuid": "e69579d4_91dae4fb",
+      "revId": "83b3c83f9413bf793db687ff52441f3a5e6ec544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
