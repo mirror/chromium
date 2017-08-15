@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f56fdec3_a909184b",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-15T16:10:21Z",
+      "side": 1,
+      "message": "maybe it\u0027s better to have a local utility method like this?\n\nbool IsVoiceInteractionActive() {\n   if (enabled \u0026\u0026 active) {\n     DCHECK(voice_interaction_overlay_);\n     return true;\n   }\n   return false;\n}",
+      "revId": "4e57817766d637d342f18684dd244788c177f9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fabfc8c_1fa0c7f1",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
