@@ -9,7 +9,7 @@ namespace test {
 
 void EmptyClient::OnServiceInitialized(
     bool state_lost,
-    const std::vector<std::string>& outstanding_download_guids) {}
+    const std::vector<DownloadMetaData>& downloads) {}
 
 void EmptyClient::OnServiceUnavailable() {}
 

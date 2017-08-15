@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "components/download/public/client.h"
+#include "components/download/public/download_metadata.h"
 
 namespace download {
 namespace test {
@@ -19,7 +20,7 @@ class EmptyClient : public Client {
   // Client implementation.
   void OnServiceInitialized(
       bool state_lost,
-      const std::vector<std::string>& outstanding_download_guids) override;
+      const std::vector<DownloadMetaData>& downloads) override;
   void OnServiceUnavailable() override;
   ShouldDownload OnDownloadStarted(
       const std::string& guid,
