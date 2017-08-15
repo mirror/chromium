@@ -22,6 +22,30 @@
       "revId": "56f67d66467f487e6c332e2405011f565747b40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c48913_862ac939",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T19:31:50Z",
+      "side": 1,
+      "message": "Not sure I\u0027m fully understanding your question.\n\nWhen we type a key, we want to measure how long it takes for that character to be displayed on the screen. OnPaint() is the code that needs to run to have that character be painted (onto a composited layer) and then we need compositing to happen after that.\n\nSo we can\u0027t just record the next compositing end, because if OnPaint() didn\u0027t happen in the mean time, that character wasn\u0027t yet painted (the compositing was from a previous update). Not sure if this is what you\u0027re asking, though.\n\nThe other case you might be asking about (but wasn\u0027t clear to me if that what\u0027s you mean) is why we drop the event if there\u0027s two COMPOSITING_COMMITS in a row. In this case, if such a thing happened it means compositor decided not to do any updates - because they were not necessary. (e.g. probably very rare with omnibox, but if the view was occluded - e.g. by another window or offscreen, etc). In such a case, it doesn\u0027t make sense to wait for the next compositing event because it will be unrelated and might happen much later. (e.g. user goes away and comes back to computer 5 mins later to interact again)\n\nDo those two explanations make sense? Or did I not understand your question correctly?",
+      "parentUuid": "32c8279c_3bdf2996",
+      "range": {
+        "startLine": 1133,
+        "startChar": 3,
+        "endLine": 1133,
+        "endChar": 0
+      },
+      "revId": "56f67d66467f487e6c332e2405011f565747b40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
