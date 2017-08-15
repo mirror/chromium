@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea80070_caf81b15",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-15T01:49:30Z",
+      "side": 1,
+      "message": "nit: selector doesn\u0027t need to be in the initializer list",
+      "range": {
+        "startLine": 63,
+        "startChar": 34,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "ad9e6dfa45fb80262e3f329c68c5e7208bafceb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c014f471_af42c638",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-15T01:49:30Z",
+      "side": 1,
+      "message": "Can you add comments documenting these fields?",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "ad9e6dfa45fb80262e3f329c68c5e7208bafceb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b156332a_c280e269",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-15T01:49:30Z",
+      "side": 1,
+      "message": "If RestoreScrollAnchor returns false, shouldn\u0027t we fall back to the normal restoration path?",
+      "range": {
+        "startLine": 1199,
+        "startChar": 14,
+        "endLine": 1199,
+        "endChar": 33
+      },
+      "revId": "ad9e6dfa45fb80262e3f329c68c5e7208bafceb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
