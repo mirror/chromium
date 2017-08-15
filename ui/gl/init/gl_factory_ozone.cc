@@ -8,6 +8,7 @@
 #include "base/trace_event/trace_event.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_context_stub.h"
+#include "ui/gl/gl_egl_api_implementation.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_share_group.h"
 #include "ui/gl/gl_surface.h"
@@ -102,6 +103,26 @@ scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(
   }
 
   return nullptr;
+}
+
+void SetDisabledExtensionsPlatform(const std::string& disabled_extensions) {
+  GLImplementation implementation = GetGLImplementation();
+  DCHECK_NE(kGLImplementationNone, implementation);
+  switch (implementation) {
+    case kGLImplementationEGLGLES2:
+      SetDisabledExtensionsEGL(disabled_extensions);
+      break;
+    case kGLImplementationDesktopGL:
+      SetDiaabledExtensionsGLX(disabled_extensions);
+      break;
+    case kGLImplementationSwiftShaderGL:
+    case kGLImplementationOSMesaGL:
+    case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
 }  // namespace init
