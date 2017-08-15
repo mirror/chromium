@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1264561d_3defff6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-15T12:53:43Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll try it tomorrow.",
+      "parentUuid": "e4a25431_56e374ad",
+      "revId": "0132440162166089e8e46e0189c1d370c99c5fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3432d782_9b1a6fdf",
         "filename": "chromeos/audio/cras_audio_handler.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T10:04:02Z",
       "side": 1,
       "message": "forgot to remove this",
+      "revId": "0132440162166089e8e46e0189c1d370c99c5fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856a3644_9502f88b",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-15T12:53:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3432d782_9b1a6fdf",
       "revId": "0132440162166089e8e46e0189c1d370c99c5fe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
