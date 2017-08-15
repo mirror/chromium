@@ -6,7 +6,9 @@ package org.chromium.chrome.browser.photo_picker;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.ui.PhotoPickerListener;
@@ -18,8 +20,14 @@ import java.util.List;
  * &lt;input type=file accept=image &gt; form element.
  */
 public class PhotoPickerDialog extends AlertDialog {
+    // How long to wait for an external intent to launch (in ms).
+    private static final int WAIT_FOR_EXTERNAL_INTENT_MS = 3000;
+
     // The category we're showing photos for.
     private PickerCategoryView mCategoryView;
+
+    // Whether the wait for an external intent launch is over.
+    private boolean mDoneWaitingForExternalIntent;
 
     /**
      * The PhotoPickerDialog constructor.
@@ -39,10 +47,44 @@ public class PhotoPickerDialog extends AlertDialog {
         setView(mCategoryView);
     }
 
+    private void dismissLater() {
+        try {
+            // This allows the UI thread to catch up and show the background, while the external
+            // intent is launching. At some point we should be in the background while we wait.
+            Thread.sleep(WAIT_FOR_EXTERNAL_INTENT_MS);
+        } catch (InterruptedException e) {
+        }
+
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDoneWaitingForExternalIntent = true;
+                dismiss();
+            }
+        });
+    }
+
     @Override
     public void dismiss() {
-        super.dismiss();
-        mCategoryView.onDialogDismissed();
+        if (!mCategoryView.externalIntentSelected() || mDoneWaitingForExternalIntent) {
+            super.dismiss();
+            mCategoryView.onDialogDismissed();
+        } else {
+            // We're already in the cancel process, prevent the Back button from starting another.
+            mCategoryView.disableCancel();
+
+            // Surface the lights-out (black) background and hide all other controls.
+            findViewById(R.id.selectable_list).setVisibility(View.GONE);
+            findViewById(R.id.lights_out).setVisibility(View.VISIBLE);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dismissLater();
+                }
+            })
+                    .start();
+        }
     }
 
     @VisibleForTesting
