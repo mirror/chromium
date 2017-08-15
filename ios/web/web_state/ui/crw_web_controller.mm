@@ -1811,13 +1811,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // Reset current WebUI if one exists.
   [self clearWebUI];
 
+  // Remove the transient content view.
+  _webStateImpl->ClearTransientContent();
+
   // Abort any outstanding page load. This ensures the delegate gets informed
   // about the outgoing page, and further messages from the page are suppressed.
   if (_loadPhase != web::PAGE_LOADED)
     [self abortLoad];
 
   DCHECK(!_isHalted);
-  _webStateImpl->ClearTransientContent();
 
   web::NavigationItem* item = self.currentNavItem;
   const GURL currentURL = item ? item->GetURL() : GURL::EmptyGURL();
