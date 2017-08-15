@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f51cc861_506979ca",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T17:30:10Z",
+      "side": 1,
+      "message": "I was a bit on the fence about this, since that kind of means \"don\u0027t pass garbage values\".  WebUI contexts, in practice, cannot have associated extensions, and extension contexts should always have an extension, etc.  But I suppose it\u0027s good to reinforce.  Done.",
+      "parentUuid": "441b32e6_ddde6044",
+      "revId": "e51c73293df50de91313fb19a7d4554cc3917630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8473492e_e817faa1",
         "filename": "extensions/renderer/feature_cache.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T15:45:35Z",
       "side": 1,
       "message": "By \"static\", you mean that they do not require invalidation? (I was a little confused because my mind jumped to static storage lifetime, but that may be my bias.)",
+      "revId": "e51c73293df50de91313fb19a7d4554cc3917630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45df0fd_c9c13526",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-15T17:30:10Z",
+      "side": 1,
+      "message": "Yep, static meaning they don\u0027t require invalidation since they\u0027re essentially set at compile-time (they don\u0027t have dynamic availability at all).  Updated comment.",
+      "parentUuid": "8473492e_e817faa1",
       "revId": "e51c73293df50de91313fb19a7d4554cc3917630",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
