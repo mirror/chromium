@@ -42,6 +42,11 @@ bool WindowTargeter::GetHitTestRects(Window* window,
   return true;
 }
 
+std::unique_ptr<WindowTargeter::HitTestRects>
+WindowTargeter::GetExtraHitTestShapeRects(Window* target) const {
+  return nullptr;
+}
+
 Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
                                                const ui::LocatedEvent& event) {
   DCHECK_EQ(root_window, root_window->GetRootWindow());
@@ -166,10 +171,23 @@ bool WindowTargeter::EventLocationInsideBounds(
   if (window->parent())
     Window::ConvertPointToTarget(window->parent(), window, &point);
 
-  if (event.IsTouchEvent() || event.IsGestureEvent())
-    return touch_rect.Contains(point);
+  const bool point_in_rect = event.IsTouchEvent() || event.IsGestureEvent()
+                                 ? touch_rect.Contains(point)
+                                 : mouse_rect.Contains(point);
+  if (!point_in_rect)
+    return false;
 
-  return mouse_rect.Contains(point);
+  auto shape_rects = GetExtraHitTestShapeRects(window);
+  if (!shape_rects)
+    return true;
+
+  for (const gfx::Rect& shape_rect : *shape_rects) {
+    if (shape_rect.Contains(point)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 bool WindowTargeter::ShouldUseExtendedBounds(const aura::Window* window) const {

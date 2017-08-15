@@ -5,6 +5,9 @@
 #ifndef UI_AURA_WINDOW_TARGETER_H_
 #define UI_AURA_WINDOW_TARGETER_H_
 
+#include <memory>
+#include <vector>
+
 #include "base/macros.h"
 #include "ui/aura/aura_export.h"
 #include "ui/events/event_targeter.h"
@@ -28,6 +31,8 @@ class AURA_EXPORT WindowTargeter : public ui::EventTargeter {
   WindowTargeter();
   ~WindowTargeter() override;
 
+  using HitTestRects = std::vector<gfx::Rect>;
+
   // Returns true if |window| or one of its descendants can be a target of
   // |event|. This requires that |window| and its descendants are not
   // prohibited from accepting the event, and that the event is within an
@@ -44,6 +49,13 @@ class AURA_EXPORT WindowTargeter : public ui::EventTargeter {
   virtual bool GetHitTestRects(Window* target,
                                gfx::Rect* hit_test_rect_mouse,
                                gfx::Rect* hit_test_rect_touch) const;
+
+  // Returns additional hit-test areas or nullptr when there are none. Used when
+  // a window needs a complex shape hit-test area. This additional area is
+  // clipped to |hit_test_rect_mouse| returned by GetHitTestRects or the window
+  // bounds.
+  virtual std::unique_ptr<HitTestRects> GetExtraHitTestShapeRects(
+      Window* target) const;
 
   Window* FindTargetInRootWindow(Window* root_window,
                                  const ui::LocatedEvent& event);
