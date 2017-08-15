@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42760ab4_d42b677c",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "This does not do filtering yet, so no extra work is necessary.\nI\u0027ll add that when implementing the quota and probably argue the strategy because of starvation.",
+      "parentUuid": "31bc7e7f_bf7364f9",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0294f664_6e8e4444",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e887bc_0d10321a",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0294f664_6e8e4444",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,48 @@
     },
     {
       "key": {
+        "uuid": "1f1e8128_1ca1921a",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40624154_68f46532",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 75
+      },
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "741713bb_c4ea7f99",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e548d60_acb4aa02",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dae09988_117bc70e",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70065a4b_f0319998",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Yes. See:\nhttps://chromium.googlesource.com/chromium/src/+/c3421f6d9d62c5b55e08c4661b9b1b03339c7005/components/offline_pages/core/prefetch/store/README.md#defining-a-runcallback\n\nfor details.",
+      "parentUuid": "dae09988_117bc70e",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "3c5f0f20_32721860",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be8c5726_91a39681",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "584f961e_a35991a7",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559ae425_583f6618",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "584f961e_a35991a7",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "846d1751_5a284e0f",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "I think it would make sense to reuse it, but it has nothing to do with the store.\nLet\u0027s not deal with it now, but watch for opportunities as you suggested.\nIs that OK?",
+      "parentUuid": "3fe1e42a_006be92b",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 47
+      },
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67997cb4_cb679056",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 2
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "9eda3a66_ed84f9d3",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67997cb4_cb679056",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b7023d_c1a42188",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 2
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "b1469a26_9b604e78",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b7023d_c1a42188",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf9200e_d070c20e",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 2
@@ -216,6 +426,24 @@
       "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437df68d_f4d04234",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf9200e_d070c20e",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "acdd9e4f_982c5564",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb46ec9_a4d08c8c",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b51abe6_e647c8c1",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -259,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "df843830_797a4f05",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done. Shouldn\u0027t hurt, right?",
+      "parentUuid": "9b51abe6_e647c8c1",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fb7c953_93fb3f5f",
         "filename": "components/offline_pages/core/prefetch/test_prefetch_downloader.h",
         "patchSetId": 2
@@ -273,6 +543,24 @@
       "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e246575_210e963e",
+        "filename": "components/offline_pages/core/prefetch/test_prefetch_downloader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T21:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fb7c953_93fb3f5f",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
