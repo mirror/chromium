@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40ad896e_95d224e9",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_browsertest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-15T17:50:35Z",
+      "side": 1,
+      "message": "Could you listen for this event so we don\u0027t need to rely on timeouts? e.g. using RenderWidgetHost::InputEventObserver (site_per_process_browsertest.cc has some examples of how to use it)",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ad97e7_b3d2aa4e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-15T17:50:35Z",
+      "side": 1,
+      "message": "Defining a pointer to the field we want to change is just to avoid having to ifdef for every change to |gesture_scroll_update| between the x and y direction. Since we only set the delta hint once here, we can just set the desired field directly in the ifdef.",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c221ed_5bc5ff51",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-15T17:50:35Z",
+      "side": 1,
+      "message": "nit: Since you\u0027ve copied these comments above for the delta hints, they\u0027re redundant here.",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6459ae_a3b695ba",
+        "filename": "content/browser/site_per_process_mac_browsertest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-15T17:50:35Z",
+      "side": 1,
+      "message": "|gesture_scroll_begin_ack_observer| has already received the GSB from the first wheel event (line 218) and since it hasn\u0027t been reset in the |wheel_scroll_latching_enabled()| code path, calling |Wait()| here is trivial. From your comment above, we don\u0027t expect a GSB from momentum phase began, so shouldn\u0027t this be inside a |if (!child_rwhv-\u003ewheel_scroll_latching_enabled())| as well?",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
