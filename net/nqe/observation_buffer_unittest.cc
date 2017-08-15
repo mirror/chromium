@@ -440,6 +440,154 @@ TEST(NetworkQualityObservationBufferTest, TestGetMedianRTTSince) {
   }
 }
 
+// Test that time filtering works and the subnets are split correctly.
+TEST(NetworkQualityObservationBufferTest,
+     TestGetPercentileForEachSubnetSinceTimeStamp) {
+  const uint64_t new_subnet = 0x101010UL;
+  const int32_t new_subnet_observation = 1000;
+  const size_t new_subnet_num_obs = 10;
+  const uint64_t old_subnet = 0x202020UL;
+  const int32_t old_subnet_observation = 2000;
+  const size_t old_subnet_num_obs = 20;
+  ObservationBuffer buffer(0.5, 1.0);
+  base::TimeTicks now = base::TimeTicks::Now();
+  for (unsigned int i = 0; i < old_subnet_num_obs; ++i) {
+    buffer.AddObservation(Observation(
+        old_subnet_observation, now - base::TimeDelta::FromSeconds(100),
+        INT32_MIN, NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, old_subnet));
+  }
+
+  for (unsigned int i = 0; i < new_subnet_num_obs; ++i) {
+    buffer.AddObservation(Observation(new_subnet_observation, now, INT32_MIN,
+                                      NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP,
+                                      new_subnet));
+  }
+
+  std::map<uint64_t, int32_t> subnet_keyed_percentiles;
+  std::map<uint64_t, size_t> subnet_keyed_counts;
+  buffer.GetPercentileForEachSubnetWithCounts(
+      now - base::TimeDelta::FromSeconds(50), 50,
+      std::vector<NetworkQualityObservationSource>(), &subnet_keyed_percentiles,
+      &subnet_keyed_counts);
+  EXPECT_EQ(1u, subnet_keyed_percentiles.size());
+  EXPECT_EQ(1u, subnet_keyed_counts.size());
+  EXPECT_EQ(new_subnet_observation, subnet_keyed_percentiles[new_subnet]);
+  EXPECT_EQ(new_subnet_num_obs, subnet_keyed_counts[new_subnet]);
+
+  subnet_keyed_percentiles.clear();
+  subnet_keyed_counts.clear();
+
+  buffer.GetPercentileForEachSubnetWithCounts(
+      now - base::TimeDelta::FromSeconds(150), 50,
+      std::vector<NetworkQualityObservationSource>(), &subnet_keyed_percentiles,
+      &subnet_keyed_counts);
+  EXPECT_EQ(2u, subnet_keyed_percentiles.size());
+  EXPECT_EQ(2u, subnet_keyed_counts.size());
+  EXPECT_EQ(new_subnet_observation, subnet_keyed_percentiles[new_subnet]);
+  EXPECT_EQ(new_subnet_num_obs, subnet_keyed_counts[new_subnet]);
+  EXPECT_EQ(old_subnet_observation, subnet_keyed_percentiles[old_subnet]);
+  EXPECT_EQ(old_subnet_num_obs, subnet_keyed_counts[old_subnet]);
+}
+
+// Test that the result is split correctly for multiple subnets and that the
+// count for each subnet is correct.
+TEST(NetworkQualityObservationBufferTest,
+     TestGetPercentileForEachSubnetCounts) {
+  ObservationBuffer buffer(0.5, 1.0);
+  base::TimeTicks now = base::TimeTicks::Now();
+  const size_t num_subnets = 5;
+
+  // Add |2*i| observations having value |4*i| for subnet |i|.
+  for (unsigned int i = 1; i <= num_subnets; ++i) {
+    for (unsigned int j = 1; j <= 2 * i; ++j) {
+      buffer.AddObservation(Observation(4 * i, now, INT32_MIN,
+                                        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP,
+                                        static_cast<uint64_t>(i)));
+    }
+  }
+
+  std::map<uint64_t, int32_t> subnet_keyed_percentiles;
+  std::map<uint64_t, size_t> subnet_keyed_counts;
+  buffer.GetPercentileForEachSubnetWithCounts(
+      base::TimeTicks(), 50, std::vector<NetworkQualityObservationSource>(),
+      &subnet_keyed_percentiles, &subnet_keyed_counts);
+  EXPECT_EQ(5u, subnet_keyed_percentiles.size());
+  EXPECT_EQ(5u, subnet_keyed_counts.size());
+
+  for (unsigned int i = 1; i <= num_subnets; ++i) {
+    EXPECT_EQ(2u * i, subnet_keyed_counts[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<int32_t>(4 * i),
+              subnet_keyed_percentiles[static_cast<uint64_t>(i)]);
+  }
+}
+
+// Test that the percentiles are computed correctly for different subnets.
+TEST(NetworkQualityObservationBufferTest,
+     TestGetPercentileForEachSubnetComputation) {
+  ObservationBuffer buffer(0.5, 1.0);
+  base::TimeTicks now = base::TimeTicks::Now();
+  // For three different subnets, add observations such that the 50 percentiles
+  // are different.
+  for (int i = 1; i <= 3; i++) {
+    // Add |20 * i + 1| observations for subnet |i|.
+    for (int j = 90 * i; j <= 110 * i; j++) {
+      buffer.AddObservation(Observation(j, now, INT32_MIN,
+                                        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP,
+                                        static_cast<uint64_t>(i)));
+    }
+  }
+  std::map<uint64_t, int32_t> subnet_keyed_percentiles;
+  std::map<uint64_t, size_t> subnet_keyed_counts;
+
+  // Test the computation of the median.
+  buffer.GetPercentileForEachSubnetWithCounts(
+      base::TimeTicks(), 50, std::vector<NetworkQualityObservationSource>(),
+      &subnet_keyed_percentiles, &subnet_keyed_counts);
+
+  EXPECT_EQ(3u, subnet_keyed_percentiles.size());
+  EXPECT_EQ(3u, subnet_keyed_counts.size());
+
+  // The median must be equal to |100 * i| and the count must be equal to
+  // |20 * i + 1| for subnet |i|.
+  for (int i = 1; i <= 3; i++) {
+    EXPECT_EQ(100 * i, subnet_keyed_percentiles[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<size_t>(20 * i + 1),
+              subnet_keyed_counts[static_cast<uint64_t>(i)]);
+  }
+
+  // Test the computation of 0th percentile.
+  buffer.GetPercentileForEachSubnetWithCounts(
+      base::TimeTicks(), 0, std::vector<NetworkQualityObservationSource>(),
+      &subnet_keyed_percentiles, &subnet_keyed_counts);
+
+  EXPECT_EQ(3u, subnet_keyed_percentiles.size());
+  EXPECT_EQ(3u, subnet_keyed_counts.size());
+
+  // The 0 percentile must be equal to |90 * i| and the count must be equal to
+  // |20 * i| for subnet |i|.
+  for (int i = 1; i <= 3; i++) {
+    EXPECT_EQ(90 * i, subnet_keyed_percentiles[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<size_t>(20 * i + 1),
+              subnet_keyed_counts[static_cast<uint64_t>(i)]);
+  }
+
+  // Test the computation of 100th percentile.
+  buffer.GetPercentileForEachSubnetWithCounts(
+      base::TimeTicks(), 100, std::vector<NetworkQualityObservationSource>(),
+      &subnet_keyed_percentiles, &subnet_keyed_counts);
+
+  EXPECT_EQ(3u, subnet_keyed_percentiles.size());
+  EXPECT_EQ(3u, subnet_keyed_counts.size());
+
+  // The 0 percentile must be equal to |90 * i| and the count must be equal to
+  // |20 * i| for subnet |i|.
+  for (int i = 1; i <= 3; i++) {
+    EXPECT_EQ(110 * i, subnet_keyed_percentiles[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<size_t>(20 * i + 1),
+              subnet_keyed_counts[static_cast<uint64_t>(i)]);
+  }
+}
+
 }  // namespace
 
 }  // namespace internal
