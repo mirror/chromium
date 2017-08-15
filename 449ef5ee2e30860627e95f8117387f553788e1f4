@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "455d285c_710772e6",
+        "filename": "ui/events/devices/device_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-15T20:04:37Z",
+      "side": 1,
+      "message": "Why unsigned?",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbea30e6_78910052",
+        "filename": "ui/events/devices/touch_device_transform.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-15T20:04:37Z",
+      "side": 1,
+      "message": "Can you include the radius scale in here? That would bundle everything up nicely and could maybe even replace DeviceDataManager::TouchscreenInfo?",
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d02306_48cd1314",
+        "filename": "ui/events/devices/touchscreen_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-15T20:04:37Z",
+      "side": 1,
+      "message": "Can you set the value in the header file? |target_display_id| isn\u0027t set in the first constructor.",
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
