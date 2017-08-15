@@ -79,42 +79,58 @@ void DriverWGL::InitializeExtensionBindings() {
     fn.wglChoosePixelFormatARBFn =
         reinterpret_cast<wglChoosePixelFormatARBProc>(
             GetGLProcAddress("wglChoosePixelFormatARB"));
+  } else {
+    fn.wglChoosePixelFormatARBFn = nullptr;
   }
 
   if (ext.b_WGL_ARB_create_context) {
     fn.wglCreateContextAttribsARBFn =
         reinterpret_cast<wglCreateContextAttribsARBProc>(
             GetGLProcAddress("wglCreateContextAttribsARB"));
+  } else {
+    fn.wglCreateContextAttribsARBFn = nullptr;
   }
 
   if (ext.b_WGL_ARB_pbuffer) {
     fn.wglCreatePbufferARBFn = reinterpret_cast<wglCreatePbufferARBProc>(
         GetGLProcAddress("wglCreatePbufferARB"));
+  } else {
+    fn.wglCreatePbufferARBFn = nullptr;
   }
 
   if (ext.b_WGL_ARB_pbuffer) {
     fn.wglDestroyPbufferARBFn = reinterpret_cast<wglDestroyPbufferARBProc>(
         GetGLProcAddress("wglDestroyPbufferARB"));
+  } else {
+    fn.wglDestroyPbufferARBFn = nullptr;
   }
 
   if (ext.b_WGL_ARB_pbuffer) {
     fn.wglGetPbufferDCARBFn = reinterpret_cast<wglGetPbufferDCARBProc>(
         GetGLProcAddress("wglGetPbufferDCARB"));
+  } else {
+    fn.wglGetPbufferDCARBFn = nullptr;
   }
 
   if (ext.b_WGL_ARB_pbuffer) {
     fn.wglQueryPbufferARBFn = reinterpret_cast<wglQueryPbufferARBProc>(
         GetGLProcAddress("wglQueryPbufferARB"));
+  } else {
+    fn.wglQueryPbufferARBFn = nullptr;
   }
 
   if (ext.b_WGL_ARB_pbuffer) {
     fn.wglReleasePbufferDCARBFn = reinterpret_cast<wglReleasePbufferDCARBProc>(
         GetGLProcAddress("wglReleasePbufferDCARB"));
+  } else {
+    fn.wglReleasePbufferDCARBFn = nullptr;
   }
 
   if (ext.b_WGL_EXT_swap_control) {
     fn.wglSwapIntervalEXTFn = reinterpret_cast<wglSwapIntervalEXTProc>(
         GetGLProcAddress("wglSwapIntervalEXT"));
+  } else {
+    fn.wglSwapIntervalEXTFn = nullptr;
   }
 }
 

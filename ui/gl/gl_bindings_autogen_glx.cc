@@ -138,53 +138,73 @@ void DriverGLX::InitializeExtensionBindings() {
   if (ext.b_GLX_EXT_texture_from_pixmap) {
     fn.glXBindTexImageEXTFn = reinterpret_cast<glXBindTexImageEXTProc>(
         GetGLProcAddress("glXBindTexImageEXT"));
+  } else {
+    fn.glXBindTexImageEXTFn = nullptr;
   }
 
   if (ext.b_GLX_MESA_copy_sub_buffer) {
     fn.glXCopySubBufferMESAFn = reinterpret_cast<glXCopySubBufferMESAProc>(
         GetGLProcAddress("glXCopySubBufferMESA"));
+  } else {
+    fn.glXCopySubBufferMESAFn = nullptr;
   }
 
   if (ext.b_GLX_ARB_create_context) {
     fn.glXCreateContextAttribsARBFn =
         reinterpret_cast<glXCreateContextAttribsARBProc>(
             GetGLProcAddress("glXCreateContextAttribsARB"));
+  } else {
+    fn.glXCreateContextAttribsARBFn = nullptr;
   }
 
   if (ext.b_GLX_SGIX_fbconfig) {
     fn.glXGetFBConfigFromVisualSGIXFn =
         reinterpret_cast<glXGetFBConfigFromVisualSGIXProc>(
             GetGLProcAddress("glXGetFBConfigFromVisualSGIX"));
+  } else {
+    fn.glXGetFBConfigFromVisualSGIXFn = nullptr;
   }
 
   if (ext.b_GLX_OML_sync_control) {
     fn.glXGetMscRateOMLFn = reinterpret_cast<glXGetMscRateOMLProc>(
         GetGLProcAddress("glXGetMscRateOML"));
+  } else {
+    fn.glXGetMscRateOMLFn = nullptr;
   }
 
   if (ext.b_GLX_OML_sync_control) {
     fn.glXGetSyncValuesOMLFn = reinterpret_cast<glXGetSyncValuesOMLProc>(
         GetGLProcAddress("glXGetSyncValuesOML"));
+  } else {
+    fn.glXGetSyncValuesOMLFn = nullptr;
   }
 
   if (ext.b_GLX_EXT_texture_from_pixmap) {
     fn.glXReleaseTexImageEXTFn = reinterpret_cast<glXReleaseTexImageEXTProc>(
         GetGLProcAddress("glXReleaseTexImageEXT"));
+  } else {
+    fn.glXReleaseTexImageEXTFn = nullptr;
   }
 
   if (ext.b_GLX_EXT_swap_control) {
     fn.glXSwapIntervalEXTFn = reinterpret_cast<glXSwapIntervalEXTProc>(
         GetGLProcAddress("glXSwapIntervalEXT"));
+  } else {
+    fn.glXSwapIntervalEXTFn = nullptr;
   }
 
   if (ext.b_GLX_MESA_swap_control) {
     fn.glXSwapIntervalMESAFn = reinterpret_cast<glXSwapIntervalMESAProc>(
         GetGLProcAddress("glXSwapIntervalMESA"));
+  } else {
+    fn.glXSwapIntervalMESAFn = nullptr;
   }
 
   if (ext.b_GLX_SGI_video_sync) {
     fn.glXWaitVideoSyncSGIFn = reinterpret_cast<glXWaitVideoSyncSGIProc>(
         GetGLProcAddress("glXWaitVideoSyncSGI"));
+  } else {
+    fn.glXWaitVideoSyncSGIFn = nullptr;
   }
 }
 
