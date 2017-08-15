@@ -34,6 +34,116 @@
       "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22415313_05798918",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:25:58Z",
+      "side": 1,
+      "message": "Would it work if we pass only WebState and then use LegacyTabHelper to get Tab? This way the ugliness is moved from interface to implementation.",
+      "parentUuid": "e4dc2323_ec7a83b0",
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43ab7c3_aa9e73fe",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:25:58Z",
+      "side": 1,
+      "message": "s/pageTitle/page_title",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418780c0_6bc8745a",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:25:58Z",
+      "side": 1,
+      "message": "Would you mind fixing variable names to proper_c_plus_plus_case?",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1d0124_1bcf2f7a",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:25:58Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f57b7b_fc3d8e20",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:25:58Z",
+      "side": 1,
+      "message": "nit: /*web_state\u003d*/nullptr",
+      "range": {
+        "startLine": 78,
+        "startChar": 54,
+        "endLine": 78,
+        "endChar": 61
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
