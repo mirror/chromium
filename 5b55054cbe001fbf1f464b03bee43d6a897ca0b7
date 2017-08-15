@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4074cef0_0e0379d7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T15:36:29Z",
+      "side": 1,
+      "message": "We are now duplicating a lot of code. Could we maybe create a new class \"EnableColorCanvasExtensionsForTesting\" move these code there?\n\nThe function Float16ToFloat \u0026\u0026 CompareColorCorrectedPixels() should also be shared. Otherwise in the future, it could easily happen that we update one place but forget to update the other one.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 2
+      },
+      "revId": "5b55054cbe001fbf1f464b03bee43d6a897ca0b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
