@@ -65,7 +65,8 @@ class BandwidthManagementCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[BandwidthManagementCollectionViewController alloc]
-        initWithBrowserState:chrome_browser_state_.get()];
+        initWithBrowserState:chrome_browser_state_.get()
+                  dispatcher:nil];
   }
 
   base::MessageLoop loop_;

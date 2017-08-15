@@ -57,7 +57,8 @@ class SavePasswordsCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[SavePasswordsCollectionViewController alloc]
-        initWithBrowserState:chrome_browser_state_.get()];
+        initWithBrowserState:chrome_browser_state_.get()
+                  dispatcher:nil];
   }
 
   // Adds a form to SavePasswordsTableViewController.

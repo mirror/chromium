@@ -62,13 +62,15 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 @implementation BandwidthManagementCollectionViewController
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
   if (self) {
     self.title = l10n_util::GetNSString(IDS_IOS_BANDWIDTH_MANAGEMENT_SETTINGS);
     self.collectionViewAccessibilityIdentifier = @"Bandwidth Management";
+    self.dispatcher = dispatcher;
     _browserState = browserState;
 
     _prefChangeRegistrarApplicationContext.Init(_browserState->GetPrefs());

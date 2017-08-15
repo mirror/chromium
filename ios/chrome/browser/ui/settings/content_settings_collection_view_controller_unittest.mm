@@ -29,7 +29,8 @@ class ContentSettingsCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[ContentSettingsCollectionViewController alloc]
-        initWithBrowserState:chrome_browser_state_.get()];
+        initWithBrowserState:chrome_browser_state_.get()
+                  dispatcher:nil];
   }
 
  private:

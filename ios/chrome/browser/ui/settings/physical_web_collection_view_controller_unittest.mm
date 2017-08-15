@@ -42,7 +42,8 @@ class PhysicalWebCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     physicalWebController_ = [[PhysicalWebCollectionViewController alloc]
-        initWithPrefs:pref_service_.get()];
+        initWithPrefs:pref_service_.get()
+           dispatcher:nil];
     return physicalWebController_;
   }
 

@@ -53,7 +53,8 @@ class TranslateCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[TranslateCollectionViewController alloc]
-        initWithPrefs:pref_service_.get()];
+        initWithPrefs:pref_service_.get()
+           dispatcher:nil];
   }
 
   std::unique_ptr<PrefService> CreateLocalState() {

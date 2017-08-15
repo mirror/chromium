@@ -43,7 +43,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 // |browserState| must not be nil.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState;
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
