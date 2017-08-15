@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d5385cd_b5fb1fb5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-trim-long-urls.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T21:47:24Z",
+      "side": 0,
+      "message": "This comment was here so that one would see that the \u00272---...\u0027s were aligned, showing the length of \u0027http://example.com/\u0027.  Since we\u0027ve changed the indentation, it no longer makes sense.  Can we avoid changing indentation inside comments, or just get rid of this comment?",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "bc18672beabe5693f6927a74aa54a90b32ebff0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

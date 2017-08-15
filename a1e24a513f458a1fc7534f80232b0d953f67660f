@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445c818e_7ee8f003",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-command-copy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T21:47:24Z",
+      "side": 1,
+      "message": "Just a note: it might be worth it in the future to do another pass to get rid of these unnecessary html, when the content is \u003d\u003d\u003d the first addResult()\u0027s argument.",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c31b597_c6c90039",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-object-with-getter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T21:47:24Z",
+      "side": 1,
+      "message": "Double semicolons is strange!  Another prettifier bug?",
+      "range": {
+        "startLine": 12,
+        "startChar": 96,
+        "endLine": 12,
+        "endChar": 98
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0d612a_10460720",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-message-format.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T21:47:24Z",
+      "side": 1,
+      "message": "Just curious, how did the script know to remove the content from inside this \u003cp\u003e tag?  Or was this a manual change?",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e587007_d90946b1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T21:47:24Z",
+      "side": 1,
+      "message": "Another double semicolon",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273b195b_92383c45",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-time.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T21:47:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 46
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
