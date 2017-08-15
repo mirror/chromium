@@ -11,7 +11,7 @@ import org.chromium.chrome.browser.vr_shell.VrIntentHandler;
 /**
  * Mock version of VrIntentHandler for testing.
  */
-public class MockVrIntentHandler extends VrIntentHandler {
+public class MockVrIntentHandler implements VrIntentHandler {
     private boolean mUseMockImplementation;
     private boolean mTreatIntentsAsTrusted;
 
