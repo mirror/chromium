@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d0a08c_1407aee5",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T20:53:23Z",
+      "side": 1,
+      "message": "Indentation is off from this point.",
+      "revId": "63825daf7889464b83bc8bd8e4735c5280150875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcef41d3_7f31e932",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CookieModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T20:53:23Z",
+      "side": 1,
+      "message": "Didn\u0027t you change the order of parameters?",
+      "revId": "63825daf7889464b83bc8bd8e4735c5280150875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
