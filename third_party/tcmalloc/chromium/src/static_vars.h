@@ -36,6 +36,7 @@
 #define TCMALLOC_STATIC_VARS_H_
 
 #include <config.h>
+#include "base/basictypes.h"
 #include "base/spinlock.h"
 #include "central_freelist.h"
 #include "common.h"
@@ -65,7 +66,7 @@ class Static {
   // must be protected by pageheap_lock.
 
   // Page-level allocator.
-  static PageHeap* pageheap() { return pageheap_; }
+  static PageHeap* pageheap() { return reinterpret_cast<PageHeap *>(&pageheap_.memory); }
 
   static PageHeapAllocator<Span>* span_allocator() { return &span_allocator_; }
 
@@ -82,28 +83,42 @@ class Static {
     return &bucket_allocator_;
   }
 
+  // Check if InitStaticVars() has been run.
+  static bool IsInited() { return inited_; }
+
  private:
-  static SpinLock pageheap_lock_;
+  // some unit tests depend on this and link to static vars
+  // imperfectly. Thus we keep those unhidden for now. Thankfully
+  // they're not performance-critical.
+  /* ATTRIBUTE_HIDDEN */ static bool inited_;
+  /* ATTRIBUTE_HIDDEN */ static SpinLock pageheap_lock_;
 
   // These static variables require explicit initialization.  We cannot
   // count on their constructors to do any initialization because other
   // static variables may try to allocate memory before these variables
   // can run their constructors.
 
-  static SizeMap sizemap_;
-  static CentralFreeListPadded central_cache_[kNumClasses];
-  static PageHeapAllocator<Span> span_allocator_;
-  static PageHeapAllocator<StackTrace> stacktrace_allocator_;
-  static Span sampled_objects_;
-  static PageHeapAllocator<StackTraceTable::Bucket> bucket_allocator_;
+  ATTRIBUTE_HIDDEN static SizeMap sizemap_;
+  ATTRIBUTE_HIDDEN static CentralFreeListPadded central_cache_[kNumClasses];
+  ATTRIBUTE_HIDDEN static PageHeapAllocator<Span> span_allocator_;
+  ATTRIBUTE_HIDDEN static PageHeapAllocator<StackTrace> stacktrace_allocator_;
+  ATTRIBUTE_HIDDEN static Span sampled_objects_;
+  ATTRIBUTE_HIDDEN static PageHeapAllocator<StackTraceTable::Bucket> bucket_allocator_;
 
   // Linked list of stack traces recorded every time we allocated memory
   // from the system.  Useful for finding allocation sites that cause
   // increase in the footprint of the system.  The linked list pointer
   // is stored in trace->stack[kMaxStackDepth-1].
-  static StackTrace* growth_stacks_;
+  ATTRIBUTE_HIDDEN static StackTrace* growth_stacks_;
 
-  static PageHeap* pageheap_;
+  // PageHeap uses a constructor for initialization.  Like the members above,
+  // we can't depend on initialization order, so pageheap is new'd
+  // into this buffer.
+  union PageHeapStorage {
+    char memory[sizeof(PageHeap)];
+    uintptr_t extra;  // To force alignment
+  };
+  ATTRIBUTE_HIDDEN static PageHeapStorage pageheap_;
 };
 
 }  // namespace tcmalloc

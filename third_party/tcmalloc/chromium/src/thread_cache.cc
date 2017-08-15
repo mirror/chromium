@@ -1,3 +1,4 @@
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
 // Copyright (c) 2008, Google Inc.
 // All rights reserved.
 //
@@ -63,63 +64,14 @@ ThreadCache* ThreadCache::thread_heaps_ = NULL;
 int ThreadCache::thread_heap_count_ = 0;
 ThreadCache* ThreadCache::next_memory_steal_ = NULL;
 #ifdef HAVE_TLS
-__thread ThreadCache* ThreadCache::threadlocal_heap_
-// See comments in thread_cache.h about this. Bug here:
-// http://code.google.com/p/chromium/issues/detail?id=124489
-//
-// gcc has a problem with this tls model on arm.
-// See https://bugs.chromium.org/p/chromium/issues/detail?id=650137
-#if defined(HAVE___ATTRIBUTE__) && !defined(PGO_GENERATE) && \
-    !(!defined(__clang__) && defined(OS_CHROMEOS) && defined(__arm__))
-   __attribute__ ((tls_model ("initial-exec")))
-# endif
-   ;
+__thread ThreadCache::ThreadLocalData ThreadCache::threadlocal_data_
+    ATTR_INITIAL_EXEC CACHELINE_ALIGNED;
 #endif
 bool ThreadCache::tsd_inited_ = false;
 pthread_key_t ThreadCache::heap_key_;
 
-#if defined(HAVE_TLS)
-bool kernel_supports_tls = false;      // be conservative
-# if defined(_WIN32)    // windows has supported TLS since winnt, I think.
-    void CheckIfKernelSupportsTLS() {
-      kernel_supports_tls = true;
-    }
-# elif !HAVE_DECL_UNAME    // if too old for uname, probably too old for TLS
-    void CheckIfKernelSupportsTLS() {
-      kernel_supports_tls = false;
-    }
-# else
-#   include <sys/utsname.h>    // DECL_UNAME checked for <sys/utsname.h> too
-    void CheckIfKernelSupportsTLS() {
-      struct utsname buf;
-      if (uname(&buf) < 0) {   // should be impossible
-        Log(kLog, __FILE__, __LINE__,
-            "uname failed assuming no TLS support (errno)", errno);
-        kernel_supports_tls = false;
-      } else if (strcasecmp(buf.sysname, "linux") == 0) {
-        // The linux case: the first kernel to support TLS was 2.6.0
-        if (buf.release[0] < '2' && buf.release[1] == '.')    // 0.x or 1.x
-          kernel_supports_tls = false;
-        else if (buf.release[0] == '2' && buf.release[1] == '.' &&
-                 buf.release[2] >= '0' && buf.release[2] < '6' &&
-                 buf.release[3] == '.')                       // 2.0 - 2.5
-          kernel_supports_tls = false;
-        else
-          kernel_supports_tls = true;
-      } else if (strcasecmp(buf.sysname, "CYGWIN_NT-6.1-WOW64") == 0) {
-        // In my testing, this version of cygwin, at least, would hang
-        // when using TLS.
-        kernel_supports_tls = false;
-      } else {        // some other kernel, we'll be optimisitic
-        kernel_supports_tls = true;
-      }
-      // TODO(csilvers): VLOG(1) the tls status once we support RAW_VLOG
-    }
-#  endif  // HAVE_DECL_UNAME
-#endif    // HAVE_TLS
-
 void ThreadCache::Init(pthread_t tid) {
-  size_ = 0;
+  size_left_ = 0;
   total_bytes_allocated_ = 0;
 
   max_size_ = 0;
@@ -127,7 +79,7 @@ void ThreadCache::Init(pthread_t tid) {
   if (max_size_ == 0) {
     // There isn't enough memory to go around.  Just give the minimum to
     // this thread.
-    max_size_ = kMinThreadCacheSize;
+    SetMaxSize(kMinThreadCacheSize);
 
     // Take unclaimed_cache_space_ negative.
     unclaimed_cache_space_ -= kMinThreadCacheSize;
@@ -138,8 +90,8 @@ void ThreadCache::Init(pthread_t tid) {
   prev_ = NULL;
   tid_  = tid;
   in_setspecific_ = false;
-  for (size_t cl = 0; cl < kNumClasses; ++cl) {
-    list_[cl].Init();
+  for (uint32 cl = 0; cl < kNumClasses; ++cl) {
+    list_[cl].Init(Static::sizemap()->class_to_size(cl));
   }
 
   uint32_t sampler_seed;
@@ -149,7 +101,7 @@ void ThreadCache::Init(pthread_t tid) {
 
 void ThreadCache::Cleanup() {
   // Put unused memory back into central cache
-  for (int cl = 0; cl < kNumClasses; ++cl) {
+  for (uint32 cl = 0; cl < kNumClasses; ++cl) {
     if (list_[cl].length() > 0) {
       ReleaseToCentralCache(&list_[cl], cl, list_[cl].length());
     }
@@ -158,7 +110,7 @@ void ThreadCache::Cleanup() {
 
 // Remove some objects of class "cl" from central cache and add to thread heap.
 // On success, return the first object for immediate use; otherwise return NULL.
-void* ThreadCache::FetchFromCentralCache(size_t cl, size_t byte_size) {
+void* ThreadCache::FetchFromCentralCache(uint32 cl, int32_t byte_size) {
   FreeList* list = &list_[cl];
   ASSERT(list->empty());
   const int batch_size = Static::sizemap()->num_objects_to_move(cl);
@@ -170,7 +122,7 @@ void* ThreadCache::FetchFromCentralCache(size_t cl, size_t byte_size) {
 
   ASSERT((start == NULL) == (fetch_count == 0));
   if (--fetch_count >= 0) {
-    size_ += byte_size * fetch_count;
+    size_left_ -= byte_size * fetch_count;
     // Pop the top of the list and add the rest to the freelist.
     void *second = start;
     start = FL_Pop(&second);
@@ -198,7 +150,9 @@ void* ThreadCache::FetchFromCentralCache(size_t cl, size_t byte_size) {
   return start;
 }
 
-void ThreadCache::ListTooLong(FreeList* list, size_t cl) {
+void ThreadCache::ListTooLong(FreeList* list, uint32 cl) {
+  size_left_ -= list->object_size();
+
   const int batch_size = Static::sizemap()->num_objects_to_move(cl);
   ReleaseToCentralCache(list, cl, batch_size);
 
@@ -220,10 +174,14 @@ void ThreadCache::ListTooLong(FreeList* list, size_t cl) {
       list->set_length_overages(0);
     }
   }
+
+  if (PREDICT_FALSE(size_left_ < 0)) {
+    Scavenge();
+  }
 }
 
 // Remove some objects of class "cl" from thread heap and add to central cache
-void ThreadCache::ReleaseToCentralCache(FreeList* src, size_t cl, int N) {
+void ThreadCache::ReleaseToCentralCache(FreeList* src, uint32 cl, int N) {
   ASSERT(src == &list_[cl]);
   if (N > src->length()) N = src->length();
   size_t delta_bytes = N * Static::sizemap()->ByteSizeForClass(cl);
@@ -240,7 +198,7 @@ void ThreadCache::ReleaseToCentralCache(FreeList* src, size_t cl, int N) {
   void *tail, *head;
   src->PopRange(N, &head, &tail);
   Static::central_cache()[cl].InsertRange(head, tail, N);
-  size_ -= delta_bytes;
+  size_left_ += delta_bytes;
 }
 
 // Release idle memory to the central cache
@@ -251,7 +209,6 @@ void ThreadCache::Scavenge() {
   // that situation by dropping L/2 nodes from the free list.  This
   // may not release much memory, but if so we will call scavenge again
   // pretty soon and the low-water marks will be high on that call.
-  //int64 start = CycleClock::Now();
   for (int cl = 0; cl < kNumClasses; cl++) {
     FreeList* list = &list_[cl];
     const int lowmark = list->lowwatermark();
@@ -287,7 +244,7 @@ void ThreadCache::IncreaseCacheLimitLocked() {
   if (unclaimed_cache_space_ > 0) {
     // Possibly make unclaimed_cache_space_ negative.
     unclaimed_cache_space_ -= kStealAmount;
-    max_size_ += kStealAmount;
+    SetMaxSize(max_size_ + kStealAmount);
     return;
   }
   // Don't hold pageheap_lock too long.  Try to steal from 10 other
@@ -305,8 +262,8 @@ void ThreadCache::IncreaseCacheLimitLocked() {
         next_memory_steal_->max_size_ <= kMinThreadCacheSize) {
       continue;
     }
-    next_memory_steal_->max_size_ -= kStealAmount;
-    max_size_ += kStealAmount;
+    next_memory_steal_->SetMaxSize(next_memory_steal_->max_size_ - kStealAmount);
+    SetMaxSize(max_size_ + kStealAmount);
 
     next_memory_steal_ = next_memory_steal_->next_;
     return;
@@ -350,8 +307,35 @@ void ThreadCache::InitTSD() {
 }
 
 ThreadCache* ThreadCache::CreateCacheIfNecessary() {
+  if (!tsd_inited_) {
+#ifndef NDEBUG
+    // tests that freeing nullptr very early is working
+    free(NULL);
+#endif
+
+    InitModule();
+  }
+
   // Initialize per-thread data if necessary
   ThreadCache* heap = NULL;
+
+  bool seach_condition = true;
+#ifdef HAVE_TLS
+  static __thread ThreadCache** current_heap_ptr;
+  if (tsd_inited_) {
+    // In most common case we're avoiding expensive linear search
+    // through all heaps (see below). Working TLS enables faster
+    // protection from malloc recursion in pthread_setspecific
+    seach_condition = false;
+
+    if (current_heap_ptr != NULL) {
+      // we're being recursively called by pthread_setspecific below.
+      return *current_heap_ptr;
+    }
+    current_heap_ptr = &heap;
+  }
+#endif
+
   {
     SpinLockHolder h(Static::pageheap_lock());
     // On some old glibc's, and on freebsd's libc (as of freebsd 8.1),
@@ -375,10 +359,12 @@ ThreadCache* ThreadCache::CreateCacheIfNecessary() {
     // This may be a recursive malloc call from pthread_setspecific()
     // In that case, the heap for this thread has already been created
     // and added to the linked list.  So we search for that first.
-    for (ThreadCache* h = thread_heaps_; h != NULL; h = h->next_) {
-      if (h->tid_ == me) {
-        heap = h;
-        break;
+    if (seach_condition) {
+      for (ThreadCache* h = thread_heaps_; h != NULL; h = h->next_) {
+        if (h->tid_ == me) {
+          heap = h;
+          break;
+        }
       }
     }
 
@@ -394,10 +380,14 @@ ThreadCache* ThreadCache::CreateCacheIfNecessary() {
     perftools_pthread_setspecific(heap_key_, heap);
 #ifdef HAVE_TLS
     // Also keep a copy in __thread for faster retrieval
-    threadlocal_heap_ = heap;
+    threadlocal_data_.heap = heap;
+    threadlocal_data_.fast_path_heap = heap;
 #endif
     heap->in_setspecific_ = false;
   }
+#ifdef HAVE_TLS
+  current_heap_ptr = NULL;
+#endif
   return heap;
 }
 
@@ -429,7 +419,8 @@ void ThreadCache::BecomeIdle() {
   perftools_pthread_setspecific(heap_key_, NULL);
 #ifdef HAVE_TLS
   // Also update the copy in __thread
-  threadlocal_heap_ = NULL;
+  threadlocal_data_.heap = NULL;
+  threadlocal_data_.fast_path_heap = NULL;
 #endif
   heap->in_setspecific_ = false;
   if (GetThreadHeap() == heap) {
@@ -442,6 +433,12 @@ void ThreadCache::BecomeIdle() {
   DeleteCache(heap);
 }
 
+void ThreadCache::BecomeTemporarilyIdle() {
+  ThreadCache* heap = GetCacheIfPresent();
+  if (heap)
+    heap->Cleanup();
+}
+
 void ThreadCache::DestroyThreadCache(void* ptr) {
   // Note that "ptr" cannot be NULL since pthread promises not
   // to invoke the destructor on NULL values, but for safety,
@@ -449,7 +446,8 @@ void ThreadCache::DestroyThreadCache(void* ptr) {
   if (ptr == NULL) return;
 #ifdef HAVE_TLS
   // Prevent fast path of GetThreadHeap() from returning heap.
-  threadlocal_heap_ = NULL;
+  threadlocal_data_.heap = NULL;
+  threadlocal_data_.fast_path_heap = NULL;
 #endif
   DeleteCache(reinterpret_cast<ThreadCache*>(ptr));
 }
@@ -487,7 +485,7 @@ void ThreadCache::RecomputePerThreadCacheSize() {
     // Increasing the total cache size should not circumvent the
     // slow-start growth of max_size_.
     if (ratio < 1.0) {
-        h->max_size_ = static_cast<size_t>(h->max_size_ * ratio);
+      h->SetMaxSize(h->max_size_ * ratio);
     }
     claimed += h->max_size_;
   }
