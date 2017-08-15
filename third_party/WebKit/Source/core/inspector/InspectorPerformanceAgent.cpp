@@ -5,7 +5,9 @@
 #include "core/inspector/InspectorPerformanceAgent.h"
 
 #include "core/frame/LocalFrame.h"
+#include "core/frame/PerformanceMonitor.h"
 #include "core/inspector/InspectedFrames.h"
+#include "core/paint/PaintTiming.h"
 #include "platform/InstanceCounters.h"
 #include "platform/wtf/dtoa/utils.h"
 
@@ -23,7 +25,7 @@ const char* InspectorPerformanceAgent::instance_metric_names_[] = {
 
 InspectorPerformanceAgent::InspectorPerformanceAgent(
     InspectedFrames* inspected_frames)
-    : performance_monitor_(inspected_frames->Root()->GetPerformanceMonitor()) {}
+    : inspected_frames_(inspected_frames) {}
 
 InspectorPerformanceAgent::~InspectorPerformanceAgent() = default;
 
@@ -39,6 +41,17 @@ protocol::Response InspectorPerformanceAgent::disable() {
   return Response::OK();
 }
 
+namespace {
+void AppendMetric(protocol::Array<protocol::Performance::Metric>* container,
+                  const String& name,
+                  double value) {
+  container->addItem(protocol::Performance::Metric::create()
+                         .setName(name)
+                         .setValue(value)
+                         .build());
+}
+}  // namespace
+
 Response InspectorPerformanceAgent::getMetrics(
     std::unique_ptr<protocol::Array<protocol::Performance::Metric>>*
         out_result) {
@@ -46,24 +59,42 @@ Response InspectorPerformanceAgent::getMetrics(
     *out_result = protocol::Array<protocol::Performance::Metric>::create();
     return Response::OK();
   }
+
+  // Page performance metrics.
+  PerformanceMonitor* performance_monitor =
+      inspected_frames_->Root()->GetPerformanceMonitor();
   std::unique_ptr<protocol::Array<protocol::Performance::Metric>> result =
       protocol::Array<protocol::Performance::Metric>::create();
   for (size_t i = 0; i < ARRAY_SIZE(page_metric_names_); ++i) {
-    double value = performance_monitor_->PerfMetricValue(
+    double value = performance_monitor->PerfMetricValue(
         static_cast<PerformanceMonitor::MetricsType>(i));
-    result->addItem(protocol::Performance::Metric::create()
-                        .setName(page_metric_names_[i])
-                        .setValue(value)
-                        .build());
+    AppendMetric(result.get(), page_metric_names_[i], value);
   }
+
+  // Renderer metrics.
   for (size_t i = 0; i < InstanceCounters::kCounterTypeLength; ++i) {
     int value = InstanceCounters::CounterValue(
         static_cast<InstanceCounters::CounterType>(i));
-    result->addItem(protocol::Performance::Metric::create()
-                        .setName(instance_metric_names_[i])
-                        .setValue(value)
-                        .build());
+    AppendMetric(result.get(), instance_metric_names_[i], value);
   }
+
+  // Performance timings.
+  Document* document = inspected_frames_->Root()->GetDocument();
+  if (document) {
+    const PaintTiming& paint_timing = PaintTiming::From(*document);
+    AppendMetric(result.get(), "FirstMeaningfulPaint",
+                 paint_timing.FirstMeaningfulPaint());
+    AppendMetric(result.get(), "FirstPaint", paint_timing.FirstPaint());
+    const DocumentTiming& document_timing = document->GetTiming();
+    AppendMetric(result.get(), "FirstLayout", document_timing.FirstLayout());
+    AppendMetric(result.get(), "DomLoading", document_timing.DomLoading());
+    AppendMetric(result.get(), "DomInteractive",
+                 document_timing.DomInteractive());
+    AppendMetric(result.get(), "DomContentLoaded",
+                 document_timing.DomContentLoadedEventStart());
+    AppendMetric(result.get(), "DomComplete", document_timing.DomComplete());
+  }
+
   *out_result = std::move(result);
   return Response::OK();
 }
@@ -77,7 +108,7 @@ void InspectorPerformanceAgent::ConsoleTimeStamp(const String& title) {
 }
 
 DEFINE_TRACE(InspectorPerformanceAgent) {
-  visitor->Trace(performance_monitor_);
+  visitor->Trace(inspected_frames_);
   InspectorBaseAgent<protocol::Performance::Metainfo>::Trace(visitor);
 }
 

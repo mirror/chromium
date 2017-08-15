@@ -1,6 +1,48 @@
 Test that page performance metrics are retrieved.
-[]
-["PageDocumentCount","AudioHandlerCount","DocumentCount","FrameCount","JSEventListenerCount","LayoutObjectCount","MediaKeySessionCount","MediaKeysCount","NodeCount","ResourceCount","ScriptPromiseCount","SuspendableObjectCount","V8PerContextDataCount","WorkerGlobalScopeCount"]
-["PageDocumentCount","AudioHandlerCount","DocumentCount","FrameCount","JSEventListenerCount","LayoutObjectCount","MediaKeySessionCount","MediaKeysCount","NodeCount","ResourceCount","ScriptPromiseCount","SuspendableObjectCount","V8PerContextDataCount","WorkerGlobalScopeCount"]
-[]
+Received metrics:
+Received metrics:
+	PageDocumentCount
+	AudioHandlerCount
+	DocumentCount
+	FrameCount
+	JSEventListenerCount
+	LayoutObjectCount
+	MediaKeySessionCount
+	MediaKeysCount
+	NodeCount
+	ResourceCount
+	ScriptPromiseCount
+	SuspendableObjectCount
+	V8PerContextDataCount
+	WorkerGlobalScopeCount
+	FirstMeaningfulPaint
+	FirstPaint
+	FirstLayout
+	DomLoading
+	DomInteractive
+	DomContentLoaded
+	DomComplete
+Received metrics:
+	PageDocumentCount
+	AudioHandlerCount
+	DocumentCount
+	FrameCount
+	JSEventListenerCount
+	LayoutObjectCount
+	MediaKeySessionCount
+	MediaKeysCount
+	NodeCount
+	ResourceCount
+	ScriptPromiseCount
+	SuspendableObjectCount
+	V8PerContextDataCount
+	WorkerGlobalScopeCount
+	FirstMeaningfulPaint
+	FirstPaint
+	FirstLayout
+	DomLoading
+	DomInteractive
+	DomContentLoaded
+	DomComplete
+Received metrics:
 
