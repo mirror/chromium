@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "bbe84941_fabb1b70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done! (git cl format . makes it single space)",
+      "parentUuid": "24079c1e_2529374e",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4806c01_4149ee64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28704ae7_92945830",
+      "range": {
+        "startLine": 52,
+        "startChar": 86,
+        "endLine": 52,
+        "endChar": 89
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d12e04d_44f8acbf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 20
@@ -62,6 +110,24 @@
       "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efc925d_ac55283d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d12e04d_44f8acbf",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "8a92ef65_22d18808",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7946be86_761074d2",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 14
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5180386_9782c607",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 20
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "51b77672_c5f37f7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5180386_9782c607",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b35f5e8_b08d9e6b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 20
@@ -119,6 +227,24 @@
       "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6035467f_412c32ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "0b35f5e8_b08d9e6b",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "c03a3b46_9d16fc60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b15b0901_22861f20",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 340,
+        "endChar": 10
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a859e875_c69cf241",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 20
@@ -165,6 +315,30 @@
       "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494167ff_37a2375c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a859e875_c69cf241",
+      "range": {
+        "startLine": 351,
+        "startChar": 38,
+        "endLine": 351,
+        "endChar": 43
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "1acddf07_eb7c08c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b390c50f_803f5802",
+      "range": {
+        "startLine": 401,
+        "startChar": 13,
+        "endLine": 401,
+        "endChar": 21
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35d0dbd3_65839d0c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 20
@@ -205,6 +403,24 @@
       "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07453eb1_77d08a9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d0dbd3_65839d0c",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "162b30d6_12aaede0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGeneratorCallback.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve changed the icon size variables in the other classes to iconSizePx where applicable.",
+      "parentUuid": "51d883ed_43248261",
+      "range": {
+        "startLine": 19,
+        "startChar": 82,
+        "endLine": 19,
+        "endChar": 94
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7707e89_93f17a93",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
         "patchSetId": 20
@@ -248,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "b85c172b_e082f24f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "It would be @Nullable because of DownloadItemView#getFilePath. But we check if it\u0027s null in ThumbnailProviderImpl so it\u0027s ok.",
+      "parentUuid": "d7707e89_93f17a93",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c181fd2c_e246dfa5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
         "patchSetId": 20
@@ -262,6 +520,24 @@
       "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88961cbf_d6666d9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "It would be @Nullable (same reason as getFilePath).",
+      "parentUuid": "c181fd2c_e246dfa5",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "a3668af0_8d3f5683",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "6a43c24c_b475ce48",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "016eddc1_5f9b22dc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/thumbnail_cache_entry.proto",
         "patchSetId": 20
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "5d1586fc_376c1dad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/thumbnail_cache_entry.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "016eddc1_5f9b22dc",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37598343_6ce67f07",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
         "patchSetId": 20
@@ -331,6 +655,30 @@
       "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c05f707_32876cd4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-15T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37598343_6ce67f07",
+      "range": {
+        "startLine": 262,
+        "startChar": 97,
+        "endLine": 262,
+        "endChar": 98
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
