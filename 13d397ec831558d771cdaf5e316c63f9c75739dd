@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d42bf0_79b3df3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": ":)",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89e7bc7_ccdd0ec2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "Add a parameter for the URL?",
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a288f94_8602fb6c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163089af_43514862",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "Time to extract this to a top-level class so we can reuse it?",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 56
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57f7e49_aedf7bb3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "@Nullable?",
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd53e07_4d551b5d",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 4867,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "I think this should have a placeholder for the site instead of appending it in code.",
+      "range": {
+        "startLine": 4867,
+        "startChar": 85,
+        "endLine": 4867,
+        "endChar": 90
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28300d9_4ada590f",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "If this class isn\u0027t referenced anymore in the header, you can move it into the anonymous namespace.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d66dad_6eb7992d",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "Nit: I think the New Hotness is \u003d default.",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53729708_153bc93b",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "Members should be private. Also add DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74b0509_9cf96446",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "If this genuinely can\u0027t happen, no need to have code after the NOTREACHED().",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713208b9_fafbb125",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "Hm, this all seems a bit more complicated than strictly necessary -- we\u0027re calling from Java into the native infobar and then forward to the delegate... which then just returns a constant. We could do all of this directly in Java if we wanted to. We should also think about how this would work in a world where we have only the Java UI (the fact that right now the infobars need to be added from native notwithstanding). From that point of view I think it makes sense to have all the UI (including strings) in Java and only have glue code in C++.",
+      "range": {
+        "startLine": 92,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa23a00_b11ac873",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "What is this method for? Why does it need to be protected?",
+      "range": {
+        "startLine": 36,
+        "startChar": 33,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be277510_5794ba8f",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:56:58Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense to keep this with OnLinkClicked above?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
