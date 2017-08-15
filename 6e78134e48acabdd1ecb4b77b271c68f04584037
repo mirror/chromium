@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d0c023f9_5be27fe2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T23:52:53Z",
+      "side": 1,
+      "message": "Just out of curiosity, what\u0027s the motivation for this? I\u0027ve personally always relied on something like shrink_to_fit or patterns that accomplish that before C++11 to manage wasted memory. I think as demonstrated by different implementations you reference below, it\u0027s a bit iffy to rely on any specific behavior.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "6e78134e48acabdd1ecb4b77b271c68f04584037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26b2b9fa_b7e54372",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 2
@@ -13,6 +36,30 @@
       "writtenOn": "2017-08-15T23:37:08Z",
       "side": 1,
       "message": "I think +1 should be here, otherwise buffer will get capacity of \"InitialCapacity + 1\" which will cause us to reallocate again and again here.",
+      "range": {
+        "startLine": 785,
+        "startChar": 78,
+        "endLine": 785,
+        "endChar": 79
+      },
+      "revId": "6e78134e48acabdd1ecb4b77b271c68f04584037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5fbe6b_2083b952",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T23:52:53Z",
+      "side": 1,
+      "message": "I think this is fine, since capacity() returns the \"true external capacity\", so on the line below we\u0027re comparing apples to apples, and only adjust to oranges when we call SetCapacityTo. \n\nThat being said, it\u0027s a bit hard to keep track of which functions use \"external capacity\" and which functions use \"internal capacity\" If there\u0027s a way to differentiate them by name or something, that would be a nice improvement to readability IMHO.",
+      "parentUuid": "26b2b9fa_b7e54372",
       "range": {
         "startLine": 785,
         "startChar": 78,
