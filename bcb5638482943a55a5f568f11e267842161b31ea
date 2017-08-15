@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "188e87d9_042e4282",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-15T05:32:37Z",
+      "side": 1,
+      "message": "Is 20 sufficient?",
+      "revId": "bcb5638482943a55a5f568f11e267842161b31ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
