@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb28398d_43625b4a",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-15T22:45:32Z",
+      "side": 1,
+      "message": "We really need to introduce some CSS vars in this code, but since this seems to be how we do this everywhere else in login/, it seems fine for now.",
+      "revId": "45c9dd06ee8ce0f827e04e978867d583d0346528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609de8ae_17c1ff71",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-15T22:45:32Z",
+      "side": 1,
+      "message": "The button CSS here doesn\u0027t seem like it should be specific to this screen. I see some similar styling in oobe_nav_button.css, can we use that instead?",
+      "revId": "45c9dd06ee8ce0f827e04e978867d583d0346528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
