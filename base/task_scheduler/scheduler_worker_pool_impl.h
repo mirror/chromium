@@ -31,7 +31,6 @@ namespace base {
 
 class HistogramBase;
 class SchedulerWorkerPoolParams;
-class TaskTraits;
 
 namespace internal {
 
@@ -70,12 +69,6 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   ~SchedulerWorkerPoolImpl() override;
 
   // SchedulerWorkerPool:
-  scoped_refptr<TaskRunner> CreateTaskRunnerWithTraits(
-      const TaskTraits& traits) override;
-  scoped_refptr<SequencedTaskRunner> CreateSequencedTaskRunnerWithTraits(
-      const TaskTraits& traits) override;
-  bool PostTaskWithSequence(std::unique_ptr<Task> task,
-                            scoped_refptr<Sequence> sequence) override;
   void PostTaskWithSequenceNow(std::unique_ptr<Task> task,
                                scoped_refptr<Sequence> sequence) override;
 
@@ -210,9 +203,6 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // TaskScheduler.NumTasksBetweenWaits.[worker pool name] histogram.
   // Intentionally leaked.
   HistogramBase* const num_tasks_between_waits_histogram_;
-
-  TaskTracker* const task_tracker_;
-  DelayedTaskManager* const delayed_task_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
 };

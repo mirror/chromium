@@ -18,6 +18,9 @@
 namespace base {
 namespace internal {
 
+class BASE_EXPORT TaskTracker;
+class BASE_EXPORT DelayedTaskManager;
+
 // Interface for a worker pool.
 class BASE_EXPORT SchedulerWorkerPool {
  public:
@@ -27,25 +30,37 @@ class BASE_EXPORT SchedulerWorkerPool {
   // in this SchedulerWorkerPool using |traits|. Tasks may run in any order and
   // in parallel.
   virtual scoped_refptr<TaskRunner> CreateTaskRunnerWithTraits(
-      const TaskTraits& traits) = 0;
+      const TaskTraits& traits);
 
   // Returns a SequencedTaskRunner whose PostTask invocations result in
   // scheduling tasks in this SchedulerWorkerPool using |traits|. Tasks run one
   // at a time in posting order.
   virtual scoped_refptr<SequencedTaskRunner>
-  CreateSequencedTaskRunnerWithTraits(const TaskTraits& traits) = 0;
+  CreateSequencedTaskRunnerWithTraits(const TaskTraits& traits);
 
   // Posts |task| to be executed by this SchedulerWorkerPool as part of
   // |sequence|. |task| won't be executed before its delayed run time, if any.
   // Returns true if |task| is posted.
   virtual bool PostTaskWithSequence(std::unique_ptr<Task> task,
-                                    scoped_refptr<Sequence> sequence) = 0;
+                                    scoped_refptr<Sequence> sequence);
 
   // Posts |task| to be executed by this SchedulerWorkerPool as part of
   // |sequence|. This must only be called after |task| has gone through
   // PostTaskWithSequence() and after |task|'s delayed run time.
   virtual void PostTaskWithSequenceNow(std::unique_ptr<Task> task,
                                        scoped_refptr<Sequence> sequence) = 0;
+
+  static void SetCurrentWorkerPool(
+      const SchedulerWorkerPool* scheduler_worker_pool);
+
+  static const SchedulerWorkerPool* GetCurrentWorkerPool();
+
+ protected:
+  SchedulerWorkerPool(TaskTracker* task_tracker,
+                      DelayedTaskManager* delayed_task_manager);
+
+  TaskTracker* const task_tracker_;
+  DelayedTaskManager* const delayed_task_manager_;
 };
 
 }  // namespace internal

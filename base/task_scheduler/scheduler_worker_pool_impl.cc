@@ -10,21 +10,16 @@
 #include <utility>
 
 #include "base/atomicops.h"
-#include "base/bind.h"
-#include "base/bind_helpers.h"
-#include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/sequence_token.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_runner.h"
-#include "base/task_scheduler/delayed_task_manager.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/task_tracker.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/platform_thread.h"
-#include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"
 
 namespace base {
@@ -40,91 +35,6 @@ constexpr char kNumTasksBeforeDetachHistogramPrefix[] =
 constexpr char kNumTasksBetweenWaitsHistogramPrefix[] =
     "TaskScheduler.NumTasksBetweenWaits.";
 
-// SchedulerWorkerPool that owns the current thread, if any.
-LazyInstance<ThreadLocalPointer<const SchedulerWorkerPool>>::Leaky
-    tls_current_worker_pool = LAZY_INSTANCE_INITIALIZER;
-
-// A task runner that runs tasks with the PARALLEL ExecutionMode.
-class SchedulerParallelTaskRunner : public TaskRunner {
- public:
-  // Constructs a SchedulerParallelTaskRunner which can be used to post tasks so
-  // long as |worker_pool| is alive.
-  // TODO(robliao): Find a concrete way to manage |worker_pool|'s memory.
-  SchedulerParallelTaskRunner(const TaskTraits& traits,
-                              SchedulerWorkerPool* worker_pool)
-      : traits_(traits), worker_pool_(worker_pool) {
-    DCHECK(worker_pool_);
-  }
-
-  // TaskRunner:
-  bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       OnceClosure closure,
-                       TimeDelta delay) override {
-    // Post the task as part of a one-off single-task Sequence.
-    return worker_pool_->PostTaskWithSequence(
-        MakeUnique<Task>(from_here, std::move(closure), traits_, delay),
-        make_scoped_refptr(new Sequence));
-  }
-
-  bool RunsTasksInCurrentSequence() const override {
-    return tls_current_worker_pool.Get().Get() == worker_pool_;
-  }
-
- private:
-  ~SchedulerParallelTaskRunner() override = default;
-
-  const TaskTraits traits_;
-  SchedulerWorkerPool* const worker_pool_;
-
-  DISALLOW_COPY_AND_ASSIGN(SchedulerParallelTaskRunner);
-};
-
-// A task runner that runs tasks with the SEQUENCED ExecutionMode.
-class SchedulerSequencedTaskRunner : public SequencedTaskRunner {
- public:
-  // Constructs a SchedulerSequencedTaskRunner which can be used to post tasks
-  // so long as |worker_pool| is alive.
-  // TODO(robliao): Find a concrete way to manage |worker_pool|'s memory.
-  SchedulerSequencedTaskRunner(const TaskTraits& traits,
-                               SchedulerWorkerPool* worker_pool)
-      : traits_(traits), worker_pool_(worker_pool) {
-    DCHECK(worker_pool_);
-  }
-
-  // SequencedTaskRunner:
-  bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       OnceClosure closure,
-                       TimeDelta delay) override {
-    std::unique_ptr<Task> task(
-        new Task(from_here, std::move(closure), traits_, delay));
-    task->sequenced_task_runner_ref = this;
-
-    // Post the task as part of |sequence_|.
-    return worker_pool_->PostTaskWithSequence(std::move(task), sequence_);
-  }
-
-  bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
-                                  OnceClosure closure,
-                                  base::TimeDelta delay) override {
-    // Tasks are never nested within the task scheduler.
-    return PostDelayedTask(from_here, std::move(closure), delay);
-  }
-
-  bool RunsTasksInCurrentSequence() const override {
-    return sequence_->token() == SequenceToken::GetForCurrentThread();
-  }
-
- private:
-  ~SchedulerSequencedTaskRunner() override = default;
-
-  // Sequence for all Tasks posted through this TaskRunner.
-  const scoped_refptr<Sequence> sequence_ = new Sequence;
-
-  const TaskTraits traits_;
-  SchedulerWorkerPool* const worker_pool_;
-
-  DISALLOW_COPY_AND_ASSIGN(SchedulerSequencedTaskRunner);
-};
 
 // Only used in DCHECKs.
 bool ContainsWorker(const std::vector<scoped_refptr<SchedulerWorker>>& workers,
@@ -185,7 +95,8 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
     ThreadPriority priority_hint,
     TaskTracker* task_tracker,
     DelayedTaskManager* delayed_task_manager)
-    : name_(name),
+    : SchedulerWorkerPool(task_tracker, delayed_task_manager),
+      name_(name),
       priority_hint_(priority_hint),
       lock_(shared_priority_queue_.container_lock()),
       idle_workers_stack_cv_for_testing_(lock_.CreateConditionVariable()),
@@ -216,12 +127,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
           1,
           100,
           50,
-          HistogramBase::kUmaTargetedHistogramFlag)),
-      task_tracker_(task_tracker),
-      delayed_task_manager_(delayed_task_manager) {
-  DCHECK(task_tracker_);
-  DCHECK(delayed_task_manager_);
-}
+          HistogramBase::kUmaTargetedHistogramFlag)) {}
 
 void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   AutoSchedulerLock auto_lock(lock_);
@@ -261,46 +167,6 @@ SchedulerWorkerPoolImpl::~SchedulerWorkerPoolImpl() {
   AutoSchedulerLock auto_lock(lock_);
   DCHECK(join_for_testing_returned_.IsSignaled() || workers_.empty());
 #endif
-}
-
-scoped_refptr<TaskRunner> SchedulerWorkerPoolImpl::CreateTaskRunnerWithTraits(
-    const TaskTraits& traits) {
-  return make_scoped_refptr(new SchedulerParallelTaskRunner(traits, this));
-}
-
-scoped_refptr<SequencedTaskRunner>
-SchedulerWorkerPoolImpl::CreateSequencedTaskRunnerWithTraits(
-    const TaskTraits& traits) {
-  return make_scoped_refptr(new SchedulerSequencedTaskRunner(traits, this));
-}
-
-bool SchedulerWorkerPoolImpl::PostTaskWithSequence(
-    std::unique_ptr<Task> task,
-    scoped_refptr<Sequence> sequence) {
-  DCHECK(task);
-  DCHECK(sequence);
-
-  if (!task_tracker_->WillPostTask(task.get()))
-    return false;
-
-  if (task->delayed_run_time.is_null()) {
-    PostTaskWithSequenceNow(std::move(task), std::move(sequence));
-  } else {
-    // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
-    // for details.
-    CHECK(task->task);
-    delayed_task_manager_->AddDelayedTask(
-        std::move(task),
-        BindOnce(
-            [](scoped_refptr<Sequence> sequence,
-               SchedulerWorkerPool* worker_pool, std::unique_ptr<Task> task) {
-              worker_pool->PostTaskWithSequenceNow(std::move(task),
-                                                   std::move(sequence));
-            },
-            std::move(sequence), Unretained(this)));
-  }
-
-  return true;
 }
 
 void SchedulerWorkerPoolImpl::PostTaskWithSequenceNow(
@@ -416,8 +282,8 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
   PlatformThread::SetName(
       StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
-  DCHECK(!tls_current_worker_pool.Get().Get());
-  tls_current_worker_pool.Get().Set(outer_);
+  DCHECK(!SchedulerWorkerPool::GetCurrentWorkerPool());
+  SchedulerWorkerPool::SetCurrentWorkerPool(outer_);
 
   // New threads haven't run GetWork() yet, so reset the |idle_start_time_|.
   idle_start_time_ = TimeTicks();
