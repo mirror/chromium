@@ -557,6 +557,7 @@ source_set("unit_tests") {
         ":remoting_me2me_host",
       ]
     }
+    data_deps += [ "//remoting/test:capability_test_stub" ]
   }
 }
 
