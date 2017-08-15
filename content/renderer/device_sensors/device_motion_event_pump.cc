@@ -15,18 +15,17 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
 
-DeviceMotionEventPump::DeviceMotionEventPump(RenderThread* thread,
-                                             RenderFrame* render_frame)
+DeviceMotionEventPump::DeviceMotionEventPump(RenderThread* thread)
     : PlatformEventObserver<blink::WebDeviceMotionListener>(thread),
       accelerometer_(this, device::mojom::SensorType::ACCELEROMETER),
       linear_acceleration_sensor_(
           this,
           device::mojom::SensorType::LINEAR_ACCELERATION),
       gyroscope_(this, device::mojom::SensorType::GYROSCOPE),
-      render_frame_(render_frame),
       state_(PumpState::STOPPED) {}
 
 DeviceMotionEventPump::~DeviceMotionEventPump() {
@@ -62,8 +61,6 @@ void DeviceMotionEventPump::Stop() {
 }
 
 void DeviceMotionEventPump::SendStartMessage() {
-  auto request = mojo::MakeRequest(&sensor_provider_);
-
   // When running layout tests, those observers should not listen to the
   // actual hardware changes. In order to make that happen, don't connect
   // the other end of the mojo pipe to anything.
@@ -74,11 +71,22 @@ void DeviceMotionEventPump::SendStartMessage() {
 
   if (!accelerometer_.sensor && !linear_acceleration_sensor_.sensor &&
       !gyroscope_.sensor) {
-    DCHECK(render_frame_);
-    render_frame_->GetRemoteInterfaces()->GetInterface(std::move(request));
-    sensor_provider_.set_connection_error_handler(
-        base::Bind(&DeviceMotionEventPump::HandleSensorProviderError,
-                   base::Unretained(this)));
+    if (!sensor_provider_) {
+      blink::WebLocalFrame* const web_frame =
+          blink::WebLocalFrame::FrameForCurrentContext();
+
+      RenderFrame* const render_frame = RenderFrame::FromWebFrame(web_frame);
+      if (!render_frame)
+        return;
+
+      CHECK(render_frame->GetRemoteInterfaces());
+
+      render_frame->GetRemoteInterfaces()->GetInterface(
+          mojo::MakeRequest(&sensor_provider_));
+      sensor_provider_.set_connection_error_handler(
+          base::Bind(&DeviceMotionEventPump::HandleSensorProviderError,
+                     base::Unretained(this)));
+    }
     GetSensor(&accelerometer_);
     GetSensor(&linear_acceleration_sensor_);
     GetSensor(&gyroscope_);

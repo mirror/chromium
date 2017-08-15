@@ -73,7 +73,7 @@ class MockDeviceMotionListener : public blink::WebDeviceMotionListener {
 class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
  public:
   DeviceMotionEventPumpForTesting()
-      : DeviceMotionEventPump(nullptr, nullptr), stop_on_fire_event_(true) {}
+      : DeviceMotionEventPump(nullptr), stop_on_fire_event_(true) {}
   ~DeviceMotionEventPumpForTesting() override {}
 
   // DeviceMotionEventPump:
