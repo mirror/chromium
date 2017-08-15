@@ -1052,7 +1052,7 @@
     },
     {
       name: "UpdateHoverPostLayout",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "V8IdleTasks",
