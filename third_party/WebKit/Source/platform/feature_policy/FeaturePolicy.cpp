@@ -10,6 +10,8 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 
+#include <algorithm>
+
 namespace blink {
 
 WebParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
@@ -82,6 +84,66 @@ WebParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
     }
   }
   return whitelists;
+}
+
+bool IsFeatureDeclared(
+    const WebFeaturePolicyFeature feature,
+    const Vector<WebParsedFeaturePolicyDeclaration>& policy) {
+  for (const auto& declaration : policy) {
+    if (declaration.feature == feature) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void RemoveFeatureIfPresent(const WebFeaturePolicyFeature feature,
+                            Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  std::remove_if(policy->begin(), policy->end(),
+                 [feature](const auto& declaration) {
+                   return (declaration.feature == feature);
+                 });
+}
+
+void DisallowFeatureIfNotPresent(
+    const WebFeaturePolicyFeature feature,
+    Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  if (!IsFeatureDeclared(feature, *policy)) {
+    WebParsedFeaturePolicyDeclaration whitelist;
+    whitelist.feature = feature;
+    whitelist.matches_all_origins = false;
+    whitelist.origins = Vector<WebSecurityOrigin>(0UL);
+    policy->push_back(whitelist);
+  }
+}
+
+void AllowFeatureEverywhereIfNotPresent(
+    const WebFeaturePolicyFeature feature,
+    Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  if (!IsFeatureDeclared(feature, *policy)) {
+    WebParsedFeaturePolicyDeclaration whitelist;
+    whitelist.feature = feature;
+    whitelist.matches_all_origins = true;
+    whitelist.origins = Vector<WebSecurityOrigin>(0UL);
+    policy->push_back(whitelist);
+  }
+}
+
+void DisallowFeature(const WebFeaturePolicyFeature feature,
+                     Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  RemoveFeatureIfPresent(feature, policy);
+  DisallowFeatureIfNotPresent(feature, policy);
+}
+
+void AllowFeatureEverywhere(const WebFeaturePolicyFeature feature,
+                            Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  RemoveFeatureIfPresent(feature, policy);
+  AllowFeatureEverywhereIfNotPresent(feature, policy);
 }
 
 bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature feature) {

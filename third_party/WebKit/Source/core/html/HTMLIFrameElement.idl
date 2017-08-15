@@ -40,6 +40,10 @@ interface HTMLIFrameElement : HTMLElement {
     // Feature Policy allow attribute
     // https://wicg.github.io/feature-policy/
     [RuntimeEnabled=FeaturePolicy, CEReactions, PutForwards=value] readonly attribute DOMTokenList allow;
+
+    // AdFrame
+    [CEReactions, Reflect] attribute boolean ad;
+
     // obsolete members
     // https://html.spec.whatwg.org/#HTMLIFrameElement-partial
     [CEReactions, Reflect] attribute DOMString align;
