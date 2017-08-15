@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "48336d72_6f8409a0",
+        "filename": "components/offline_pages/core/offline_event_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c921746c_57e1cd23",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3df3d99_6422a706",
         "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I reworked this to be more resilient to state change.  WDYT?",
       "parentUuid": "d3df3d99_6422a706",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "710822ed_31e971bb",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "Looks good. For the record I liked the cleanness  of the previous approach. :)",
+      "parentUuid": "b9db1758_02f77b0f",
       "range": {
         "startLine": 49,
         "startChar": 6,
@@ -166,6 +214,30 @@
       "side": 1,
       "message": "That is how raw string literals work.  See: http://en.cppreference.com/w/cpp/language/string_literal\n\nThe string itself will not have parens surrounding it.",
       "parentUuid": "f28bd867_6e8d06e8",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a739212_cc6a4d9e",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "Ack. Thanks for the pointer.",
+      "parentUuid": "2ee0f4e8_4ef31497",
       "range": {
         "startLine": 36,
         "startChar": 31,
@@ -554,6 +626,30 @@
     },
     {
       "key": {
+        "uuid": "56034e2b_e35b4c9c",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s worry about this later if it ever becomes an architectural  problem.",
+      "parentUuid": "71af6ee2_c3f51777",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c133df1_5e1ac5aa",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
         "patchSetId": 2
@@ -589,6 +685,30 @@
       "side": 1,
       "message": "Is this better?",
       "parentUuid": "6c133df1_5e1ac5aa",
+      "range": {
+        "startLine": 49,
+        "startChar": 46,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8e6628d_e1c57e4a",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "Yes, thanks. Transitively \u003d\u003d indirectly (PS -owns-\u003e PD -owns-\u003e |this|), right?",
+      "parentUuid": "105c3505_2d695353",
       "range": {
         "startLine": 49,
         "startChar": 46,
@@ -965,6 +1085,30 @@
       "side": 1,
       "message": "That may be more thorough, but to me it seems like it\u0027d be less readable.  If you feel strongly I can open a task to redo this in a future CL.",
       "parentUuid": "a5d8481f_adc9880a",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 75
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf51ce87_1bd822a0",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "SGTM as is (I don\u0027t feel strongly about this hence nit/suggestion).",
+      "parentUuid": "52d21557_6388518b",
       "range": {
         "startLine": 181,
         "startChar": 2,

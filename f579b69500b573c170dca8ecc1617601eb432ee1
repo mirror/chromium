@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0652e968_650a92c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "nit: I think this should be \"responses\", right?",
+      "range": {
+        "startLine": 7,
+        "startChar": 64,
+        "endLine": 7,
+        "endChar": 72
+      },
+      "revId": "f579b69500b573c170dca8ecc1617601eb432ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de27b51b_b7a6934c",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-15T00:21:34Z",
+      "side": 1,
+      "message": "nit: that",
+      "range": {
+        "startLine": 161,
+        "startChar": 11,
+        "endLine": 161,
+        "endChar": 15
+      },
+      "revId": "f579b69500b573c170dca8ecc1617601eb432ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
