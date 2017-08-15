@@ -22,6 +22,30 @@
       "revId": "ef5343ce9db0f605becd94ceacf449d35e037328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451406a4_1078ff84",
+        "filename": "extensions/shell/browser/system_logs/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T00:02:16Z",
+      "side": 1,
+      "message": "No, that\u0027s implicit from the directory name. https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#Implicit-names",
+      "parentUuid": "1a1e9573_a5d17dd4",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "ef5343ce9db0f605becd94ceacf449d35e037328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
