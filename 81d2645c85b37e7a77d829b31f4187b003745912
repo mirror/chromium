@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1be8df4c_366879b7",
+        "filename": "net/ssl/ssl_platform_key_nss_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-15T21:33:41Z",
+      "side": 1,
+      "message": "Yeah, this was mostly just being lazy since there are a bunch of places that use the ImportClientCertAndKeyFromFile and ImportClientCertToSlot functions.. but I think I came up with a reasonable way to handle it that doesn\u0027t require updating all the call sites at once.\n\nI\u0027ve also removed the FindCERTCertificateFOO functions from this CL, though they\u0027ll show up again in one of the later ones, you can judge what you think of those uses once we get there :)",
+      "parentUuid": "9e665a6c_7046cc8f",
+      "revId": "81d2645c85b37e7a77d829b31f4187b003745912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15365be9_ba28efb0",
         "filename": "net/third_party/nss/ssl/cmpcert.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "81d2645c85b37e7a77d829b31f4187b003745912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051c9c78_b77c4829",
+        "filename": "net/third_party/nss/ssl/cmpcert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-15T21:33:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15365be9_ba28efb0",
+      "range": {
+        "startLine": 25,
+        "startChar": 31,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "81d2645c85b37e7a77d829b31f4187b003745912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
