@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "7b129d68_641167d0",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-15T17:58:08Z",
+      "side": 1,
+      "message": "That\u0027s a great idea! Done.",
+      "parentUuid": "f56fdec3_a909184b",
+      "revId": "4e57817766d637d342f18684dd244788c177f9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fabfc8c_1fa0c7f1",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -62,6 +80,30 @@
       "revId": "4e57817766d637d342f18684dd244788c177f9c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05625d23_3c641ffc",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-15T17:58:08Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4fabfc8c_1fa0c7f1",
+      "range": {
+        "startLine": 378,
+        "startChar": 6,
+        "endLine": 379,
+        "endChar": 29
+      },
+      "revId": "4e57817766d637d342f18684dd244788c177f9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
