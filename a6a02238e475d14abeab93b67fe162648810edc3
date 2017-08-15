@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a29ef32f_5cc6485b",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T09:28:21Z",
+      "side": 1,
+      "message": "Looks inconsistent with the original list. So, could you document the policy what are included and what are not?",
+      "revId": "a6a02238e475d14abeab93b67fe162648810edc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674d958a_59c87cd6",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T09:28:21Z",
+      "side": 1,
+      "message": "(out-of-focus): L215-L221 can be\n\nreturn std::binary_search(...);\n\n?",
+      "revId": "a6a02238e475d14abeab93b67fe162648810edc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
