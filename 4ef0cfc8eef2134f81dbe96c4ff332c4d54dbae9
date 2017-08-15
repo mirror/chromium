@@ -93,6 +93,30 @@
       "revId": "4ef0cfc8eef2134f81dbe96c4ff332c4d54dbae9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba75d72a_4b563757",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T23:14:55Z",
+      "side": 1,
+      "message": "My concern is the special casing here leading to the possibility of no release or release without a down. If you don\u0027t send a release with a corresponding down, and similar a release with no down then I have no doubt views may be left in a weird state and/or hit random DCHECKs.",
+      "parentUuid": "daa90500_755735ac",
+      "range": {
+        "startLine": 2864,
+        "startChar": 11,
+        "endLine": 2864,
+        "endChar": 45
+      },
+      "revId": "4ef0cfc8eef2134f81dbe96c4ff332c4d54dbae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
