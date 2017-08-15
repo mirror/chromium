@@ -65,6 +65,8 @@ NET_EXPORT ScopedCERTCertificate
 FindCERTCertificateFromX509Certificate(const X509Certificate* cert);
 
 // Increments the refcount of |cert| and returns a handle for that reference.
+NET_EXPORT ScopedCERTCertificate
+DupCERTCertificate(const ScopedCERTCertificate& cert);
 NET_EXPORT ScopedCERTCertificate DupCERTCertificate(CERTCertificate* cert);
 
 // Creates an X509Certificate from |cert|, with intermediates from |chain|.
@@ -78,6 +80,11 @@ CreateX509CertificateFromCERTCertificate(
 // Returns NULL on failure.
 NET_EXPORT scoped_refptr<X509Certificate>
 CreateX509CertificateFromCERTCertificate(CERTCertificate* cert);
+
+// Creates an X509Certificate for each element in |certs|.
+// Returns an empty list on failure.
+NET_EXPORT CertificateList CreateX509CertificateListFromCERTCertificates(
+    const ScopedCERTCertificateList& certs);
 
 // Obtains the DER encoded certificate data for |cert|. On success, returns
 // true and writes the DER encoded certificate to |*der_encoded|.
@@ -121,6 +128,10 @@ NET_EXPORT std::string GetDefaultUniqueNickname(CERTCertificate* nss_cert,
 // this order: CN, O and OU and returns the first non-empty one found.
 // This mirrors net::CertPrincipal::GetDisplayName.
 NET_EXPORT std::string GetCERTNameDisplayName(CERTName* name);
+
+// Calculates the SHA-256 fingerprint of the certificate.  Returns an empty
+// (all zero) fingerprint on failure.
+NET_EXPORT SHA256HashValue CalculateFingerprint256(CERTCertificate* cert);
 
 } // namespace x509_util
 
