@@ -80,28 +80,6 @@ int64_t GetDisplayIdFromDictionary(const base::DictionaryValue* dictionary,
   return GetDisplayIdFromValue(arg);
 }
 
-base::string16 GetColorProfileName(display::ColorCalibrationProfile profile) {
-  switch (profile) {
-    case display::COLOR_PROFILE_STANDARD:
-      return l10n_util::GetStringUTF16(
-          IDS_OPTIONS_SETTINGS_DISPLAY_OPTIONS_COLOR_PROFILE_STANDARD);
-    case display::COLOR_PROFILE_DYNAMIC:
-      return l10n_util::GetStringUTF16(
-          IDS_OPTIONS_SETTINGS_DISPLAY_OPTIONS_COLOR_PROFILE_DYNAMIC);
-    case display::COLOR_PROFILE_MOVIE:
-      return l10n_util::GetStringUTF16(
-          IDS_OPTIONS_SETTINGS_DISPLAY_OPTIONS_COLOR_PROFILE_MOVIE);
-    case display::COLOR_PROFILE_READING:
-      return l10n_util::GetStringUTF16(
-          IDS_OPTIONS_SETTINGS_DISPLAY_OPTIONS_COLOR_PROFILE_READING);
-    case display::NUM_COLOR_PROFILES:
-      break;
-  }
-
-  NOTREACHED();
-  return base::string16();
-}
-
 int GetIntOrDouble(const base::DictionaryValue* dict,
                    const std::string& field) {
   double double_result = 0;
@@ -343,20 +321,6 @@ void DisplayOptionsHandler::SendAllDisplayInfo() {
     }
     js_display->Set("resolutions", std::move(js_resolutions));
 
-    js_display->SetInteger("colorProfileId", display_info.color_profile());
-    auto available_color_profiles = base::MakeUnique<base::ListValue>();
-    for (const auto& color_profile : display_info.available_color_profiles()) {
-      const base::string16 profile_name = GetColorProfileName(color_profile);
-      if (profile_name.empty())
-        continue;
-      auto color_profile_dict = base::MakeUnique<base::DictionaryValue>();
-      color_profile_dict->SetInteger("profileId", color_profile);
-      color_profile_dict->SetString("name", profile_name);
-      available_color_profiles->Append(std::move(color_profile_dict));
-    }
-    js_display->Set("availableColorProfiles",
-                    std::move(available_color_profiles));
-
     if (display_manager->GetNumDisplays() > 1) {
       // The settings UI must use the resolved display layout to show the
       // actual applied layout.
@@ -551,16 +515,6 @@ void DisplayOptionsHandler::HandleSetColorProfile(const base::ListValue* args) {
     LOG(ERROR) << "Invalid profile: " << profile_value;
     return;
   }
-
-  if (profile_id < display::COLOR_PROFILE_STANDARD ||
-      profile_id > display::COLOR_PROFILE_READING) {
-    LOG(ERROR) << "Invalid profile_id: " << profile_id;
-    return;
-  }
-
-  base::RecordAction(base::UserMetricsAction("Options_DisplaySetColorProfile"));
-  GetDisplayManager()->SetColorCalibrationProfile(
-      display_id, static_cast<display::ColorCalibrationProfile>(profile_id));
 
   SendAllDisplayInfo();
 }
