@@ -237,7 +237,8 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
 // force the subresource filter specific UI.
 bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow(
     const content::OpenURLParams* open_url_params) {
-  auto it = activated_frame_hosts_.find(web_contents()->GetMainFrame());
+  content::RenderFrameHost* main_frame = web_contents()->GetMainFrame();
+  auto it = activated_frame_hosts_.find(main_frame);
   if (it == activated_frame_hosts_.end())
     return false;
   const ActivationState state = it->second->activation_state();
@@ -257,8 +258,11 @@ bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow(
     should_block = open_url_params->triggering_event_info ==
                    blink::WebTriggeringEventInfo::kFromUntrustedEvent;
   }
-  if (should_block)
+  if (should_block) {
     delegate_->OnFirstSubresourceLoadDisallowed();
+    main_frame->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_ERROR,
+                                    kDisallowNewWindowMessage);
+  }
   return should_block;
 }
 
