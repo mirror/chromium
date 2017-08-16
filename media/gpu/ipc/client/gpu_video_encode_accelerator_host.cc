@@ -170,6 +170,10 @@ void GpuVideoEncodeAcceleratorHost::RequestEncodingParametersChange(
       encoder_route_id_, bitrate, framerate));
 }
 
+void GpuVideoEncodeAcceleratorHost::Flush() {
+  NOTIMPLEMENTED();
+}
+
 void GpuVideoEncodeAcceleratorHost::Destroy() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (channel_)

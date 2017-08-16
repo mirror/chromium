@@ -748,6 +748,10 @@ void VaapiVideoEncodeAccelerator::RequestEncodingParametersChangeTask(
   encoding_parameters_changed_ = true;
 }
 
+void VaapiVideoEncodeAccelerator::Flush() {
+  NOTIMPLEMENTED();
+}
+
 void VaapiVideoEncodeAccelerator::Destroy() {
   DCHECK(child_task_runner_->BelongsToCurrentThread());
 
@@ -1053,6 +1057,10 @@ void VaapiVideoEncodeAccelerator::NotifyError(Error error) {
     client_->NotifyError(error);
     client_ptr_factory_.reset();
   }
+}
+
+void VaapiVideoEncodeAccelerator::NotifyFlushDone() {
+  NOTIMPLEMENTED();
 }
 
 VaapiVideoEncodeAccelerator::EncodeJob::EncodeJob()

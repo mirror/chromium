@@ -336,6 +336,10 @@ void V4L2VideoEncodeAccelerator::RequestEncodingParametersChange(
           base::Unretained(this), bitrate, framerate));
 }
 
+void V4L2VideoEncodeAccelerator::Flush() {
+  NOTIMPLEMENTED();
+}
+
 void V4L2VideoEncodeAccelerator::Destroy() {
   DVLOG(3) << "Destroy()";
   DCHECK(child_task_runner_->BelongsToCurrentThread());

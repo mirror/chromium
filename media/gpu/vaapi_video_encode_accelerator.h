@@ -45,6 +45,7 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
   void UseOutputBitstreamBuffer(const BitstreamBuffer& buffer) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
+  void Flush() override;
   void Destroy() override;
 
  private:
@@ -151,6 +152,9 @@ class MEDIA_GPU_EXPORT VaapiVideoEncodeAccelerator
 
   // Puts the encoder into en error state and notifies client about the error.
   void NotifyError(Error error);
+
+  // Notifies the client the completion of Flush().
+  void NotifyFlushDone();
 
   // Sets the encoder state on the correct thread.
   void SetState(State state);

@@ -120,6 +120,10 @@ void VEAEncoder::NotifyError(media::VideoEncodeAccelerator::Error error) {
   error_notified_ = true;
 }
 
+void VEAEncoder::NotifyFlushDone() {
+  NOTIMPLEMENTED();
+}
+
 void VEAEncoder::UseOutputBitstreamBufferId(int32_t bitstream_buffer_id) {
   DVLOG(3) << __func__;
   DCHECK(encoding_task_runner_->BelongsToCurrentThread());
