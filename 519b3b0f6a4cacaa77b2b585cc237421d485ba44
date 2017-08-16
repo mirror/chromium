@@ -16,6 +16,24 @@
       "revId": "519b3b0f6a4cacaa77b2b585cc237421d485ba44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0cd438_69e74839",
+        "filename": "sql/connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-16T18:44:01Z",
+      "side": 1,
+      "message": "Statement cache is per connection, and in most cases we have one connection per class (i.e. per file). So number of cached statements is roughly the number of GetCachedStatement instances per file, which is ~30 max.\n\nI added a comment explaining that number of statements is expected to be small, and gave a link to //base/containers/README.md.",
+      "parentUuid": "9ec4812d_626b7a2b",
+      "revId": "519b3b0f6a4cacaa77b2b585cc237421d485ba44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
