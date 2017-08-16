@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661ede11_55b04366",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:05:10Z",
+      "side": 1,
+      "message": "Can we check the cursor visibility here instead? (because the cursor can be hidden after this task has already been posted, and we would still end up synthesizing the mouse-move while the cursor is hidden)",
+      "revId": "00c90d2d63a03ef66bc1be04db3348b6f4aab50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
