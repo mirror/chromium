@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "13a75cbc_67e8fe0b",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:16:47Z",
+      "side": 1,
+      "message": "Clarifying question: Given that the weak pointer factor is not longer existing, I presume the issue you\u0027re referring to that you\u0027d block this for is the apparent lack of a test that includes destruction of this object on the IO thread?",
+      "parentUuid": "8c483d40_bf3d3a3b",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
