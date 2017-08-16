@@ -176,6 +176,24 @@
       "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4e4876_3ecca6aa",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T17:31:32Z",
+      "side": 1,
+      "message": "I\u0027m curious how things go wrong if we always exited fullscreen in the CreateNewWindow. Is there a user-visible difference?\n\nAFAIK, the blink message loop doesn\u0027t run between the IPCs that trigger CreateNewWindow, and the one that triggers ShowCreatedWindow -- they\u0027re part of the same operation, just at different points in the stack. I used to think there was a delay in these two operations, but my current understanding is that they arrive back-to-back.",
+      "parentUuid": "5858ac9f_00cb3817",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
