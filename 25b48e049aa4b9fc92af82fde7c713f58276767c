@@ -34,6 +34,24 @@
       "revId": "25b48e049aa4b9fc92af82fde7c713f58276767c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e7ad8a5_964fdf5e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T06:11:46Z",
+      "side": 1,
+      "message": "Sorry... flipping this now, let\u0027s go with \u0027S13nServiceWorker\u0027.",
+      "parentUuid": "e53c5ab4_390c7b10",
+      "revId": "25b48e049aa4b9fc92af82fde7c713f58276767c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
