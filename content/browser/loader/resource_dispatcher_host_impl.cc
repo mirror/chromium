@@ -1864,7 +1864,10 @@ void ResourceDispatcherHostImpl::CancelRequestsForRoute(
       any_requests_transferring = true;
     if (cancel_all_routes || route_id == info->GetRenderFrameID()) {
       if (info->detachable_handler()) {
-        info->detachable_handler()->Detach();
+        if (!base::FeatureList::IsEnabled(
+                features::kKeepAliveRendererForKeepaliveRequests)) {
+          info->detachable_handler()->Detach();
+        }
       } else if (!info->IsDownload() && !info->is_stream() &&
                  !IsTransferredNavigation(id)) {
         matching_requests.push_back(id);

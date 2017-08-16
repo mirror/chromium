@@ -87,6 +87,7 @@ class WebFrameScheduler;
 class WebPluginContainerImpl;
 class WebTaskRunner;
 class WebURLLoader;
+class WebURLRequestsTracker;
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<LocalFrame>;
 
@@ -253,6 +254,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
                                                 WebTaskRunner*);
+  std::unique_ptr<WebURLRequestsTracker> IssueRequestsTracker();
 
   bool IsInert() const { return is_inert_; }
 
