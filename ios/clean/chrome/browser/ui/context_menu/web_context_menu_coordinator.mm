@@ -6,11 +6,11 @@
 
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
+#import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_context_impl.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_mediator.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_view_controller.h"
-#import "ios/shared/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
