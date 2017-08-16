@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a79d07b3_c0777619",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 6
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-16T15:27:31Z",
+      "side": 1,
+      "message": "I\u0027ve made images work as well now.",
+      "parentUuid": "87888a21_6b5f3708",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d993a1f0_cf039e05",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 6
@@ -85,6 +103,24 @@
       "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65be39db_57763842",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-16T15:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed4a108d_04083ae6",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

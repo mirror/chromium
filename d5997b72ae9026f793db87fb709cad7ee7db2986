@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01c1452d_31b3e51e",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-16T15:27:31Z",
+      "side": 1,
+      "message": "No reason, I probably added some code that I deleted after. Done.",
+      "parentUuid": "12869651_ac45cd7b",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e53edfae_13da4e29",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6a969053_a724b5ad",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-16T15:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53edfae_13da4e29",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2840b866_40572596",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 7
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-16T09:00:40Z",
       "side": 1,
       "message": "Can we have two reporting policies in this function rather than having one more policy value in SecurityViolationReportingPolicy?",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502c590b_b8c9573d",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-16T15:27:31Z",
+      "side": 1,
+      "message": "Hmm... you mean separate event firing and report posting policies? I\u0027m not sure this would help a lot and in some places it would probably make things more complicated.",
+      "parentUuid": "2840b866_40572596",
       "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
