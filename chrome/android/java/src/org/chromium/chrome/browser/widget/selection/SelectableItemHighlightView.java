@@ -13,6 +13,7 @@ import android.widget.Checkable;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 
 /**
  * Highlight overlay view for selectable items.
@@ -20,6 +21,7 @@ import org.chromium.chrome.R;
 public class SelectableItemHighlightView extends View implements Checkable {
     public static final int ANIMATION_DURATION_MS = 150;
     private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
+    private final boolean mUseModernDesign;
     private boolean mIsChecked;
 
     /**
@@ -27,6 +29,7 @@ public class SelectableItemHighlightView extends View implements Checkable {
      */
     public SelectableItemHighlightView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mUseModernDesign = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
         Drawable clickDrawable = context.obtainStyledAttributes(new int[] {
                 android.R.attr.selectableItemBackground }).getDrawable(0);
         Drawable longClickDrawable = ApiCompatibilityUtils.getDrawable(context.getResources(),
@@ -55,7 +58,7 @@ public class SelectableItemHighlightView extends View implements Checkable {
     @Override
     public int[] onCreateDrawableState(int extraSpace) {
         final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-        if (mIsChecked) {
+        if (mIsChecked && !mUseModernDesign) {
             mergeDrawableStates(drawableState, CHECKED_STATE_SET);
         }
         return drawableState;
