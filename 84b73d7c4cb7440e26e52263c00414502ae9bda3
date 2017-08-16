@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e15c2de_3cf30d7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T17:28:03Z",
+      "side": 1,
+      "message": "This seems like \u0027yet another name\u0027 for LifetimePolicy::LifetimeType::TEMPORARY.  I\u0027d either rename to isLifetimeTemporary, or expose the enum directly to Java",
+      "revId": "84b73d7c4cb7440e26e52263c00414502ae9bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a6b9ee_991e5efb",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T17:28:03Z",
+      "side": 1,
+      "message": "I believe we were trying to avoid an explosion of policy controllers, we wanted to reduce the number to 1.\n\nPerhaps another strategy would be to expose a method on OfflinePageBridge method for checking the lifetime policy of a page by going and asking the OfflinePageModel\u0027s controller.",
+      "revId": "84b73d7c4cb7440e26e52263c00414502ae9bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
