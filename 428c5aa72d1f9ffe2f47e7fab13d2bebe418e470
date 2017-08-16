@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f5dbf92_b3dcb384",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-16T02:50:28Z",
+      "side": 1,
+      "message": "I do intend to get rid of StartNextTask, but I\u0027d like to first work on removing is_active_ entirely, such that StartNextTask *only* calls WorkOnTask. Moving DCHECK(is_active_) into WorkOnTask() now will mean that that check is run in more contexts than it is currently, meaning that it will be harder to reason about its removal later.",
+      "parentUuid": "e81d5209_0bef127c",
+      "range": {
+        "startLine": 370,
+        "startChar": 25,
+        "endLine": 370,
+        "endChar": 38
+      },
+      "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8c58d5f_3ec7f2e6",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ef30ee4f_b0522375",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-16T02:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c58d5f_3ec7f2e6",
+      "range": {
+        "startLine": 392,
+        "startChar": 30,
+        "endLine": 392,
+        "endChar": 31
+      },
+      "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed741bb6_54b34765",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29609eec_533f337f",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-16T02:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed741bb6_54b34765",
+      "range": {
+        "startLine": 525,
+        "startChar": 34,
+        "endLine": 525,
+        "endChar": 35
+      },
+      "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
