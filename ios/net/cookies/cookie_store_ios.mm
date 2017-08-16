@@ -19,7 +19,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/observer_list.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/task_runner_util.h"
@@ -42,62 +41,6 @@
 namespace net {
 
 namespace {
-
-#pragma mark NotificationTrampoline
-
-// NotificationTrampoline dispatches cookie notifications to all the existing
-// CookieStoreIOS.
-class NotificationTrampoline {
- public:
-  static NotificationTrampoline* GetInstance();
-
-  void AddObserver(CookieNotificationObserver* obs);
-  void RemoveObserver(CookieNotificationObserver* obs);
-
-  // Notify the observers.
-  void NotifyCookiesChanged();
-
- private:
-  NotificationTrampoline();
-  ~NotificationTrampoline();
-
-  base::ObserverList<CookieNotificationObserver> observer_list_;
-
-  DISALLOW_COPY_AND_ASSIGN(NotificationTrampoline);
-
-  static NotificationTrampoline* g_notification_trampoline;
-};
-
-#pragma mark NotificationTrampoline implementation
-
-NotificationTrampoline* NotificationTrampoline::GetInstance() {
-  if (!g_notification_trampoline)
-    g_notification_trampoline = new NotificationTrampoline;
-  return g_notification_trampoline;
-}
-
-void NotificationTrampoline::AddObserver(CookieNotificationObserver* obs) {
-  observer_list_.AddObserver(obs);
-}
-
-void NotificationTrampoline::RemoveObserver(CookieNotificationObserver* obs) {
-  observer_list_.RemoveObserver(obs);
-}
-
-void NotificationTrampoline::NotifyCookiesChanged() {
-  for (auto& observer : observer_list_)
-    observer.OnSystemCookiesChanged();
-}
-
-NotificationTrampoline::NotificationTrampoline() {
-}
-
-NotificationTrampoline::~NotificationTrampoline() {
-}
-
-// Global instance of NotificationTrampoline.
-NotificationTrampoline* NotificationTrampoline::g_notification_trampoline =
-    nullptr;
 
 #pragma mark Utility functions
 
@@ -280,12 +223,8 @@ CookieStoreIOS::CookieStoreIOS(NSHTTPCookieStorage* cookie_storage)
     : CookieStoreIOS(nullptr, cookie_storage) {}
 
 CookieStoreIOS::~CookieStoreIOS() {
-  NotificationTrampoline::GetInstance()->RemoveObserver(this);
-}
-
-// static
-void CookieStoreIOS::NotifySystemCookiesChanged() {
-  NotificationTrampoline::GetInstance()->NotifyCookiesChanged();
+  [[NSNotificationCenter defaultCenter]
+      removeObserver:system_cookies_changed_observer_];
 }
 
 void CookieStoreIOS::SetMetricsEnabled() {
@@ -609,14 +548,30 @@ CookieStoreIOS::CookieStoreIOS(
       system_store_(system_store),
       creation_time_manager_(new CookieCreationTimeManager),
       metrics_enabled_(false),
+      task_runner_(base::ThreadTaskRunnerHandle::Get()),
       cookie_cache_(new CookieCache()),
       weak_factory_(this) {
   DCHECK(system_store);
 
-  NotificationTrampoline::GetInstance()->AddObserver(this);
-
   cookie_monster_->SetPersistSessionCookies(true);
   cookie_monster_->SetForceKeepSessionState();
+
+  id<NSObject> observer = [[NSNotificationCenter defaultCenter]
+      addObserverForName:NSHTTPCookieManagerCookiesChangedNotification
+                  object:[NSHTTPCookieStorage sharedHTTPCookieStorage]
+                   queue:nil
+              usingBlock:^(NSNotification* notification) {
+                NotifySystemCookiesChanged(notification);
+              }];
+  system_cookies_changed_observer_.reset(observer);
+}
+
+void CookieStoreIOS::NotifySystemCookiesChanged(NSNotification* notification) {
+  DCHECK([[notification name]
+      isEqualToString:NSHTTPCookieManagerCookiesChangedNotification]);
+  task_runner_->PostTask(FROM_HERE,
+                         base::BindOnce(&CookieStoreIOS::OnSystemCookiesChanged,
+                                        weak_factory_.GetWeakPtr()));
 }
 
 CookieStoreIOS::SetCookiesCallback CookieStoreIOS::WrapSetCallback(
@@ -817,14 +772,10 @@ void CookieStoreIOS::DidClearNSHTTPCookieStorageCookies(
     int num_deleted) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  CookieStoreIOSClient* client = net::GetCookieStoreIOSClient();
-  DCHECK(client);
-  auto sequenced_task_runner = client->GetTaskRunner();
-  DCHECK(sequenced_task_runner);
   auto callback = base::BindOnce(
       &CookieStoreIOS::DidClearBinaryCookiesFileCookies,
       weak_factory_.GetWeakPtr(), std::move(delete_callback), num_deleted);
-  sequenced_task_runner.get()->PostTaskAndReply(
+  task_runner_->PostTaskAndReply(
       FROM_HERE, base::Bind(&ClearAllCookiesFromBinaryCookiesFile),
       std::move(callback));
 }
