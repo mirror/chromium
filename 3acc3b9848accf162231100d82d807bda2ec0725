@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22b6757a_c7fd4f6c",
+        "filename": "chrome/renderer/chrome_content_renderer_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-16T20:38:46Z",
+      "side": 1,
+      "message": "Any chance I could convince you to use an enum for this (https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Prefer-enums-to-bools-for-function-parameters)?\n\nIf not, please use\n\n  /*is_placeholder_image\u003d*/false\n\nelse it\u0027s ambiguous if false here means \"use a placeholder image\" or \"set use_placeholder_image to false, i.e. do not use a placeholder\"",
+      "range": {
+        "startLine": 400,
+        "startChar": 25,
+        "endLine": 400,
+        "endChar": 45
+      },
+      "revId": "3acc3b9848accf162231100d82d807bda2ec0725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
