@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c03ea9c6_9954a576",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c0e075_aee7ea80",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77300638_1b84dd05",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560da545_c0f24bb0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77300638_1b84dd05",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eb5e4cd1_3e473b77",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:12:03Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "c73a86db_f1015b14",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 33
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32b7ebcb_940f0cd1",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2a4988b6_84a16d10",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:12:03Z",
+      "side": 1,
+      "message": "Similar comment about if it\u0027s worth it to pass in the SchedulerWorker* pointer to such a function.",
+      "parentUuid": "32b7ebcb_940f0cd1",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 506,
+        "endChar": 59
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ed9d296_363ef8aa",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-15T22:11:49Z",
       "side": 1,
       "message": "This DCHECK might be more appropriate in SetIsNotOnIdleWorkersStack(). This way anyone who calls it can be ensured the state is correct prior to calling SetIsNotOnIdleWorkersStack(). This would just be a DCHECK(!outer-\u003eidle_workers_stack_...).",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 50
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a21de1_e49799f2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:12:03Z",
+      "side": 1,
+      "message": "I\u0027d have to pass in a SchedulerWorker* to SchedulerWorkerDelegateImpl::SetIsNotOnIdleWorkersStack() to do that, which might be confusing. (I know this is already done in delegate functions like GetWork, but here, it\u0027d only be used in DCHECKs)\n\nDo you think it\u0027s still worth having that DCHECK there?",
+      "parentUuid": "6ed9d296_363ef8aa",
       "range": {
         "startLine": 636,
         "startChar": 4,
