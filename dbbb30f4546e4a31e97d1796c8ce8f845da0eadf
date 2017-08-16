@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85fe2bcc_c60418dd",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:39:45Z",
+      "side": 1,
+      "message": "|n| is now unsigned (it was signed previously, thanks for the change).  So all values in this if expression have the same type.\n\nDid you test this code using buffers with |len| near UINT_MAX?  Because the expression ((i + n) \u003e len) will integer overflow, and that causes the code below to do an out-of-bounds read on |buf|.",
+      "revId": "dbbb30f4546e4a31e97d1796c8ce8f845da0eadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
