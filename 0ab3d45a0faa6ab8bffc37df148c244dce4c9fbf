@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb71146d_de28bbff",
+        "filename": "net/http/http_auth_handler_ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-16T14:15:50Z",
+      "side": 1,
+      "message": "I was specifically suggesting to avoid using base::Time::Now() in favor of passing in a base::Clock, yes.\n\nHowever, I was also writing it to avoid any assumptions (about the zero point or ToInternalValue). I\u0027m not sure why you suggested there would need to be an additional helper function, ScopedProcHelper, etc. Could you expand on the concerns?\n\nThat is, I thought it would be easier, not more difficult. I\u0027m also not sure I understand your concerns re: scoped_ptr - that doesn\u0027t seem to raise complexity at all?\n\n(Re-reading) Is the issue because you\u0027re using static globals to override/inject the test behaviour (line 145 - 147), rather than being something that can be passed to the factory? For these heremetic tests, aren\u0027t they something we can test via the factory (e.g. dependency injection)? Just trying to make sure I understand the concern properly, even though it looks like \"fix the static\" may be a CL in its own right :)",
+      "parentUuid": "f41a9dad_dc161dd1",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35f207b2_e9094e35",
         "filename": "net/http/http_auth_handler_ntlm_portable.cc",
         "patchSetId": 8
@@ -773,6 +791,24 @@
       "side": 1,
       "message": "Updated comment for state on failure. Not sure if general convention is to force .clear() or assert. But I added a comment and DCHECK\u0027d that the vector is empty on entry.",
       "parentUuid": "f8c61eb5_d88b1a6f",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5894d7fc_8818d678",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-16T14:15:50Z",
+      "side": 1,
+      "message": "Depends. A common style is \"don\u0027t touch on error, .clear() on success\" - but it really depends on the expected use case. Others can just .push_back()  (to allow larger compositions), hence the importance to document the expectations (e.g. \"new items will be added to the end\" vs \"the result will contain only the items\") and the state on error :)",
+      "parentUuid": "b65caff8_efc21a8e",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
