@@ -60,15 +60,22 @@
 namespace blink {
 
 static inline ImageBitmapSource* ToImageBitmapSourceInternal(
+    ScriptState* script_state,
     const ImageBitmapSourceUnion& value,
     ExceptionState& exception_state,
     const ImageBitmapOptions& options,
     bool has_crop_rect) {
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  UseCounter::Count(context, WebFeature::kCreateImageBitmap);
   ImageElementBase* image_element = nullptr;
   if (value.isHTMLImageElement()) {
+    UseCounter::Count(context,
+                      WebFeature::kCreateImageBitmapFromHTMLImageElement);
     if (!(image_element = value.getAsHTMLImageElement()))
       return nullptr;
   } else if (value.isSVGImageElement()) {
+    UseCounter::Count(context,
+                      WebFeature::kCreateImageBitmapFromSVGImageElement);
     if (!(image_element = value.getAsSVGImageElement()))
       return nullptr;
   }
@@ -93,18 +100,33 @@ static inline ImageBitmapSource* ToImageBitmapSourceInternal(
     }
     return image_element;
   }
-  if (value.isHTMLVideoElement())
+  if (value.isHTMLVideoElement()) {
+    UseCounter::Count(context,
+                      WebFeature::kCreateImageBitmapFromHTMLVideoElement);
     return value.getAsHTMLVideoElement();
-  if (value.isHTMLCanvasElement())
+  }
+  if (value.isHTMLCanvasElement()) {
+    UseCounter::Count(context,
+                      WebFeature::kCreateImageBitmapFromHTMLCanvasElement);
     return value.getAsHTMLCanvasElement();
-  if (value.isBlob())
+  }
+  if (value.isBlob()) {
+    UseCounter::Count(context, WebFeature::kCreateImageBitmapFromBlob);
     return value.getAsBlob();
-  if (value.isImageData())
+  }
+  if (value.isImageData()) {
+    UseCounter::Count(context, WebFeature::kCreateImageBitmapFromImageData);
     return value.getAsImageData();
-  if (value.isImageBitmap())
+  }
+  if (value.isImageBitmap()) {
+    UseCounter::Count(context, WebFeature::kCreateImageBitmapFromImageBitmap);
     return value.getAsImageBitmap();
-  if (value.isOffscreenCanvas())
+  }
+  if (value.isOffscreenCanvas()) {
+    UseCounter::Count(context,
+                      WebFeature::kCreateImageBitmapFromOffscreenCanvas);
     return value.getAsOffscreenCanvas();
+  }
   NOTREACHED();
   return nullptr;
 }
@@ -137,10 +159,8 @@ ScriptPromise ImageBitmapFactories::createImageBitmap(
     const ImageBitmapSourceUnion& bitmap_source,
     const ImageBitmapOptions& options,
     ExceptionState& exception_state) {
-  WebFeature feature = WebFeature::kCreateImageBitmap;
-  UseCounter::Count(ExecutionContext::From(script_state), feature);
   ImageBitmapSource* bitmap_source_internal = ToImageBitmapSourceInternal(
-      bitmap_source, exception_state, options, false);
+      script_state, bitmap_source, exception_state, options, false);
   if (!bitmap_source_internal)
     return ScriptPromise();
   return createImageBitmap(script_state, event_target, bitmap_source_internal,
@@ -157,10 +177,8 @@ ScriptPromise ImageBitmapFactories::createImageBitmap(
     int sh,
     const ImageBitmapOptions& options,
     ExceptionState& exception_state) {
-  WebFeature feature = WebFeature::kCreateImageBitmap;
-  UseCounter::Count(ExecutionContext::From(script_state), feature);
   ImageBitmapSource* bitmap_source_internal = ToImageBitmapSourceInternal(
-      bitmap_source, exception_state, options, true);
+      script_state, bitmap_source, exception_state, options, true);
   if (!bitmap_source_internal)
     return ScriptPromise();
   Optional<IntRect> crop_rect = IntRect(sx, sy, sw, sh);

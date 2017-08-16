@@ -16045,6 +16045,14 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2066" label="StyleSheetListNonNullAnonymousNamedGetter"/>
   <int value="2067" label="OffMainThreadFetch"/>
   <int value="2068" label="HTMLOptionsCollectionNamedGetterReturnsNodeList"/>
+  <int value="2069" label="CreateImageBitmapFromHTMLImageElement"/>
+  <int value="2070" label="CreateImageBitmapFromSVGImageElement"/>
+  <int value="2071" label="CreateImageBitmapFromHTMLVideoElement"/>
+  <int value="2072" label="CreateImageBitmapFromHTMLCanvasElement"/>
+  <int value="2073" label="CreateImageBitmapFromBlob"/>
+  <int value="2074" label="CreateImageBitmapFromImageData"/>
+  <int value="2075" label="CreateImageBitmapFromImageBitmap"/>
+  <int value="2076" label="CreateImageBitmapFromOffscreenCanvas"/>
 </enum>
 
 <enum name="FeedbackSource">

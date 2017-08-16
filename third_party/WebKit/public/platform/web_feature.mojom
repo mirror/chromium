@@ -1602,6 +1602,14 @@ enum WebFeature {
   kStyleSheetListNonNullAnonymousNamedGetter = 2066,
   kOffMainThreadFetch = 2067,
   kHTMLOptionsCollectionNamedGetterReturnsNodeList = 2068,
+  kCreateImageBitmapFromHTMLImageElement = 2069,
+  kCreateImageBitmapFromSVGImageElement = 2070,
+  kCreateImageBitmapFromHTMLVideoElement = 2071,
+  kCreateImageBitmapFromHTMLCanvasElement = 2072,
+  kCreateImageBitmapFromBlob = 2073,
+  kCreateImageBitmapFromImageData = 2074,
+  kCreateImageBitmapFromImageBitmap = 2075,
+  kCreateImageBitmapFromOffscreenCanvas = 2076,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
