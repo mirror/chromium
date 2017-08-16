@@ -45,7 +45,7 @@ source_set("ntp") {
     "//ios/clean/chrome/browser/ui/recent_tabs",
     "//ios/shared/chrome/browser/ui/commands",
     "//ios/shared/chrome/browser/ui/coordinators",
-    "//ios/web:web_arc",
+    "//ios/web:web",
     "//ui/base:base",
     "//url:url",
   ]

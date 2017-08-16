@@ -42,7 +42,6 @@ source_set("web") {
     "//ios/chrome/browser/ui/sad_tab:sad_tab",
     "//ios/chrome/browser/ui/util:util",
     "//ios/web",
-    "//ios/web:web_arc",
     "//ui/base",
     "//url",
   ]
@@ -80,7 +79,7 @@ source_set("unit_tests") {
     "//ios/chrome/browser/ui:ui",
     "//ios/chrome/browser/ui/sad_tab",
     "//ios/chrome/test:test_support",
-    "//ios/web:web_arc",
+    "//ios/web:web",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
     "//testing/gtest",
