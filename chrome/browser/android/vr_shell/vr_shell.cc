@@ -433,6 +433,11 @@ void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
   ui_->SetWebVrSecureOrigin(secure_origin);
 }
 
+void VrShell::ShowAlertDialog(base::string16 txt_msg) {
+  LOG(ERROR) << "VRSHELL: VRP = show alert dialog";
+  ui_->SetAlertText(txt_msg);
+}
+
 void VrShell::CreateVRDisplayInfo(
     const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
     uint32_t device_id) {

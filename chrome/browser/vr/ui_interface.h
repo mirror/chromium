@@ -42,6 +42,7 @@ class UiInterface {
   virtual void SetScreenCapturingIndicator(bool enabled) = 0;
   virtual void SetAudioCapturingIndicator(bool enabled) = 0;
   virtual void SetBluetoothConnectedIndicator(bool enabled) = 0;
+  virtual void SetAlertText(base::string16 text) = 0;
   virtual void SetLocationAccessIndicator(bool enabled) = 0;
   virtual void SetSplashScreenIcon(const SkBitmap& bitmap) = 0;
 

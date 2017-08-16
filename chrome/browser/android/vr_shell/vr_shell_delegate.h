@@ -71,6 +71,8 @@ class VrShellDelegate : public device::GvrDelegateProvider {
   void OnWebContentsFocused(content::RenderWidgetHost* host);
   void OnWebContentsLostFocus(content::RenderWidgetHost* host);
 
+  void AddAlertDialog(base::string16 txt_msg);
+
   // device::GvrDelegateProvider implementation.
   void ExitWebVRPresent() override;
   void CreateVRDisplayInfo(

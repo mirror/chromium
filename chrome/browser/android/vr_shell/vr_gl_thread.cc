@@ -239,6 +239,12 @@ void VrGLThread::SetBluetoothConnectedIndicator(bool enabled) {
                             weak_scene_manager_, enabled));
 }
 
+void VrGLThread::SetAlertText(base::string16 text) {
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::UiSceneManager::SetAlertText, weak_scene_manager_, text));
+}
+
 void VrGLThread::SetIsExiting() {
   WaitUntilThreadStarted();
   task_runner()->PostTask(

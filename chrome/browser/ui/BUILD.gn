@@ -2412,6 +2412,8 @@ split_static_library("ui") {
       "android/usb_chooser_dialog_android.h",
       "android/view_android_helper.cc",
       "android/view_android_helper.h",
+      "android/vr_alert_dialog.cc",
+      "android/vr_alert_dialog.h",
       "browser_otr_state_android.cc",
       "screen_capture_notification_ui_stub.cc",
       "webui/offline/offline_internals_ui.cc",

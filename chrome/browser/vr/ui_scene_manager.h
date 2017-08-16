@@ -10,6 +10,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/values.h"
 #include "chrome/browser/vr/color_scheme.h"
+#include "chrome/browser/vr/elements/alert_dialog.h"
 #include "chrome/browser/vr/elements/simple_textured_element.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
@@ -57,6 +58,7 @@ class UiSceneManager {
   void SetLocationAccessIndicator(bool enabled);
   void SetSplashScreenIcon(const SkBitmap& bitmap);
   void SetBluetoothConnectedIndicator(bool enabled);
+  void SetAlertText(base::string16 text);
 
   // These methods are currently stubbed.
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
@@ -78,6 +80,7 @@ class UiSceneManager {
   void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
   void CreateUnderDevelopmentNotice();
+  void CreateAlertDialog();
   void CreateBackground();
   void CreateUrlBar();
   void CreateTransientUrlBar();
@@ -117,6 +120,7 @@ class UiSceneManager {
   UiElement* screen_capture_indicator_ = nullptr;
   UiElement* location_access_indicator_ = nullptr;
   UiElement* screen_dimmer_ = nullptr;
+  AlertDialog* alert_dialog_ = nullptr;
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
