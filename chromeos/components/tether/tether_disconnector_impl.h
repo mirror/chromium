@@ -60,6 +60,9 @@ class TetherDisconnectorImpl : public TetherDisconnector,
       const base::Closure& success_callback,
       const network_handler::StringResultCallback& error_callback) override;
 
+  void SendDisconnectTetheringRequest(
+      const std::string& tether_network_guid) override;
+
   // DisconnectTetheringOperation::Observer:
   void OnOperationFinished(const std::string& device_id, bool success) override;
 

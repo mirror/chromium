@@ -214,7 +214,7 @@ void Initializer::CreateComponent() {
   tether_network_disconnection_handler_ =
       base::MakeUnique<TetherNetworkDisconnectionHandler>(
           active_host_.get(), network_state_handler_,
-          network_configuration_remover_.get());
+          network_configuration_remover_.get(), tether_disconnector_.get());
   network_connection_handler_tether_delegate_ =
       base::MakeUnique<NetworkConnectionHandlerTetherDelegate>(
           network_connection_handler_, tether_connector_.get(),

@@ -21,10 +21,12 @@ namespace tether {
 TetherNetworkDisconnectionHandler::TetherNetworkDisconnectionHandler(
     ActiveHost* active_host,
     NetworkStateHandler* network_state_handler,
-    NetworkConfigurationRemover* network_configuration_remover)
+    NetworkConfigurationRemover* network_configuration_remover,
+    TetherDisconnector* tether_disconnector)
     : active_host_(active_host),
       network_state_handler_(network_state_handler),
-      network_configuration_remover_(network_configuration_remover) {
+      network_configuration_remover_(network_configuration_remover),
+      tether_disconnector_(tether_disconnector) {
   network_state_handler_->AddObserver(this, FROM_HERE);
 }
 
@@ -43,6 +45,9 @@ void TetherNetworkDisconnectionHandler::NetworkConnectionStateChanged(
 
     network_configuration_remover_->RemoveNetworkConfiguration(
         active_host_->GetWifiNetworkGuid());
+
+    tether_disconnector_->SendDisconnectTetheringRequest(
+        active_host_->GetTetherNetworkGuid());
 
     active_host_->SetActiveHostDisconnected();
   }

@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "chromeos/components/tether/active_host.h"
+#include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/network/network_state_handler_observer.h"
 
 namespace chromeos {
@@ -29,7 +30,8 @@ class TetherNetworkDisconnectionHandler : public NetworkStateHandlerObserver {
   TetherNetworkDisconnectionHandler(
       ActiveHost* active_host,
       NetworkStateHandler* network_state_handler,
-      NetworkConfigurationRemover* network_configuration_remover);
+      NetworkConfigurationRemover* network_configuration_remover,
+      TetherDisconnector* tether_disconnector);
   ~TetherNetworkDisconnectionHandler() override;
 
   // NetworkStateHandlerObserver:
@@ -41,6 +43,7 @@ class TetherNetworkDisconnectionHandler : public NetworkStateHandlerObserver {
   ActiveHost* active_host_;
   NetworkStateHandler* network_state_handler_;
   NetworkConfigurationRemover* network_configuration_remover_;
+  TetherDisconnector* tether_disconnector_;
 
   DISALLOW_COPY_AND_ASSIGN(TetherNetworkDisconnectionHandler);
 };

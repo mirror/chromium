@@ -86,6 +86,7 @@ void TetherDisconnectorImpl::DisconnectFromNetwork(
     const base::Closure& success_callback,
     const network_handler::StringResultCallback& error_callback) {
   DCHECK(!tether_network_guid.empty());
+  PA_LOG(INFO) << "TetherDisconnector::DisconnectFromNetwork called";
 
   ActiveHost::ActiveHostStatus status = active_host_->GetActiveHostStatus();
   std::string active_tether_network_guid = active_host_->GetTetherNetworkGuid();
@@ -173,6 +174,11 @@ void TetherDisconnectorImpl::DisconnectActiveWifiConnection(
   // In addition to disconnecting from the Wi-Fi network, this device must also
   // send a DisconnectTetheringRequest to the tether host so that it can shut
   // down its Wi-Fi hotspot if it is no longer in use.
+  SendDisconnectTetheringRequest(tether_network_guid);
+}
+
+void TetherDisconnectorImpl::SendDisconnectTetheringRequest(
+    const std::string& tether_network_guid) {
   const std::string device_id =
       device_id_tether_network_guid_map_->GetDeviceIdForTetherNetworkGuid(
           tether_network_guid);

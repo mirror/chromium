@@ -32,6 +32,9 @@ class TetherDisconnector {
       const base::Closure& success_callback,
       const network_handler::StringResultCallback& error_callback) = 0;
 
+  virtual void SendDisconnectTetheringRequest(
+      const std::string& tether_network_guid) = 0;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(TetherDisconnector);
 };
