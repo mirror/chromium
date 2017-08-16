@@ -310,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "1d522f76_884d6c7d",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:09:30Z",
+      "side": 1,
+      "message": "Sorry, that should be \"unless we receive an unexpected message/closure from the URLLoaderClient pipe, or an error from the BodyHandler (Like a write to file failure, or buffer size exceeded).",
+      "parentUuid": "5022ee3f_ae56b46c",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c46c42a_2fcc9a52",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
