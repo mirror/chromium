@@ -179,6 +179,14 @@ std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial() {
       ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
 }
 
+bool IsAMPRedirectionPreviewEnabled() {
+  return base::FeatureList::IsEnabled(features::kAMPRedirection);
+}
+
+int AMPRedirectionPreviewsVersion() {
+  return 0;
+}
+
 }  // namespace params
 
 std::string GetStringNameForType(PreviewsType type) {
@@ -189,6 +197,8 @@ std::string GetStringNameForType(PreviewsType type) {
       return "LoFi";
     case PreviewsType::LITE_PAGE:
       return "LitePage";
+    case PreviewsType::AMP_REDIRECTION:
+      return "AMPRedirection";
     case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;

@@ -38,6 +38,8 @@ bool IsPreviewsTypeEnabled(previews::PreviewsType type) {
              (data_reduction_proxy::params::IsLoFiOnViaFlags() &&
               data_reduction_proxy::params::AreLitePagesEnabledViaFlags()) ||
              data_reduction_proxy::params::IsIncludedInLitePageFieldTrial();
+    case previews::PreviewsType::AMP_REDIRECTION:
+      return previews::params::IsAMPRedirectionPreviewEnabled();
     case previews::PreviewsType::NONE:
     case previews::PreviewsType::LAST:
       break;
@@ -56,6 +58,8 @@ int GetPreviewsTypeVersion(previews::PreviewsType type) {
       return previews::params::ClientLoFiVersion();
     case previews::PreviewsType::LITE_PAGE:
       return data_reduction_proxy::params::LitePageVersion();
+    case previews::PreviewsType::AMP_REDIRECTION:
+      return previews::params::AMPRedirectionPreviewsVersion();
     case previews::PreviewsType::NONE:
     case previews::PreviewsType::LAST:
       break;

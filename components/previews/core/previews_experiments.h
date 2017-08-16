@@ -71,6 +71,10 @@ net::EffectiveConnectionType EffectiveConnectionTypeThresholdForClientLoFi();
 // Returns the hosts that are blacklisted by the Client Lo-Fi field trial.
 std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial();
 
+bool IsAMPRedirectionPreviewEnabled();
+
+int AMPRedirectionPreviewsVersion();
+
 }  // namespace params
 
 enum class PreviewsType {
@@ -85,9 +89,12 @@ enum class PreviewsType {
   // The user is shown a server lite page.
   LITE_PAGE = 3,
 
+  // AMP version of the page is shown as a preview.
+  AMP_REDIRECTION = 4,
+
   // Insert new enum values here. Keep values sequential to allow looping
   // from NONE+1 to LAST-1.
-  LAST = 4,
+  LAST = 5,
 };
 
 typedef std::vector<std::pair<PreviewsType, int>> PreviewsTypeList;
