@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b086f80_653d1753",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T15:05:44Z",
+      "side": 1,
+      "message": "You also need to update create_channel_ipa_packages.py to update this value for all channels.",
+      "range": {
+        "startLine": 6,
+        "startChar": 11,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "607db0a2abd4b8893ecf19a9151602788ea98f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
