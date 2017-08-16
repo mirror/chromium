@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a71ecb86_1b43e8ba",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "It must be valid, AXEventGenerator should have a shorter\nlifetime. Added a comment to the constructor.",
+      "parentUuid": "db4dc67d_7f359951",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee4573eb_cca1aa97",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "Is this generator useful if it doesn\u0027t subscribe as a delegate to the tree? i.e. why are we not adding ourselves as a delegate on construction? You also never set tree_ to nullptr, so this is somewhat of a no-op.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d5d8ecd_eddaf332",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Good suggestion, made it automatically register as the delegate\nand clarified that in the header file.",
+      "parentUuid": "ee4573eb_cca1aa97",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e949e1e_8ddadcb1",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "With the changes you suggested above there\u0027s no need\nsince |tree_| is required to be not null.",
+      "parentUuid": "c0eb2ad8_4ad6758a",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c67d9e7_ee763dc6",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "Maybe this should be called GetAndClearEvents (since there\u0027s really no popping involved).",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e84d6c_81081862",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Changed to GetEvents, and added a separate Clear().",
+      "parentUuid": "8c67d9e7_ee763dc6",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "311be44b_76aae000",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "I agree that it\u0027d be possible to catch the redundant events\nmore easily elsewhere. Done. I think I originally thought\nthere\u0027d be more work to do in postprocessing but just\nkeeping the events in a set ended up taking care of most\nof that.\n\nLooking for deleted nodes on add/push doesn\u0027t work because\nsometimes an event will fire on a node early in a tree update\nbut later that node ends up getting deleted.\n\nAs an example, imagine first node A changes, which generates\nan event on its parent B, but then later in the same tree\nupdate it turns out that A is reparented to C and B goes away,\nwhich is totally legal.",
+      "parentUuid": "1c5faccf_771a5f78",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c4ef802_84efc7cf",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "Maybe this should be called AddEvent rather than Push.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf5169_578fc617",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4ef802_84efc7cf",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5d074857_895ac213",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f549d8_82f673c4",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4052a56b_e693ee53",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "I\u0027m concerned about inferences like this. Ideally, this should be picked up when the row count attribute (an int attribute) changes, right? Seems like we should strictly avoid one-offs like this and fix the underlying attributes if it doesn\u0027t already work to observe int attr changes.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31bc3862_d5fa211e",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "FWIW, this is exactly mimicing what Blink does now. In the case\nof a table you\u0027re right that the row count should update.\nThe problematic case is a tree grid - the top-level element\ndoesn\u0027t have an attribute that counts the total number of\ndescendants, but VoiceOver requires you to fire this event\non the root of the treegrid (AXOutline) when you\u0027ve added or\nremoved an item anywhere in it.",
+      "parentUuid": "4052a56b_e693ee53",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b8ec214b_f481baeb",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "That won\u0027t break ARC++, will it? All it says is that if you have\na selection AND it happens to be in a composite container like a\nlist box or menu, then it fires this event on the container.\n\nWe need this event on Mac to make things like list boxes work.\nWe can absolutely ignore it for the automation API if you want,\nsince there are other ways to get that information.",
+      "parentUuid": "953780e5_2b9c1c0a",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ba87fc_f17576c4",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "Is there going to be a TODO here or will this event get suppressed?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9eb1276_c252c4fb",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Right now we don\u0027t have any string list attributes that\nneed to fire an event. The only attribute is\ncustom_action_descriptions, which is only supposed to\nchange if custom_action_ids changes.",
+      "parentUuid": "b8ba87fc_f17576c4",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c8304332_6ee0efab",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Good call on document title changed. We needed that anyway.\n\nWe can add progress if we need it, right now it\u0027s hooked in\nelsewhere and we don\u0027t need an event.\n\nI don\u0027t believe the others can change independently of a\nload complete event, but yeah, we should absolutely just add\nany others we need.",
+      "parentUuid": "1e41102f_b3da009d",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b56658_0f267e82",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 4
@@ -200,6 +398,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "Why not do this in the above delegate callbacks? I think you also need some concept of StartProcessing() and GetAllEventsWhenReady() i.e. all events up to and including the next OnAtomicUpdateFinished or whenever all deserialization completes since the ax tree can be incomplete. That also reminds me, when you perform tree walking above, is the tree in a consistent state?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "045531ea_06bfc8fe",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "These specific events need to fire only when a node is\ncreated, not when it changes.",
+      "parentUuid": "37b56658_0f267e82",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "8d9ae031_31510905",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "It\u0027s safe to walk up the tree in all of the methods that\nare overridden in this file.\n\nI think the live region changes are already pretty\nefficient because CONTAINER_LIVE_STATUS is only set\non nodes within a live region, so we\u0027re only walking\nup when there\u0027s a change inside a live region, then\nwe only walk up to the live region root. That seems\npretty narrow and efficient to me.\n\nIf you\u0027ve got massively large live regions that\u0027s\ngoing to cause problems far worse than walking up\nthe ancestry.\n\nFinally, as to performance impact, this particular\nchange won\u0027t impact performance at all because it\ndoesn\u0027t actually run. I\u0027d like to land it first as\na utility class with a test, and then in a follow-up\nchange I\u0027ll swap it in and we can make sure we\u0027re\nhappy with the performance.\n\nI expect this to be much faster than the equivalent\nBlink code it replaces, but I\u0027ll do some measurements\nto make sure that\u0027s the case. The only difference is\nthat we\u0027ll be trading render-process computation for\na bit of computation in the browser or extension\nprocess.",
+      "parentUuid": "df84e749_91e1f2ed",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8160e9f_f2ba9e49",
         "filename": "ui/accessibility/ax_event_generator.h",
         "patchSetId": 4
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "6c87a899_8f85df8a",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Yeah, this is on purpose - see my design doc for more details,\nbut the plan is that ui::AXEvent will almost completely go away\nshortly. Basically none of our cross-platform code should\nhave to worry about a large list of events representing the\nsuperset of every possible event on every platform. Instead,\ncross-platform code like Blink and Views just mutates the\ntree and fires a tiny number of well-defined events.\n\nThen as you move from cross-platform to platform-specific code,\nAXEventGenerator offers you a big suite of possible events to\nfire. You fire only the ones you care about, converting them\ndirectly into platform-specific events and not an AXEvent.",
+      "parentUuid": "e8160e9f_f2ba9e49",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360b7b1d_540d3f85",
         "filename": "ui/accessibility/ax_event_generator.h",
         "patchSetId": 4
@@ -268,6 +520,24 @@
       "writtenOn": "2017-08-15T17:41:44Z",
       "side": 1,
       "message": "Push/pop implies lifo ordering...which doesn\u0027t happen here.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6e94516_895545ef",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T00:04:20Z",
+      "side": 1,
+      "message": "Good idea. Renamed.",
+      "parentUuid": "360b7b1d_540d3f85",
       "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
