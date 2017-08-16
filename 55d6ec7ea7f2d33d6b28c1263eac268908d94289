@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "e912ded5_8f020d8d",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T23:56:03Z",
+      "side": 1,
+      "message": "MOJO_RESULT_FAILED_PRECONDITION is the specific error that will be returned on pipe close. Any error other than MOJO_RESULT_OK, MOJO_RESULT_FAILED_PRECONDITION, or MOJO_RESULT_SHOULD_WAIT is an unexpected result from this API in this context. We should add a DCHECK documenting this.\n\nSee: https://cs.chromium.org/chromium/src/mojo/public/c/system/data_pipe.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d282",
+      "parentUuid": "97241575_20aae930",
+      "range": {
+        "startLine": 109,
+        "startChar": 20,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3302b380_f32dc338",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 21
