@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bacaad67_a62f7cf0",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-16T08:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8928cde5_685422b7",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429df70e_19e54f03",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7876de_2693def2",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-16T08:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429df70e_19e54f03",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01f4c124_8c336dd3",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-16T08:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "165d6e05_25f7df0d",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2170eb65_0d7d4140",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T04:09:48Z",
       "side": 1,
       "message": "It seems we don\u0027t need to use |previous_layout_object|. It is used only\nin then-clause.",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb4b70e_ecfea99a",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-16T08:58:53Z",
+      "side": 1,
+      "message": "I declare it for readability.",
+      "parentUuid": "2170eb65_0d7d4140",
       "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b3af5795_027c7e85",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-16T08:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b41e01_37e4a5a3",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ac22fac_efb6641f",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-16T04:09:48Z",
       "side": 1,
       "message": "Could you add yet another test for simple line wrap, |^bar\u003cbr\u003e||?",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f08865_1938504c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-16T08:58:53Z",
+      "side": 1,
+      "message": "TraverseLayoutObjectBRs tests that.",
+      "parentUuid": "8ac22fac_efb6641f",
       "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
