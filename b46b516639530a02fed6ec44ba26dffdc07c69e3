@@ -16,6 +16,24 @@
       "revId": "b46b516639530a02fed6ec44ba26dffdc07c69e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c17a85_9148f9b1",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-16T20:14:22Z",
+      "side": 1,
+      "message": "I think it\u0027s the same (and generated ninja files don\u0027t change after doing this). This does look easier to read, done. Also updated CL description.",
+      "parentUuid": "9a36c7d4_09c75b90",
+      "revId": "b46b516639530a02fed6ec44ba26dffdc07c69e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
