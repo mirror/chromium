@@ -69,6 +69,7 @@ class ContentSettingsPattern {
     SCHEME_HTTPS,
     SCHEME_FILE,
     SCHEME_CHROMEEXTENSION,
+    SCHEME_CHROMESEARCH,
     SCHEME_MAX,
   };
 
@@ -88,7 +89,7 @@ class ContentSettingsPattern {
     // - IPv4 or IPv6
     // - hostname
     // - domain
-    // - empty string if the |is_host_wildcard flag is set.
+    // - empty string if the |is_host_wildcard| flag is set.
     std::string host;
 
     // True if the domain wildcard is set.
