@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "70dfe62c_5f7df6f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T05:44:48Z",
+      "side": 1,
+      "message": "I think it\u0027d be possible, but I\u0027m not sure how productive this would be; we\u0027d have to make MarkerPaintStartAndEnd public (right now it\u0027s a static function), and the most interesting cases involve multiple InlineTextBoxes, so I think we\u0027d have to walk the layout tree and check the paint offsets for each of them. I think any developer touching the DocumentMarker painting code is going to end up relying primarily on the layout tests anyway, and they might end up changing how the method works (as I\u0027m doing here) and invalidating the MarkerPaintStartAndEnd tests.",
+      "parentUuid": "3bd0f889_27513c8f",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebeb2ef6_f99cd699",
         "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html",
         "patchSetId": 2
