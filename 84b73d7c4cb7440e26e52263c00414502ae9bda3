@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd316b6f_98b195e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-16T22:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e15c2de_3cf30d7c",
+      "revId": "84b73d7c4cb7440e26e52263c00414502ae9bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46a6b9ee_991e5efb",
         "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "84b73d7c4cb7440e26e52263c00414502ae9bda3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97516516_0de0d34e",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-16T22:01:00Z",
+      "side": 1,
+      "message": "Ack. No longer need this.",
+      "parentUuid": "46a6b9ee_991e5efb",
+      "revId": "84b73d7c4cb7440e26e52263c00414502ae9bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
