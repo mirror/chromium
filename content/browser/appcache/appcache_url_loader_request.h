@@ -23,6 +23,8 @@ class CONTENT_EXPORT AppCacheURLLoaderRequest : public AppCacheRequest {
   ~AppCacheURLLoaderRequest() override;
 
   // AppCacheRequest overrides.
+  void Start() override;
+  void Cancel() override;
   // TODO(ananta)
   // Add support to the GetURL() call to return the updated URL while following
   // a chain of redirects.
@@ -41,6 +43,7 @@ class CONTENT_EXPORT AppCacheURLLoaderRequest : public AppCacheRequest {
   std::string GetResponseHeaderByName(const std::string& name) const override;
   ResourceRequest* GetResourceRequest() override;
   AppCacheURLLoaderRequest* AsURLLoaderRequest() override;
+  net::NetworkDelegate* GetDelegate() override;
 
   void set_response(const ResourceResponseHead& response) {
     response_ = response;

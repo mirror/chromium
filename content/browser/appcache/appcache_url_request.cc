@@ -4,6 +4,7 @@
 
 #include "content/browser/appcache/appcache_url_request.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
 
 namespace content {
 
@@ -13,6 +14,14 @@ std::unique_ptr<AppCacheURLRequest> AppCacheURLRequest::Create(
   std::unique_ptr<AppCacheURLRequest> request(
       new AppCacheURLRequest(url_request));
   return request;
+}
+
+void AppCacheURLRequest::Start() {
+  url_request_->Start();
+}
+
+void AppCacheURLRequest::Cancel() {
+  url_request_->Cancel();
 }
 
 const GURL& AppCacheURLRequest::GetURL() const {
@@ -60,6 +69,10 @@ net::URLRequest* AppCacheURLRequest::GetURLRequest() {
 
 AppCacheURLRequest* AppCacheURLRequest::AsURLRequest() {
   return this;
+}
+
+net::NetworkDelegate* AppCacheURLRequest::GetDelegate() {
+  return url_request_->context()->network_delegate();
 }
 
 AppCacheURLRequest::AppCacheURLRequest(net::URLRequest* url_request)

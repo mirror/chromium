@@ -17,6 +17,14 @@ std::unique_ptr<AppCacheURLLoaderRequest> AppCacheURLLoaderRequest::Create(
 
 AppCacheURLLoaderRequest::~AppCacheURLLoaderRequest() {}
 
+void AppCacheURLLoaderRequest::Start() {
+  NOTIMPLEMENTED();
+}
+
+void AppCacheURLLoaderRequest::Cancel() {
+  NOTIMPLEMENTED();
+}
+
 const GURL& AppCacheURLLoaderRequest::GetURL() const {
   return request_.url;
 }
@@ -34,8 +42,9 @@ const GURL AppCacheURLLoaderRequest::GetReferrer() const {
 }
 
 bool AppCacheURLLoaderRequest::IsSuccess() const {
-  int response_code = GetResponseCode();
-  return (response_code >= 200 && response_code <= 226);
+  if (response_.headers)
+    return true;
+  return false;
 }
 
 bool AppCacheURLLoaderRequest::IsCancelled() const {
@@ -54,7 +63,10 @@ int AppCacheURLLoaderRequest::GetResponseCode() const {
 
 std::string AppCacheURLLoaderRequest::GetResponseHeaderByName(
     const std::string& name) const {
-  return std::string();
+  std::string header;
+  if (response_.headers)
+    response_.headers->GetNormalizedHeader(name, &header);
+  return header;
 }
 
 ResourceRequest* AppCacheURLLoaderRequest::GetResourceRequest() {
@@ -63,6 +75,10 @@ ResourceRequest* AppCacheURLLoaderRequest::GetResourceRequest() {
 
 AppCacheURLLoaderRequest* AppCacheURLLoaderRequest::AsURLLoaderRequest() {
   return this;
+}
+
+net::NetworkDelegate* AppCacheURLLoaderRequest::GetDelegate() {
+  return nullptr;
 }
 
 AppCacheURLLoaderRequest::AppCacheURLLoaderRequest(
