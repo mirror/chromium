@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1b2601_2a54dc1e",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T15:56:50Z",
+      "side": 1,
+      "message": "nit: s/observer/observe",
+      "revId": "3c8651503333e6e67427b12e7cd658805cb5cf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
