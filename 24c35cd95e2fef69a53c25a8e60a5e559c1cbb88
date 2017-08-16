@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde6be11_10d2c687",
+        "filename": "content/common/service_worker/service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T03:25:39Z",
+      "side": 1,
+      "message": "Should this be also renamed to ContainerHostInfo ?",
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
