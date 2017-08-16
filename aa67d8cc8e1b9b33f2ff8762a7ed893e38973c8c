@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee9a83d_3428d638",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T09:52:39Z",
+      "side": 1,
+      "message": "safelisted -\u003e CORS-safelisted please",
+      "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b9f545_d139130b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T09:52:39Z",
+      "side": 1,
+      "message": "let\u0027s place this outside of try-catch block.",
+      "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af676422_6c5b3b06",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T09:52:39Z",
+      "side": 1,
+      "message": "and return here. then, you can remove L37",
+      "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
