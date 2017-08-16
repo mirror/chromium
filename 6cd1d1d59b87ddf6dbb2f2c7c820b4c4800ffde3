@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e21c418a_7bb1dbab",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-16T12:15:01Z",
+      "side": 1,
+      "message": "I\u0027d like to impl only Register within this CL, and will pay attention to possible IPC ordering issue while investigating/implementing, if necessary will also impl other methods together. If you already have some concerns about this please let me know ;-)",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac42c841_352a238a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-16T12:15:01Z",
+      "side": 1,
+      "message": "To avoid making this CL too big, should I separate all changes(mojom,traits,typemap) for this to another CL and land it firstly? WDYT? Thanks.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
