@@ -145,6 +145,7 @@ void InstallableManager::GetData(const InstallableParams& params,
   is_active_ = true;
   if (page_status_ == InstallabilityCheckStatus::NOT_STARTED)
     page_status_ = InstallabilityCheckStatus::NOT_COMPLETED;
+
   StartNextTask();
 }
 
@@ -367,13 +368,6 @@ void InstallableManager::RunCallback(const Task& task,
 }
 
 void InstallableManager::StartNextTask() {
-  // If there's nothing to do, exit. Resources remain cached so any future calls
-  // won't re-fetch anything that has already been retrieved.
-  if (task_queue_.IsEmpty()) {
-    is_active_ = false;
-    return;
-  }
-
   DCHECK(is_active_);
   WorkOnTask();
 }
@@ -394,7 +388,12 @@ void InstallableManager::WorkOnTask() {
     if (worker_error() == NO_MATCHING_SERVICE_WORKER)
       worker_ = base::MakeUnique<ServiceWorkerProperty>();
     task_queue_.Next();
-    StartNextTask();
+
+    if (task_queue_.IsEmpty()) {
+      is_active_ = false;
+    } else {
+      StartNextTask();
+    }
     return;
   }
 
@@ -523,7 +522,11 @@ void InstallableManager::OnDidCheckHasServiceWorker(
         params.wait_for_worker = false;
         OnWaitingForServiceWorker();
         task_queue_.PauseCurrent();
-        StartNextTask();
+        if (task_queue_.IsEmpty()) {
+          is_active_ = false;
+        } else {
+          StartNextTask();
+        }
         return;
       }
       worker_->has_worker = false;
