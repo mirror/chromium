@@ -16,6 +16,24 @@
       "revId": "cc55c0295cd2bc2f02ea2b6fda198fd2e4dfa104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fca81c_b3fed795",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-16T16:18:41Z",
+      "side": 1,
+      "message": "I\u0027ll add a comment, but here\u0027s more info:\nLike AXRequired, it\u0027s not defined by the platform. However, I copied this pattern from how WebKit handles undefined attributes, They use an #ifndef in case it is one day defined.",
+      "parentUuid": "611a4e3f_1382d00a",
+      "revId": "cc55c0295cd2bc2f02ea2b6fda198fd2e4dfa104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
