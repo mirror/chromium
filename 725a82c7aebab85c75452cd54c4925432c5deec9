@@ -22,6 +22,30 @@
       "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b216bd4d_6a5634e4",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-16T06:32:55Z",
+      "side": 0,
+      "message": "calling keyboard::KeyboardController::GetInstance()-\u003eset_keyboard_locked(true) might be enough...?",
+      "parentUuid": "38606229_a47ab366",
+      "range": {
+        "startLine": 1465,
+        "startChar": 0,
+        "endLine": 1465,
+        "endChar": 73
+      },
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
