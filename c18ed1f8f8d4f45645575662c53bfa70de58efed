@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaeb223a_858b0db0",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T02:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635854b8_5f1b1193",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a3cf353_5811c549",
         "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
         "patchSetId": 5
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "58fca855_75074894",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T02:28:43Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "246f762e_b1736344",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "755a9f59_9f3536a7",
         "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
         "patchSetId": 5
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-16T01:00:46Z",
       "side": 1,
       "message": "can you help me understand why this doesn\u0027t make a cycle now? version_ owns the event dispatcher which holds the binding to this class, no?",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd9bfd5_3e932a4f",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T02:28:43Z",
+      "side": 1,
+      "message": "Hm, you\u0027re probably right..? Version owns the EventDispatcherPtr which owns EventDispatcher in the renderer side which owns ResponseCallbackPtr?",
+      "parentUuid": "755a9f59_9f3536a7",
       "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
