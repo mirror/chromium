@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "bbce9d53_58c18721",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-16T17:01:13Z",
+      "side": 1,
+      "message": "It ensures that the conditional skipping rule (VrActivityRestrictionRule) is applied before whatever mVrTestRule is set to. If findbugs is complaining about it being unused, that\u0027s a bug that should be fixed. Any rule that\u0027s annotated with @Rule will be used by the JUnit4 runner, just not necessarily by the class it\u0027s in.",
+      "parentUuid": "6dc65725_37bfe9fa",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cf64f2a_7d1820d7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
         "patchSetId": 2
@@ -91,6 +115,30 @@
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bb21d7_bbb7b5e9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-16T17:01:13Z",
+      "side": 1,
+      "message": "Typo, fixed.",
+      "parentUuid": "5cf64f2a_7d1820d7",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
