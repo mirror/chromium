@@ -996,7 +996,10 @@ FileTable.prototype.clearThumbnailImage_ = function(box) {
 FileTable.prototype.renderCheckmark_ = function() {
   var checkmark = /** @type {!HTMLDivElement} */
       (this.ownerDocument.createElement('div'));
-  checkmark.className = 'detail-checkmark';
+  checkmark.classList.add('detail-checkmark');
+  // Used for distinguishing between list view and grid view directly.
+  // See MainWindowComponent.prototype.handleTouchEvents_.
+  checkmark.classList.add('file-table');
   return checkmark;
 };
 
