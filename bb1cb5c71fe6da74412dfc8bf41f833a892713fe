@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95919cd8_a3267939",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T04:59:07Z",
+      "side": 1,
+      "message": "I\u0027d prefer\n\nstatic_assert(BUILDFLAG(MAC_VIEWS_BROWSER),\n              \"Requires with mac_views_browser \u003d true\");\n\nThis way the error is reported sooner - when this file is compiled, rather than at link time (with a missing symbol)",
+      "revId": "bb1cb5c71fe6da74412dfc8bf41f833a892713fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

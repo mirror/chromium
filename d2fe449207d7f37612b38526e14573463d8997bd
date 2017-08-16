@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b51ff2d6_4facd3ef",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T04:59:07Z",
+      "side": 1,
+      "message": "Yeah I think this is the right approach. The most interesting job of ChromeWebContentsViewDelegateFoo is the renderer context menu, which is very different on Mac -- the Views version used on Win/Linux won\u0027t have the stuff we want.\n\nThere\u0027s also dragging stuff.. it looks like there\u0027s scope for cleanup there. I can\u0027t tell the difference between WebDragBookmarkHandlerAura and WebDragBookmarkHandlerMac, apart from having to inherit from a class which has some methods hidden with USE_AURA -- there\u0027s probably enough of ui::OSExchangeData implemented for Mac now that these differences can go away. That\u0027s orthogonal though.\n\n\nTechnically, it\u0027s feasible to implement SizeChanged directly on ChromeWebContentsViewDelegateMac, since Mac doesn\u0027t currently use or implement it. But that would involve exposing chrome/browser/ui/views/sad_tab_view.h in Cocoa browser code, which I think would be misleading. (currently DEPS rules prevent this).",
+      "parentUuid": "b960aec0_686c3d5f",
+      "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "512e91ba_7003caee",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
         "patchSetId": 11
