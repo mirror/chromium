@@ -56,12 +56,18 @@ struct CandidateWindowEntry {
   string description_body;
 };
 
+enum ImeTextSpanThickness {
+  kNone,
+  kThin,
+  kThick
+};
+
 // Represents an underlined segment of text currently composed by IME.
 // Corresponds to ui::ImeTextSpan.
 struct ImeTextSpan {
   uint32 start_offset;
   uint32 end_offset;
-  bool thick;
+  ImeTextSpanThickness thickness;
   uint32 color;
   uint32 background_color;
 };

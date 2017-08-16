@@ -110,9 +110,10 @@ TEST_F(IMEStructTraitsTest, CandidateWindowEntry) {
 TEST_F(IMEStructTraitsTest, CompositionText) {
   CompositionText input;
   input.text = base::UTF8ToUTF16("abcdefghij");
-  input.ime_text_spans.push_back(ImeTextSpan(0, 2, SK_ColorGRAY, false));
   input.ime_text_spans.push_back(
-      ImeTextSpan(3, 6, SK_ColorRED, true, SK_ColorGREEN));
+      ImeTextSpan(0, 2, SK_ColorGRAY, blink::kWebImeTextSpanThicknessThin));
+  input.ime_text_spans.push_back(ImeTextSpan(
+      3, 6, SK_ColorRED, blink::kWebImeTextSpanThicknessThick, SK_ColorGREEN));
   input.selection = gfx::Range(1, 7);
 
   CompositionText output;

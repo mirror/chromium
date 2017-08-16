@@ -212,16 +212,16 @@ bool InputMethodEngineBase::SetComposition(
        segment != segments.end(); ++segment) {
     ui::ImeTextSpan ime_text_span;
 
+    ime_text_span.color = SK_ColorTRANSPARENT;
     switch (segment->style) {
       case SEGMENT_STYLE_UNDERLINE:
-        ime_text_span.color = SK_ColorBLACK;
+        ime_text_span.thickness = blink::kWebImeTextSpanThicknessThin;
         break;
       case SEGMENT_STYLE_DOUBLE_UNDERLINE:
-        ime_text_span.color = SK_ColorBLACK;
-        ime_text_span.thick = true;
+        ime_text_span.thickness = blink::kWebImeTextSpanThicknessThick;
         break;
       case SEGMENT_STYLE_NO_UNDERLINE:
-        ime_text_span.color = SK_ColorTRANSPARENT;
+        ime_text_span.thickness = blink::kWebImeTextSpanThicknessNone;
         break;
       default:
         continue;

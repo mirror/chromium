@@ -12,14 +12,14 @@ class ActiveSuggestionMarkerTest : public ::testing::Test {};
 
 TEST_F(ActiveSuggestionMarkerTest, MarkerType) {
   DocumentMarker* marker = new ActiveSuggestionMarker(
-      0, 1, Color::kTransparent, StyleableMarker::Thickness::kThin,
+      0, 1, Color::kTransparent, StyleableMarker::Thickness::kNone,
       Color::kTransparent);
   EXPECT_EQ(DocumentMarker::kActiveSuggestion, marker->GetType());
 }
 
 TEST_F(ActiveSuggestionMarkerTest, IsStyleableMarker) {
   DocumentMarker* marker = new ActiveSuggestionMarker(
-      0, 1, Color::kTransparent, StyleableMarker::Thickness::kThin,
+      0, 1, Color::kTransparent, StyleableMarker::Thickness::kNone,
       Color::kTransparent);
   EXPECT_TRUE(IsStyleableMarker(*marker));
 }
