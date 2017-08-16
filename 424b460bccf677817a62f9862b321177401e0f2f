@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "507aca85_1ee341ca",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-16T09:07:49Z",
+      "side": 1,
+      "message": "why is this change needed?",
+      "revId": "424b460bccf677817a62f9862b321177401e0f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
