@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3191a496_357b5782",
+        "filename": "chrome/browser/extensions/extension_bindings_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-16T21:32:21Z",
+      "side": 1,
+      "message": "Please add a comment briefly saying why these params are here, may be around line 328. You\u0027ve already described the motivation in the CL description, a copy-ish of should be useful.",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "1d0403839790efb34d8d68bb8c77e7b843806ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
