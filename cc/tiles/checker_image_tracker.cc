@@ -339,9 +339,10 @@ void CheckerImageTracker::UpdateDecodeState(const DrawImage& draw_image,
 void CheckerImageTracker::ScheduleNextImageDecode() {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "CheckerImageTracker::ScheduleNextImageDecode");
+  return;
   // We can have only one outstanding decode pending completion with the decode
   // service. We'll come back here when it is completed.
-  if (outstanding_image_decode_.has_value())
+  /*if (outstanding_image_decode_.has_value())
     return;
 
   if (image_decode_queue_.empty())
@@ -394,7 +395,7 @@ void CheckerImageTracker::ScheduleNextImageDecode() {
                                  weak_factory_.GetWeakPtr(), image_id));
 
   image_id_to_decode_.emplace(image_id, base::MakeUnique<ScopedDecodeHolder>(
-                                            image_controller_, request_id));
+                                            image_controller_, request_id));*/
 }
 
 }  // namespace cc
