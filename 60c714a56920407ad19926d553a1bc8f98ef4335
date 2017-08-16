@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee97ded0_cc65a184",
+        "filename": "chrome/browser/ui/webui/chromeos/ui_account_tweaks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T20:52:54Z",
+      "side": 0,
+      "message": "I confirmed that there are no remaining references to any of the above identifiers.",
+      "revId": "60c714a56920407ad19926d553a1bc8f98ef4335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
