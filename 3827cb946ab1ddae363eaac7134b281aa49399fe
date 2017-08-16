@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "47cf40a1_1662d4cd",
+        "filename": "ash/public/cpp/shelf_item_delegate.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "I like it!",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d705b0a_6eaef420",
         "filename": "ash/public/cpp/shelf_item_delegate.h",
         "patchSetId": 34
@@ -13,6 +30,108 @@
       "writtenOn": "2017-08-16T17:42:49Z",
       "side": 1,
       "message": "As I mentioned in-person last week, most/all of Chrome\u0027s ShelfItemDelegate subclasses use LauncherContextMenu::Create as the impl here. I could potentially change ShelfItemDelegate to store a base::Callback for generating context menu models (with a late-binding display_id arg), and make ChromeLauncherController set that callback for most/all of the delegates it creates; that would avoid needing to override this new GetContextMenu method for each of Chrome\u0027s delegate subclasses. That may be a worthwhile consolidation/cleanup; I\u0027ll investigate after lunch...",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5905db6_db99de59",
+        "filename": "ash/public/cpp/shelf_item_delegate.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "Aside, not for this CL: It\u0027s kind of confusing that there are chrome delegates that derive from ShelfItemDelegate that derives from mojom::ShelfItemDelegate. I think our convention of mojom::Foo is implemented by Foo only works well when Foo doesn\u0027t have subclasses. Maybe this should be ShelfItemDelegateBase or ShelfItemDelegateImpl or some such. Or maybe we should use composition instead of inheritance.",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54152a18_293999ed",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 34
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "Aside: Weird that this got reformatted.",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81ae9c3_13e3f5dc",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "nit: std::string (no ref) or inline, otherwise this is a ref to an invisible local",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25ac86d_6584c556",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "nit: add comments/constants for what these nullptr/true mean",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e03fd46_374334ba",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "optional: Is there a way to assert that the menu has items in it? Or is that tested elsewhere?",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db89e0f1_fca69a19",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 1,
+      "message": "nit: should this call Close(), or otherwise work similarly?\n\nShould Close() null out window_? Or maybe it deletes |this|, in which case a comment might be helpful.",
       "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

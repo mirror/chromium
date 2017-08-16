@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bfe1491_eb39b16e",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T19:54:52Z",
+      "side": 0,
+      "message": "just double-checking: we don\u0027t need set_delegate() anymore?",
+      "revId": "6e4072298023ab9a086a82a3c751e87e22c207ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
