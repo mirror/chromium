@@ -1,11 +1,10 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #ifndef CHROME_GPU_GPU_ARC_VIDEO_DECODE_ACCELERATOR_H_
 #define CHROME_GPU_GPU_ARC_VIDEO_DECODE_ACCELERATOR_H_
 
-#include <memory>
 #include <vector>
 
 #include "base/files/scoped_file.h"
@@ -18,12 +17,6 @@
 
 namespace chromeos {
 namespace arc {
-
-// GpuArcVideoDecodeAccelerator manages life-cycle and IPC message translation
-// for ArcVideoDecodeAccelerator.
-//
-// For each creation request from GpuArcVideoDecodeAcceleratorHost,
-// GpuArcVideoDecodeAccelerator will create a new IPC channel.
 class GpuArcVideoDecodeAccelerator
     : public ::arc::mojom::VideoDecodeAccelerator,
       public ArcVideoDecodeAccelerator::Client {
@@ -33,39 +26,34 @@ class GpuArcVideoDecodeAccelerator
   ~GpuArcVideoDecodeAccelerator() override;
 
  private:
-  // ArcVideoDecodeAccelerator::Client implementation.
-  void OnError(ArcVideoDecodeAccelerator::Result error) override;
-  void OnBufferDone(PortType port,
-                    uint32_t index,
-                    const BufferMetadata& metadata) override;
-  void OnFlushDone() override;
-  void OnResetDone() override;
-  void OnOutputFormatChanged(const VideoFormat& format) override;
+  // VideoDecodeAccelerator::Client implementation.
+  void ProvidePictureBuffers(uint32_t requested_num_of_buffers,
+                             media::VideoPixelFormat format,
+                             uint32_t textures_per_buffer,
+                             const gfx::Size& dimensions,
+                             uint32_t texture_target) override;
+  void PictureReady(const media::Picture& picture) override;
+  void NotifyEndOfBitstreamBuffer(int32_t bitstream_buffer) override;
+  void NotifyFlushDone() override;
+  void NotifyResetDone() override;
+  void NotifyError(ArcVideoDecodeAccelerator::Result error) override;
 
   // ::arc::mojom::VideoDecodeAccelerator implementation.
-  void Initialize(::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
+  void Initialize(media::VideoCodecProfile profile,
                   ::arc::mojom::VideoDecodeClientPtr client,
-                  const InitializeCallback& callback) override;
-  void BindSharedMemory(::arc::mojom::PortType port,
-                        uint32_t index,
-                        mojo::ScopedHandle ashmem_handle,
-                        uint32_t offset,
-                        uint32_t length) override;
-  void BindDmabuf(::arc::mojom::PortType port,
-                  uint32_t index,
-                  mojo::ScopedHandle dmabuf_handle,
-                  std::vector<::arc::VideoFramePlane> planes) override;
-  void UseBuffer(::arc::mojom::PortType port,
-                 uint32_t index,
-                 ::arc::mojom::BufferMetadataPtr metadata) override;
-  void SetNumberOfOutputBuffers(uint32_t number) override;
-  void Flush() override;
-  void Reset() override;
+                  const InitializeCallback& callback);
+  void Decode(::arc::mojom::BitstreamBufferPtr bitstream_buffer);
+  void AssignPictureBuffers(uint32_t count);
+  void ImportBufferForPicture(int32_t picture_id,
+                              mojo::ScopedHandle dmabuf_handle,
+                              std::vector<::arc::VideoFramePlane> planes);
+  void ReusePictureBuffer(int32_t picture_id);
+  void Flush();
+  void Reset();
 
   base::ScopedFD UnwrapFdFromMojoHandle(mojo::ScopedHandle handle);
 
   THREAD_CHECKER(thread_checker_);
-
   gpu::GpuPreferences gpu_preferences_;
   std::unique_ptr<ArcVideoDecodeAccelerator> accelerator_;
   ::arc::mojom::VideoDecodeClientPtr client_;

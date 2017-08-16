@@ -1,19 +1,15 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "chrome/gpu/gpu_arc_video_decode_accelerator.h"
 
-#include <utility>
-
-#include "base/bind.h"
-#include "base/logging.h"
-#include "base/memory/ptr_util.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/gpu/chrome_arc_video_decode_accelerator.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
-#include "mojo/public/cpp/bindings/type_converter.h"
+#include "media/base/video_frame.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+
+#define VLOGF(level) VLOG(level) << __func__ << "(): "
+#define DVLOGF(level) DVLOG(level) << __func__ << "(): "
 
 // Make sure arc::mojom::VideoDecodeAccelerator::Result and
 // chromeos::arc::ArcVideoDecodeAccelerator::Result match.
@@ -49,55 +45,17 @@ static_assert(
 namespace mojo {
 
 template <>
-struct TypeConverter<arc::mojom::BufferMetadataPtr,
-                     chromeos::arc::BufferMetadata> {
-  static arc::mojom::BufferMetadataPtr Convert(
-      const chromeos::arc::BufferMetadata& input) {
-    arc::mojom::BufferMetadataPtr result = arc::mojom::BufferMetadata::New();
-    result->timestamp = input.timestamp;
-    result->bytes_used = input.bytes_used;
-    return result;
-  }
-};
-
-template <>
-struct TypeConverter<chromeos::arc::BufferMetadata,
-                     arc::mojom::BufferMetadataPtr> {
-  static chromeos::arc::BufferMetadata Convert(
-      const arc::mojom::BufferMetadataPtr& input) {
-    chromeos::arc::BufferMetadata result;
-    result.timestamp = input->timestamp;
-    result.bytes_used = input->bytes_used;
-    return result;
-  }
-};
-
-template <>
-struct TypeConverter<arc::mojom::VideoFormatPtr, chromeos::arc::VideoFormat> {
-  static arc::mojom::VideoFormatPtr Convert(
-      const chromeos::arc::VideoFormat& input) {
-    arc::mojom::VideoFormatPtr result = arc::mojom::VideoFormat::New();
+struct TypeConverter<arc::mojom::PictureBufferFormatPtr,
+                     chromeos::arc::PictureBufferFormat> {
+  static arc::mojom::PictureBufferFormatPtr Convert(
+      const chromeos::arc::PictureBufferFormat& input) {
+    arc::mojom::PictureBufferFormatPtr result =
+        arc::mojom::PictureBufferFormat::New();
     result->pixel_format = input.pixel_format;
     result->buffer_size = input.buffer_size;
     result->min_num_buffers = input.min_num_buffers;
     result->coded_width = input.coded_width;
     result->coded_height = input.coded_height;
-    result->crop_left = input.crop_left;
-    result->crop_width = input.crop_width;
-    result->crop_top = input.crop_top;
-    result->crop_height = input.crop_height;
-    return result;
-  }
-};
-
-template <>
-struct TypeConverter<chromeos::arc::ArcVideoDecodeAccelerator::Config,
-                     arc::mojom::VideoDecodeAcceleratorConfigPtr> {
-  static chromeos::arc::ArcVideoDecodeAccelerator::Config Convert(
-      const arc::mojom::VideoDecodeAcceleratorConfigPtr& input) {
-    chromeos::arc::ArcVideoDecodeAccelerator::Config result;
-    result.num_input_buffers = input->num_input_buffers;
-    result.input_pixel_format = input->input_pixel_format;
     return result;
   }
 };
@@ -116,70 +74,102 @@ GpuArcVideoDecodeAccelerator::~GpuArcVideoDecodeAccelerator() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 }
 
-void GpuArcVideoDecodeAccelerator::OnError(
-    ArcVideoDecodeAccelerator::Result error) {
-  DVLOG(2) << "OnError " << error;
-  DCHECK_NE(error, ArcVideoDecodeAccelerator::SUCCESS);
-  DCHECK(client_);
-  client_->OnError(
-      static_cast<::arc::mojom::VideoDecodeAccelerator::Result>(error));
-}
+// TODO(hiroh): This enum should be moved to arc_video_decode_accelerator_new.h.
+//              This is defined here temporarily because the definition is
+//              conflicted in that in arc_video_decode_accelerator.h
+enum HalPixelFormatExtension {
+  // The pixel formats defined in Android but are used here. They are defined
+  // in "system/core/include/system/graphics.h"
+  HAL_PIXEL_FORMAT_BGRA_8888 = 5,
+  HAL_PIXEL_FORMAT_YCbCr_420_888 = 0x23,
 
-void GpuArcVideoDecodeAccelerator::OnBufferDone(
-    PortType port,
-    uint32_t index,
-    const BufferMetadata& metadata) {
-  DVLOG(2) << "OnBufferDone " << port << "," << index;
-  DCHECK(client_);
-  client_->OnBufferDone(static_cast<::arc::mojom::PortType>(port), index,
-                        ::arc::mojom::BufferMetadata::From(metadata));
-}
+  // The following formats are not defined in Android, but used in
+  // ArcVideoDecodeAccelerator to identify the input format.
+  HAL_PIXEL_FORMAT_H264 = 0x34363248,
+  HAL_PIXEL_FORMAT_VP8 = 0x00385056,
+  HAL_PIXEL_FORMAT_VP9 = 0x00395056,
+};
 
-void GpuArcVideoDecodeAccelerator::OnFlushDone() {
-  DVLOG(2) << "OnFlushDone";
+void GpuArcVideoDecodeAccelerator::ProvidePictureBuffers(
+    uint32_t requested_num_of_buffers,
+    media::VideoPixelFormat format,
+    uint32_t textures_per_buffer,
+    const gfx::Size& dimensions,
+    uint32_t texture_target) {
+  DVLOGF(2);
   DCHECK(client_);
-  client_->OnFlushDone();
-}
 
-void GpuArcVideoDecodeAccelerator::OnResetDone() {
-  DVLOG(2) << "OnResetDone";
-  DCHECK(client_);
-  client_->OnResetDone();
-}
-
-void GpuArcVideoDecodeAccelerator::OnOutputFormatChanged(
-    const VideoFormat& format) {
-  DVLOG(2) << "OnOutputFormatChanged";
-  DCHECK(client_);
-  client_->OnOutputFormatChanged(::arc::mojom::VideoFormat::From(format));
-}
-
-void GpuArcVideoDecodeAccelerator::Initialize(
-    ::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
-    ::arc::mojom::VideoDecodeClientPtr client,
-    const InitializeCallback& callback) {
-  DVLOG(2) << "Initialize";
-  DCHECK(!client_);
-  if (config->device_type_deprecated !=
-      ::arc::mojom::VideoDecodeAcceleratorConfig::DeviceTypeDeprecated::
-          DEVICE_DECODER) {
-    LOG(ERROR) << "only decoder is supported";
-    callback.Run(
-        ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
+  uint32_t pixel_format;
+  switch (format) {
+    case media::PIXEL_FORMAT_I420:
+    case media::PIXEL_FORMAT_YV12:
+    case media::PIXEL_FORMAT_NV12:
+    case media::PIXEL_FORMAT_NV21:
+      // HAL_PIXEL_FORMAT_YCbCr_420_888 is the flexible pixel format in Android
+      // which handles all 420 formats, with both orderings of chroma (CbCr and
+      // CrCb) as well as planar and semi-planar layouts.
+      pixel_format = HAL_PIXEL_FORMAT_YCbCr_420_888;
+      break;
+    case media::PIXEL_FORMAT_ARGB:
+      pixel_format = HAL_PIXEL_FORMAT_BGRA_8888;
+      break;
+    default:
+      VLOGF(1) << "Format not supported: " << format;
+      NotifyError(ArcVideoDecodeAccelerator::PLATFORM_FAILURE);
+      return;
   }
-  client_ = std::move(client);
-  ArcVideoDecodeAccelerator::Result result = accelerator_->Initialize(
-      config.To<ArcVideoDecodeAccelerator::Config>(), this);
-  callback.Run(
-      static_cast<::arc::mojom::VideoDecodeAccelerator::Result>(result));
+  chromeos::arc::PictureBufferFormat pbf;
+  pbf.pixel_format = pixel_format;
+  pbf.buffer_size = media::VideoFrame::AllocationSize(format, dimensions);
+  pbf.min_num_buffers = requested_num_of_buffers;
+  pbf.coded_width = dimensions.width();
+  pbf.coded_height = dimensions.height();
+  client_->ProvidePictureBuffers(::arc::mojom::PictureBufferFormat::From(pbf));
+}
+
+void GpuArcVideoDecodeAccelerator::PictureReady(const media::Picture& picture) {
+  DVLOGF(2);
+  DCHECK(client_);
+  auto picture_buffer_id = picture.picture_buffer_id();
+  auto bitstream_buffer_id = picture.bitstream_buffer_id();
+  auto crop_rect = picture.visible_rect();
+  client_->PictureReady(picture_buffer_id, bitstream_buffer_id, crop_rect);
+}
+
+void GpuArcVideoDecodeAccelerator::NotifyEndOfBitstreamBuffer(
+    int32_t bitstream_buffer) {
+  DVLOGF(2);
+  DCHECK(client_);
+  client_->NotifyEndOfBitstreamBuffer(bitstream_buffer);
+}
+
+void GpuArcVideoDecodeAccelerator::NotifyFlushDone() {
+  DVLOGF(2);
+  DCHECK(client_);
+  client_->NotifyFlushDone();
+}
+
+void GpuArcVideoDecodeAccelerator::NotifyResetDone() {
+  DVLOGF(2);
+  DCHECK(client_);
+  client_->NotifyResetDone();
+}
+
+void GpuArcVideoDecodeAccelerator::NotifyError(
+    ArcVideoDecodeAccelerator::Result error) {
+  DVLOGF(2);
+  DCHECK(client_);
+  DCHECK_NE(error, ArcVideoDecodeAccelerator::SUCCESS);
+  client_->NotifyError(
+      static_cast<::arc::mojom::VideoDecodeAccelerator::Result>(error));
 }
 
 base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
     mojo::ScopedHandle handle) {
   DCHECK(client_);
   if (!handle.is_valid()) {
-    LOG(ERROR) << "handle is invalid";
-    client_->OnError(
+    VLOGF(1) << "Handle is invalid.";
+    client_->NotifyError(
         ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
     return base::ScopedFD();
   }
@@ -188,8 +178,8 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
   MojoResult mojo_result =
       mojo::UnwrapPlatformFile(std::move(handle), &platform_file);
   if (mojo_result != MOJO_RESULT_OK) {
-    LOG(ERROR) << "UnwrapPlatformFile failed: " << mojo_result;
-    client_->OnError(
+    VLOGF(1) << "UnwrapPlatformFile failed: " << mojo_result;
+    client_->NotifyError(
         ::arc::mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE);
     return base::ScopedFD();
   }
@@ -197,59 +187,63 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
   return base::ScopedFD(platform_file);
 }
 
-void GpuArcVideoDecodeAccelerator::BindSharedMemory(
-    ::arc::mojom::PortType port,
-    uint32_t index,
-    mojo::ScopedHandle ashmem_handle,
-    uint32_t offset,
-    uint32_t length) {
-  DVLOG(2) << "BindSharedMemoryCallback port=" << port << ", index=" << index
-           << ", offset=" << offset << ", length=" << length;
-
-  base::ScopedFD fd = UnwrapFdFromMojoHandle(std::move(ashmem_handle));
-  if (!fd.is_valid())
-    return;
-  accelerator_->BindSharedMemory(static_cast<PortType>(port), index,
-                                 std::move(fd), offset, length);
+void GpuArcVideoDecodeAccelerator::Initialize(
+    media::VideoCodecProfile profile,
+    ::arc::mojom::VideoDecodeClientPtr client,
+    const InitializeCallback& callback) {
+  DVLOGF(2) << "prfoile = " << profile;
+  DCHECK(!client_);
+  client_ = std::move(client);
+  ArcVideoDecodeAccelerator::Result result =
+      accelerator_->Initialize(profile, this);
+  callback.Run(
+      static_cast<::arc::mojom::VideoDecodeAccelerator::Result>(result));
 }
 
-void GpuArcVideoDecodeAccelerator::BindDmabuf(
-    ::arc::mojom::PortType port,
-    uint32_t index,
+void GpuArcVideoDecodeAccelerator::Decode(
+    ::arc::mojom::BitstreamBufferPtr bitstream_buffer) {
+  DVLOGF(2);
+  base::ScopedFD fd =
+      UnwrapFdFromMojoHandle(std::move(bitstream_buffer->ashmem_fd));
+  chromeos::arc::BitstreamBuffer buffer;
+  buffer.bitstream_id = bitstream_buffer->bitstream_id;
+  buffer.ashmem_fd = std::move(fd);
+  buffer.offset = bitstream_buffer->offset;
+  buffer.bytes_used = bitstream_buffer->bytes_used;
+  accelerator_->Decode(std::move(buffer));
+}
+
+void GpuArcVideoDecodeAccelerator::AssignPictureBuffers(uint32_t count) {
+  DVLOGF(2);
+  accelerator_->AssignPictureBuffers(count);
+}
+
+void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
+    int32_t picture_id,
     mojo::ScopedHandle dmabuf_handle,
     std::vector<::arc::VideoFramePlane> planes) {
-  DVLOG(2) << "BindDmabuf port=" << port << ", index=" << index;
-
+  DVLOGF(2);
   base::ScopedFD fd = UnwrapFdFromMojoHandle(std::move(dmabuf_handle));
-  if (!fd.is_valid())
+  if (!fd.is_valid()) {
     return;
-
-  accelerator_->BindDmabuf(static_cast<PortType>(port), index, std::move(fd),
-                           std::move(planes));
+  }
+  accelerator_->ImportBufferForPicture(picture_id, std::move(fd),
+                                       std::move(planes));
 }
 
-void GpuArcVideoDecodeAccelerator::UseBuffer(
-    ::arc::mojom::PortType port,
-    uint32_t index,
-    ::arc::mojom::BufferMetadataPtr metadata) {
-  DVLOG(2) << "UseBuffer port=" << port << ", index=" << index;
-  accelerator_->UseBuffer(static_cast<PortType>(port), index,
-                          metadata.To<BufferMetadata>());
-}
-
-void GpuArcVideoDecodeAccelerator::SetNumberOfOutputBuffers(uint32_t number) {
-  DVLOG(2) << "SetNumberOfOutputBuffers number=" << number;
-  accelerator_->SetNumberOfOutputBuffers(number);
-}
-
-void GpuArcVideoDecodeAccelerator::Reset() {
-  DVLOG(2) << "Reset";
-  accelerator_->Reset();
+void GpuArcVideoDecodeAccelerator::ReusePictureBuffer(int32_t picture_id) {
+  DVLOGF(2);
+  accelerator_->ReusePictureBuffer(picture_id);
 }
 
 void GpuArcVideoDecodeAccelerator::Flush() {
-  DVLOG(2) << "Flush";
+  DVLOGF(2);
   accelerator_->Flush();
+}
+
+void GpuArcVideoDecodeAccelerator::Reset() {
+  DVLOGF(2);
+  accelerator_->Reset();
 }
 
 }  // namespace arc
