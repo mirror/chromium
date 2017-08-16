@@ -65,8 +65,8 @@
 #pragma mark - Command handlers
 
 - (void)sharePage {
-  ShareToData* data =
-      activity_services::ShareToDataForTab([self.tabModel currentTab]);
+  Tab* tab = [self.tabModel currentTab];
+  ShareToData* data = activity_services::ShareToDataForTab(tab);
   if (!data)
     return;
 
