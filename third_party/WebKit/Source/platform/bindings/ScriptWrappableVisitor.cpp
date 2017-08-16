@@ -304,7 +304,8 @@ void ScriptWrappableVisitor::PerformCleanup(v8::Isolate* isolate) {
     script_wrappable_visitor->PerformCleanup();
 }
 
-WrapperVisitor* ScriptWrappableVisitor::CurrentVisitor(v8::Isolate* isolate) {
+ScriptWrappableVisitor* ScriptWrappableVisitor::CurrentVisitor(
+    v8::Isolate* isolate) {
   return V8PerIsolateData::From(isolate)->GetScriptWrappableVisitor();
 }
 
