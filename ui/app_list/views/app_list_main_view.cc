@@ -24,6 +24,7 @@
 #include "ui/app_list/search_box_model.h"
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/app_list_item_view.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/apps_container_view.h"
 #include "ui/app_list/views/apps_grid_view.h"
 #include "ui/app_list/views/contents_view.h"
@@ -31,7 +32,9 @@
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/search_result_page_view.h"
 #include "ui/app_list/views/start_page_view.h"
+#include "ui/compositor/paint_recorder.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/gfx/skia_paint_util.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/custom_button.h"
@@ -45,13 +48,64 @@ namespace app_list {
 ////////////////////////////////////////////////////////////////////////////////
 // AppListMainView:
 
+// A layer delegate used for AppListMainView's mask layer. It is used to create
+// a fading out zone with half shelf height and top in line with the top of
+// shelf.
+class AppListMainView::FadeoutLayerDelegate : public ui::LayerDelegate {
+ public:
+  FadeoutLayerDelegate() : layer_(ui::LAYER_TEXTURED) {
+    layer_.set_delegate(this);
+    layer_.SetFillsBoundsOpaquely(false);
+  }
+
+  ~FadeoutLayerDelegate() override { layer_.set_delegate(nullptr); }
+
+  ui::Layer* layer() { return &layer_; }
+  void set_offset(int offset) { offset_ = offset; }
+
+ private:
+  // ui::LayerDelegate overrides:
+  // TODO(warx): using a mask is expensive. It would be more efficient to avoid
+  // the mask for the non-fading zones.
+  void OnPaintLayer(const ui::PaintContext& context) override {
+    const gfx::Size size = layer()->size();
+    ui::PaintRecorder recorder(context, size);
+    gfx::Canvas* canvas = recorder.canvas();
+    // Clear the canvas.
+    canvas->DrawColor(SK_ColorBLACK, SkBlendMode::kSrc);
+    // Draw the gradient zone.
+    cc::PaintFlags flags;
+    flags.setBlendMode(SkBlendMode::kSrc);
+    flags.setAntiAlias(false);
+    gfx::Rect shader_rect(0, size.height() - kShelfSize + offset_, size.width(),
+                          kShelfSize / 2);
+    flags.setShader(
+        gfx::CreateGradientShader(shader_rect.y(), shader_rect.bottom(),
+                                  SK_ColorBLACK, SK_ColorTRANSPARENT));
+    canvas->DrawRect(shader_rect, flags);
+    // Below the gradient zone, it should be totally transparent.
+    gfx::Rect shelf_rect(0, size.height() - kShelfSize / 2 + offset_,
+                         size.width(), kShelfSize / 2);
+    flags.setColor(SK_ColorTRANSPARENT);
+    canvas->DrawRect(shelf_rect, flags);
+  }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override {}
+
+  ui::Layer layer_;
+  int offset_ = 0;
+
+  DISALLOW_COPY_AND_ASSIGN(FadeoutLayerDelegate);
+};
+
 AppListMainView::AppListMainView(AppListViewDelegate* delegate,
                                  AppListView* app_list_view)
     : delegate_(delegate),
       model_(delegate->GetModel()),
       search_box_view_(nullptr),
       contents_view_(nullptr),
-      app_list_view_(app_list_view) {
+      app_list_view_(app_list_view),
+      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
   model_->AddObserver(this);
@@ -73,6 +127,13 @@ void AppListMainView::Init(gfx::NativeView parent,
     pagination_model->SelectPage(initial_apps_page, false);
 
   OnSearchEngineIsGoogleChanged(model_->search_engine_is_google());
+
+  // The bottom fading out zone is only applied for tablet mode or laptop mode
+  // bottom shelf aligned state.
+  if (is_fullscreen_app_list_enabled_ &&
+      (app_list_view_->is_tablet_mode() || !app_list_view_->is_side_shelf())) {
+    fadeout_layer_delegate_.reset(new FadeoutLayerDelegate);
+  }
 }
 
 void AppListMainView::AddContentsViews() {
@@ -196,6 +257,16 @@ void AppListMainView::CancelDragInActiveFolder() {
       ->app_list_folder_view()
       ->items_grid_view()
       ->EndDrag(true);
+}
+
+void AppListMainView::UpdateBottomFadeout(int app_list_y_position_in_screen) {
+  if (!fadeout_layer_delegate_)
+    return;
+
+  layer()->SetMaskLayer(fadeout_layer_delegate_->layer());
+  fadeout_layer_delegate_->layer()->SetBounds(layer()->bounds());
+  fadeout_layer_delegate_->set_offset(-1 * app_list_y_position_in_screen);
+  SchedulePaint();
 }
 
 void AppListMainView::QueryChanged(SearchBoxView* sender) {
