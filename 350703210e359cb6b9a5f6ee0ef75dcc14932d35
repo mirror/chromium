@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "774fe2ae_31718772",
+        "filename": "components/metrics/generate_expired_histograms_array.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T21:27:21Z",
+      "side": 1,
+      "message": "It\u0027s not 2015!\n\nPlease change in the other files you\u0027re introducing.",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b537fe9_6fbf439e",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T21:27:21Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense for this to be a parameter, since the hash function is hardcoded in this file. Make it a constant and define at the top of the file.",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779c5ef5_c672acaa",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T21:27:21Z",
+      "side": 1,
+      "message": "Start with _ since it\u0027s only used in this file.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d95fca_ac7b2d57",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T21:27:21Z",
+      "side": 1,
+      "message": "Should add #include \u003cstdint.h\u003e since you\u0027re using uint64_t.",
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f384b8_4af4721e",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T21:27:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure this will compile without errors on all platforms.\n\nUnsigned types might require \"U\" suffix, but since this is a 64-bit value seems there might not be any good suffix to use:\n\nhttps://stackoverflow.com/questions/13158501/specifying-64-bit-unsigned-integer-literals-on-64-bit-data-models\n\nMaybe ULL would be sufficient? Also, it may be better to use hex for these.\n\nAnyway, I\u0027m not too worried about it for this CL, you can just ignore it for now and deal with it in your future CL that actually adds the generated file to be compiled in Chrome.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
