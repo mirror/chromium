@@ -7,10 +7,21 @@
 
 #include <stddef.h>
 
+#include "base/sys_info.h"
+
 namespace gpu {
 
 struct SharedMemoryLimits {
-  SharedMemoryLimits() = default;
+  SharedMemoryLimits() {
+    // On memory constrained devices, switch to lower limits.
+    if (base::SysInfo::AmountOfPhysicalMemoryMB() < 512) {
+      command_buffer_size = 512 * 1024;
+      start_transfer_buffer_size = 256 * 1024;
+      min_transfer_buffer_size = 128 * 1024;
+      max_transfer_buffer_size = 8 * 1024 * 1024;
+      mapped_memory_reclaim_limit = 1 * 1024 * 1024;
+    }
+  }
 
   int32_t command_buffer_size = 1024 * 1024;
   uint32_t start_transfer_buffer_size = 1 * 1024 * 1024;
