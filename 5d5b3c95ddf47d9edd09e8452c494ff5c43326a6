@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3efc814_7907f33d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T00:13:43Z",
+      "side": 1,
+      "message": "It sounds like you\u0027re fixing a couple bugs here. WDYT of splitting out some of the smaller fixes into separate patches with simple tests?",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebeb2ef6_f99cd699",
+        "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T00:13:43Z",
+      "side": 1,
+      "message": "Do you know how Firefox or Edge handle these cases? Does this patch improve our compatibility with them?",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda77d43_e952b409",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T00:13:43Z",
+      "side": 1,
+      "message": "Your comment mentions that this should only be called for certain marker types, and GetTextMatchMarkerPaintOffsets should be called for others. Can you enforce these comments with DCHECKs of the marker type and a short comment above each DCHECK explaining why?",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e49aaf6_316287a3",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T00:13:43Z",
+      "side": 1,
+      "message": "Did you mean to change this to std::min\u003cint\u003e?",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb43e3e_5d6cb1b2",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T00:13:43Z",
+      "side": 1,
+      "message": "Supernit: please add a period.",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d732feb8_28390797",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T00:13:43Z",
+      "side": 1,
+      "message": "This is my first time seeing std::tie. Pretty cool!\n\nOptional nit: I wonder if this would be cleaner to implement with a simple struct though, since you can give the return values real names instead of the nameless std::pair.\nE.g.,\nstruct MarkerOffsets {\n  unsigned start;\n  unsigned end;\n}\nauto offsets \u003d MarkerPaintStartAndEnd(styleable_marker);",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
