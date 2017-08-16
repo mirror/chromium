@@ -428,7 +428,7 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <td><code>std::begin()</code>, <code>std::end()</code></td>
 <td>Allows use of free functions on any container, including fixed-size arrays</td>
 <td><a href="http://en.cppreference.com/w/cpp/iterator/begin">std::begin</a>, <a href="http://en.cppreference.com/w/cpp/iterator/end">std::end</a></td>
-<td>Useful for fixed-size arrays. Note that non-member <code>cbegin()</code> and <code>cend()</code> are not available until C++14. <a href="https://groups.google.com/a/chromium.org/forum/#!topic/cxx/5iFNE8P5qT4">Discussion thread</a></td>
+<td>Useful for fixed-size arrays. <code>cbegin()</code> and <code>cend()</code> are also available as of C++14. <a href="https://groups.google.com/a/chromium.org/forum/#!topic/cxx/5iFNE8P5qT4">Discussion thread</a></td>
 </tr>
 
 <tr>
@@ -601,6 +601,14 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <th style='width:240px;'>Description</th>
 <th style='width:240px;'>Documentation Link</th>
 <th style='width:240px;'>Notes and Discussion Thread</th>
+</tr>
+
+<tr>
+<td>Constant begin/end non-member functions</td>
+<td><code>std::cbegin(<i>container</i>)<br>std::cend(<i>container</i>)<br>std::crbegin(<i>container</i>)<br>std::crend(<i>container</i>)</br></code></td>
+<td>Constant counterparts to <code>std::begin</code> etc.</td>
+<td><a href="http://en.cppreference.com/w/cpp/iterator/begin">std::cbegin</a></td>
+<td><a href="https://groups.google.com/a/chromium.org/d/msg/cxx/ow7hmdDm4yw/EDEvBRi_BQAJ">Discussion thread</a></td>
 </tr>
 
 <tr>
@@ -1172,19 +1180,11 @@ than binary literals.</td>
 </tr>
 
 <tr>
-<td>Constant begin/end non-member functions</td>
-<td><code>std::cbegin(<i>container</i>)<br>std::cend(<i>container</i>)<br>std::crbegin(<i>container</i>)<br>std::crend(<i>container</i>)</br></code></td>
-<td>Constant counterparts to <code>std::begin</code> etc.</td>
-<td><a href="http://en.cppreference.com/w/cpp/iterator/begin">std::cbegin</a></td>
-<td></td>
-</tr>
-
-<tr>
 <td>Heterogeneous lookup in associative containers</td>
 <td><code><i>// Does not construct an std::string to use as the lookup key.</i><br>std::map&lt;std::string, int, std::less&lt;&gt;&gt; map;<br>auto it = map.find("answer");</code></td>
 <td>Allows searching associative containers without converting the key to exactly match the stored key type, assuming a suitable comparator exists.</td>
 <td><a href="http://en.cppreference.com/w/cpp/utility/functional/less">std::less</a></td>
-<td></td>
+<td><a href="https://groups.google.com/a/chromium.org/d/msg/cxx/ow7hmdDm4yw/EDEvBRi_BQAJ">Discussion thread</a></td>
 </tr>
 
 <tr>
