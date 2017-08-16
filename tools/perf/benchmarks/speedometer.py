@@ -18,6 +18,7 @@ engine, CSS style resolution, layout, and other technologies.
 
 import os
 
+from core import path_util
 from core import perf_benchmark
 
 from telemetry import benchmark
