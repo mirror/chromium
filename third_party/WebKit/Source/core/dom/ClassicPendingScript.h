@@ -82,6 +82,10 @@ class CORE_EXPORT ClassicPendingScript final
   // appropriate.
   void AdvanceReadyState(ReadyState);
 
+  // Fires the securityviolationevent
+  void HandleViolationEvent(
+      const SecurityViolationEventDataContainer& violation_data_container);
+
   // Handle the end of streaming.
   void FinishWaitingForStreaming();
   void FinishReadyStreaming();

@@ -44,6 +44,8 @@ class CORE_EXPORT ImageResourceInfo : public GarbageCollectedMixin {
       DoesCurrentFrameHaveSingleSecurityOrigin) const = 0;
   virtual bool HasCacheControlNoStoreHeader() const = 0;
   virtual const ResourceError& GetResourceError() const = 0;
+  virtual const SecurityViolationEventDataContainer& GetViolationData()
+      const = 0;
 
   // TODO(hiroshige): Remove this once MemoryCache becomes further weaker.
   virtual void SetDecodedSize(size_t) = 0;

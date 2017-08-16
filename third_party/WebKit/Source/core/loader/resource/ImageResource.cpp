@@ -94,6 +94,7 @@ class ImageResource::ImageResourceInfoImpl final
   const ResourceResponse& GetResponse() const override {
     return resource_->GetResponse();
   }
+
   bool ShouldShowPlaceholder() const override {
     return resource_->ShouldShowPlaceholder();
   }
@@ -116,6 +117,9 @@ class ImageResource::ImageResourceInfoImpl final
   }
   const ResourceError& GetResourceError() const override {
     return resource_->GetResourceError();
+  }
+  const SecurityViolationEventDataContainer& GetViolationData() const override {
+    return resource_->GetViolationData();
   }
 
   void SetDecodedSize(size_t size) override { resource_->SetDecodedSize(size); }
@@ -167,14 +171,20 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
   if (fetcher->Context().PageDismissalEventBeingDispatched()) {
     KURL request_url = params.GetResourceRequest().Url();
     if (request_url.IsValid()) {
-      ResourceRequestBlockedReason block_reason = fetcher->Context().CanRequest(
-          Resource::kImage, params.GetResourceRequest(), request_url,
-          params.Options(),
-          /* Don't send security violation reports for speculative preloads */
+      /* Don't send security violation reports for speculative preloads */
+      SecurityViolationReportingPolicy reporting_policy =
           params.IsSpeculativePreload()
               ? SecurityViolationReportingPolicy::kSuppressReporting
-              : SecurityViolationReportingPolicy::kReport,
-          params.GetOriginRestriction(),
+              : SecurityViolationReportingPolicy::kReport;
+
+      if (reporting_policy == SecurityViolationReportingPolicy::kReport &&
+          params.Options().resource_should_handle_violation_event) {
+        reporting_policy = SecurityViolationReportingPolicy::kSuppressOnlyEvent;
+      }
+
+      ResourceRequestBlockedReason block_reason = fetcher->Context().CanRequest(
+          Resource::kImage, params.GetResourceRequest(), request_url,
+          params.Options(), reporting_policy, params.GetOriginRestriction(),
           params.GetResourceRequest().GetRedirectStatus());
       if (block_reason == ResourceRequestBlockedReason::kNone)
         fetcher->Context().SendImagePing(request_url);

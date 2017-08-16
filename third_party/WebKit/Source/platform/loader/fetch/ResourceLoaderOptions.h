@@ -86,7 +86,8 @@ struct ResourceLoaderOptions {
         cors_handling_by_resource_fetcher(kEnableCORSHandlingByResourceFetcher),
         cors_flag(false),
         parser_disposition(kParserInserted),
-        cache_aware_loading_enabled(kNotCacheAwareLoadingEnabled) {}
+        cache_aware_loading_enabled(kNotCacheAwareLoadingEnabled),
+        resource_should_handle_violation_event(false) {}
 
   FetchInitiatorInfo initiator_info;
 
@@ -112,6 +113,7 @@ struct ResourceLoaderOptions {
   IntegrityMetadataSet integrity_metadata;
   ParserDisposition parser_disposition;
   CacheAwareLoadingEnabled cache_aware_loading_enabled;
+  bool resource_should_handle_violation_event;
 };
 
 // Encode AtomicString (in FetchInitiatorInfo) as String to cross threads.
@@ -134,7 +136,8 @@ struct CrossThreadResourceLoaderOptionsData {
             options.content_security_policy_nonce.IsolatedCopy()),
         integrity_metadata(options.integrity_metadata),
         parser_disposition(options.parser_disposition),
-        cache_aware_loading_enabled(options.cache_aware_loading_enabled) {}
+        cache_aware_loading_enabled(options.cache_aware_loading_enabled),
+        resource_should_handle_violation_event(false) {}
 
   operator ResourceLoaderOptions() const {
     ResourceLoaderOptions options;
@@ -151,6 +154,8 @@ struct CrossThreadResourceLoaderOptionsData {
     options.integrity_metadata = integrity_metadata;
     options.parser_disposition = parser_disposition;
     options.cache_aware_loading_enabled = cache_aware_loading_enabled;
+    options.resource_should_handle_violation_event =
+        resource_should_handle_violation_event;
     return options;
   }
 
@@ -168,6 +173,7 @@ struct CrossThreadResourceLoaderOptionsData {
   IntegrityMetadataSet integrity_metadata;
   ParserDisposition parser_disposition;
   CacheAwareLoadingEnabled cache_aware_loading_enabled;
+  bool resource_should_handle_violation_event;
 };
 
 template <>

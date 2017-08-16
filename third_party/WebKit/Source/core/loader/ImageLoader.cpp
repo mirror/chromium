@@ -326,6 +326,7 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     FetchParameters params(resource_request, resource_loader_options);
     ConfigureRequest(params, bypass_behavior, *element_,
                      document.GetClientHintsPreferences());
+    params.SetResourceShouldHandleViolationEvent(true);
 
     if (update_behavior != kUpdateForcedReload && document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
@@ -520,6 +521,9 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
     image_->UpdateImageAnimationPolicy();
 
   UpdateLayoutObject();
+
+  GetElement()->GetDocument().GetContentSecurityPolicy()->FireViolationEvents(
+      resource->GetViolationData(), GetElement());
 
   if (image_ && image_->GetImage() && image_->GetImage()->IsSVGImage()) {
     // SVG's document should be completely loaded before access control

@@ -40,6 +40,7 @@
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/weborigin/SchemeRegistry.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Vector.h"
@@ -210,7 +211,9 @@ class CORE_EXPORT ContentSecurityPolicy
                             RedirectStatus = RedirectStatus::kNoRedirect,
                             SecurityViolationReportingPolicy =
                                 SecurityViolationReportingPolicy::kReport,
-                            CheckHeaderType = CheckHeaderType::kCheckAll) const;
+                            CheckHeaderType = CheckHeaderType::kCheckAll,
+                            SecurityViolationEventDataContainer*
+                                violation_data_container = nullptr) const;
   bool AllowFontFromSource(const KURL&,
                            RedirectStatus = RedirectStatus::kNoRedirect,
                            SecurityViolationReportingPolicy =
@@ -251,15 +254,16 @@ class CORE_EXPORT ContentSecurityPolicy
 
   // Passing 'String()' into the |nonce| arguments in the following methods
   // represents an unnonced resource load.
-  bool AllowScriptFromSource(
-      const KURL&,
-      const String& nonce,
-      const IntegrityMetadataSet& hashes,
-      ParserDisposition,
-      RedirectStatus = RedirectStatus::kNoRedirect,
-      SecurityViolationReportingPolicy =
-          SecurityViolationReportingPolicy::kReport,
-      CheckHeaderType = CheckHeaderType::kCheckAll) const;
+  bool AllowScriptFromSource(const KURL&,
+                             const String& nonce,
+                             const IntegrityMetadataSet& hashes,
+                             ParserDisposition,
+                             RedirectStatus = RedirectStatus::kNoRedirect,
+                             SecurityViolationReportingPolicy =
+                                 SecurityViolationReportingPolicy::kReport,
+                             CheckHeaderType = CheckHeaderType::kCheckAll,
+                             SecurityViolationEventDataContainer*
+                                 violation_data_container = nullptr) const;
   bool AllowStyleFromSource(const KURL&,
                             const String& nonce,
                             RedirectStatus = RedirectStatus::kNoRedirect,
@@ -311,7 +315,9 @@ class CORE_EXPORT ContentSecurityPolicy
                     RedirectStatus = RedirectStatus::kNoRedirect,
                     SecurityViolationReportingPolicy =
                         SecurityViolationReportingPolicy::kReport,
-                    CheckHeaderType = CheckHeaderType::kCheckAll) const;
+                    CheckHeaderType = CheckHeaderType::kCheckAll,
+                    SecurityViolationEventDataContainer*
+                        violation_data_container = nullptr) const;
 
   void UsesScriptHashAlgorithms(uint8_t content_security_policy_hash_algorithm);
   void UsesStyleHashAlgorithms(uint8_t content_security_policy_hash_algorithm);
@@ -354,20 +360,32 @@ class CORE_EXPORT ContentSecurityPolicy
   // available).
   // If |sourceLocation| is not set, the source location will be the context's
   // current location.
-  void ReportViolation(const String& directive_text,
-                       const DirectiveType& effective_type,
-                       const String& console_message,
-                       const KURL& blocked_url,
-                       const Vector<String>& report_endpoints,
-                       bool use_reporting_api,
-                       const String& header,
-                       ContentSecurityPolicyHeaderType,
-                       ViolationType,
-                       std::unique_ptr<SourceLocation>,
-                       LocalFrame* = nullptr,
-                       RedirectStatus = RedirectStatus::kFollowedRedirect,
-                       Element* = nullptr,
-                       const String& source = g_empty_string);
+  void ReportViolation(
+      const String& directive_text,
+      const DirectiveType& effective_type,
+      const String& console_message,
+      const KURL& blocked_url,
+      const Vector<String>& report_endpoints,
+      bool use_reporting_api,
+      const String& header,
+      ContentSecurityPolicyHeaderType,
+      ViolationType,
+      std::unique_ptr<SourceLocation>,
+      LocalFrame* = nullptr,
+      RedirectStatus = RedirectStatus::kFollowedRedirect,
+      Element* = nullptr,
+      const String& source = g_empty_string,
+      SecurityViolationReportingPolicy =
+          SecurityViolationReportingPolicy::kReport,
+      SecurityViolationEventDataContainer* violation_data_container = nullptr);
+
+  void FireViolationEvents(
+      const SecurityViolationEventDataContainer& violation_data_container,
+      Element*);
+
+  void FireViolationEvent(
+      const SecurityPolicyViolationEventInit& violation_data,
+      Element*);
 
   // Called when mixed content is detected on a page; will trigger a violation
   // report if the 'block-all-mixed-content' directive is specified for a

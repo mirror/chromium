@@ -181,18 +181,22 @@ class PLATFORM_EXPORT ResourceFetcher
 
   enum PrepareRequestResult { kAbort, kContinue, kBlock };
 
-  PrepareRequestResult PrepareRequest(FetchParameters&,
-                                      const ResourceFactory&,
-                                      const SubstituteData&,
-                                      unsigned long identifier,
-                                      ResourceRequestBlockedReason&);
+  PrepareRequestResult PrepareRequest(
+      FetchParameters&,
+      const ResourceFactory&,
+      const SubstituteData&,
+      unsigned long identifier,
+      ResourceRequestBlockedReason&,
+      SecurityViolationEventDataContainer* violation_data_container);
 
   Resource* ResourceForStaticData(const FetchParameters&,
                                   const ResourceFactory&,
                                   const SubstituteData&);
-  Resource* ResourceForBlockedRequest(const FetchParameters&,
-                                      const ResourceFactory&,
-                                      ResourceRequestBlockedReason);
+  Resource* ResourceForBlockedRequest(
+      const FetchParameters&,
+      const ResourceFactory&,
+      ResourceRequestBlockedReason,
+      const SecurityViolationEventDataContainer* violation_data_container);
 
   Resource* MatchPreload(const FetchParameters& params, Resource::Type);
   void InsertAsPreloadIfNecessary(Resource*,

@@ -137,6 +137,8 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
       integrity_failure_ = GetResource()->IntegrityDisposition() !=
                            ResourceIntegrityDisposition::kPassed;
     }
+
+    HandleViolationEvent(resource->GetViolationData());
   }
 
   // We are now waiting for script streaming to finish.
@@ -325,6 +327,12 @@ KURL ClassicPendingScript::UrlForClassicScript() const {
 
 void ClassicPendingScript::RemoveFromMemoryCache() {
   GetMemoryCache()->Remove(GetResource());
+}
+
+void ClassicPendingScript::HandleViolationEvent(
+    const SecurityViolationEventDataContainer& violation_data_container) {
+  if (violation_data_container.size() > 0)
+    GetElement()->HandleViolationEvent(violation_data_container);
 }
 
 }  // namespace blink

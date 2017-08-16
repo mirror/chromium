@@ -256,16 +256,30 @@ bool ResourceLoader::WillFollowRedirect(
         unused_preload ? SecurityViolationReportingPolicy::kSuppressReporting
                        : SecurityViolationReportingPolicy::kReport;
 
+    std::unique_ptr<SecurityViolationEventDataContainer>
+        violation_data_container;
+    if (options.resource_should_handle_violation_event &&
+        reporting_policy == SecurityViolationReportingPolicy::kReport) {
+      violation_data_container.reset(new SecurityViolationEventDataContainer());
+      reporting_policy = SecurityViolationReportingPolicy::kSuppressOnlyEvent;
+    }
+
     // CanRequest() checks only enforced CSP, so check report-only here to
     // ensure that violations are sent.
     Context().CheckCSPForRequest(
         request_context, new_url, options, reporting_policy,
-        ResourceRequest::RedirectStatus::kFollowedRedirect);
+        ResourceRequest::RedirectStatus::kFollowedRedirect,
+        violation_data_container.get());
 
     ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
         resource_type, new_request, new_url, options, reporting_policy,
         FetchParameters::kUseDefaultOriginRestrictionForType,
-        ResourceRequest::RedirectStatus::kFollowedRedirect);
+        ResourceRequest::RedirectStatus::kFollowedRedirect,
+        violation_data_container.get());
+
+    if (violation_data_container)
+      resource_->AddViolationData(*violation_data_container);
+
     if (blocked_reason != ResourceRequestBlockedReason::kNone) {
       CancelForRedirectAccessCheckError(new_url, blocked_reason);
       return false;
@@ -515,16 +529,31 @@ void ResourceLoader::DidReceiveResponse(
     if (!original_url.IsEmpty()) {
       // CanRequest() below only checks enforced policies: check report-only
       // here to ensure violations are sent.
+
+      SecurityViolationReportingPolicy reporting_policy =
+          SecurityViolationReportingPolicy::kReport;
+      std::unique_ptr<SecurityViolationEventDataContainer>
+          violation_data_container;
+      if (options.resource_should_handle_violation_event) {
+        violation_data_container.reset(
+            new SecurityViolationEventDataContainer());
+        reporting_policy = SecurityViolationReportingPolicy::kSuppressOnlyEvent;
+      }
+
       Context().CheckCSPForRequest(
-          request_context, original_url, options,
-          SecurityViolationReportingPolicy::kReport,
-          ResourceRequest::RedirectStatus::kFollowedRedirect);
+          request_context, original_url, options, reporting_policy,
+          ResourceRequest::RedirectStatus::kFollowedRedirect,
+          violation_data_container.get());
 
       ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
           resource_type, initial_request, original_url, options,
-          SecurityViolationReportingPolicy::kReport,
+          reporting_policy,
           FetchParameters::kUseDefaultOriginRestrictionForType,
           ResourceRequest::RedirectStatus::kFollowedRedirect);
+
+      if (violation_data_container)
+        resource_->AddViolationData(*violation_data_container);
+
       if (blocked_reason != ResourceRequestBlockedReason::kNone) {
         HandleError(ResourceError::CancelledDueToAccessCheckError(
             original_url, blocked_reason));

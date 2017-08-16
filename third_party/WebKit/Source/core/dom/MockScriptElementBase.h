@@ -48,6 +48,8 @@ class MockScriptElementBase
                     const WTF::OrdinalNumber&,
                     const String&,
                     ContentSecurityPolicy::InlineType));
+  MOCK_METHOD1(HandleViolationEvent,
+               void(const SecurityViolationEventDataContainer&));
   MOCK_CONST_METHOD0(GetDocument, Document&());
   MOCK_METHOD1(SetScriptElementForBinding,
                void(HTMLScriptElementOrSVGScriptElement&));

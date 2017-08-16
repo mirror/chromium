@@ -26,6 +26,7 @@
 #include <memory>
 #include "core/CoreExport.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/resource/ImageResource.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceObserver.h"

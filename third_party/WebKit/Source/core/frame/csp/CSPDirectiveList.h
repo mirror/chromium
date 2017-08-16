@@ -81,7 +81,9 @@ class CORE_EXPORT CSPDirectiveList
                              const IntegrityMetadataSet& hashes,
                              ParserDisposition,
                              ResourceRequest::RedirectStatus,
-                             SecurityViolationReportingPolicy) const;
+                             SecurityViolationReportingPolicy,
+                             SecurityViolationEventDataContainer*
+                                 violation_data_container = nullptr) const;
   bool AllowStyleFromSource(const KURL&,
                             const String& nonce,
                             ResourceRequest::RedirectStatus,
@@ -95,7 +97,9 @@ class CORE_EXPORT CSPDirectiveList
                             SecurityViolationReportingPolicy) const;
   bool AllowImageFromSource(const KURL&,
                             ResourceRequest::RedirectStatus,
-                            SecurityViolationReportingPolicy) const;
+                            SecurityViolationReportingPolicy,
+                            SecurityViolationEventDataContainer*
+                                violation_data_container = nullptr) const;
   bool AllowFontFromSource(const KURL&,
                            ResourceRequest::RedirectStatus,
                            SecurityViolationReportingPolicy) const;
@@ -222,7 +226,11 @@ class CORE_EXPORT CSPDirectiveList
                        const ContentSecurityPolicy::DirectiveType&,
                        const String& console_message,
                        const KURL& blocked_url,
-                       ResourceRequest::RedirectStatus) const;
+                       ResourceRequest::RedirectStatus,
+                       SecurityViolationReportingPolicy =
+                           SecurityViolationReportingPolicy::kReport,
+                       SecurityViolationEventDataContainer*
+                           violation_data_container = nullptr) const;
   void ReportViolationWithFrame(const String& directive_text,
                                 const ContentSecurityPolicy::DirectiveType&,
                                 const String& console_message,
@@ -278,11 +286,14 @@ class CORE_EXPORT CSPDirectiveList
                                      bool is_script,
                                      const String& hash_value) const;
 
-  bool CheckSourceAndReportViolation(
+  bool CheckSourceAndMaybeReportViolation(
       SourceListDirective*,
       const KURL&,
       const ContentSecurityPolicy::DirectiveType&,
-      ResourceRequest::RedirectStatus) const;
+      ResourceRequest::RedirectStatus,
+      SecurityViolationReportingPolicy,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const;
   bool CheckMediaTypeAndReportViolation(MediaListDirective*,
                                         const String& type,
                                         const String& type_attribute,

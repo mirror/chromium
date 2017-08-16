@@ -16,6 +16,7 @@
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceStatus.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/HashCountedSet.h"
 #include "platform/wtf/HashMap.h"
@@ -124,6 +125,7 @@ class CORE_EXPORT ImageResourceContent final
   bool IsAccessAllowed(SecurityOrigin*);
   const ResourceResponse& GetResponse() const;
   const ResourceError& GetResourceError() const;
+  const SecurityViolationEventDataContainer& GetViolationData() const;
 
   // For FrameSerializer.
   bool HasCacheControlNoStoreHeader() const;

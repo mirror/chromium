@@ -143,6 +143,12 @@ bool SVGScriptElement::AllowInlineScriptForCSP(
       inline_type);
 }
 
+void SVGScriptElement::HandleViolationEvent(
+    const SecurityViolationEventDataContainer& violation_data_container) {
+  GetDocument().GetContentSecurityPolicy()->FireViolationEvents(
+      violation_data_container, this);
+}
+
 AtomicString SVGScriptElement::InitiatorName() const {
   return Element::localName();
 }

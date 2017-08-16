@@ -91,6 +91,56 @@ bool CheckHeaderTypeMatches(
   return false;
 }
 
+SecurityPolicyViolationEventData ToEventData(
+    const SecurityPolicyViolationEventInit& event_init) {
+  SecurityPolicyViolationEventData event_data;
+  if (event_init.hasBlockedURI())
+    event_data.blocked_uri = event_init.blockedURI();
+  if (event_init.hasColumnNumber())
+    event_data.column_number = event_init.columnNumber();
+  if (event_init.hasDisposition())
+    event_data.disposition = event_init.disposition();
+  if (event_init.hasDocumentURI())
+    event_data.document_uri = event_init.documentURI();
+  if (event_init.hasEffectiveDirective())
+    event_data.effective_directive = event_init.effectiveDirective();
+  if (event_init.hasLineNumber())
+    event_data.line_number = event_init.lineNumber();
+  if (event_init.hasOriginalPolicy())
+    event_data.original_policy = event_init.originalPolicy();
+  if (event_init.hasReferrer())
+    event_data.referrer = event_init.referrer();
+  if (event_init.hasSample())
+    event_data.sample = event_init.sample();
+  if (event_init.hasSourceFile())
+    event_data.source_file = event_init.sourceFile();
+  if (event_init.hasStatusCode())
+    event_data.status_code = event_init.statusCode();
+  if (event_init.hasViolatedDirective())
+    event_data.violated_directive = event_init.violatedDirective();
+
+  return event_data;
+}
+
+SecurityPolicyViolationEventInit ToEventInit(
+    const SecurityPolicyViolationEventData& event_data) {
+  SecurityPolicyViolationEventInit event_init;
+  event_init.setBlockedURI(event_data.blocked_uri);
+  event_init.setColumnNumber(event_data.column_number);
+  event_init.setDisposition(event_data.disposition);
+  event_init.setDocumentURI(event_data.document_uri);
+  event_init.setEffectiveDirective(event_data.effective_directive);
+  event_init.setLineNumber(event_data.line_number);
+  event_init.setOriginalPolicy(event_data.original_policy);
+  event_init.setReferrer(event_data.referrer);
+  event_init.setSample(event_data.sample);
+  event_init.setSourceFile(event_data.source_file);
+  event_init.setStatusCode(event_data.status_code);
+  event_init.setViolatedDirective(event_data.violated_directive);
+
+  return event_init;
+}
+
 }  // namespace
 
 bool ContentSecurityPolicy::IsNonceableElement(const Element* element) {
@@ -647,7 +697,8 @@ bool ContentSecurityPolicy::AllowScriptFromSource(
     ParserDisposition parser_disposition,
     RedirectStatus redirect_status,
     SecurityViolationReportingPolicy reporting_policy,
-    CheckHeaderType check_header_type) const {
+    CheckHeaderType check_header_type,
+    SecurityViolationEventDataContainer* violation_data_container) const {
   if (ShouldBypassContentSecurityPolicy(url)) {
     UseCounter::Count(
         GetDocument(),
@@ -672,9 +723,9 @@ bool ContentSecurityPolicy::AllowScriptFromSource(
   for (const auto& policy : policies_) {
     if (!CheckHeaderTypeMatches(check_header_type, policy->HeaderType()))
       continue;
-    is_allowed &=
-        policy->AllowScriptFromSource(url, nonce, hashes, parser_disposition,
-                                      redirect_status, reporting_policy);
+    is_allowed &= policy->AllowScriptFromSource(
+        url, nonce, hashes, parser_disposition, redirect_status,
+        reporting_policy, violation_data_container);
   }
   return is_allowed;
 }
@@ -702,7 +753,8 @@ bool ContentSecurityPolicy::AllowRequest(
     ParserDisposition parser_disposition,
     RedirectStatus redirect_status,
     SecurityViolationReportingPolicy reporting_policy,
-    CheckHeaderType check_header_type) const {
+    CheckHeaderType check_header_type,
+    SecurityViolationEventDataContainer* violation_data_container) const {
   if (integrity_metadata.IsEmpty() &&
       !AllowRequestWithoutIntegrity(context, url, redirect_status,
                                     reporting_policy, check_header_type)) {
@@ -731,7 +783,7 @@ bool ContentSecurityPolicy::AllowRequest(
     case WebURLRequest::kRequestContextImage:
     case WebURLRequest::kRequestContextImageSet:
       return AllowImageFromSource(url, redirect_status, reporting_policy,
-                                  check_header_type);
+                                  check_header_type, violation_data_container);
     case WebURLRequest::kRequestContextFont:
       return AllowFontFromSource(url, redirect_status, reporting_policy,
                                  check_header_type);
@@ -745,9 +797,9 @@ bool ContentSecurityPolicy::AllowRequest(
     case WebURLRequest::kRequestContextImport:
     case WebURLRequest::kRequestContextScript:
     case WebURLRequest::kRequestContextXSLT:
-      return AllowScriptFromSource(url, nonce, integrity_metadata,
-                                   parser_disposition, redirect_status,
-                                   reporting_policy, check_header_type);
+      return AllowScriptFromSource(
+          url, nonce, integrity_metadata, parser_disposition, redirect_status,
+          reporting_policy, check_header_type, violation_data_container);
     case WebURLRequest::kRequestContextManifest:
       return AllowManifestFromSource(url, redirect_status, reporting_policy,
                                      check_header_type);
@@ -823,7 +875,8 @@ bool ContentSecurityPolicy::AllowImageFromSource(
     const KURL& url,
     RedirectStatus redirect_status,
     SecurityViolationReportingPolicy reporting_policy,
-    CheckHeaderType check_header_type) const {
+    CheckHeaderType check_header_type,
+    SecurityViolationEventDataContainer* violation_data_container) const {
   if (ShouldBypassContentSecurityPolicy(url, SchemeRegistry::kPolicyAreaImage))
     return true;
 
@@ -831,8 +884,8 @@ bool ContentSecurityPolicy::AllowImageFromSource(
   for (const auto& policy : policies_) {
     if (!CheckHeaderTypeMatches(check_header_type, policy->HeaderType()))
       continue;
-    is_allowed &=
-        policy->AllowImageFromSource(url, redirect_status, reporting_policy);
+    is_allowed &= policy->AllowImageFromSource(
+        url, redirect_status, reporting_policy, violation_data_container);
   }
 
   return is_allowed;
@@ -1198,8 +1251,13 @@ void ContentSecurityPolicy::ReportViolation(
     LocalFrame* context_frame,
     RedirectStatus redirect_status,
     Element* element,
-    const String& source) {
+    const String& source,
+    SecurityViolationReportingPolicy reporting_policy,
+    SecurityViolationEventDataContainer* violation_data_container) {
   DCHECK(violation_type == kURLViolation || blocked_url.IsEmpty());
+
+  if (reporting_policy == SecurityViolationReportingPolicy::kSuppressReporting)
+    return;
 
   // TODO(lukasza): Support sending reports from OOPIFs -
   // https://crbug.com/611232 (or move CSP child-src and frame-src checks to the
@@ -1214,6 +1272,7 @@ void ContentSecurityPolicy::ReportViolation(
   DCHECK((execution_context_ && !context_frame) ||
          ((effective_type == DirectiveType::kFrameAncestors) && context_frame));
 
+  // we'll use this to store the violation data if not provided by the caller
   SecurityPolicyViolationEventInit violation_data;
 
   // If we're processing 'frame-ancestors', use |contextFrame|'s execution
@@ -1239,6 +1298,26 @@ void ContentSecurityPolicy::ReportViolation(
   PostViolationReport(violation_data, context_frame, report_endpoints,
                       use_reporting_api);
 
+  if (violation_data_container)
+    violation_data_container->push_back(ToEventData(violation_data));
+
+  if (reporting_policy !=
+      SecurityViolationReportingPolicy::kSuppressOnlyEvent) {
+    FireViolationEvent(violation_data, element);
+  }
+}
+
+void ContentSecurityPolicy::FireViolationEvents(
+    const SecurityViolationEventDataContainer& violation_data_container,
+    Element* element) {
+  for (auto& event_data : violation_data_container) {
+    FireViolationEvent(ToEventInit(event_data), element);
+  }
+}
+
+void ContentSecurityPolicy::FireViolationEvent(
+    const SecurityPolicyViolationEventInit& violation_data,
+    Element* element) {
   // Fire a violation event if we're working within an execution context (e.g.
   // we're not processing 'frame-ancestors').
   if (execution_context_) {

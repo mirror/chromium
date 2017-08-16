@@ -51,6 +51,9 @@ class NullImageResourceInfo final
   }
   bool HasCacheControlNoStoreHeader() const override { return false; }
   const ResourceError& GetResourceError() const override { return error_; }
+  const SecurityViolationEventDataContainer& GetViolationData() const override {
+    return violation_data_container_;
+  }
 
   void SetDecodedSize(size_t) override {}
   void WillAddClientOrObserver() override {}
@@ -63,6 +66,7 @@ class NullImageResourceInfo final
   const KURL url_;
   const ResourceResponse response_;
   const ResourceError error_;
+  const SecurityViolationEventDataContainer violation_data_container_;
 };
 
 }  // namespace
@@ -637,6 +641,10 @@ const ResourceResponse& ImageResourceContent::GetResponse() const {
 
 const ResourceError& ImageResourceContent::GetResourceError() const {
   return info_->GetResourceError();
+}
+const SecurityViolationEventDataContainer&
+ImageResourceContent::GetViolationData() const {
+  return info_->GetViolationData();
 }
 
 }  // namespace blink

@@ -460,13 +460,16 @@ Resource* ResourceFetcher::ResourceForStaticData(
 Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
     const ResourceFactory& factory,
-    ResourceRequestBlockedReason blocked_reason) {
+    ResourceRequestBlockedReason blocked_reason,
+    const SecurityViolationEventDataContainer* violation_data_container) {
   Resource* resource = factory.Create(
       params.GetResourceRequest(), params.Options(), params.DecoderOptions());
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
       params.Url(), blocked_reason));
+  if (violation_data_container)
+    resource->AddViolationData(*violation_data_container);
   return resource;
 }
 
@@ -525,7 +528,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
     const ResourceFactory& factory,
     const SubstituteData& substitute_data,
     unsigned long identifier,
-    ResourceRequestBlockedReason& blocked_reason) {
+    ResourceRequestBlockedReason& blocked_reason,
+    SecurityViolationEventDataContainer* violation_data_container) {
   ResourceRequest& resource_request = params.MutableResourceRequest();
   Resource::Type resource_type = factory.GetType();
   const ResourceLoaderOptions& options = params.Options();
@@ -542,13 +546,19 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
           ? SecurityViolationReportingPolicy::kSuppressReporting
           : SecurityViolationReportingPolicy::kReport;
 
+  if (reporting_policy == SecurityViolationReportingPolicy::kReport &&
+      options.resource_should_handle_violation_event) {
+    reporting_policy = SecurityViolationReportingPolicy::kSuppressOnlyEvent;
+  }
+
   // Before modifying the request for CSP, evaluate report-only headers. This
   // allows site owners to learn about requests that are being modified
   // (e.g. mixed content that is being upgraded by upgrade-insecure-requests).
   Context().CheckCSPForRequest(
       resource_request.GetRequestContext(),
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
-      reporting_policy, resource_request.GetRedirectStatus());
+      reporting_policy, resource_request.GetRedirectStatus(),
+      violation_data_container);
 
   // This may modify params.Url() (via the resource_request argument).
   Context().PopulateResourceRequest(
@@ -587,7 +597,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       resource_type, resource_request,
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
       reporting_policy, params.GetOriginRestriction(),
-      resource_request.GetRedirectStatus());
+      resource_request.GetRedirectStatus(), violation_data_container);
+
   if (blocked_reason != ResourceRequestBlockedReason::kNone) {
     DCHECK(!substitute_data.ForceSynchronousLoad());
     return kBlock;
@@ -644,12 +655,21 @@ Resource* ResourceFetcher::RequestResource(
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
 
-  PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
-                                               identifier, blocked_reason);
+  std::unique_ptr<SecurityViolationEventDataContainer> violation_data_container;
+
+  if (params.Options().resource_should_handle_violation_event)
+    violation_data_container.reset(new SecurityViolationEventDataContainer());
+
+  PrepareRequestResult result =
+      PrepareRequest(params, factory, substitute_data, identifier,
+                     blocked_reason, violation_data_container.get());
+
   if (result == kAbort)
     return nullptr;
-  if (result == kBlock)
-    return ResourceForBlockedRequest(params, factory, blocked_reason);
+  if (result == kBlock) {
+    return ResourceForBlockedRequest(params, factory, blocked_reason,
+                                     violation_data_container.get());
+  }
 
   Resource::Type resource_type = factory.GetType();
 
@@ -715,6 +735,8 @@ Resource* ResourceFetcher::RequestResource(
   DCHECK(resource);
   // TODO(yoav): turn to a DCHECK. See https://crbug.com/690632
   CHECK_EQ(resource->GetType(), resource_type);
+  if (violation_data_container)
+    resource->AddViolationData(*violation_data_container);
 
   if (policy != kUse)
     resource->SetIdentifier(identifier);

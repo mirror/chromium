@@ -25,6 +25,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Heap.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/TextPosition.h"
 #include "platform/wtf/text/WTFString.h"
@@ -62,6 +63,9 @@ class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
                                        const WTF::OrdinalNumber&,
                                        const String& script_content,
                                        ContentSecurityPolicy::InlineType) = 0;
+  virtual void HandleViolationEvent(
+      const SecurityViolationEventDataContainer& violation_data_container) = 0;
+
   virtual Document& GetDocument() const = 0;
   virtual void SetScriptElementForBinding(
       HTMLScriptElementOrSVGScriptElement&) = 0;

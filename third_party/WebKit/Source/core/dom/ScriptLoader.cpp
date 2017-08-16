@@ -753,6 +753,8 @@ bool ScriptLoader::FetchClassicScript(
   // |kLazyLoad| for module scripts in ModuleScriptLoader.
   params.SetDefer(defer);
 
+  params.SetResourceShouldHandleViolationEvent(true);
+
   resource_ = ScriptResource::Fetch(params, fetcher);
 
   if (!resource_)
