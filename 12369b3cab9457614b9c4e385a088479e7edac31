@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c96c89_1b2564fe",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-16T20:00:01Z",
+      "side": 1,
+      "message": "Adding a reply to a message which did not previously expect a reply is not a backwards-compatible change supported by mojo versioning, as documented by https://chromium.googlesource.com/chromium/src/+/master/mojo/public/tools/bindings/README.md#Versioned-Interfaces",
+      "revId": "12369b3cab9457614b9c4e385a088479e7edac31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
