@@ -39,6 +39,7 @@
         <meta-data android:name="org.chromium.webapk.shell_apk.runtimeHostApplicationName" android:value="{{{runtime_host_application_name}}}" />
         {{/bound_webapk}}
         <meta-data android:name="org.chromium.webapk.shell_apk.startUrl" android:value="{{{start_url}}}" />
+        <meta-data android:name="org.chromium.webapk.shell_apk.includeStartUrl" android:value="{{{include_start_url}}}" />
         <meta-data android:name="org.chromium.webapk.shell_apk.scope" android:value="{{{scope_url}}}" />
         <meta-data android:name="org.chromium.webapk.shell_apk.displayMode" android:value="{{{display_mode}}}" />
         <meta-data android:name="org.chromium.webapk.shell_apk.orientation" android:value="{{{orientation}}}" />

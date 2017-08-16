@@ -58,6 +58,37 @@ public final class MainActivityTest {
     }
 
     /**
+     * Test that MainActivity appends the start URL as a paramater if `includeStartUrl` in WebAPK
+     * metadata is set to true.
+     */
+    @Test
+    public void testIncludeStartUrlWhenRewrite() {
+        final String intentStartUrl = "https://www.google.com/page?a=A#aaa";
+        final String manifestStartUrl = "http://www.test.com/page?b=B&c=C#ddd";
+        final String expectedRewrittenStartUrl =
+                "https://www.google.com/page?a=A&originalUrl=http%253A%252F%252Fwww.test.com%252Fpage%253Fb%253DB%2526c%253DC%2523ddd#aaa";
+        final String manifestScope = "https://www.google.com/";
+        final String browserPackageName = "browser.support.webapks";
+
+        Bundle bundle = new Bundle();
+        bundle.putString(WebApkMetaDataKeys.START_URL, manifestStartUrl);
+        bundle.putString(WebApkMetaDataKeys.SCOPE, manifestScope);
+        bundle.putString(WebApkMetaDataKeys.RUNTIME_HOST, browserPackageName);
+        bundle.putBoolean(WebApkMetaDataKeys.INCLUDE_START_URL, true);
+        WebApkTestHelper.registerWebApkWithMetaData(WebApkUtilsTest.WEBAPK_PACKAGE_NAME, bundle);
+
+        installBrowser(browserPackageName);
+
+        Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentStartUrl));
+        Robolectric.buildActivity(MainActivity.class).withIntent(launchIntent).create();
+
+        Intent startActivityIntent = ShadowApplication.getInstance().getNextStartedActivity();
+        Assert.assertEquals(MainActivity.ACTION_START_WEBAPK, startActivityIntent.getAction());
+        Assert.assertEquals(expectedRewrittenStartUrl,
+                startActivityIntent.getStringExtra(WebApkConstants.EXTRA_URL));
+    }
+
+    /**
      * Test that MainActivity rewrites the start URL host so that it matches exactly the scope URL
      * host. In particular, MainActivity should not escape unicode characters.
      */
