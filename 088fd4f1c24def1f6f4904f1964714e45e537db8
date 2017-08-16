@@ -22,6 +22,144 @@
       "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cf5523_ec9608e4",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:58:51Z",
+      "side": 1,
+      "message": "nit: /** @private */",
+      "range": {
+        "startLine": 351,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 13
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd3db3d_6ee61c09",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:58:51Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 686,
+        "startChar": 2,
+        "endLine": 686,
+        "endChar": 10
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90ecacc_39294a99",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:58:51Z",
+      "side": 1,
+      "message": "nit: capitalize",
+      "range": {
+        "startLine": 705,
+        "startChar": 70,
+        "endLine": 705,
+        "endChar": 74
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10b9239_781a5cc1",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:58:51Z",
+      "side": 1,
+      "message": "nit: \"implementation\" (singular) or, better, \"override\" for consistency with line 103",
+      "range": {
+        "startLine": 111,
+        "startChar": 35,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34c93d8_bf5b35ad",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:58:51Z",
+      "side": 1,
+      "message": "optional: while you\u0027re here, place all override sections together instead of interspersing them with own methods. e.g., move this and FileSelected() to the bottom just before the member variables.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b737ba3c_3f5e37b8",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:58:51Z",
+      "side": 1,
+      "message": "nit: newline before comment",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
