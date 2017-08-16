@@ -25,6 +25,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_base.h"
+#include "base/metrics/record_histogram_checker.h"
 #include "base/strings/string_piece.h"
 #include "base/synchronization/lock.h"
 
@@ -217,6 +218,15 @@ class BASE_EXPORT StatisticsRecorder {
   // by a call to Initialize().
   static void UninitializeForTesting();
 
+  // Sets the record checker that implements RecordHistogramChecker
+  // interface.
+  static void SetRecordChecker(
+      std::unique_ptr<RecordHistogramChecker> record_checker);
+
+  // Returns true iff the given histogram should be recorded based on
+  // the record checker filter. If the record checker is not set, returns false.
+  static bool ShouldRecordHistogram(uint64_t histogram_hash);
+
  private:
   // We keep a map of callbacks to histograms, so that as histograms are
   // created, we can set the callback properly.
@@ -255,6 +265,7 @@ class BASE_EXPORT StatisticsRecorder {
   std::unique_ptr<CallbackMap> existing_callbacks_;
   std::unique_ptr<RangesMap> existing_ranges_;
   std::unique_ptr<HistogramProviders> existing_providers_;
+  std::unique_ptr<RecordHistogramChecker> existing_record_checker_;
 
   bool vlog_initialized_ = false;
 
@@ -265,6 +276,7 @@ class BASE_EXPORT StatisticsRecorder {
   static CallbackMap* callbacks_;
   static RangesMap* ranges_;
   static HistogramProviders* providers_;
+  static RecordHistogramChecker* record_checker_;
 
   // Lock protects access to above maps. This is a LazyInstance to avoid races
   // when the above methods are used before Initialize(). Previously each method
