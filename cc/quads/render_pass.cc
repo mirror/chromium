@@ -57,7 +57,7 @@ void QuadList::ReplaceExistingQuadWithOpaqueTransparentSolidColor(Iterator at) {
 
   SolidColorDrawQuad* replacement =
       QuadList::ReplaceExistingElement<SolidColorDrawQuad>(at);
-  replacement->SetAll(shared_quad_state, rect, rect /* opaque_rect */,
+  replacement->SetAll(shared_quad_state, rect /* rect */,
                       rect /* visible_rect */, needs_blending,
                       SK_ColorTRANSPARENT, true);
 }

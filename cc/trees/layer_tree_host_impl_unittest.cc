@@ -7550,12 +7550,7 @@ class BlendStateCheckLayer : public LayerImpl {
   void AppendQuads(RenderPass* render_pass,
                    AppendQuadsData* append_quads_data) override {
     quads_appended_ = true;
-
-    gfx::Rect opaque_rect;
-    if (contents_opaque())
-      opaque_rect = quad_rect_;
-    else
-      opaque_rect = opaque_content_rect_;
+    bool needs_blending = contents_opaque() ? false : true;
     gfx::Rect visible_quad_rect = quad_rect_;
 
     SharedQuadState* shared_quad_state =
@@ -7564,10 +7559,10 @@ class BlendStateCheckLayer : public LayerImpl {
 
     TileDrawQuad* test_blending_draw_quad =
         render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
-    test_blending_draw_quad->SetNew(shared_quad_state, quad_rect_, opaque_rect,
-                                    visible_quad_rect, resource_id_,
-                                    gfx::RectF(0.f, 0.f, 1.f, 1.f),
-                                    gfx::Size(1, 1), false, false);
+    test_blending_draw_quad->SetNew(
+        shared_quad_state, quad_rect_, visible_quad_rect, needs_blending,
+        resource_id_, gfx::RectF(0.f, 0.f, 1.f, 1.f), gfx::Size(1, 1), false,
+        false);
     test_blending_draw_quad->visible_rect = quad_visible_rect_;
     EXPECT_EQ(blend_, test_blending_draw_quad->ShouldDrawWithBlending());
     EXPECT_EQ(has_render_surface_,
