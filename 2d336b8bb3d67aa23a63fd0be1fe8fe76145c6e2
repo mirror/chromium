@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "290943e1_72a2a6e8",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T20:42:46Z",
+      "side": 0,
+      "message": "It looks like this was the only usage of this message, so we can delete the IPC and its handler too -- unless that\u0027s slated for a broader BrowserPlugin cleanup?",
+      "range": {
+        "startLine": 365,
+        "startChar": 51,
+        "endLine": 365,
+        "endChar": 77
+      },
+      "revId": "2d336b8bb3d67aa23a63fd0be1fe8fe76145c6e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

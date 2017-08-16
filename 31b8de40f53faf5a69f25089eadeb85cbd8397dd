@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca25e9e1_3a9b38c3",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T20:42:46Z",
+      "side": 1,
+      "message": "I think this effectively resolves this TODO.",
+      "revId": "31b8de40f53faf5a69f25089eadeb85cbd8397dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbfa8f7_01f270da",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2171,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T20:42:46Z",
+      "side": 1,
+      "message": "Should we just remove this? Is there any reason to waste storage on a const crash key?",
+      "revId": "31b8de40f53faf5a69f25089eadeb85cbd8397dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
