@@ -70,6 +70,30 @@
       "revId": "c8d9b9195946d148144c5ab0fc48c6647d29c93f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "183935a2_b7a7f440",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-16T21:24:01Z",
+      "side": 1,
+      "message": "Agreed, better to have something explicit than implicit dynamic strings. Will add a TODO.",
+      "parentUuid": "3b0724bd_d11d96c1",
+      "range": {
+        "startLine": 1060,
+        "startChar": 21,
+        "endLine": 1060,
+        "endChar": 61
+      },
+      "revId": "c8d9b9195946d148144c5ab0fc48c6647d29c93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
