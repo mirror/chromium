@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "24c492ec_2f35d6d3",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:39:58Z",
+      "side": 1,
+      "message": "optional nit: I think the code would be more clear with:\n\nif (error_code !\u003d chromeos::RENAME_ERROR_NONE) {\n  for (auto\u0026 observer : observers_)\n    observer.OnRenameCompleted(device_path, false);\n  return;\n}\n\nIt duplicates the observer loop but makes the rest of the code more readable so I think that\u0027s a better trade-off.",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a9f3bbc_64cdb8a2",
         "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
         "patchSetId": 4
@@ -70,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "247d69b4_3eb755d9",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:39:58Z",
+      "side": 1,
+      "message": "nit: \u0027 is a bit easier to read in log strings than \\\".",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f902aa64_8e3a65a0",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 4
@@ -81,6 +115,75 @@
       "writtenOn": "2017-08-16T16:14:46Z",
       "side": 1,
       "message": "Could you comment what\u0027s the key and what\u0027s the value?",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6564867f_a3d9f31f",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:39:58Z",
+      "side": 1,
+      "message": "pending_rename_changes_",
+      "parentUuid": "f902aa64_8e3a65a0",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c33fe24_3431ba57",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:39:58Z",
+      "side": 1,
+      "message": "nit: invert and early exit:\n\nif (error_code !\u003d MOUNT_ERROR_NONE ||\n    disks_.find(device_path) \u003d\u003d disks_.end()) {\n  OnRenameCompleted(RENAME_ERROR_UNKNOWN, device_path);\n  return;\n}",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec90086_e6fd49dc",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:39:58Z",
+      "side": 1,
+      "message": "pending_change",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a506c846_dd1a1ad7",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:39:58Z",
+      "side": 1,
+      "message": "Avoid non trivial code in set_foo inline methods.\n\nThis should be SetMountPath() and the code moved to the .cc file.\n\n(Alternatively move the base_mount_path_.empty() test to where it is used).",
       "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
