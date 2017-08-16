@@ -10,6 +10,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_local.h"
 
@@ -65,9 +66,15 @@ ScopedClosureRunner ThreadTaskRunnerHandle::OverrideForTesting(
   // previous one, as the |task_runner_to_restore|).
   ttrh->task_runner_.swap(overriding_task_runner);
 
+  std::unique_ptr<RunLoop::ScopedDisallowRunningForTesting>
+      no_running_during_override =
+          base::MakeUnique<RunLoop::ScopedDisallowRunningForTesting>();
+
   return ScopedClosureRunner(base::Bind(
       [](scoped_refptr<SingleThreadTaskRunner> task_runner_to_restore,
-         SingleThreadTaskRunner* expected_task_runner_before_restore) {
+         SingleThreadTaskRunner* expected_task_runner_before_restore,
+         std::unique_ptr<RunLoop::ScopedDisallowRunningForTesting>
+             no_running_during_override) {
         ThreadTaskRunnerHandle* ttrh = lazy_tls_ptr.Pointer()->Get();
 
         DCHECK_EQ(expected_task_runner_before_restore, ttrh->task_runner_.get())
@@ -77,7 +84,8 @@ ScopedClosureRunner ThreadTaskRunnerHandle::OverrideForTesting(
         ttrh->task_runner_.swap(task_runner_to_restore);
       },
       base::Passed(&overriding_task_runner),
-      base::Unretained(ttrh->task_runner_.get())));
+      base::Unretained(ttrh->task_runner_.get()),
+      base::Passed(&no_running_during_override)));
 }
 
 ThreadTaskRunnerHandle::ThreadTaskRunnerHandle(
