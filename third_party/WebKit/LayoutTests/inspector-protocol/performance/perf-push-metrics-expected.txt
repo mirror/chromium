@@ -5,6 +5,8 @@ title: test1
 	JSEventListenerCount
 	NodeCount
 	ResourceCount
+	LayoutCount
+	RecalcStyleCount
 	FirstMeaningfulPaint
 	DomContentLoaded
 title: test1
@@ -13,6 +15,8 @@ title: test1
 	JSEventListenerCount
 	NodeCount
 	ResourceCount
+	LayoutCount
+	RecalcStyleCount
 	FirstMeaningfulPaint
 	DomContentLoaded
 title: 
@@ -21,6 +25,8 @@ title:
 	JSEventListenerCount
 	NodeCount
 	ResourceCount
+	LayoutCount
+	RecalcStyleCount
 	FirstMeaningfulPaint
 	DomContentLoaded
 
