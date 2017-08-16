@@ -2084,6 +2084,9 @@ void Document::UpdateStyleAndLayoutTree() {
 
   TRACE_EVENT_END1("blink,devtools.timeline", "UpdateLayoutTree",
                    "elementCount", element_count);
+  InstanceCounters::IncrementCounter(InstanceCounters::kLayoutCounter);
+  InstanceCounters::IncrementCounter(InstanceCounters::kLayoutElementCounter,
+                                     element_count);
 
 #if DCHECK_IS_ON()
   AssertLayoutTreeUpdated(*this);

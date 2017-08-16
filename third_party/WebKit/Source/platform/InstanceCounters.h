@@ -41,6 +41,8 @@ namespace blink {
   V(AudioHandler)                 \
   V(Document)                     \
   V(Frame)                        \
+  V(Layout)                       \
+  V(LayoutElement)                \
   V(JSEventListener)              \
   V(LayoutObject)                 \
   V(MediaKeySession)              \
@@ -71,6 +73,17 @@ class InstanceCounters {
       ++counters_[kNodeCounter];
     } else {
       AtomicIncrement(&counters_[type]);
+    }
+  }
+
+  static inline void IncrementCounter(CounterType type, int increment) {
+    // There are lots of nodes created. Atomic barriers or locks
+    // should be avoided for the sake of performance. See crbug.com/641019
+    if (type == kNodeCounter) {
+      DCHECK(IsMainThread());
+      counters_[kNodeCounter] += increment;
+    } else {
+      AtomicAdd(&counters_[type], increment);
     }
   }
 
