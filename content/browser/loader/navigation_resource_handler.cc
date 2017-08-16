@@ -22,7 +22,11 @@
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/resource_response.h"
 #include "net/base/net_errors.h"
+#include "net/http/transport_security_state.h"
+#include "net/ssl/ssl_info.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -48,7 +52,7 @@ NavigationResourceHandler::NavigationResourceHandler(
 
 NavigationResourceHandler::~NavigationResourceHandler() {
   if (core_) {
-    core_->NotifyRequestFailed(false, net::ERR_ABORTED);
+    core_->NotifyRequestFailed(false, net::ERR_ABORTED, nullptr);
     DetachFromCore();
   }
 }
@@ -149,10 +153,17 @@ void NavigationResourceHandler::OnResponseCompleted(
   if (core_) {
     DCHECK_NE(net::OK, status.error());
     core_->NotifyRequestFailed(request()->response_info().was_cached,
-                               status.error());
+                               status.error(), &request()->ssl_info());
     DetachFromCore();
   }
   next_handler_->OnResponseCompleted(status, std::move(controller));
+}
+
+bool NavigationResourceHandler::ShouldSSLErrorsBeFatal() {
+  net::TransportSecurityState* state =
+      request()->context()->transport_security_state();
+  const std::string host = request()->url().host();
+  return state->ShouldSSLErrorsBeFatal(host);
 }
 
 void NavigationResourceHandler::DetachFromCore() {

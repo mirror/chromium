@@ -39,6 +39,7 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "net/base/load_flags.h"
+#include "net/base/net_errors.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -520,7 +521,17 @@ void NavigationURLLoaderNetworkService::OnComplete(
     TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted",
                            this, "&NavigationURLLoaderNetworkService", this,
                            "success", false);
+  }
 
+  NavigationThrottle::CertificateErrorInfo certificate_error_info;
+  certificate_error_info.ssl_info = completion_status.ssl_info;
+  certificate_error_info.fatal = true;  // TODO
+
+  if (net::IsCertificateError(completion_status.error_code)) {
+    delegate_->OnRequestFailedWithCertificateError(
+        completion_status.exists_in_cache, completion_status.error_code,
+        certificate_error_info);
+  } else {
     delegate_->OnRequestFailed(completion_status.exists_in_cache,
                                completion_status.error_code);
   }

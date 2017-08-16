@@ -58,6 +58,9 @@ class NavigationResourceHandler : public LayeredResourceHandler {
       const net::URLRequestStatus& status,
       std::unique_ptr<ResourceController> controller) override;
 
+  // Returns whether SSL errors for this resource should be fatal.
+  bool ShouldSSLErrorsBeFatal();
+
  private:
   // Clears |core_| and its reference to the resource handler. After calling
   // this, the lifetime of the request is no longer managed by the

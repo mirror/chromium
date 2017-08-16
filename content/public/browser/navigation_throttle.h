@@ -7,6 +7,8 @@
 
 #include "content/common/content_export.h"
 
+#include "net/ssl/ssl_info.h"
+
 namespace content {
 class NavigationHandle;
 
@@ -50,6 +52,11 @@ class CONTENT_EXPORT NavigationThrottle {
     // embedding restrictions like 'X-Frame-Options'). This result will only
     // be returned from WillProcessResponse.
     BLOCK_RESPONSE,
+  };
+
+  struct CertificateErrorInfo {
+    net::SSLInfo ssl_info;
+    bool fatal;
   };
 
   NavigationThrottle(NavigationHandle* navigation_handle);
