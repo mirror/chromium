@@ -9,8 +9,9 @@ class SystemHealthDesktopCommonExpectations(expectations.StoryExpectations):
     self.DisableStory('browse:news:hackernews',
                       [expectations.ALL_WIN, expectations.ALL_MAC],
                       'crbug.com/676336')
-    self.DisableStory('browse:search:google', [expectations.ALL_WIN],
-                      'crbug.com/673775')
+    self.DisableStory('browse:search:google',
+                      [expectations.ALL_WIN, expectations.MAC_10_11],
+                      'crbug.com/673775, crbug.com/756027')
     self.DisableStory('browse:tools:maps', [expectations.ALL],
                       'crbug.com/712694')
     self.DisableStory('browse:tools:earth', [expectations.ALL],
@@ -22,6 +23,8 @@ class SystemHealthDesktopCommonExpectations(expectations.StoryExpectations):
     self.DisableStory('play:media:pandora', [expectations.ALL],
                       'crbug.com/64939')
     self.DisableStory('browse:news:cnn',
+                      [expectations.ALL_MAC], 'crbug.com/728576')
+    self.DisableStory('browse:search:google',
                       [expectations.ALL_MAC], 'crbug.com/728576')
 
 
