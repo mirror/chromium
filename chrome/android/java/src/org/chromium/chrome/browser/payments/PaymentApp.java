@@ -77,6 +77,13 @@ public interface PaymentApp {
     Set<String> getPreferredRelatedApplicationIds();
 
     /**
+     * Gets the app Id this application can dedupe. The return, for example, could be
+     * "https://bobpay.com";
+     */
+    @Nullable
+    String getCanDedupedApplicationId();
+
+    /**
      * Returns the identifier for this payment app to be saved in user preferences. For
      * example, this can be "autofill", "https://android.com/pay", or
      * "com.example.app.ExamplePaymentApp".
