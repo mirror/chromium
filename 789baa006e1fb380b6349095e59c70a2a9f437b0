@@ -22,6 +22,29 @@
       "revId": "789baa006e1fb380b6349095e59c70a2a9f437b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332f3d6e_c5525ef4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-16T12:22:07Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 17
+      },
+      "revId": "789baa006e1fb380b6349095e59c70a2a9f437b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
