@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd335356_253defe7",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4188,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-16T22:30:10Z",
+      "side": 1,
+      "message": "Woohoo! Awesome!",
+      "revId": "845b1d9a8cb9d4de1e7355ae18dc6604049e3507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9904987a_4802d7fa",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4223,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-16T22:30:10Z",
+      "side": 1,
+      "message": "nit: %s/faile/fail",
+      "revId": "845b1d9a8cb9d4de1e7355ae18dc6604049e3507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
