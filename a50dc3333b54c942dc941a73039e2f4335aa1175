@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "66c19d85_368e40e7",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5802,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-16T13:56:09Z",
+      "side": 1,
+      "message": "I\u0027ve implemented separate popup with long message.",
+      "parentUuid": "817a1e09_0c0ad3b8",
+      "range": {
+        "startLine": 5802,
+        "startChar": 1,
+        "endLine": 5802,
+        "endChar": 56
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "add5944e_3905f2fa",
         "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.html",
         "patchSetId": 2
@@ -521,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "cfb58afc_8bafcbb8",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-16T13:56:09Z",
+      "side": 1,
+      "message": "Yep, seems so.",
+      "parentUuid": "6395c0ea_b13e8a0c",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9280744_f1342fa8",
         "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
         "patchSetId": 2
@@ -909,6 +957,30 @@
       "side": 1,
       "message": "Style guide says so:\n\nUse DCHECK() or NOTREACHED() as assertions, e.g. to document pre- and post-conditions. A DCHECK() means “this condition must always be true”, not “this condition is normally true, but perhaps not in exceptional cases.”\n\nUse CHECK() if the consequence of a failed assertion would be a security vulnerability, where crashing the browser is preferable. \n\nActually, accessing a nullptr pretty much always takes down the process, anyway.",
       "parentUuid": "3f3cff72_d7900be8",
+      "range": {
+        "startLine": 600,
+        "startChar": 6,
+        "endLine": 600,
+        "endChar": 62
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "addf30a2_28bafafd",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-16T13:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363d1766_3903c544",
       "range": {
         "startLine": 600,
         "startChar": 6,
