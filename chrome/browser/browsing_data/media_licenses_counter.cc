@@ -9,14 +9,20 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/task_runner_util.h"
+#include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
+#if defined(OS_ANDROID)
+#include "components/cdm/browser/media_drm_storage_impl.h"
+#endif  // defined(OS_ANDROID)
+
 namespace {
 
+#if !defined(OS_ANDROID)
 // Determining the origins must be run on the file task thread.
 std::set<GURL> CountOriginsOnFileTaskRunner(
     storage::FileSystemContext* filesystem_context) {
@@ -33,6 +39,7 @@ std::set<GURL> CountOriginsOnFileTaskRunner(
       storage::kFileSystemTypePluginPrivate, &origins);
   return origins;
 }
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace
 
@@ -63,6 +70,10 @@ const char* MediaLicensesCounter::GetPrefName() const {
 
 void MediaLicensesCounter::Count() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+#if defined(OS_ANDROID)
+  ReportResult(base::MakeUnique<MediaLicenseResult>(
+      this, cdm::MediaDrmStorageImpl::GetAllOrigins(profile_->GetPrefs())));
+#else
   // Cancel existing requests.
   weak_ptr_factory_.InvalidateWeakPtrs();
   scoped_refptr<storage::FileSystemContext> filesystem_context =
@@ -75,6 +86,7 @@ void MediaLicensesCounter::Count() {
                  base::RetainedRef(filesystem_context)),
       base::Bind(&MediaLicensesCounter::OnContentLicensesObtained,
                  weak_ptr_factory_.GetWeakPtr()));
+#endif  // defined(OS_ANDROID)
 }
 
 void MediaLicensesCounter::OnContentLicensesObtained(
