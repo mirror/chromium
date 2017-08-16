@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ace215b_b9eac0c0",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T01:59:17Z",
+      "side": 1,
+      "message": "nit: /* parameter_name */\n\nSame elsewhere.",
+      "range": {
+        "startLine": 323,
+        "startChar": 44,
+        "endLine": 323,
+        "endChar": 49
+      },
+      "revId": "229aedb49cf0fcee0a5ff329cb381b170a84bc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
