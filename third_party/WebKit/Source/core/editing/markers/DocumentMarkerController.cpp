@@ -587,6 +587,18 @@ void DocumentMarkerController::RemoveSpellingMarkersUnderWords(
   }
 }
 
+void DocumentMarkerController::RemoveSuggestionMarkerByTag(
+    const Node* node,
+    uint32_t marker_tag) {
+  MarkerLists* markers = markers_.at(node);
+  SuggestionMarkerListImpl* const list = ToSuggestionMarkerListImpl(
+      ListForType(markers, DocumentMarker::kSuggestion));
+  if (list->RemoveMarkerByTag(marker_tag)) {
+    node->GetLayoutObject()->SetShouldDoFullPaintInvalidation(
+        PaintInvalidationReason::kDocumentMarker);
+  }
+}
+
 void DocumentMarkerController::RemoveMarkersOfTypes(
     DocumentMarker::MarkerTypes marker_types) {
   if (!PossiblyHasMarkers(marker_types))
