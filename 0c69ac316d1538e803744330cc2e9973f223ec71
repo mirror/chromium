@@ -2,6 +2,126 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf3b0df2_2c6e6e48",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "nit: Drop const from bool. bools, ints etc are generally passed as non-const.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2387ae_a46d0324",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "Actually, I think we should keep this as a regex. It\u0027ll give us more control that way. For example, we might want to match a substring only if it\u0027s at the beginning of a string, and it wouldn\u0027t be possible with a substring search. Same for issuer_org.",
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12cc61c_a36c4e4b",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "nit: Rename to issuer_organization",
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0039c52a_71ab4d3f",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "This file is already included in line 22, you can remove from here.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3514787e_7b8e6a91",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "If this is false, do we get an empty string from proto_entry.issuer_common_name()?\n\nIf so, I\u0027d make MITMSoftwareType a struct with const members, and set the members in its constructor:\n\nstruct MITMSoftwareType {\n MITMSoftwareType(name, issuer_common_name, issuer_org)\n  : name(name), issuer_common_name(issuer_common_name), issuer_org(issuer_org) {}\n\n  const string name;\n  const string issuer_common_name;\n  const string issuer_org;\n}",
+      "range": {
+        "startLine": 263,
+        "startChar": 20,
+        "endLine": 263,
+        "endChar": 42
+      },
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56fd0b3_c8e11336",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "As we discussed, returning the software name from CertContainsMITMSoftwareString is better.",
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d276486a_8f642733",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 3
@@ -13,6 +133,41 @@
       "writtenOn": "2017-08-16T21:14:34Z",
       "side": 1,
       "message": "Does this logic make sense? I feel like it\u0027s a little bulky. If you have better ideas for how to perform this check or my comment doesn\u0027t make sense, please lmk!",
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47f1274_6005ed0d",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "The logic looks good. But I think you should divide this into two CLs:\n1- Change the string based on is_enterprise_managed bit\n2- Support proto lookups for issuer_organization field.\n\nSeems like we need to land (1) soon, and can wait a bit more for (2).",
+      "parentUuid": "d276486a_8f642733",
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ab2c9f_aac83866",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-16T22:38:12Z",
+      "side": 1,
+      "message": "You can check if mitm_software has either a common name or an issuer before line 501. If it has neither, simply continue. If it has one of them, line 501-508 should capture it, and line 509-517 seems redundant.",
       "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
