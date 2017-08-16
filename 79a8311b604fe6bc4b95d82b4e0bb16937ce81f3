@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5a4567c6_2464fee4",
+        "filename": "base/metrics/histogram_uploading_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:13:58Z",
+      "side": 1,
+      "message": "I agree that having one place to disable it makes sense. However, can\u0027t that place be the StatisticsRecorder::ShouldRecordHistogram()? i.e. it can just not call the checker if we wish to disable it.\n\nSo I think given the above, it\u0027s better to just have a single method that subclasses override rather than two different ones. So just make ShouldRecord() the virtual method that is overridden.",
+      "parentUuid": "eedbcb7b_3bb22921",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79a8311b604fe6bc4b95d82b4e0bb16937ce81f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27632e26_19fa7c41",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 4

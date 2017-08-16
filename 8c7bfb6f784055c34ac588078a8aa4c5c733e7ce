@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c0a9d3_c1d95e86",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:13:58Z",
+      "side": 1,
+      "message": "Update comment with new class name.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "8c7bfb6f784055c34ac588078a8aa4c5c733e7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1de3e53_d4aa1cba",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:13:58Z",
+      "side": 1,
+      "message": "Methods should have comments.",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "8c7bfb6f784055c34ac588078a8aa4c5c733e7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
