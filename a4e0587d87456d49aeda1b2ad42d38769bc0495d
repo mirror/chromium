@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0332842b_3d4acdac",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:11:55Z",
+      "side": 1,
+      "message": "Nit: It is fine to forward declare BlockingObserver here to keep the topical class at the top of the file.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
