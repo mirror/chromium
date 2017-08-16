@@ -56,7 +56,7 @@ struct ServiceWorkerProviderContextDeleter;
 class CONTENT_EXPORT ServiceWorkerProviderContext
     : public base::RefCountedThreadSafe<ServiceWorkerProviderContext,
                                         ServiceWorkerProviderContextDeleter>,
-      NON_EXPORTED_BASE(public mojom::ServiceWorkerProvider) {
+      NON_EXPORTED_BASE(public mojom::ServiceWorkerContainer) {
  public:
   // |provider_id| specifies which host will receive the message from this
   // provider. |provider_type| changes the behavior of this provider
@@ -67,7 +67,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
-      mojom::ServiceWorkerProviderAssociatedRequest request,
+      mojom::ServiceWorkerContainerAssociatedRequest request,
       ServiceWorkerDispatcher* dispatcher);
 
   // For service worker execution contexts. Sets the registration for
@@ -118,7 +118,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Mojo binding for the |request| passed to the constructor. This keeps the
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
-  mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
+  mojo::AssociatedBinding<mojom::ServiceWorkerContainer> binding_;
 
   // Only used for controllee contexts. Used to dispatch events to the
   // controller ServiceWorker.

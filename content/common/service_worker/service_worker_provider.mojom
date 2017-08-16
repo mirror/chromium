@@ -18,8 +18,8 @@ struct ServiceWorkerProviderInfoForStartWorker {
   ServiceWorkerRegistrationObjectInfo registration;
   ServiceWorkerVersionAttributes attributes;
 
-  associated ServiceWorkerProviderHost host_ptr_info;
-  associated ServiceWorkerProvider& client_request;
+  associated ServiceWorkerContainerHost host_ptr_info;
+  associated ServiceWorkerContainer& client_request;
 
   // For servicified service worker only.
   // The loader to use for loading the worker's main script and
@@ -36,6 +36,6 @@ struct ServiceWorkerProviderHostInfo {
   int32 route_id;
   ServiceWorkerProviderType type;
   bool is_parent_frame_secure;
-  associated ServiceWorkerProviderHost& host_request;
-  associated ServiceWorkerProvider client_ptr_info;
+  associated ServiceWorkerContainerHost& host_request;
+  associated ServiceWorkerContainer client_ptr_info;
 };

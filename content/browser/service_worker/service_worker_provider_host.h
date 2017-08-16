@@ -81,7 +81,7 @@ class WebContents;
 class CONTENT_EXPORT ServiceWorkerProviderHost
     : public NON_EXPORTED_BASE(ServiceWorkerRegistration::Listener),
       public base::SupportsWeakPtr<ServiceWorkerProviderHost>,
-      public NON_EXPORTED_BASE(mojom::ServiceWorkerProviderHost) {
+      public NON_EXPORTED_BASE(mojom::ServiceWorkerContainerHost) {
  public:
   using GetRegistrationForReadyCallback =
       base::Callback<void(ServiceWorkerRegistration* reigstration)>;
@@ -449,15 +449,16 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   ServiceWorkerDispatcherHost* dispatcher_host_;
   bool allow_association_;
 
-  // |provider_| is the renderer-side Mojo endpoint for provider.
-  mojom::ServiceWorkerProviderAssociatedPtr provider_;
+  // |container_| is the Mojo endpoint to the renderer-side
+  // ServiceWorkerContainer that |this| is a ServiceWorkerContainerHost for.
+  mojom::ServiceWorkerContainerAssociatedPtr container_;
   // |binding_| is the Mojo binding that keeps the connection to the
   // renderer-side counterpart (content::ServiceWorkerNetworkProvider). When the
   // connection bound on |binding_| gets killed from the renderer side, or the
   // bound |ServiceWorkerProviderInfoForStartWorker::host_ptr_info| is otherwise
   // destroyed before being passed to the renderer, this
   // content::ServiceWorkerProviderHost will be destroyed.
-  mojo::AssociatedBinding<mojom::ServiceWorkerProviderHost> binding_;
+  mojo::AssociatedBinding<mojom::ServiceWorkerContainerHost> binding_;
 
   std::vector<base::Closure> queued_events_;
 

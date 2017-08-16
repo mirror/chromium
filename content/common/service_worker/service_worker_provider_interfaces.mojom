@@ -4,24 +4,30 @@
 
 module content.mojom;
 
-// mojom::ServiceWorkerProviderHost is a browser-side interface. The renderer
+// mojom::ServiceWorkerContainerHost is a browser-side interface. The renderer
 // uses this interface to request the browser to do operations involving service
 // worker registrations.
-interface ServiceWorkerProviderHost {
-  // TODO(shimazu): implement them.
-  // register() => ();
-  // getRegistation() => ();
-  // getRegistrations() => ();
-  // getRegistrationForReady() => ();
+interface ServiceWorkerContainerHost {
+  // TODO(leon.han): implement them.
+  // Register();
+  // GetRegistation();
+  // GetRegistrations();
+  // GetRegistrationForReady();
+  // GetControllerServiceWorker();
 };
 
-// mojom::ServiceWorkerProvider is a renderer-side interface.
-// The browser process uses this interface to send messages to pages or
-// the service worker's context.
-interface ServiceWorkerProvider {
-  // TODO(shimazu): implement them.
-  // associateRegistration();
-  // disassociateRegistration();
-  // setControllerServiceWorker();
-  // messageToDocument();
+// Roughly corresponds to the web-exposed ServiceWorkerContainer interface,
+// i.e., navigator.serviceWorker. Actually, the plan is for this interface to be
+// used for anything that could access a ServiceWorkerRegistration or
+// ServiceWorker object. For example, ServiceWorkerGlobalScope needs to be
+// connected to this, since it has self.registration, even though we don’t
+// implement navigator.serviceWorker for Worker yet. But eventually anything
+// that can touch these objects should be a ServiceWorkerContainer, so it’s OK
+// to use this name.
+interface ServiceWorkerContainer {
+  // TODO(xiaofeng.zhang): implement them.
+  // SetController();
+  // ServiceWorkerStateChanged();
+  // ServiceWorkerRegistrationUpdateFound();
+  // PostMessage();
 };
