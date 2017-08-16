@@ -79,6 +79,156 @@
       "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75903a30_5ed6ba7e",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "That also reduces the number of thread UI/IO hops.\n\nIRT Transactions, they are not required here because these statement executions are independent of each other.",
+      "parentUuid": "ded5d08d_31f68cf5",
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0e69ee_d884604b",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "number of attempts",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d048a444_d4ebb638",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "Should extend TaskTestBase to simplify this implementation.",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8637467_bc3de7bf",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "Please use the MockPrefetchItemGenerator provided by TaskTestBase to simplify test item creation.\n\nIt might also be better to move this code into the specific test so that other tests could initialize different sets of entries.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856a9f71_1d70e250",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "set this item3\u0027s get_operation_attempts to a high number here to confirm that other states are not being affected.",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c755b616_8b4962bc",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "Add a ExpectTaskCompletes check here.",
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6071af1c_4f1df816",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T18:17:45Z",
+      "side": 1,
+      "message": "Check this and the next item\u0027s get_operation_attempts.",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 6
+      },
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
