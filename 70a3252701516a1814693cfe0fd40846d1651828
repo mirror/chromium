@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a778947_c974dfed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T16:23:13Z",
+      "side": 1,
+      "message": "Add a comment for why we don\u0027t just return early?\n\nAlso, wouldn\u0027t the logical or still short-circuit the right-hand expression once |value| is true?",
+      "revId": "70a3252701516a1814693cfe0fd40846d1651828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
