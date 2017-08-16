@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3bd0f889_27513c8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T03:07:16Z",
+      "side": 1,
+      "message": "Would it be possible to extract out and unit test MarkerPaintStartAndEnd along the way?\n\nI\u0027m thinking of an approach similar to third_party/WebKit/Source/core/paint/TextPainterTest.cpp, very roughly like:\nTEST_F(InlineTextBoxPainterTest, RTLCompositionMarkers) {\n  SetBodyInnerHTML(\n    \"\u003cstyle\u003e\"\n    \"div {\"\n    \"    white-space: pre;\"\n    \"    direction: rtl;\"\n    \"}\"\n    \"\u003c/style\u003e\"\n    \"\u003cdiv id\u003d\u0027text\u0027\u003eאבגדהוזחטיכךלמםסעפףצץקרשת\u003c/div\u003e\");\n\n  auto range \u003d ... create range, VisibleSelectionTest.cpp may have an example.\n  document-\u003eMarkers().AddSpellingMarker(EphemeralRange(range));\n\n  GetDocument().View()-\u003eUpdateAllLifecyclePhases();\n\n  const auto\u0026 text \u003d *GetDocument().QuerySelector(\"text\")-\u003eGetLayoutObject();\n  EXPECT_EQ(10, InlineTextBoxPainter(text).MarkerPaintStartAndEnd(...).start);\n}",
+      "parentUuid": "2d49239c_60f01901",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebeb2ef6_f99cd699",
         "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html",
         "patchSetId": 2
