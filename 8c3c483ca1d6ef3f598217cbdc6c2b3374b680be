@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dbdc0300_5f65663d",
+        "filename": "chrome/browser/chromeos/policy/configuration_policy_handler_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T14:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8df463ef_0d3ca4d0",
+      "range": {
+        "startLine": 329,
+        "startChar": 7,
+        "endLine": 330,
+        "endChar": 45
+      },
+      "revId": "8c3c483ca1d6ef3f598217cbdc6c2b3374b680be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "411fcc63_193a723b",
         "filename": "components/policy/core/browser/configuration_policy_handler.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8c3c483ca1d6ef3f598217cbdc6c2b3374b680be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd48f58a_07648d87",
+        "filename": "components/policy/core/browser/configuration_policy_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T14:36:10Z",
+      "side": 1,
+      "message": "Done. It also has the implication that my unit test needs an actual implementation now, but that\u0027s fine.",
+      "parentUuid": "411fcc63_193a723b",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "8c3c483ca1d6ef3f598217cbdc6c2b3374b680be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a2c4c2b6_87e918b9",
+        "filename": "components/policy/core/browser/configuration_policy_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T14:36:10Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "d6be9bbc_d17a133b",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 22
+      },
+      "revId": "8c3c483ca1d6ef3f598217cbdc6c2b3374b680be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f84cf094_d8beeb43",
         "filename": "components/policy/core/browser/configuration_policy_handler.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "8c3c483ca1d6ef3f598217cbdc6c2b3374b680be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45627812_39795036",
+        "filename": "components/policy/core/browser/configuration_policy_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T14:36:10Z",
+      "side": 1,
+      "message": "Done. I agree with the readability argument. The saved code duplication is really minor. The \u0027bonus\u0027 doesn\u0027t apply since a subclass doesn\u0027t have to call the base class\u0027 ApplyList, it could just do whatever. But yeah, it\u0027s cleaner to make it purely virtual.",
+      "parentUuid": "f84cf094_d8beeb43",
+      "range": {
+        "startLine": 133,
+        "startChar": 35,
+        "endLine": 134,
+        "endChar": 72
+      },
+      "revId": "8c3c483ca1d6ef3f598217cbdc6c2b3374b680be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
