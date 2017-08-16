@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89689a75_d5dc57c0",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-16T05:44:42Z",
+      "side": 1,
+      "message": "how about making this gfx:Insets?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "07770fed93515702cbcf23cd22157828f1218759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f8a8b9_f87efa5d",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-16T05:44:42Z",
+      "side": 1,
+      "message": "don\u0027t you need to apply kAppInfoConatainerBottomPadding?",
+      "range": {
+        "startLine": 213,
+        "startChar": 57,
+        "endLine": 213,
+        "endChar": 58
+      },
+      "revId": "07770fed93515702cbcf23cd22157828f1218759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
