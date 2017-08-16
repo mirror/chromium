@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da942df8_4a96c259",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:41:19Z",
+      "side": 1,
+      "message": "I guess remove the arg?",
+      "range": {
+        "startLine": 789,
+        "startChar": 63,
+        "endLine": 789,
+        "endChar": 77
+      },
+      "revId": "d5b1f6b55b791b2af1609a8ab267b98f802236fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfc2a41_c85f5398",
+        "filename": "components/download/internal/entry_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:41:19Z",
+      "side": 1,
+      "message": "Do we want to expose this before the download is finished?  Probably not right?",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "d5b1f6b55b791b2af1609a8ab267b98f802236fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084a6cb4_f9792cdc",
+        "filename": "components/download/internal/entry_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:41:19Z",
+      "side": 1,
+      "message": "MapEntriesToMetadataForClients?",
+      "range": {
+        "startLine": 36,
+        "startChar": 56,
+        "endLine": 36,
+        "endChar": 75
+      },
+      "revId": "d5b1f6b55b791b2af1609a8ab267b98f802236fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3968a13e_329b69bc",
+        "filename": "components/download/public/download_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:41:19Z",
+      "side": 1,
+      "message": "Do we want an optional completed struct, so we could pass things like file size as well as the path?  This would also help when we have to pass a stream for incognito.  Everything related to a completed download could be in one Optional instead of a bunch of Optionals.\n\nWe could probably then even remove the completed boolean because the presence of the completed info would be enough.  wdyt?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "d5b1f6b55b791b2af1609a8ab267b98f802236fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
