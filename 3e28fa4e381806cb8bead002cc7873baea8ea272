@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f32368_fa076f9e",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-16T20:40:31Z",
+      "side": 1,
+      "message": "Be sure to remove the id from this list after the printer is moved to configured.",
+      "range": {
+        "startLine": 161,
+        "startChar": 30,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "3e28fa4e381806cb8bead002cc7873baea8ea272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6b804b_70f9a110",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-16T20:40:31Z",
+      "side": 1,
+      "message": "Would it make sense to just move printers from kAutomatic to kConfigured when we call PrinterInstalled?",
+      "range": {
+        "startLine": 166,
+        "startChar": 27,
+        "endLine": 166,
+        "endChar": 43
+      },
+      "revId": "3e28fa4e381806cb8bead002cc7873baea8ea272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
