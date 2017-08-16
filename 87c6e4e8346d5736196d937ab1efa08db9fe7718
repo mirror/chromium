@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68e606ed_267d7492",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-16T16:33:24Z",
+      "side": 1,
+      "message": "That\u0027s better, done.",
+      "parentUuid": "cf0a1535_9c721d84",
+      "revId": "87c6e4e8346d5736196d937ab1efa08db9fe7718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3a1ae1e_2b20c260",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T15:53:34Z",
       "side": 1,
       "message": "Think we should update visibility here too.",
+      "revId": "87c6e4e8346d5736196d937ab1efa08db9fe7718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56466d2c_91d76253",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-16T16:33:24Z",
+      "side": 1,
+      "message": "Yes, you are right. Done.",
+      "parentUuid": "c3a1ae1e_2b20c260",
       "revId": "87c6e4e8346d5736196d937ab1efa08db9fe7718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
