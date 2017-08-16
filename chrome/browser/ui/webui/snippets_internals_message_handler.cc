@@ -586,7 +586,11 @@ void SnippetsInternalsMessageHandler::PushDummySuggestion() {
       "    \"creationTime\" : \"%s\","
       "    \"expirationTime\" : \"%s\","
       "    \"attribution\" : \"Pushed Dummy Publisher\","
-      "    \"imageUrl\" : \"https://www.google.com/favicon.ico\" "
+      "    \"imageUrl\" : \"https://www.google.com/favicon.ico\","
+      "    \"notificationInfo\": {\n"
+      "      \"shouldNotify\": true,"
+      "      \"deadline\": \"2100-01-01T00:00:01.000Z\"\n"
+      "     }\n"
       "  }]"
       "}]}";
 
