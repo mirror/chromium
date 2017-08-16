@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03f3bb3_4ff16bd5",
+        "filename": "components/loader/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "For my education: What does this flag mean?",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a33e53b_c2b7ac23",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "nit, suggestion (since it\u0027s an implementation restricted class): A note about the lifetime requirements on simple_url_loader.",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e420109_f029dcae",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "Hmmm.  I think there\u0027s a conceptual layering violation here, in that the concept of \"callback\" doesn\u0027t exist at the BodyHandler layer.  What callback is being invoked?  The one defined in the derived class, not the base class.  Maybe instead \"NotifyConsumerOfCompletion()\" with a note that the way that notification happens will be subclass dependent?  \n\n(Suggestion, since a) that\u0027s a bit wonky, and b) this is all in the implementation and I\u0027m ok with not perfectly abstract code in that context.  But I wanted to raise the issue.)",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880915ba_99e3a9c6",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "nit, suggestion: Mark as implementation of base class.",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97241575_20aae930",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "Are there multiple results that can be returned to signal \"pipe closed\"?  This feels like there\u0027s information we\u0027re throwing away--is it really useless info?",
+      "range": {
+        "startLine": 109,
+        "startChar": 20,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3302b380_f32dc338",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "nit: received",
+      "range": {
+        "startLine": 253,
+        "startChar": 68,
+        "endLine": 253,
+        "endChar": 75
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47f54a1_67300dd2",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "NIt: Update comment to remove reference to simple_url_loader.",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483b02b9_fa47bca4",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "\"without providing any body data\": That sort of contradicts the comment below on set_allow_partial_results.  If the person using this class read carefully through the entire header comment they\u0027d probably assume the comment on set_allow_partial_results overrides, and if partial results are allowed, the callback would get the results read to max_body_size.  But I\u0027d rather have each part be accurate to; willing to say \"If |max_body_size| is exceeded and !allow_partial_results(), ...\"?",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ae537e_5c730a1b",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "nit: lowercase \"or\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c76ec17_32a47670",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "Thought (not even a suggestion): Name this client_binding_ or something to make easily clear in reading the code which pipe it\u0027s referring to?",
+      "range": {
+        "startLine": 178,
+        "startChar": 32,
+        "endLine": 178,
+        "endChar": 47
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc56c35_970a2620",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "nit, suggestion: \"should be\" to \"are\" (mostly for parallelism with \"consumer is\").",
+      "range": {
+        "startLine": 192,
+        "startChar": 50,
+        "endLine": 192,
+        "endChar": 55
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

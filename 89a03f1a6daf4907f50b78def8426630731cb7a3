@@ -334,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "ba6f6089_365c8466",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "Ah, this was another casualty of my confusion between the net_errors.  Ok.",
+      "parentUuid": "1d522f76_884d6c7d",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c46c42a_2fcc9a52",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -781,6 +805,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5450b32_3f6d75a9",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "\"remove\" -\u003e \"remote\", sorry.  \n\nAlso, thinking about it, I don\u0027t think there\u0027s any benefit to not listening to both.  They should both be closed in the error cases we can think of, but if an error case that we can\u0027t think of shows up, a) it\u0027s better to do something rather than ignore it, and b) I think this is the right thing to do.  So I\u0027d suggest binding this function to the error handler on the URLLoader pipe as well.",
+      "parentUuid": "8000eef8_51f1c16e",
+      "range": {
+        "startLine": 280,
+        "startChar": 28,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

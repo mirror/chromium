@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "290ce4df_a9271e99",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "In an ideal world this would be a more specific error code.  I presume you thought about ERR_CONNECTION_CLOSED and weren\u0027t comfortable with it?",
+      "range": {
+        "startLine": 321,
+        "startChar": 26,
+        "endLine": 321,
+        "endChar": 36
+      },
+      "revId": "ae55b08fc3fa7adf3116ee46b800333136b02477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485b79e5_28838a36",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T23:48:19Z",
+      "side": 1,
+      "message": "I\u0027d like comments on request_net_error_ and net_error_ describing the difference between them.  Maybe above request_net_error_ \"Error reported over message pipe by OnComplete() or ERR_FAILED if the URLLoaderClient pipe was unexpected closed.\" and above net_error_ \"Final result of the request incorporating all aspects of the load.\"\n\nI\u0027d also find it easier to parse (i.e. differentiate) these if they were declared next to each other, but up to you.",
+      "range": {
+        "startLine": 182,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 24
+      },
+      "revId": "ae55b08fc3fa7adf3116ee46b800333136b02477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
