@@ -187,6 +187,30 @@
       "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93245c73_a604c095",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T23:02:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8c7e0a59_9a86c1d2",
+      "range": {
+        "startLine": 983,
+        "startChar": 77,
+        "endLine": 983,
+        "endChar": 0
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
