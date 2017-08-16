@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fec31aa_1487cfe1",
+        "filename": "content/public/test/test_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-16T14:42:52Z",
+      "side": 1,
+      "message": "Do you know if this function is used outside of content/? If no, we can remove this method from the public API.",
+      "revId": "ab938ad14d8c9aea62e1cf468e01b6e2e187b72f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
