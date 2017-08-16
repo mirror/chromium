@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00d6645d_5c285955",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-16T05:48:07Z",
+      "side": 1,
+      "message": "Nit: for consistency can you make this ...OtherModeDefault?",
+      "revId": "6e9fb1e78f9e623e56c6c6f626ba6e53bd8ea216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
