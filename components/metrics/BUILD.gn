@@ -14,8 +14,6 @@ static_library("metrics") {
     "client_info.h",
     "cloned_install_detector.cc",
     "cloned_install_detector.h",
-    "component_metrics_provider.cc",
-    "component_metrics_provider.h",
     "daily_event.cc",
     "daily_event.h",
     "data_use_tracker.cc",
@@ -108,7 +106,6 @@ static_library("metrics") {
     ":call_stack_profile_params",
     "//base",
     "//base:base_static",
-    "//components/component_updater",
     "//components/prefs",
     "//components/variations",
     "//components/version_info:version_info",
@@ -133,6 +130,22 @@ static_library("metrics") {
     sources -= [ "machine_id_provider_stub.cc" ]
     deps += [ "//components/browser_watcher:stability_client" ]
   }
+}
+
+static_library("component_metrics") {
+  sources = [
+    "component_metrics_provider.cc",
+    "component_metrics_provider.h",
+  ]
+
+  public_deps = [
+    "//components/metrics/proto",
+  ]
+
+  deps = [
+    "//base",
+    "//components/component_updater",
+  ]
 }
 
 if (!is_ios) {
@@ -378,6 +391,7 @@ source_set("unit_tests") {
   deps = [
     ":call_stack_profile_params",
     ":child_call_stacks",
+    ":component_metrics",
     ":metrics",
     ":net",
     ":profiler",

@@ -14,36 +14,36 @@ namespace metrics {
 
 namespace {
 
-const std::map<std::string, SystemProfileProto_ComponentId> component_map = {
-    {"hfnkpimlhhgieaddgfemjhofmfblmnib",
-     SystemProfileProto_ComponentId_CRL_SET},
-    {"bjbdkfoakgmkndalgpadobhgbhhoanho",
-     SystemProfileProto_ComponentId_EPSON_INKJET_PRINTER_ESCPR},
-    {"khaoiebndkojlmppeemjhbpbandiljpe",
-     SystemProfileProto_ComponentId_FILE_TYPE_POLICIES},
-    {"mimojjlkmoijpicakmndhoigimigcmbb",
-     SystemProfileProto_ComponentId_PEPPER_FLASH},
-    {"ckjlcfmdbdglblbjglepgnoekdnkoklc",
-     SystemProfileProto_ComponentId_PEPPER_FLASH_CHROMEOS},
-    {"kfoklmclfodeliojeaekpoflbkkhojea",
-     SystemProfileProto_ComponentId_ORIGIN_TRIALS},
-    {"llkgjffcdpffmhiakmfcdcblohccpfmo",
-     SystemProfileProto_ComponentId_ORIGIN_TRIALS},  // Alternate ID
-    {"hnimpnehoodheedghdeeijklkeaacbdc", SystemProfileProto_ComponentId_PNACL},
-    {"npdjjkjlcidkjlamlmmdelcjbcpdjocm",
-     SystemProfileProto_ComponentId_RECOVERY},
-    {"ojjgnpkioondelmggbekfhllhdaimnho",
-     SystemProfileProto_ComponentId_STH_SET},
-    {"gcmjkmgdlgnkkcocmoeiminaijmmjnii",
-     SystemProfileProto_ComponentId_SUBRESOURCE_FILTER},
-    {"gkmgaooipdjhmangpemjhigmamcehddo",
-     SystemProfileProto_ComponentId_SW_REPORTER},
-    {"giekcmmlnklenlaomppkphknjmnnpneh",
-     SystemProfileProto_ComponentId_SSL_ERROR_ASSISTANT},
-    {"oimompecagnajdejgnnjijobebaeigek",
-     SystemProfileProto_ComponentId_WIDEVINE_CDM}};
-
 SystemProfileProto_ComponentId CrxIdToComponentId(const std::string& app_id) {
+  const std::map<std::string, SystemProfileProto_ComponentId> component_map = {
+      {"hfnkpimlhhgieaddgfemjhofmfblmnib",
+       SystemProfileProto_ComponentId_CRL_SET},
+      {"bjbdkfoakgmkndalgpadobhgbhhoanho",
+       SystemProfileProto_ComponentId_EPSON_INKJET_PRINTER_ESCPR},
+      {"khaoiebndkojlmppeemjhbpbandiljpe",
+       SystemProfileProto_ComponentId_FILE_TYPE_POLICIES},
+      {"mimojjlkmoijpicakmndhoigimigcmbb",
+       SystemProfileProto_ComponentId_PEPPER_FLASH},
+      {"ckjlcfmdbdglblbjglepgnoekdnkoklc",
+       SystemProfileProto_ComponentId_PEPPER_FLASH_CHROMEOS},
+      {"kfoklmclfodeliojeaekpoflbkkhojea",
+       SystemProfileProto_ComponentId_ORIGIN_TRIALS},
+      {"llkgjffcdpffmhiakmfcdcblohccpfmo",
+       SystemProfileProto_ComponentId_ORIGIN_TRIALS},  // Alternate ID
+      {"hnimpnehoodheedghdeeijklkeaacbdc",
+       SystemProfileProto_ComponentId_PNACL},
+      {"npdjjkjlcidkjlamlmmdelcjbcpdjocm",
+       SystemProfileProto_ComponentId_RECOVERY},
+      {"ojjgnpkioondelmggbekfhllhdaimnho",
+       SystemProfileProto_ComponentId_STH_SET},
+      {"gcmjkmgdlgnkkcocmoeiminaijmmjnii",
+       SystemProfileProto_ComponentId_SUBRESOURCE_FILTER},
+      {"gkmgaooipdjhmangpemjhigmamcehddo",
+       SystemProfileProto_ComponentId_SW_REPORTER},
+      {"giekcmmlnklenlaomppkphknjmnnpneh",
+       SystemProfileProto_ComponentId_SSL_ERROR_ASSISTANT},
+      {"oimompecagnajdejgnnjijobebaeigek",
+       SystemProfileProto_ComponentId_WIDEVINE_CDM}};
   const auto result = component_map.find(app_id);
   if (result == component_map.end())
     return SystemProfileProto_ComponentId_UNKNOWN;
