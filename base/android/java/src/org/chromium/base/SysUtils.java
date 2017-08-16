@@ -136,8 +136,8 @@ public class SysUtils {
     }
 
     private static boolean detectLowEndDevice() {
-        assert CommandLine.isInitialized();
-        if (CommandLine.getInstance().hasSwitch(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE)) {
+        if (CommandLine.isInitialized() && CommandLine.getInstance()
+                .hasSwitch(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE)) {
             return true;
         }
         if (CommandLine.getInstance().hasSwitch(BaseSwitches.DISABLE_LOW_END_DEVICE_MODE)) {
