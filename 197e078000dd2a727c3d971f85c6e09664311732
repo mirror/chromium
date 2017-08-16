@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "a64a766f_ead0fdd1",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T17:44:06Z",
+      "side": 1,
+      "message": "Just to make sure this is clear: this task\u0027s behavior shouldn\u0027t be affected based on the attempts counter. A to-be-created reconciler task will take care of that.",
+      "parentUuid": "52e163be_13c7abba",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bb00fb2_416bad89",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -137,6 +155,30 @@
       "side": 1,
       "message": "Since I am not changing it here, I am not sure how exactly to proceed. Let\u0027s discuss tomorrow.",
       "parentUuid": "8bb00fb2_416bad89",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ecc1e9_e4d933b5",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T17:44:06Z",
+      "side": 1,
+      "message": "As discussed: update freshness date only if current attempt counter equals zero.",
+      "parentUuid": "be0c0946_1ba06059",
       "range": {
         "startLine": 49,
         "startChar": 7,
@@ -213,6 +255,24 @@
       "side": 1,
       "message": "Good catch, but now that I think about it, will it be OK to request the same file with the same GUID? Are we sure that Downloads won\u0027t just tell us that it has been tried and failed?",
       "parentUuid": "cdc6ecd5_2e317604",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811a16e5_01342752",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T17:44:06Z",
+      "side": 1,
+      "message": "Good catch and questioning! Sounds like ideally we would have a test verifying that multiple, non-concurrent download requests are allowed to reused the same GUID (or the opposite). Not for this patch though...",
+      "parentUuid": "a819b9a5_a7cc48e8",
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -371,6 +431,24 @@
     },
     {
       "key": {
+        "uuid": "8f2303a8_a8b0507a",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T17:44:06Z",
+      "side": 1,
+      "message": "You should be able to if you only forward declare ItemsToDownload here.",
+      "parentUuid": "6eef0a57_f66c4af1",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e459be95_06093d26",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
         "patchSetId": 3
@@ -441,6 +519,24 @@
     },
     {
       "key": {
+        "uuid": "845ae9e9_9b8d18ac",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T17:44:06Z",
+      "side": 1,
+      "message": "nit: Could also be reflected in the next test. Could event initialize an entry\u0027s counter to non-zero.",
+      "parentUuid": "75e2c65e_8570236d",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "592eac4b_bbe7faf8",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 3
@@ -470,6 +566,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "592eac4b_bbe7faf8",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e662492_a01f544b",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T17:44:06Z",
+      "side": 1,
+      "message": "Next test also needs this update.",
+      "parentUuid": "d7e8068b_23959fbf",
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
