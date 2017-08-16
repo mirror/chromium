@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_MESSAGE_CENTER_VIEWS_MESSAGE_CENTER_BUBBLE_H_
-#define UI_MESSAGE_CENTER_VIEWS_MESSAGE_CENTER_BUBBLE_H_
+#ifndef ASH_SYSTEM_WEB_NOTIFICATION_MESSAGE_CENTER_BUBBLE_H_
+#define ASH_SYSTEM_WEB_NOTIFICATION_MESSAGE_CENTER_BUBBLE_H_
 
 #include <stddef.h>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "ui/message_center/message_center_export.h"
 #include "ui/views/widget/widget_observer.h"
 
 namespace views {
@@ -17,17 +16,19 @@ class TrayBubbleView;
 }
 
 namespace message_center {
-
 class MessageCenter;
 class MessageCenterTray;
 class MessageCenterView;
+}  // namespace message_center
+
+namespace ash {
 
 // Bubble for message center.
-class MESSAGE_CENTER_EXPORT MessageCenterBubble
-    : public views::WidgetObserver,
-      public base::SupportsWeakPtr<MessageCenterBubble> {
+class MessageCenterBubble : public views::WidgetObserver,
+                            public base::SupportsWeakPtr<MessageCenterBubble> {
  public:
-  MessageCenterBubble(MessageCenter* message_center, MessageCenterTray* tray);
+  MessageCenterBubble(message_center::MessageCenter* message_center,
+                      message_center::MessageCenterTray* tray);
   ~MessageCenterBubble() override;
 
   // Gets called when the bubble view associated with this bubble is
@@ -58,10 +59,10 @@ class MESSAGE_CENTER_EXPORT MessageCenterBubble
  private:
   void UpdateBubbleView();
 
-  MessageCenter* message_center_;
-  MessageCenterTray* tray_;
+  message_center::MessageCenter* message_center_;
+  message_center::MessageCenterTray* tray_;
   views::TrayBubbleView* bubble_view_ = nullptr;
-  MessageCenterView* message_center_view_ = nullptr;
+  message_center::MessageCenterView* message_center_view_ = nullptr;
 
   // Use settings view as the initially visible content if true.
   bool initially_settings_visible_ = false;
@@ -73,6 +74,6 @@ class MESSAGE_CENTER_EXPORT MessageCenterBubble
   DISALLOW_COPY_AND_ASSIGN(MessageCenterBubble);
 };
 
-}  // namespace message_center
+}  // namespace ash
 
-#endif  // UI_MESSAGE_CENTER_VIEWS_MESSAGE_CENTER_BUBBLE_H_
+#endif  // ASH_SYSTEM_WEB_NOTIFICATION_MESSAGE_CENTER_BUBBLE_H_
