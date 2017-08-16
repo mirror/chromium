@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a52aa9a7_96c20aff",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T14:44:29Z",
+      "side": 1,
+      "message": "Depending only on screen\u0027s physical size also won\u0027t be good enough, as a low-density device like the nexus 5 would require larger text to be readable than a phone of the same physical size with higher density.\n\nMaybe at least split this up into multiple constants to make it clear where it comes from, and how it can be tweaked to take density into account in the future, if we can\u0027t come up with a good way to do so now.",
+      "parentUuid": "ff5455f1_fa638a38",
+      "range": {
+        "startLine": 85,
+        "startChar": 50,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7d5a306_bedc423e",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 5
@@ -248,6 +272,30 @@
       "side": 1,
       "message": "What do you mean by width_constant and height_constant?",
       "parentUuid": "343448e4_a0b676c6",
+      "range": {
+        "startLine": 702,
+        "startChar": 2,
+        "endLine": 702,
+        "endChar": 26
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f52787_75a0209e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T14:44:29Z",
+      "side": 1,
+      "message": "I just meant to replace it with whatever constant you use (like physical_width_m * kContentLegibilityFactor)",
+      "parentUuid": "6256cb8c_f623fbe2",
       "range": {
         "startLine": 702,
         "startChar": 2,
