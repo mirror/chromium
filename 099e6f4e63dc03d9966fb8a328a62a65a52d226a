@@ -22,6 +22,30 @@
       "revId": "099e6f4e63dc03d9966fb8a328a62a65a52d226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e400a155_20dec366",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T17:07:42Z",
+      "side": 1,
+      "message": "The transparent shelf in tablet mode is already happening in ToT: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d752383\n\nIn this cl, we just modify the status area to be transparent (+ separator) as well.",
+      "parentUuid": "c9f044fe_fe6e8184",
+      "range": {
+        "startLine": 249,
+        "startChar": 33,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "099e6f4e63dc03d9966fb8a328a62a65a52d226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
