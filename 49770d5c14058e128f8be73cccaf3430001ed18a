@@ -45,6 +45,52 @@
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc65725_37bfe9fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T14:39:08Z",
+      "side": 1,
+      "message": "What is mRuleChain? Nothing appears to use it, and findbugs is complaining about it being unused.",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf64f2a_7d1820d7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T14:39:08Z",
+      "side": 1,
+      "message": "Why is this the same as WAA?",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
