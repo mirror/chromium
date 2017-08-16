@@ -94,6 +94,30 @@
       "revId": "bb7b436922bf7bdc711c6e8f6ccf42c5a207a886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1ba14b1_872b32be",
+        "filename": "ui/base/ime/ime_text_span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:40:36Z",
+      "side": 1,
+      "message": "Yeah, the way we handle this now is messed up. The Japanese IME is passing overlapping spans but a lot of Blink code is written assuming all the spans will be in order and non-overlapping. I will hopefully find time to clean this up soon.",
+      "parentUuid": "92c6f1e8_2a297bb9",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "bb7b436922bf7bdc711c6e8f6ccf42c5a207a886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
