@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a067d4df_d853e799",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:45:06Z",
+      "side": 1,
+      "message": "Old TODO now that we\u0027re merging the control class and some of the app logic.  Remove?",
+      "range": {
+        "startLine": 406,
+        "startChar": 4,
+        "endLine": 406,
+        "endChar": 82
+      },
+      "revId": "1aa513e55af054daeb6f06d0165799939c685d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a429915_1363c743",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
         "patchSetId": 1
@@ -36,6 +59,30 @@
       "writtenOn": "2017-08-15T23:29:08Z",
       "side": 1,
       "message": "This probably shouldn\u0027t be in the layout code at all.",
+      "range": {
+        "startLine": 706,
+        "startChar": 4,
+        "endLine": 706,
+        "endChar": 76
+      },
+      "revId": "1aa513e55af054daeb6f06d0165799939c685d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedff6a1_2e5159da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:45:06Z",
+      "side": 1,
+      "message": "Can we erase this if we aren\u0027t supporting document mode anymore?  I think this was to enable swiping between document mode activities by side swiping on the toolbar?  Maybe check and remove if possible :).",
+      "parentUuid": "47b88aa2_efeb1858",
       "range": {
         "startLine": 706,
         "startChar": 4,
