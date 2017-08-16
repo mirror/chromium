@@ -22,6 +22,30 @@
       "revId": "02dd949dddf356070145d03967a6132a5430c0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c448357_0a723373",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3090,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-08-16T18:50:43Z",
+      "side": 1,
+      "message": "Enforcement20170329 is the one we intend to release globally to stable for now so it is the one that should be tested. I can update it when 20170626 becomes a serious candidate.\n\nThe reason I put several experiments here is to silence the Finch warning I get when updating the config, since I run several experiments in parallel. But, I guess since these don\u0027t get tested anyway, I guess I can just ignore that warning?",
+      "parentUuid": "f293e6dd_2c43c288",
+      "range": {
+        "startLine": 3090,
+        "startChar": 50,
+        "endLine": 3090,
+        "endChar": 0
+      },
+      "revId": "02dd949dddf356070145d03967a6132a5430c0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
