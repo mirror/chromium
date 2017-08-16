@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "56324dec_24852eaa",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-16T20:28:50Z",
+      "side": 1,
+      "message": "Since now GetFusedDataInternal() is not called by any subclasses of PlatformSensorFusionAlgorithm(), it seems it is reasonable to mark it as private. But I am ok with both since the case you mentioned is also reasonable. So up to you.",
+      "parentUuid": "ba4aff39_27365202",
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e54848e7_c2c171c9",
         "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
         "patchSetId": 4
