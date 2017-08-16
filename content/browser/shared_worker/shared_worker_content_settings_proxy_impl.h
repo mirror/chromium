@@ -7,42 +7,42 @@
 
 #include "base/callback.h"
 #include "base/strings/string16.h"
-#include "content/browser/shared_worker/shared_worker_host.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/resource_context.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/public/web/worker_content_settings_proxy.mojom.h"
 #include "url/origin.h"
 
 namespace content {
 
+class SharedWorkerHost;
+
 // Passes the content settings information to the renderer counterpart through
 // Mojo connection.
 // Created on SharedWorker::Start() and connected to the counterpart
 // at the moment.
-// Kept alive while the connection is held in the renderer.
+// SharedWorkerHost owns this class, so the life time of this class is strongly
+// associated to it.
 class CONTENT_EXPORT SharedWorkerContentSettingsProxyImpl
     : public blink::mojom::WorkerContentSettingsProxy {
  public:
+  explicit SharedWorkerContentSettingsProxyImpl(
+      const GURL& script_url,
+      SharedWorkerHost* host,
+      blink::mojom::WorkerContentSettingsProxyRequest request);
+
   ~SharedWorkerContentSettingsProxyImpl() override;
 
-  // Creates a new SharedWorkerContentSettingsProxyImpl and
-  // binds it to |request|.
-  static void Create(base::WeakPtr<SharedWorkerHost> host,
-                     blink::mojom::WorkerContentSettingsProxyRequest request);
-
   // blink::mojom::WorkerContentSettingsProxy implementation.
-  void AllowIndexedDB(const url::Origin& origin,
-                      const base::string16& name,
+  void AllowIndexedDB(const base::string16& name,
                       AllowIndexedDBCallback callback) override;
   void RequestFileSystemAccessSync(
-      const url::Origin& origin,
       RequestFileSystemAccessSyncCallback callback) override;
 
  private:
-  explicit SharedWorkerContentSettingsProxyImpl(
-      base::WeakPtr<SharedWorkerHost> host);
-
-  const base::WeakPtr<SharedWorkerHost> host_;
+  const url::Origin origin_;
+  SharedWorkerHost* owner_;
+  mojo::Binding<blink::mojom::WorkerContentSettingsProxy> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(SharedWorkerContentSettingsProxyImpl);
 };
