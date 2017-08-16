@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "421b5327_17ad1697",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T16:14:39Z",
+      "side": 1,
+      "message": "I don\u0027t necessarily mind renaming the variable here, but the command-line option should stay the same.\n\nAdded docstrings to BuildBootfs, NetCp, and RunFuchsia.",
+      "parentUuid": "ec6e9a7a_59a2b881",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e30e9656_8effdc55",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 9
@@ -67,6 +85,24 @@
       "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86af8fa9_7f6d5d98",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T16:14:39Z",
+      "side": 1,
+      "message": "I can\u0027t find any indication of them expiring. I also can\u0027t delete it. My suspicion would be that it\u0027s sufficiently permanent to leave here.",
+      "parentUuid": "e30e9656_8effdc55",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +129,30 @@
     },
     {
       "key": {
+        "uuid": "889c6b65_160089df",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T16:14:39Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "2005bad9_1b404ee7",
+      "range": {
+        "startLine": 360,
+        "startChar": 3,
+        "endLine": 360,
+        "endChar": 38
+      },
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbdc01e1_67a1a8de",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 9
@@ -110,6 +170,24 @@
     },
     {
       "key": {
+        "uuid": "3ca3babf_5295f15d",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T16:14:39Z",
+      "side": 1,
+      "message": "Done and done.",
+      "parentUuid": "cbdc01e1_67a1a8de",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e603798b_e6729902",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 9
@@ -124,6 +202,24 @@
       "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97941608_38b26d6d",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T16:14:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e603798b_e6729902",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
