@@ -8,10 +8,10 @@ function test() {
     {
         var suggestionBuilder = new Network.FilterSuggestionBuilder(keys);
         var result = suggestionBuilder.parseQuery(query);
-        InspectorTest.addResult("");
-        InspectorTest.addResult("Keys: " + JSON.stringify(keys));
-        InspectorTest.addResult("Query: " + query);
-        InspectorTest.addResult("Result: " + JSON.stringify(result));
+        TestRunner.addResult("");
+        TestRunner.addResult("Keys: " + JSON.stringify(keys));
+        TestRunner.addResult("Query: " + query);
+        TestRunner.addResult("Result: " + JSON.stringify(result));
     }
 
     checkQuery([], "plain text");
@@ -32,7 +32,7 @@ function test() {
     checkQuery(["key"], "bar -:key:foo baz");
     checkQuery(["key"], "bar key:-foo baz");
 
-    InspectorTest.completeTest();
+    TestRunner.completeTest();
 }
 
 </script>
