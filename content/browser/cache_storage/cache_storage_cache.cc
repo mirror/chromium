@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <iostream>
+
 #include "content/browser/cache_storage/cache_storage_cache.h"
 
 #include <stddef.h>
@@ -1304,6 +1306,9 @@ void CacheStorageCache::UpdateCacheSizeGotSize(
   quota_manager_proxy_->NotifyStorageModified(
       storage::QuotaClient::kServiceWorkerCache, origin_,
       storage::kStorageTypeTemporary, size_delta);
+
+  if (cache_storage_)
+    cache_storage_->NotifyCacheContentChanged(cache_name_);
 
   if (cache_observer_)
     cache_observer_->CacheSizeUpdated(this, current_cache_size);
