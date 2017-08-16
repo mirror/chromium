@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "10ddce86_fc30e82e",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-16T18:47:02Z",
+      "side": 1,
+      "message": "Hah! Would you mind removing it from there too? (in a followup)",
+      "parentUuid": "01a521ff_efd61dd8",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2288f52_bb43380c",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "I do not know the motivation, I just copied this from SpdyProxyClientSocket.",
       "parentUuid": "0e4d4a13_7364713b",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7033e603_4f0fe5a7",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-16T18:47:02Z",
+      "side": 1,
+      "message": "Are there any tests which fail if this code is removed? If not, let\u0027s remove it.",
+      "parentUuid": "47b3ffae_409a5077",
       "range": {
         "startLine": 99,
         "startChar": 14,
@@ -766,6 +814,24 @@
       "side": 1,
       "message": "Done, but leaving this unresolved since I don\u0027t understand why this event is being emitted.",
       "parentUuid": "1aec55e2_86a66a86",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff4a51d_45dcc751",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-16T18:47:02Z",
+      "side": 1,
+      "message": "Oh, sorry. You\u0027re asking why we emit \"TUNNEL_READ_HEADERS\"? The basic ides is that we want to record the headers we receive in response to the CONNECT request. But since this is not a \"real\" HTTP request, those don\u0027t get logged in the \"normal\" way, so we log them here.\n\nDoes that make sense?",
+      "parentUuid": "c669ef6c_4bf9efef",
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
