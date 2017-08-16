@@ -293,6 +293,7 @@ test("components_unittests") {
   if (is_chromeos) {
     deps += [
       "//components/arc:unit_tests",
+      "//components/multidevice/service/cpp:multidevice_service_unittest",
       "//components/ownership:unit_tests",
       "//components/pairing:unit_tests",
       "//components/sync_wifi:unit_tests",
