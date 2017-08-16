@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8385a6b1_1062f68a",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-16T23:38:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this assumption is valid in the case where the profile directory lives on a remote filesystem (for example, mounted via NFS). What happens if this takes O(seconds) to complete?",
+      "range": {
+        "startLine": 228,
+        "startChar": 78,
+        "endLine": 228,
+        "endChar": 0
+      },
+      "revId": "0b08bf2eaee22458d459ef824e644d4493b29c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
