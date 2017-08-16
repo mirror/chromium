@@ -901,16 +901,25 @@ bool TaskQueueImpl::HasPendingImmediateWork() {
   return !immediate_incoming_queue().empty();
 }
 
+void TaskQueueImpl::SetOnTaskStartedHandler(
+    TaskQueueImpl::OnTaskStartedHandler handler) {
+  main_thread_only().on_task_started_handler = std::move(handler);
+}
+
+void TaskQueueImpl::OnTaskStarted(base::TimeTicks start) {
+  if (!main_thread_only().on_task_started_handler.is_null())
+    main_thread_only().on_task_started_handler.Run(start);
+}
+
 void TaskQueueImpl::SetOnTaskCompletedHandler(
     TaskQueueImpl::OnTaskCompletedHandler handler) {
   main_thread_only().on_task_completed_handler = std::move(handler);
 }
 
-void TaskQueueImpl::OnTaskCompleted(const TaskQueue::Task& task,
-                                    base::TimeTicks start,
+void TaskQueueImpl::OnTaskCompleted(base::TimeTicks start,
                                     base::TimeTicks end) {
   if (!main_thread_only().on_task_completed_handler.is_null())
-    main_thread_only().on_task_completed_handler.Run(task, start, end);
+    main_thread_only().on_task_completed_handler.Run(start, end);
 }
 
 void TaskQueueImpl::SetQueueEnabledForTest(bool enabled) {

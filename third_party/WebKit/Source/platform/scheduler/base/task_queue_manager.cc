@@ -181,11 +181,8 @@ void TaskQueueManager::OnBeginNestedRunLoop() {
     any_thread().immediate_do_work_posted_count++;
     any_thread().is_nested = true;
   }
-
-  // When a nested run loop starts, task time observers may want to ignore
-  // the current task.
-  for (auto& observer : task_time_observers_)
-    observer.OnBeginNestedRunLoop();
+  if (observer_)
+    observer_->OnBeginNestedRunLoop();
 
   delegate_->PostTask(FROM_HERE, immediate_do_work_closure_);
 }
@@ -505,6 +502,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     MaybeRecordTaskDelayHistograms(pending_task, queue);
 
   double task_start_time = 0;
+  base::TimeTicks start;
   TRACE_TASK_EXECUTION("TaskQueueManager::ProcessTaskFromWorkQueue",
                        pending_task);
   if (queue->GetShouldNotifyObservers()) {
@@ -513,11 +511,14 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     queue->NotifyWillProcessTask(pending_task);
 
     bool notify_time_observers =
-        !delegate_->IsNested() && task_time_observers_.might_have_observers();
+        !delegate_->IsNested() &&
+        (task_time_observers_.might_have_observers() || observer_);
     if (notify_time_observers) {
       task_start_time = MonotonicTimeInSeconds(time_before_task.Now());
       for (auto& observer : task_time_observers_)
         observer.WillProcessTask(task_start_time);
+      start += base::TimeDelta::FromSecondsD(task_start_time);
+      queue->OnTaskStarted(start);
     }
   }
 
@@ -554,8 +555,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   if (task_start_time && task_end_time) {
     queue->OnTaskCompleted(
-        pending_task,
-        base::TimeTicks() + base::TimeDelta::FromSecondsD(task_start_time),
+        start,
         base::TimeTicks() + base::TimeDelta::FromSecondsD(task_end_time));
   }
 

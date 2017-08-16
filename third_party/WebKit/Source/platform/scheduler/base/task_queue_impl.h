@@ -135,8 +135,9 @@ class PLATFORM_EXPORT TaskQueueImpl {
   };
 
   using OnNextWakeUpChangedCallback = base::Callback<void(base::TimeTicks)>;
-  using OnTaskCompletedHandler = base::Callback<
-      void(const TaskQueue::Task&, base::TimeTicks, base::TimeTicks)>;
+  using OnTaskStartedHandler = base::Callback<void(base::TimeTicks)>;
+  using OnTaskCompletedHandler =
+      base::Callback<void(base::TimeTicks, base::TimeTicks)>;
 
   // TaskQueue implementation.
   const char* GetName() const;
@@ -261,11 +262,11 @@ class PLATFORM_EXPORT TaskQueueImpl {
   void SweepCanceledDelayedTasks(base::TimeTicks now);
 
   // Allows wrapping TaskQueue to set a handler to subscribe for notifications
-  // about completed tasks.
+  // about started and completed tasks.
+  void SetOnTaskStartedHandler(OnTaskStartedHandler handler);
+  void OnTaskStarted(base::TimeTicks start);
   void SetOnTaskCompletedHandler(OnTaskCompletedHandler handler);
-  void OnTaskCompleted(const TaskQueue::Task& task,
-                       base::TimeTicks start,
-                       base::TimeTicks end);
+  void OnTaskCompleted(base::TimeTicks start, base::TimeTicks end);
 
   // Disables queue for testing purposes, when a QueueEnabledVoter can't be
   // constructed due to not having TaskQueue.
@@ -318,6 +319,7 @@ class PLATFORM_EXPORT TaskQueueImpl {
     base::trace_event::BlameContext* blame_context;  // Not owned.
     EnqueueOrder current_fence;
     base::Optional<base::TimeTicks> scheduled_time_domain_wake_up;
+    OnTaskStartedHandler on_task_started_handler;
     OnTaskCompletedHandler on_task_completed_handler;
     // If false, queue will be disabled. Used only for tests.
     bool is_enabled_for_test;

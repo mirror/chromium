@@ -1417,6 +1417,7 @@ namespace {
 class MockObserver : public TaskQueueManager::Observer {
  public:
   MOCK_METHOD0(OnTriedToExecuteBlockedTask, void());
+  MOCK_METHOD0(OnBeginNestedRunLoop, void());
 };
 
 }  // namespace

@@ -562,11 +562,11 @@ class RendererSchedulerImplTest : public ::testing::Test {
   }
 
   void AdvanceTimeWithTask(double duration) {
-    double start = (clock_->NowTicks() - base::TimeTicks()).InSecondsF();
+    base::TimeTicks start = clock_->NowTicks();
+    scheduler_->OnTaskStarted(nullptr, start);
     clock_->Advance(base::TimeDelta::FromSecondsD(duration));
-    double end = (clock_->NowTicks() - base::TimeTicks()).InSecondsF();
-    scheduler_->WillProcessTask(start);
-    scheduler_->DidProcessTask(start, end);
+    base::TimeTicks end = clock_->NowTicks();
+    scheduler_->OnTaskCompleted(nullptr, start, end);
   }
 
   void GetQueueingTimeEstimatorLock() {
@@ -3957,8 +3957,7 @@ TEST_F(RendererSchedulerImplTest, ResponsiveMainThreadDuringTask) {
   EXPECT_FALSE(
       scheduler_->MainThreadSeemsUnresponsive(responsiveness_threshold()));
   clock_->Advance(base::TimeDelta::FromSecondsD(2));
-  scheduler_->WillProcessTask(
-      (clock_->NowTicks() - base::TimeTicks()).InSecondsF());
+  scheduler_->OnTaskStarted(nullptr, clock_->NowTicks());
   EXPECT_FALSE(
       scheduler_->MainThreadSeemsUnresponsive(responsiveness_threshold()));
 }

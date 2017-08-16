@@ -11,6 +11,7 @@ namespace blink {
 namespace scheduler {
 
 class RendererSchedulerImpl;
+class WebFrameSchedulerImpl;
 
 class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
  public:
@@ -109,6 +110,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
     QueueType queue_type;
     TaskQueue::Spec spec;
+    WebFrameSchedulerImpl* frame_;
     bool can_be_blocked;
     bool can_be_throttled;
     bool can_be_paused;
@@ -132,12 +134,15 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
   bool UsedForControlTasks() const { return used_for_control_tasks_; }
 
-  void OnTaskCompleted(const TaskQueue::Task& task,
-                       base::TimeTicks start,
-                       base::TimeTicks end);
+  void OnTaskStarted(base::TimeTicks start);
+
+  void OnTaskCompleted(base::TimeTicks start, base::TimeTicks end);
 
   // Override base method to notify RendererScheduler about unregistered queue.
   void UnregisterTaskQueue() override;
+
+  WebFrameSchedulerImpl* GetFrame() const override;
+  void SetFrame(WebFrameSchedulerImpl* frame) override;
 
  private:
   MainThreadTaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl,
@@ -156,6 +161,8 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
   // Needed to notify renderer scheduler about completed tasks.
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED
+
+  WebFrameSchedulerImpl* web_frame_scheduler_;  // NOT OWNED
 
   DISALLOW_COPY_AND_ASSIGN(MainThreadTaskQueue);
 };
