@@ -68,6 +68,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
+      mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
       ServiceWorkerDispatcher* dispatcher);
 
   // For service worker execution contexts. Sets the registration for
@@ -100,6 +101,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void CountFeature(uint32_t feature);
   const std::set<uint32_t>& used_features() const { return used_features_; }
 
+  void OnNetworkProviderDestroyed();
+
  private:
   friend class base::DeleteHelper<ServiceWorkerProviderContext>;
   friend class base::RefCountedThreadSafe<ServiceWorkerProviderContext,
@@ -119,6 +122,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
+  // Browser-side Mojo endpoint for provider host.
+  mojom::ServiceWorkerProviderHostAssociatedPtr provider_host_;
 
   // Only used for controllee contexts. Used to dispatch events to the
   // controller ServiceWorker.

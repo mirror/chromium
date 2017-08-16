@@ -125,10 +125,12 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerProviderAssociatedRequest request,
+    mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
     ServiceWorkerDispatcher* dispatcher)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       binding_(this, std::move(request)) {
+  provider_host_.Bind(std::move(host_ptr_info));
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER)
     delegate_.reset(new ControllerDelegate);
   else
@@ -183,6 +185,10 @@ void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
   // it to WebServiceWorkerProviderClient, which actually records the
   // UseCounter.
   used_features_.insert(feature);
+}
+
+void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
+  provider_host_.reset();
 }
 
 void ServiceWorkerProviderContext::DestructOnMainThread() const {
