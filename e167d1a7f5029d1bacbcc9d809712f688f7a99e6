@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "39247d7d_9e5bfc7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T09:39:48Z",
+      "side": 1,
+      "message": "Inline this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2709cde_9e2258ef",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
         "patchSetId": 7
@@ -41,6 +64,75 @@
         "startChar": 5,
         "endLine": 61,
         "endChar": 17
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bbe82b_a9635e2e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T09:39:48Z",
+      "side": 1,
+      "message": "😮",
+      "range": {
+        "startLine": 77,
+        "startChar": 49,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c6e9b3a_af95278c",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T09:39:48Z",
+      "side": 1,
+      "message": "Probably not a big deal, but you could create the delegate here, to get an even smaller API surface for this class.",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ee1f77_ec94ac29",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T09:39:48Z",
+      "side": 1,
+      "message": "Make these methods either public or private?",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 11
       },
       "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
