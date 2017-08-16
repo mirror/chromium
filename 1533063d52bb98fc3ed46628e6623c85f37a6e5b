@@ -52,6 +52,24 @@
       "revId": "1533063d52bb98fc3ed46628e6623c85f37a6e5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec112be_991c40a0",
+        "filename": "chromecast/media/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-08-16T16:38:51Z",
+      "side": 1,
+      "message": "When a source_set depends on JNI headers, you need to bring in the associated Java code in each binary that uses it. For some reason, Java targets aren\u0027t built when they\u0027re just a dependency of a source_set.\nHere\u0027s an example from Chromium: https://cs.corp.google.com/eureka_internal/chromium/src/media/BUILD.gn?rcl\u003d0\u0026l\u003d358\n\n¯\\_(ツ)_/¯",
+      "parentUuid": "f47b96b6_d2edccc2",
+      "revId": "1533063d52bb98fc3ed46628e6623c85f37a6e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
