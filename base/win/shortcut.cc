@@ -9,6 +9,7 @@
 #include <shlobj.h>
 #include <propkey.h>
 
+#include "base/debug/stack_trace.h"
 #include "base/files/file_util.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/win/scoped_comptr.h"
@@ -173,6 +174,10 @@ bool CreateOrUpdateShortcutLink(const FilePath& shortcut_path,
   const bool succeeded = SUCCEEDED(result);
   if (succeeded) {
     if (shortcut_existed) {
+      // TODO(chengx): Remove this log after crbug/449569 is fixed.
+      VLOG(0) << "Desktop refresh requested from:\n"
+              << base::debug::StackTrace().ToString();
+
       // TODO(gab): SHCNE_UPDATEITEM might be sufficient here; further testing
       // required.
       SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);

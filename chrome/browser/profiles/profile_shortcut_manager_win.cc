@@ -14,6 +14,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
@@ -226,6 +227,10 @@ base::FilePath CreateOrUpdateShortcutIconForProfile(
   }
 
   if (had_icon) {
+    // TODO(chengx): Remove this log after crbug/449569 is fixed.
+    VLOG(0) << "Desktop refresh requested from:\n"
+            << base::debug::StackTrace().ToString();
+
     // This invalidates the Windows icon cache and causes the icon changes to
     // register with the taskbar and desktop. SHCNE_ASSOCCHANGED will cause a
     // desktop flash and we would like to avoid that if possible.
