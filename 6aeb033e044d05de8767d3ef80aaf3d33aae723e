@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61714c35_10732e80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T13:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69ad7ec_12d34366",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51314b3f_2760ea7a",
         "filename": "base/threading/scoped_blocking_call.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T21:47:22Z",
       "side": 1,
       "message": "How do tests clean this TLS entry up?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63650048_b494fbcb",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T13:55:33Z",
+      "side": 1,
+      "message": "There aren\u0027t any tests that directly call this.\n\nIn the later CL that implements BlockingObserver, the SchedulerWorkerPoolImplDelegate does call this, but in that case, a SchedulerWorker thread is always associated with the same SchedulerWorkerPoolImpl (and also the same delegate) throughout its lifetime. So it doesn\u0027t really make sense to clean it.",
+      "parentUuid": "51314b3f_2760ea7a",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b086083f_c378b68f",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T13:55:33Z",
+      "side": 1,
+      "message": "Do you mean add a BlockingObserver* DCHECK member so that the destructor can verify that the BlockingObserver never changed btwn the constructor and destructor?\n\nLine 27 does ensure that the BlockingObserver doesn\u0027t change, but I can add that if you still think it\u0027s important.",
+      "parentUuid": "2536f4a0_40bde212",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feec1208_d11f73ca",
         "filename": "base/threading/scoped_blocking_call.h",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2053722f_687ed0f6",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T13:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feec1208_d11f73ca",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
