@@ -320,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "1c3bc5dc_92f527e0",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-16T08:35:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "36a1846e_8d91eee4",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1211bc0_3ba685bb",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 2
