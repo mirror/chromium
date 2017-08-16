@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "92090a1d_324d9cf0",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-16T00:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8488d594_9e734ffc",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "666215a8_334b82a6",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "What if the HTML has no \u003ctitle\u003e tag? Does this still get called? And if it does, what if there\u0027s JS that runs and sets this title during pageload, and never happens after; does it still get called twice? The code is assuming the former is true, that the latter (if true) is a title change we care about in this context, and that both are behaviors that we can rely on in the webcontents API and won\u0027t change.\n\nI would assume what we actually care about is pages that update their title after OnDocumentLoad or something like that?",
       "parentUuid": "11e7142d_387632b0",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb40761_db27c649",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-16T00:04:23Z",
+      "side": 1,
+      "message": "mmmmm, from the doc it looks like we just want to ignore the first time that a title/favicon is updated.\n\nyes, you are right, if there\u0027s no \u003ctitle\u003e tag and no JS code setting title, then this method won\u0027t be called. But if there\u0027s JS set the title before the \u003ctitle\u003e tag is found, then \u003ctitle\u003e tag will be ignored, it won\u0027t get called twice.\n\nThis code doesn\u0027t handle case where title is empty even the tab finishes loading, and after some amount of time in background, a title is set.",
+      "parentUuid": "3b5819e8_36af34e3",
       "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
