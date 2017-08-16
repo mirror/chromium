@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5a600a58_6e4a9431",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "FWIW, your thoughts make perfect sense to me now that I have the expected API use in my head (and the different places from which errors can come more firmly in my head).",
+      "parentUuid": "1d058a12_420e8b70",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "218cf750_0fb9036a",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "f321ffce_36715359",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Sorry, still confused--I may need to talk to you about this in person.  You didn\u0027t caveat Reilly\u0027s answer, so I\u0027ll take it as accurate.  But given that, shouldn\u0027t we check with/wait on the URLLoaderClient pipe to figure out what actually happened in this case before we notify the client of (apparently) success?",
+      "parentUuid": "d22f8b0e_95bf563e",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c46c42a_2fcc9a52",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -332,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "d2cfea42_6ce41d23",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "I have no objection to the method name.  Amusement, yes, but no objection :-}.  \n\nThis was just an implementation suggestion, which is that you call DownloadToString() from DownloadToStringCrashAndDie() with max_body_size \u003d\u003d std::numeric_limits\u003cint64_t\u003e::max() and change the DCHECK in DownloadToString to allow that (but continue to barf if max_body_size was greater than kMaxBoundedStringDownloadSize).  I figured that if people insisted on calling DownloadToString(std::numeric_limits\u003cint64_t\u003e::max()) in order to avoid using the method DownloadToStringOfUnbounedSizeUntilCrashAndDie() to sooth their shattered nerves there was no help for them.  But I\"m not wedded to the idea; it just saves three lines of duplicate code.",
+      "parentUuid": "3643833c_8671acfd",
+      "range": {
+        "startLine": 158,
+        "startChar": 25,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316e5336_a754f21f",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -367,6 +439,30 @@
       "side": 1,
       "message": "I can\u0027t have a test that we can handle messages from a compromised process if this is a DCHECK.  Prefering DCHECKs to handling errors only applies for non-IPC messages (Or perhaps when you\u0027re in the less privileged process).",
       "parentUuid": "316e5336_a754f21f",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a235b71_00b5b721",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Ah, right, that makes sense.  Just to make sure I\u0027m understanding this correctly--this code will be in the browser/renderer, with the remote code in the network service, right?  Browser/network seems similar in privilege, renderer/network seems lesser in privilege, so perhaps I\u0027m missing something?\n\nRegardless, I\u0027m ok with the test and the ERR_UNEXPECTED, but I would like a comment indicating that we\u0027ve detected a protocol violation.",
+      "parentUuid": "9a82e2f8_6d1b8356",
       "range": {
         "startLine": 214,
         "startChar": 4,
@@ -473,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "53bd5ffc_aaaf4b44",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69bfc0ef_1c1a2402",
+      "range": {
+        "startLine": 244,
+        "startChar": 39,
+        "endLine": 244,
+        "endChar": 63
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96acc2a2_50c760f7",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -508,6 +628,30 @@
       "side": 1,
       "message": "Right - the protocol is that they should call OnComplete whether it succeed or fail (At which point we close the URLLoader/URLLoaderClient channels) - so the fact that we\u0027re here means we never got that message).\n\nWe only listen for errors on the channel we receive data on, not the one we send it on.  I\u0027m not sure if there\u0027s any benefit to listening to both.  Those should be talking to the same process.",
       "parentUuid": "96acc2a2_50c760f7",
+      "range": {
+        "startLine": 280,
+        "startChar": 28,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8000eef8_51f1c16e",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Makes sense.  I\u0027d be inclined to put in a comment that this implies a connection or remove peer death, but up to you.",
+      "parentUuid": "c24a1d87_67886bbc",
       "range": {
         "startLine": 280,
         "startChar": 28,
@@ -567,6 +711,30 @@
     },
     {
       "key": {
+        "uuid": "53a8f71c_e6e413b0",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Oy vais, completely missed that.  I\u0027ll re-review with that in mind.",
+      "parentUuid": "79734e43_a1270337",
+      "range": {
+        "startLine": 295,
+        "startChar": 12,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cf6dced_bf2b4d41",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -602,6 +770,30 @@
       "side": 1,
       "message": "So the main reason for this design is it allows consumers that want to do file IO to read from the pipe and handle file I/O on the same thread, transparently to this class (And handle back pressure there, etc - in the simplest case, can just read from the pipe, and can write to the file (gasp) synchronously).\n\nI assume we\u0027ll just have two BodyHandler classes for driving the request - one for doing it off thread, and one on thread (We may even be able to get away with just one, and make everything subclass that one.  Haven\u0027t looked into it yet).\n\nWDYT?",
       "parentUuid": "6cf6dced_bf2b4d41",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 19
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53dd7de_b7822d3c",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "I hadn\u0027t thought about the file IO issue; based on that I\u0027m inclined to see how the implementation works out over time (i.e. once you\u0027ve added that code).  But let\u0027s keep an eye on making sure we properly integrate information between the two pipes in the meantime.",
+      "parentUuid": "24bf0f5c_2d657316",
       "range": {
         "startLine": 304,
         "startChar": 6,
@@ -658,6 +850,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8e3b40_24c7e8e4",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that this comment was made from a state of deep confusion around request_ versus response_ net_error_ and you should ignore it.  I\"ll re-review that code and comment if there\u0027s really anything there, but for now assume there isn\u0027t.",
+      "parentUuid": "edee96fe_06f45163",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -802,6 +1018,30 @@
     },
     {
       "key": {
+        "uuid": "bc949991_65fb47a2",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Fair enough; when I was thinking CL size, I wasn\u0027t thinking about the tests :-}.  Ok.",
+      "parentUuid": "8a59cff7_db47de17",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff003d3_17111d63",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -846,6 +1086,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8206f783_8daea730",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f69ad53_757c3858",
+      "range": {
+        "startLine": 89,
+        "startChar": 29,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -917,6 +1181,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49040fb_c3b3b2f4",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Gotcha.  That makes sense.  \n\nThought (not even a suggestion): Given that I was confused specifically about what the usage code for the class would look like, maybe worthwhile providing example usage code in the comments?",
+      "parentUuid": "abc76767_71c85f25",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1014,6 +1302,30 @@
     },
     {
       "key": {
+        "uuid": "b9b6edf9_a26c35df",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5cc3d246_ecfc5a5b",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 10
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13bc6046_291276d7",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -1096,6 +1408,30 @@
       "side": 1,
       "message": "It\u0027s checked via its accessor in SaveToStringBodyHandler::InvokeCallback().  There are 6 unit tests for this.  (I initially thought you were asking the latter, but I assume you\u0027re asking about the former?).",
       "parentUuid": "e69b7aa0_03c424f8",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346374c0_1e608fdb",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:55:57Z",
+      "side": 1,
+      "message": "Huh.  I wonder how I missed that.  Thanks.\n\n(Yes, I was asking about the former--I haven\u0027t looked at the tests yet.  I wanted to get the interface solid first.)",
+      "parentUuid": "e0230fcd_d6950da8",
       "range": {
         "startLine": 170,
         "startChar": 7,
