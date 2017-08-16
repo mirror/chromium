@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ed7c93_9b40cae1",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:15:26Z",
+      "side": 1,
+      "message": "I think it would be better to have this logic handled on the browser side for consistency and to avoid including the notifications modules from permissions (modules should not include each other ideally). Why was this solution preferred over relying on the notification context?",
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
