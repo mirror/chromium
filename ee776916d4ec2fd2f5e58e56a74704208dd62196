@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "172140df_4fc5fac4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "Nit: Extra \"of\"",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7d9c23_e2b9a0f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "Nit: I guess we don\u0027t need this line as it\u0027s the default value.",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dca79b6_c4ada0d6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this line for `testharness.js` tests.\nAlso there\u0027s a typo \"passes\".",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f3c837_bae82666",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "A question here, you\u0027re not calling `checkLayout()`, is this `data-expected-width` being checked?\nMaybe the `evalute()` calls already do it, but just asking to confirm.",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8e2bba_f9e50599",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-004.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "Here it should be \"normal\".",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a968cb1_7e37ce15",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-004.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "And here it should be \"stretch\".",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2248904f_a4ff0738",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-019.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "Mmm, did you mean `data-expected-height` here?",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d33bf16_43703f3c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/100x100-green.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "There\u0027s a file like this at \"grid-items/support/100x100-green.png\".\nNot sure why it\u0027s not in a more generic folder, maybe we should just move it, if that\u0027s ok from the WPT point of view.\nMaybe we can do a PR with this movement on WPT\u0027s GitHub to check feedback.",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ce6d8a_c1d93394",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "Maybe we should look for a better name for this function.\n\nAlso the \"phase\" name for the 2nd argument is a bit strange.",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2805a5_3e09e2c9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:20:05Z",
+      "side": 1,
+      "message": "After this, the element still keeps the new class passed in \"phase\".\nShouldn\u0027t we reset it?\nAfter calling \"evalute(\"before\")\" and \"evaluate(\"after\")\" the item will have both classes \"before\" and \"after\".\n\nI\u0027d avoid adding this extra class completely. You could just receive the item\u0027s selector (e.g. \"#item\") and pass it to \"checkLayout()\".",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
