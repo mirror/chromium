@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f94d36_be74db43",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:02:56Z",
+      "side": 1,
+      "message": "true /* show_on_creation */\n\nor\n\n  constexpr bool show_on_creation \u003d true;\n  return Create....(...., show_on_creation);",
+      "revId": "323ca296aaad99b923ba89283377d103e11c1617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c3f288_bf003fed",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:02:56Z",
+      "side": 1,
+      "message": "ditto and in other places",
+      "revId": "323ca296aaad99b923ba89283377d103e11c1617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b1af16_9a322365",
+        "filename": "ui/aura/test/test_windows.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:02:56Z",
+      "side": 1,
+      "message": "Is it possible to use an enum? Because test functions with long param-list makes it difficult to read the code that uses these functions. (or at least update the callsites to document the param)",
+      "revId": "323ca296aaad99b923ba89283377d103e11c1617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
