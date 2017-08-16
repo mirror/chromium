@@ -16,6 +16,24 @@
       "revId": "64851d6549e974416f48bf85a95621076393ae16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f206dd_c85681d5",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T23:48:54Z",
+      "side": 0,
+      "message": "I\u0027ve updated the test to actually check that high resolution timers are in use.\n\nHasHighResolutionTasks() isn\u0027t useful if what you really want to do is check you\u0027re really using High resolution timers.",
+      "parentUuid": "75402e46_b9ad1f99",
+      "revId": "64851d6549e974416f48bf85a95621076393ae16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
