@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5751fbb_82b1be6b",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T18:08:57Z",
+      "side": 1,
+      "message": "verify db* is not null",
+      "range": {
+        "startLine": 18,
+        "startChar": 62,
+        "endLine": 18,
+        "endChar": 64
+      },
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7a4b627_a2358f87",
         "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
         "patchSetId": 1
@@ -13,6 +36,29 @@
       "writtenOn": "2017-08-16T01:40:03Z",
       "side": 1,
       "message": "I think you need to get a list of all Operation names that currently have ongoing requests and not update their state... I have a CL with a method for that on PrefetchNetworkRequestFactory.",
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1bfbfe_0a5d56b2",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T18:08:57Z",
+      "side": 1,
+      "message": "same.\n\nHere is how you use it:\nhttps://chromium.googlesource.com/chromium/src/+/e52fea44724e9de0b8b480ddb6ba3ca0737a4966/components/offline_pages/core/prefetch/store/README.md",
+      "range": {
+        "startLine": 32,
+        "startChar": 61,
+        "endLine": 32,
+        "endChar": 63
+      },
       "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
