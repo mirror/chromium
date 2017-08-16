@@ -16,6 +16,24 @@
       "revId": "ca40e53ed5bbe76697662f382083956d1dd2e25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77367f7_5e97b9b9",
+        "filename": "content/browser/loader/resource_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-16T02:18:42Z",
+      "side": 1,
+      "message": "Humm...\n\nAccording to the carsh/5988711fc2920fc3, it is crashing while accessing ResourceRequestInfoImpl::detachable_handler().\nThis means that loader.second-\u003eGetRequestInfo() returned nullptr.\n\nBut, is it possible??",
+      "parentUuid": "84714a17_0d7329cb",
+      "revId": "ca40e53ed5bbe76697662f382083956d1dd2e25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
