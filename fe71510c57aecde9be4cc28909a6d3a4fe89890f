@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ac3caa_8fd4a9ec",
+        "filename": "ash/system/power/tray_power.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-16T08:30:32Z",
+      "side": 0,
+      "message": "Is IDR_AURA_NOTIFICATION_LOW_POWER_CHARGER still in use?",
+      "range": {
+        "startLine": 229,
+        "startChar": 25,
+        "endLine": 229,
+        "endChar": 64
+      },
+      "revId": "fe71510c57aecde9be4cc28909a6d3a4fe89890f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
