@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e5b7e35_b8446008",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T08:49:27Z",
+      "side": 1,
+      "message": "let\u0027s put these inside async_test as they\u0027re not used by anyone else",
+      "revId": "8574f7621b66a7e644fa4bf91fc7588b166c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
