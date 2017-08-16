@@ -11,7 +11,10 @@ namespace content {
 TouchSelectionControllerClientManagerAndroid::
     TouchSelectionControllerClientManagerAndroid(
         RenderWidgetHostViewAndroid* rwhv)
-    : rwhv_(rwhv), active_client_(rwhv), page_scale_factor_(1.f) {
+    : rwhv_(rwhv),
+      active_client_(rwhv),
+      page_scale_factor_(1.f),
+      device_scale_factor_(1.f) {
   DCHECK(rwhv_);
 }
 
@@ -24,6 +27,11 @@ TouchSelectionControllerClientManagerAndroid::
 void TouchSelectionControllerClientManagerAndroid::SetPageScaleFactor(
     float page_scale_factor) {
   page_scale_factor_ = page_scale_factor;
+}
+
+void TouchSelectionControllerClientManagerAndroid::SetDeviceScaleFactor(
+    float device_scale_factor) {
+  device_scale_factor_ = device_scale_factor;
 }
 
 namespace {
@@ -67,6 +75,7 @@ void TouchSelectionControllerClientManagerAndroid::UpdateClientSelectionBounds(
   // Notify TouchSelectionController if anything should change here. Only
   // update if the client is different and not making a change to empty, or
   // is the same client.
+  GetTouchSelectionController()->SetDeviceScaleFactor(device_scale_factor_);
   GetTouchSelectionController()->OnSelectionBoundsChanged(
       manager_selection_start_, manager_selection_end_);
 }

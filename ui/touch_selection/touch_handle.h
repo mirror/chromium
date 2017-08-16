@@ -124,6 +124,10 @@ class UI_TOUCH_SELECTION_EXPORT TouchHandle : public TouchSelectionDraggable {
   TouchHandleOrientation orientation() const { return orientation_; }
   float alpha() const { return alpha_; }
 
+  void SetDeviceScaleFactor(float device_scale_factor) {
+    device_scale_factor_ = device_scale_factor;
+  }
+
  private:
   gfx::PointF ComputeHandleOrigin() const;
   void BeginDrag();
@@ -165,6 +169,8 @@ class UI_TOUCH_SELECTION_EXPORT TouchHandle : public TouchSelectionDraggable {
   bool mirror_vertical_;
   bool mirror_horizontal_;
   float handle_horizontal_padding_;
+
+  float device_scale_factor_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchHandle);
 };

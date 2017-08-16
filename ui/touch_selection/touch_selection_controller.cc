@@ -65,8 +65,8 @@ TouchSelectionController::TouchSelectionController(
       longpress_drag_selector_(this),
       selection_handle_dragged_(false),
       consume_touch_sequence_(false),
-      show_touch_handles_(true)
-{
+      show_touch_handles_(true),
+      device_scale_factor_(1.f) {
   DCHECK(client_);
 }
 
@@ -539,11 +539,14 @@ void TouchSelectionController::DeactivateSelection() {
 void TouchSelectionController::UpdateHandleLayoutIfNecessary() {
   if (active_status_ == INSERTION_ACTIVE) {
     DCHECK(insertion_handle_);
+    insertion_handle_->SetDeviceScaleFactor(device_scale_factor_);
     insertion_handle_->UpdateHandleLayout();
   } else if (active_status_ == SELECTION_ACTIVE) {
     DCHECK(start_selection_handle_);
     DCHECK(end_selection_handle_);
+    start_selection_handle_->SetDeviceScaleFactor(device_scale_factor_);
     start_selection_handle_->UpdateHandleLayout();
+    end_selection_handle_->SetDeviceScaleFactor(device_scale_factor_);
     end_selection_handle_->UpdateHandleLayout();
   }
 }

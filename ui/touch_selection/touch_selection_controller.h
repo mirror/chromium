@@ -129,6 +129,10 @@ class UI_TOUCH_SELECTION_EXPORT TouchSelectionController
 
   ActiveStatus active_status() const { return active_status_; }
 
+  void SetDeviceScaleFactor(float device_scale_factor) {
+    device_scale_factor_ = device_scale_factor;
+  }
+
  private:
   friend class TouchSelectionControllerTestApi;
 
@@ -218,6 +222,8 @@ class UI_TOUCH_SELECTION_EXPORT TouchSelectionController
   bool consume_touch_sequence_;
 
   bool show_touch_handles_;
+
+  float device_scale_factor_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchSelectionController);
 };

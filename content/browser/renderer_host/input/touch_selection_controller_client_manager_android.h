@@ -22,6 +22,7 @@ class TouchSelectionControllerClientManagerAndroid
       RenderWidgetHostViewAndroid* rwhv);
   ~TouchSelectionControllerClientManagerAndroid() override;
   void SetPageScaleFactor(float page_scale_factor);
+  void SetDeviceScaleFactor(float device_scale_factor);
   float page_scale_factor() { return page_scale_factor_; }
 
   // TouchSelectionControllerClientManager implementation.
@@ -50,6 +51,7 @@ class TouchSelectionControllerClientManagerAndroid
   RenderWidgetHostViewAndroid* rwhv_;
   TouchSelectionControllerClient* active_client_;
   float page_scale_factor_;
+  float device_scale_factor_;
   gfx::SelectionBound manager_selection_start_;
   gfx::SelectionBound manager_selection_end_;
   base::ObserverList<TouchSelectionControllerClientManager::Observer>

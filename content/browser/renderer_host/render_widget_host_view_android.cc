@@ -1508,6 +1508,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   if (touch_selection_controller_) {
     DCHECK(touch_selection_controller_client_manager_);
+    touch_selection_controller_client_manager_->SetDeviceScaleFactor(dip_scale);
     touch_selection_controller_client_manager_->UpdateClientSelectionBounds(
         frame_metadata.selection.start, frame_metadata.selection.end, this,
         nullptr);

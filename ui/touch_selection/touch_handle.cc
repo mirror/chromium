@@ -79,7 +79,8 @@ TouchHandle::TouchHandle(TouchHandleClient* client,
       is_drag_within_tap_region_(false),
       is_handle_layout_update_required_(false),
       mirror_vertical_(false),
-      mirror_horizontal_(false) {
+      mirror_horizontal_(false),
+      device_scale_factor_(1.f) {
   DCHECK_NE(orientation, TouchHandleOrientation::UNDEFINED);
   drawable_->SetEnabled(enabled_);
   drawable_->SetOrientation(orientation_, false, false);
@@ -329,6 +330,7 @@ gfx::PointF TouchHandle::ComputeHandleOrigin() const {
       break;
   };
 
+  focus.Scale(1.f / device_scale_factor_);
   return focus - gfx::Vector2dF(focal_offset_x, focal_offset_y);
 }
 
