@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bafcb20_77f6a591",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-16T23:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb25cc13_e2658816",
+      "range": {
+        "startLine": 115,
+        "startChar": 56,
+        "endLine": 115,
+        "endChar": 72
+      },
+      "revId": "be0f48b168b5c19af0ad4a5f11cd73ac1fbfaa43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ffabdac_2cb4c702",
         "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_browsertest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3193edf5_3b37a1c1",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-16T23:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ffabdac_2cb4c702",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "be0f48b168b5c19af0ad4a5f11cd73ac1fbfaa43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c8ab11c_c7b11d50",
         "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-16T22:04:17Z",
       "side": 1,
       "message": "Why the desire to store it as a uintptr_t? why not use a WebContents*?",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "be0f48b168b5c19af0ad4a5f11cd73ac1fbfaa43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98ca116_d73a8046",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-16T23:20:08Z",
+      "side": 1,
+      "message": "Changed to |WebContents*|.\n\nThe original idea was to make sure that we don\u0027t need to worry about it\u0027s lifetime, see:\nhttps://docs.google.com/document/d/1DuZDnpxx8zppVl9IY__teeMnJ3Vbwgds1gAps1vqU3U/edit?disco\u003dAAAABOWyBp8",
+      "parentUuid": "2c8ab11c_c7b11d50",
       "range": {
         "startLine": 91,
         "startChar": 12,
