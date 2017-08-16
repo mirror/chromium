@@ -12,13 +12,13 @@
 #include "media/base/media_switches.h"
 #include "third_party/libyuv/include/libyuv.h"
 
-#if defined(OS_ANDROID)
-#include "base/android/build_info.h"
-#include "media/base/android/media_codec_util.h"
-#endif
-
 #if !defined(MEDIA_DISABLE_FFMPEG)
-#include "media/ffmpeg/ffmpeg_common.h"
+#include "third_party/ffmpeg/ffmpeg_features.h"
+extern "C" {
+#include <libavutil/cpu.h>
+#include <libavutil/log.h>
+#include <libavutil/mem.h>
+}
 #endif
 
 namespace media {
