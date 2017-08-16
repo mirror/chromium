@@ -8,9 +8,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#include <vector>
+
 @protocol ClientKeyboardDelegate<NSObject>
-- (void)clientKeyboardShouldSend:(NSString*)text;
-- (void)clientKeyboardShouldDelete;
+- (void)clientKeyboardShouldSend:(NSString*)text
+                       modifiers:(const std::vector<uint32_t>&)modifiers;
+- (void)clientKeyboardShouldDelete:(const std::vector<uint32_t>&)modifiers;
+- (void)clientKeyboardShouldSendKeyCombination:
+    (const std::vector<uint32_t>&)combination;
 @end
 
 // A class for capturing keyboard inputs and forwarding them to the delegate.
