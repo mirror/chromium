@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc11f07c_e9b77c43",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64076,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T07:05:26Z",
+      "side": 1,
+      "message": "I believe UMA team prefers to reuse an existing top-level UMA  instead of adding a new one, this seems to add a new one \"RenderProcessHost\". Is there an existing one we can use instead?",
+      "range": {
+        "startLine": 64076,
+        "startChar": 17,
+        "endLine": 64076,
+        "endChar": 34
+      },
+      "revId": "af607258992fac2d976bd46c9e55a63908666dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a6bbbd_d1fde949",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64079,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T07:05:26Z",
+      "side": 1,
+      "message": "nit: Can remove \"Track\", most UMA descriptions are written in the form like \"The time spent\", \"How long\", etc.",
+      "range": {
+        "startLine": 64079,
+        "startChar": 4,
+        "endLine": 64079,
+        "endChar": 18
+      },
+      "revId": "af607258992fac2d976bd46c9e55a63908666dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
