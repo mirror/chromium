@@ -96,8 +96,15 @@ void DynamicsCompressorHandler::Process(size_t frames_to_process) {
 
   dynamics_compressor_->Process(Input(0).Bus(), output_bus, frames_to_process);
 
-  reduction_ =
-      dynamics_compressor_->ParameterValue(DynamicsCompressor::kParamReduction);
+  // Main thread (via |ClearInternalStateWhenDisabled()|) might be resetting
+  // the reduction value. If we can't get the lock, it's ok skip this because
+  // |ClearInternalStateWhenDisabled()| is setting the value anyway. And we'll
+  // update it later here if we still need to.
+  MutexTryLocker try_locker(process_lock_);
+  if (try_locker.Locked()) {
+    reduction_ = dynamics_compressor_->ParameterValue(
+        DynamicsCompressor::kParamReduction);
+  }
 }
 
 void DynamicsCompressorHandler::ProcessOnlyAudioParams(
@@ -124,7 +131,14 @@ void DynamicsCompressorHandler::Initialize() {
 }
 
 void DynamicsCompressorHandler::ClearInternalStateWhenDisabled() {
-  reduction_ = 0;
+  if (IsMainThread()) {
+    // The audio thread could be changing this too, so grab a process lock
+    MutexLocker process_locker(process_lock_);
+    reduction_ = 0;
+  } else {
+    // Not on main thrad, so we can set this directly.
+    reduction_ = 0;
+  }
 }
 
 double DynamicsCompressorHandler::TailTime() const {

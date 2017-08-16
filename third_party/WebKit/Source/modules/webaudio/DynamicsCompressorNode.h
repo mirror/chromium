@@ -82,6 +82,11 @@ class MODULES_EXPORT DynamicsCompressorHandler final : public AudioHandler {
   RefPtr<AudioParamHandler> release_;
 
   FRIEND_TEST_ALL_PREFIXES(DynamicsCompressorNodeTest, ProcessorLifetime);
+
+  // Synchronize |Process()| with setting or resetting the
+  // |reduction_| value.  The main thread can do this via
+  // |ClearInternalStateWhenDisabled()|.
+  mutable Mutex process_lock_;
 };
 
 class MODULES_EXPORT DynamicsCompressorNode final : public AudioNode {
