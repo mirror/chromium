@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8f93b8f_504822f1",
+        "filename": "chrome/browser/extensions/content_script_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-16T20:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c04d31_3c4bdf2a",
+      "range": {
+        "startLine": 448,
+        "startChar": 32,
+        "endLine": 448,
+        "endChar": 54
+      },
+      "revId": "b1f4253ad28ab5d9f31a2ee3ba7eace43c50f513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba245a1_9f841711",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 2
