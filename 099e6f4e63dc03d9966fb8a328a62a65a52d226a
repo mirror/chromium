@@ -46,6 +46,30 @@
       "revId": "099e6f4e63dc03d9966fb8a328a62a65a52d226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a1310d_a7f11bd8",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-08-16T17:36:02Z",
+      "side": 1,
+      "message": "Okay - if this is what we want: Fine with me. Just wanted to make sure.",
+      "parentUuid": "e400a155_20dec366",
+      "range": {
+        "startLine": 249,
+        "startChar": 33,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "099e6f4e63dc03d9966fb8a328a62a65a52d226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
