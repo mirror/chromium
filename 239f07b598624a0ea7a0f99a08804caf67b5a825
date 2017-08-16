@@ -2,6 +2,273 @@
   "comments": [
     {
       "key": {
+        "uuid": "e69ece33_7d28f601",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "Can this be -(NSMenu*)makeEmptySubmenu; ?",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6b6e37_2498d1f7",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "not your doing, but this C-style cast (i.e. `(ui::SimpleMenuModel*)`) shouldn\u0027t be necessary",
+      "range": {
+        "startLine": 162,
+        "startChar": 36,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620bd5b5_3123ab49",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "We try to avoid autorelease except when returning from a method. Assuming `makeEmptySubmenu` works, this should look something like\n\n  scoped_nsobject\u003cNSMenu\u003e submenu([[NSMenu alloc] init..]);\n  [submenu addItemWithTitle:...];\n  [[submenu itemAtIndex:0] setEnabled:NO];\n  return submenu.autorelease();",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cabc25_74646091",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4551a18_8fe2380a",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "if you like, `items_.emplace_back({true, command_id})`",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30883b9e_36b5b7c5",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53161a3d_8fc845c2",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "move below type declarations per go/cppguide#Declaration_Order",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48772e23_81d5a268",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "using",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3c37c6_9a01e412",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(1, ..)  (i.e. order args as `expected, actual` so the failure messages are more readable). More below (in the other test cases)",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfbc4b1_f2480c85",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "these shouldn\u0027t be references (technically this works, but assigning rvalues to const-ref lvalues is an obscure part of the C++ standard)",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6c2cfc_3b0484a9",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "We\u0027re allowed to assume US-english most of the time. I think the test is clearer with something like\n\n  EXPECT_NSEQ(@\"(empty)\", [submenu itemAtIndex:0]);\n\n(and delete the 6 lines above)",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67793d8_94668c8a",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "nit: comment before the test case describing its purpose",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffbb8c4_8800a649",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "same - EXPECT_NSEQ(@\"(empty)\",...",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df27cc3_323ad99b",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "nit: comment before",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d3e560_1c85b0d0",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T01:10:52Z",
+      "side": 1,
+      "message": "menu -\u003e controller (or menu_controller)",
+      "range": {
+        "startLine": 393,
+        "startChar": 40,
+        "endLine": 393,
+        "endChar": 44
+      },
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd24dff1_6db7efcd",
         "filename": "ui/base/models/menu_model.h",
         "patchSetId": 3
