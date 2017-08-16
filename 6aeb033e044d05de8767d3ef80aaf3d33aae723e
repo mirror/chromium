@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3dbceb2c_127fd646",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T16:51:02Z",
+      "side": 1,
+      "message": "What about multiple test cases that run new TaskSchedulers per test case in a single process?\n\nThis is akin to support we have like JoinForTesting. We\u0027ll need a ClearForTesting here.",
+      "parentUuid": "63650048_b494fbcb",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2536f4a0_40bde212",
         "filename": "base/threading/scoped_blocking_call.cc",
         "patchSetId": 11
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Do you mean add a BlockingObserver* DCHECK member so that the destructor can verify that the BlockingObserver never changed btwn the constructor and destructor?\n\nLine 27 does ensure that the BlockingObserver doesn\u0027t change, but I can add that if you still think it\u0027s important.",
       "parentUuid": "2536f4a0_40bde212",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd98a6af_96fe5090",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T16:51:02Z",
+      "side": 1,
+      "message": "No DCHECK. We add a member variable to hold the blocking_observer obtained in the constructor and use that here.\n\nThis gets rid of a condition where a BlockingObserver is somehow registered in the middle of a blocking call.",
+      "parentUuid": "b086083f_c378b68f",
       "range": {
         "startLine": 52,
         "startChar": 2,
