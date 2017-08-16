@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b61db36f_872f2783",
+        "filename": "sandbox/win/tests/integration_tests/cfi_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-16T22:47:42Z",
+      "side": 1,
+      "message": "lot of scary code here - are you not able to use functions in pe_image.h instead by passing __ImageBase to that? PEImage constructor can take a void* for image base.",
+      "revId": "331402c7bd98adafeee518f18a5bebbffa404dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84ab479_1d79fe5e",
+        "filename": "sandbox/win/tests/integration_tests/cfi_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-16T22:47:42Z",
+      "side": 1,
+      "message": "I think chromium style is to prefer DWORD{IMAGE_NT_SIGNATURE} here. \n\nhttps://google.github.io/styleguide/cppguide.html#Casting \"Use brace initialization to convert arithmetic types\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "331402c7bd98adafeee518f18a5bebbffa404dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
