@@ -18,6 +18,7 @@
 #include "components/download/internal/client_set.h"
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
+#include "components/download/internal/entry_utils.h"
 #include "components/download/internal/file_monitor.h"
 #include "components/download/internal/model_impl.h"
 #include "components/download/internal/scheduler/scheduler.h"
@@ -393,11 +394,13 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitWithExistingDownload) {
       test::BuildEntry(DownloadClient::INVALID, base::GenerateGUID());
 
   std::vector<Entry> entries = {entry1, entry2, entry3};
-  std::vector<std::string> expected_guids = {entry1.guid, entry2.guid};
+  std::vector<DownloadMetaData> expected_downloads = {
+      util::BuildDownloadMetaData(&entry1),
+      util::BuildDownloadMetaData(&entry2)};
 
   EXPECT_CALL(*client_,
-              OnServiceInitialized(
-                  false, testing::UnorderedElementsAreArray(expected_guids)));
+              OnServiceInitialized(false, testing::UnorderedElementsAreArray(
+                                              expected_downloads)));
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
   EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 

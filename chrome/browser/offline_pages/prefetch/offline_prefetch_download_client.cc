@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "chrome/browser/download/download_service_factory.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
+#include "components/download/public/download_metadata.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 
@@ -20,7 +21,7 @@ OfflinePrefetchDownloadClient::~OfflinePrefetchDownloadClient() = default;
 
 void OfflinePrefetchDownloadClient::OnServiceInitialized(
     bool state_lost,
-    const std::vector<std::string>& outstanding_download_guids) {
+    const std::vector<download::DownloadMetaData>& downloads) {
   // TODO(jianli): Remove orphaned downloads.
   // TODO(jianli, dtrainor): Handle service corruption and recovery if
   // |state_lost| is |true|.

@@ -14,6 +14,8 @@
 
 namespace download {
 
+struct DownloadMetaData;
+
 // The Client interface required by any feature that wants to start a download
 // through the DownloadService.  Should be registered immediately at startup
 // when the DownloadService is created (see the factory).
@@ -60,14 +62,15 @@ class Client {
   virtual ~Client() = default;
 
   // Called when the DownloadService is initialized and ready to be interacted
-  // with.  |outstanding_download_guids| is a list of all downloads the
-  // DownloadService is aware of that are associated with this Client.  If
-  // |state_lost| is |true|, the service ran into an error initializing and had
-  // to destroy all internal persisted state.  At this point any saved files
+  // with.  |downloads| is a list of all downloads the DownloadService is aware
+  // of that are associated with this Client, including in-progress downloads
+  // and recently completed downloads.
+  // If |state_lost| is |true|, the service ran into an error initializing and
+  // had to destroy all internal persisted state.  At this point any saved files
   // might not be available and any previously scheduled downloads are gone.
   virtual void OnServiceInitialized(
       bool state_lost,
-      const std::vector<std::string>& outstanding_download_guids) = 0;
+      const std::vector<DownloadMetaData>& downloads) = 0;
 
   // Called when the DownloadService fails to initialize and should not be used.
   virtual void OnServiceUnavailable() = 0;
