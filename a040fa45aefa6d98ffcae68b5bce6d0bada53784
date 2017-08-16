@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e1eff75_b05121c6",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:31:37Z",
+      "side": 1,
+      "message": "Rebase leftover?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "a040fa45aefa6d98ffcae68b5bce6d0bada53784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c95824_5b189980",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:31:37Z",
+      "side": 1,
+      "message": "Generally a factory would remain in a common place (//components/feedback/feedback_uploader_factory.h), and only *this* function would be implemented in //chrome. So an extension API could build and use a FeedbackUploader without worrying whether it\u0027s implemented in Chrome or elsewhere (ie, appshell).\n\nSo, could this factory class stay in //components?",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "a040fa45aefa6d98ffcae68b5bce6d0bada53784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e8e2e9_1af3fff8",
+        "filename": "components/feedback/feedback_data.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:31:37Z",
+      "side": 1,
+      "message": "can this be OnceCallback?",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "a040fa45aefa6d98ffcae68b5bce6d0bada53784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

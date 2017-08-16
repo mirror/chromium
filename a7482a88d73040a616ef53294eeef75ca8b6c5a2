@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d5205ff_9593e8d8",
+        "filename": "components/feedback/feedback_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:31:37Z",
+      "side": 0,
+      "message": "This code isn\u0027t Chrome-dependent, why does it need to be moved into Chrome?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "a7482a88d73040a616ef53294eeef75ca8b6c5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

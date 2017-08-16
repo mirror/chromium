@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "df616421_164f0a81",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T23:31:37Z",
+      "side": 1,
+      "message": "My concern from AppShell is that now I can\u0027t upload feedback reports since this was moved to Chrome :-)\n\nThe new FeedbackUploaderFactory doesn\u0027t seem to declare a dependency on ProfileOAuth2TokenServiceFactory/SigninManagerFactory. Is the Chrome dependency limited to FeedbackUploaderChrome?",
+      "parentUuid": "5bba910c_07a8bd0d",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 58
+      },
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df2d01f_cd82aeaa",
         "filename": "components/feedback/feedback_uploader.h",
         "patchSetId": 6
