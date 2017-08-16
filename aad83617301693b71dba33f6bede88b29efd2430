@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c059d63d_e2316315",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-16T08:09:40Z",
+      "side": 1,
+      "message": "Yes. It\u0027s because module scripts are not supported yet. Updated.",
+      "parentUuid": "6a727fc1_27ea1299",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fecd95db_efde4f6c",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
         "patchSetId": 3
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "bfe12498_5634c7d9",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-16T08:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d1166c5_0b691740",
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6c34029_2f4a5c32",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-16T08:09:40Z",
+      "side": 1,
+      "message": "This would be correct. This is an argument to get a returned value. If you\u0027d like to do something special when an error happens, you can get the ErrorEvent via this argument and lazily dispatch it. If you pass a nullptr and an error happens, Evaluate() directly dispatches the event.\n\nBy the way, we could the argument because it\u0027s used only by importScripts() and immediately passed back to WorkerOrWorkletController::RethrowExceptionFromImportedScript(). I\u0027ll make a separate CL.",
+      "parentUuid": "fecd95db_efde4f6c",
+      "range": {
+        "startLine": 105,
+        "startChar": 36,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb16d6_68ae466b",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "aad83617301693b71dba33f6bede88b29efd2430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54bf8162_abf74614",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-16T08:09:40Z",
+      "side": 1,
+      "message": "Ohh... good catch! Done.",
+      "parentUuid": "40eb16d6_68ae466b",
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +209,54 @@
       "revId": "aad83617301693b71dba33f6bede88b29efd2430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33587429_84993045",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-16T08:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00573b1_6406f5f1",
+      "range": {
+        "startLine": 33,
+        "startChar": 15,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d4ca27b_e3f60641",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-16T08:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8de43dc8_4b608f0b",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
