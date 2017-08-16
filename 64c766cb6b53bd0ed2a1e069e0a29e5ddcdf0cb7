@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "16e087a3_7228d19c",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:18:14Z",
+      "side": 1,
+      "message": "\u003e There is an actual separate test which ensures that Mojo kills the renderer process if ReportBadMessage is called during processing of an interface method call.\n\nFor reference, which test is that?\n\n\u003e \n\u003e Because I am acting as a man-in-the-middle on the interface, the connection to the real StoragePartitionService is lacking the process id, so Mojo cannot kill the process. However, the call that does process termination works with callbacks and if a generic error handler is registered, it will call it. \n\u003e \n\u003e The goal of this part is to register this default callback, which basically restores the process termination behavior.\n\u003e \n\u003e I looked at alternatives, but couldn\u0027t find a good one. Without some support for man-in-the-middle type testing in Mojo, the only way is to add testing hooks in the actual StoragePartitionImpl code. I don\u0027t think that approach is the right way to go, as I would like us to test the real implementation without it branching on test hooks and prefer this workaround. We also have a thread on chromium-mojo@ to see if there is a way to solve this a bit more generically.\n\nMaybe Daniel\u0027s idea for the routing table?  :)  (I don\u0027t have any understanding of the Mojo code here, but I\u0027m hoping to find something where the test mimics an exploited renderer talking to a real browser process as much as possible.)",
+      "parentUuid": "8bfb253c_5eb8c27a",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89daa50_f88a096c",
         "filename": "content/browser/storage_partition_impl.cc",
         "patchSetId": 5
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "It calls ReceivedBadMessage as far as I\u0027ve traced it, but doesn\u0027t specify a different termination reason (I think it maps it all to RPH_MOJO_PROCESS_ERROR \u003d 123). Maybe a good bug to file to allow for the reason code to be plumbed through.",
       "parentUuid": "f89daa50_f88a096c",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35d6eb3_5027de38",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:18:14Z",
+      "side": 1,
+      "message": "Oh dear.  From past experience, that means any bug for tracking renderer kill 123 is going to become a dumping ground for lots of random types of renderer kills.  That will make it extraordinarily difficult to triage/track/close the bug because there will always be new instances with different stacks, and it\u0027s hard to tell from the crash numbers which ones are the most pressing.\n\nWe put a lot of effort into getting unique magic signatures for different types of renderer kills in ReceivedBadMessage.  I think it\u0027s going to be critical to find a way to support something like that for Mojo.",
+      "parentUuid": "be416f46_a94ef8e3",
       "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
