@@ -22,6 +22,30 @@
       "revId": "10bb8f84df6ae32ba0a547f5e9b477e0cdc6319e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e52df2_d96917a4",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-16T16:42:52Z",
+      "side": 0,
+      "message": "The original behavior is that either speech button or close button could show. Since now speech button is removed from new launcher, I think we could remove this logic here.",
+      "parentUuid": "4ce561f1_8c10457e",
+      "range": {
+        "startLine": 509,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 40
+      },
+      "revId": "10bb8f84df6ae32ba0a547f5e9b477e0cdc6319e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
