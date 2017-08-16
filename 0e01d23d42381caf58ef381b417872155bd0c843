@@ -88,6 +88,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec33a76_31993285",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-16T02:06:49Z",
+      "side": 1,
+      "message": "For the format: We will have functions that resolve the actual platform-dependent format for SCANOUT_CAMERA_READ_WRITE. On Chrome OS the function will basically try to allocate each possible format and see which one succeed. We can do this because we have only one format per platform that supports SCANOUT_CAMERA_READ_WRITE usage.\n\nFor buffer allocation: Right, Chrome is going to allocate the buffer. The camera HAL needs the client to provide the buffers.",
+      "parentUuid": "e18a9c8e_2a333565",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
