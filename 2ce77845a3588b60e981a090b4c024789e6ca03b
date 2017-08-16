@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fa7ee81_fef9d13e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T23:09:36Z",
+      "side": 1,
+      "message": "Done. Comment in isSatisfied() should explain the wait condition correctly.",
+      "parentUuid": "555df4c5_3f0d6f83",
+      "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0973ab8a_12177288",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6e14305e_6b1b4c7f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T23:09:36Z",
+      "side": 1,
+      "message": "Done. Thanks for the catch.",
+      "parentUuid": "0973ab8a_12177288",
+      "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9de6537_609e97b2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenThemeColorTest.java",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8775e6_ad0c1c02",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenThemeColorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T23:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9de6537_609e97b2",
+      "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
