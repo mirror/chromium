@@ -1444,13 +1444,15 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, RestorePinnedTabs) {
   // Write out the pinned tabs.
   PinnedTabCodec::WritePinnedTabs(browser()->profile());
 
-  // Simulate launching again.
+  // Close the browser window.
+  browser()->window()->Close();
+
+  // Launch again with the same profile.
   base::CommandLine dummy(base::CommandLine::NO_PROGRAM);
   chrome::startup::IsFirstRun first_run = first_run::IsChromeFirstRun() ?
       chrome::startup::IS_FIRST_RUN : chrome::startup::IS_NOT_FIRST_RUN;
   StartupBrowserCreatorImpl launch(base::FilePath(), dummy, first_run);
-  launch.profile_ = browser()->profile();
-  launch.ProcessStartupURLs(std::vector<GURL>());
+  launch.Launch(browser()->profile(), std::vector<GURL>(), false);
 
   // The launch should have created a new browser.
   ASSERT_EQ(2u, chrome::GetBrowserCount(browser()->profile()));
@@ -1458,11 +1460,12 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, RestorePinnedTabs) {
   // Find the new browser.
   Browser* new_browser = NULL;
   for (auto* b : *BrowserList::GetInstance()) {
-    if (b != browser())
+    if (b != browser()) {
       new_browser = b;
+      break;
+    }
   }
   ASSERT_TRUE(new_browser);
-  ASSERT_TRUE(new_browser != browser());
 
   // We should get back an additional tab for the app, and another for the
   // default home page.
@@ -1473,9 +1476,6 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, RestorePinnedTabs) {
   EXPECT_TRUE(new_model->IsTabPinned(0));
   EXPECT_TRUE(new_model->IsTabPinned(1));
   EXPECT_FALSE(new_model->IsTabPinned(2));
-
-  EXPECT_EQ(GURL(chrome::kChromeUINewTabURL),
-            new_model->GetWebContentsAt(2)->GetURL());
 }
 #endif  // !defined(OS_CHROMEOS)
 

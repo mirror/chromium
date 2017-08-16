@@ -493,15 +493,6 @@ void StartupBrowserCreator::RegisterProfilePrefs(PrefRegistrySimple* registry) {
 }
 
 // static
-bool StartupBrowserCreator::UseConsolidatedFlow() {
-#if defined(OS_WIN)
-  if (base::win::GetVersion() >= base::win::VERSION_WIN10)
-    return base::FeatureList::IsEnabled(features::kEnableWelcomeWin10);
-#endif  // defined(OS_WIN)
-  return base::FeatureList::IsEnabled(features::kUseConsolidatedStartupFlow);
-}
-
-// static
 std::vector<GURL> StartupBrowserCreator::GetURLsFromCommandLine(
     const base::CommandLine& command_line,
     const base::FilePath& cur_dir,
