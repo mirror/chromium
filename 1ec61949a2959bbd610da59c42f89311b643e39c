@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fff7390_e51b1553",
+        "filename": "chrome/browser/embedded_ui_service_info_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T15:00:09Z",
+      "side": 1,
+      "message": "no (c) (see style guide)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "1ec61949a2959bbd610da59c42f89311b643e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2d53eb_764620e1",
+        "filename": "chrome/browser/embedded_ui_service_info_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T15:00:09Z",
+      "side": 1,
+      "message": "Don\u0027t use a namespace here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "1ec61949a2959bbd610da59c42f89311b643e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5092e4c8_0e457cb4",
+        "filename": "chrome/browser/embedded_ui_service_info_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T15:00:09Z",
+      "side": 1,
+      "message": "Please add a description.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "1ec61949a2959bbd610da59c42f89311b643e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
