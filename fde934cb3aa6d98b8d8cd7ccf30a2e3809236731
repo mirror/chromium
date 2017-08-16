@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "ce846232_48acaf65",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "Don\u0027t think this include is necessary.",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cb7b7d_cfb2a295",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "This include isn\u0027t used.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c04d463_7d6d4c89",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "Don\u0027t think this include is necessary",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4205b8bf_ceb119e2",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "I think you can remove this include.",
+      "range": {
+        "startLine": 16,
+        "startChar": 40,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5905b74_3c2805a3",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "Is the only purpose for this observer to ensure that if the WebContents which started this installation stays alive? Can you add a brief comment (otherwise this looks very mysterious at first glance: a do nothing observer!)\n\nOtherwise consider giving this a more descriptive class name: LifetimeObserver or something like that.",
+      "range": {
+        "startLine": 82,
+        "startChar": 19,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2e63be6_986e9b65",
         "filename": "chrome/browser/android/webapk/webapk_install_service.h",
         "patchSetId": 18
@@ -18,6 +133,87 @@
         "startChar": 13,
         "endLine": 84,
         "endChar": 21
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1d9b93_e8273fa6",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "I think it\u0027s okay: WebContentsImpl::~WebContentsImpl explicitly calls ResetWebContents on each observer which wipes the pointer and stops observation.",
+      "parentUuid": "b2e63be6_986e9b65",
+      "range": {
+        "startLine": 84,
+        "startChar": 13,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4104b5_3ca483f5",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN? Or DISALLOW_IMPLICIT_CONSTRUCTORS?",
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8831744d_3e34f1b5",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "Call the variable observer",
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e8943d_764b6de2",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:26:33Z",
+      "side": 1,
+      "message": "Nit: fix the indentation.",
+      "range": {
+        "startLine": 311,
+        "startChar": 5,
+        "endLine": 316,
+        "endChar": 5
       },
       "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
