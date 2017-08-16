@@ -166,6 +166,42 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
     View* move_view;
   };
 
+  struct LayerOffsetData {
+    LayerOffsetData(float device_scale_factor)
+        : offset(gfx::Vector2d()), device_scale_factor(device_scale_factor) {}
+
+    LayerOffsetData(const gfx::Vector2d& offset, float device_scale_factor)
+        : device_scale_factor(device_scale_factor) {
+      AddOffset(offset);
+    }
+
+    LayerOffsetData(const LayerOffsetData& other)
+        : offset(other.offset),
+          total_subpixel_offset(other.total_subpixel_offset),
+          device_scale_factor(other.device_scale_factor) {}
+
+    void AddOffset(const gfx::Vector2d& offset_to_parent) {
+      offset += offset_to_parent;
+      gfx::Vector2dF fractional_pixel_offset(
+          offset_to_parent.x() * device_scale_factor,
+          offset_to_parent.y() * device_scale_factor);
+      gfx::Vector2dF integral_pixel_offset(
+          gfx::ToRoundedInt(fractional_pixel_offset.x()),
+          gfx::ToRoundedInt(fractional_pixel_offset.y()));
+      total_subpixel_offset += integral_pixel_offset - fractional_pixel_offset;
+    }
+
+    // Offset information
+    gfx::Vector2d offset;
+
+    // The subpixel offset information associated with the |offset| for this
+    // object.
+    gfx::Vector2dF total_subpixel_offset;
+
+    // The device scale factor for which the subpixel offset is being computed.
+    float device_scale_factor;
+  };
+
   // Creation and lifetime -----------------------------------------------------
 
   View();
@@ -1179,7 +1215,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
 
   // Returns the offset from this view to the nearest ancestor with a layer. If
   // |layer_parent| is non-NULL it is set to the nearest ancestor with a layer.
-  virtual gfx::Vector2d CalculateOffsetToAncestorWithLayer(
+  virtual LayerOffsetData CalculateOffsetToAncestorWithLayer(
       ui::Layer** layer_parent);
 
   // Updates the view's layer's parent. Called when a view is added to a view
@@ -1192,11 +1228,11 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // recurses through all children. This is used when adding a layer to an
   // existing view to make sure all descendants that have layers are parented to
   // the right layer.
-  void MoveLayerToParent(ui::Layer* parent_layer, const gfx::Point& point);
+  void MoveLayerToParent(ui::Layer* parent_layer, LayerOffsetData offset_data);
 
   // Called to update the bounds of any child layers within this View's
   // hierarchy when something happens to the hierarchy.
-  void UpdateChildLayerBounds(const gfx::Vector2d& offset);
+  void UpdateChildLayerBounds(const LayerOffsetData& offset_data);
 
   // Overridden from ui::LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override;
@@ -1422,7 +1458,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   void RemoveDescendantToNotify(View* view);
 
   // Sets the layer's bounds given in DIP coordinates.
-  void SetLayerBounds(const gfx::Rect& bounds_in_dip);
+  void SetLayerBounds(const gfx::Rect& bounds_in_dip,
+                      gfx::Vector2dF total_subpixel_offset);
 
   // Transformations -----------------------------------------------------------
 

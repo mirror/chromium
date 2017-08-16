@@ -50,6 +50,10 @@ COMPOSITOR_EXPORT void SnapLayerToPhysicalPixelBoundary(
     ui::Layer* snapped_layer,
     ui::Layer* layer_to_snap);
 
+// Returns the subpixel offset for a point at (|x|, |y|) that will be scaled by
+// a factor of |dsf|.
+COMPOSITOR_EXPORT gfx::Vector2dF ComputeSubpixelOffset(int x, int y, float dsf);
+
 }  // namespace ui
 
 #endif  // UI_COMPOSITOR_DIP_UTIL_H_
