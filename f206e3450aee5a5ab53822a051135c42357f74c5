@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "944369bf_c375acc0",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-16T05:29:16Z",
+      "side": 1,
+      "message": "Notify SWProviderContext to close SWProviderHost mojo connection.\nSeems this is necessary, otherwise some layout tests and browser_tests fail, showed by trybots result for ps#1. I\u0027m not very clear about the root cause, would you please help to elaborate more to speed up my investigation to dig deeper? Thanks!\n\nIIUC SWNetworkProvider has different lifetime with SWProviderContext, which is held as scoped_refptr\u003c\u003e by both SWNetworkProvider and WebServiceWorkerProviderImpl. So maybe we should also modify the existing comments about SWProviderContext?\n\"\n// Created and destructed on the main thread. Unless otherwise noted, all\n// methods are called on the main thread. The lifetime of this class is equals\n// to the corresponding ServiceWorkerNetworkProvider.\n\"\nat https://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_provider_context.h?rcl\u003dadda1f9b50e60b82bd26c04bcf883bf7aa3d1289\u0026l\u003d41",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
