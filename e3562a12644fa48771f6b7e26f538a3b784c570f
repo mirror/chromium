@@ -22,6 +22,30 @@
       "revId": "e3562a12644fa48771f6b7e26f538a3b784c570f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948ca284_9bafd7d3",
+        "filename": "ios/chrome/browser/web/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-16T16:55:21Z",
+      "side": 1,
+      "message": "Removed namespace ios.",
+      "parentUuid": "6adc5df8_f2cc99a0",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "e3562a12644fa48771f6b7e26f538a3b784c570f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
