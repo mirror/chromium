@@ -46,6 +46,30 @@
       "revId": "61419e7bdddeccd59ba9d8c9069e20307302ded4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09d49a5_f64829d9",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T16:36:47Z",
+      "side": 0,
+      "message": "Ack. I see. I put back the line. I decided not to change it because the comment in the header file is clear.",
+      "parentUuid": "251ba237_cbaf147e",
+      "range": {
+        "startLine": 652,
+        "startChar": 2,
+        "endLine": 652,
+        "endChar": 26
+      },
+      "revId": "61419e7bdddeccd59ba9d8c9069e20307302ded4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
