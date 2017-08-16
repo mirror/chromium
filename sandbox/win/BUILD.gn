@@ -243,6 +243,7 @@ loadable_module("sbox_integration_test_hijack_shim_dll") {
   sources = [
     "tests/integration_tests/hijack_dlls.h",
     "tests/integration_tests/hijack_shim_dll.cc",
+    "tests/integration_tests/hijack_shim_dll.def",
   ]
 
   # Implicitly linking hijack_dll as loader import resolution required.

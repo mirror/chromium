@@ -18,7 +18,7 @@ constexpr wchar_t g_hijack_shim_dll_file[] =
 constexpr wchar_t g_hijack_dlls_mutex[] = L"ChromeTestHijackDllsMutex";
 
 // Function definition for hijack shim dll.
-int CheckHijackResult(bool expect_system);
+typedef int(WINAPI* CheckHijackResultFunction)(bool expect_system);
 
 }  // namespace hijack_dlls
 
