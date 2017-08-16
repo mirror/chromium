@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d30f900b_c9453620",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T05:06:26Z",
+      "side": 1,
+      "message": "nit: maybe explain a bit why setting and getting from different threads is ok (e.g. SetRegistration is supposed to be called during initialization and would never have a race with GetRegistration)",
+      "revId": "8c1bad981aa7dc14db61e1611d57eedaed84fac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
