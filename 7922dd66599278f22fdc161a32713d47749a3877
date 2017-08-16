@@ -158,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "6394a254_64ba834a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-16T23:43:53Z",
+      "side": 1,
+      "message": "Ah yeah I guess it won\u0027t return a null handle, as it\u0027s just a pipe.",
+      "parentUuid": "17b2e5d3_4ef471d5",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 63
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31bb53d2_83dad8f8",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 9
