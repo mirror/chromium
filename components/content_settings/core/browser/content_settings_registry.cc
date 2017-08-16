@@ -190,7 +190,8 @@ void ContentSettingsRegistry::Init() {
 
   Register(CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC, "media-stream-mic",
            CONTENT_SETTING_ASK, WebsiteSettingsInfo::UNSYNCABLE,
-           WhitelistedSchemes(kChromeUIScheme, kChromeDevToolsScheme),
+           WhitelistedSchemes(kChromeUIScheme, kChromeDevToolsScheme,
+                              kChromeSearchScheme),
            ValidSettings(CONTENT_SETTING_ALLOW, CONTENT_SETTING_BLOCK,
                          CONTENT_SETTING_ASK),
            WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,

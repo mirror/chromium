@@ -44,6 +44,7 @@ class MapValueIterator {
 // content/public/common/url_constants.h to avoid complicated dependencies.
 // TODO(vabr): Get these constants through the ContentSettingsClient.
 const char kChromeDevToolsScheme[] = "chrome-devtools";
+const char kChromeSearchScheme[] = "chrome-search";
 const char kChromeUIScheme[] = "chrome";
 const char kExtensionScheme[] = "chrome-extension";
 
