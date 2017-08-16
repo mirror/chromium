@@ -84,18 +84,18 @@ public class DownloadManagerServiceTest {
             expect(MethodID.CLEAR_PENDING_DOWNLOADS, null);
         }
 
-        /**
-         * Helper method to simulate that the DownloadNotificationService is connected.
-         */
-        public void onServiceConnected() {
-            ThreadUtils.runOnUiThreadBlocking(() -> {
-                mService = new MockDownloadNotificationService();
-                mService.setContext(new AdvancedMockContext(
-                        mContext.getApplicationContext()));
-                mService.onCreate();
-            });
-            setDownloadNotificationService(mService);
-        }
+        //        /**
+        //         * Helper method to simulate that the DownloadNotificationService is connected.
+        //         */
+        //        public void onServiceConnected() {
+        //            ThreadUtils.runOnUiThreadBlocking(() -> {
+        //                mService = new MockDownloadNotificationService();
+        //                mService.setContext(new AdvancedMockContext(
+        //                        mContext.getApplicationContext()));
+        //                mService.onCreate();
+        //            });
+        //            setDownloadNotificationService(mService);
+        //        }
 
         public MockDownloadNotifier expect(MethodID method, Object param) {
             mExpectedCalls.clear();
@@ -410,7 +410,7 @@ public class DownloadManagerServiceTest {
         dService.setDownloadSnackbarController(snackbarController);
         // Try calling download completed directly.
         DownloadInfo successful = getDownloadInfo();
-        notifier.onServiceConnected();
+        //        notifier.onServiceConnected();
         notifier.expect(MethodID.DOWNLOAD_SUCCESSFUL, successful);
 
         dService.onDownloadCompleted(successful);
