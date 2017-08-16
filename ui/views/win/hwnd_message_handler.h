@@ -756,6 +756,10 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // partially or fully transparent.
   bool is_translucent_ = false;
 
+  bool is_pen_in_contact_ = false;
+  bool send_touch_for_pen_ = false;
+  int pen_mouse_down_flags_ = 0;
+
   // This is a map of the HMONITOR to full screeen window instance. It is safe
   // to keep a raw pointer to the HWNDMessageHandler instance as we track the
   // window destruction and ensure that the map is cleaned up.
