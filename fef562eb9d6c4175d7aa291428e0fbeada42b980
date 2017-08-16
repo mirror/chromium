@@ -45,6 +45,30 @@
       "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d1f914_3cdc0757",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T02:29:49Z",
+      "side": 1,
+      "message": "Yea something like this looks easier to understand, even though i think it\u0027s safe to call ActivateWaitingVersionWhenReady multiple times.\n\nI don\u0027t understand why we check running_status(). The service worker should always be running here since only the service worker can send the SkipWaiting message, unless there is a problem with IPC ordering. Does the stop message come from a Mojo message and we don\u0027t have an ordering guarantee, or something like that? If so we could make a TODO comment here.\n\nAnyway, we can just remove the running_status() check since SendMessage() also does a check for it.",
+      "parentUuid": "11df6db1_6733974a",
+      "range": {
+        "startLine": 1339,
+        "startChar": 2,
+        "endLine": 1339,
+        "endChar": 48
+      },
+      "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
