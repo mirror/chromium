@@ -142,6 +142,54 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7af7a2_a220628a",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T21:19:16Z",
+      "side": 1,
+      "message": "Or... perhaps you mean that some call-sites use TaskManager::GetCPUUsage()... which does appear to be the case (I see at least an extension API that does):",
+      "parentUuid": "a84635d0_38e1f122",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41438c8_ec03c164",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T21:19:16Z",
+      "side": 1,
+      "message": "This is a developer-facing surface, so not something which requires UX sign-off.\n\nThat said, the concern that this is presenting information that differs from what the OS Task Manager will show is a valid one; I\u0027m just not sure of a good way to explain it, beyond documenting the change in release notes.\n\nThe only call-sites I can find which use the value from Task Manager are the ChromeOS ones, which won\u0027t be affected by this change since it only changes Windows to be consistent with everything else, and the extension API - the latter can be hacked at the call-site to divide down by #processors on Windows, if we want to avoid changing it.\n\nPerhaps we should actually have this be called GetPlatformIndependentCPUUsage() permanently, for clarity?",
+      "parentUuid": "3f23d03c_b6b6fa64",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
