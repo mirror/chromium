@@ -26,6 +26,24 @@ gfx::Point DefaultScreenPositionClient::GetOriginInScreen(
   return dip_bounds.origin();
 }
 
+void DefaultScreenPositionClient::ConvertFloatPointToScreen(
+    const aura::Window* window,
+    gfx::PointF* point) {
+  const aura::Window* root_window = window->GetRootWindow();
+  aura::Window::ConvertFloatPointToTarget(window, root_window, point);
+  gfx::Point origin = GetOriginInScreen(root_window);
+  point->Offset(origin.x(), origin.y());
+}
+
+void DefaultScreenPositionClient::ConvertFloatPointFromScreen(
+    const aura::Window* window,
+    gfx::PointF* point) {
+  const aura::Window* root_window = window->GetRootWindow();
+  gfx::Point origin = GetOriginInScreen(root_window);
+  point->Offset(-origin.x(), -origin.y());
+  aura::Window::ConvertFloatPointToTarget(root_window, window, point);
+}
+
 void DefaultScreenPositionClient::ConvertPointToScreen(
     const aura::Window* window,
     gfx::Point* point) {
