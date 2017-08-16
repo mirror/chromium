@@ -97,16 +97,18 @@
             class$="[[statusIconClassName_]]" id="status-icon"></iron-icon>
       </div>
       <div class="start">
-        <div>[[title_]]</div>
-        <div class="secondary">
-          <span hidden="[[!showDetails_]]">
-            $i18n{chromeCleanupExplanation}
-          </span>
-          <a id="learn-more" href="$i18n{chromeCleanupLearnMoreUrl}"
-              on-tap="learnMore_" target="_blank" hidden="[[!showLearnMore_]]">
-            $i18n{learnMore}
-          </a>
-        </div>
+        <span>[[title_]]</span>
+        <!-- Conditional line break to display learn-more inlined with
+             chromeCleanupExplanation or with the title_ (if showDetails_ is
+             false) despite these two elements being on different lines. -->
+        <div hidden="[[!showDetails_]]"></div>
+        <span class="secondary" hidden="[[!showDetails_]]">
+          $i18n{chromeCleanupExplanation}
+        </span>
+        <a id="learn-more" href="$i18n{chromeCleanupLearnMoreUrl}"
+            on-tap="learnMore_" target="_blank" hidden="[[!showLearnMore_]]">
+          $i18n{learnMore}
+        </a>
       </div>
       <template is="dom-if" if="[[showActionButton_]]">
         <div class="separator"></div>
