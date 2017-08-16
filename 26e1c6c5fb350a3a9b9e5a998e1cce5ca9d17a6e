@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f25cc4c3_fbb046a1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T22:22:51Z",
+      "side": 1,
+      "message": "This might be different from the above if check right?  Maybe something like:\n\nbool optional_cleanup \u003d base::Time::Now() \u003e (entry-\u003elast_cleanup_check_time + config_-\u003efile_keep_alive_time);\nbool required_cleanup \u003d base::Time::Now() \u003e (entry-\u003ecompletion_time + config_-\u003emax_file_keep_alive_time);\n\nif (!optional_cleanup \u0026\u0026 !required_cleanup)\n  continue;\n\nbool client_ok \u003d client-\u003eCanServiceRemoveDownloadedFile(entry-\u003eguid, required_cleanup);\n\nif (client_ok || required_cleanup) {\n  entries_to_remove.push_back(entry);\n} else {\n  entry-\u003elast_cleanup_check_time \u003d base::Time::Now();\n}",
+      "range": {
+        "startLine": 302,
+        "startChar": 6,
+        "endLine": 303,
+        "endChar": 60
+      },
+      "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0e2e6b_1fd952d8",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T22:22:51Z",
+      "side": 1,
+      "message": "Make this second in the if block (or use the code above), otherwise it won\u0027t run the else if this is true.  Add unit tests for all of these scenarios IMO!",
+      "range": {
+        "startLine": 304,
+        "startChar": 10,
+        "endLine": 304,
+        "endChar": 22
+      },
+      "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55875648_43633460",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T22:22:51Z",
+      "side": 1,
+      "message": "Do you need a minimum of this or the complietion_time + max_file_keep_alive_time?",
+      "range": {
+        "startLine": 909,
+        "startChar": 8,
+        "endLine": 909,
+        "endChar": 70
+      },
+      "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
