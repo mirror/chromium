@@ -313,8 +313,4 @@ ScopedJavaLocalRef<jstring> GetHostPort(JNIEnv* env,
   return base::android::ConvertUTF8ToJavaString(env, host_port);
 }
 
-bool RegisterNativeTestServer(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace cronet
