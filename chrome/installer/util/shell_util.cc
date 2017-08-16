@@ -24,6 +24,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -2061,6 +2062,10 @@ bool ShellUtil::RegisterChromeBrowser(BrowserDistribution* dist,
   // Ensure that the shell is notified of the mutations below. Specific exit
   // points may disable this if no mutations are made.
   base::ScopedClosureRunner notify_on_exit(base::Bind([] {
+    // TODO(chengx): Remove this log after crbug/449569 is fixed.
+    VLOG(0) << "Desktop refresh requested from:\n"
+            << base::debug::StackTrace().ToString();
+
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
   }));
 
