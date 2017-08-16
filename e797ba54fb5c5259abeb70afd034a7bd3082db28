@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f74c33b6_fbbcbafd",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-16T19:55:51Z",
+      "side": 1,
+      "message": "Let\u0027s split it into another patch for CL cleanness (and personal CL count).",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 0
+      },
+      "revId": "e797ba54fb5c5259abeb70afd034a7bd3082db28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
