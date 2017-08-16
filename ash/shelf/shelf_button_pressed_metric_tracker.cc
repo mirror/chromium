@@ -8,7 +8,6 @@
 #include "ash/shell.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_tick_clock.h"
-#include "ui/views/controls/button/button.h"
 
 namespace ash {
 
@@ -25,7 +24,7 @@ ShelfButtonPressedMetricTracker::~ShelfButtonPressedMetricTracker() {}
 
 void ShelfButtonPressedMetricTracker::ButtonPressed(
     const ui::Event& event,
-    const views::Button* sender,
+    const views::View* sender,
     ShelfAction performed_action) {
   RecordButtonPressedSource(event);
   RecordButtonPressedAction(performed_action);
@@ -85,13 +84,13 @@ void ShelfButtonPressedMetricTracker::RecordTimeBetweenMinimizedAndActivated() {
 }
 
 bool ShelfButtonPressedMetricTracker::IsSubsequentActivationEvent(
-    const views::Button* sender) const {
+    const views::View* sender) const {
   return time_of_last_minimize_ != base::TimeTicks() &&
          last_minimized_source_button_ == sender;
 }
 
 void ShelfButtonPressedMetricTracker::SetMinimizedData(
-    const views::Button* sender) {
+    const views::View* sender) {
   last_minimized_source_button_ = sender;
   time_of_last_minimize_ = tick_clock_->NowTicks();
 }
