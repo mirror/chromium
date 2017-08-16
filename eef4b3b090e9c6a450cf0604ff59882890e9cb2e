@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "907b620a_8125acdb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-whitelist-request-headers.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-16T10:41:42Z",
+      "side": 1,
+      "message": "\"CORS-safelisted request headers\" is probably better.",
+      "revId": "eef4b3b090e9c6a450cf0604ff59882890e9cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
