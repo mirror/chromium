@@ -2106,7 +2106,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
           info.common_params.url,
           resource_type,
           resource_context))) {
-    loader->NotifyRequestFailed(false, net::ERR_ABORTED);
+    loader->NotifyRequestFailed(false, net::ERR_ABORTED, nullptr);
     return;
   }
 
@@ -2152,7 +2152,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   if (body) {
     if (!GetBodyBlobDataHandles(body, resource_context, &blob_handles)) {
       new_request->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
-      loader->NotifyRequestFailed(false, net::ERR_ABORTED);
+      loader->NotifyRequestFailed(false, net::ERR_ABORTED, nullptr);
       return;
     }
     new_request->set_upload(UploadDataStreamBuilder::Build(

@@ -10,11 +10,13 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace net {
 struct RedirectInfo;
+class SSLInfo;
 }
 
 namespace content {
@@ -57,6 +59,10 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
   // network error code for the failure. |has_stale_copy_in_cache| is true if
   // there is a stale copy of the unreachable page in cache.
   virtual void OnRequestFailed(bool has_stale_copy_in_cache, int net_error) = 0;
+  virtual void OnRequestFailedWithCertificateError(bool has_stale_copy_in_cache,
+                                                   int net_error,
+                                                   net::SSLInfo ssl_info,
+                                                   bool fatal) = 0;
 
   // Called after the network request has begun on the IO thread at time
   // |timestamp|. This is just a thread hop but is used to compare timing

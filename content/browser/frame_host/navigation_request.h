@@ -210,7 +210,19 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                          mojom::URLLoaderFactoryPtrInfo
                              subresource_url_loader_factory_info) override;
   void OnRequestFailed(bool has_stale_copy_in_cache, int net_error) override;
+  void OnRequestFailedWithCertificateError(bool has_stale_copy_in_cache,
+                                           int net_error,
+                                           net::SSLInfo ssl_info,
+                                           bool fatal) override;
   void OnRequestStarted(base::TimeTicks timestamp) override;
+
+  // If the error is a certificate error, ssl_info should be passed and |fatal|
+  // should be set to the correct value. Else, |ssl_info| should be null (and
+  // |fatal| will be ignored).
+  void OnRequestFailedInternal(bool has_stale_copy_in_cache,
+                               int net_error,
+                               net::SSLInfo* ssl_info,
+                               bool fatal);
 
   // Called when the NavigationThrottles have been checked by the
   // NavigationHandle.
