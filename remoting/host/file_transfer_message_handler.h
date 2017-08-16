@@ -6,6 +6,7 @@
 #define REMOTING_HOST_FILE_TRANSFER_MESSAGE_HANDLER_H_
 
 #include "remoting/host/file_proxy_wrapper.h"
+#include "remoting/proto/file_transfer.pb.h"
 #include "remoting/protocol/named_message_pipe_handler.h"
 
 namespace remoting {
@@ -23,6 +24,13 @@ class FileTransferMessageHandler : public protocol::NamedMessagePipeHandler {
   void OnConnected() override;
   void OnIncomingMessage(std::unique_ptr<CompoundBuffer> message) override;
   void OnDisconnecting() override;
+
+ private:
+  void DoneCallback(std::unique_ptr<protocol::FileTransferResponse_ErrorCode> error);
+
+  std::unique_ptr<FileProxyWrapper> file_proxy_wrapper_;
+  std::unique_ptr<protocol::FileTransferRequest> request_;
+  uint64_t total_bytes_written_;
 };
 
 }  // namespace remoting
