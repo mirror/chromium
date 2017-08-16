@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b4387b_ecfc37c9",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-16T21:31:37Z",
+      "side": 1,
+      "message": "Nit: I think it\u0027s slightly easier to follow if you don\u0027t invert this, thereby swapping the if-then code below.",
+      "revId": "96db01c26a31518520e494787ded69dff9893e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
