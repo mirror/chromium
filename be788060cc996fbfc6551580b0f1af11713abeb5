@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbde0ccb_ec7ad13d",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-16T03:12:25Z",
+      "side": 1,
+      "message": "kAutoHideTitleBarsInTabletMode",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc43fecf_311996e3",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-16T03:12:25Z",
+      "side": 1,
+      "message": "s/Hide/AutoHide",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90d6a717_15dfbe9d",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-16T03:12:25Z",
+      "side": 1,
+      "message": "let\u0027s keep this consistent with the feature flag (autohide_title_bars \u003d false;)",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
