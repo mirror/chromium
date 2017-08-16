@@ -27,7 +27,10 @@ if (enable_oop_heap_profiling) {
       ":interfaces",
       "//base",
       "//base:debugging_flags",
+      "//base/allocator:features",
       "//chrome/common:constants",
+      "//content/public/common",
+      "//mojo/edk/system",
     ]
   }
 
