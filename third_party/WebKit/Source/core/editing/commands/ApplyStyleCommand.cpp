@@ -186,14 +186,14 @@ void ApplyStyleCommand::UpdateStartEnd(const Position& new_start,
 
 Position ApplyStyleCommand::StartPosition() {
   if (use_ending_selection_)
-    return EndingVisibleSelection().Start();
+    return EndingSelection().Start();
 
   return start_;
 }
 
 Position ApplyStyleCommand::EndPosition() {
   if (use_ending_selection_)
-    return EndingVisibleSelection().End();
+    return EndingSelection().End();
 
   return end_;
 }
