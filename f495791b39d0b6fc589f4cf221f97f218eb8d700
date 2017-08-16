@@ -2,6 +2,138 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ef859fa_cb468048",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "You can remove this - it\u0027s already done elsewhere.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 74
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a437af4_7802412f",
+        "filename": "components/multidevice/service/cpp/device_sync_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to write a constructor for this class. DeviceSyncObserver should be implemented by clients who want to call into the service, so the service itself does not need to implement that interface.",
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad645da2_462db530",
+        "filename": "components/multidevice/service/cpp/device_sync_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "Add the following:\n\nconst std::unique_ptr\u003cservice_manager::ServiceContextRef\u003e service_ref_;\n\nIn your constructor, initialize service_ref_ with a ref from the service\u0027s ServiceContextRefFactory.",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 8
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c255f3_8f571f23",
+        "filename": "components/multidevice/service/cpp/multidevice_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "nit: weak_ptr_factory_",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 56
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c871a76e_dd2c25de",
+        "filename": "components/multidevice/service/cpp/multidevice_service_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "I don\u0027t believe this is necessary.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 74
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8743f26d_8240e670",
+        "filename": "components/multidevice/service/cpp/multidevice_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "Is there a reason you have this constructor?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cade6d6_b928cbb0",
         "filename": "components/multidevice/service/cpp/multidevice_service_unittest.cc",
         "patchSetId": 3
@@ -13,6 +145,75 @@
       "writtenOn": "2017-08-16T01:34:15Z",
       "side": 1,
       "message": "I think I\u0027m doing something wrong here -- I\u0027m expecting DeviceSync to call OnEnrollmentFinished of DeviceSyncObserverImpl imp, but it isn\u0027t",
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8073e38_0ffdb1da",
+        "filename": "components/multidevice/service/cpp/multidevice_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "This should be in SetUp().",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 62
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ee7785_33605117",
+        "filename": "components/multidevice/service/cpp/multidevice_service_unittest_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "This also shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ecaa867_056b0da3",
+        "filename": "components/multidevice/service/public/interfaces/device_sync.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T02:15:00Z",
+      "side": 1,
+      "message": "Actually, can you please make a new file called constants.mojom, which includes this constant? The service name should be \"multidevice\", so this doesn\u0027t belong in device_sync.mojom since it should be orthogonal to DeviceSync. There are other constants.mojom example files for you to check out.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
       "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
