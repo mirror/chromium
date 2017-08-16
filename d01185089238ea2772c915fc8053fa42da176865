@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f0747fb_1b8e94d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T22:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53feaa9_34377b8e",
+      "range": {
+        "startLine": 1434,
+        "startChar": 4,
+        "endLine": 1434,
+        "endChar": 15
+      },
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63557cea_e7bcbf47",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5242bf32_01017305",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T22:03:11Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve added a sensible (key + \u0027:\u0027 + value) default filter in createSpecialFilters(), instead of returning null.",
+      "parentUuid": "63557cea_e7bcbf47",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96593a39_91c7e1bd",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
         "patchSetId": 9
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-16T17:40:52Z",
       "side": 1,
       "message": "I think this should be just string.",
+      "range": {
+        "startLine": 142,
+        "startChar": 97,
+        "endLine": 142,
+        "endChar": 113
+      },
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01586e37_ab23ffd5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T22:03:11Z",
+      "side": 1,
+      "message": "I think it needs to be undefined-able.  There are still cases where a capture group is skipped, and is undefined in the position-preserving result.\nConsider this case:\n/a(b)?(c)/.exec(\"ac\")\n\nProduces:\n[\"ac\", undefined, \"c\"]",
+      "parentUuid": "96593a39_91c7e1bd",
       "range": {
         "startLine": 142,
         "startChar": 97,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "63d04f0a_ba6fdf8e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T22:03:11Z",
+      "side": 1,
+      "message": "Removed.\n\nI was thinking we should enforce the keys to FilterParser to always be a string enum, but actually, that isn\u0027t necessary.",
+      "parentUuid": "c937f176_11134a02",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d22c1ac3_fefa7947",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
         "patchSetId": 9
@@ -93,6 +177,24 @@
       "writtenOn": "2017-08-16T17:40:52Z",
       "side": 1,
       "message": "I believe that previously text filters were never negative. I think we can do negative, but only if we support quotes for exact match, e.g. \"-small.png\". Follow up maybe? Also, let\u0027s test this.",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32380d04_8c6d7b20",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T22:03:11Z",
+      "side": 1,
+      "message": "Today\u0027s old NetworkLogView.js does support negative text filters (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js?l\u003d1458)\n\nThere\u0027s also a test for it:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/inspector/network/network-filters.html?l\u003d52\n\nAnd I\u0027ve already added a test for the parser in parse-filter-query.js\n\nThis CL preserves the old negative text behavior, and the case \"-small.png\" is still supported via /-small\\.png/ \nI\u0027d rather keep it simple, but I\u0027m fine with adding quote support in a separate CL.",
+      "parentUuid": "d22c1ac3_fefa7947",
       "revId": "d01185089238ea2772c915fc8053fa42da176865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +215,24 @@
       "revId": "d01185089238ea2772c915fc8053fa42da176865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffe10d3_9cd26ad0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T22:03:11Z",
+      "side": 1,
+      "message": "Done.  Also made the filter bar a little wider 143px \u003e 163px to show the full placeholder text",
+      "parentUuid": "7f379017_f9e4e0ed",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
