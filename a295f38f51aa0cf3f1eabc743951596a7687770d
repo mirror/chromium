@@ -34,6 +34,24 @@
       "revId": "a295f38f51aa0cf3f1eabc743951596a7687770d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea37fba_125d6163",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-16T21:34:32Z",
+      "side": 1,
+      "message": "The alternative is to use:\n\n  if (diff.NeedsFullPaintInvalidation())\n\ninstead of:\n\n  if (!old_style-\u003eBackgroundVisuallyEqual(new_style))\n\nThe visual diff is already done on new vs old ComputedStyle and passed into this method as \"diff\". What I discovered was that diff.NeedsFullPaintInvalidation() is true due to a difference in old/new LayoutView style due to font fallback list not being equal after a zoom operation in an svg test.\n\nI need to do more thorough debugging to figure out what\u0027s happening exactly.",
+      "parentUuid": "b68077e1_78c99bd3",
+      "revId": "a295f38f51aa0cf3f1eabc743951596a7687770d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
