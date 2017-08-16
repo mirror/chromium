@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de49597e_606e478a",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T15:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68acf38a_834a94e3",
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b930622_2eb2ef0b",
         "filename": "chrome/installer/zucchini/binary_data_histogram.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0046fab8_de40d0e3",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T15:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b930622_2eb2ef0b",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8867597_46a07f12",
         "filename": "chrome/installer/zucchini/binary_data_histogram.h",
         "patchSetId": 4
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "73d5d76c_071d4640",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T15:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8867597_46a07f12",
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "120f4cf2_57951f0c",
         "filename": "chrome/installer/zucchini/binary_data_histogram_unittest.cc",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c703effc_59a7052a",
+        "filename": "chrome/installer/zucchini/binary_data_histogram_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T15:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120f4cf2_57951f0c",
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
