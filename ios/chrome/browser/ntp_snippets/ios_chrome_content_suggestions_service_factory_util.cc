@@ -169,14 +169,15 @@ void RegisterRemoteSuggestionsProvider(ContentSuggestionsService* service,
   base::FilePath database_dir(
       browser_state->GetStatePath().Append(ntp_snippets::kDatabaseFolder));
 
-  std::string api_key;
   // This API needs whitelisted API keys. Get the key only if it is not a
   // dummy key.
-  if (google_apis::HasKeysConfigured()) {
-    bool is_stable_channel = GetChannel() == version_info::Channel::STABLE;
-    api_key = is_stable_channel ? google_apis::GetAPIKey()
-                                : google_apis::GetNonStableAPIKey();
+  if (!google_apis::HasKeysConfigured()) {
+    return;
   }
+  bool is_stable_channel = GetChannel() == version_info::Channel::STABLE;
+  std::string api_key = is_stable_channel ? google_apis::GetAPIKey()
+                                          : google_apis::GetNonStableAPIKey();
+
   auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcherImpl>(
       signin_manager, token_service, request_context, prefs, nullptr,
       base::Bind(&ParseJson), GetFetchEndpoint(GetChannel()), api_key,
