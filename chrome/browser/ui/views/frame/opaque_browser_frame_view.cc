@@ -5,7 +5,9 @@
 #include "chrome/browser/ui/views/frame/opaque_browser_frame_view.h"
 
 #include "build/build_config.h"
+#include "build/buildflag.h"
 #include "chrome/browser/themes/theme_properties.h"
+#include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
@@ -16,6 +18,8 @@
 #include "chrome/browser/ui/views/tab_icon_view.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
+#include "chrome/common/chrome_features.h"
+#include "chrome/common/features.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_strings.h"
@@ -43,6 +47,10 @@
 
 #if defined(OS_WIN)
 #include "ui/display/win/screen_win.h"
+#endif
+
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+#include "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.h"
 #endif
 
 using content::WebContents;
@@ -401,6 +409,30 @@ gfx::Size OpaqueBrowserFrameView::GetTabstripPreferredSize() const {
   return s;
 }
 
+bool OpaqueBrowserFrameView::ShouldRenderNativeNavButtons() const {
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+  if (!base::FeatureList::IsEnabled(features::kNativeWindowNavButtons))
+    return false;
+  return ThemeServiceFactory::GetForProfile(
+             browser_view()->browser()->profile())
+      ->UsingSystemTheme();
+#else
+  return false;
+#endif
+}
+
+int OpaqueBrowserFrameView::GetTopAreaHeight() const {
+  const gfx::ImageSkia frame_image = GetFrameImage();
+  int top_area_height =
+      std::max(frame_image.height(), layout_->NonClientTopHeight(false));
+  if (browser_view()->IsTabStripVisible()) {
+    top_area_height =
+        std::max(top_area_height,
+                 GetBoundsForTabStrip(browser_view()->tabstrip()).bottom());
+  }
+  return top_area_height;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueBrowserFrameView, protected:
 
@@ -503,18 +535,6 @@ bool OpaqueBrowserFrameView::ShouldShowWindowTitleBar() const {
     return true;
   return !views::ViewsDelegate::GetInstance()->WindowManagerProvidesTitleBar(
       IsMaximized());
-}
-
-int OpaqueBrowserFrameView::GetTopAreaHeight() const {
-  const gfx::ImageSkia frame_image = GetFrameImage();
-  int top_area_height =
-      std::max(frame_image.height(), layout_->NonClientTopHeight(false));
-  if (browser_view()->IsTabStripVisible()) {
-    top_area_height =
-        std::max(top_area_height,
-                 GetBoundsForTabStrip(browser_view()->tabstrip()).bottom());
-  }
-  return top_area_height;
 }
 
 void OpaqueBrowserFrameView::PaintRestoredFrameBorder(

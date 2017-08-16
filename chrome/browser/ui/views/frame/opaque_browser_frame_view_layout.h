@@ -72,9 +72,18 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
 
   int GetTabStripInsetsTop(bool restored) const;
 
-  // Returns the y-coordinate of the caption buttons.  If |restored| is true,
+  // Returns the y-coordinate of the profile chooser button.  If |restored| is
+  // true, acts as if the window is restored regardless of the real mode.
+  int ProfileButtonY(bool restored) const;
+
+  // Returns the y-coordinate of button |button_id|.  If |restored| is true,
   // acts as if the window is restored regardless of the real mode.
-  int CaptionButtonY(bool restored) const;
+  int CaptionButtonY(views::FrameButtonDisplayType button_id,
+                     bool restored) const;
+
+  // Returns the initial spacing between the edge of the browser window and the
+  // first button.
+  int TopAreaPadding() const;
 
   // Returns the thickness of the 3D edge along the top of the titlebar.  If
   // |restored| is true, acts as if the window is restored regardless of the
@@ -88,12 +97,24 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
   // Returns the bounds of the client area for the specified view size.
   gfx::Rect CalculateClientAreaBounds(int width, int height) const;
 
+  // Converts a FrameButton to a FrameButtonDisplayType, taking into
+  // consideration the maximized state of the browser window.
+  views::FrameButtonDisplayType GetButtonDisplayType(
+      views::FrameButton button_id) const;
+
+  // Returns the margin around button |button_id|.  If |leading_spacing| is
+  // true, returns the left margin (in RTL), otherwise returns the right margin
+  // (in RTL).  Extra margin may be added if |is_leading_button| is true.
+  int GetWindowCaptionSpacing(views::FrameButton button_id,
+                              bool leading_spacing,
+                              bool is_leading_button) const;
+
   void set_extra_caption_y(int extra_caption_y) {
     extra_caption_y_ = extra_caption_y;
   }
 
-  void set_window_caption_spacing(int window_caption_spacing) {
-    window_caption_spacing_ = window_caption_spacing;
+  void set_window_caption_spacing_for_test(int window_caption_spacing) {
+    forced_window_caption_spacing_ = window_caption_spacing;
   }
 
   const gfx::Rect& client_view_bounds() const { return client_view_bounds_; }
@@ -128,17 +149,16 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
 
   void ConfigureButton(views::View* host,
                        views::FrameButton button_id,
-                       ButtonAlignment align,
-                       int caption_y);
+                       ButtonAlignment align);
 
   // Sets the visibility of all buttons associated with |button_id| to false.
   void HideButton(views::FrameButton button_id);
 
   // Adds a window caption button to either the leading or trailing side.
-  void SetBoundsForButton(views::View* host,
+  void SetBoundsForButton(views::FrameButton button_id,
+                          views::View* host,
                           views::ImageButton* button,
-                          ButtonAlignment align,
-                          int caption_y);
+                          ButtonAlignment align);
 
   // Internal implementation of ViewAdded() and ViewRemoved().
   void SetView(int id, views::View* view);
@@ -175,8 +195,9 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
   // buttons. Configurable based on platform and whether we are under test.
   int extra_caption_y_;
 
-  // Extra offset between the individual window caption buttons.
-  int window_caption_spacing_;
+  // Extra offset between the individual window caption buttons.  Set only in
+  // testing, otherwise, its value will be -1.
+  int forced_window_caption_spacing_;
 
   // Window controls.
   views::ImageButton* minimize_button_;
