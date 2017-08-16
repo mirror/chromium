@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07cd9519_a1cd31f2",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-16T21:04:36Z",
+      "side": 0,
+      "message": "How will the renderer know about the disabled extensions in the new way of doing things? Is that hooked up yet?",
+      "range": {
+        "startLine": 806,
+        "startChar": 36,
+        "endLine": 806,
+        "endChar": 56
+      },
+      "revId": "f38d1d0ba886f3cfa5f8ebcb37a4712e0af4cf5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
