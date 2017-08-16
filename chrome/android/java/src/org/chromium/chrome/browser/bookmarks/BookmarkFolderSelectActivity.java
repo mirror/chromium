@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.bookmarks;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -20,10 +19,13 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.SynchronousInitializationActivity;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
 import org.chromium.chrome.browser.widget.TintedDrawable;
+import org.chromium.chrome.browser.widget.TintedImageButton;
+import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.components.bookmarks.BookmarkId;
 
 import java.util.ArrayList;
@@ -262,6 +264,7 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
 
         private final int mBasePadding;
         private final int mPaddingIncrement;
+        private final boolean mUseModernDesign;
 
         List<FolderListEntry> mEntryList = new ArrayList<>();
 
@@ -269,6 +272,8 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
             mBasePadding = context.getResources()
                     .getDimensionPixelSize(R.dimen.bookmark_folder_item_left);
             mPaddingIncrement = mBasePadding * 2;
+            mUseModernDesign =
+                    ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
         }
 
         @Override
@@ -310,13 +315,14 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
                 convertView = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.bookmark_folder_select_item, parent, false);
             }
-            TextView textView = (TextView) convertView;
+            TextView textView = (TextView) convertView.findViewById(R.id.title);
             textView.setText(entry.mTitle);
+            convertView.findViewById(R.id.description).setVisibility(View.GONE);
 
-            setUpIcons(entry, textView);
-            setUpPadding(entry, textView);
+            setUpIcons(entry, convertView);
+            setUpPadding(entry, convertView);
 
-            return textView;
+            return convertView;
         }
 
         void setEntryList(List<FolderListEntry> entryList) {
@@ -328,7 +334,10 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
          * Sets compound drawables (icons) for different kinds of list entries,
          * i.e. New Folder, Normal and Selected.
          */
-        private void setUpIcons(FolderListEntry entry, TextView textView) {
+        private void setUpIcons(FolderListEntry entry, View view) {
+            TintedImageView startIcon = view.findViewById(R.id.icon_view);
+            TintedImageButton endIcon = view.findViewById(R.id.selected_view);
+
             int iconId = 0;
             if (entry.mType == FolderListEntry.TYPE_NORMAL) {
                 iconId = R.drawable.bookmark_folder;
@@ -337,23 +346,38 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
                 iconId = R.drawable.bookmark_add_folder;
             }
 
-            Drawable drawableStart = TintedDrawable.constructTintedDrawable(textView.getResources(),
-                    iconId);
-            // Selected entry has an end_icon, a blue check mark.
-            Drawable drawableEnd = entry.mIsSelected ? ApiCompatibilityUtils.getDrawable(
-                    textView.getResources(), R.drawable.ic_check_googblue_24dp) : null;
-            ApiCompatibilityUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(textView,
-                    drawableStart, null, drawableEnd, null);
+            if (mUseModernDesign) {
+                startIcon.setBackgroundResource(R.drawable.selectable_item_icon_modern_bg);
+                startIcon.setImageDrawable(entry.mIsSelected
+                                ? TintedDrawable.constructTintedDrawable(view.getResources(),
+                                          R.drawable.ic_check_googblue_24dp,
+                                          R.color.white_mode_tint)
+                                : TintedDrawable.constructTintedDrawable(
+                                          view.getResources(), iconId));
+                startIcon.getBackground().setLevel(entry.mIsSelected
+                                ? view.getResources().getInteger(
+                                          R.integer.selectable_item_level_selected)
+                                : view.getResources().getInteger(
+                                          R.integer.selectable_item_level_default));
+                endIcon.setVisibility(View.GONE);
+            } else {
+                // Selected entry has an end_icon, a blue check mark.
+                startIcon.setImageDrawable(
+                        TintedDrawable.constructTintedDrawable(view.getResources(), iconId));
+                endIcon.setVisibility(entry.mIsSelected ? View.VISIBLE : View.GONE);
+            }
         }
 
         /**
          * Sets up padding for the entry
          */
-        private void setUpPadding(FolderListEntry entry, TextView textView) {
+        private void setUpPadding(FolderListEntry entry, View view) {
             int paddingStart = mBasePadding + Math.min(entry.mDepth, MAX_FOLDER_DEPTH)
                     * mPaddingIncrement;
-            ApiCompatibilityUtils.setPaddingRelative(textView, paddingStart, 0,
-                    mBasePadding, 0);
+            View endIcon = view.findViewById(R.id.selected_view);
+            ApiCompatibilityUtils.setPaddingRelative(view, paddingStart, view.getPaddingTop(),
+                    (endIcon.getVisibility() == View.VISIBLE) ? 0 : mBasePadding,
+                    view.getPaddingBottom());
         }
     }
 }
