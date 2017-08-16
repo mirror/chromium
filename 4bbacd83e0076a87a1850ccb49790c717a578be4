@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "784697fa_19efa7c6",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-16T13:57:31Z",
+      "side": 1,
+      "message": "Done.\nThanks for telling me to put them behind the #if, I would have forgotten and wasted a lot of time.",
+      "parentUuid": "950ad84a_783f7292",
+      "revId": "4bbacd83e0076a87a1850ccb49790c717a578be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b259e721_502f7b3e",
         "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
         "patchSetId": 7
@@ -56,6 +74,24 @@
       "revId": "4bbacd83e0076a87a1850ccb49790c717a578be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49ffd2f_e38ba140",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-16T13:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b259e721_502f7b3e",
+      "revId": "4bbacd83e0076a87a1850ccb49790c717a578be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
