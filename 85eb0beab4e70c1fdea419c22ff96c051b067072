@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "23386b12_c6502ad6",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T18:11:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e438f35a_d111fec4",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 45
+      },
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da0e44e_5cb3cabb",
         "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
         "patchSetId": 1
