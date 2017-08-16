@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7cabc50_faceee69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883d0ace_be0a427d",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 72
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bba73af_0bada128",
         "filename": "chrome/browser/android/shortcut_helper.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1754cb0c_20363767",
+        "filename": "chrome/browser/android/shortcut_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bba73af_0bada128",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4465f146_aeb8be8a",
         "filename": "chrome/browser/android/shortcut_info.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f10e11_29a9b334",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4465f146_aeb8be8a",
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "93f09fe8_9290d943",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:21:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "599c0043_544dae3c",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df3813e7_e1fd8c78",
         "filename": "chrome/browser/android/shortcut_info.cc",
         "patchSetId": 1
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f81684bd_b4294ef6",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3813e7_e1fd8c78",
+      "range": {
+        "startLine": 57,
+        "startChar": 15,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497945b2_fb667d04",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
@@ -125,6 +239,24 @@
       "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5c6a4c_d45b1e4d",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497945b2_fb667d04",
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
