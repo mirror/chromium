@@ -244,7 +244,7 @@ struct FunctorTraits<Callback<R(Args...), copy_mode, repeat_mode>> {
 };
 
 template <typename Functor>
-using MakeFunctorTraits = FunctorTraits<typename std::decay<Functor>::type>;
+using MakeFunctorTraits = FunctorTraits<std::decay_t<Functor>>;
 
 // InvokeHelper<>
 //
@@ -330,7 +330,7 @@ struct Invoker<StorageType, R(UnboundArgs...)> {
                           UnboundArgs&&... unbound_args) {
     static constexpr bool is_method = MakeFunctorTraits<Functor>::is_method;
 
-    using DecayedArgsTuple = typename std::decay<BoundArgsTuple>::type;
+    using DecayedArgsTuple = std::decay_t<BoundArgsTuple>;
     static constexpr bool is_weak_call =
         IsWeakMethod<is_method,
                      typename std::tuple_element<
@@ -490,16 +490,14 @@ struct MakeBindStateTypeImpl;
 
 template <typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl<false, Functor, BoundArgs...> {
-  static_assert(!HasRefCountedTypeAsRawPtr<
-                    typename std::decay<BoundArgs>::type...>::value,
+  static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
-  using Type = BindState<typename std::decay<Functor>::type,
-                         typename std::decay<BoundArgs>::type...>;
+  using Type = BindState<std::decay_t<Functor>, std::decay_t<BoundArgs>...>;
 };
 
 template <typename Functor>
 struct MakeBindStateTypeImpl<true, Functor> {
-  using Type = BindState<typename std::decay<Functor>::type>;
+  using Type = BindState<std::decay_t<Functor>>;
 };
 
 template <typename Functor, typename Receiver, typename... BoundArgs>
@@ -507,21 +505,20 @@ struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
   static_assert(
       !std::is_array<typename std::remove_reference<Receiver>::type>::value,
       "First bound argument to a method cannot be an array.");
-  static_assert(!HasRefCountedTypeAsRawPtr<
-                    typename std::decay<BoundArgs>::type...>::value,
+  static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
 
  private:
-  using DecayedReceiver = typename std::decay<Receiver>::type;
+  using DecayedReceiver = std::decay_t<Receiver>;
 
  public:
   using Type = BindState<
-      typename std::decay<Functor>::type,
+      std::decay_t<Functor>,
       typename std::conditional<
           std::is_pointer<DecayedReceiver>::value,
           scoped_refptr<typename std::remove_pointer<DecayedReceiver>::type>,
           DecayedReceiver>::type,
-      typename std::decay<BoundArgs>::type...>;
+      std::decay_t<BoundArgs>...>;
 };
 
 template <typename Functor, typename... BoundArgs>
