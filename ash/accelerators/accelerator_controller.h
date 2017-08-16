@@ -122,6 +122,7 @@ class ASH_EXPORT AcceleratorController : public ui::AcceleratorTarget,
   // Overridden from ui::AcceleratorTarget:
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   bool CanHandleAccelerators() const override;
+  int GetAcceleratorId(const ui::Accelerator& accelerator) const override;
 
   // Binds the mojom::AcceleratorController interface to this object.
   void BindRequest(mojom::AcceleratorControllerRequest request);
@@ -151,13 +152,16 @@ class ASH_EXPORT AcceleratorController : public ui::AcceleratorTarget,
   bool CanPerformAction(AcceleratorAction action,
                         const ui::Accelerator& accelerator) const;
 
+  // Returns the AcceleratorAction represented by the |accelerator|. If the
+  // accelerator action cannot be performed now, this function returns false and
+  // the |action| will keep unmodified.
+  bool GetAcceleratorAction(const ui::Accelerator& accelerator,
+                            AcceleratorAction* action) const;
+
   // Performs the specified action. The |accelerator| may provide additional
   // data the action needs.
   void PerformAction(AcceleratorAction action,
                      const ui::Accelerator& accelerator);
-
-  // Returns whether performing |action| should consume the key event.
-  bool ShouldActionConsumeKeyEvent(AcceleratorAction action);
 
   // Get the accelerator restriction for the given action. Supply an |action|
   // of -1 to get restrictions that apply for the current context.

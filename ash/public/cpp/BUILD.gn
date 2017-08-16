@@ -5,6 +5,7 @@
 # C++ headers and sources that can be used outside ash.
 component("ash_public_cpp") {
   sources = [
+    "accelerator_ids.h",
     "app_types.h",
     "ash_pref_names.cc",
     "ash_pref_names.h",

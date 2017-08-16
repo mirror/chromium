@@ -18,6 +18,7 @@
 #include "ash/media_controller.h"
 #include "ash/multi_profile_uma.h"
 #include "ash/new_window_controller.h"
+#include "ash/public/cpp/accelerator_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
 #include "ash/rotator/window_rotation.h"
@@ -833,11 +834,8 @@ bool AcceleratorController::ShouldCloseMenuAndRepostAccelerator(
 
 bool AcceleratorController::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
-  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
-      accelerators_.find(accelerator);
-  DCHECK(it != accelerators_.end());
-  AcceleratorAction action = it->second;
-  if (!CanPerformAction(action, accelerator))
+  AcceleratorAction action;
+  if (!GetAcceleratorAction(accelerator, &action))
     return false;
 
   // Handling the deprecated accelerators (if any) only if action can be
@@ -848,7 +846,34 @@ bool AcceleratorController::AcceleratorPressed(
   }
 
   PerformAction(action, accelerator);
-  return ShouldActionConsumeKeyEvent(action);
+  return true;
+}
+
+int AcceleratorController::GetAcceleratorId(
+    const ui::Accelerator& accelerator) const {
+  AcceleratorAction action;
+  if (!GetAcceleratorAction(accelerator, &action))
+    return kUnknownAcceleratorId;
+
+  // TODO(zijiehe): Most of the ash accelerators cannot map to a browser
+  // command, so BrowserCommandController::IsReservedCommandOrKey() cannot make
+  // decision for these actions. Maybe add a kNotReservedAcceleratorId?
+  switch (action) {
+    case NEW_INCOGNITO_WINDOW:
+      return static_cast<int>(AcceleratorId::NEW_INCOGNITO_WINDOW);
+    case NEW_TAB:
+      return static_cast<int>(AcceleratorId::NEW_TAB);
+    case NEW_WINDOW:
+      return static_cast<int>(AcceleratorId::NEW_WINDOW);
+    case OPEN_FEEDBACK_PAGE:
+      return static_cast<int>(AcceleratorId::OPEN_FEEDBACK_PAGE);
+    case RESTORE_TAB:
+      return static_cast<int>(AcceleratorId::RESTORE_TAB);
+    case SHOW_TASK_MANAGER:
+      return static_cast<int>(AcceleratorId::SHOW_TASK_MANAGER);
+    default:
+      return kUnknownAcceleratorId;
+  }
 }
 
 bool AcceleratorController::CanHandleAccelerators() const {
@@ -1081,6 +1106,20 @@ bool AcceleratorController::CanPerformAction(
   }
   return delegate_ && delegate_->HandlesAction(action) &&
          delegate_->CanPerformAction(action, accelerator, previous_accelerator);
+}
+
+bool AcceleratorController::GetAcceleratorAction(
+    const ui::Accelerator& accelerator,
+    AcceleratorAction* action) const {
+  DCHECK(action);
+  std::map<ui::Accelerator, AcceleratorAction>::const_iterator it =
+      accelerators_.find(accelerator);
+  DCHECK(it != accelerators_.end());
+  if (!CanPerformAction(it->second, accelerator))
+    return false;
+
+  *action = it->second;
+  return true;
 }
 
 void AcceleratorController::PerformAction(AcceleratorAction action,
@@ -1335,12 +1374,6 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       delegate_->PerformAction(action, accelerator);
       break;
   }
-}
-
-bool AcceleratorController::ShouldActionConsumeKeyEvent(
-    AcceleratorAction action) {
-  // Adding new exceptions is *STRONGLY* discouraged.
-  return true;
 }
 
 AcceleratorController::AcceleratorProcessingRestriction
