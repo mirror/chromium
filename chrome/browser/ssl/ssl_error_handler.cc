@@ -49,8 +49,16 @@
 #endif
 
 #if !defined(OS_IOS)
+
+#if defined(OS_WIN)
+#include "base/win/win_util.h"
+#include "build/build_config.h"
+#elif defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#endif  // #if defined(OS_WIN)
+
 #include "chrome/browser/ssl/mitm_software_blocking_page.h"
-#endif
+#endif  // if !defined(OS_IOS)
 
 namespace {
 
@@ -203,16 +211,66 @@ bool IsMITMSoftwareInterstitialEnabled() {
   return base::FeatureList::IsEnabled(kMITMSoftwareInterstitial);
 }
 
-std::unique_ptr<std::vector<std::regex>> LoadMITMSoftwareRegexes(
-    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
-  auto regexes = base::MakeUnique<std::vector<std::regex>>();
-  for (const chrome_browser_ssl::MITMSoftware& filter : proto.mitm_software()) {
-    // There isn't a regex type in proto buffer world, so convert the string
-    // literals returned from our proto to regexes.
-    regexes.get()->push_back(std::regex(filter.regex()));
+// Class which stores data about a known MITM software pulled from the
+// SSLErrorAssistant proto.
+class MITMSoftwareType {
+ public:
+  MITMSoftwareType();
+
+  ~MITMSoftwareType();
+
+  void SetName(const std::string& name) { name_ = name; }
+
+  const std::string& GetName() const { return name_; }
+
+  void SetIssuerCommonName(const std::string& issuer_common_name) {
+    issuer_common_name_ = issuer_common_name;
   }
-  return regexes;
+
+  bool HasIssuerCommonName() const { return !issuer_common_name_.empty(); }
+
+  const std::string& GetIssuerCommonName() const { return issuer_common_name_; }
+
+  void SetIssuerOrg(const std::string& issuer_org) { issuer_org_ = issuer_org; }
+
+  bool HasIssuerOrg() const { return !issuer_org_.empty(); }
+
+  const std::string& GetIssuerOrg() const { return issuer_org_; }
+
+ private:
+  // Substring of the issuer common name of this MITM software's certificates.
+  std::string issuer_common_name_;
+
+  // Substring of the issuer organization of this MITM software's certificates.
+  std::string issuer_org_;
+
+  // Human readable name of this MITM software which will be displayed on the
+  // interstitial.
+  std::string name_;
+
+  // DISALLOW_COPY_AND_ASSIGN(MITMSoftwareType);
+};
+
+std::unique_ptr<std::vector<MITMSoftwareType>> LoadMITMSoftwareList(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  auto mitm_software_list = base::MakeUnique<std::vector<MITMSoftwareType>>();
+
+  for (const chrome_browser_ssl::MITMSoftware& proto_entry :
+       proto.mitm_software()) {
+    MITMSoftwareType mitm_software;
+    mitm_software.SetName(proto_entry.name());
+
+    if (proto_entry.has_issuer_common_name()) {
+      mitm_software.SetIssuerCommonName(proto_entry.issuer_common_name());
+    }
+    if (proto_entry.has_issuer_org()) {
+      mitm_software.SetIssuerOrg(proto_entry.issuer_org());
+    }
+    mitm_software_list.get()->push_back(mitm_software);
+  }
+  return mitm_software_list;
 }
+
 #endif
 
 // Reads the SSL error assistant configuration from the resource bundle.
@@ -285,7 +343,9 @@ class ConfigSingleton {
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
       error_assistant_proto_;
 
-  std::unique_ptr<std::vector<std::regex>> mitm_software_regexes_;
+  std::unique_ptr<std::vector<MITMSoftwareType>> mitm_software_list_;
+  // TODO(sperigo): Is this a good way to store this?
+  std::string found_mitm_software_ = std::string();
 #endif
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
@@ -328,7 +388,8 @@ void ConfigSingleton::ResetForTesting() {
   testing_clock_ = nullptr;
 #if !defined(OS_IOS)
   error_assistant_proto_.reset();
-  mitm_software_regexes_.reset();
+  mitm_software_list_.reset();
+  found_mitm_software_ = std::string();
 #endif
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   captive_portal_spki_hashes_.reset();
@@ -367,7 +428,7 @@ void ConfigSingleton::SetErrorAssistantProto(
   }
   error_assistant_proto_ = std::move(proto);
 
-  mitm_software_regexes_ = LoadMITMSoftwareRegexes(*error_assistant_proto_);
+  mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   captive_portal_spki_hashes_ =
@@ -399,6 +460,20 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
 }
 #endif
 
+bool ContainsSubstring(const std::string& str, const std::string& substr) {
+  return str.find(substr) != std::string::npos;
+}
+
+bool VectorContainsSubstring(const std::vector<std::string>& vec,
+                             const std::string& substr) {
+  for (std::size_t i = 0; i < vec.size(); i++) {
+    if (ContainsSubstring(vec[i], substr)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 #if !defined(OS_IOS)
 bool ConfigSingleton::CertContainsMITMSoftwareString(
     const net::SSLInfo& ssl_info) {
@@ -408,16 +483,36 @@ bool ConfigSingleton::CertContainsMITMSoftwareString(
   }
 
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!mitm_software_regexes_) {
+  if (!mitm_software_list_) {
     error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
     DCHECK(error_assistant_proto_);
-    mitm_software_regexes_ = LoadMITMSoftwareRegexes(*error_assistant_proto_);
+    mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
   }
 
-  // Compares the common name of the issuer of the certificate to our
-  // MITM software regexes.
-  for (const std::regex& regex : *mitm_software_regexes_) {
-    if (std::regex_match(ssl_info.cert->issuer().common_name, regex)) {
+  // Compare the known MITM software list to the errored certificate. For each
+  // known MITM software the |mitm_software| object has a string representing
+  // the certificate's issuer common name, issuer organization, or
+  // both. These strings are substrings which occur in all certificate common
+  // names or organizations from that software vendor.
+  for (const MITMSoftwareType mitm_software : *mitm_software_list_) {
+    // In order for a certificate to match a known MITM software type, it must
+    // match ALL of the available info on the |mitm_software| object. If any
+    // existing fields do not match, continue.
+    if ((mitm_software.HasIssuerCommonName() &&
+         !ContainsSubstring(ssl_info.cert->issuer().common_name,
+                            mitm_software.GetIssuerCommonName())) ||
+        (mitm_software.HasIssuerOrg() &&
+         !VectorContainsSubstring(ssl_info.cert->issuer().organization_names,
+                                  mitm_software.GetIssuerOrg()))) {
+      continue;
+    }
+    if ((mitm_software.HasIssuerCommonName() &&
+         ContainsSubstring(ssl_info.cert->issuer().common_name,
+                           mitm_software.GetIssuerCommonName())) ||
+        (mitm_software.HasIssuerOrg() &&
+         VectorContainsSubstring(ssl_info.cert->issuer().organization_names,
+                                 mitm_software.GetIssuerOrg()))) {
+      found_mitm_software_ = mitm_software.GetName();
       return true;
     }
   }
@@ -457,7 +552,8 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void NavigateToSuggestedURL(const GURL& suggested_url) override;
   bool IsErrorOverridable() const override;
   void ShowCaptivePortalInterstitial(const GURL& landing_url) override;
-  void ShowMITMSoftwareInterstitial() override;
+  void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
+                                    const bool is_enterprise_managed) override;
   void ShowSSLInterstitial() override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
@@ -533,12 +629,14 @@ void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
 #endif
 }
 
-void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial() {
+void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial(
+    const std::string& mitm_software_name,
+    const bool is_enterprise_managed) {
 #if !defined(OS_IOS)
   // Show MITM software blocking page. The interstitial owns the blocking page.
-  (new MITMSoftwareBlockingPage(web_contents_, cert_error_, request_url_,
-                                std::move(ssl_cert_reporter_), ssl_info_,
-                                callback_))
+  (new MITMSoftwareBlockingPage(
+       web_contents_, cert_error_, request_url_, std::move(ssl_cert_reporter_),
+       ssl_info_, mitm_software_name, is_enterprise_managed, callback_))
       ->Show();
 #else
   NOTREACHED();
@@ -674,6 +772,11 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+  if (true) {
+    ShowMITMSoftwareInterstitial("Misconfigured Antivirus", false);
+    return;
+  }
+
   const bool only_error_is_name_mismatch =
       IsOnlyCertError(net::CERT_STATUS_COMMON_NAME_INVALID);
 
@@ -701,10 +804,27 @@ void SSLErrorHandler::StartHandlingError() {
   if (IsMITMSoftwareInterstitialEnabled() && !delegate_->IsErrorOverridable() &&
       IsOnlyCertError(net::CERT_STATUS_AUTHORITY_INVALID) &&
       g_config.Pointer()->CertContainsMITMSoftwareString(ssl_info_)) {
-    ShowMITMSoftwareInterstitial();
+#if defined(OS_WIN)
+    if (base::win::IsEnterpriseManaged()) {
+      ShowMITMSoftwareInterstitial(found_mitm_software_,
+                                   true /* is_enterprise_managed */);
+      return;
+    }
+#elif defined(OS_CHROMEOS)
+    if (g_browser_process->platform_part()
+            ->browser_policy_connector_chromeos()
+            ->IsEnterpriseManaged()) {
+      ShowMITMSoftwareInterstitial(found_mitm_software_,
+                                   true /* is_enterprise_managed */);
+      return;
+    }
+#endif  // #if defined(OS_WIN)
+
+    ShowMITMSoftwareInterstitial(found_mitm_software_,
+                                 false /* is_enterprise_managed */);
     return;
   }
-#endif
+#endif  // #if !defined(OS_IOS)
 
   if (IsSSLCommonNameMismatchHandlingEnabled() &&
       cert_error_ == net::ERR_CERT_COMMON_NAME_INVALID &&
@@ -781,11 +901,14 @@ void SSLErrorHandler::ShowCaptivePortalInterstitial(const GURL& landing_url) {
 #endif
 }
 
-void SSLErrorHandler::ShowMITMSoftwareInterstitial() {
+void SSLErrorHandler::ShowMITMSoftwareInterstitial(
+    const std::string& mitm_software_name,
+    const bool is_enterprise_managed) {
 #if !defined(OS_IOS)
   // Show SSL blocking page. The interstitial owns the blocking page.
   RecordUMA(SHOW_MITM_SOFTWARE_INTERSTITIAL);
-  delegate_->ShowMITMSoftwareInterstitial();
+  delegate_->ShowMITMSoftwareInterstitial(mitm_software_name,
+                                          is_enterprise_managed);
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
