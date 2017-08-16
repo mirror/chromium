@@ -665,11 +665,11 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   EXPECT_EQ(kUrl2, contents()->GetLastCommittedURL());
 }
 
-// PlzNavigate: Test that a renderer-initiated user-initiated navigation is NOT
+// PlzNavigate: Test that a renderer-initiated user-initiated navigation is
 // canceled if a renderer-initiated non-user-initiated request is issued in the
 // meantime.
 TEST_F(NavigatorTestWithBrowserSideNavigation,
-       RendererNonUserInitiatedNavigationDoesntCancelRendererUserInitiated) {
+       RendererNonUserInitiatedNavigationCancelsRendererUserInitiated) {
   const GURL kUrl0("http://www.wikipedia.org/");
   const GURL kUrl1("http://www.chromium.org/");
   const GURL kUrl2("http://www.google.com/");
@@ -692,15 +692,15 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
     EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
   }
 
-  // Now receive a renderer-initiated non-user-initiated request. Nothing should
-  // change.
+  // Now receive a renderer-initiated non-user-initiated request. The previous
+  // navigation should be replaced.
   main_test_rfh()->SendRendererInitiatedNavigationRequest(kUrl2, false);
   NavigationRequest* request2 = node->navigation_request();
   ASSERT_TRUE(request2);
-  EXPECT_EQ(request1, request2);
-  EXPECT_EQ(kUrl1, request2->common_params().url);
+  EXPECT_NE(request1, request2);
+  EXPECT_EQ(kUrl2, request2->common_params().url);
   EXPECT_FALSE(request2->browser_initiated());
-  EXPECT_TRUE(request2->begin_params().has_user_gesture);
+  EXPECT_FALSE(request2->begin_params().has_user_gesture);
   if (AreAllSitesIsolatedForTesting()) {
     EXPECT_TRUE(GetSpeculativeRenderFrameHost(node));
   } else {
@@ -719,8 +719,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   }
 
   // Commit the navigation.
-  main_test_rfh()->SendNavigate(0, true, kUrl1);
-  EXPECT_EQ(kUrl1, contents()->GetLastCommittedURL());
+  main_test_rfh()->SendNavigate(0, true, kUrl2);
+  EXPECT_EQ(kUrl2, contents()->GetLastCommittedURL());
 }
 
 // PlzNavigate: Test that a browser-initiated navigation is NOT canceled if a
