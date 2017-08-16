@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a23ff631_e55d0b20",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-16T20:28:52Z",
+      "side": 1,
+      "message": "Yes I think so.",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4b8f6e_c34d1146",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-16T20:28:52Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f2dce5_00c55caf",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-16T20:28:52Z",
+      "side": 1,
+      "message": "Can you leave a TODO to remove this by invalidating on a scroll timeline.",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d59a0d_223055b6",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-16T20:28:52Z",
+      "side": 1,
+      "message": "Document this. It\u0027s unclear what this means, returns or does.",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
