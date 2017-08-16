@@ -127,7 +127,7 @@ SDK.CookieModel = class extends SDK.SDKModel {
    */
   _deleteAll(cookies, callback) {
     var networkAgent = this.target().networkAgent();
-    Promise.all(cookies.map(cookie => networkAgent.deleteCookie(cookie.name(), cookie.url())))
+    Promise.all(cookies.map(cookie => networkAgent.deleteCookies(cookie.name(), cookie.url())))
         .then(callback || function() {});
   }
 };
