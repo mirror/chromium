@@ -33,6 +33,29 @@
       "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86983a3_0d3ba322",
+        "filename": "extensions/renderer/resources/declarative_webrequest_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-16T21:20:21Z",
+      "side": 1,
+      "message": "I think we still do. Constructs like\nvar myMatcher \u003d new RequestMatcher({\u0027bogusKey\u0027: \u0027bogusValue\u0027})\nwill still correctly fail because of the validate() below. But this will pass in native bindings.\n\nThat\u0027s not the end of the world though, because validation will fail when you try to do sth useful with it later, for example:\nonRequest.addRule([{\u0027conditions\u0027: myMatcher}]) will throw.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 75
+      },
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
