@@ -450,7 +450,7 @@ public class AwContentsClientFullScreenTest extends AwTestBase {
         runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
-                observer.register(mContentViewCore, observerName);
+                observer.register(mContentViewCore.getWebContents(), observerName);
             }
         });
         return observer;
