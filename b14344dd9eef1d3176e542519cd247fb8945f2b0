@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50c91736_f2f94180",
+        "filename": "tools/perf/page_sets/webrtc_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1167909
+      },
+      "writtenOn": "2017-08-16T13:08:11Z",
+      "side": 1,
+      "message": "See how the codec is part of the name.",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "b14344dd9eef1d3176e542519cd247fb8945f2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
