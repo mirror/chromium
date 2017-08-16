@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "0f338d06_bfa8afff",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-16T22:40:21Z",
+      "side": 1,
+      "message": "On further investigation, Finch has some protections.\n1. Finch seed is signed\n2. Fetched via https.\nhttps://groups.google.com/a/google.com/d/msg/finch-users/WJPIxaX2jEM/kK16w5ChAwAJ\nSo in future, it won\u0027t be changed to http.\n\nBut a possible way to mess with all these is via command line.",
+      "parentUuid": "40c382be_336336ce",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a3b69a3_ab9e951c",
         "filename": "components/previews/core/previews_amp_converter.cc",
         "patchSetId": 5
