@@ -107,8 +107,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
                           int result) {
     DCHECK(owner_);
     DCHECK(http_info);
-    DCHECK_GT(result, 0);
-    if (!http_info->http_info) {
+    if (result < 0 || !http_info->http_info) {
       CompleteSendIfNeeded(FinishedReason::kNoHttpInfoError);
       return;
     }
@@ -403,6 +402,33 @@ void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
                                   "FinishedReason", static_cast<int>(status));
   state_ = State::kFinished;
   finished_reason_ = status;
+
+  switch (status) {
+    case FinishedReason::kNotFinished:
+      NOTREACHED();
+      break;
+    case FinishedReason::kSuccess:
+      break;
+    case FinishedReason::kNoHttpInfoError:
+    case FinishedReason::kResponseReaderError:
+      owner_->SetStartWorkerStatusCode(SERVICE_WORKER_ERROR_DISK_CACHE);
+      if (context_) {
+        ServiceWorkerRegistration* registration =
+            context_->GetLiveRegistration(owner_->registration_id());
+        registration->DeleteVersion(owner_);
+      }
+      return;
+    case FinishedReason::kCreateDataPipeError:
+    case FinishedReason::kConnectionError:
+    case FinishedReason::kMetaDataSenderError:
+      owner_->SetStartWorkerStatusCode(SERVICE_WORKER_ERROR_ABORT);
+      if (context_) {
+        ServiceWorkerRegistration* registration =
+            context_->GetLiveRegistration(owner_->registration_id());
+        registration->DeleteVersion(owner_);
+      }
+      return;
+  }
 
   // Notify the renderer that the error occurred by resetting the Mojo
   // pipe. This triggers failure of script loading on the renderer, and if it's
