@@ -16,6 +16,24 @@
       "revId": "c095f8f17afe20adff01ca63a7bac2758f3975b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4b1fc3_87c32374",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-16T14:09:43Z",
+      "side": 1,
+      "message": "Deleted whitespace.",
+      "parentUuid": "2db1b8fb_0f06a030",
+      "revId": "c095f8f17afe20adff01ca63a7bac2758f3975b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
