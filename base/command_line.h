@@ -40,7 +40,7 @@ class BASE_EXPORT CommandLine {
 
   using CharType = StringType::value_type;
   using StringVector = std::vector<StringType>;
-  using SwitchMap = std::map<std::string, StringType>;
+  using SwitchMap = std::multimap<std::string, StringType>;
   using StringPieceSwitchMap = std::map<StringPiece, const StringType*>;
 
   // A constructor for CommandLines that only carry switches and arguments.

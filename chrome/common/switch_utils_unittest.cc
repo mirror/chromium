@@ -21,7 +21,7 @@ TEST(SwitchUtilsTest, RemoveSwitches) {
   base::CommandLine cmd_line(arraysize(argv), argv);
   EXPECT_FALSE(cmd_line.GetCommandLineString().empty());
 
-  std::map<std::string, base::CommandLine::StringType> switches =
+  std::multimap<std::string, base::CommandLine::StringType> switches =
       cmd_line.GetSwitches();
   EXPECT_EQ(5U, switches.size());
 
