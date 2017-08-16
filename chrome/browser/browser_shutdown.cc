@@ -239,7 +239,7 @@ void ShutdownPostThreadsStop(int shutdown_flags) {
     base::CommandLine old_cl(*base::CommandLine::ForCurrentProcess());
     std::unique_ptr<base::CommandLine> new_cl(
         new base::CommandLine(old_cl.GetProgram()));
-    std::map<std::string, base::CommandLine::StringType> switches =
+    std::multimap<std::string, base::CommandLine::StringType> switches =
         old_cl.GetSwitches();
     // Remove the switches that shouldn't persist across restart.
     about_flags::RemoveFlagsSwitches(&switches);

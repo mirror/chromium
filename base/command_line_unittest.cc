@@ -437,4 +437,21 @@ TEST(CommandLineTest, PrependComplexWrapper) {
   EXPECT_EQ(FILE_PATH_LITERAL("--b"), cl.argv()[5]);
 }
 
+TEST(CommandLineTest, MultiSwitchInstance) {
+  CommandLine cl(FilePath(FILE_PATH_LITERAL("Program")));
+  cl.AppendSwitchASCII("switch", "aaa");
+  cl.AppendSwitchASCII("switch", "bbb");
+  cl.AppendSwitchASCII("switch", "ccc");
+  EXPECT_EQ(FILE_PATH_LITERAL("Program --switch=aaa --switch=bbb --switch=ccc"),
+            cl.GetCommandLineString());
+  const CommandLine::SwitchMap& map = cl.GetSwitches();
+  EXPECT_EQ(3u, map.count("switch"));
+  auto it = map.lower_bound("switch");
+  EXPECT_EQ(FILE_PATH_LITERAL("aaa"), it->second);
+  EXPECT_EQ(FILE_PATH_LITERAL("bbb"), (++it)->second);
+  EXPECT_EQ(FILE_PATH_LITERAL("ccc"), (++it)->second);
+  EXPECT_EQ(map.upper_bound("switch"), ++it);
+  EXPECT_EQ(FILE_PATH_LITERAL("ccc"), cl.GetSwitchValueNative("switch"));
+}
+
 } // namespace base

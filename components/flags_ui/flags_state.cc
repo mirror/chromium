@@ -374,18 +374,26 @@ void FlagsState::SetFeatureEntryEnabled(FlagsStorage* flags_storage,
 }
 
 void FlagsState::RemoveFlagsSwitches(
-    std::map<std::string, base::CommandLine::StringType>* switch_list) {
+    std::multimap<std::string, base::CommandLine::StringType>* switch_list) {
   for (const auto& entry : flags_switches_)
     switch_list->erase(entry.first);
 
   // If feature entries were added to --enable-features= or --disable-features=
   // lists, remove them here while preserving existing values.
+
+  // TODO(skobes): Support multiple occurrences of --enable-features and
+  // --disable-features, allowing us to simplify this logic.
+
   for (const auto& entry : appended_switches_) {
     const auto& switch_name = entry.first;
     const auto& switch_added_values = entry.second;
 
+    const auto it = base::LastMultimapValue(*switch_list, switch_name);
+    if (it == switch_list->end())
+      continue;
+
     // The below is either a std::string or a base::string16 based on platform.
-    const auto& existing_value = (*switch_list)[switch_name];
+    const auto& existing_value = it->second;
 #if defined(OS_WIN)
     const std::string existing_value_utf8 = base::UTF16ToUTF8(existing_value);
 #else
@@ -408,10 +416,16 @@ void FlagsState::RemoveFlagsSwitches(
       switch_list->erase(switch_name);
     } else {
       std::string switch_value = base::JoinString(remaining_features, ",");
+
+      // Note: do this after setting switch_value, since it erases the string
+      // backing remaining_features.
+      switch_list->erase(switch_name);
+
 #if defined(OS_WIN)
-      (*switch_list)[switch_name] = base::UTF8ToUTF16(switch_value);
+      switch_list->insert(
+          make_pair(switch_name, base::UTF8ToUTF16(switch_value)));
 #else
-      (*switch_list)[switch_name] = switch_value;
+      switch_list->insert(make_pair(switch_name, switch_value));
 #endif
     }
   }
@@ -680,6 +694,9 @@ void FlagsState::MergeFeatureCommandLineSwitch(
     const char* switch_name,
     bool feature_state,
     base::CommandLine* command_line) {
+  // TODO(skobes): Support multiple occurrences of --enable-features and
+  // --disable-features, allowing us to remove the merging logic here.
+
   std::string original_switch_value =
       command_line->GetSwitchValueASCII(switch_name);
   std::vector<base::StringPiece> features =

@@ -83,6 +83,20 @@ bool ContainsKey(const Collection& collection, const Key& key) {
   return collection.find(key) != collection.end();
 }
 
+// Returns an iterator referring to the last (most recently inserted) element in
+// a std::multimap whose key is equivalent to the specified key, or map::end()
+// if no such element exists.
+template <typename Map>
+typename Map::const_iterator LastMultimapValue(
+    const Map& map,
+    const typename Map::key_type& key) {
+  auto range = map.equal_range(key);
+  auto result = map.end();
+  for (auto it = range.first; it != range.second; ++it)
+    result = it;
+  return result;
+}
+
 namespace internal {
 
 template <typename Collection>

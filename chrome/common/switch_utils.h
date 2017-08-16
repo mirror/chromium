@@ -14,7 +14,7 @@ namespace switches {
 
 // Remove the keys that we shouldn't pass through during restart.
 void RemoveSwitchesForAutostart(
-    std::map<std::string, base::CommandLine::StringType>* switches);
+    std::multimap<std::string, base::CommandLine::StringType>* switches);
 
 }  // namespace switches
 
