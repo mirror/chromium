@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635854b8_5f1b1193",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:00:46Z",
+      "side": 1,
+      "message": "ResponseCallback is owned via StrongBinding to an interface request passed mojom::ServiceWorkerEventDispatcher::DispatchFetchEvent().",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3cf353_5811c549",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:00:46Z",
+      "side": 1,
+      "message": "have it take scoped_refptr since it now takes ownership",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246f762e_b1736344",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:00:46Z",
+      "side": 1,
+      "message": "still accurate?",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755a9f59_9f3536a7",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:00:46Z",
+      "side": 1,
+      "message": "can you help me understand why this doesn\u0027t make a cycle now? version_ owns the event dispatcher which holds the binding to this class, no?",
+      "revId": "c18ed1f8f8d4f45645575662c53bfa70de58efed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
