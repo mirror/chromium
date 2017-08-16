@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea5cecf_65eae2e6",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-16T19:36:28Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 53
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f1a6a8_534744a4",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-16T19:36:28Z",
+      "side": 1,
+      "message": "(here and elsewhere, be consistent)\n\nPeriod? No period? https://cs.chromium.org/search/?q\u003ddesktop+benchmark\u0026sq\u003dpackage:chromium\u0026type\u003dcs \n\nCapital? No capital?",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ba5d21_ea91d093",
+        "filename": "tools/perf/benchmarks/memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-16T19:36:28Z",
+      "side": 1,
+      "message": "Why provide the bug? It seems like providing a bug for permanent disables like this, where the benchmark never should have been enabled in that benchmark in the first place, isn\u0027t too useful. Bugs seem a lot more useful for temporary disables than permanent.",
+      "range": {
+        "startLine": 215,
+        "startChar": 47,
+        "endLine": 215,
+        "endChar": 53
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5d974f_38ce7ddf",
+        "filename": "tools/perf/benchmarks/oortonline.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-16T19:36:28Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 56,
+        "startChar": 46,
+        "endLine": 56,
+        "endChar": 53
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a62df8e_9696c30b",
+        "filename": "tools/perf/benchmarks/startup.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-16T19:36:28Z",
+      "side": 1,
+      "message": "Assuming that you\u0027re intending to enable this benchmark on desktop?",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 12
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
