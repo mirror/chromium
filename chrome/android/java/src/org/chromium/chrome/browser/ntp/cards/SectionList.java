@@ -212,6 +212,17 @@ public class SectionList
         return mSections.isEmpty();
     }
 
+    /** Returns whether content has recently been inserted in any of the sections. */
+    public boolean hasRecentlyInsertedContent() {
+        boolean value = false;
+        for (SuggestionsSection section : mSections.values()) {
+            // We explicitly go through all the sections to make sure we reset the flag everywhere.
+            boolean sectionHasRecentInsertion = section.hasRecentlyInsertedContent();
+            value = value || sectionHasRecentInsertion;
+        }
+        return value;
+    }
+
     /**
      * Synchronises the data of the sections with that of the suggestions source, resetting the ones
      * that are stale. (see {@link SuggestionsSection#isDataStale()})
