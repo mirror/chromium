@@ -531,6 +531,24 @@
     },
     {
       "key": {
+        "uuid": "eeb3022f_c5faad22",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-16T02:29:52Z",
+      "side": 1,
+      "message": "It would depend on how you implement the Frame:Document\u003d1:1 infrastructure (do you have a design doc?).\n\nEven if we have the Frame:Document\u003d1:1 infrastructure, we\u0027ll still need a mechanism to invalidate all Ptrs to Mojo interfaces (owned by Blink objects that outlive the Frame), right?\n\nMaybe we should move this discussion to another place -- regarding this CK, let\u0027s just add ContextLifecycleObserver.",
+      "parentUuid": "db5b4927_2f12ac8c",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01be1bdc_f3ab95d5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
         "patchSetId": 24
