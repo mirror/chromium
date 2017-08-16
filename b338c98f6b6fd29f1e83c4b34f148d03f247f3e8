@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4b47cf64_86fa0166",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T07:23:17Z",
+      "side": 1,
+      "message": "Thank you for sharing the background.\n\nI took a look Alarm code, and the syscall looks just used one of ways to implement timer,\nand it looks not important to return FD.\nSo, questions;\nIs it necessary to expose the syscall directly?\nAt the moment, I couldn\u0027t find a reason, because if an event is sent at specified timing to the container, it looks just enough?\nDo we need to proxy it to powerd? Does PostTask family work?\n\nFor security wise, defer to the expert, Jorge.",
+      "parentUuid": "85df6a3b_4f4bc118",
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ea7485_bf1b0332",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 3
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-15T14:22:31Z",
       "side": 1,
       "message": "Nit: \"DBus\".",
+      "range": {
+        "startLine": 22,
+        "startChar": 42,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26af36fd_989c07ac",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T07:23:17Z",
+      "side": 1,
+      "message": "nit: I was recommended to use \"D-Bus\" :-).",
+      "parentUuid": "80ea7485_bf1b0332",
       "range": {
         "startLine": 22,
         "startChar": 42,
