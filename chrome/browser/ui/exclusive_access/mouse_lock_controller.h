@@ -50,6 +50,11 @@ class MouseLockController : public ExclusiveAccessControllerBase {
     fake_mouse_lock_for_test_ = value;
   }
 
+  void set_web_contents_with_silent_mouse_lock_permission_for_test(
+      content::WebContents* web_contents) {
+    web_contents_with_silent_mouse_lock_permission_ = web_contents;
+  }
+
   // If set, |bubble_hide_callback_for_test_| will be called during
   // |OnBubbleHidden()|.
   void set_bubble_hide_callback_for_test_(
@@ -76,6 +81,13 @@ class MouseLockController : public ExclusiveAccessControllerBase {
   void OnBubbleHidden(content::WebContents*, ExclusiveAccessBubbleHideReason);
 
   MouseLockState mouse_lock_state_;
+
+  // The WebContents that is allowed to lock mouse silently if
+  // |last_unlocked_by_target|. This value is updated when a WebContents
+  // acquired lock and have the exit instruction bubble displayed for an enough
+  // period of time. https://crbug.com/725370
+  content::WebContents* web_contents_with_silent_mouse_lock_permission_ =
+      nullptr;
 
   bool fake_mouse_lock_for_test_;
   base::RepeatingCallback<void(ExclusiveAccessBubbleHideReason)>
