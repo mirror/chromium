@@ -22,6 +22,30 @@
       "revId": "c8d9b9195946d148144c5ab0fc48c6647d29c93f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef21085_f518ec45",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-16T19:49:13Z",
+      "side": 1,
+      "message": "Ah, thanks for letting me know!\n\nSince remoting_apk doesn\u0027t factor into monochrome_apk\u0027s size, I don\u0027t mind just adding a general suppression for \"remoting.*R.strings.offline_reason_*.\". Do you have any ideas on how to make that more granular?",
+      "parentUuid": "58543c95_c079d3b0",
+      "range": {
+        "startLine": 1060,
+        "startChar": 21,
+        "endLine": 1060,
+        "endChar": 61
+      },
+      "revId": "c8d9b9195946d148144c5ab0fc48c6647d29c93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
