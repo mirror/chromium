@@ -22,6 +22,30 @@
       "revId": "0db3e6b0b72cc63f783cc52f0e4dac54ae9b4e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80f3e8d_c4ed9d71",
+        "filename": "components/search_engines/template_url_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-16T10:26:02Z",
+      "side": 1,
+      "message": "Hm, that does work, but all the other initializations here do their type conversions explicitly: logo_url and favicon_url also do GURL(), and there\u0027s lots of .as_string() calls to get from base::StringPiece to std::string. Should I change all of those? TBH I\u0027d prefer to keep things as they are, unless there\u0027s a good reason.",
+      "parentUuid": "d56e6381_377dcc13",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "0db3e6b0b72cc63f783cc52f0e4dac54ae9b4e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
