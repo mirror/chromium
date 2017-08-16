@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "851ff060_04306267",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T18:19:04Z",
+      "side": 1,
+      "message": "empty line above closing namespace bracket",
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea56e26c_8e39abca",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T18:19:04Z",
+      "side": 1,
+      "message": "why is this required? I don\u0027t think we should whitebox test this and blackbox testing should rely on scope exiting not manually resetting",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cc6cce_ce6d324f",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T18:19:04Z",
+      "side": 1,
+      "message": "// The call might block (e.g. file I/O that might hit in memory cache).",
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9079e330_6e85890a",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T18:19:04Z",
+      "side": 1,
+      "message": "// The call will definitely block (e.g. cache already checked and now pinging server synchronously).",
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0332842b_3d4acdac",
         "filename": "base/threading/scoped_blocking_call.h",
         "patchSetId": 15
@@ -18,6 +92,29 @@
         "startChar": 0,
         "endLine": 22,
         "endChar": 20
+      },
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e6bf71_642e4aa7",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T18:19:04Z",
+      "side": 1,
+      "message": "+ \"(more or less aggressively depending on BlockingType)\"",
+      "range": {
+        "startLine": 43,
+        "startChar": 62,
+        "endLine": 43,
+        "endChar": 63
       },
       "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
