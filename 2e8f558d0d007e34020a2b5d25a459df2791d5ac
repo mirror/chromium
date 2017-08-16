@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73a3f794_fc10e607",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-non-cors-safelisted-method.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T09:08:59Z",
+      "side": 1,
+      "message": "method other than GET -\u003e a method that is none of the CORS-safelisted methods",
+      "revId": "2e8f558d0d007e34020a2b5d25a459df2791d5ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
