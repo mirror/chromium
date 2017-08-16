@@ -16,6 +16,24 @@
       "revId": "84f5db292dcb8dfe926c64dbf4cda4496b1691d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f99cc4_83c4998b",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:37:45Z",
+      "side": 0,
+      "message": "To expand a little more on this: I think --use-viz-hit-test and --enable-async-event-targeting can be set independently, and all four configs for these two flags should work OK (assuming clients send the correct hit-test regions).",
+      "parentUuid": "cac32465_0f4d1a29",
+      "revId": "84f5db292dcb8dfe926c64dbf4cda4496b1691d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
