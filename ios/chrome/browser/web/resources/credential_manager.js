@@ -168,6 +168,10 @@ FederatedCredential.prototype.constructor = FederatedCredential;
 Object.defineProperty(
     FederatedCredential.prototype, 'constructor', { enumerable: false });
 
+FederatedCredential.prototype.provider = function() {
+  throw new TypeError();
+}
+
 /**
  * CredentialData dictionary
  * https://w3c.github.io/webappsec-credential-management/#dictdef-credentialdata
