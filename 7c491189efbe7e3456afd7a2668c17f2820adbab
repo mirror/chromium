@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68acf38a_834a94e3",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T06:58:45Z",
+      "side": 1,
+      "message": "nit: omit blank line since there\u0027s no intervening comment.",
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b930622_2eb2ef0b",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T06:58:45Z",
+      "side": 1,
+      "message": "nit: i find the \"|foo|\" notation hard to understand when it isn\u0027t referring to a function\u0027s actual parameters. i think this comment would be more clear as:\n\n  // Size, in bytes, of the data over which the histogram was computed.\n\nor something like that.",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8867597_46a07f12",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T06:58:45Z",
+      "side": 1,
+      "message": "this looks like a stale comment for size_ before it was changed from # of intervals to # of bytes. how about:\n  // 2^16 buckets holding counts of all 2-byte sequences in the data. The counts\n  // are stored as signed values to simplify computing the distance between two\n  // histograms.",
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120f4cf2_57951f0c",
+        "filename": "chrome/installer/zucchini/binary_data_histogram_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T06:58:45Z",
+      "side": 1,
+      "message": "static constexpr uint8_t kTestData[] \u003d ...",
+      "revId": "7c491189efbe7e3456afd7a2668c17f2820adbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
