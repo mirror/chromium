@@ -90,6 +90,9 @@ class CORE_EXPORT BrowserControls final
 
   // Constraints on the browser controls state
   WebBrowserControlsState permitted_state_;
+
+  // Are we animating to |permitted_state_|?
+  bool animating_;
 };
 }  // namespace blink
 

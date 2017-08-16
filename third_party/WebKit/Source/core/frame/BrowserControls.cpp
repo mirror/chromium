@@ -21,7 +21,8 @@ BrowserControls::BrowserControls(const Page& page)
       baseline_content_offset_(0),
       accumulated_scroll_delta_(0),
       shrink_viewport_(false),
-      permitted_state_(kWebBrowserControlsBoth) {}
+      permitted_state_(kWebBrowserControlsBoth),
+      animating_(false) {}
 
 DEFINE_TRACE(BrowserControls) {
   visitor->Trace(page_);
@@ -99,6 +100,15 @@ void BrowserControls::SetShownRatio(float shown_ratio) {
   if (shown_ratio_ == shown_ratio)
     return;
 
+  // If controls are supposed to be hidden, and we're not animating, then clamp
+  // the shown ratio.  If the impl side is animating, then let it set them to
+  // whatever it likes.  This is similar to UpdateConstraintsAndState, except
+  // that it also affects updates from the impl side while the ratio is
+  // converging.  Otherwise, the non-commutivity of clamping to [0,1] can cause
+  // it to converge on +1 when it should be hidden.
+  if (!animating_ && permitted_state_ == kWebBrowserControlsHidden)
+    shown_ratio = 0;
+
   shown_ratio_ = shown_ratio;
   page_->GetChromeClient().DidUpdateBrowserControls();
 }
@@ -108,6 +118,7 @@ void BrowserControls::UpdateConstraintsAndState(
     WebBrowserControlsState current,
     bool animate) {
   permitted_state_ = constraints;
+  animating_ = animate;
 
   DCHECK(!(constraints == kWebBrowserControlsShown &&
            current == kWebBrowserControlsHidden));
