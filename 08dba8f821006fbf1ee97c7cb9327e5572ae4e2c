@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27b4ddf6_0e556d5d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8738,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T14:49:30Z",
+      "side": 1,
+      "message": "Hmm, I thought it\u0027s marked as internal, but I looked at the wrong proto again. Yes, BLOCKED does seem useful.",
+      "parentUuid": "f67f1bfd_d783bd45",
+      "range": {
+        "startLine": 8738,
+        "startChar": 15,
+        "endLine": 8738,
+        "endChar": 19
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dededf03_09e15bd5",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2054a8ee_f90753e7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8740,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T14:49:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9ecfe513_0fdadec2",
+      "range": {
+        "startLine": 8740,
+        "startChar": 17,
+        "endLine": 8740,
+        "endChar": 24
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
