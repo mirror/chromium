@@ -2160,8 +2160,7 @@ void PaintLayerScrollableArea::ScrollbarManager::DestroyScrollbar(
   else
     ScrollableArea()->rebuild_vertical_scrollbar_layer_ = true;
 
-  if (!scrollbar->IsCustomScrollbar())
-    ScrollableArea()->WillRemoveScrollbar(*scrollbar, orientation);
+  ScrollableArea()->WillRemoveScrollbar(*scrollbar, orientation);
 
   ScrollableArea()->Box().GetDocument().View()->RemoveScrollbar(scrollbar);
   scrollbar->DisconnectFromScrollableArea();
