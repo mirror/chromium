@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52d1e662_b42d163f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T15:30:54Z",
+      "side": 1,
+      "message": "This test is run twice on the same config object. The first run affects the second run. I moved the config constructor inside the forloop to eliminate test runs affecting each other.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 36,
+        "endLine": 1110,
+        "endChar": 47
+      },
+      "revId": "e525b859df85ff9b7f8f66bcc2294b6c68cdec63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

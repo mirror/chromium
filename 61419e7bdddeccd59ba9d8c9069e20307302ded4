@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6b4481_b489e0ca",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T15:30:54Z",
+      "side": 0,
+      "message": "Tarun: I think this line looks fishy. The |connection_type_changed_| shouldn\u0027t be changed when querying IsNetworkQualityProhibitivelySlow(). It should only be changed when connection type is changed as indicated through OnNetworkChanged(ConnectionType type).",
+      "range": {
+        "startLine": 652,
+        "startChar": 2,
+        "endLine": 652,
+        "endChar": 26
+      },
+      "revId": "61419e7bdddeccd59ba9d8c9069e20307302ded4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
