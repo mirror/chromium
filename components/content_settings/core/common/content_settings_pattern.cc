@@ -22,15 +22,13 @@ namespace {
 // The component supports only one scheme for simplicity.
 const char* non_port_non_domain_wildcard_scheme = NULL;
 
+const char kChromeSearchScheme[] = "chrome-search";
+
 // Keep it consistent with enum SchemeType in content_settings_pattern.h.
-const char* const kSchemeNames[] = {
-  "wildcard",
-  "other",
-  url::kHttpScheme,
-  url::kHttpsScheme,
-  url::kFileScheme,
-  "chrome-extension",
-};
+const char* const kSchemeNames[] = {"wildcard",         "other",
+                                    url::kHttpScheme,   url::kHttpsScheme,
+                                    url::kFileScheme,   "chrome-extensions",
+                                    kChromeSearchScheme};
 
 static_assert(arraysize(kSchemeNames) == ContentSettingsPattern::SCHEME_MAX,
               "kSchemeNames should have SCHEME_MAX elements");
@@ -267,6 +265,12 @@ bool ContentSettingsPattern::Builder::Validate(const PatternParts& parts) {
   // If the pattern is for an extension URL test if it is valid.
   if (IsNonWildcardDomainNonPortScheme(parts.scheme) &&
       parts.port.empty() &&
+      !parts.is_port_wildcard) {
+    return true;
+  }
+
+  // If the pattern is for a Chrome Search URL test if it is valid.
+  if (parts.scheme == kChromeSearchScheme && parts.port.empty() &&
       !parts.is_port_wildcard) {
     return true;
   }

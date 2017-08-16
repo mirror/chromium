@@ -11,6 +11,7 @@
 
 namespace {
 
+const char kChromeSearchScheme[] = "chrome-search";
 const char kDomainWildcard[] = "[*.]";
 const size_t kDomainWildcardLength = 4;
 const char kHostWildcard[] = "*";
@@ -165,7 +166,7 @@ void PatternParser::Parse(const std::string& pattern_spec,
     }
   } else {
     if (!ContentSettingsPattern::IsNonWildcardDomainNonPortScheme(scheme) &&
-        scheme != url::kFileScheme)
+        scheme != url::kFileScheme && scheme != kChromeSearchScheme)
       builder->WithPortWildcard();
   }
 
@@ -209,7 +210,8 @@ std::string PatternParser::ToString(
   }
   str += parts.host;
 
-  if (ContentSettingsPattern::IsNonWildcardDomainNonPortScheme(parts.scheme)) {
+  if (ContentSettingsPattern::IsNonWildcardDomainNonPortScheme(parts.scheme) ||
+      parts.scheme == kChromeSearchScheme) {
     str += parts.path.empty() ? std::string(kUrlPathSeparator) : parts.path;
     return str;
   }
