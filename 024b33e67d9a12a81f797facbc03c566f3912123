@@ -122,6 +122,24 @@
       "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1395f81c_1fc8266b",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T20:52:22Z",
+      "side": 1,
+      "message": "Oh, I see. So num_handles is the total number of handles that the whole message contains, not the number of handles associated with an individual OS-level message fragment.\n\nHowever, I thought that this only gets called once the entire Mojo-level message has been received, even if it has been split across multiple underlying OS-level messages (see OnReadComplete(), which early-exits returning true if there isn\u0027t enough data available to process the message, yet).\n\nIf you look at the OnMxHandleSignalled implementation below, I\u0027m accumulating all the handles from received messages into a vector to attached to the resulting Message (though I\u0027ve explicitly DCHECK\u0027d against \u003e64 handles per-message in the WriteNoLock implementation..).",
+      "parentUuid": "d43895a8_6e976f40",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
