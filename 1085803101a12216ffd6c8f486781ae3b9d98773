@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb196b10_60b4c6fb",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T15:28:46Z",
+      "side": 1,
+      "message": "This behavior is different than we have for menus. For menus the EventHandler consumes everything. Don\u0027t you want the same thing here? Or more specifically don\u0027t you want all key events to be acted on by the tray without changing activation? MenuPreTargetHandler calls https://chromium.googlesource.com/chromium/src/+/master/ui/views/controls/menu/menu_controller.cc#1060 , which StopsPropagation of events.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 62
+      },
+      "revId": "1085803101a12216ffd6c8f486781ae3b9d98773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e14722d_edfb8995",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T15:28:46Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 26
+      },
+      "revId": "1085803101a12216ffd6c8f486781ae3b9d98773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36309fb_3b8d23a8",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T15:28:46Z",
+      "side": 1,
+      "message": "Prefix section with where override comes from, e.g.\n// ui::EventHandler:",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 20
+      },
+      "revId": "1085803101a12216ffd6c8f486781ae3b9d98773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
