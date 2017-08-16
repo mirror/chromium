@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4979fb7a_7bb73f63",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T06:15:02Z",
+      "side": 1,
+      "message": "Let\u0027s not do this here. You can calculate in the caller separately.\n\nAlso, UTF8-UTF16 conversion and text.size() * 2 look inconsistent.\nCould you elaborate more details and/or fix the code properly.",
+      "revId": "e360e31a1369c5176c94368d27cffbbbcdc28fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21f4b42_d3a98ae2",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T06:15:02Z",
+      "side": 1,
+      "message": "style: please elide the brace.",
+      "revId": "e360e31a1369c5176c94368d27cffbbbcdc28fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39770ebe_18c32d78",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T06:15:02Z",
+      "side": 1,
+      "message": "nit: As I told you via offline chat, we often use || only for var names, not for class names.",
+      "revId": "e360e31a1369c5176c94368d27cffbbbcdc28fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
