@@ -118,8 +118,8 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
   ignore_key_mutations_[key]++;
   leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
                 PackSource(page_url, storage_area_id),
-                base::Bind(&LocalStorageCachedArea::OnSetItemComplete,
-                           weak_factory_.GetWeakPtr(), key));
+                base::BindOnce(&LocalStorageCachedArea::OnSetItemComplete,
+                               weak_factory_.GetWeakPtr(), key));
   return true;
 }
 
@@ -135,8 +135,8 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
   ignore_key_mutations_[key]++;
   leveldb_->Delete(String16ToUint8Vector(key),
                    PackSource(page_url, storage_area_id),
-                   base::Bind(&LocalStorageCachedArea::OnRemoveItemComplete,
-                              weak_factory_.GetWeakPtr(), key));
+                   base::BindOnce(&LocalStorageCachedArea::OnRemoveItemComplete,
+                                  weak_factory_.GetWeakPtr(), key));
 }
 
 void LocalStorageCachedArea::Clear(const GURL& page_url,
@@ -146,8 +146,8 @@ void LocalStorageCachedArea::Clear(const GURL& page_url,
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
   ignore_all_mutations_ = true;
   leveldb_->DeleteAll(PackSource(page_url, storage_area_id),
-                      base::Bind(&LocalStorageCachedArea::OnClearComplete,
-                                  weak_factory_.GetWeakPtr()));
+                      base::BindOnce(&LocalStorageCachedArea::OnClearComplete,
+                                     weak_factory_.GetWeakPtr()));
 }
 
 void LocalStorageCachedArea::AreaCreated(LocalStorageArea* area) {

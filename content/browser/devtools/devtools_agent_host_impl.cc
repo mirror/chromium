@@ -347,10 +347,9 @@ void DevToolsAgentHostImpl::NotifyCreated() {
 void DevToolsAgentHostImpl::NotifyAttached() {
   if (!s_attached_count_) {
     BrowserThread::PostTask(
-        BrowserThread::IO,
-        FROM_HERE,
-        base::Bind(&NetLogObserver::Attach,
-                   GetContentClient()->browser()->GetNetLog()));
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&NetLogObserver::Attach,
+                       GetContentClient()->browser()->GetNetLog()));
   }
   ++s_attached_count_;
 
@@ -361,10 +360,8 @@ void DevToolsAgentHostImpl::NotifyAttached() {
 void DevToolsAgentHostImpl::NotifyDetached() {
   --s_attached_count_;
   if (!s_attached_count_) {
-    BrowserThread::PostTask(
-        BrowserThread::IO,
-        FROM_HERE,
-        base::Bind(&NetLogObserver::Detach));
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::BindOnce(&NetLogObserver::Detach));
   }
 
   for (auto& observer : g_observers.Get())

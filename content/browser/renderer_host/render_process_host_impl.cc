@@ -772,8 +772,8 @@ class RenderProcessHostIsReadyObserver : public RenderProcessHostObserver {
   void PostTask() {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&RenderProcessHostIsReadyObserver::CallTask,
-                   weak_factory_.GetWeakPtr()));
+        base::BindOnce(&RenderProcessHostIsReadyObserver::CallTask,
+                       weak_factory_.GetWeakPtr()));
   }
 
   void CallTask() {
@@ -1337,8 +1337,8 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::Bind(&CacheShaderInfo, GetID(),
-                                       storage_partition_impl_->GetPath()));
+                            base::BindOnce(&CacheShaderInfo, GetID(),
+                                           storage_partition_impl_->GetPath()));
   }
 
   push_messaging_manager_.reset(new PushMessagingManager(
@@ -1407,7 +1407,7 @@ RenderProcessHostImpl::~RenderProcessHostImpl() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::Bind(&RemoveShaderInfo, GetID()));
+                            base::BindOnce(&RemoveShaderInfo, GetID()));
   }
 }
 
@@ -2933,9 +2933,10 @@ void RenderProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
   // Inform AudioInputRendererHost about the new render process PID.
   // AudioInputRendererHost is reference counted, so its lifetime is
   // guaranteed during the lifetime of the closure.
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::Bind(&AudioInputRendererHost::set_renderer_pid,
-                                     audio_input_renderer_host_, peer_pid));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&AudioInputRendererHost::set_renderer_pid,
+                     audio_input_renderer_host_, peer_pid));
 }
 
 void RenderProcessHostImpl::OnChannelError() {
@@ -3148,8 +3149,8 @@ void RenderProcessHostImpl::EnableAudioDebugRecordings(
     // Not null if RenderProcessHostImpl::Init has already been called.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&AudioInputRendererHost::EnableDebugRecording,
-                   audio_input_renderer_host_, file));
+        base::BindOnce(&AudioInputRendererHost::EnableDebugRecording,
+                       audio_input_renderer_host_, file));
   }
 }
 
@@ -3160,9 +3161,9 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
   // for avoiding races between enable and disable. Nothing is done on the
   // sequence.
   GetAecDumpFileTaskRunner().PostTaskAndReply(
-      FROM_HERE, base::Bind(&base::DoNothing),
-      base::Bind(&RenderProcessHostImpl::SendDisableAecDumpToRenderer,
-                 weak_factory_.GetWeakPtr()));
+      FROM_HERE, base::BindOnce(&base::DoNothing),
+      base::BindOnce(&RenderProcessHostImpl::SendDisableAecDumpToRenderer,
+                     weak_factory_.GetWeakPtr()));
 
   // AudioInputRendererHost is reference counted, so it's lifetime is
   // guaranteed during the lifetime of the closure.
@@ -3170,8 +3171,8 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
     // Not null if RenderProcessHostImpl::Init has already been called.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&AudioInputRendererHost::DisableDebugRecording,
-                   audio_input_renderer_host_));
+        base::BindOnce(&AudioInputRendererHost::DisableDebugRecording,
+                       audio_input_renderer_host_));
   }
 }
 
@@ -3225,9 +3226,9 @@ RenderProcessHostImpl::StartRtpDump(
     return WebRtcStopRtpDumpCallback();
 
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::Bind(&P2PSocketDispatcherHost::StartRtpDump,
-                                     p2p_socket_dispatcher_host_, incoming,
-                                     outgoing, packet_callback));
+                          base::BindOnce(&P2PSocketDispatcherHost::StartRtpDump,
+                                         p2p_socket_dispatcher_host_, incoming,
+                                         outgoing, packet_callback));
 
   if (stop_rtp_dump_callback_.is_null()) {
     stop_rtp_dump_callback_ =
@@ -4016,15 +4017,16 @@ RenderProcessHost* RenderProcessHostImpl::FindReusableProcessHostForSite(
 void RenderProcessHostImpl::OnRegisterAecDumpConsumer(int id) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread,
-                 weak_factory_.GetWeakPtr(), id));
+      base::BindOnce(&RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread,
+                     weak_factory_.GetWeakPtr(), id));
 }
 
 void RenderProcessHostImpl::OnUnregisterAecDumpConsumer(int id) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&RenderProcessHostImpl::UnregisterAecDumpConsumerOnUIThread,
-                 weak_factory_.GetWeakPtr(), id));
+      base::BindOnce(
+          &RenderProcessHostImpl::UnregisterAecDumpConsumerOnUIThread,
+          weak_factory_.GetWeakPtr(), id));
 }
 
 void RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread(int id) {

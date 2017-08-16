@@ -374,8 +374,8 @@ class DeviceSensorBrowserTest : public ContentBrowserTest {
     sensor_provider_ = base::MakeUnique<FakeSensorProvider>();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&DeviceSensorBrowserTest::SetUpOnIOThread,
-                   base::Unretained(this)));
+        base::BindOnce(&DeviceSensorBrowserTest::SetUpOnIOThread,
+                       base::Unretained(this)));
     io_loop_finished_event_.Wait();
   }
 
