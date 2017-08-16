@@ -1018,8 +1018,8 @@ class FrameRectChangedMessageFilter : public content::BrowserMessageFilter {
   void OnFrameRectChanged(const gfx::Rect& rect) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&FrameRectChangedMessageFilter::OnFrameRectChangedOnUI, this,
-                   rect));
+        base::BindOnce(&FrameRectChangedMessageFilter::OnFrameRectChangedOnUI,
+                       this, rect));
   }
 
   void OnFrameRectChangedOnUI(const gfx::Rect& rect) {
@@ -5729,8 +5729,8 @@ class CursorMessageFilter : public content::BrowserMessageFilter {
     if (message.type() == ViewHostMsg_SetCursor::ID) {
       content::BrowserThread::PostTask(
           content::BrowserThread::UI, FROM_HERE,
-          base::Bind(&CursorMessageFilter::OnSetCursor, this,
-                     message.routing_id()));
+          base::BindOnce(&CursorMessageFilter::OnSetCursor, this,
+                         message.routing_id()));
     }
     return false;
   }
@@ -6774,8 +6774,8 @@ class ShowWidgetMessageFilter : public content::BrowserMessageFilter {
   void OnShowWidget(int route_id, const gfx::Rect& initial_rect) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&ShowWidgetMessageFilter::OnShowWidgetOnUI, this, route_id,
-                   initial_rect));
+        base::BindOnce(&ShowWidgetMessageFilter::OnShowWidgetOnUI, this,
+                       route_id, initial_rect));
   }
 
 #if defined(OS_MACOSX) || defined(OS_ANDROID)
@@ -8449,7 +8449,8 @@ class ShutdownRequestMessageFilter : public BrowserMessageFilter {
     if (message.type() == ChildProcessHostMsg_ShutdownRequest::ID) {
       content::BrowserThread::PostTask(
           content::BrowserThread::UI, FROM_HERE,
-          base::Bind(&ShutdownRequestMessageFilter::OnShutdownRequest, this));
+          base::BindOnce(&ShutdownRequestMessageFilter::OnShutdownRequest,
+                         this));
     }
     return false;
   }
@@ -8738,15 +8739,15 @@ class PendingWidgetMessageFilter : public BrowserMessageFilter {
                            bool user_gesture) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&PendingWidgetMessageFilter::OnReceivedRoutingIDOnUI, this,
-                   pending_widget_routing_id));
+        base::BindOnce(&PendingWidgetMessageFilter::OnReceivedRoutingIDOnUI,
+                       this, pending_widget_routing_id));
   }
 
   void OnShowWidget(int routing_id, const gfx::Rect& initial_rect) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&PendingWidgetMessageFilter::OnReceivedRoutingIDOnUI, this,
-                   routing_id));
+        base::BindOnce(&PendingWidgetMessageFilter::OnReceivedRoutingIDOnUI,
+                       this, routing_id));
   }
 
   void OnReceivedRoutingIDOnUI(int widget_routing_id) {
@@ -9888,8 +9889,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     // executed on the message queue before the task to process the
     // DidStartProvisionalLoad IPC from the renderer.
     base::SequencedTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&WebContents::Close,
-                              base::Unretained(other_shell->web_contents())));
+        FROM_HERE,
+        base::BindOnce(&WebContents::Close,
+                       base::Unretained(other_shell->web_contents())));
 
     // Resume the navigation. This will 1) initiate the transfer and 2) shortly
     // after destroy the |other_shell| via WebContents::Close task posted above.
@@ -10780,7 +10782,8 @@ class SetIsInertMessageFilter : public content::BrowserMessageFilter {
   void OnSetIsInert(bool is_inert) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&SetIsInertMessageFilter::OnSetIsInertOnUI, this, is_inert));
+        base::BindOnce(&SetIsInertMessageFilter::OnSetIsInertOnUI, this,
+                       is_inert));
   }
   void OnSetIsInertOnUI(bool is_inert) {
     is_inert_ = is_inert;
