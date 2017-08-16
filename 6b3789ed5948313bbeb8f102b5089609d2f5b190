@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56059fbe_96c4f9df",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-16T23:52:03Z",
+      "side": 1,
+      "message": "Why not return the allocator out of GetAllocator, then the code becomes a bit more readable:\n\nreturn GetAllocator()-\u003eCreateCmdBuffer(capacity);\n\nVery easy to follow one liner.",
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da6ab5a_15d22cd6",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-16T23:52:03Z",
+      "side": 1,
+      "message": "I think code here can be made easier to follow too. \n\nif (GetOutputProtection()) {\n  // make the call\n}\n\nAnd GetOutputProtection() can return nullptr if it was attempted but didn\u0027t succeed getting one.",
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af267bcc_b84adbe1",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-16T23:52:03Z",
+      "side": 1,
+      "message": "nit: s/MOJO/Mojo/",
+      "range": {
+        "startLine": 149,
+        "startChar": 37,
+        "endLine": 149,
+        "endChar": 41
+      },
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8ae088_d10f56cd",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-16T23:52:03Z",
+      "side": 1,
+      "message": "If it fails later, is the interface pointer nullified? Where does that happen?",
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
