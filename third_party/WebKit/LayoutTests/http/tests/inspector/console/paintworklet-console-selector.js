@@ -1,0 +1,1 @@
+registerPaint('foo', class { paint() {} });
