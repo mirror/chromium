@@ -76,6 +76,11 @@ public interface PaymentApp {
     @Nullable
     Set<String> getPreferredRelatedApplicationIds();
 
+    @Nullable
+    default String getCanDedupedApplicationId() {
+        return null;
+    }
+
     /**
      * Returns the identifier for this payment app to be saved in user preferences. For
      * example, this can be "autofill", "https://android.com/pay", or

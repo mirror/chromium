@@ -657,6 +657,7 @@ def main(argv):
         _AsInterfaceJar(p) for p in javac_classpath]
     deps_info['java'] = {
       'full_classpath': java_full_classpath
+      'full_interface_classpath': [_AsInterfaceJar(p) for p in java_full_classpath]
     }
 
   if options.type in ('android_apk', 'dist_jar'):
@@ -671,7 +672,6 @@ def main(argv):
     }
 
   if options.type == 'android_apk':
-    dependency_jars = [c['jar_path'] for c in all_library_deps]
     manifest = AndroidManifest(options.android_manifest)
     deps_info['package_name'] = manifest.GetPackageName()
     if not options.tested_apk_config and manifest.GetInstrumentationElements():

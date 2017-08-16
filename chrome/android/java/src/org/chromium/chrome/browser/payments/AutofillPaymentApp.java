@@ -228,4 +228,10 @@ public class AutofillPaymentApp implements PaymentApp {
         resourceIds[1][1][1] = 0;
         return resourceIds[credit][debit][prepaid];
     }
+    /*
+    @Override
+    public String getCanDedupedApplicationId() {
+        return null;
+    }
+    */
 }

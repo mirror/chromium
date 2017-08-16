@@ -94,6 +94,8 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
      */
     private final Map<URI, Set<ResolveInfo>> mMethodToSupportedAppsMapping = new HashMap<>();
 
+    private final Map<ResolveInfo, String> mAppsToDefaultMethodsMapping = new HashMap<>();
+
     /** Contains information about a URI payment method. */
     private static final class PaymentMethod {
         /** The default applications for this payment method. */
@@ -236,6 +238,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             URI appOrigin = null;
             URI defaultUriMethod = null;
             if (!TextUtils.isEmpty(defaultMethod)) {
+                assert !mAppsToDefaultMethodsMapping.containsKey(app);
+                mAppsToDefaultMethodsMapping.put(app, defaultMethod);
+
                 if (!methodToAppsMapping.containsKey(defaultMethod)) {
                     methodToAppsMapping.put(defaultMethod, new HashSet<ResolveInfo>());
                 }
@@ -476,7 +481,8 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         }
 
         // The same method may be added multiple times.
-        app.addMethodName(methodName);
+        app.addMethodName(
+                methodName, methodName.equals(mAppsToDefaultMethodsMapping.get(resolveInfo)));
     }
 
     @Override

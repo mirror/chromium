@@ -99,6 +99,7 @@ public class AndroidPaymentApp
     private InstrumentDetailsCallback mInstrumentDetailsCallback;
     private ServiceConnection mServiceConnection;
     private boolean mIsReadyToPayQueried;
+    private String mDefaultMethodName;
 
     /**
      * Builds the point of interaction with a locally installed 3rd party native Android payment
@@ -127,8 +128,9 @@ public class AndroidPaymentApp
     }
 
     /** @param methodName A payment method that this app supports, e.g., "https://bobpay.com". */
-    public void addMethodName(String methodName) {
+    public void addMethodName(String methodName, boolean defaultMethod) {
         mMethodNames.add(methodName);
+        if (defaultMethod) mDefaultMethodName = methodName;
     }
 
     /** @param className The class name of the "is ready to pay" service in the payment app. */
@@ -241,6 +243,11 @@ public class AndroidPaymentApp
     @Override
     public Set<String> getPreferredRelatedApplicationIds() {
         return null;
+    }
+
+    @Override
+    public String getCanDedupedApplicationId() {
+        return mDefaultMethodName;
     }
 
     @Override

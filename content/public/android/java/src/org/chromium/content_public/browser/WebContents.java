@@ -258,6 +258,10 @@ public interface WebContents extends Parcelable {
      */
     boolean isIncognito();
 
+    default boolean returnFalse() {
+        return false;
+    }
+
     /**
      * Resumes the requests for a newly created window.
      */

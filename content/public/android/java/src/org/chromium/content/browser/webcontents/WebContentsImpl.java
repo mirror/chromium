@@ -143,8 +143,15 @@ import java.util.UUID;
 
     private WebContentsImpl(
             long nativeWebContentsAndroid, NavigationController navigationController) {
-        mNativeWebContentsAndroid = nativeWebContentsAndroid;
-        mNavigationController = navigationController;
+        if (!returnFalse()) {
+            mNativeWebContentsAndroid = nativeWebContentsAndroid;
+            mNavigationController = navigationController;
+        }
+    }
+
+    @Override
+    public boolean returnFalse() {
+        return false;
     }
 
     @CalledByNative
