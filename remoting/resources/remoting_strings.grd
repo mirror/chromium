@@ -635,15 +635,6 @@
         <message desc="Text shown in tooltip when user touches an offline host on the device." name="IDS_HOST_OFFLINE_TOOLTIP" formatter_data="android_java">
           Host is offline.
         </message>
-        <message desc="Error that is shown in tooltip if the app loses its connection to the Cast device." name="IDS_CONNECTION_TO_CAST_FAILED" formatter_data="android_java">
-          Failed to connect to Cast device.
-        </message>
-         <message desc="Text shown in tooltip when the application has closed its connection to the Cast device." name="IDS_CONNECTION_TO_CAST_CLOSED" formatter_data="android_java">
-          Closed connection to Cast device.
-        </message>
-        <message desc="Title for Cast button in Android application menu." name="IDS_CAST_BUTTON_TITLE" formatter_data="android_java">
-          Cast
-        </message>
         <message name="IDS_MOBILE_NETWORK_WARNING" desc="Message shown in an alert dialog that warns the user that they are trying to connect to a device over mobile network.">
           Data charges may apply when connecting to a device over mobile network. Do you want to continue?
         </message>
@@ -905,7 +896,7 @@ After your remote device is setup, you can access it directly from this page
       <message desc="Menu option for toggle full-screen mode." name="IDS_FULL_SCREEN" formatter_data="android_java">
         Full screen
       </message>
-      <message desc="Icon to leave full-screen mode." name="IDS_EXIT_FULL_SCREEN" formatter_data="android_java">
+      <message desc="Icon to leave full-screen mode." name="IDS_EXIT_FULL_SCREEN">
         Exit full screen
       </message>
       <message desc="Tool-tip for the window's close icon." name="IDS_CLOSE_WINDOW">
@@ -1049,10 +1040,6 @@ After your remote device is setup, you can access it directly from this page
                  name="IDS_HOST_STATUS_LINE" formatter_data="android_java">
           <ph name="OPTIONAL_OFFLINE_REASON">%2$s<ex>Host failed to read the policy.</ex></ph>  Last seen online <ph name="RELATIVE_TIMESTAMP">%1$s<ex>yesterday</ex></ph>.
         </message>
-        <message desc="Content description (used for accessibility) of a host icon representing an online host."
-                 name="IDS_HOST_ICON_ONLINE_DESCRIPTION" formatter_data="android_java">
-          Online.
-        </message>
         <message desc="Content description (used for accessibility) of a host icon representing an offline host."
                  name="IDS_HOST_ICON_OFFLINE_DESCRIPTION" formatter_data="android_java">
           Offline.
@@ -1070,43 +1057,43 @@ After your remote device is setup, you can access it directly from this page
         </message>
       </if>
       <message desc="Error message indicating that the host is offline, because the host failed to initialize (i.e. failed to generate a host certificate, run out of memory early during startup, failed to set up inter-process communication, etc.)."
-               name="IDS_OFFLINE_REASON_INITIALIZATION_FAILED" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_INITIALIZATION_FAILED">
         Host initialization failed.
       </message>
       <message desc="Error message indicating that the host is offline, because the host configuration is invalid."
-               name="IDS_OFFLINE_REASON_INVALID_HOST_CONFIGURATION" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_INVALID_HOST_CONFIGURATION">
         Invalid host configuration.
       </message>
       <message desc="Error message indicating that the host is offline, because the host configuration specifies a host id that is not found in the Chrome Remote Desktop Directory service (possibly because the host entry was deleted by the user)."
-               name="IDS_OFFLINE_REASON_INVALID_HOST_ID" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_INVALID_HOST_ID">
         Invalid host id.
       </message>
       <message desc="Error message indicating that the host is offline, because the host configuration specifies an OAuth credential that is rejected when the host tries to authenticate itself to Chrome Remote Desktop Directory service."
-               name="IDS_OFFLINE_REASON_INVALID_OAUTH_CREDENTIALS" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_INVALID_OAUTH_CREDENTIALS">
         Host is configured with invalid OAuth credentials.
       </message>
       <message desc="Error message indicating that the host is offline, because the host is owned by a user from a domain different than the domain mandated by RemoteAccessHostDomainList policy."
-               name="IDS_OFFLINE_REASON_INVALID_HOST_DOMAIN" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_INVALID_HOST_DOMAIN">
         Invalid host owner domain.
       </message>
       <message desc="Error message indicating that the host is offline, because RemoteAccessHostRequireCurtain policy requires curtain mode, which is not supported when 'launchd' runs an instance of the host at the console login screen on a Mac."
-               name="IDS_OFFLINE_REASON_LOGIN_SCREEN_NOT_SUPPORTED" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_LOGIN_SCREEN_NOT_SUPPORTED">
         Host running at the console logic screen has shutdown to support curtain mode by switching to a host running in a user-specific session.
       </message>
       <message desc="Error message indicating that the host is offline, because the host policy was unreadable (unparseable, inaccessible, mistyped or malformed)."
-               name="IDS_OFFLINE_REASON_POLICY_READ_ERROR" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_POLICY_READ_ERROR">
         Host failed to read the policy.
       </message>
       <message desc="Error message indicating that the host is temporarily offline, because the host is restarting due to a policy change."
-               name="IDS_OFFLINE_REASON_POLICY_CHANGE_REQUIRES_RESTART" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_POLICY_CHANGE_REQUIRES_RESTART">
         Host is restarting, to take into account a policy change.
       </message>
       <message desc="Error message indicating that the host is offline, because another process has requested the host to shut down (via a SIGTERM signal)."
-               name="IDS_OFFLINE_REASON_SUCCESS_EXIT" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_SUCCESS_EXIT">
         Host has shut down.
       </message>
       <message desc="Error message indicating that the host is offline, because RemoteAccessHostMatchUsername policy is enabled and there is a mismatch between the name of the local user (that the host is associated with) and the name of the Google account registered as the host owner (i.e. 'johndoe' if the host is owned by 'johndoe@example.com' Google account)"
-               name="IDS_OFFLINE_REASON_USERNAME_MISMATCH" formatter_data="android_java">
+               name="IDS_OFFLINE_REASON_USERNAME_MISMATCH">
         Invalid host owner.
       </message>
       <if expr="is_android">
