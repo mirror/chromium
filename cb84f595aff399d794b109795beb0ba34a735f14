@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a673a0ca_ed2a2638",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 1,
+      "message": "Any reason not to just copy this wholesale? : requested_urls_(page_url)",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e8ecfc_284d259c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 1,
+      "message": "nit: blank line after this",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da3ee89_ffb0720e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 1,
+      "message": "Need a GetAllURLs-type API instead",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b14fba3_bb4ed22c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 1,
+      "message": "I\u0027d prefer if all this was a part of the class itself.",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292f539f_425ab0ff",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 1,
+      "message": "There are no tests for concurrent requests that finish at different times, potentially with overlapping URLs",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242024b8_58cece04",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 1,
+      "message": "Does it make sense to check that GeneratePageBundle also counts toward the Too Many Requests condition?",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

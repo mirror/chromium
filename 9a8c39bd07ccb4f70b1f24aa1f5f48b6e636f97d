@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6605d9e3_76f21be0",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T00:07:53Z",
+      "side": 0,
+      "message": "This was testing that an empty task did not generate a network request, why did you remove it?",
+      "revId": "9a8c39bd07ccb4f70b1f24aa1f5f48b6e636f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
