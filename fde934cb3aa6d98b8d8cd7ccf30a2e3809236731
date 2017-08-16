@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "8524b1de_ecb36273",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:41:22Z",
+      "side": 1,
+      "message": "yep, just cause installation can even take 10s of seconds in the worst-case so there\u0027s plenty of opportunity for the webcontents to go away. +1 for LifetimeObserver",
+      "parentUuid": "c5905b74_3c2805a3",
+      "range": {
+        "startLine": 82,
+        "startChar": 19,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2e63be6_986e9b65",
         "filename": "chrome/browser/android/webapk/webapk_install_service.h",
         "patchSetId": 18
@@ -152,6 +176,30 @@
       "side": 1,
       "message": "I think it\u0027s okay: WebContentsImpl::~WebContentsImpl explicitly calls ResetWebContents on each observer which wipes the pointer and stops observation.",
       "parentUuid": "b2e63be6_986e9b65",
+      "range": {
+        "startLine": 84,
+        "startChar": 13,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319cb406_46d92992",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:41:22Z",
+      "side": 1,
+      "message": "oh sweet, good point!",
+      "parentUuid": "9b1d9b93_e8273fa6",
       "range": {
         "startLine": 84,
         "startChar": 13,
