@@ -16,6 +16,23 @@
       "revId": "126f994237281a4e927695d0f05c99bd5f11c5ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99e431f_8b18713d",
+        "filename": "base/android/java/src/org/chromium/base/SysUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T02:42:21Z",
+      "side": 1,
+      "message": "not ok. can test properly initialize this?",
+      "revId": "126f994237281a4e927695d0f05c99bd5f11c5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
