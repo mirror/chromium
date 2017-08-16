@@ -12,6 +12,7 @@
 #include "chrome/profiling/json_exporter.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "chrome/profiling/memlog_stream_parser.h"
+#include "third_party/zlib/zlib.h"
 
 namespace profiling {
 
@@ -120,7 +121,17 @@ void MemlogConnectionManager::DumpProcess(
   ExportAllocationEventSetToJSON(pid, connection->tracker.live_allocs(), maps,
                                  oss);
   std::string reply = oss.str();
-  output_file.WriteAtCurrentPos(reply.c_str(), reply.size());
+
+  // Pass ownership of the underlying fd/HANDLE to zlib.
+  base::PlatformFile platform_file = output_file.TakePlatformFile();
+#if defined(OS_WIN)
+  int fd = reinterpret_cast<int>(platform_file);
+#else
+  int fd = platform_file;
+#endif
+  gzFile gz_file = gzdopen(fd, "w");
+  gzwrite(gz_file, reply.c_str(), reply.size());
+  gzclose(gz_file);
 }
 
 }  // namespace profiling
