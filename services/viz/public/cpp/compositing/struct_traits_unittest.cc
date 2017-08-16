@@ -669,17 +669,18 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const bool y_flipped = true;
   const bool nearest_neighbor = true;
   const bool secure_output_only = true;
-  const bool needs_blending = true;
+  const bool needs_blending5 = true;
   const gfx::Size resource_size_in_pixels5(1234, 5678);
   cc::TextureDrawQuad* texture_draw_quad =
       render_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
-  texture_draw_quad->SetAll(sqs, rect5, rect5, rect5, needs_blending,
-                            resource_id5, resource_size_in_pixels5,
-                            premultiplied_alpha, uv_top_left, uv_bottom_right,
-                            background_color, vertex_opacity, y_flipped,
-                            nearest_neighbor, secure_output_only);
+  texture_draw_quad->SetAll(sqs, rect5, rect5, needs_blending5, resource_id5,
+                            resource_size_in_pixels5, premultiplied_alpha,
+                            uv_top_left, uv_bottom_right, background_color,
+                            vertex_opacity, y_flipped, nearest_neighbor,
+                            secure_output_only);
 
   const gfx::Rect rect6(321, 765, 11109, 151413);
+  const bool needs_blending6 = false;
   const ResourceId resource_id6(1234);
   const gfx::Size resource_size_in_pixels(1234, 5678);
   const gfx::Transform matrix(16.1f, 15.3f, 14.3f, 13.7f, 12.2f, 11.4f, 10.4f,
@@ -687,8 +688,8 @@ TEST_F(StructTraitsTest, QuadListBasic) {
                               1.2f);
   cc::StreamVideoDrawQuad* stream_video_draw_quad =
       render_pass->CreateAndAppendDrawQuad<cc::StreamVideoDrawQuad>();
-  stream_video_draw_quad->SetNew(sqs, rect6, rect6, rect6, resource_id6,
-                                 resource_size_in_pixels, matrix);
+  stream_video_draw_quad->SetNew(sqs, rect6, rect6, needs_blending6,
+                                 resource_id6, resource_size_in_pixels, matrix);
 
   std::unique_ptr<cc::RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(render_pass->DeepCopy(), &output);
@@ -699,6 +700,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::DebugBorderDrawQuad::MaterialCast(output->quad_list.ElementAt(0));
   EXPECT_EQ(rect1, out_debug_border_draw_quad->rect);
   EXPECT_EQ(rect1, out_debug_border_draw_quad->visible_rect);
+  EXPECT_EQ(false, out_debug_border_draw_quad->needs_blending);
   EXPECT_EQ(color1, out_debug_border_draw_quad->color);
   EXPECT_EQ(width1, out_debug_border_draw_quad->width);
 
@@ -706,6 +708,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::SolidColorDrawQuad::MaterialCast(output->quad_list.ElementAt(1));
   EXPECT_EQ(rect2, out_solid_color_draw_quad->rect);
   EXPECT_EQ(rect2, out_solid_color_draw_quad->visible_rect);
+  EXPECT_EQ(false, out_solid_color_draw_quad->needs_blending);
   EXPECT_EQ(color2, out_solid_color_draw_quad->color);
   EXPECT_EQ(force_anti_aliasing_off,
             out_solid_color_draw_quad->force_anti_aliasing_off);
@@ -714,6 +717,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::SurfaceDrawQuad::MaterialCast(output->quad_list.ElementAt(2));
   EXPECT_EQ(rect3, out_primary_surface_draw_quad->rect);
   EXPECT_EQ(rect3, out_primary_surface_draw_quad->visible_rect);
+  EXPECT_EQ(true, out_primary_surface_draw_quad->needs_blending);
   EXPECT_EQ(primary_surface_id, out_primary_surface_draw_quad->surface_id);
   EXPECT_EQ(cc::SurfaceDrawQuadType::PRIMARY,
             out_primary_surface_draw_quad->surface_draw_quad_type);
@@ -724,6 +728,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
             out_primary_surface_draw_quad->fallback_quad);
   EXPECT_EQ(rect3, out_fallback_surface_draw_quad->rect);
   EXPECT_EQ(rect3, out_fallback_surface_draw_quad->visible_rect);
+  EXPECT_EQ(true, out_fallback_surface_draw_quad->needs_blending);
   EXPECT_EQ(fallback_surface_id, out_fallback_surface_draw_quad->surface_id);
   EXPECT_EQ(cc::SurfaceDrawQuadType::FALLBACK,
             out_fallback_surface_draw_quad->surface_draw_quad_type);
@@ -733,6 +738,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::RenderPassDrawQuad::MaterialCast(output->quad_list.ElementAt(4));
   EXPECT_EQ(rect4, out_render_pass_draw_quad->rect);
   EXPECT_EQ(rect4, out_render_pass_draw_quad->visible_rect);
+  EXPECT_EQ(true, out_render_pass_draw_quad->needs_blending);
   EXPECT_EQ(render_pass_id, out_render_pass_draw_quad->render_pass_id);
   EXPECT_EQ(resource_id4, out_render_pass_draw_quad->mask_resource_id());
   EXPECT_EQ(mask_texture_size, out_render_pass_draw_quad->mask_texture_size);
@@ -741,9 +747,8 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const cc::TextureDrawQuad* out_texture_draw_quad =
       cc::TextureDrawQuad::MaterialCast(output->quad_list.ElementAt(5));
   EXPECT_EQ(rect5, out_texture_draw_quad->rect);
-  EXPECT_EQ(rect5, out_texture_draw_quad->opaque_rect);
   EXPECT_EQ(rect5, out_texture_draw_quad->visible_rect);
-  EXPECT_EQ(needs_blending, out_texture_draw_quad->needs_blending);
+  EXPECT_EQ(needs_blending5, out_texture_draw_quad->needs_blending);
   EXPECT_EQ(resource_id5, out_texture_draw_quad->resource_id());
   EXPECT_EQ(resource_size_in_pixels5,
             out_texture_draw_quad->resource_size_in_pixels());
@@ -762,8 +767,8 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const cc::StreamVideoDrawQuad* out_stream_video_draw_quad =
       cc::StreamVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(6));
   EXPECT_EQ(rect6, out_stream_video_draw_quad->rect);
-  EXPECT_EQ(rect6, out_stream_video_draw_quad->opaque_rect);
   EXPECT_EQ(rect6, out_stream_video_draw_quad->visible_rect);
+  EXPECT_EQ(needs_blending6, out_texture_draw_quad->needs_blending);
   EXPECT_EQ(resource_id6, out_stream_video_draw_quad->resource_id());
   EXPECT_EQ(resource_size_in_pixels,
             out_stream_video_draw_quad->resource_size_in_pixels());
@@ -829,7 +834,6 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
 
   const cc::DrawQuad::Material material = cc::DrawQuad::YUV_VIDEO_CONTENT;
   const gfx::Rect rect(1234, 4321, 1357, 7531);
-  const gfx::Rect opaque_rect(1357, 8642, 432, 123);
   const gfx::Rect visible_rect(1337, 7331, 561, 293);
   const bool needs_blending = true;
   const gfx::RectF ya_tex_coord_rect(1234.1f, 5678.2f, 9101112.3f, 13141516.4f);
@@ -851,12 +855,11 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   cc::SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
   cc::YUVVideoDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<cc::YUVVideoDrawQuad>();
-  quad->SetAll(sqs, rect, opaque_rect, visible_rect, needs_blending,
-               ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size, uv_tex_size,
-               y_plane_resource_id, u_plane_resource_id, v_plane_resource_id,
-               a_plane_resource_id, color_space, video_color_space,
-               resource_offset, resource_multiplier, bits_per_channel,
-               require_overlay);
+  quad->SetAll(sqs, rect, visible_rect, needs_blending, ya_tex_coord_rect,
+               uv_tex_coord_rect, ya_tex_size, uv_tex_size, y_plane_resource_id,
+               u_plane_resource_id, v_plane_resource_id, a_plane_resource_id,
+               color_space, video_color_space, resource_offset,
+               resource_multiplier, bits_per_channel, require_overlay);
 
   std::unique_ptr<cc::RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(render_pass->DeepCopy(), &output);
@@ -867,7 +870,6 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   const cc::YUVVideoDrawQuad* out_quad =
       cc::YUVVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(0));
   EXPECT_EQ(rect, out_quad->rect);
-  EXPECT_EQ(opaque_rect, out_quad->opaque_rect);
   EXPECT_EQ(visible_rect, out_quad->visible_rect);
   EXPECT_EQ(needs_blending, out_quad->needs_blending);
   EXPECT_EQ(ya_tex_coord_rect, out_quad->ya_tex_coord_rect);

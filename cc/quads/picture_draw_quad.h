@@ -27,8 +27,8 @@ class CC_EXPORT PictureDrawQuad : public ContentDrawQuadBase {
 
   void SetNew(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
-              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
+              bool need_blending,
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool nearest_neighbor,
@@ -39,7 +39,6 @@ class CC_EXPORT PictureDrawQuad : public ContentDrawQuadBase {
 
   void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
-              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
               bool needs_blending,
               const gfx::RectF& tex_coord_rect,
