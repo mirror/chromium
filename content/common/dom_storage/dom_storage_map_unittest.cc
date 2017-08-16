@@ -53,7 +53,7 @@ TEST_P(DOMStorageMapParamTest, DOMStorageMapBasics) {
   EXPECT_EQ(0u, copy->Length());
   EXPECT_EQ(0u, copy->bytes_used());
   if (has_only_keys)
-    map->TakeKeysFrom(&swap);
+    map->TakeKeysFrom(swap);
   else
     map->SwapValues(&swap);
   EXPECT_TRUE(swap.empty());
@@ -101,7 +101,7 @@ TEST_P(DOMStorageMapParamTest, DOMStorageMapBasics) {
   EXPECT_EQ(kItemBytes + kItem2Bytes, copy->bytes_used());
 
   if (has_only_keys)
-    map->TakeKeysFrom(&swap);
+    map->TakeKeysFrom(swap);
   else
     map->SwapValues(&swap);
   EXPECT_EQ(0u, map->Length());
@@ -140,7 +140,7 @@ TEST_P(DOMStorageMapParamTest, EnforcesQuota) {
   swap[kKey] = base::NullableString16(kValue, false);
   swap[kKey2] = base::NullableString16(kValue, false);
   if (has_only_keys)
-    map->TakeKeysFrom(&swap);
+    map->TakeKeysFrom(swap);
   else
     map->SwapValues(&swap);
   EXPECT_GT(map->bytes_used(), kQuota);

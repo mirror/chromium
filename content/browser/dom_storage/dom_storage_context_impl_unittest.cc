@@ -238,8 +238,7 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
   dom_namespace = context_->GetStorageNamespace(kSessionStorageNamespaceId);
   area = dom_namespace->OpenStorageArea(kOrigin);
   base::NullableString16 read_value;
-  read_value = area->GetItem(kKey);
-  EXPECT_EQ(kValue, read_value.string());
+  EXPECT_EQ(kKey, area->Key(0).string());
   dom_namespace->CloseStorageArea(area);
 
   SessionStorageUsageInfo info;
@@ -261,8 +260,8 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
                                    kPersistentId);
   dom_namespace = context_->GetStorageNamespace(kSessionStorageNamespaceId);
   area = dom_namespace->OpenStorageArea(kOrigin);
-  read_value = area->GetItem(kKey);
-  EXPECT_TRUE(read_value.is_null());
+
+  EXPECT_EQ(0u, area->Length());
   dom_namespace->CloseStorageArea(area);
   context_->Shutdown();
   context_ = NULL;
@@ -272,7 +271,8 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
 TEST_F(DOMStorageContextImplTest, PurgeMemory) {
   auto* dom_namespace = context_->GetStorageNamespace(kLocalStorageNamespaceId);
   auto* area1 = dom_namespace->OpenStorageArea(kOrigin);
-  area1->InitialImportIfNeeded();
+  base::NullableString16 old_value;
+  area1->SetItem(kKey, kValue, &old_value);
 
   // PURGE_UNOPENED does not delete the open area.
   context_->PurgeMemory(DOMStorageContextImpl::PURGE_UNOPENED);
@@ -282,13 +282,14 @@ TEST_F(DOMStorageContextImplTest, PurgeMemory) {
   // PURGE_UNOPENED deletes the unopened area.
   dom_namespace->CloseStorageArea(area1);
   EXPECT_EQ(1u, dom_namespace->GetUsageStatistics().inactive_area_count);
+  area1->CommitChanges(area1->commit_batch_.get());
+  area1->commit_batch_ = nullptr;
   context_->PurgeMemory(DOMStorageContextImpl::PURGE_UNOPENED);
   EXPECT_EQ(0u, dom_namespace->GetUsageStatistics().total_area_count);
 
   // Add an item to the database and commit changes, and keep it open. So, cache
   // is kept alive.
   auto* area2 = dom_namespace->OpenStorageArea(kOrigin);
-  base::NullableString16 old_value;
   area2->SetItem(kKey, kValue, &old_value);
   // Call commit directly instead of posting task.
   area2->CommitChanges(area2->commit_batch_.get());
@@ -313,6 +314,8 @@ TEST_F(DOMStorageContextImplTest, DeleteSuboriginLocalStorage) {
       context_->GetStorageNamespace(kLocalStorageNamespaceId);
   DOMStorageArea* origin_area = dom_namespace->OpenStorageArea(kOrigin);
   DOMStorageArea* suborigin_area = dom_namespace->OpenStorageArea(kSuborigin);
+  origin_area->SetCacheOnlyKeys(false);
+  suborigin_area->SetCacheOnlyKeys(false);
 
   const base::string16 kOriginKey(ASCIIToUTF16("foo"));
   const base::string16 kOriginValue(ASCIIToUTF16("bar"));

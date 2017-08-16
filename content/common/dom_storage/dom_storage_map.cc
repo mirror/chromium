@@ -119,21 +119,22 @@ void DOMStorageMap::SwapValues(DOMStorageValuesMap* values) {
   DCHECK(!has_only_keys_);
   keys_values_.swap(*values);
   bytes_used_ = CountBytes(keys_values_);
+  memory_usage_ = bytes_used_;
   ResetKeyIterator();
 }
 
-void DOMStorageMap::TakeKeysFrom(const DOMStorageValuesMap* values) {
+void DOMStorageMap::TakeKeysFrom(const DOMStorageValuesMap& values) {
   // Note: A pre-existing file may be over the quota budget.
   DCHECK(has_only_keys_);
   keys_only_.clear();
   memory_usage_ = 0;
-  for (const auto& item : *values) {
+  for (const auto& item : values) {
     keys_only_[item.first] =
         item.second.string().length() * sizeof(base::char16);
     // Do not count size of values for memory usage.
     memory_usage_ += size_in_memory(item.first, 0 /* unused */);
   }
-  bytes_used_ = CountBytes(*values);
+  bytes_used_ = CountBytes(values);
   ResetKeyIterator();
 }
 
