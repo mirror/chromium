@@ -34,6 +34,24 @@
       "revId": "9fe654ad6f56ef3144d2c1afeb4eb0ecb93ff307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3631ad_d06277c0",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-16T22:53:03Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "14e2f5ee_77d953ec",
+      "revId": "9fe654ad6f56ef3144d2c1afeb4eb0ecb93ff307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
