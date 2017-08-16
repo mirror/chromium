@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0cd13b79_dd224088",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-16T21:17:21Z",
+      "side": 1,
+      "message": "Yes, I remember because we don\u0027t create animator for custom scrollbar. I can double check this see if I can fix up.",
+      "parentUuid": "6b83d5f8_4b741b4c",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 39
+      },
+      "revId": "9e23e18354dd553217d1292624252afcb68a893f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516717f8_e718bb21",
         "filename": "third_party/WebKit/Source/platform/scroll/Scrollbar.cpp",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T21:08:30Z",
       "side": 1,
       "message": "Is this still firing or did you just forget to remove these?",
+      "range": {
+        "startLine": 594,
+        "startChar": 2,
+        "endLine": 595,
+        "endChar": 13
+      },
+      "revId": "9e23e18354dd553217d1292624252afcb68a893f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4f154f_de986d62",
+        "filename": "third_party/WebKit/Source/platform/scroll/Scrollbar.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-16T21:17:21Z",
+      "side": 1,
+      "message": "This one fail for autoscroll. Posted a new patch for this. PTAL. Thank you.",
+      "parentUuid": "516717f8_e718bb21",
       "range": {
         "startLine": 594,
         "startChar": 2,
