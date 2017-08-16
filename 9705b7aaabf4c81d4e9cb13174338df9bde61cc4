@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b10a386d_780f9b56",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-16T09:43:59Z",
+      "side": 0,
+      "message": "Please move the implementation of -showRateThisAppDialog to be grouped with the other borwserCommand implementations in this file.",
+      "range": {
+        "startLine": 4400,
+        "startChar": 12,
+        "endLine": 4400,
+        "endChar": 33
+      },
+      "revId": "9705b7aaabf4c81d4e9cb13174338df9bde61cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
