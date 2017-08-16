@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a16780_613653c0",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T08:34:01Z",
+      "side": 1,
+      "message": "switch statement?",
+      "revId": "07ebc3a92cd879329bf11826a8456a83cc97372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e1ca6b_995ba771",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T08:34:01Z",
+      "side": 1,
+      "message": "I guess this TODO can go. (when I wrote this I was actually expecting a bunch of failures between macOS versions, which didn\u0027t eventuate).",
+      "revId": "07ebc3a92cd879329bf11826a8456a83cc97372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
