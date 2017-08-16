@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a742c6_d9924b0f",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-16T00:55:50Z",
+      "side": 0,
+      "message": "My prior CL had added id\u003d\"homeButton\" and id\u003d\"bookmarksBar\" below.",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 48
+      },
+      "revId": "bed043e4d38f7e38c98bec358a5ef870358ba195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
