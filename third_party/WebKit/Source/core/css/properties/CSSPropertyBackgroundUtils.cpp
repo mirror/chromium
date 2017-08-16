@@ -7,6 +7,7 @@
 #include "core/CSSValueKeywords.h"
 #include "core/css/CSSTimingFunctionValue.h"
 #include "core/css/CSSValueList.h"
+#include "core/css/CSSValuePair.h"
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -79,6 +80,137 @@ bool CSSPropertyBackgroundUtils::ConsumeBackgroundPosition(
     AddBackgroundValue(result_y, position_y);
   } while (CSSPropertyParserHelpers::ConsumeCommaIncludingWhitespace(range));
   return true;
+}
+
+CSSValue* CSSPropertyBackgroundUtils::ConsumePrefixedBackgroundBox(
+    CSSParserTokenRange& range,
+    const CSSParserContext* context,
+    bool allow_text_value) {
+  // The values 'border', 'padding' and 'content' are deprecated and do not
+  // apply to the version of the property that has the -webkit- prefix removed.
+  if (CSSValue* value = CSSPropertyParserHelpers::ConsumeIdentRange(
+          range, CSSValueBorder, CSSValuePaddingBox))
+    return value;
+  if (allow_text_value && range.Peek().Id() == CSSValueText)
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  return nullptr;
+}
+
+CSSValue* CSSPropertyBackgroundUtils::ConsumeBackgroundSize(
+    CSSParserTokenRange& range,
+    CSSParserMode css_parser_mode,
+    bool use_legacy_parsing) {
+  if (CSSPropertyParserHelpers::IdentMatches<CSSValueContain, CSSValueCover>(
+          range.Peek().Id()))
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+
+  CSSValue* horizontal =
+      CSSPropertyParserHelpers::ConsumeIdent<CSSValueAuto>(range);
+  if (!horizontal) {
+    horizontal = CSSPropertyParserHelpers::ConsumeLengthOrPercent(
+        range, css_parser_mode, kValueRangeAll,
+        CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
+  }
+
+  CSSValue* vertical = nullptr;
+  if (!range.AtEnd()) {
+    if (range.Peek().Id() == CSSValueAuto)  // `auto' is the default
+    {
+      range.ConsumeIncludingWhitespace();
+    } else {
+      vertical = CSSPropertyParserHelpers::ConsumeLengthOrPercent(
+          range, css_parser_mode, kValueRangeAll,
+          CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
+    }
+  } else if (use_legacy_parsing) {
+    // Legacy syntax: "-webkit-background-size: 10px" is equivalent to
+    // "background-size: 10px 10px".
+    vertical = horizontal;
+  }
+  if (!vertical)
+    return horizontal;
+  return CSSValuePair::Create(horizontal, vertical,
+                              CSSValuePair::kKeepIdenticalValues);
+}
+
+bool CSSPropertyBackgroundUtils::ConsumeRepeatStyleComponent(
+    CSSParserTokenRange& range,
+    CSSValue*& value1,
+    CSSValue*& value2,
+    bool& implicit) {
+  if (CSSPropertyParserHelpers::ConsumeIdent<CSSValueRepeatX>(range)) {
+    value1 = CSSIdentifierValue::Create(CSSValueRepeat);
+    value2 = CSSIdentifierValue::Create(CSSValueNoRepeat);
+    implicit = true;
+    return true;
+  }
+  if (CSSPropertyParserHelpers::ConsumeIdent<CSSValueRepeatY>(range)) {
+    value1 = CSSIdentifierValue::Create(CSSValueNoRepeat);
+    value2 = CSSIdentifierValue::Create(CSSValueRepeat);
+    implicit = true;
+    return true;
+  }
+  value1 = CSSPropertyParserHelpers::ConsumeIdent<
+      CSSValueRepeat, CSSValueNoRepeat, CSSValueRound, CSSValueSpace>(range);
+  if (!value1)
+    return false;
+
+  value2 = CSSPropertyParserHelpers::ConsumeIdent<
+      CSSValueRepeat, CSSValueNoRepeat, CSSValueRound, CSSValueSpace>(range);
+  if (!value2) {
+    value2 = value1;
+    implicit = true;
+  }
+  return true;
+}
+
+bool CSSPropertyBackgroundUtils::ConsumeRepeatStyle(CSSParserTokenRange& range,
+                                                    CSSValue*& result_x,
+                                                    CSSValue*& result_y,
+                                                    bool& implicit) {
+  do {
+    CSSValue* repeat_x = nullptr;
+    CSSValue* repeat_y = nullptr;
+    if (!ConsumeRepeatStyleComponent(range, repeat_x, repeat_y, implicit))
+      return false;
+    AddBackgroundValue(result_x, repeat_x);
+    AddBackgroundValue(result_y, repeat_y);
+  } while (CSSPropertyParserHelpers::ConsumeCommaIncludingWhitespace(range));
+  return true;
+}
+
+bool CSSPropertyBackgroundUtils::ConsumeSizeProperty(
+    CSSParserTokenRange& range,
+    CSSParserMode css_parser_mode,
+    bool is_prev_pos_parsed,
+    CSSValue*& value) {
+  DCHECK(!value);
+  if (!CSSPropertyParserHelpers::ConsumeSlashIncludingWhitespace(range))
+    return true;  // so caller can continue
+
+  value = ConsumeBackgroundSize(range, css_parser_mode,
+                                false /* use_legacy_parsing */);
+  // If is_prev_pos_parsed is false, Position must have been parsed in the
+  // current layer.
+  return value && is_prev_pos_parsed;
+}
+
+void CSSPropertyBackgroundUtils::BackgroundValuePostProcessing(
+    CSSValue* value,
+    CSSValue* value_y,
+    CSSValue** longhands,
+    bool* parsed_longhand,
+    size_t longhands_sz,
+    size_t longhand_idx) {
+  DCHECK_LT(longhand_idx, longhands_sz);
+
+  parsed_longhand[longhand_idx] = true;
+  AddBackgroundValue(longhands[longhand_idx], value);
+  if (value_y) {
+    DCHECK_LT(longhand_idx + 1, longhands_sz);
+    parsed_longhand[longhand_idx + 1] = true;
+    AddBackgroundValue(longhands[longhand_idx + 1], value_y);
+  }
 }
 
 }  // namespace blink
