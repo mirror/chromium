@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42340fe8_60781aa5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-16T00:06:58Z",
+      "side": 1,
+      "message": "I might be missing something, but shouldn\u0027t this cause the existing autopresent test to fail, or at least behave weirdly? The MockVrIntentHandler in the test will return true for isTrustedDaydreamIntent, which means that isCustomTabVrIntent will return true and eventually cause a CCT to open up (instead of the CTA that the test expects).",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 78
+      },
+      "revId": "28709f859c25e163f01010a398c9f36bd8427c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
