@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e63be6_986e9b65",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:13:29Z",
+      "side": 1,
+      "message": "I think you still need to listen to WebContentsDestroyed and call Observer(nullptr);",
+      "range": {
+        "startLine": 84,
+        "startChar": 13,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "fde934cb3aa6d98b8d8cd7ccf30a2e3809236731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

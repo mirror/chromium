@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e30e1a_e3117932",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:13:29Z",
+      "side": 0,
+      "message": "was this implicitly true?",
+      "range": {
+        "startLine": 311,
+        "startChar": 18,
+        "endLine": 311,
+        "endChar": 37
+      },
+      "revId": "860acaf8e535ad818892b473722024d4a45a76d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
