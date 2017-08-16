@@ -52,6 +52,24 @@
       "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9513df8_a43eb5c9",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T21:42:22Z",
+      "side": 1,
+      "message": "What do you expect prevents navigation_handle()-\u003eGetURL from having %22 or double quote characters in it, followed by close tags (%3E) ? https://www.google.com/%22%3E is a totally valid URL, and that would seemingly break out of this context -- anything after that gets dumped into the data URL.\n\nThere are two levels of escaping here: the URL needs to be properly escaped so that it can appear in the context of an HTML attribute, then the entire HTML document needs to be encoded so that it\u0027s acceptable in the payload of a data: URL. So, there\u0027s a missing extra escaping that needs to happen on |navigation_handle()-\u003eGetURL().spec()| before it\u0027s safe to concatenate in.\n\nRegarding GURL parsing \"data:\" URLs -- I don\u0027t expect GURL to do very much canonicalization of data: URLs AT ALL. A valid spec() is a very low bar. GURL barely references the data scheme at all: https://cs.chromium.org/search/?q\u003dkDataScheme+file:src.url\u0026type\u003dcs\n\nLooking at the code, it seems like there\u0027s some whitespace stripping that applies to all URLs, and then the weak canonicalization that happens in https://cs.chromium.org/chromium/src/url/url_canon_pathurl.cc?type\u003dcs\u0026l\u003d66 . \"javascript:\" and \"data:\" URLs are canonicalized in the exact same way.",
+      "parentUuid": "c7c97e98_5823d67d",
+      "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
