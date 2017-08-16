@@ -144,6 +144,7 @@ bool IsRequestingTabletSite(Browser* browser);
 void ToggleRequestTabletSite(Browser* browser);
 void ToggleFullscreenMode(Browser* browser);
 void ClearCache(Browser* browser);
+void TurnOnAndOffPlatformEventRecorder();
 bool IsDebuggerAttachedToCurrentTab(Browser* browser);
 
 // Opens a view-source tab for a given web contents.

@@ -739,6 +739,8 @@ static_library("test_support_internal") {
     "test/menu_test_utils.cc",
     "test/menu_test_utils.h",
     "test/native_widget_factory.h",
+    "test/platform_event_replayer.cc",
+    "test/platform_event_replayer.h",
     "test/scoped_views_test_helper.cc",
     "test/scoped_views_test_helper.h",
     "test/slider_test_api.cc",

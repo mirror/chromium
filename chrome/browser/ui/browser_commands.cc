@@ -88,6 +88,7 @@
 #include "printing/features/features.h"
 #include "rlz/features/features.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/events/platform/platform_event_source.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/api/commands/command_service.h"
@@ -1201,6 +1202,10 @@ void ClearCache(Browser* browser) {
                   content::BrowsingDataRemover::DATA_TYPE_CACHE,
                   content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
   // BrowsingDataRemover takes care of deleting itself when done.
+}
+
+void TurnOnAndOffPlatformEventRecorder() {
+  ui::PlatformEventSource::GetInstance()->TurnOnAndOffPlatformEventRecorder();
 }
 
 bool IsDebuggerAttachedToCurrentTab(Browser* browser) {

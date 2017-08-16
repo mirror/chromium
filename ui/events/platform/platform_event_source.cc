@@ -12,6 +12,7 @@
 #include "base/threading/thread_local.h"
 #include "ui/events/platform/platform_event_dispatcher.h"
 #include "ui/events/platform/platform_event_observer.h"
+#include "ui/events/platform/platform_event_recorder.h"
 #include "ui/events/platform/scoped_event_dispatcher.h"
 
 namespace ui {
@@ -28,7 +29,8 @@ base::LazyInstance<base::ThreadLocalPointer<PlatformEventSource>>::Leaky
 
 PlatformEventSource::PlatformEventSource()
     : overridden_dispatcher_(NULL),
-      overridden_dispatcher_restored_(false) {
+      overridden_dispatcher_restored_(false),
+      recorder_(nullptr) {
   CHECK(!lazy_tls_ptr.Pointer()->Get())
       << "Only one platform event source can be created.";
   lazy_tls_ptr.Pointer()->Set(this);
@@ -78,8 +80,18 @@ void PlatformEventSource::RemovePlatformEventObserver(
   observers_.RemoveObserver(observer);
 }
 
+void PlatformEventSource::TurnOnAndOffPlatformEventRecorder() {
+  if (!recorder_.get())
+    recorder_.reset(new PlatformEventRecorder());
+  else
+    recorder_.reset(nullptr);
+}
+
 uint32_t PlatformEventSource::DispatchEvent(PlatformEvent platform_event) {
   uint32_t action = POST_DISPATCH_PERFORM_DEFAULT;
+
+  if (recorder_.get())
+    recorder_->RecordPlatformEvent(platform_event);
 
   for (PlatformEventObserver& observer : observers_)
     observer.WillProcessEvent(platform_event);
