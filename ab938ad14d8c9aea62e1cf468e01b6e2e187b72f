@@ -16,6 +16,24 @@
       "revId": "ab938ad14d8c9aea62e1cf468e01b6e2e187b72f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115740f6_d9853dc8",
+        "filename": "content/public/test/test_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-16T15:12:54Z",
+      "side": 1,
+      "message": "Yes, (if I remember well) there is still two edge cases that will need to be addressed.",
+      "parentUuid": "3fec31aa_1487cfe1",
+      "revId": "ab938ad14d8c9aea62e1cf468e01b6e2e187b72f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
