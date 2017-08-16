@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1472b706_e0001cb5",
+        "filename": "ios/web_view/internal/cwv_page_transition.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T14:57:30Z",
+      "side": 1,
+      "message": "Avoid \"we\" in the comments (go/avoidwe)",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e055119_4891ee0e",
+        "filename": "ios/web_view/public/cwv_page_transition.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T14:57:30Z",
+      "side": 1,
+      "message": "Please do not mention implementation details here (ui::PageTransition, page_transition_types.h)",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 41
+      },
+      "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c428c5f_f91bb9ab",
+        "filename": "ios/web_view/public/cwv_page_transition.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T14:57:30Z",
+      "side": 1,
+      "message": "How about naming this CWVNavigationType instead?",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
