@@ -745,7 +745,8 @@ bool SandboxDirectoryDatabase::Init(RecoveryOption recovery_option) {
   options.create_if_missing = true;
   if (env_override_)
     options.env = env_override_;
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status =
+      leveldb_env::OpenDB(options, path, base::nullopt, &db_);
   ReportInitStatus(status);
   if (status.ok()) {
     return true;

@@ -364,8 +364,8 @@ AttachmentStore::Result OnDiskAttachmentStore::OpenOrCreate(
   options.create_if_missing = true;
   // TODO(pavely): crbug/424287 Consider adding info_log, block_cache and
   // filter_policy to options.
-  leveldb::Status status =
-      leveldb_env::OpenDB(options, leveldb_path.AsUTF8Unsafe(), &db);
+  leveldb::Status status = leveldb_env::OpenDB(
+      options, leveldb_path.AsUTF8Unsafe(), base::nullopt, &db);
   if (!status.ok()) {
     DVLOG(1) << "OpenDB failed: status=" << status.ToString()
              << ", path=" << path.AsUTF8Unsafe();

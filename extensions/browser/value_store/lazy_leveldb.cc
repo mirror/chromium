@@ -184,13 +184,15 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
 
   if (s.ok()) {
     restore_status = ValueStore::DB_RESTORE_REPAIR_SUCCESS;
-    s = leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
+    s = leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(),
+                            base::nullopt, &db_);
   }
 
   if (!s.ok()) {
     if (DeleteDbFile()) {
       restore_status = ValueStore::DB_RESTORE_DELETE_SUCCESS;
-      s = leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
+      s = leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(),
+                              base::nullopt, &db_);
     } else {
       restore_status = ValueStore::DB_RESTORE_DELETE_FAILURE;
     }
@@ -231,8 +233,8 @@ ValueStore::Status LazyLevelDb::EnsureDbIsOpen() {
                               "Database corrupted");
   }
 
-  leveldb::Status ldb_status =
-      leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
+  leveldb::Status ldb_status = leveldb_env::OpenDB(
+      open_options_, db_path_.AsUTF8Unsafe(), base::nullopt, &db_);
   open_histogram_->Add(leveldb_env::GetLevelDBStatusUMAValue(ldb_status));
   ValueStore::Status status = ToValueStoreError(ldb_status);
   if (ldb_status.IsCorruption()) {

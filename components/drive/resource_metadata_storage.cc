@@ -274,7 +274,7 @@ bool ResourceMetadataStorage::UpgradeOldDB(
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = false;
   leveldb::Status status = leveldb_env::OpenDB(
-      options, resource_map_path.AsUTF8Unsafe(), &resource_map);
+      options, resource_map_path.AsUTF8Unsafe(), base::nullopt, &resource_map);
   if (!status.ok())
     return false;
 
@@ -560,7 +560,7 @@ bool ResourceMetadataStorage::Initialize() {
   leveldb::Status status;
   if (base::PathExists(resource_map_path)) {
     status = leveldb_env::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
-                                 &resource_map_);
+                                 base::nullopt, &resource_map_);
     open_existing_result = LevelDBStatusToDBInitStatus(status);
   }
 
@@ -608,7 +608,7 @@ bool ResourceMetadataStorage::Initialize() {
     options.error_if_exists = true;
 
     status = leveldb_env::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
-                                 &resource_map_);
+                                 base::nullopt, &resource_map_);
     if (status.ok()) {
       // Set up header and trash the old DB.
       if (PutHeader(GetDefaultHeaderEntry()) == FILE_ERROR_OK &&
@@ -673,8 +673,9 @@ void ResourceMetadataStorage::RecoverCacheInfoFromTrashedResourceMap(
 
   // Open it.
   std::unique_ptr<leveldb::DB> resource_map;
-  status = leveldb_env::OpenDB(
-      options, trashed_resource_map_path.AsUTF8Unsafe(), &resource_map);
+  status =
+      leveldb_env::OpenDB(options, trashed_resource_map_path.AsUTF8Unsafe(),
+                          base::nullopt, &resource_map);
   if (!status.ok()) {
     LOG(ERROR) << "Failed to open trashed DB: " << status.ToString();
     return;

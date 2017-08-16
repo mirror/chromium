@@ -86,7 +86,7 @@ class RegisterAppTaskTest : public testing::Test {
     options.create_if_missing = true;
     options.env = in_memory_env_.get();
     leveldb::Status status = leveldb_env::OpenDB(
-        options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
+        options, database_dir_.GetPath().AsUTF8Unsafe(), base::nullopt, &db);
     EXPECT_TRUE(status.ok());
     return base::MakeUnique<LevelDBWrapper>(std::move(db));
   }

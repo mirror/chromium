@@ -223,7 +223,7 @@ SyncStatusCode OpenDatabase(const base::FilePath& path,
     options.env = env_override;
   std::unique_ptr<leveldb::DB> db;
   leveldb::Status db_status =
-      leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), &db);
+      leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), base::nullopt, &db);
   UMA_HISTOGRAM_ENUMERATION("SyncFileSystem.Database.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(db_status),
                             leveldb_env::LEVELDB_STATUS_MAX);

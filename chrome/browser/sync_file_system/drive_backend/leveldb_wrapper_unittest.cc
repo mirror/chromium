@@ -81,7 +81,7 @@ class LevelDBWrapperTest : public testing::Test {
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
     leveldb::Status status = leveldb_env::OpenDB(
-        options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
+        options, database_dir_.GetPath().AsUTF8Unsafe(), base::nullopt, &db);
     ASSERT_TRUE(status.ok());
 
     db_.reset(new LevelDBWrapper(std::move(db)));

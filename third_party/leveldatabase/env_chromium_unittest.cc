@@ -267,8 +267,8 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDatabase) {
   options.create_if_missing = true;
   std::string name = temp_path().AsUTF8Unsafe();
   DBTracker::TrackedDB* tracked_db;
-  Status status =
-      DBTracker::GetInstance()->OpenDatabase(options, name, &tracked_db);
+  Status status = DBTracker::GetInstance()->OpenDatabase(
+      options, name, base::nullopt, &tracked_db);
   ASSERT_TRUE(status.ok()) << status.ToString();
   for (const auto& kv : db_data) {
     status = tracked_db->Put(WriteOptions(), kv.key, kv.value);
@@ -297,7 +297,8 @@ TEST_F(ChromiumEnvDBTrackerTest, TrackedDBInfo) {
   options.create_if_missing = true;
   std::string name = temp_path().AsUTF8Unsafe();
   DBTracker::TrackedDB* db;
-  Status status = DBTracker::GetInstance()->OpenDatabase(options, name, &db);
+  Status status =
+      DBTracker::GetInstance()->OpenDatabase(options, name, base::nullopt, &db);
   ASSERT_TRUE(status.ok()) << status.ToString();
 
   // Check that |db| reports info that was used to open it.
@@ -315,7 +316,8 @@ TEST_F(ChromiumEnvDBTrackerTest, VisitDatabases) {
     options.create_if_missing = true;
     std::string name = temp_path().AppendASCII(tag).AsUTF8Unsafe();
     DBTracker::TrackedDB* db;
-    Status status = DBTracker::GetInstance()->OpenDatabase(options, name, &db);
+    Status status = DBTracker::GetInstance()->OpenDatabase(options, name,
+                                                           base::nullopt, &db);
     ASSERT_TRUE(status.ok()) << status.ToString();
     live_dbs.emplace_back(db);
   }
@@ -335,7 +337,8 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDBTracking) {
   Options options;
   options.create_if_missing = true;
   std::unique_ptr<leveldb::DB> db;
-  auto status = leveldb_env::OpenDB(options, temp_path().AsUTF8Unsafe(), &db);
+  auto status = leveldb_env::OpenDB(options, temp_path().AsUTF8Unsafe(),
+                                    base::nullopt, &db);
   ASSERT_TRUE(status.ok()) << status.ToString();
 
   auto visited_dbs = VisitDatabases();

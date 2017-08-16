@@ -981,7 +981,9 @@ TEST_F(LocalStorageContextMojoTestWithService, InvalidVersionOnDisk) {
     options.env = &env;
     base::FilePath db_path =
         temp_path().Append(test_path).Append(FILE_PATH_LITERAL("leveldb"));
-    ASSERT_TRUE(leveldb_env::OpenDB(options, db_path.AsUTF8Unsafe(), &db).ok());
+    ASSERT_TRUE(
+        leveldb_env::OpenDB(options, db_path.AsUTF8Unsafe(), base::nullopt, &db)
+            .ok());
     ASSERT_TRUE(db->Put(leveldb::WriteOptions(), "VERSION", "argh").ok());
   }
 

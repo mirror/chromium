@@ -442,7 +442,8 @@ leveldb::Status SessionStorageDatabase::TryToOpen(
   // memory allocation in RAM from a log file recovery.
   options.write_buffer_size = 64 * 1024;
   options.block_cache = leveldb_env::SharedWebBlockCache();
-  return leveldb_env::OpenDB(options, file_path_.AsUTF8Unsafe(), db);
+  return leveldb_env::OpenDB(options, file_path_.AsUTF8Unsafe(), base::nullopt,
+                             db);
 }
 
 bool SessionStorageDatabase::IsOpen() const {

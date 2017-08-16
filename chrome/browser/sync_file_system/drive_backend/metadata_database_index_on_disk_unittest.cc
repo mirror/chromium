@@ -123,7 +123,7 @@ class MetadataDatabaseIndexOnDiskTest : public testing::Test {
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
     leveldb::Status status = leveldb_env::OpenDB(
-        options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
+        options, database_dir_.GetPath().AsUTF8Unsafe(), base::nullopt, &db);
     EXPECT_TRUE(status.ok());
     return base::MakeUnique<LevelDBWrapper>(std::move(db));
   }
