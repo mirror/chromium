@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "856b91a2_aa06111c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T22:32:18Z",
+      "side": 1,
+      "message": "nit: I think this would be a bit easier to understand conceptually with a dom-if here instead of these hidden attributes.\n\nhttps://jsfiddle.net/q784o3qs/1/",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 70
+      },
+      "revId": "63663b8f28f39dadf0f06da5e2a13f8afa29289e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
