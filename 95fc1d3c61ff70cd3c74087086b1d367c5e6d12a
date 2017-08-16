@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b8a1319a_3dd1fff8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-16T17:24:26Z",
+      "side": 1,
+      "message": "As discussed internally, split the constant into Pixel phone\u0027s density and small unitless legibility factor. Added a comment that we may want to incorporate the density in the text size in some way in the future.",
+      "parentUuid": "a52aa9a7_96c20aff",
+      "range": {
+        "startLine": 85,
+        "startChar": 50,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7d5a306_bedc423e",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 5
@@ -108,6 +132,30 @@
       "writtenOn": "2017-08-15T21:09:42Z",
       "side": 1,
       "message": "Comment on why we need 4x as many pixels as appears to be necessary?",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 46
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d02238_949e89d4",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-16T17:24:26Z",
+      "side": 1,
+      "message": "With the value 4 we get roughly the same amount of pixels we have right now. I played with it a bit. 2 seems to work well on my phone too. Can you check how it looks on your side?",
+      "parentUuid": "c7d5a306_bedc423e",
       "range": {
         "startLine": 89,
         "startChar": 43,
@@ -187,6 +235,30 @@
       "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b38a62_8b49760d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-16T17:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169b2b09_795245cf",
+      "range": {
+        "startLine": 685,
+        "startChar": 6,
+        "endLine": 685,
+        "endChar": 17
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "309c4bea_cc7c4ee8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-16T17:24:26Z",
+      "side": 1,
+      "message": "You mean gfx::ScaleSize? That\u0027s a neat function. Used it.",
+      "parentUuid": "d8f52787_75a0209e",
+      "range": {
+        "startLine": 702,
+        "startChar": 2,
+        "endLine": 702,
+        "endChar": 26
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ec8f94_9d0f3abe",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 5
@@ -378,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "7adc3f8e_ff559e2d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-16T17:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31318516_ae8ab2ce",
+      "range": {
+        "startLine": 85,
+        "startChar": 14,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebaa7d0e_b55da4b7",
         "filename": "chrome/browser/android/vr_shell/vr_shell.h",
         "patchSetId": 5
@@ -398,6 +518,30 @@
       "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b6b5f2_7811b1a5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-16T17:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebaa7d0e_b55da4b7",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
