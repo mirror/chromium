@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03ceb41b_bfdf2a63",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-16T07:51:06Z",
+      "side": 1,
+      "message": "I added a mutex to protect |default_output_buffer_size_|. I believe the existing |audio_devices_| has the same issue. |default_output_buffer_size_| is only written once. |audio_devices_| can be changed at any time and is more subjected to racing.",
+      "parentUuid": "a12663e0_893ef471",
+      "revId": "b3e1cc8074c4296d6335559c1c0dcc2b9a20ea5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fedf7d4_71d546ab",
         "filename": "chromeos/dbus/cras_audio_client.h",
         "patchSetId": 7
