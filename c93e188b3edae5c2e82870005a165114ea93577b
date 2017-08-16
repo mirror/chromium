@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb00d13_2203843b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-16T16:47:13Z",
+      "side": 1,
+      "message": "nit: This is not accurate, \"--local-ntp-voice-search\" isn\u0027t actually a valid command line flag. (Right?)",
+      "range": {
+        "startLine": 11,
+        "startChar": 70,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "c93e188b3edae5c2e82870005a165114ea93577b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
