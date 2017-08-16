@@ -141,7 +141,17 @@ HttpHandler::HttpHandler(
                         base::Bind(&ExecuteAlertCommand,
                                    base::Bind(&ExecuteGetAlertText)))),
       CommandMapping(
+          kGet, "session/:sessionId/alert/text",
+          WrapToCommand("GetAlertMessage",
+                        base::Bind(&ExecuteAlertCommand,
+                                   base::Bind(&ExecuteGetAlertText)))),
+      CommandMapping(
           kPost, "session/:sessionId/alert_text",
+          WrapToCommand("SetAlertPrompt",
+                        base::Bind(&ExecuteAlertCommand,
+                                   base::Bind(&ExecuteSetAlertValue)))),
+      CommandMapping(
+          kPost, "session/:sessionId/alert/text",
           WrapToCommand("SetAlertPrompt",
                         base::Bind(&ExecuteAlertCommand,
                                    base::Bind(&ExecuteSetAlertValue)))),
