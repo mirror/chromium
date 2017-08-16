@@ -31,6 +31,14 @@ class HTMLMediaElementTest : public ::testing::TestWithParam<MediaTestParam> {
     KURL url(kParsedURLString, src);
     Media()->current_src_ = url;
   }
+  WTF::AtomicString DefaultPreloadTypeAsString() {
+    // There are different default preload types for <audio> and <video>
+    // elements. The <audio> default is "auto" and <video> defaeult is
+    // "metadata".
+    if (Media()->DefaultPreloadType() == WebMediaPlayer::kPreloadAuto)
+      return "auto";
+    return "metadata";
+  }
 
  private:
   std::unique_ptr<DummyPageHolder> dummy_page_holder_;
@@ -114,8 +122,10 @@ TEST_P(HTMLMediaElementTest, preloadType) {
       {false, false, true, TestURLScheme::kHttp, "auto", "metadata"},
       {false, false, true, TestURLScheme::kHttp, "scheme", "metadata"},
       {false, false, true, TestURLScheme::kHttp, "none", "none"},
-      // Tests that the preload is overriden to "auto"
-      {false, false, false, TestURLScheme::kHttp, "foo", "auto"},
+      // Tests that the preload is overriden to default depending on the media
+      // type.
+      {false, false, false, TestURLScheme::kHttp, "foo",
+       DefaultPreloadTypeAsString()},
   };
 
   int index = 0;

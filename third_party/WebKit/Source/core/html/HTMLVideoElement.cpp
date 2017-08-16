@@ -36,6 +36,7 @@
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/Settings.h"
+#include "core/frame/UseCounter.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/html/media/MediaRemotingInterstitial.h"
@@ -98,6 +99,18 @@ DEFINE_TRACE(HTMLVideoElement) {
 bool HTMLVideoElement::HasPendingActivity() const {
   return HTMLMediaElement::HasPendingActivity() ||
          (image_loader_ && image_loader_->HasPendingActivity());
+}
+
+WebMediaPlayer::Preload HTMLVideoElement::DefaultPreloadType() const {
+  // "The attribute's missing value default is user-agent defined, though the
+  // Metadata state is suggested as a compromise between reducing server load
+  // and providing an optimal user experience."
+
+  // The spec does not define an invalid value default:
+  // https://www.w3.org/Bugs/Public/show_bug.cgi?id=28950
+  UseCounter::Count(GetDocument(),
+                    WebFeature::kHTMLMediaElementPreloadMetadata);
+  return WebMediaPlayer::kPreloadMetaData;
 }
 
 Node::InsertionNotificationRequest HTMLVideoElement::InsertedInto(
