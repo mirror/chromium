@@ -609,6 +609,14 @@ void AutofillManager::OnQueryFormFieldAutofillImpl(
           GetProfileSuggestions(*form_structure, field, *autofill_field);
     }
 
+    // Logic for disabling credit card autofill.
+    if (base::FeatureList::IsEnabled(kAutofillCreditCardDisabled) &&
+        is_filling_credit_card && !suggestions.empty()) {
+      suggestions.clear();
+      autocomplete_history_manager_->CancelPendingQuery();
+      external_delegate_->OnSuggestionsReturned(query_id, suggestions);
+      return;
+    }
     if (!suggestions.empty()) {
       if (is_filling_credit_card)
         AutofillMetrics::LogIsQueriedCreditCardFormSecure(is_context_secure);
