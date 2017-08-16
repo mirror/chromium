@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a71c01af_07038ad6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T08:28:01Z",
+      "side": 1,
+      "message": "Header.cpp -\u003e Headers.cpp",
+      "revId": "d93283b74118959446ccc2d1e9c3c70e3dd5a23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
