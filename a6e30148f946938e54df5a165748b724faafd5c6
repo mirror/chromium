@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e01ed8e_40fae933",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T10:13:50Z",
+      "side": 1,
+      "message": "Nit: if the dictionary spans more than one line, put the key on a separate line from the opening brace. Also, no space before the colon. Really, just run this through a JSON pretty printer :)",
+      "range": {
+        "startLine": 578,
+        "startChar": 19,
+        "endLine": 578,
+        "endChar": 20
+      },
+      "revId": "a6e30148f946938e54df5a165748b724faafd5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
