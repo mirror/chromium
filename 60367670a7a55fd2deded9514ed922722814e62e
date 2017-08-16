@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd4dc8ba_46e38b36",
+        "filename": "ui/compositor/layer_animation_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T16:19:25Z",
+      "side": 1,
+      "message": "nit: GetLayer as \"Ui\" is implicit from current namespace.",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b621e3a_f340dea0",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T16:19:25Z",
+      "side": 1,
+      "message": "doesn\u0027t look like this needs to be part of this class. can you move it up to anonymous namespace instead?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459dbc5d_628a0972",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T16:19:25Z",
+      "side": 1,
+      "message": "what if the value of CacheRenderSurface was true before this animation started? shouldn\u0027t that return it to true?",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927b6ec3_a7e83e95",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T16:19:25Z",
+      "side": 1,
+      "message": "is it guaranteed that OnImplicitAnimationsCompleted is called before |layer_| is destroyed?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
