@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f60d6d7_61a695fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-16T14:28:39Z",
+      "side": 1,
+      "message": "Could you explain why that\u0027s the case? If the location is set to \"the bottom left corner of the first selection rect\", why is it not hitting the selection when we go to do the hit test?",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 68
+      },
+      "revId": "2a98dbadd612c08b8fa0db450db9756d4b973efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622fb9a1_461c81c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-16T14:28:39Z",
+      "side": 1,
+      "message": "Is this out of date? It seems it\u0027s now fixed by taking the mid point of the y coordinates?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "2a98dbadd612c08b8fa0db450db9756d4b973efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
