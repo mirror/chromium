@@ -2795,6 +2795,9 @@
   "EcryptfsMigrationStrategy": {
     "os": ["chromeos"],
     "test_policy": { "EcryptfsMigrationStrategy": 1 }
+    "pref_mappings": [
+      { "pref": "ecryptfs_migration_strategy" }
+    ]
   },
 
   "----- Chrome OS device policies ---------------------------------------": {},
@@ -3124,8 +3127,8 @@
   },
 
   "DeviceEcryptfsMigrationStrategy": {
+    "note": "This policy is deprecated."
     "os": ["chromeos"],
-    "test_policy": { "DeviceEcryptfsMigrationStrategy": 1 }
   },
 
   "NoteTakingAppsLockScreenWhitelist": {
