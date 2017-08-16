@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df0f04e_c94d5f47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T06:48:35Z",
+      "side": 1,
+      "message": "Nit: maybe add this to the end as 5 so be consistent with the IntDef above (and generally we try and keep enums append-only)?",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 65
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f750422e_770aaef1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/SingleTabModel.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T06:48:35Z",
+      "side": 1,
+      "message": "I was going to ask if there are any other implications to this, but it looks like mTab.getProfile() could return null anyway. :)",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8065b83_05916869",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T06:48:35Z",
+      "side": 1,
+      "message": "Nit: I\u0027d call this shouldShowBrowserControlsForDisplayMode, and make the definition:\n\ninfo.displayMode() !\u003d WebDisplayMode.STANDALONE \u0026\u0026 info.displayMode() !\u003d WebDisplayMode.FULLSCREEN;\n\nThat way by default new types inherit a browser control rather than no browser control.",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 58
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa48f5e6_1b1b343e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappDisplayModeTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T06:48:35Z",
+      "side": 1,
+      "message": "Can you explicitly mark this as WebappActivity.IMMERSIVE_MODE_UI_FLAGS for clarity?",
+      "range": {
+        "startLine": 112,
+        "startChar": 37,
+        "endLine": 112,
+        "endChar": 60
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13a44d4_f818f3b7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappVisibilityTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T06:48:35Z",
+      "side": 1,
+      "message": "I wonder if we can make this more comprehensive. What about having:\n\nclass TestData {\n  public int displayMode;\n  public boolean shouldAlwaysShowControls;\n  public Type type; ?\n}\n\nThen we could have a test helper that takes a TestData object and does everything on it, using AssertTrue/False/Equals as appropriate (all types should show controls for insecure, but only minimal UI shows it when on a same-origin URL).\n\nThis can be a follow up, not going to block on it.",
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
