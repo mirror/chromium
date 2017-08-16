@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a2555a6_16a713ce",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T16:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59333a8_65588c3d",
+      "revId": "ecd7f62e50ab24a5c5967a376aa9a4c101386e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da72773_6645d95a",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "ecd7f62e50ab24a5c5967a376aa9a4c101386e4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499cf764_9810b99e",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T16:33:19Z",
+      "side": 1,
+      "message": "For the case: \"If you have a host browser in the metadata and it doesn\u0027t match.\"\nWe already check for it.\n\nLine 144 checks for host browser in Manifest, and returns null if not found, without going any further. Which is the behavior we want :)\n\nSecond case as discussed offline, we can skip the host browser selection.\n\nAdded tests for the two cases.",
+      "parentUuid": "0da72773_6645d95a",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 35
+      },
+      "revId": "ecd7f62e50ab24a5c5967a376aa9a4c101386e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
