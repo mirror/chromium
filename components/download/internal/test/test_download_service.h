@@ -36,6 +36,8 @@ class TestDownloadService : public DownloadService {
 
   base::Optional<DownloadParams> GetDownload(const std::string& guid) const;
 
+  url::Origin GetOrigin(const std::string& guid) override;
+
   // Set failed_download_id and fail_at_start.
   void SetFailedDownload(const std::string& failed_download_id,
                          bool fail_at_start);

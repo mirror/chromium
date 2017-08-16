@@ -7,29 +7,25 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "content/public/browser/browser_thread.h"
-
-namespace net {
-class URLRequestContextGetter;
-}
 
 namespace content {
 
 class BackgroundFetchJobController;
 class BrowserContext;
 
-// Proxy class for passing messages between BackgroundFetchJobController on the
-// IO thread to and BackgroundFetchDelegate on the UI thread.
-// TODO(delphick): Create BackgroundFetchDelegate.
+// Proxy class for passing messages between BackgroundFetchJobControllers on the
+// IO thread and BackgroundFetchDelegate on the UI thread.
 class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  public:
-  BackgroundFetchDelegateProxy(
-      BrowserContext* browser_context,
-      scoped_refptr<net::URLRequestContextGetter> request_context);
+  explicit BackgroundFetchDelegateProxy(BrowserContext* browser_context);
 
   ~BackgroundFetchDelegateProxy();
 
@@ -53,23 +49,33 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  private:
   class Core;
 
-  // Called when the download manager has started the given |request|. The
-  // |download_item| continues to be owned by the download system. The
-  // |interrupt_reason| will indicate when a request could not be started.
-  // Should only be called from the BackgroundFetchDelegate (on the IO thread).
-  void DidStartRequest(
-      const base::WeakPtr<BackgroundFetchJobController>& job_controller,
-      scoped_refptr<BackgroundFetchRequestInfo> request,
-      const std::string& download_guid);
+  // Called when the given download identified by |guid| has been completed
+  // successfully. Should only be called on the IO thread.
+  void OnDownloadSucceeded(std::string guid,
+                           base::FilePath path,
+                           uint64_t size);
 
-  // Called when the given |request| has been completed.
+  // Called when the given download identified by |guid| has failed. Should only
+  // be called on the IO thread.
+  void OnDownloadFailed(std::string guid,
+                        BackgroundFetchDelegate::FailureReason reason);
+
+  void OnDownloadReceived(const std::string& guid,
+                          BackgroundFetchDelegate::StartResult result);
+
   // Should only be called from the BackgroundFetchDelegate (on the IO thread).
-  void DidCompleteRequest(
-      const base::WeakPtr<BackgroundFetchJobController>& job_controller,
-      scoped_refptr<BackgroundFetchRequestInfo> request);
+  void DidStartRequest(const std::string& guid,
+                       std::unique_ptr<const BackgroundFetchResponse> response);
 
   std::unique_ptr<Core, BrowserThread::DeleteOnUIThread> ui_core_;
   base::WeakPtr<Core> ui_core_ptr_;
+
+  // Map from DownloadService GUIDs to the RequestInfo and the JobController
+  // that started the download.
+  std::unordered_map<std::string,
+                     std::pair<scoped_refptr<BackgroundFetchRequestInfo>,
+                               base::WeakPtr<BackgroundFetchJobController>>>
+      controller_map_;
 
   base::WeakPtrFactory<BackgroundFetchDelegateProxy> weak_ptr_factory_;
 
