@@ -196,6 +196,48 @@ suite('SiteDetails', function() {
     assertTrue(testElement.$$('#usage').innerText.indexOf('1 KB') != -1);
   });
 
+  test('storage gets trashed properly', function() {
+    var origin = 'https://foo.com:443';
+    browserProxy.setPrefs(prefs);
+    loadTimeData.overrideValues({enableSiteSettings: true});
+    testElement = createSiteDetails(origin);
+
+    // Remove the current website-usage-private-api element.
+    var parent = testElement.$.usageApi.parentNode;
+    assertTrue(parent != undefined);
+    testElement.$.usageApi.remove();
+    var usageCleared = false;
+
+    // Replace it with a mock version.
+    Polymer({
+      is: 'mock-website-usage-private-api',
+
+      fetchUsageTotal: function(host) {
+        testElement.storedData_ = '1 KB';
+      },
+
+      clearUsage: function(origin) {
+        usageCleared = true;
+      },
+    });
+    var api = document.createElement('mock-website-usage-private-api');
+    testElement.$.usageApi = api;
+    Polymer.dom(parent).appendChild(api);
+    Polymer.dom.flush();
+
+    // Call onOriginChanged_() manually to simulate a new navigation.
+    testElement.onOriginChanged_(testElement.site);
+
+    // Ensure the mock's methods were called and check usage was cleared on
+    // clicking the trash button.
+    assertEquals('1 KB', testElement.storedData_);
+    assertTrue(testElement.$$('#noStorage').hidden);
+    assertFalse(testElement.$$('#storage').hidden);
+
+    MockInteractions.tap(testElement.$$('#storage button'));
+    assertTrue(usageCleared);
+  });
+
   test('correct pref settings are shown', function() {
     browserProxy.setPrefs(prefs);
     testElement = createSiteDetails('https://foo.com:443');
