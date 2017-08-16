@@ -187,35 +187,7 @@ NGLogicalOffset NGBlockLayoutAlgorithm::CalculateLogicalOffset(
 }
 
 RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
-  WTF::Optional<MinMaxSize> min_max_size;
-  if (NeedMinMaxSize(ConstraintSpace(), Style()))
-    min_max_size = ComputeMinMaxSize();
-
-  border_scrollbar_padding_ = ComputeBorders(ConstraintSpace(), Style()) +
-                              ComputePadding(ConstraintSpace(), Style()) +
-                              GetScrollbarSizes(Node().GetLayoutObject());
-  // TODO(layout-ng): For quirks mode, should we pass blockSize instead of -1?
-  NGLogicalSize size(
-      ComputeInlineSizeForFragment(ConstraintSpace(), Style(), min_max_size),
-      ComputeBlockSizeForFragment(ConstraintSpace(), Style(),
-                                  NGSizeIndefinite));
-
-  // Our calculated block-axis size may be indefinite at this point.
-  // If so, just leave the size as NGSizeIndefinite instead of subtracting
-  // borders and padding.
-  NGLogicalSize adjusted_size(size);
-  if (size.block_size == NGSizeIndefinite) {
-    adjusted_size.inline_size -= border_scrollbar_padding_.InlineSum();
-  } else {
-    adjusted_size -= border_scrollbar_padding_;
-    adjusted_size.block_size = std::max(adjusted_size.block_size, LayoutUnit());
-  }
-  adjusted_size.inline_size = std::max(adjusted_size.inline_size, LayoutUnit());
-
-  child_available_size_ = adjusted_size;
-  child_percentage_size_ = adjusted_size;
-
-  container_builder_.SetSize(size);
+  PrepareLayout();
 
   // If we have a list of unpositioned floats as input to this layout, we'll
   // need to abort once our BFC offset is resolved. Additionally the
@@ -224,11 +196,6 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   abort_when_bfc_resolved_ = !unpositioned_floats_.IsEmpty();
   if (abort_when_bfc_resolved_)
     DCHECK(!constraint_space_->FloatsBfcOffset());
-
-  // If we are resuming from a break token our start border and padding is
-  // within a previous fragment.
-  content_size_ =
-      BreakToken() ? LayoutUnit() : border_scrollbar_padding_.block_start;
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
 
@@ -342,16 +309,11 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       content_size_ = std::max(content_size_, float_end_offset.value());
   }
 
-  content_size_ += border_scrollbar_padding_.block_end;
-
-  // Recompute the block-axis size now that we know our content size.
-  size.block_size =
-      ComputeBlockSizeForFragment(ConstraintSpace(), Style(), content_size_);
-  container_builder_.SetBlockSize(size.block_size);
+  UpdateSizeAfterChildLayout();
 
   // Non-empty blocks always know their position in space.
   // TODO(ikilpatrick): This check for a break token seems error prone.
-  if (size.block_size || BreakToken()) {
+  if (container_builder_.Size().block_size || BreakToken()) {
     // TODO(ikilpatrick): This looks wrong with end_margin_strut above?
     end_bfc_block_offset += end_margin_strut.Sum();
     bool updated = MaybeUpdateFragmentBfcOffset(
@@ -374,9 +336,62 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
     end_margin_strut = NGMarginStrut();
   }
   container_builder_.SetEndMarginStrut(end_margin_strut);
-  container_builder_.SetOverflowSize(
-      NGLogicalSize(max_inline_size_, content_size_));
 
+  return FinishLayout();
+}
+
+void NGBlockLayoutAlgorithm::PrepareLayout() {
+  WTF::Optional<MinMaxSize> min_max_size;
+  if (NeedMinMaxSize(ConstraintSpace(), Style()))
+    min_max_size = ComputeMinMaxSize();
+
+  border_scrollbar_padding_ = ComputeBorders(ConstraintSpace(), Style()) +
+                              ComputePadding(ConstraintSpace(), Style()) +
+                              GetScrollbarSizes(Node().GetLayoutObject());
+  // TODO(layout-ng): For quirks mode, should we pass blockSize instead of -1?
+  NGLogicalSize size(
+      ComputeInlineSizeForFragment(ConstraintSpace(), Style(), min_max_size),
+      ComputeBlockSizeForFragment(ConstraintSpace(), Style(),
+                                  NGSizeIndefinite));
+
+  // Our calculated block-axis size may be indefinite at this point.
+  // If so, just leave the size as NGSizeIndefinite instead of subtracting
+  // borders and padding.
+  NGLogicalSize adjusted_size(size);
+  if (size.block_size == NGSizeIndefinite) {
+    adjusted_size.inline_size -= border_scrollbar_padding_.InlineSum();
+  } else {
+    adjusted_size -= border_scrollbar_padding_;
+    adjusted_size.block_size = std::max(adjusted_size.block_size, LayoutUnit());
+  }
+  adjusted_size.inline_size = std::max(adjusted_size.inline_size, LayoutUnit());
+
+  child_available_size_ = adjusted_size;
+  child_percentage_size_ = adjusted_size;
+
+  container_builder_.SetSize(size);
+
+  // If we are resuming from a break token our start border and padding is
+  // within a previous fragment.
+  content_size_ =
+      BreakToken() ? LayoutUnit() : border_scrollbar_padding_.block_start;
+}
+
+void NGBlockLayoutAlgorithm::UpdateSizeAfterChildLayout() {
+  LayoutUnit border_box_block_size =
+      content_size_ + border_scrollbar_padding_.block_end;
+
+  // Recompute the block-axis size now that we know our content size.
+  LayoutUnit block_size = ComputeBlockSizeForFragment(
+      ConstraintSpace(), Style(), border_box_block_size);
+
+  // Update the builder with the final sizes.
+  container_builder_.SetBlockSize(block_size);
+  container_builder_.SetOverflowSize(
+      NGLogicalSize(max_inline_size_, border_box_block_size));
+}
+
+RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::FinishLayout() {
   // We only finalize for fragmentation if the fragment has a BFC offset. This
   // may occur with a zero block size fragment. We need to know the BFC offset
   // to determine where the fragmentation line is relative to us.
@@ -401,6 +416,12 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   PropagateBaselinesFromChildren();
 
   return container_builder_.ToBoxFragment();
+}
+
+void NGBlockLayoutAlgorithm::PropagateSizeFromChild(
+    const NGLogicalOffset& child_end_offset) {
+  max_inline_size_ = std::max(max_inline_size_, child_end_offset.inline_offset);
+  content_size_ = std::max(content_size_, child_end_offset.block_offset);
 }
 
 void NGBlockLayoutAlgorithm::HandleOutOfFlowPositioned(
