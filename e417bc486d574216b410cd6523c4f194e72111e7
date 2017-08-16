@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd19bd35_a6831bee",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T00:57:02Z",
+      "side": 1,
+      "message": "The new comment is strange. Say something like \"keep the state if the bubble is currently open or ...\"",
+      "range": {
+        "startLine": 492,
+        "startChar": 41,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "e417bc486d574216b410cd6523c4f194e72111e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6788b3_869201a8",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T00:57:02Z",
+      "side": 1,
+      "message": "enforce_navigation",
+      "range": {
+        "startLine": 866,
+        "startChar": 12,
+        "endLine": 866,
+        "endChar": 30
+      },
+      "revId": "e417bc486d574216b410cd6523c4f194e72111e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
