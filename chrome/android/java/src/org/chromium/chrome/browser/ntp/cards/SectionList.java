@@ -212,6 +212,11 @@ public class SectionList
         return mSections.isEmpty();
     }
 
+    public void clickArticlesMoreButton() {
+        assert mSections.size() == 1;
+        mSections.get(KnownCategories.ARTICLES).clickMoreButton(mUiDelegate);
+    }
+
     /**
      * Synchronises the data of the sections with that of the suggestions source, resetting the ones
      * that are stale. (see {@link SuggestionsSection#isDataStale()})
