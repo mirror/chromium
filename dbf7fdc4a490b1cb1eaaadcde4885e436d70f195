@@ -16,6 +16,24 @@
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3cf930_aef2965f",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-16T13:27:19Z",
+      "side": 1,
+      "message": "We don\u0027t have the required knowledge in the browser process, notably the associated frame (if any) and its ancestry. The two existing code paths for determining the permission status have already led to inconsistencies[1], which this CL addresses as well. It\u0027ll be a while before notifications completely align with other permissions, but it\u0027s yet another step.\n\nNote that this is a first in regards to denying permission requests from same-origin iframes too.\n\nI\u0027m not worried about cross-module dependencies. It\u0027s common practice (notably in media and Service Worker/fetch related modules) and we dropped the plans to have separate per-module libraries.\n\n[1] https://chromium-review.googlesource.com/c/613901/1/third_party/WebKit/LayoutTests/http/tests/notifications/permission-behaviour.html",
+      "parentUuid": "c0ed7c93_9b40cae1",
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
