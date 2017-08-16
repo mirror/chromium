@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "835b237d_a80ae8dd",
+        "filename": "sandbox/win/src/process_mitigations_imageload_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-16T22:40:22Z",
+      "side": 1,
+      "message": "Ack, for some reason I was going on the comment on l154 in base...",
+      "parentUuid": "87b767a1_9c008a4e",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 13
+      },
+      "revId": "a39dc8a8835fde96b80a6bb08611a088cbead4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff3a1a8d_5892f153",
         "filename": "sandbox/win/tests/integration_tests/hijack_shim_dll.def",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "- This isn\u0027t a namespace situation.  The .def file only enforces the export name in the PE header of the generated PE file.  Handy to prevent mangled function names.\n\nThe function prototype in the .h file is a type definition for compile time use.\n\n- I think these PreferSys32 tests were broken when I reorganized the ProcessMitigations tests into multiple files.  My local gWin machine hadn\u0027t yet been updated to win10 14393, and as we now know, none of the waterfall bots were \u003e\u003d 14393.  So the weren\u0027t working since then.",
       "parentUuid": "ff3a1a8d_5892f153",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "a39dc8a8835fde96b80a6bb08611a088cbead4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd54a33_ca47cb83",
+        "filename": "sandbox/win/tests/integration_tests/hijack_shim_dll.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-16T22:40:22Z",
+      "side": 1,
+      "message": "okay fine, I do prefer the function being declared in the header then you\u0027d get compile errors if you change your function definition in the implementation.\n\nI suppose you could put a static_assert to make sure that the function type in the DLL matches the one in the .h if you are not going to actually going to use the .h to define it, but it seems to make a lot of sense to just have the .h included in both then decltype it... I don\u0027t mind either way, but want to be sure that if one changes it will be noticed.",
+      "parentUuid": "70f6ce7e_e3675a8f",
       "range": {
         "startLine": 8,
         "startChar": 2,
