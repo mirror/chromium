@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "611a4e3f_1382d00a",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-16T00:11:11Z",
+      "side": 1,
+      "message": "Why would this be the case? Can you add a comment to explain why this is different to other attributes?",
+      "revId": "cc55c0295cd2bc2f02ea2b6fda198fd2e4dfa104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
