@@ -48,11 +48,8 @@ CONTEXT_TEST_F(SignalTest, BasicSignalSyncTokenTest) {
     return;
 #endif
 
-  const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
-  gl_->ShallowFlushCHROMIUM();
-
   gpu::SyncToken sync_token;
-  gl_->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  gl_->GenSyncTokenCHROMIUM(sync_token.GetData());
 
   TestSignalSyncToken(sync_token);
 };
@@ -81,7 +78,7 @@ CONTEXT_TEST_F(SignalTest, InvalidSignalSyncTokenTest) {
 
   // Signalling something that doesn't exist should run the callback
   // immediately.
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
                             gpu::CommandBufferId::FromUnsafeValue(1297824234),
                             9123743439);
   TestSignalSyncToken(sync_token);

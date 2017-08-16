@@ -571,11 +571,11 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
 TEST_F(CCParamTraitsTest, Resources) {
   IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
   gfx::Size arbitrary_size(757, 1281);
-  gpu::SyncToken arbitrary_token1(gpu::CommandBufferNamespace::GPU_IO, 0,
+  gpu::SyncToken arbitrary_token1(gpu::CommandBufferNamespace::GPU_IO,
                                   gpu::CommandBufferId::FromUnsafeValue(0x123),
                                   71234838);
   arbitrary_token1.SetVerifyFlush();
-  gpu::SyncToken arbitrary_token2(gpu::CommandBufferNamespace::GPU_IO, 0,
+  gpu::SyncToken arbitrary_token2(gpu::CommandBufferNamespace::GPU_IO,
                                   gpu::CommandBufferId::FromUnsafeValue(0x123),
                                   53589793);
   arbitrary_token2.SetVerifyFlush();

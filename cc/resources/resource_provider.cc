@@ -753,9 +753,7 @@ void ResourceProvider::DeleteResourceInternal(ResourceMap::iterator it,
         gl->DeleteTextures(1, &resource->gl_id);
         resource->gl_id = 0;
         if (!lost_resource) {
-          const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-          gl->ShallowFlushCHROMIUM();
-          gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+          gl->GenSyncTokenCHROMIUM(sync_token.GetData());
         }
       }
     } else {
@@ -1470,13 +1468,12 @@ void ResourceProvider::PrepareSendToParent(
   if (!need_synchronization_resources.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
     DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
+    gl->GenUnverifiedSyncTokenCHROMIUM(new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 
-  compositor_context_provider_->ContextSupport()->FlushPendingWork();
+  if (compositor_context_provider_)
+    compositor_context_provider_->ContextSupport()->FlushPendingWork();
 
   if (!unverified_sync_tokens.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
@@ -1828,9 +1825,7 @@ void ResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   if (!need_synchronization_resources.empty()) {
     DCHECK(child_info->needs_sync_tokens);
     DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
+    gl->GenUnverifiedSyncTokenCHROMIUM(new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 
@@ -1991,18 +1986,10 @@ GLint ResourceProvider::GetActiveTextureUnit(gpu::gles2::GLES2Interface* gl) {
 gpu::SyncToken ResourceProvider::GenerateSyncTokenHelper(
     gpu::gles2::GLES2Interface* gl) {
   DCHECK(gl);
-  const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-
-  // Barrier to sync worker context output to cc context.
-  gl->OrderingBarrierCHROMIUM();
-
-  // Generate sync token after the barrier for cross context synchronization.
   gpu::SyncToken sync_token;
-  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
-
+  gl->GenUnverifiedSyncTokenCHROMIUM(sync_token.GetData());
   DCHECK(sync_token.HasData() ||
          gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
-
   return sync_token;
 }
 

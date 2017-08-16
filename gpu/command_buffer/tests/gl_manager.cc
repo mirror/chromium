@@ -513,28 +513,12 @@ CommandBufferId GLManager::GetCommandBufferID() const {
   return command_buffer_->GetCommandBufferID();
 }
 
-int32_t GLManager::GetStreamId() const {
-  return 0;
-}
-
 void GLManager::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 
 uint64_t GLManager::GenerateFenceSyncRelease() {
   return next_fence_sync_release_++;
-}
-
-bool GLManager::IsFenceSyncRelease(uint64_t release) {
-  return release > 0 && release < next_fence_sync_release_;
-}
-
-bool GLManager::IsFenceSyncFlushed(uint64_t release) {
-  return IsFenceSyncRelease(release);
-}
-
-bool GLManager::IsFenceSyncFlushReceived(uint64_t release) {
-  return IsFenceSyncRelease(release);
 }
 
 bool GLManager::IsFenceSyncReleased(uint64_t release) {

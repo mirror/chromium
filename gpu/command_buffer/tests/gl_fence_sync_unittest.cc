@@ -46,10 +46,8 @@ class GLFenceSyncTest : public testing::Test {
 TEST_F(GLFenceSyncTest, SimpleReleaseWait) {
   gl1_.MakeCurrent();
 
-  const GLuint64 fence_sync = glInsertFenceSyncCHROMIUM();
   SyncToken sync_token;
-  glFlush();
-  glGenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  glGenSyncTokenCHROMIUM(sync_token.GetData());
   ASSERT_TRUE(GL_NO_ERROR == glGetError());
 
   // Make sure it is actually released.
@@ -70,10 +68,8 @@ TEST_F(GLFenceSyncTest, SimpleReleaseSignal) {
   // Pause the command buffer so the fence sync does not immediately trigger.
   gl1_.SetCommandsPaused(true);
 
-  const GLuint64 fence_sync = glInsertFenceSyncCHROMIUM();
   SyncToken sync_token;
-  glGenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
-  glFlush();
+  glGenUnverifiedSyncTokenCHROMIUM(sync_token.GetData());
   ASSERT_TRUE(sync_token.HasData());
 
   gl2_.MakeCurrent();

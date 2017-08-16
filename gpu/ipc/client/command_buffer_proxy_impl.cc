@@ -254,7 +254,6 @@ void CommandBufferProxyImpl::Flush(int32_t put_offset) {
                put_offset);
 
   OrderingBarrierHelper(put_offset);
-
   if (channel_)
     channel_->EnsureFlush(last_flush_id_);
 }
@@ -283,8 +282,6 @@ void CommandBufferProxyImpl::OrderingBarrierHelper(int32_t put_offset) {
 
   latency_info_.clear();
   pending_sync_token_fences_.clear();
-
-  flushed_fence_sync_release_ = next_fence_sync_release_ - 1;
 }
 
 void CommandBufferProxyImpl::SetSwapBuffersCompletionCallback(
@@ -457,6 +454,9 @@ int32_t CommandBufferProxyImpl::CreateImage(ClientBuffer buffer,
   if (last_state_.error != gpu::error::kNoError)
     return -1;
 
+  // Flush all pending ordering barriers.
+  channel_->EnsureFlush(UINT32_MAX);
+
   int32_t new_id = channel_->ReserveImageId();
 
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
@@ -473,12 +473,8 @@ int32_t CommandBufferProxyImpl::CreateImage(ClientBuffer buffer,
   bool requires_sync_token = handle.type == gfx::IO_SURFACE_BUFFER;
 
   uint64_t image_fence_sync = 0;
-  if (requires_sync_token) {
+  if (requires_sync_token)
     image_fence_sync = GenerateFenceSyncRelease();
-
-    // Make sure fence syncs were flushed before CreateImage() was called.
-    DCHECK_EQ(image_fence_sync, flushed_fence_sync_release_ + 1);
-  }
 
   DCHECK(gpu::IsImageFromGpuMemoryBufferFormatSupported(
       gpu_memory_buffer->GetFormat(), capabilities_));
@@ -498,11 +494,11 @@ int32_t CommandBufferProxyImpl::CreateImage(ClientBuffer buffer,
   Send(new GpuCommandBufferMsg_CreateImage(route_id_, params));
 
   if (image_fence_sync) {
-    gpu::SyncToken sync_token(GetNamespaceID(), GetStreamId(),
-                              GetCommandBufferID(), image_fence_sync);
-
     // Force a synchronous IPC to validate sync token.
-    EnsureWorkVisible();
+    channel_->VerifyFlush(UINT32_MAX);
+
+    gpu::SyncToken sync_token(GetNamespaceID(), GetCommandBufferID(),
+                              image_fence_sync);
     sync_token.SetVerifyFlush();
 
     gpu_memory_buffer_manager->SetDestructionSyncToken(gpu_memory_buffer,
@@ -543,6 +539,7 @@ void CommandBufferProxyImpl::SetLock(base::Lock* lock) {
 }
 
 void CommandBufferProxyImpl::EnsureWorkVisible() {
+  CheckLock();
   if (channel_)
     channel_->VerifyFlush(UINT32_MAX);
 }
@@ -555,11 +552,8 @@ gpu::CommandBufferId CommandBufferProxyImpl::GetCommandBufferID() const {
   return command_buffer_id_;
 }
 
-int32_t CommandBufferProxyImpl::GetStreamId() const {
-  return stream_id_;
-}
-
 void CommandBufferProxyImpl::FlushPendingWork() {
+  CheckLock();
   if (channel_)
     channel_->EnsureFlush(UINT32_MAX);
 }
@@ -567,26 +561,6 @@ void CommandBufferProxyImpl::FlushPendingWork() {
 uint64_t CommandBufferProxyImpl::GenerateFenceSyncRelease() {
   CheckLock();
   return next_fence_sync_release_++;
-}
-
-bool CommandBufferProxyImpl::IsFenceSyncRelease(uint64_t release) {
-  CheckLock();
-  return release && release < next_fence_sync_release_;
-}
-
-bool CommandBufferProxyImpl::IsFenceSyncFlushed(uint64_t release) {
-  CheckLock();
-  return release && release <= flushed_fence_sync_release_;
-}
-
-bool CommandBufferProxyImpl::IsFenceSyncFlushReceived(uint64_t release) {
-  CheckLock();
-  if (release > verified_fence_sync_release_) {
-    if (channel_)
-      channel_->VerifyFlush(last_flush_id_);
-    verified_fence_sync_release_ = flushed_fence_sync_release_;
-  }
-  return release && release <= verified_fence_sync_release_;
 }
 
 // This can be called from any thread without holding |lock_|. Use a thread-safe

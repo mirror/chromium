@@ -192,7 +192,6 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   #include "gpu/command_buffer/client/gles2_implementation_autogen.h"
 
   // ContextSupport implementation.
-  int32_t GetStreamId() const override;
   void FlushPendingWork() override;
   void SignalSyncToken(const gpu::SyncToken& sync_token,
                        const base::Closure& callback) override;
@@ -628,6 +627,8 @@ class GLES2_IMPL_EXPORT GLES2Implementation
 
   void FinishHelper();
   void FlushHelper();
+
+  void GenSyncTokenHelper(GLbyte* sync_token, bool verify);
 
   void RunIfContextNotLost(const base::Closure& callback);
 

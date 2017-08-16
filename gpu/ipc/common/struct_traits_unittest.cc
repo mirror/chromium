@@ -321,12 +321,11 @@ TEST_F(StructTraitsTest, MailboxHolder) {
   gpu::Mailbox mailbox;
   mailbox.SetName(mailbox_name);
   const gpu::CommandBufferNamespace namespace_id = gpu::IN_PROCESS;
-  const int32_t extra_data_field = 0xbeefbeef;
   const gpu::CommandBufferId command_buffer_id(
       gpu::CommandBufferId::FromUnsafeValue(0xdeadbeef));
   const uint64_t release_count = 0xdeadbeefdeadL;
-  const gpu::SyncToken sync_token(namespace_id, extra_data_field,
-                                  command_buffer_id, release_count);
+  const gpu::SyncToken sync_token(namespace_id, command_buffer_id,
+                                  release_count);
   const uint32_t texture_target = 1337;
   input.mailbox = mailbox;
   input.sync_token = sync_token;
@@ -342,18 +341,15 @@ TEST_F(StructTraitsTest, MailboxHolder) {
 
 TEST_F(StructTraitsTest, SyncToken) {
   const gpu::CommandBufferNamespace namespace_id = gpu::IN_PROCESS;
-  const int32_t extra_data_field = 0xbeefbeef;
   const gpu::CommandBufferId command_buffer_id(
       gpu::CommandBufferId::FromUnsafeValue(0xdeadbeef));
   const uint64_t release_count = 0xdeadbeefdead;
   const bool verified_flush = false;
-  gpu::SyncToken input(namespace_id, extra_data_field, command_buffer_id,
-                       release_count);
+  gpu::SyncToken input(namespace_id, command_buffer_id, release_count);
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   gpu::SyncToken output;
   proxy->EchoSyncToken(input, &output);
   EXPECT_EQ(namespace_id, output.namespace_id());
-  EXPECT_EQ(extra_data_field, output.extra_data_field());
   EXPECT_EQ(command_buffer_id, output.command_buffer_id());
   EXPECT_EQ(release_count, output.release_count());
   EXPECT_EQ(verified_flush, output.verified_flush());

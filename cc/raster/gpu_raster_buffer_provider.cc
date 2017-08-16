@@ -275,10 +275,8 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
                   resource_lock->size(), raster_full_rect, raster_dirty_rect,
                   transform, playback_settings, worker_context_provider_,
                   resource_lock, use_distance_field_text_, msaa_sample_count_);
-
   // Generate sync token for cross context synchronization.
   resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
-
   // Mark resource as synchronized when worker and compositor are in same stream
   // to prevent extra wait sync token calls.
   if (!async_worker_context_enabled_)

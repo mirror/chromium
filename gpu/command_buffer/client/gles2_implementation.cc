@@ -381,10 +381,6 @@ void GLES2Implementation::RunIfContextNotLost(const base::Closure& callback) {
     callback.Run();
 }
 
-int32_t GLES2Implementation::GetStreamId() const {
-  return gpu_control_->GetStreamId();
-}
-
 void GLES2Implementation::FlushPendingWork() {
   gpu_control_->FlushPendingWork();
 }
@@ -6141,55 +6137,35 @@ void GLES2Implementation::SetLostContextCallback(
   lost_context_callback_ = callback;
 }
 
-GLuint64 GLES2Implementation::InsertFenceSyncCHROMIUM() {
+void GLES2Implementation::GenSyncTokenCHROMIUM(GLbyte* sync_token) {
+  GenSyncTokenHelper(sync_token, true /* verify */);
+}
+
+void GLES2Implementation::GenUnverifiedSyncTokenCHROMIUM(GLbyte* sync_token) {
+  GenSyncTokenHelper(sync_token, false /* verify */);
+}
+
+void GLES2Implementation::GenSyncTokenHelper(GLbyte* sync_token, bool verify) {
+  if (!sync_token) {
+    SetGLError(GL_INVALID_VALUE, "glGenUnverifiedSyncTokenCHROMIUM",
+               "null sync_token");
+    return;
+  }
+
   const uint64_t release = gpu_control_->GenerateFenceSyncRelease();
   helper_->InsertFenceSyncCHROMIUM(release);
-  return release;
-}
-
-void GLES2Implementation::GenSyncTokenCHROMIUM(GLuint64 fence_sync,
-                                               GLbyte* sync_token) {
-  if (!sync_token) {
-    SetGLError(GL_INVALID_VALUE, "glGenSyncTokenCHROMIUM", "empty sync_token");
-    return;
-  } else if (!gpu_control_->IsFenceSyncRelease(fence_sync)) {
-    SetGLError(GL_INVALID_VALUE, "glGenSyncTokenCHROMIUM",
-               "invalid fence sync");
-    return;
-  } else if (!gpu_control_->IsFenceSyncFlushReceived(fence_sync)) {
-    SetGLError(GL_INVALID_OPERATION, "glGenSyncTokenCHROMIUM",
-               "fence sync must be flushed before generating sync token");
-    return;
-  }
+  helper_->CommandBufferHelper::OrderingBarrier();
 
   // Copy the data over after setting the data to ensure alignment.
   SyncToken sync_token_data(gpu_control_->GetNamespaceID(),
-                            gpu_control_->GetStreamId(),
-                            gpu_control_->GetCommandBufferID(), fence_sync);
-  sync_token_data.SetVerifyFlush();
-  memcpy(sync_token, &sync_token_data, sizeof(sync_token_data));
-}
+                            gpu_control_->GetCommandBufferID(), release);
 
-void GLES2Implementation::GenUnverifiedSyncTokenCHROMIUM(GLuint64 fence_sync,
-                                                         GLbyte* sync_token) {
-  if (!sync_token) {
-    SetGLError(GL_INVALID_VALUE, "glGenUnverifiedSyncTokenCHROMIUM",
-               "empty sync_token");
-    return;
-  } else if (!gpu_control_->IsFenceSyncRelease(fence_sync)) {
-    SetGLError(GL_INVALID_VALUE, "glGenUnverifiedSyncTokenCHROMIUM",
-               "invalid fence sync");
-    return;
-  } else if (!gpu_control_->IsFenceSyncFlushed(fence_sync)) {
-    SetGLError(GL_INVALID_OPERATION, "glGenUnverifiedSyncTokenCHROMIUM",
-               "fence sync must be flushed before generating sync token");
-    return;
+  if (verify) {
+    // Verify the sync token by ensuring that the GPU process sees the flush.
+    gpu_control_->EnsureWorkVisible();
+    sync_token_data.SetVerifyFlush();
   }
 
-  // Copy the data over after setting the data to ensure alignment.
-  SyncToken sync_token_data(gpu_control_->GetNamespaceID(),
-                            gpu_control_->GetStreamId(),
-                            gpu_control_->GetCommandBufferID(), fence_sync);
   memcpy(sync_token, &sync_token_data, sizeof(sync_token_data));
 }
 
@@ -6316,9 +6292,9 @@ GLuint GLES2Implementation::CreateImageCHROMIUMHelper(ClientBuffer buffer,
     return 0;
   }
 
-  // CreateImage creates a fence sync so we must flush first to ensure all
-  // previously created fence syncs are flushed first.
-  FlushHelper();
+  // CreateImage creates a fence sync so we must insert an ordering barrier
+  // first to ensure all previously created fence syncs are flushed first.
+  helper_->CommandBufferHelper::OrderingBarrier();
 
   int32_t image_id =
       gpu_control_->CreateImage(buffer, width, height, internalformat);

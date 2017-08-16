@@ -1945,7 +1945,7 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
                     gfx::Transform(), cc::FilterOperations());
   root_pass->has_transparent_background = false;
 
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
                             gpu::CommandBufferId::FromUnsafeValue(0x123), 29);
   TextureMailbox mailbox =
       TextureMailbox(gpu::Mailbox::Generate(), sync_token, GL_TEXTURE_2D,
