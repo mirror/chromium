@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16847397_615bed88",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-16T05:20:10Z",
+      "side": 1,
+      "message": "Can we put this into DiskMountManagerImpl as it is only used inside it?",
+      "revId": "fb16583455bf80aa0bd660e4ac5c727387ac7608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
