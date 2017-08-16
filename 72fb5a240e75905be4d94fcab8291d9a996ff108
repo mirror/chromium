@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957208e3_bfd7ef04",
+        "filename": "ash/system/accessibility_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T21:58:36Z",
+      "side": 1,
+      "message": "Update this comment too, please?",
+      "revId": "72fb5a240e75905be4d94fcab8291d9a996ff108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
