@@ -1,0 +1,526 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd08052_65f88e21",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "There is a lot of extraction of values from a dictionary in this file. Would it make more sense to have a structure for the things that need to happen in this file? I\u0027m guessing that the fact we might want to write the values back means that might not be ideal.",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 48
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b24991a_6715f816",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "This seems more like \"Extract...\"",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 6
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e77e278_3bfa654b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "This should be indicated in the name.\nAlso, it seems the fact that the data is being extracted from a Dictionary seems relevant. See, for example, GetTimeFromDict.\nGetOfflineSessionDataFromDictionary?",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd337d4_604c51c9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32b49f9_ad77a39b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "... from |session_dict|?",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 59
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5943f26_28eae1b8",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "data for all sessions is",
+      "range": {
+        "startLine": 165,
+        "startChar": 3,
+        "endLine": 165,
+        "endChar": 29
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492c615c_afcd32e9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "nit: \"removal\"\nI assume you don\u0027t mean removing from |session_dict|, though.",
+      "range": {
+        "startLine": 165,
+        "startChar": 62,
+        "endLine": 165,
+        "endChar": 70
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71993086_58c3b4d0",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "This name is misleading:\n1. Most importantly, the function doesn\u0027t do anything if *all* sessions should be removed.\n2. It is only removing \"...ForTimePeriod\"",
+      "range": {
+        "startLine": 167,
+        "startChar": 5,
+        "endLine": 167,
+        "endChar": 28
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802999c5_f869a70b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Do we want to include these in every Android APK? Especially since users are unlikely to be able to see these logs, I would guess not.",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d915b8_3304b401",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "\"Broken\" isn\u0027t very descriptive.",
+      "range": {
+        "startLine": 177,
+        "startChar": 27,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f02648_71ffd5d5",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "nit: \"...; removing\"",
+      "range": {
+        "startLine": 177,
+        "startChar": 33,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4e2d33_3b0f9001",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e11f004_bacd21ec",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "It seems strange to return false when the function did its job. I suggest inverting the return value.\nAlso, you should probably note that the function cannot fail. Otherwise, you\u0027d need a third return value.\nWould it be better to just have the caller check the size of |sessions_dict| instead? In theory, it could be empty without us having removed anything and the caller would want to remove it in that case. In addition, whether to remove the dictionary is an implementation detail of the caller and probably not something this function should care about.q",
+      "range": {
+        "startLine": 206,
+        "startChar": 9,
+        "endLine": 206,
+        "endChar": 14
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7a31f8_303fb981",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "This seems like a description of part of what this function does. There should probably be an overall description that also touches on this.",
+      "range": {
+        "startLine": 209,
+        "startChar": 1,
+        "endLine": 209,
+        "endChar": 2
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8650803_5406fd1b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Removes",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 209,
+        "endChar": 9
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d0cde2_4982d062",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Returns",
+      "range": {
+        "startLine": 210,
+        "startChar": 3,
+        "endLine": 210,
+        "endChar": 9
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936dfa48_17784adc",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Similar naming problems here. It doesn\u0027t clear all origins. It clears data for a period across origins.",
+      "range": {
+        "startLine": 211,
+        "startChar": 36,
+        "endLine": 211,
+        "endChar": 58
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6f601b_6ed4ef5e",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "\"clear\" here and \"unprovision\" in the comment on 210 are different things. Please be specific.",
+      "range": {
+        "startLine": 217,
+        "startChar": 38,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8f10de_af6127f0",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "ditto here and at 235.",
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f9a804_1dd4a750",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Why isn\u0027t there a log statement (or at least explanation) as in other cases?",
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fce734a_168f77fc",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "This seems like a strange return value for such a function. Why not make this an output parameter?",
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e9ea5f_014d0f4b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Where is the origin specified? Is PrefService per-origin? If so, perhaps say \"the PrefService\u0027s origin.\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae1420d_045aed8d",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "Why is the list only returned if all licenses are cleared?\nWhat happens in other cases?\nIs the caller expected to use the data somehow or just use this as a Boolean? If the latter, for success/failure? What happens if only some can be cleared (i.e., there is an error)?",
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a104216_599abc61",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-16T21:14:20Z",
+      "side": 1,
+      "message": "ISTM this should be more descriptive. For example, ClearMatchingLicensesDuringPeriod(). Given that name, it might make sense to reorder the |filter| parameter.",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "4bc037d647a2df46f3ca7f64fe6d67cbf8727df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
