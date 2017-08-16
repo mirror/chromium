@@ -41,7 +41,7 @@ public class AwActivityTestRule
     private final AwTestCommon mTestCommon;
 
     public AwActivityTestRule() {
-        super(AwTestRunnerActivity.class);
+        super(AwTestRunnerActivity.class, false, false);
         mTestCommon = new AwTestCommon(this);
     }
 
