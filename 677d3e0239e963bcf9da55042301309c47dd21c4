@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "47916c1d_11589f88",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-16T18:59:15Z",
+      "side": 1,
+      "message": "Hmm I\u0027m not totally understanding your comment, maybe I\u0027m missing something.\n\nYour change to make DoCreateMRC() take a raw pointer to MRC instead of Mojo pointers makes sense. The reason we need MRDesktop::CreateMRCDeferred() makes sense as well.\n\nUnrelated to that, |pending_controller_request_| seems unnecessary to me because CreateControllerRequest() can create the request on the spot, and it always gets called before the controller is used.",
+      "parentUuid": "20e4bfe8_42a340e8",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab2f805_f2d20753",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 10
@@ -189,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "77b07b05_39dfc2c0",
+        "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-16T18:59:15Z",
+      "side": 1,
+      "message": "I believe the compiler is run by trybots for validation. But maybe they\u0027ve been updated since I last tried to use const.",
+      "parentUuid": "79b36ea7_338b28d1",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328cd521_fb753f1c",
         "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
         "patchSetId": 10
@@ -218,6 +254,24 @@
       "side": 1,
       "message": "From my testing it seems we need to actually set it to a different object in order for the Polymer observer function to be invoked.",
       "parentUuid": "328cd521_fb753f1c",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b1c9c08_53319dce",
+        "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-16T18:59:15Z",
+      "side": 1,
+      "message": "Ah, if I remember correctly the observer doesn\u0027t get invoked when you just change object properties. Optionally you can add hangoutsExtraData to the params in createRouteStatus(), and do\ncontrols.routeStatus \u003d createRouteStatus({hangoutsExtraData: {localPresent: true}});",
+      "parentUuid": "a8fcbaaf_9f213ede",
       "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
