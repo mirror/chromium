@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b2b4300f_7b5ce578",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T20:28:08Z",
+      "side": 1,
+      "message": "if a zucchini bug causes this error to be silently eaten, how will such bugs be found?",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374bb906_f081a90b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T20:28:08Z",
+      "side": 1,
+      "message": "does GetReader return a unique_ptr? it seems *really* odd to me to return an object in a unique_ptr, and then std::move the object out of the smart ptr. am i missing something?",
+      "range": {
+        "startLine": 42,
+        "startChar": 55,
+        "endLine": 42,
+        "endChar": 64
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bc47122_d5ceebda",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -287,6 +333,29 @@
         "startChar": 46,
         "endLine": 300,
         "endChar": 54
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2d8259_38580ea9",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T20:28:08Z",
+      "side": 1,
+      "message": "is |disasm| mutated by this call? could it be taken by constref?",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 62
       },
       "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
