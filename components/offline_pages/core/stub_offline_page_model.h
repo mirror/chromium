@@ -59,6 +59,7 @@ class StubOfflinePageModel : public OfflinePageModel, public KeyedService {
       URLSearchMode url_search_mode,
       const MultipleOfflinePageItemCallback& callback) override;
   ClientPolicyController* GetPolicyController() override;
+  ArchiveManager* GetArchiveManager() override;
   bool is_loaded() const override;
   OfflineEventLogger* GetLogger() override;
 

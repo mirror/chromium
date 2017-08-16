@@ -51,6 +51,9 @@ void StubOfflinePageModel::GetPagesByURL(
 ClientPolicyController* StubOfflinePageModel::GetPolicyController() {
   return &policy_controller_;
 }
+ArchiveManager* StubOfflinePageModel::GetArchiveManager() {
+  return nullptr;
+}
 bool StubOfflinePageModel::is_loaded() const {
   return true;
 }
