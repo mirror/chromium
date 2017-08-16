@@ -2,6 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+        <key>BreakpadProduct</key>
+        <string>CSChrome_iOS</string>
+        <key>BreakpadProductDisplay</key>
+        <string>CSChrome</string>
+        <key>BreakpadReportInterval</key>
+        <string>3600</string>
+        <key>BreakpadSendAndExit</key>
+        <string>YES</string>
+        <key>BreakpadSkipConfirm</key>
+        <string>YES</string>
+        <key>BreakpadURL</key>
+        <string>https://clients2.google.com/cr/staging_report</string>
+        <key>BreakpadVersion</key>
+        <string>62.0.3183.0</string>
 	<key>UIApplicationShortcutWidget</key>
 	<string>${IOS_BUNDLE_ID_PREFIX}.${CONTENT_WIDGET_EXTENSION_BUNDLE_ID}</string>
 	<key>CFBundleDevelopmentRegion</key>
