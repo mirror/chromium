@@ -10,7 +10,7 @@
 
   <org.chromium.chrome.browser.ntp.cards.ProgressIndicatorView
       android:id="@+id/snippets_progress"
-      android:layout_marginTop="40dp"
+
       android:layout_width="match_parent"
       android:layout_height="@dimen/ntp_progress_indicator_diameter" />
 </FrameLayout>
