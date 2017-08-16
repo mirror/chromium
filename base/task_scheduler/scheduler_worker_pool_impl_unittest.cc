@@ -35,6 +35,7 @@
 #include "base/test/test_simple_task_runner.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/threading/simple_thread.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_checker_impl.h"
@@ -857,6 +858,148 @@ TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, VerifyStandbyThread) {
 
   worker_pool->DisallowWorkerCleanupForTesting();
   worker_pool->JoinForTesting();
+}
+
+class TaskSchedulerWorkerPoolBlockingEnterExitTest
+    : public TaskSchedulerWorkerPoolImplTest {
+ public:
+  TaskSchedulerWorkerPoolBlockingEnterExitTest()
+      : TaskSchedulerWorkerPoolImplTest(),
+        blocking_thread_running_(WaitableEvent::ResetPolicy::AUTOMATIC,
+                                 WaitableEvent::InitialState::NOT_SIGNALED),
+        blocking_thread_continue_(WaitableEvent::ResetPolicy::MANUAL,
+                                  WaitableEvent::InitialState::NOT_SIGNALED) {}
+
+  void SetUp() override {
+    TaskSchedulerWorkerPoolImplTest::SetUp();
+    task_runner_ =
+        worker_pool_->CreateTaskRunnerWithTraits({WithBaseSyncPrimitives()});
+  }
+
+ protected:
+  // Saturates the worker pool with a task that first blocks, waits to be
+  // unblocked, then exits.
+  void SaturateWithBlockingTasks() {
+    for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
+      task_runner_->PostTask(
+          FROM_HERE,
+          BindOnce(
+              [](WaitableEvent* blocking_thread_running_,
+                 WaitableEvent* blocking_thread_continue_) {
+                ScopedBlockingCall scoped_will_block(BlockingType::WILL_BLOCK);
+
+                blocking_thread_running_->Signal();
+                blocking_thread_continue_->Wait();
+
+              },
+              Unretained(&blocking_thread_running_),
+              Unretained(&blocking_thread_continue_)));
+      blocking_thread_running_.Wait();
+    }
+  }
+
+  // Unblocks tasks posted by SaturateWithBlockingTasks().
+  void UnblockTasks() { blocking_thread_continue_.Signal(); }
+
+  scoped_refptr<TaskRunner> task_runner_;
+
+ private:
+  WaitableEvent blocking_thread_running_;
+  WaitableEvent blocking_thread_continue_;
+
+  DISALLOW_COPY_AND_ASSIGN(TaskSchedulerWorkerPoolBlockingEnterExitTest);
+};
+
+// Verify that BlockingScopeEntered() causes worker capacity to increase and
+// creates a worker if needed. Also verify that BlockingScopeExited() decreases
+// worker capacity after an increase.
+TEST_F(TaskSchedulerWorkerPoolBlockingEnterExitTest, ThreadBlockedUnblocked) {
+  ASSERT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
+            kNumWorkersInWorkerPool);
+
+  SaturateWithBlockingTasks();
+  ASSERT_EQ(worker_pool_->NumberOfWorkersForTesting(),
+            kNumWorkersInWorkerPool + 1);
+  EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
+            2 * kNumWorkersInWorkerPool);
+
+  UnblockTasks();
+  task_tracker_.Flush();
+  EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
+            kNumWorkersInWorkerPool);
+}
+
+// Verify that workers become suspended when the pool is over-capacity and that
+// suspended workers do no work.
+TEST_F(TaskSchedulerWorkerPoolBlockingEnterExitTest,
+       WorkersSuspendedWhenOvercapacity) {
+  ASSERT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
+            kNumWorkersInWorkerPool);
+
+  SaturateWithBlockingTasks();
+  EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
+            2 * kNumWorkersInWorkerPool);
+  EXPECT_EQ(worker_pool_->NumberOfWorkersForTesting(),
+            kNumWorkersInWorkerPool + 1);
+
+  WaitableEvent thread_running(WaitableEvent::ResetPolicy::AUTOMATIC,
+                               WaitableEvent::InitialState::NOT_SIGNALED);
+  WaitableEvent thread_continue(WaitableEvent::ResetPolicy::MANUAL,
+                                WaitableEvent::InitialState::NOT_SIGNALED);
+
+  // Posting these tasks should cause new workers to be created.
+  for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
+    task_runner_->PostTask(
+        FROM_HERE,
+        BindOnce(
+            [](WaitableEvent* thread_running, WaitableEvent* thread_continue) {
+              thread_running->Signal();
+              thread_continue->Wait();
+            },
+            Unretained(&thread_running), Unretained(&thread_continue)));
+    thread_running.Wait();
+  }
+
+  ASSERT_EQ(worker_pool_->NumberOfIdleWorkersForTesting(), 0U);
+  EXPECT_EQ(worker_pool_->NumberOfWorkersForTesting(),
+            2 * kNumWorkersInWorkerPool);
+
+  AtomicFlag is_exiting;
+  // These tasks should not get executed until after other tasks become
+  // unblocked and there are idle, non-suspended workers.
+  for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
+    task_runner_->PostTask(FROM_HERE, BindOnce(
+                                          [](AtomicFlag* is_exiting) {
+                                            EXPECT_TRUE(is_exiting->IsSet());
+                                          },
+                                          Unretained(&is_exiting)));
+  }
+
+  // The original |kNumWorkersInWorkerPool| will finish their tasks after being
+  // unblocked. There will be work in the work queue, but the pool should now
+  // be over-capacity and workers will become idle.
+  UnblockTasks();
+  worker_pool_->WaitForWorkersIdleForTesting(kNumWorkersInWorkerPool);
+  EXPECT_EQ(worker_pool_->NumberOfIdleWorkersForTesting(),
+            kNumWorkersInWorkerPool);
+
+  // Posting more tasks should not cause suspended workers to begin doing work.
+  for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
+    task_runner_->PostTask(FROM_HERE, BindOnce(
+                                          [](AtomicFlag* is_exiting) {
+                                            EXPECT_TRUE(is_exiting->IsSet());
+                                          },
+                                          Unretained(&is_exiting)));
+  }
+
+  // Give time for suspended workers to possibly do work (which should not
+  // happen).
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+
+  is_exiting.Set();
+  // Unblocks the new workers.
+  thread_continue.Signal();
+  task_tracker_.Flush();
 }
 
 }  // namespace internal
