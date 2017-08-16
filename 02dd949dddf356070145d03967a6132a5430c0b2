@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f293e6dd_2c43c288",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3090,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:17:02Z",
+      "side": 1,
+      "message": "Suggest just having this group and remove the other two. Only the first gets tested - so if this is the end goal of the work, it should be the one getting test coverage now.",
+      "range": {
+        "startLine": 3090,
+        "startChar": 50,
+        "endLine": 3090,
+        "endChar": 0
+      },
+      "revId": "02dd949dddf356070145d03967a6132a5430c0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
