@@ -27,6 +27,8 @@
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/background/request_queue_results.h"
 #include "components/offline_pages/core/background/save_page_request.h"
+#include "components/offline_pages/core/client_policy_controller.h"
+#include "components/offline_pages/core/offline_page_client_policy.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_model.h"
@@ -40,6 +42,7 @@
 #include "net/base/filename_util.h"
 
 using base::android::ConvertJavaStringToUTF8;
+using base::android::ConvertUTF16ToJavaString;
 using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
 using base::android::JavaRef;
@@ -56,13 +59,18 @@ const char kOfflinePageBridgeKey[] = "offline-page-bridge";
 void ToJavaOfflinePageList(JNIEnv* env,
                            const JavaRef<jobject>& j_result_obj,
                            const std::vector<OfflinePageItem>& offline_pages) {
+  ClientPolicyController client_policy;
   for (const OfflinePageItem& offline_page : offline_pages) {
     Java_OfflinePageBridge_createOfflinePageAndAddToList(
         env, j_result_obj,
         ConvertUTF8ToJavaString(env, offline_page.url.spec()),
+        client_policy.GetPolicy(offline_page.client_id.name_space)
+                .lifetime_policy.lifetime_type ==
+            LifetimePolicy::LifetimeType::TEMPORARY,
         offline_page.offline_id,
         ConvertUTF8ToJavaString(env, offline_page.client_id.name_space),
         ConvertUTF8ToJavaString(env, offline_page.client_id.id),
+        ConvertUTF16ToJavaString(env, offline_page.title),
         ConvertUTF8ToJavaString(env, offline_page.file_path.value()),
         offline_page.file_size, offline_page.creation_time.ToJavaTime(),
         offline_page.access_count, offline_page.last_access_time.ToJavaTime(),
@@ -75,9 +83,14 @@ ScopedJavaLocalRef<jobject> ToJavaOfflinePageItem(
     const OfflinePageItem& offline_page) {
   return Java_OfflinePageBridge_createOfflinePageItem(
       env, ConvertUTF8ToJavaString(env, offline_page.url.spec()),
+      ClientPolicyController()
+              .GetPolicy(offline_page.client_id.name_space)
+              .lifetime_policy.lifetime_type ==
+          LifetimePolicy::LifetimeType::TEMPORARY,
       offline_page.offline_id,
       ConvertUTF8ToJavaString(env, offline_page.client_id.name_space),
       ConvertUTF8ToJavaString(env, offline_page.client_id.id),
+      ConvertUTF16ToJavaString(env, offline_page.title),
       ConvertUTF8ToJavaString(env, offline_page.file_path.value()),
       offline_page.file_size, offline_page.creation_time.ToJavaTime(),
       offline_page.access_count, offline_page.last_access_time.ToJavaTime(),
