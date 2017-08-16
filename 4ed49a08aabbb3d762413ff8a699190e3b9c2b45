@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07319444_8b4ddbd4",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123014
+      },
+      "writtenOn": "2017-08-16T00:25:11Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused -- is this still being shown anymore? I thought it was disabled for non-chromeos.",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
