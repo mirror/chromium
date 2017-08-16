@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "a9880447_e3881f46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T09:56:39Z",
+      "side": 1,
+      "message": "I meant, why can\u0027t you just instantiate ViewHolder directly?",
+      "parentUuid": "b8ec661c_2dbc3aaf",
+      "range": {
+        "startLine": 193,
+        "startChar": 43,
+        "endLine": 193,
+        "endChar": 46
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1052fbb4_00a2e2f3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 14
