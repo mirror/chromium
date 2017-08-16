@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "747b1038_b531a513",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-16T21:28:39Z",
+      "side": 1,
+      "message": "Added TODO, good point!",
+      "parentUuid": "18edfb75_9764861d",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 86
+      },
+      "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e95787b_1830f982",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "85c422e2_26dffae9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-16T21:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e95787b_1830f982",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 25
+      },
+      "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53b67577_08a5ffd1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c32e904_5fa50bf7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-16T21:28:39Z",
+      "side": 1,
+      "message": "Cool, hope the bug covers all of the cases!",
+      "parentUuid": "53b67577_08a5ffd1",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
