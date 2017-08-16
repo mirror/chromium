@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "723ea6af_10cc89a3",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-16T22:04:10Z",
+      "side": 1,
+      "message": "Okay, that way the defining the struct in NavigationThrottle makes more sense. :-)",
+      "parentUuid": "471981ed_babf1582",
+      "range": {
+        "startLine": 216,
+        "startChar": 6,
+        "endLine": 216,
+        "endChar": 12
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c9174b0_e3eb4b8b",
         "filename": "content/browser/loader/navigation_resource_handler.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "da5e65e653e462af99953db8491269007788711c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941a69db_8504e77a",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-16T22:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c9174b0_e3eb4b8b",
+      "range": {
+        "startLine": 166,
+        "startChar": 39,
+        "endLine": 166,
+        "endChar": 43
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "249f6893_aceceabd",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-16T22:04:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f98a75fa_5d5cd208",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 10
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fedefca_69d0cf82",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "da5e65e653e462af99953db8491269007788711c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820e37ee_b1ec60ae",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-16T22:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fedefca_69d0cf82",
+      "range": {
+        "startLine": 550,
+        "startChar": 2,
+        "endLine": 550,
+        "endChar": 11
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +234,30 @@
       "revId": "da5e65e653e462af99953db8491269007788711c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63020d21_c36d0da0",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-16T22:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca38fd44_4c65ad40",
+      "range": {
+        "startLine": 2109,
+        "startChar": 57,
+        "endLine": 2109,
+        "endChar": 64
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
