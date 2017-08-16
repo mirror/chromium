@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd4b9d1_fe5b320c",
+        "filename": "ui/app_list/pagination_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-16T16:48:02Z",
+      "side": 1,
+      "message": "nit: I would just\n  return target_page \u003e\u003d start_page \u0026\u0026 target_page \u003c\u003d end_page;",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 14
+      },
+      "revId": "a6dafd2bc3eb20928837b98ec75a5d6c5dcd0e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
