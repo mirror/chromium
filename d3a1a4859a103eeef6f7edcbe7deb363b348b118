@@ -69,6 +69,24 @@
       "revId": "d3a1a4859a103eeef6f7edcbe7deb363b348b118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0047fe_358cf3af",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/WebKitHitTestTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T03:55:39Z",
+      "side": 1,
+      "message": "\u003e Yes, in order to create a Handler. \n\u003e https://chromium.googlesource.com/chromium/src/+/master/testing/android/docs/junit4.md#Common-Errors\n\nOh so test thread no longer has a looper. this is fine then",
+      "parentUuid": "38c42334_fc8033f5",
+      "revId": "d3a1a4859a103eeef6f7edcbe7deb363b348b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
