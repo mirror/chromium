@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b0c0e01_e40b18f2",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-16T23:04:43Z",
+      "side": 1,
+      "message": "As a drive-by note, IMO we should try to deprecate pre-fork WebXxxx wrappers. In this case, ScrollPaintPropertyNode can directly hold a reference to ScrollableArea, instead of WebLayerScrollClient.",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5233781a_24f57580",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-16T23:04:43Z",
+      "side": 1,
+      "message": "nits: No need to clear. If we do need to clear it, we should have scoped it. :)",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d4d112_ad6dd60a",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-16T23:04:43Z",
+      "side": 1,
+      "message": "nits: Move up to line #667.",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd86235_bc126661",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-16T23:04:43Z",
+      "side": 1,
+      "message": "I think we can just make the Ensure-version public and delete this new one.",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
