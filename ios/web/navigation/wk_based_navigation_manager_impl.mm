@@ -377,6 +377,12 @@ bool WKBasedNavigationManagerImpl::CanPruneAllButLastCommittedItem() const {
   return true;
 }
 
+void WKBasedNavigationManagerImpl::Restore(
+    int selected_navigation,
+    std::vector<std::unique_ptr<NavigationItem>> items) {
+  DLOG(WARNING) << "Not yet implemented.";
+}
+
 NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(
     size_t index) const {
   WKBackForwardListItem* wk_item = GetWKItemAtIndex(index);

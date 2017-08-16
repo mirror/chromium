@@ -242,6 +242,15 @@ NavigationItemList LegacyNavigationManagerImpl::GetForwardItems() const {
   return [session_controller_ forwardItems];
 }
 
+void LegacyNavigationManagerImpl::Restore(
+    int selected_navigation,
+    std::vector<std::unique_ptr<NavigationItem>> items) {
+  DCHECK(GetItemCount() == 0 && !GetPendingItem());
+  DCHECK(selected_navigation >= 0 &&
+         selected_navigation < static_cast<int>(items.size()));
+  ReplaceSessionHistory(std::move(items), selected_navigation);
+}
+
 void LegacyNavigationManagerImpl::CopyStateFromAndPrune(
     const NavigationManager* manager) {
   DCHECK(manager);

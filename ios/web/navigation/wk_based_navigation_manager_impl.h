@@ -104,6 +104,8 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   NavigationItemList GetForwardItems() const override;
   void CopyStateFromAndPrune(const NavigationManager* source) override;
   bool CanPruneAllButLastCommittedItem() const override;
+  void Restore(int selected_navigation,
+               std::vector<std::unique_ptr<NavigationItem>> items) override;
 
  private:
   // The SessionStorageBuilder functions require access to private variables of

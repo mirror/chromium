@@ -76,6 +76,8 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
   void GoToIndex(int index) override;
   NavigationItemList GetBackwardItems() const override;
   NavigationItemList GetForwardItems() const override;
+  void Restore(int selected_navigation,
+               std::vector<std::unique_ptr<NavigationItem>> items) override;
   void CopyStateFromAndPrune(const NavigationManager* source) override;
   bool CanPruneAllButLastCommittedItem() const override;
 
