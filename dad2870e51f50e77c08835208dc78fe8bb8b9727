@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28cfad1_c4e7f11f",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "It\u0027s quite strange to see Foo inherited from FooImpl",
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27370da8_c3ca8138",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "explicit is only needed for constructor with one argument",
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0675a2e9_443900bf",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "s/webState/web_state\ns/JSON/json\ns/requestId/request_id\n\netc..",
+      "range": {
+        "startLine": 32,
+        "startChar": 44,
+        "endLine": 32,
+        "endChar": 52
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092cb1ee_1dcd1a69",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "Should this be a private method?\n\nSame question for other method",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2d0f98_0eb50ee4",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "nit: Linebreak after this",
+      "range": {
+        "startLine": 3,
+        "startChar": 29,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c81ed7_05cdaf9d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "Please add comments for all non-trivial methods",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bac176d_ea85aa40",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "nit: Do you want to use password_store() naming Style for all \"cheap\" method to be consistent?",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73fc9e8_873c7456",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "Inherit from PlatformTest to avoid memory leaks",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b55431_9cd4b714",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "Prefer constructors to SetUp. SetUp should be used only if you call virtual methods.",
+      "range": {
+        "startLine": 115,
+        "startChar": 15,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741bf628_14f38926",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "This is a memory leak. Do you need a pointer here?",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172f27c6_581e52bb",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:16:37Z",
+      "side": 1,
+      "message": "s/JSON/json",
+      "range": {
+        "startLine": 153,
+        "startChar": 24,
+        "endLine": 153,
+        "endChar": 28
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
