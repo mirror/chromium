@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3bb9159_a50ac87c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-16T15:34:45Z",
+      "side": 0,
+      "message": "nit: re-add",
+      "revId": "1b76138b02ee188f562bc38e29bf9bccd1aacabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
