@@ -22,6 +22,30 @@
       "revId": "3d49ff519a59c24c4c1fea39a01b2b5623742ccc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6f1335_e4ba7146",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T02:30:42Z",
+      "side": 1,
+      "message": "Thanks. Renamed.",
+      "parentUuid": "decd21f1_f83e4e9a",
+      "range": {
+        "startLine": 498,
+        "startChar": 7,
+        "endLine": 498,
+        "endChar": 30
+      },
+      "revId": "3d49ff519a59c24c4c1fea39a01b2b5623742ccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
