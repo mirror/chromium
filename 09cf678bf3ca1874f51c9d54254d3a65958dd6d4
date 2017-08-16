@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd95b15b_4757a896",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T22:41:59Z",
+      "side": 1,
+      "message": "nit: longPressDetectedByGestureRecognizer:\n\nFrom Coding Guidelines for Cocoa: \"Make the word before the argument describe the argument.\"",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "09cf678bf3ca1874f51c9d54254d3a65958dd6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5511bdda_8639a21f",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T22:41:59Z",
+      "side": 1,
+      "message": "Sorry, just came up with another use case. What if the page has changed (f.e. scrolled or navigation has happened)? Should we also change _contextMenuNeedsDisplay after some short timeout?",
+      "range": {
+        "startLine": 269,
+        "startChar": 10,
+        "endLine": 269,
+        "endChar": 25
+      },
+      "revId": "09cf678bf3ca1874f51c9d54254d3a65958dd6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
