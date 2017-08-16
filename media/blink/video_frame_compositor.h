@@ -60,18 +60,17 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // Used to report back the time when the new frame has been processed.
   using OnNewProcessedFrameCB = base::Callback<void(base::TimeTicks)>;
 
-  // |compositor_task_runner| is the task runner on which this class will live,
+  // |task_runner| is the task runner on which this class will live,
   // though it may be constructed on any thread.
   explicit VideoFrameCompositor(
-      const scoped_refptr<base::SingleThreadTaskRunner>&
-          compositor_task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.
   ~VideoFrameCompositor() override;
 
   // cc::VideoFrameProvider implementation. These methods must be called on the
-  // |compositor_task_runner_|.
+  // |task_runner_|.
   void SetVideoFrameProviderClient(
       cc::VideoFrameProvider::Client* client) override;
   bool UpdateCurrentFrame(base::TimeTicks deadline_min,
@@ -146,14 +145,18 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
                   base::TimeTicks deadline_max,
                   bool background_rendering);
 
-  scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
+  // This will run tasks on the compositor thread. If
+  // kEnableSurfaceLayerForVideo is enabled, it will instead run tasks on the
+  // media thread.
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
   std::unique_ptr<base::TickClock> tick_clock_;
 
   // Allows tests to disable the background rendering task.
   bool background_rendering_enabled_;
 
   // Manages UpdateCurrentFrame() callbacks if |client_| has stopped sending
-  // them for various reasons.  Runs on |compositor_task_runner_| and is reset
+  // them for various reasons.  Runs on |task_runner_| and is reset
   // after each successful UpdateCurrentFrame() call.
   base::Timer background_rendering_timer_;
 
