@@ -16,6 +16,24 @@
       "revId": "1bd83f29402708e6d46cba6ee974c0f258fe8c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774d8bf0_c59cc270",
+        "filename": "services/resource_coordinator/public/interfaces/tracing/tracing.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-16T18:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbc8c07f_cf1efd0f",
+      "revId": "1bd83f29402708e6d46cba6ee974c0f258fe8c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
