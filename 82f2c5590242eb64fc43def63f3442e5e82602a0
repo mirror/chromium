@@ -51,6 +51,24 @@
       "revId": "82f2c5590242eb64fc43def63f3442e5e82602a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547cc5b4_6c691343",
+        "filename": "gpu/command_buffer/client/shared_memory_limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-16T20:40:15Z",
+      "side": 1,
+      "message": "Thinking more I don\u0027t know if anything would fail - unless we get below a figure like not enough to upload a single line of texture data.  That\u0027s a much smaller limit, say under 256kb.\n\nBuffer data is also split up if necessary.",
+      "parentUuid": "791651aa_06c415d2",
+      "revId": "82f2c5590242eb64fc43def63f3442e5e82602a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
