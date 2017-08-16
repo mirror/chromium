@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dffed96d_ffb0479e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T16:29:25Z",
+      "side": 1,
+      "message": "If the UrlInfo is deleted from |results_|  in Stage 4, and we encounter the same Url in Stage 5, does it mean we will do Dns resolution for the same url again?",
+      "parentUuid": "39ea268b_ec15d08f",
+      "range": {
+        "startLine": 13,
+        "startChar": 60,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "2c4ce28c7067b166d9e2c846091e6b065967d4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bed2b24_d43d5189",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The map is not used only to feed about:dns. It holds the state of existing/prior resolutions that may be reused by following requests, i.e. it forms additional caching layer.",
       "parentUuid": "9bed2b24_d43d5189",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "2c4ce28c7067b166d9e2c846091e6b065967d4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a458218_db15caca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T16:29:25Z",
+      "side": 1,
+      "message": "In the next paragraph, you mentioned that the additional caching layer is not needed, so I assumed that |results_| is only kept for about:dns. \nDoesn\u0027t deleting UrlInfo from |results_| during LookupFinished() essentially get rid of the caching layer?",
+      "parentUuid": "197eee73_84a3ddbd",
       "range": {
         "startLine": 15,
         "startChar": 28,
