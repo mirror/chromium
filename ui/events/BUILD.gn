@@ -282,6 +282,8 @@ component("gesture_detection") {
 
 static_library("test_support") {
   sources = [
+    "blink/blink_features.cc",
+    "blink/blink_features.h",
     "test/cocoa_test_event_utils.h",
     "test/cocoa_test_event_utils.mm",
     "test/device_data_manager_test_api.h",
