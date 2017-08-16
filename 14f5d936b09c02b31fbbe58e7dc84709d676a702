@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad55a5c_f125a652",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T23:57:00Z",
+      "side": 1,
+      "message": "nit: Can we wrap at 72 chars / column?",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2decc7b_5428e53f",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T23:57:00Z",
+      "side": 1,
+      "message": "I don\u0027t think you can ever get to this code if print preview is not enabled.",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d3e21c_927e9b5f",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T23:57:00Z",
+      "side": 1,
+      "message": "One possible troublesome workflow:\n1) Print preview\n2) Click the print using system dialog link in the left pane\n\nAfter (2), print preview closes and the native system print dialog pops up. During this transition, this code runs. Would the webpage get the afterprint event too early in this case, or get the event twice?",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ea5517_02e5c5be",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T23:57:00Z",
+      "side": 1,
+      "message": "Do we want to move these calls into DidFinishPrinting()?",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
