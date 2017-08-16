@@ -69,6 +69,24 @@
       "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5a5e08_12abf93b",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T17:06:24Z",
+      "side": 1,
+      "message": "If absense of the value has different meaning from the default value 0,\ncould you explicitly document it somewhere? What is the expected behavior on missing value case?",
+      "parentUuid": "b33d9eab_7ee6ed6b",
+      "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

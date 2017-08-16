@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df0ac831_f8c27091",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T17:06:24Z",
+      "side": 1,
+      "message": "nit; s/int32_t/size_t/",
+      "revId": "42b6c52cb2aaff2cb2793f56e7905eace2ded18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
