@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adc5df8_f2cc99a0",
+        "filename": "ios/chrome/browser/web/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T15:27:49Z",
+      "side": 1,
+      "message": "Do we need to use namespaces in //chrome layer?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "e3562a12644fa48771f6b7e26f538a3b784c570f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
