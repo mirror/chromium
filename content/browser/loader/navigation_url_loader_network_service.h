@@ -46,6 +46,9 @@ class NavigationURLLoaderNetworkService : public NavigationURLLoader {
                          const ResourceResponseHead& head);
   void OnStartLoadingResponseBody(mojo::ScopedDataPipeConsumerHandle body);
   void OnComplete(const ResourceRequestCompletionStatus& completion_status);
+  void OnCompleteWithCertificateError(
+      const ResourceRequestCompletionStatus& completion_status,
+      bool should_ssl_errors_be_fatal);
 
  private:
   class URLLoaderRequestController;
