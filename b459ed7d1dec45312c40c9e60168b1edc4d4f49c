@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "240f196f_01ab1c7c",
+        "filename": "chrome/renderer/resources/extensions/certificate_provider_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:09:48Z",
+      "side": 1,
+      "message": "Absolutely, yes.  Done.",
+      "parentUuid": "54c4a71d_0dee91c2",
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8794483a_92fb5115",
         "filename": "chrome/renderer/resources/extensions/desktop_capture_custom_bindings.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f2684282_47a8e2f2",
+        "filename": "chrome/renderer/resources/extensions/desktop_capture_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:09:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8794483a_92fb5115",
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c86983a3_0d3ba322",
         "filename": "extensions/renderer/resources/declarative_webrequest_custom_bindings.js",
         "patchSetId": 6
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-16T21:20:21Z",
       "side": 1,
       "message": "I think we still do. Constructs like\nvar myMatcher \u003d new RequestMatcher({\u0027bogusKey\u0027: \u0027bogusValue\u0027})\nwill still correctly fail because of the validate() below. But this will pass in native bindings.\n\nThat\u0027s not the end of the world though, because validation will fail when you try to do sth useful with it later, for example:\nonRequest.addRule([{\u0027conditions\u0027: myMatcher}]) will throw.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 75
+      },
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe14b260_7396b6cf",
+        "filename": "extensions/renderer/resources/declarative_webrequest_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:09:48Z",
+      "side": 1,
+      "message": "Sorry, my TODO was vague.  What I meant was \"declarativeWebRequest never shipped, so do we care if this doesn\u0027t quite work perfectly?\" :)  I\u0027ve updated the comment to reflect that.",
+      "parentUuid": "c86983a3_0d3ba322",
       "range": {
         "startLine": 37,
         "startChar": 0,
