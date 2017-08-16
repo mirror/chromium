@@ -22,6 +22,30 @@
       "revId": "cbc1fa42d76d789a51b67275b29a3610193682a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ca6f76_eadb4952",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-16T07:16:11Z",
+      "side": 1,
+      "message": "\u003e Is it writing to packet when mx_port_wait() returns MX_ERR_TIMED_OUT? Or are we just\n\u003e processing garbage in that case?\n\nmx_port_wait() doesn\u0027t change the packet in this case, so packet contain the content of the previous packet if there was a previous packet (since the location on the stack doesn\u0027t change). So this code stills sees packet.type \u003d\u003d MX_PKT_TYPE_SIGNAL_ONE and then tries to call the old controller for that (no-longer valid) packet, which then DCHECKs in WaitEnd().\n\n\u003e \n\u003e MX_PKT_TYPE_SIGNAL_ONE is 1u so I guess if we had been initializing packet to {}, we\u0027d just be waking up on TIMED_OUT, doing delegate work, and then waiting again right?\n\nThe code below assumes that packet.type is either MX_PKT_TYPE_SIGNAL_ONE or MX_PKT_TYPE_USER, see DCHECK in line 274. So initializing the packet to {} would not be enough.",
+      "parentUuid": "965e403b_ed7fa803",
+      "range": {
+        "startLine": 237,
+        "startChar": 45,
+        "endLine": 237,
+        "endChar": 51
+      },
+      "revId": "cbc1fa42d76d789a51b67275b29a3610193682a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
