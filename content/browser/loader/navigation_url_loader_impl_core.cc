@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/time/time.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/navigation_resource_handler.h"
@@ -136,18 +137,31 @@ void NavigationURLLoaderImplCore::NotifyResponseStarted(
                      is_stream));
 }
 
-void NavigationURLLoaderImplCore::NotifyRequestFailed(bool in_cache,
-                                                      int net_error) {
+void NavigationURLLoaderImplCore::NotifyRequestFailed(
+    bool in_cache,
+    int net_error,
+    const net::SSLInfo* ssl_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   TRACE_EVENT_ASYNC_END0("navigation", "Navigation redirectDelay", this);
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderImplCore", this, "success",
                          false);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestFailed, loader_,
-                     in_cache, net_error));
+  if (net::IsCertificateError(net_error)) {
+    DCHECK(ssl_info);
+
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &NavigationURLLoaderImpl::NotifyRequestFailedWithCertificateError,
+            loader_, in_cache, net_error, *ssl_info,
+            resource_handler_->ShouldSSLErrorsBeFatal()));
+  } else {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestFailed, loader_,
+                       in_cache, net_error));
+  }
 }
 
 }  // namespace content

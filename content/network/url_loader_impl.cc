@@ -408,6 +408,7 @@ void URLLoaderImpl::NotifyCompleted(int error_code) {
       url_request_->GetTotalReceivedBytes();
   request_complete_data.encoded_body_length = url_request_->GetRawBodyBytes();
   request_complete_data.decoded_body_length = total_written_bytes_;
+  request_complete_data.ssl_info = url_request_->ssl_info();
 
   url_loader_client_->OnComplete(request_complete_data);
   DeleteIfNeeded();
