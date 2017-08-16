@@ -630,7 +630,7 @@ class Instance {
  private:
   PP_Instance pp_instance_;
 
-  typedef std::map<std::string, void*> InterfaceNameToObjectMap;
+  typedef std::map<std::string, void*, std::less<>> InterfaceNameToObjectMap;
   InterfaceNameToObjectMap interface_name_to_objects_;
 };
 
