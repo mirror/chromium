@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "125a874a_6562c3e0",
+        "filename": "third_party/WebKit/Source/core/input/MouseEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-16T20:42:59Z",
+      "side": 1,
+      "message": "Is \"barrel\" the button on the pen? Is it represented by Button::kRight? If I\u0027m understanding correctly, could you add a kBarrel to the enum that uses the same value to make it clearer?",
+      "range": {
+        "startLine": 783,
+        "startChar": 7,
+        "endLine": 783,
+        "endChar": 67
+      },
+      "revId": "91222d945a1f1dfa2baf40743f208f00fbd278a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
