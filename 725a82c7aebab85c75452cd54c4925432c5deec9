@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38606229_a47ab366",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1162704
+      },
+      "writtenOn": "2017-08-16T04:57:39Z",
+      "side": 0,
+      "message": "Can we keep this test for testing window behavior when the keyboard is in sticky mode? Maybe we need to create the mock of KeyboardController which keyboard_locked() returns true and to pass it to KeyboardController::ResetController().",
+      "range": {
+        "startLine": 1465,
+        "startChar": 0,
+        "endLine": 1465,
+        "endChar": 73
+      },
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
