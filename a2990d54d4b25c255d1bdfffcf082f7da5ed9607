@@ -70,6 +70,24 @@
       "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803287c1_8ba1e3de",
+        "filename": "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-16T09:32:33Z",
+      "side": 1,
+      "message": "I think I planted the seeds of this in my earlier command refactor CLs, but probably didn\u0027t think it all the way through. Setting a superclass property inside an init seems like it\u0027s technically OK but should probably be avoided.\n\nA fourth possibility to fix this is to add the dispatcher parameter to the superclass init (or make a new superclass init with dispatcher as a param). I\u0027d favor either that or (2) as being the most consistent approach.",
+      "parentUuid": "fc0b35ed_8100658a",
+      "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
