@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a2fa389_34d3d1dd",
+        "filename": "ios/chrome/browser/ui/settings/privacy_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T14:42:52Z",
+      "side": 1,
+      "message": "It looks like \"prefs::kContentSuggestionsRemoteEnabled\" defaults to \"true\" (like \"prefs::kSearchSuggestEnabled\").\n\nThis mean that if a user has set \"prefs::kSearchSuggestEnabled\" to false, and then update to this new version of the code, the boolean in the UI will show this as disabled, but the content suggestion will still be enabled (because it defaults to \"true\").\n\nI think the values need to be synchronised when they are loaded (probably in \"RegisterBrowserStatePrefs\").",
+      "range": {
+        "startLine": 129,
+        "startChar": 28,
+        "endLine": 129,
+        "endChar": 67
+      },
+      "revId": "163065e9009993760acedd38d05fa6fe2452c71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
