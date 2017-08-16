@@ -92,9 +92,21 @@ class DOMStorageAreaTest : public testing::Test {
   base::MessageLoop message_loop_;
 };
 
-TEST_F(DOMStorageAreaTest, DOMStorageAreaBasics) {
+class DOMStorageAreaParamTest : public DOMStorageAreaTest,
+                                public testing::WithParamInterface<bool> {
+ public:
+  DOMStorageAreaParamTest() {}
+  ~DOMStorageAreaParamTest() override {}
+};
+
+INSTANTIATE_TEST_CASE_P(_, DOMStorageAreaParamTest, ::testing::Bool());
+
+TEST_P(DOMStorageAreaParamTest, DOMStorageAreaBasics) {
   scoped_refptr<DOMStorageArea> area(
       new DOMStorageArea(1, std::string(), kOrigin, NULL, NULL));
+  const bool caching_enabled = GetParam();
+  if (caching_enabled)
+    area->SetCacheOnlyKeys(false);
   base::string16 old_value;
   base::NullableString16 old_nullable_value;
   scoped_refptr<DOMStorageArea> copy;
@@ -113,7 +125,8 @@ TEST_F(DOMStorageAreaTest, DOMStorageAreaBasics) {
   EXPECT_EQ(kOrigin, copy->origin());
   EXPECT_EQ(2, copy->namespace_id());
   EXPECT_EQ(area->Length(), copy->Length());
-  EXPECT_EQ(area->GetItem(kKey).string(), copy->GetItem(kKey).string());
+  if (caching_enabled)
+    EXPECT_EQ(area->GetItem(kKey).string(), copy->GetItem(kKey).string());
   EXPECT_EQ(area->Key(0).string(), copy->Key(0).string());
   EXPECT_EQ(copy->map_.get(), area->map_.get());
 
@@ -137,7 +150,8 @@ TEST_F(DOMStorageAreaTest, DOMStorageAreaBasics) {
   EXPECT_FALSE(area->map_.get());
   EXPECT_EQ(0u, area->Length());
   EXPECT_TRUE(area->Key(0).is_null());
-  EXPECT_TRUE(area->GetItem(kKey).is_null());
+  if (caching_enabled)
+    EXPECT_TRUE(area->GetItem(kKey).is_null());
   EXPECT_FALSE(area->SetItem(kKey, kValue, &old_nullable_value));
   EXPECT_FALSE(area->RemoveItem(kKey, &old_value));
   EXPECT_FALSE(area->Clear());
@@ -212,17 +226,98 @@ TEST_F(DOMStorageAreaTest, BackingDatabaseOpened) {
         area->backing_.get())->db_.get();
     EXPECT_TRUE(database->IsOpen());
     EXPECT_EQ(1u, area->Length());
-    EXPECT_EQ(kValue, area->GetItem(kKey).string());
-
-    // Verify the content made it to the in memory database.
-    DOMStorageValuesMap values;
-    area->backing_->ReadAllValues(&values);
-    EXPECT_EQ(1u, values.size());
-    EXPECT_EQ(kValue, values[kKey].string());
+    EXPECT_EQ(kKey, area->Key(0).string());
   }
 }
 
-TEST_F(DOMStorageAreaTest, CommitTasks) {
+TEST_F(DOMStorageAreaTest, SetCacheOnlyKeysWithoutBacking) {
+  scoped_refptr<DOMStorageArea> area(
+      new DOMStorageArea(1, std::string(), kOrigin, NULL, NULL));
+  EXPECT_FALSE(area->cache_only_keys_);
+  EXPECT_FALSE(area->map_->has_only_keys());
+  base::NullableString16 old_value;
+  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+  DOMStorageValuesMap map;
+  area->ExtractValues(&map);
+  EXPECT_EQ(1u, map.size());
+
+  area->SetCacheOnlyKeys(true);
+  EXPECT_FALSE(area->cache_only_keys_);  // cannot be disabled without backing.
+  area->SetItem(kKey, kValue2, &old_value);
+  EXPECT_FALSE(area->map_->has_only_keys());
+  EXPECT_EQ(kValue, old_value.string());
+  area->ExtractValues(&map);
+  EXPECT_EQ(kValue2, map[kKey].string());
+  EXPECT_EQ(1u, map.size());
+}
+
+TEST_F(DOMStorageAreaTest, SetCacheOnlyKeysWithBacking) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  const base::FilePath kExpectedOriginFilePath = temp_dir.GetPath().Append(
+      DOMStorageArea::DatabaseFileNameFromOrigin(kOrigin));
+  scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
+      kOrigin, temp_dir.GetPath(),
+      new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+
+  EXPECT_TRUE(area->backing_.get());
+  EXPECT_FALSE(area->is_initial_import_done_);
+
+  // Inject an in-memory db to speed up the test.
+  // We will verify that something is written into the database but not
+  // that a file is written to disk - DOMStorageDatabase unit tests cover
+  // that.
+  area->backing_.reset(new LocalStorageDatabaseAdapter());
+
+  EXPECT_TRUE(area->cache_only_keys_);
+  base::NullableString16 old_value;
+  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(area->is_initial_import_done_);
+  EXPECT_TRUE(area->commit_batch_.get());
+
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(area->commit_batch_.get());
+  EXPECT_EQ(1u, area->Length());
+
+  // Fill the commit_batch and commit_batch_in_flight.
+  EXPECT_TRUE(area->SetItem(kKey2, kValue, &old_value));
+  area->PostCommitTask();
+  EXPECT_FALSE(area->commit_batch_.get());
+  EXPECT_TRUE(area->commit_batch_in_flight_.get());
+  EXPECT_TRUE(area->SetItem(kKey2, kValue2, &old_value));
+  EXPECT_TRUE(area->commit_batch_.get());
+
+  // The values mustbe imported from the backing, and from the commit batches.
+  area->SetCacheOnlyKeys(false);
+  EXPECT_EQ(2u, area->Length());
+  EXPECT_EQ(kValue, area->GetItem(kKey).string());
+  EXPECT_EQ(kValue2, area->GetItem(kKey2).string());
+
+  // Check if disabling cache clears the cache after committing only.
+  area->SetCacheOnlyKeys(true);
+  EXPECT_TRUE(area->is_initial_import_done_);
+  ASSERT_FALSE(area->map_->has_only_keys());
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(area->is_initial_import_done_);
+  EXPECT_TRUE(area->map_->has_only_keys());
+  EXPECT_FALSE(area->commit_batch_in_flight_.get());
+
+  // Check if Clear() works as expected when caching is enabled.
+  area->Clear();
+  EXPECT_TRUE(area->SetItem(kKey2, kValue2, &old_value));
+  area->PostCommitTask();
+  area->Clear();
+  EXPECT_TRUE(area->SetItem(kKey2, kValue, &old_value));
+  EXPECT_TRUE(area->commit_batch_->clear_all_first);
+  EXPECT_TRUE(area->commit_batch_in_flight_->clear_all_first);
+  area->SetCacheOnlyKeys(false);
+  EXPECT_EQ(1u, area->Length());
+  EXPECT_EQ(kValue, area->GetItem(kKey2).string());
+}
+
+TEST_P(DOMStorageAreaParamTest, CommitTasks) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 
@@ -231,6 +326,7 @@ TEST_F(DOMStorageAreaTest, CommitTasks) {
       new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
   // Inject an in-memory db to speed up the test.
   area->backing_.reset(new LocalStorageDatabaseAdapter());
+  area->SetCacheOnlyKeys(GetParam());
 
   // Unrelated to commits, but while we're here, see that querying Length()
   // causes the backing database to be opened and presumably read from.
@@ -301,7 +397,7 @@ TEST_F(DOMStorageAreaTest, CommitTasks) {
   EXPECT_EQ(kValue2, values[kKey2].string());
 }
 
-TEST_F(DOMStorageAreaTest, CommitChangesAtShutdown) {
+TEST_P(DOMStorageAreaParamTest, CommitChangesAtShutdown) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
@@ -312,6 +408,7 @@ TEST_F(DOMStorageAreaTest, CommitChangesAtShutdown) {
   // the final changes are commited in it's dtor.
   static_cast<LocalStorageDatabaseAdapter*>(area->backing_.get())->db_.reset(
       new VerifyChangesCommittedDatabase());
+  area->SetCacheOnlyKeys(GetParam());
 
   DOMStorageValuesMap values;
   base::NullableString16 old_value;
@@ -330,12 +427,14 @@ TEST_F(DOMStorageAreaTest, CommitChangesAtShutdown) {
   area->Shutdown();
 }
 
-TEST_F(DOMStorageAreaTest, DeleteOrigin) {
+TEST_P(DOMStorageAreaParamTest, DeleteOrigin) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
       new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+  if (GetParam())
+    area->SetCacheOnlyKeys(false);
 
   // This test puts files on disk.
   base::FilePath db_file_path = static_cast<LocalStorageDatabaseAdapter*>(
@@ -393,12 +492,14 @@ TEST_F(DOMStorageAreaTest, DeleteOrigin) {
   area->Shutdown();
 }
 
-TEST_F(DOMStorageAreaTest, PurgeMemory) {
+TEST_P(DOMStorageAreaParamTest, PurgeMemory) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       kOrigin, temp_dir.GetPath(),
       new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));
+  if (GetParam())
+    area->SetCacheOnlyKeys(false);
 
   // Inject an in-memory db to speed up the test.
   area->backing_.reset(new LocalStorageDatabaseAdapter());
@@ -421,6 +522,7 @@ TEST_F(DOMStorageAreaTest, PurgeMemory) {
   // Should not do anything when commits are pending.
   base::NullableString16 old_value;
   area->SetItem(kKey, kValue, &old_value);
+  original_map = area->map_.get();  // importing creates new map.
   EXPECT_TRUE(area->is_initial_import_done_);
   EXPECT_TRUE(area->HasUncommittedChanges());
   area->PurgeMemory();
