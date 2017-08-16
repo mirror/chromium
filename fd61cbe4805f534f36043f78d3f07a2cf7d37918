@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa64d591_9157da58",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T03:03:49Z",
+      "side": 1,
+      "message": "This should have a comment for why it\u0027s needed (and why V24 is special).",
+      "revId": "fd61cbe4805f534f36043f78d3f07a2cf7d37918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
