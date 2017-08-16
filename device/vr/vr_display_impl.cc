@@ -31,7 +31,7 @@ VRDisplayImpl::VRDisplayImpl(device::VRDevice* device,
 }
 
 VRDisplayImpl::~VRDisplayImpl() {
-  device_->RemoveDisplay(this);
+  ExitPresent();
 }
 
 void VRDisplayImpl::OnChanged(mojom::VRDisplayInfoPtr vr_device_info) {
