@@ -1185,6 +1185,10 @@ float Layer::GetRefreshRate() const {
   return compositor ? compositor->refresh_rate() : 60.0;
 }
 
+ui::Layer* Layer::GetUiLayer() {
+  return this;
+}
+
 cc::Layer* Layer::GetCcLayer() const {
   return cc_layer_;
 }
