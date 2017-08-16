@@ -23,6 +23,8 @@ void SignalInitializeCrashReporting() {
     assert(false);
 #endif  // _DEBUG
   }
+
+  blacklist::SetCrashdumpFunction(&elf_crash::GenerateCrashDump);
 }
 
 void SignalChromeElf() {
@@ -59,6 +61,7 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID reserved) {
     } __except (elf_crash::GenerateCrashDump(GetExceptionInformation())) {
     }
   } else if (reason == DLL_PROCESS_DETACH) {
+    blacklist::SetCrashdumpFunction(nullptr);
     elf_crash::ShutdownCrashReporting();
   }
   return TRUE;
