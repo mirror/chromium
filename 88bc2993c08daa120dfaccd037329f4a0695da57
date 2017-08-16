@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "1bfc9b5f_76eb1489",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:14:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2029d36_12f6fd54",
+      "range": {
+        "startLine": 110,
+        "startChar": 79,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "467f5b73_b5e68c85",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 2
@@ -151,6 +175,24 @@
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef49c49b_eb453e2f",
+        "filename": "ash/highlighter/highlighter_gesture_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:14:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e264803c_d94dfe07",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -271,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "e9d0fb75_a7e4f423",
+        "filename": "ash/system/palette/common_palette_tool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:14:49Z",
+      "side": 1,
+      "message": "\u003e\u003e Is this a restriction that should be mentioned in the histogram description?\n\u003e I am not sure I understand the question. Which restriction?\n\nThe fact that the histogram below is only emitted in metalayer mode.",
+      "parentUuid": "7053190c_157f3650",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58a135bc_d7edf9cd",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -306,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "cf769c08_347306b4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:14:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f247d0b5_261e2c81",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8083e324_9ea590e6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -326,6 +410,30 @@
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5162e514_6242ef91",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2579,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:14:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8083e324_9ea590e6",
+      "range": {
+        "startLine": 2579,
+        "startChar": 67,
+        "endLine": 2579,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -373,6 +481,30 @@
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bdf3c6_38f5087e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:14:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "392ac09f_95c36a85",
+      "range": {
+        "startLine": 2585,
+        "startChar": 62,
+        "endLine": 2585,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
