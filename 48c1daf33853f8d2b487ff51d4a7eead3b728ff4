@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2878c90c_efd7b40f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3903,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T00:14:50Z",
+      "side": 1,
+      "message": "This is partly the reason GetWidgetImportanceForTesting now calls ComputeEffectiveImportance instead of just returning effective_importance_.\n\nWith the change to not store importance in WebContentsImpl, importance is plumbed down immediately on WebContentsImpl::Init. At that point, there is no child_process_launcher_, so UpdateProcessPriority is skipped. Then on desktop UpdateProcessPriority is skipped yet again here when process is launched. So in the test, immediately after first navigation, effective_importance_ is not updated.\n\nI ran into https://crbug.com/560446 before, and the proposed fix is introducing an entirely different system to prioritize processes, so going to take awhile..",
+      "revId": "48c1daf33853f8d2b487ff51d4a7eead3b728ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
