@@ -73,6 +73,52 @@
     },
     {
       "key": {
+        "uuid": "0e3e9a84_2d68c534",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-16T20:08:14Z",
+      "side": 1,
+      "message": "Can you use an enum for this?",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8be01e_6b92d188",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-16T20:08:14Z",
+      "side": 1,
+      "message": "this does not have the same semantics. you need to declare this as a handle if you want to ship the fd.",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ea7485_bf1b0332",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 3
