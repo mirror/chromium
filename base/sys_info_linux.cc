@@ -22,8 +22,14 @@ namespace {
 
 int64_t AmountOfMemory(int pages_name) {
   long pages = sysconf(pages_name);
+  if (pages == -1) {
+    LOG(ERROR) << "PAGES";
+    NOTREACHED();
+    return 0;
+  }
   long page_size = sysconf(_SC_PAGESIZE);
-  if (pages == -1 || page_size == -1) {
+  if (page_size == -1) {
+    LOG(ERROR) << "PAGE SIZE";
     NOTREACHED();
     return 0;
   }
