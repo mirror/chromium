@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "20513996_efeb9acf",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-16T14:58:57Z",
+      "side": 1,
+      "message": "Ah, thanks, that makes sense!",
+      "parentUuid": "32703b76_83a5f18c",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e1f2f6_96a16d4c",
         "filename": "ui/compositor/scoped_layer_animation_settings.h",
         "patchSetId": 1
