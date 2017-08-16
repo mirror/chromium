@@ -119,11 +119,15 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
   // Public API function.
   void UpdateConfiguredPrinter(const Printer& printer) override {
     synced_printers_manager_->UpdateConfiguredPrinter(printer);
+    // Note that we will rebuild our lists when we get the observer
+    // callback from synced_printers_manager_.
   }
 
   // Public API function.
   void RemoveConfiguredPrinter(const std::string& printer_id) override {
     synced_printers_manager_->RemoveConfiguredPrinter(printer_id);
+    // Note that we will rebuild our lists when we get the observer
+    // callback from synced_printers_manager_.
   }
 
   // Public API function.

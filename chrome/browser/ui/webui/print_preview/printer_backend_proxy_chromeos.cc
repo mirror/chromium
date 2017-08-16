@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/print_preview/printer_backend_proxy.h"
 
 #include <memory>
+#include <unordered_set>
 #include <vector>
 
 #include "base/bind_helpers.h"
@@ -15,10 +16,9 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
+#include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
-#include "chrome/browser/chromeos/printing/synced_printers_manager.h"
-#include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -31,6 +31,8 @@
 namespace printing {
 
 namespace {
+
+using chromeos::CupsPrintersManager;
 
 // Store the name used in CUPS, Printer#id in |printer_name|, the description
 // as the system_driverinfo option value, and the Printer#display_name in
@@ -71,8 +73,7 @@ void FetchCapabilities(std::unique_ptr<chromeos::Printer> printer,
 class PrinterBackendProxyChromeos : public PrinterBackendProxy {
  public:
   explicit PrinterBackendProxyChromeos(Profile* profile)
-      : prefs_(chromeos::SyncedPrintersManagerFactory::GetForBrowserContext(
-            profile)),
+      : printers_manager_(CupsPrintersManager::Create(profile)),
         printer_configurer_(chromeos::PrinterConfigurer::Create(profile)),
         weak_factory_(this) {
     // Construct the CupsPrintJobManager to listen for printing events.
@@ -97,8 +98,19 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
     PrinterList printer_list;
-    AddPrintersToList(prefs_->GetConfiguredPrinters(), &printer_list);
-    AddPrintersToList(prefs_->GetEnterprisePrinters(), &printer_list);
+    AddPrintersToList(
+        printers_manager_->GetPrinters(CupsPrintersManager::kConfigured),
+        &printer_list);
+    AddPrintersToList(
+        printers_manager_->GetPrinters(CupsPrintersManager::kEnterprise),
+        &printer_list);
+    const std::vector<chromeos::Printer> automatic_printers =
+        printers_manager_->GetPrinters(CupsPrintersManager::kAutomatic);
+    automatic_printer_ids_.clear();
+    for (const auto& printer : automatic_printers) {
+      automatic_printer_ids_.insert(printer.id());
+    }
+    AddPrintersToList(automatic_printers, &printer_list);
 
     content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
                                      base::Bind(cb, printer_list));
@@ -110,7 +122,7 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
     std::unique_ptr<chromeos::Printer> printer =
-        prefs_->GetPrinter(printer_name);
+        printers_manager_->GetPrinter(printer_name);
     if (!printer) {
       // If the printer was removed, the lookup will fail.
       content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
@@ -123,7 +135,7 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
                               printer->GetProtocol(),
                               chromeos::Printer::kProtocolMax);
 
-    if (prefs_->IsConfigurationCurrent(*printer)) {
+    if (printers_manager_->IsPrinterInstalled(*printer)) {
       // Skip setup if the printer is already installed.
       HandlePrinterSetup(std::move(printer), cb, chromeos::kSuccess);
       return;
@@ -143,14 +155,22 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
     switch (result) {
-      case chromeos::PrinterSetupResult::kSuccess:
+      case chromeos::PrinterSetupResult::kSuccess: {
         VLOG(1) << "Printer setup successful for " << printer->id()
                 << " fetching properties";
-        prefs_->PrinterInstalled(*printer);
+        auto it = automatic_printer_ids_.find(printer->id());
+        if (it != automatic_printer_ids_.end()) {
+          // If we got this printer automatically and it's not saved yet, save
+          // it now that we've used it.
+          printers_manager_->UpdateConfiguredPrinter(*printer);
+          automatic_printer_ids_.erase(it);
+        }
+        printers_manager_->PrinterInstalled(*printer);
 
         // fetch settings on the blocking pool and invoke callback.
         FetchCapabilities(std::move(printer), cb);
         return;
+      }
       case chromeos::PrinterSetupResult::kPpdNotFound:
         LOG(WARNING) << "Could not find PPD.  Check printer configuration.";
         // Prompt user to update configuration.
@@ -177,7 +197,12 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
     cb.Run(nullptr);
   }
 
-  chromeos::SyncedPrintersManager* prefs_;
+  // Ids of printers which are available but have not yet been added
+  // to the user's preferences.  If one of these printers is used,
+  // we'll add it to user preferences at the time of use.
+  std::unordered_set<std::string> automatic_printer_ids_;
+
+  std::unique_ptr<CupsPrintersManager> printers_manager_;
   scoped_refptr<chromeos::PpdProvider> ppd_provider_;
   std::unique_ptr<chromeos::PrinterConfigurer> printer_configurer_;
   base::WeakPtrFactory<PrinterBackendProxyChromeos> weak_factory_;
