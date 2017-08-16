@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "73d6a7d9_046dfca4",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:14:27Z",
+      "side": 1,
+      "message": "In the end, it comes to the definition of the heuristic. I suspect we actually want to know when JS code change the title, even if there is no \u003ctitle\u003e tag?",
+      "parentUuid": "5eb40761_db27c649",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de62ff30_f92af8ce",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
