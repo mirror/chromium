@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/permissions/chooser_context_base.h"
 #include "chrome/browser/permissions/permission_manager.h"
@@ -226,6 +227,21 @@ std::unique_ptr<base::DictionaryValue> GetExceptionForPage(
   return exception;
 }
 
+std::string GetDisplayNameForExtension(
+    const GURL& url,
+    const extensions::ExtensionRegistry* extension_registry) {
+  if (extension_registry && url.SchemeIs(extensions::kExtensionScheme)) {
+    // For the extension scheme, the pattern must be a valid URL.
+    DCHECK(url.is_valid());
+    const extensions::Extension* extension =
+        extension_registry->GetExtensionById(
+            url.host(), extensions::ExtensionRegistry::EVERYTHING);
+    if (extension)
+      return extension->name();
+  }
+  return std::string();
+}
+
 // Takes |url| and converts it into an individual origin string or retrieves
 // name of the extension it belongs to.
 std::string GetDisplayNameForGURL(
@@ -235,17 +251,19 @@ std::string GetDisplayNameForGURL(
   if (origin.unique())
     return url.spec();
 
-  if (extension_registry && origin.scheme() == extensions::kExtensionScheme) {
-    const extensions::Extension* extension =
-        extension_registry->GetExtensionById(
-            origin.host(), extensions::ExtensionRegistry::EVERYTHING);
-    if (extension)
-      return extension->name();
-  }
+  std::string display_name =
+      GetDisplayNameForExtension(url, extension_registry);
+  if (!display_name.empty())
+    return display_name;
 
-  // Note that using Serialize() here will chop off any default port numbers
-  // which may be confusing to users.
-  return origin.Serialize();
+  // Note that using Serialize() here will chop off default port numbers and
+  // percent encode the origin. To hide the latter from users, decode it again.
+  display_name = origin.Serialize();
+  url::RawCanonOutputT<base::char16> decoded_display_name;
+  url::DecodeURLEscapeSequences(display_name.c_str(), display_name.length(),
+                                &decoded_display_name);
+  return base::UTF16ToASCII(base::string16(decoded_display_name.data(),
+                                           decoded_display_name.length()));
 }
 
 // If the given |pattern| represents an individual origin or extension, retrieve
@@ -254,9 +272,10 @@ std::string GetDisplayNameForPattern(
     const ContentSettingsPattern& pattern,
     const extensions::ExtensionRegistry* extension_registry) {
   const GURL url(pattern.ToString());
-  url::Origin origin(url);
-  if (!origin.unique())
-    return GetDisplayNameForGURL(url, extension_registry);
+  const std::string extension_display_name =
+      GetDisplayNameForExtension(url, extension_registry);
+  if (!extension_display_name.empty())
+    return extension_display_name;
   return pattern.ToString();
 }
 
