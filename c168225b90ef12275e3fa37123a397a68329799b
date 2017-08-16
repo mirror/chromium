@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a12c205_6b2453d8",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-16T16:26:33Z",
+      "side": 1,
+      "message": "Is the cookie manager is specific to this context and different from other cookie managers that might be retrieved from other contexts?  Maybe a comment to that effect tho it seems to be implied by the comment at line 49.",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "c168225b90ef12275e3fa37123a397a68329799b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
