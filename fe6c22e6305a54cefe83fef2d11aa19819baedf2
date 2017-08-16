@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efb70368_c87f9dc7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T03:38:31Z",
+      "side": 1,
+      "message": "PrefetchRequestTestBase has methods that can fail/pass network requests.  Easier to form a complete failure, though.",
+      "parentUuid": "6af877a2_0fbf4bd1",
+      "revId": "fe6c22e6305a54cefe83fef2d11aa19819baedf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
