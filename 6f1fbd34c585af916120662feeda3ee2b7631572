@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47184b21_01940c88",
+        "filename": "ui/message_center/message_center_style.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-16T04:51:36Z",
+      "side": 1,
+      "message": "Sorry, I would like to do this in another CL then. This constant is referenced by number of files.",
+      "parentUuid": "661fb006_1c7c1b82",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "164ab5e5_eea961fc",
         "filename": "ui/message_center/views/notification_header_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3e99dd_ccc413b6",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-16T04:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "164ab5e5_eea961fc",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a7bbcba_f4959c08",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-16T04:51:36Z",
+      "side": 1,
+      "message": "Wrote TODO for this. There are some other contradicting constants, so I would refactor them after MD notification transition is finished.",
+      "parentUuid": "073a8b9d_3f60eae6",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bee8d91_7babc695",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a03cad8_2a7f1498",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-16T04:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bee8d91_7babc695",
+      "revId": "6f1fbd34c585af916120662feeda3ee2b7631572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
