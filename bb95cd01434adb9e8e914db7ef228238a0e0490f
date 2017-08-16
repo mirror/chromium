@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7559cfc0_6eeac875",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "Might be worth commenting here that this can\u0027t be a simple WaitForWorkersIdleForTesting(workers_.size()) because we need to acquire lock_ to get workers_.size(). It\u0027s a tempting optimization.",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 35
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970b0b24_0bf9d564",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "Maybe OnReturnNoWorkAndSetIdle()?",
+      "range": {
+        "startLine": 593,
+        "startChar": 59,
+        "endLine": 593,
+        "endChar": 73
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499e5060_3b66f2a6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "Should we just call MaintainAtLeastOneIdleWorker here()?",
+      "range": {
+        "startLine": 685,
+        "startChar": 2,
+        "endLine": 687,
+        "endChar": 53
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c15cbe_a912e89c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "Alternatively:\nif (workers_.size() \u003c\u003d worker_capacity_)\n  return false;\n\nsize_t excess_workers \u003d workers_.size() - worker_capacity_\nreturn idle_workers_stack_.Size() \u003c excess_workers",
+      "range": {
+        "startLine": 771,
+        "startChar": 0,
+        "endLine": 772,
+        "endChar": 37
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0554e4c_0e8957ad",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "Nit: All",
+      "range": {
+        "startLine": 778,
+        "startChar": 11,
+        "endLine": 778,
+        "endChar": 12
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c14721_9cc8ad2f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "over worker capacity.",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 25
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4525a427_6330f38d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "Maybe ShouldSuspendMoreWorkers()?",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 13
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55154cd8_18e135bc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-16T18:02:52Z",
+      "side": 1,
+      "message": "What does suspension mean for a worker? How is this different from going to idle?\nMaybe ShouldIdleMoreWorkers() is more appropriate?",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 20
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
