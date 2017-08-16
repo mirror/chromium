@@ -548,6 +548,7 @@ void AppListView::EndDrag(const gfx::Point& location) {
     return;
 
   DraggingLayout();
+  app_list_main_view_->UpdateBottomFadeout(0);
   // Change the app list state based on where the drag ended. If fling velocity
   // was over the threshold, snap to the next state in the direction of the
   // fling.
@@ -1045,6 +1046,7 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   }
 
   DraggingLayout();
+  app_list_main_view_->UpdateBottomFadeout(y_position_in_screen);
 }
 
 PaginationModel* AppListView::GetAppsPaginationModel() const {
