@@ -70,6 +70,30 @@
       "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6db0aba_e2eeaa45",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-16T06:41:53Z",
+      "side": 1,
+      "message": "|diskFileSystemType| has been added in CL:605108\n\nhttps://chromium-review.googlesource.com/c/605108/7/chrome/common/extensions/api/file_manager_private.idl\n\nhttps://chromium-review.googlesource.com/c/605108/7/chrome/browser/chromeos/extensions/file_manager/private_api_util.cc\n\nThis CL contains |diskFileSystemType| to satisfy closureJS compiler and therefore I was able to complete UI part of the solution without any later interventions, when merging to the main branch will occur. I am sorry for the confusion.",
+      "parentUuid": "175edd44_50bc64fe",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
