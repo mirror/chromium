@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc8c07f_cf1efd0f",
+        "filename": "services/resource_coordinator/public/interfaces/tracing/tracing.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T17:18:06Z",
+      "side": 1,
+      "message": "nit: Remove white space at end of line.",
+      "revId": "1bd83f29402708e6d46cba6ee974c0f258fe8c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
