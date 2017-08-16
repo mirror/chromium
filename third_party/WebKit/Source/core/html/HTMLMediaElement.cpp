@@ -1233,8 +1233,10 @@ void HTMLMediaElement::StartPlayerLoad() {
     return;
   }
 
-  web_media_player_ =
-      frame->Client()->CreateWebMediaPlayer(*this, source, this);
+  WebLayerTreeView* layer_tree_view =
+      frame->GetPage()->GetChromeClient().GetWebLayerTreeView(frame);
+  web_media_player_ = frame->Client()->CreateWebMediaPlayer(*this, source, this,
+                                                            layer_tree_view);
   if (!web_media_player_) {
     MediaLoadingFailed(WebMediaPlayer::kNetworkStateFormatError,
                        BuildElementErrorMessage(
