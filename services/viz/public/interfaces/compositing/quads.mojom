@@ -4,7 +4,7 @@
 
 module viz.mojom;
 
-import "cc/ipc/shared_quad_state.mojom";
+import "services/viz/public/interfaces/compositing/shared_quad_state.mojom";
 import "cc/ipc/surface_id.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 import "ui/gfx/mojo/color_space.mojom";
