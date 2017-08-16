@@ -46,6 +46,30 @@
       "revId": "792394da3cb685090b54ba197acdb8a644713c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36efacb_1eda3da1",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T02:31:23Z",
+      "side": 1,
+      "message": "Changed to GetCookieManager.  Beyond the issue of creation vs. get, I don\u0027t feel like there\u0027s anything to document that isn\u0027t in the method name.",
+      "parentUuid": "c643e86c_b3d3908e",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "792394da3cb685090b54ba197acdb8a644713c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
