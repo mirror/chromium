@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "257ca6c3_fc63b90d",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-16T15:11:51Z",
+      "side": 0,
+      "message": "OK, thank you for the detailed description of your perspective!\n\nMy main motivation to ask about this was a feeling that making AutoCompleteActionPredictor better is outside of the scope this change (if I understand the purpose correctly). So in such case I lean towards not touching unrelated bad designs to avoid risks in spending a lot of time figuring out what\u0027s best for those designs.\n\nJust to clarify where I stand:\n1. symmetry is good, but not required\n2. unittests are whitebox\n3. thanks for reminding about test fixture lifetime, I forgot about it (again)\n4. I inherited this code with no good idea about the contract of calling KeyedService\u0027s Shutdown() - thanks, today I learned something\n\nThese [1-4] leans me towards what you did - moving Shutdown() to the d-tor. Thanks for that!\n\nAnother round of thanks and applause for attempts to leave code in a better place than it was!!",
+      "parentUuid": "7848277d_45a4f639",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 27
+      },
+      "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fafe089_54adfebb",
         "filename": "chrome/browser/safe_browsing/incident_reporting/last_download_finder_unittest.cc",
         "patchSetId": 13
