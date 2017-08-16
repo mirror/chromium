@@ -177,6 +177,24 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "684639d9_ab8255a9",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-16T20:21:06Z",
+      "side": 1,
+      "message": "Ping.. \n\nScale2D seems to use only the scale factor on diagonal lines, which does not compute rotation factor. Is there any way to get the scale factor other than doing the calculation in this CL then?",
+      "parentUuid": "7de11db7_d6537a30",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
