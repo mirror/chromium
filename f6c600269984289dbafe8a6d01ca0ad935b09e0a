@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "451e0752_8b5cd39c",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T22:32:51Z",
+      "side": 1,
+      "message": "re: pkasting: did ToRoundedInt and static_cast\n\nre: pkasting \u0026 msw:\nThere can\u0027t be infinite loops.  In lines 1488-1500, we always shrink the gap between lo and hi by at least 1.  (That\u0027s the case in the current checked-in code as well.)  If the valid range shrinks by at least 1 at every step, lo and hi are guaranteed to converge and the loop terminates.\n\nI\u0027m not sure what else you want me to test.  I can see your concerns about weird thinning ligatures and mixed rtl, and I know those concerns are valid, yet this changelist doesn\u0027t the fundamental logic in this binary search at all.  If this was a problem before (adding additional characters causes shorter strings), then it\u0027s still a problem now.  If it wasn\u0027t a problem before, then it\u0027s not a problem now.  The nature of binary search assumes that input is ordered, i.e., i\u003cj implies a[i] \u003c\u003d a[j].",
+      "parentUuid": "b9abcfd4_e9ee951f",
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2688a112_4d2377b5",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 1
@@ -74,6 +92,48 @@
       "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee063d2_4b38c32b",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T22:32:51Z",
+      "side": 1,
+      "message": "\u003e Nit: Shouldn\u0027t need \u003csize_t\u003es here.  Also consider using cc:MathUtil::ClampToRange() instead.\n\nSwitched to ClampToRange.",
+      "parentUuid": "2688a112_4d2377b5",
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f07e4628_bfdb3e01",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T22:32:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary.  See above comment about always reducing the range of lo to hi by one each step.  If you really want, I can add a temporarily variable and keep track of it though...",
+      "parentUuid": "fca39171_e6fb9c71",
+      "range": {
+        "startLine": 1448,
+        "startChar": 4,
+        "endLine": 1448,
+        "endChar": 9
+      },
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
