@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
@@ -54,6 +55,8 @@ public class SelectableListLayout<E>
         extends FrameLayout implements DisplayStyleObserver, SelectionObserver<E> {
 
     private static final int WIDE_DISPLAY_MIN_PADDING_DP = 16;
+
+    private final boolean mUseModernDesign;
 
     private Adapter<RecyclerView.ViewHolder> mAdapter;
     private ViewStub mToolbarStub;
@@ -104,6 +107,7 @@ public class SelectableListLayout<E>
 
     public SelectableListLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mUseModernDesign = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
     }
 
     @Override
@@ -204,6 +208,8 @@ public class SelectableListLayout<E>
         mToolbarShadow.init(
                 ApiCompatibilityUtils.getColor(getResources(), R.color.toolbar_shadow_color),
                 FadingShadow.POSITION_TOP);
+        if (mUseModernDesign) mToolbarShadow.setAlpha(0);
+
         mShowShadowOnSelection = showShadowOnSelection;
         delegate.addObserver(this);
         setToolbarShadowVisibility();
@@ -284,10 +290,6 @@ public class SelectableListLayout<E>
      */
     public SelectableListToolbar<E> detachToolbarView() {
         removeView(mToolbar);
-
-        // The top margin for shadow needs to be removed now that the toolbar has been removed.
-        ((MarginLayoutParams) mToolbarShadow.getLayoutParams()).topMargin = 0;
-
         return mToolbar;
     }
 
@@ -329,8 +331,14 @@ public class SelectableListLayout<E>
     private void setToolbarShadowVisibility() {
         if (mToolbar == null || mRecyclerView == null) return;
 
-        boolean showShadow = mRecyclerView.canScrollVertically(-1) || mToolbar.isSearching()
-                || (mToolbar.getSelectionDelegate().isSelectionEnabled() && mShowShadowOnSelection);
+        boolean showShadow;
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            showShadow = mToolbar.isSearching() && !mUseModernDesign;
+        } else {
+            showShadow = mRecyclerView.canScrollVertically(-1) || mToolbar.isSearching()
+                    || (mToolbar.getSelectionDelegate().isSelectionEnabled()
+                               && mShowShadowOnSelection);
+        }
         mToolbarShadow.setVisibility(showShadow ? View.VISIBLE : View.GONE);
     }
 

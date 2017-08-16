@@ -19,7 +19,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.widget.MaterialProgressBar;
 import org.chromium.chrome.browser.widget.TintedImageButton;
-import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.ui.UiUtils;
@@ -35,6 +34,8 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     private final int mIconBackgroundColor;
     private final int mIconBackgroundColorSelected;
     private final ColorStateList mIconForegroundColorList;
+    private final ColorStateList mCheckedIconForegroundColorList;
+    private final int mIconBackgroundResId;
 
     private DownloadHistoryItemWrapper mItem;
     private int mIconResId;
@@ -43,7 +44,6 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
 
     // Controls common to completed and in-progress downloads.
     private LinearLayout mLayoutContainer;
-    private TintedImageView mIconView;
 
     // Controls for completed downloads.
     private View mLayoutCompleted;
@@ -68,14 +68,22 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         mIconBackgroundColor = DownloadUtils.getIconBackgroundColor(context);
         mIconBackgroundColorSelected =
                 ApiCompatibilityUtils.getColor(context.getResources(), R.color.google_grey_600);
-        mIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
         mIconSize = getResources().getDimensionPixelSize(R.dimen.downloads_item_icon_size);
+        mCheckedIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
+
+        mIconBackgroundResId = R.drawable.selectable_item_icon_modern_bg;
+
+        if (mUseModernDesign) {
+            mIconForegroundColorList = ApiCompatibilityUtils.getColorStateList(
+                    context.getResources(), R.color.dark_mode_tint);
+        } else {
+            mIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
+        }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mIconView = (TintedImageView) findViewById(R.id.icon_view);
         mProgressView = (MaterialProgressBar) findViewById(R.id.download_progress_view);
 
         mLayoutContainer = (LinearLayout) findViewById(R.id.layout_container);
@@ -239,18 +247,31 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         updateIconView();
     }
 
-    private void updateIconView() {
+    @Override
+    protected void updateIconView() {
         if (isChecked()) {
-            mIconView.setBackgroundColor(mIconBackgroundColorSelected);
+            if (mUseModernDesign) {
+                mIconView.setBackgroundResource(mIconBackgroundResId);
+                mIconView.getBackground().setLevel(
+                        getResources().getInteger(R.integer.selectable_item_level_selected));
+            } else {
+                mIconView.setBackgroundColor(mIconBackgroundColorSelected);
+            }
             mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
-            mIconView.setTint(mIconForegroundColorList);
+            mIconView.setTint(mCheckedIconForegroundColorList);
         } else if (mThumbnailBitmap != null) {
             assert !mThumbnailBitmap.isRecycled();
             mIconView.setBackground(null);
             mIconView.setImageBitmap(mThumbnailBitmap);
             mIconView.setTint(null);
         } else {
-            mIconView.setBackgroundColor(mIconBackgroundColor);
+            if (mUseModernDesign) {
+                mIconView.setBackgroundResource(mIconBackgroundResId);
+                mIconView.getBackground().setLevel(
+                        getResources().getInteger(R.integer.selectable_item_level_default));
+            } else {
+                mIconView.setBackgroundColor(mIconBackgroundColor);
+            }
             mIconView.setImageResource(mIconResId);
             mIconView.setTint(mIconForegroundColorList);
         }
