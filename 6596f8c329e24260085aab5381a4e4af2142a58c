@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8d11a58_02cecfcf",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:05:48Z",
+      "side": 1,
+      "message": "I have one other thought here. Why do you need to change ash at all? Could ash always return -1 and instead make Chrome register these shortcuts? Chrome (chrome/browser/ui/views/accelerator_table.cc) explicitly doesn\u0027t register these accelerators for chromeos. That was done here for this patch: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d123856 . I suspect the way 123856 was fixed doesn\u0027t matter anymore, but I could be wrong.",
+      "parentUuid": "7c086556_1734cfc0",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 79
+      },
+      "revId": "6596f8c329e24260085aab5381a4e4af2142a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3fac8a3_431e2f41",
         "filename": "ash/accelerators/accelerator_controller.h",
         "patchSetId": 5
