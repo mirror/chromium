@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ad98151_95d36930",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "The scope I meant was which platforms it was disabled on. I made that clearer.",
+      "parentUuid": "64d90b74_ac872914",
+      "range": {
+        "startLine": 340,
+        "startChar": 25,
+        "endLine": 340,
+        "endChar": 30
+      },
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0edfab7_9487c5c3",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "90877a29_0ecd3893",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0edfab7_9487c5c3",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 60
+      },
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ca0117_b5a57445",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "105caadd06befed5fe797325f214a7403040f4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d2b24d_26715d8c",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5ca0117_b5a57445",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0b815bdb_ac9dc78e",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9641566_057e092c",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f2001f3_a6a0b14a",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "66fba960_2ebe7b64",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f2001f3_a6a0b14a",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "171ce9a3_88abb80a",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -110,6 +212,24 @@
       "writtenOn": "2017-08-04T19:54:52Z",
       "side": 1,
       "message": "Maybe mentioning something about using code search for finding out \"bar.py\" containing \"bar.benchmark_baz\" benchmark",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4aa9c4d_70ec331a",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "I did this up above:\n\nExample:\nOn platform P, story foo is failing on benchmark bar. On the same benchmark on\nplatform Q, story baz is failing. To disable these stories, go\nto where benchmark bar is declared. Using codesearch, you can look for bar.py...",
+      "parentUuid": "171ce9a3_88abb80a",
       "revId": "105caadd06befed5fe797325f214a7403040f4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "ab7aaf50_0a230621",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ed16795_732d730c",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba15ef9_cfdfb8d6",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -144,6 +282,24 @@
       "writtenOn": "2017-08-04T20:47:11Z",
       "side": 1,
       "message": "One thing that\u0027s not clear to me: if the same story is failing for different reasons (and therefore has different bug IDs), should we have multiple DisableStory lines?",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361fd65d_7d76c81a",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Clarified that a bit.",
+      "parentUuid": "5ba15ef9_cfdfb8d6",
       "revId": "105caadd06befed5fe797325f214a7403040f4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "04404bfb_5c9089d1",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b422420_1a7d31ed",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e39eaac_dfac17d0",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "bc65aa89_577d7877",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e39eaac_dfac17d0",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "547816c6_0e1ded1f",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -198,6 +390,24 @@
       "revId": "105caadd06befed5fe797325f214a7403040f4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da74497c_9b3d38cc",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T22:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "547816c6_0e1ded1f",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
