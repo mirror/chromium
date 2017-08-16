@@ -5,6 +5,8 @@
 #ifndef WebFrameWidgetBase_h
 #define WebFrameWidgetBase_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "core/clipboard/DataObject.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -25,6 +27,7 @@ class WebLayer;
 class WebLayerTreeView;
 class WebViewImpl;
 class HitTestResult;
+struct WebActiveWheelFlingParameters;
 struct WebPoint;
 
 class CORE_EXPORT WebFrameWidgetBase
@@ -51,6 +54,14 @@ class CORE_EXPORT WebFrameWidgetBase
   virtual CompositorAnimationHost* AnimationHost() const = 0;
 
   virtual HitTestResult CoreHitTestResultAt(const WebPoint&) = 0;
+
+  // Fling operations.
+  virtual bool EndActiveFlingAnimation() = 0;
+  virtual WebInputEventResult HandleGestureFlingEvent(
+      const WebGestureEvent&) = 0;
+  virtual void UpdateGestureAnimation(double last_frame_time_monotonic) = 0;
+  virtual void TransferActiveWheelFlingAnimation(
+      const WebActiveWheelFlingParameters&) = 0;
 
   // WebFrameWidget implementation.
   WebDragOperation DragTargetDragEnter(const WebDragData&,

@@ -524,6 +524,7 @@ void RenderWidgetHostViewEventHandler::OnGestureEvent(ui::GestureEvent* event) {
 
   blink::WebGestureEvent gesture =
       ui::MakeWebGestureEvent(*event, base::Bind(&GetScreenLocationFromEvent));
+
   if (event->type() == ui::ET_GESTURE_TAP_DOWN) {
     // Webkit does not stop a fling-scroll on tap-down. So explicitly send an
     // event to stop any in-progress flings.
