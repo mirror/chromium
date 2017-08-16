@@ -770,8 +770,9 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
       child_data.bfc_offset_estimate.block_offset;
 
   // 1. Position all pending floats to a temporary space.
+  // TODO FIX
   RefPtr<NGConstraintSpace> tmp_space =
-      NGConstraintSpaceBuilder(&child_space)
+      NGConstraintSpaceBuilder(child_space.WritingMode())
           .SetIsNewFormattingContext(false)
           .ToConstraintSpace(child_space.WritingMode());
   PositionFloats(child_bfc_offset_estimate, child_bfc_offset_estimate,
@@ -916,7 +917,7 @@ NGBoxStrut NGBlockLayoutAlgorithm::CalculateMargins(NGLayoutInputNode child) {
   const ComputedStyle& child_style = child.Style();
 
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpaceBuilder(MutableConstraintSpace())
+      NGConstraintSpaceBuilder(ConstraintSpace().WritingMode())
           .SetAvailableSize(child_available_size_)
           .SetPercentageResolutionSize(child_percentage_size_)
           .ToConstraintSpace(
@@ -944,7 +945,8 @@ RefPtr<NGConstraintSpace> NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
     const NGLayoutInputNode child,
     const NGInflowChildData& child_data,
     const WTF::Optional<NGLogicalOffset> floats_bfc_offset) {
-  NGConstraintSpaceBuilder space_builder(MutableConstraintSpace());
+  // SET EXCLUSION SPACE.
+  NGConstraintSpaceBuilder space_builder(ConstraintSpace().WritingMode());
   space_builder.SetAvailableSize(child_available_size_)
       .SetPercentageResolutionSize(child_percentage_size_);
 
