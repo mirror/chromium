@@ -69,6 +69,30 @@
       "revId": "8b23c9e6b6b299b211e27e36ee1d670ebd436492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57616f1d_71322d27",
+        "filename": "ui/aura/client/window_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-16T18:19:08Z",
+      "side": 1,
+      "message": "Yes, this should not be here. \"System UI\" is a shell/ash level concept, not aura level. Let\u0027s discuss offline.",
+      "parentUuid": "3ea8cc47_b37549bd",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "8b23c9e6b6b299b211e27e36ee1d670ebd436492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
