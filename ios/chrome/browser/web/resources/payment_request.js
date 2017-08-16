@@ -186,11 +186,11 @@ var SerializedPaymentResponse;
   __gCrWeb['paymentRequestManager'] = __gCrWeb.paymentRequestManager;
 
   /**
-   * Wether the origin is secure. The default is true unless it is set to false.
-   * If false, PaymentRequest constructor throws a SecurityError DOMException.
+   * Wether the origin is secure. If false, PaymentRequest constructor throws a
+   * SecurityError DOMException.
    * @type {boolean}
    */
-  __gCrWeb['paymentRequestManager'].isContextSecure = true;
+  __gCrWeb['paymentRequestManager'].isContextSecure = undefined;
 
   /**
    * The PaymentRequest object, if any. This object is provided by the page and
@@ -523,7 +523,17 @@ window.PaymentRequest = function(methodData, details, opt_options) {
         'SecurityError');
   }
 
-  if (!__gCrWeb['paymentRequestManager'].isContextSecure) {
+  // https://w3c.github.io/webappsec-secure-contexts/#is-origin-trustworthy
+  var isOriginPotentiallyTrustworthy = window.location.origin !== 'null' &&
+      (window.location.protocol === 'https:' ||
+          window.location.hostname === '127.0.0.1' ||
+          window.location.hostname === '::1' ||
+          window.location.hostname === 'localhost' ||
+          window.location.protocol === 'file:');
+
+  if (__gCrWeb['paymentRequestManager'].isContextSecure === false ||
+      (__gCrWeb['paymentRequestManager'].isContextSecure === undefined &&
+          !isOriginPotentiallyTrustworthy)) {
     throw new DOMException(
         'Failed to construct \'PaymentRequest\': Must be in a secure context',
         'SecurityError');
