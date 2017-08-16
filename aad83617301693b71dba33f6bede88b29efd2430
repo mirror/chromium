@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a727fc1_27ea1299",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T02:13:31Z",
+      "side": 1,
+      "message": "what\u0027s \"it\" here? \n\nbecause module scripts are not supported yet?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40eb16d6_68ae466b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T02:13:31Z",
+      "side": 1,
+      "message": "add override or final?",
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00573b1_6406f5f1",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T02:13:31Z",
+      "side": 1,
+      "message": "the given",
+      "range": {
+        "startLine": 33,
+        "startChar": 15,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de43dc8_4b608f0b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T02:13:31Z",
+      "side": 1,
+      "message": "Could use more context:\n\"as a classic script (as opposed to a module script).\"\n\nLink: https://html.spec.whatwg.org/multipage/webappapis.html#classic-script",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "aad83617301693b71dba33f6bede88b29efd2430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
