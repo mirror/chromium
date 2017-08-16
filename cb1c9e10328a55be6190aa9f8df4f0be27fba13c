@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c78a2fe4_cb5799f6",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T20:54:56Z",
+      "side": 1,
+      "message": "nit:  TODO(caseq).  This is not a promise you\u0027ll do it, just a pointer for more info.",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "cb1c9e10328a55be6190aa9f8df4f0be27fba13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c0237a_4425d167",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T20:54:56Z",
+      "side": 1,
+      "message": "include ref_counted.h?",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "cb1c9e10328a55be6190aa9f8df4f0be27fba13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353755fd_98a3a3a9",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T20:54:56Z",
+      "side": 1,
+      "message": "include \u003cstring\u003e",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "cb1c9e10328a55be6190aa9f8df4f0be27fba13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f60b4c7_a345df7d",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T20:54:56Z",
+      "side": 1,
+      "message": "FIXME -\u003e TODO (Also should probably capitalize Make)",
+      "range": {
+        "startLine": 226,
+        "startChar": 32,
+        "endLine": 226,
+        "endChar": 33
+      },
+      "revId": "cb1c9e10328a55be6190aa9f8df4f0be27fba13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
