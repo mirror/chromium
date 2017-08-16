@@ -644,7 +644,6 @@ void MenuItemView::Init(MenuItemView* parent,
                         MenuDelegate* delegate) {
   delegate_ = delegate;
   controller_ = NULL;
-  canceled_ = false;
   parent_menu_item_ = parent;
   type_ = type;
   selected_ = false;
@@ -715,7 +714,7 @@ const gfx::FontList& MenuItemView::GetFontList() const {
 
 void MenuItemView::AddEmptyMenus() {
   DCHECK(HasSubmenu());
-  if (!submenu_->has_children()) {
+  if (!submenu_->HasVisibleChildren()) {
     submenu_->AddChildViewAt(new EmptyMenuMenuItem(this), 0);
   } else {
     for (int i = 0, item_count = submenu_->GetMenuItemCount(); i < item_count;

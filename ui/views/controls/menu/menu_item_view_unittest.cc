@@ -7,8 +7,12 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/strings/grit/ui_strings.h"
 #include "ui/views/controls/menu/submenu_view.h"
-#include "ui/views/view.h"
+
+namespace views {
+namespace test {
 
 namespace {
 
@@ -23,15 +27,21 @@ class SquareView : public views::View {
   int GetHeightForWidth(int width) const override { return width; }
 };
 
+}  // namespace
+
 // A MenuItemView implementation with a public destructor (so we can clean up
 // in tests).
-class TestMenuItemView : public views::MenuItemView {
+class TestMenuItemView : public MenuItemView {
  public:
-  TestMenuItemView() : views::MenuItemView(NULL) {}
+  TestMenuItemView() : MenuItemView(NULL) {}
   ~TestMenuItemView() override {}
+
+  void AddEmptyMenusForTest() { AddEmptyMenus(); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TestMenuItemView);
 };
 
-}  // namespace
 
 TEST(MenuItemViewUnitTest, TestMenuItemViewWithFlexibleWidthChild) {
   TestMenuItemView root_menu;
@@ -70,3 +80,60 @@ TEST(MenuItemViewUnitTest, TestMenuItemViewWithFlexibleWidthChild) {
   EXPECT_EQ(label_size.height() + flex_height,
             submenu->GetPreferredSize().height());
 }
+
+// Tests that the top-level menu item with hidden children should contain the
+// "(empty)" menu item to display.
+TEST(MenuItemViewUnitTest, TestEmptyTopLevelWhenAllItemsAreHidden) {
+  TestMenuItemView root_menu;
+  views::MenuItemView* item1 =
+      root_menu.AppendMenuItemWithLabel(1, base::ASCIIToUTF16("item 1"));
+  views::MenuItemView* item2 =
+      root_menu.AppendMenuItemWithLabel(2, base::ASCIIToUTF16("item 2"));
+
+  // Set menu items to hidden.
+  item1->SetVisible(false);
+  item2->SetVisible(false);
+
+  EXPECT_EQ(2, root_menu.GetSubmenu()->child_count());
+
+  // Adds any empty menu items to the menu, if needed.
+  root_menu.AddEmptyMenusForTest();
+
+  // Because all of the submenu's children are hidden, an empty menu item should
+  // have been added.
+  EXPECT_EQ(3, root_menu.GetSubmenu()->child_count());
+  EXPECT_EQ(
+      l10n_util::GetStringUTF16(IDS_APP_MENU_EMPTY_SUBMENU),
+      static_cast<MenuItemView*>(root_menu.GetSubmenu()->child_at(0))->title());
+}
+
+// Tests that submenu with hidden children should contain the "(empty)" menu
+// item to display.
+TEST(MenuItemViewUnitTest, TestEmptySubmenuWhenAllChildItemsAreHidden) {
+  TestMenuItemView root_menu;
+  MenuItemView* submenu =
+      root_menu.AppendSubMenu(1, base::ASCIIToUTF16("My Submenu"));
+  MenuItemView* child1 =
+      submenu->AppendMenuItemWithLabel(1, base::ASCIIToUTF16("submenu item 1"));
+  MenuItemView* child2 =
+      submenu->AppendMenuItemWithLabel(2, base::ASCIIToUTF16("submenu item 2"));
+
+  // Set submenu children to hidden.
+  child1->SetVisible(false);
+  child2->SetVisible(false);
+
+  EXPECT_EQ(2, submenu->GetSubmenu()->child_count());
+
+  // Adds any empty menu items to the menu, if needed.
+  root_menu.AddEmptyMenusForTest();
+
+  // Because all of the submenu's children are hidden, an empty menu item should
+  // have been added.
+  EXPECT_EQ(3, submenu->GetSubmenu()->child_count());
+  EXPECT_EQ(
+      l10n_util::GetStringUTF16(IDS_APP_MENU_EMPTY_SUBMENU),
+      static_cast<MenuItemView*>(submenu->GetSubmenu()->child_at(0))->title());
+}
+
+}  // namespace test
+}  // namespace views

@@ -100,6 +100,9 @@ class UI_BASE_EXPORT MenuModel {
   // Returns true if the menu item is visible.
   virtual bool IsVisibleAt(int index) const;
 
+  // Returns true if at least one of the menu model child items are hidden.
+  virtual bool IsMenuModelEmpty() const;
+
   // Returns the model for the submenu at the specified index.
   virtual MenuModel* GetSubmenuModelAt(int index) const = 0;
 

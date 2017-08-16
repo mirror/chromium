@@ -11,6 +11,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #import "ui/base/cocoa/menu_controller.h"
+#include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/events/test/cocoa_test_event_utils.h"
@@ -72,6 +73,48 @@ namespace {
 const int kTestLabelResourceId = IDS_APP_SCROLLBAR_CXMENU_SCROLLHERE;
 
 class MenuControllerTest : public CocoaTest {
+};
+
+class TestSimpleMenuModelVisibility : public SimpleMenuModel {
+ public:
+  TestSimpleMenuModelVisibility(SimpleMenuModel::Delegate* delegate)
+      : SimpleMenuModel(delegate) {}
+
+  bool IsVisibleAt(int index) const override {
+    return items_[ValidateItemIndex(index)].visible;
+  }
+
+  void SetVisibility(int command_id, bool visible) {
+    int index = SimpleMenuModel::GetIndexOfCommandId(command_id);
+    items_[ValidateItemIndex(index)].visible = visible;
+  }
+
+  void AddItem(int command_id, const base::string16& label) {
+    SimpleMenuModel::AddItem(command_id, label);
+    Item item = {true, command_id};
+    items_.push_back(item);
+  }
+
+  void AddSubMenuWithStringId(int command_id, int string_id, MenuModel* model) {
+    SimpleMenuModel::AddSubMenuWithStringId(command_id, string_id, model);
+    Item item = {true, command_id};
+    items_.push_back(item);
+  }
+
+ private:
+  int ValidateItemIndex(int index) const {
+    CHECK_GE(index, 0);
+    CHECK_LT(static_cast<size_t>(index), items_.size());
+    return index;
+  }
+
+  struct Item {
+    bool visible;
+    int command_id;
+  };
+
+  typedef std::vector<Item> ItemVector;
+  ItemVector items_;
 };
 
 // A menu delegate that counts the number of times certain things are called
@@ -289,6 +332,90 @@ TEST_F(MenuControllerTest, EmptySubmenu) {
   base::scoped_nsobject<MenuController> menu(
       [[MenuController alloc] initWithModel:&model useWithPopUpButtonCell:NO]);
   EXPECT_EQ([[menu menu] numberOfItems], 2);
+
+  // Inspect the submenu to ensure it has one item labeled "(empty)".
+  NSMenu* submenu = [[[menu menu] itemAtIndex:1] submenu];
+  EXPECT_TRUE(submenu);
+  EXPECT_EQ([submenu numberOfItems], 1);
+  NSMenuItem* item = [submenu itemAtIndex:0];
+
+  const std::string& expected_name = base::SysNSStringToUTF8([item title]);
+  const std::string& item_name = base::SysNSStringToUTF8(
+      l10n_util::GetNSString(IDS_APP_MENU_EMPTY_SUBMENU));
+  EXPECT_EQ(expected_name, item_name);
+}
+
+TEST_F(MenuControllerTest, EmptySubmenuWhenAllChildItemsAreHidden) {
+  Delegate delegate;
+  TestSimpleMenuModelVisibility model(&delegate);
+  model.AddItem(1, ASCIIToUTF16("one"));
+  TestSimpleMenuModelVisibility submodel(&delegate);
+  // Hide the two child menu items.
+  submodel.AddItem(2, ASCIIToUTF16("sub-one"));
+  submodel.SetVisibility(2, false);
+  submodel.AddItem(3, ASCIIToUTF16("sub-two"));
+  submodel.SetVisibility(3, false);
+  model.AddSubMenuWithStringId(4, kTestLabelResourceId, &submodel);
+
+  base::scoped_nsobject<MenuController> menu(
+      [[MenuController alloc] initWithModel:&model useWithPopUpButtonCell:NO]);
+  EXPECT_EQ([[menu menu] numberOfItems], 2);
+
+  // Inspect the submenu to ensure it has one item labeled "(empty)".
+  NSMenu* submenu = [[[menu menu] itemAtIndex:1] submenu];
+  EXPECT_TRUE(submenu);
+  EXPECT_EQ([submenu numberOfItems], 1);
+  NSMenuItem* item = [submenu itemAtIndex:0];
+
+  const std::string& expected_name = base::SysNSStringToUTF8([item title]);
+  const std::string& item_name = base::SysNSStringToUTF8(
+      l10n_util::GetNSString(IDS_APP_MENU_EMPTY_SUBMENU));
+  EXPECT_EQ(expected_name, item_name);
+}
+
+TEST_F(MenuControllerTest, HiddenSubmenu) {
+  // SimpleMenuModel posts a task that calls Delegate::MenuClosed. Create
+  // a MessageLoop for that purpose.
+  base::MessageLoopForUI message_loop;
+
+  // Create the model.
+  Delegate delegate;
+  TestSimpleMenuModelVisibility model(&delegate);
+  model.AddItem(1, ASCIIToUTF16("one"));
+  TestSimpleMenuModelVisibility submodel(&delegate);
+  submodel.AddItem(2, ASCIIToUTF16("sub-one"));
+  submodel.AddItem(3, ASCIIToUTF16("sub-two"));
+  // Set the submenu to be hidden.
+  model.AddSubMenuWithStringId(4, kTestLabelResourceId, &submodel);
+  model.SetVisibility(4, false);
+
+  // Create the controller.
+  base::scoped_nsobject<MenuController> menu(
+      [[MenuController alloc] initWithModel:&model useWithPopUpButtonCell:NO]);
+  EXPECT_EQ([[menu menu] numberOfItems], 2);
+  delegate.menu_to_close_ = [menu menu];
+
+  // Show the menu.
+  CFRunLoopPerformBlock(CFRunLoopGetCurrent(), NSEventTrackingRunLoopMode, ^{
+    EXPECT_TRUE([menu isMenuOpen]);
+    // Ensure that the submenu is hidden.
+    NSMenuItem* item = [[menu menu] itemAtIndex:1];
+    EXPECT_TRUE([item isHidden]);
+  });
+
+  // Pop open the menu, which will spin an event-tracking run loop.
+  [NSMenu popUpContextMenu:[menu menu]
+                 withEvent:cocoa_test_event_utils::RightMouseDownAtPoint(
+                               NSZeroPoint)
+                   forView:[test_window() contentView]];
+
+  EXPECT_FALSE([menu isMenuOpen]);
+
+  // Pump the task that notifies the delegate.
+  base::RunLoop().RunUntilIdle();
+
+  // Expect that the delegate got notified properly.
+  EXPECT_TRUE(delegate.did_close_);
 }
 
 TEST_F(MenuControllerTest, PopUpButton) {

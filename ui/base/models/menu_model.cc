@@ -6,6 +6,10 @@
 
 namespace ui {
 
+bool MenuModel::IsMenuModelEmpty() const {
+  return false;
+}
+
 bool MenuModel::IsVisibleAt(int index) const {
   return true;
 }

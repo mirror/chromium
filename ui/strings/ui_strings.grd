@@ -142,7 +142,6 @@ need to be translated for each locale.-->
   </translations>
   <release seq="1" allow_pseudo="false">
     <messages fallback_to_english="true">
-
       <!-- time format -->
       <message name="IDS_TIME_SECS"
                desc="Use an abbreviated word for second(s). [ICU Syntax]">

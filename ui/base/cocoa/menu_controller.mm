@@ -18,6 +18,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/text_elider.h"
+#include "ui/strings/grit/ui_strings.h"
 
 NSString* const kMenuControllerMenuWillOpenNotification =
     @"MenuControllerMenuWillOpen";
@@ -42,6 +43,11 @@ NSString* const kMenuControllerMenuDidCloseNotification =
 // Called by the posted task to selected an item during menu fade out.
 // |uiEventFlags| are the ui::EventFlags captured from the triggering NSEvent.
 - (void)itemSelected:(id)sender uiEventFlags:(int)uiEventFlags;
+
+// Called when an empty submenu is created. Because empty menus are odd, this
+// inserts an menu item labeled "(empty)" into the submenu. Matches Windows
+// behavior.
+- (void)tagEmptyMenu:(NSMenu*)menu;
 @end
 
 @interface ResponsiveNSMenuItem : NSMenuItem
@@ -144,13 +150,19 @@ NSString* const kMenuControllerMenuDidCloseNotification =
     [item setImage:icon.ToNSImage()];
 
   ui::MenuModel::ItemType type = model->GetTypeAt(index);
-  if (type == ui::MenuModel::TYPE_SUBMENU) {
-    // Recursively build a submenu from the sub-model at this index.
+  if (type == ui::MenuModel::TYPE_SUBMENU && model->IsVisibleAt(index)) {
+    ui::MenuModel* submenuModel = model->GetSubmenuModelAt(index);
+    NSMenu* submenu;
+    if (submenuModel->IsMenuModelEmpty()) {
+      NSMenu* empty_submenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
+      [self tagEmptyMenu:empty_submenu];
+      submenu = empty_submenu;
+    } else {
+      // Recursively build a submenu from the sub-model.
+      submenu = [self menuFromModel:(ui::SimpleMenuModel*)submenuModel];
+    }
     [item setTarget:nil];
     [item setAction:nil];
-    ui::MenuModel* submenuModel = model->GetSubmenuModelAt(index);
-    NSMenu* submenu =
-        [self menuFromModel:(ui::SimpleMenuModel*)submenuModel];
     [item setSubmenu:submenu];
   } else {
     // The MenuModel works on indexes so we can't just set the command id as the
@@ -279,6 +291,14 @@ NSString* const kMenuControllerMenuDidCloseNotification =
   if (model)
     model->ActivatedAt(modelIndex, uiEventFlags);
   // Note: |self| may be destroyed by the call to ActivatedAt().
+}
+
+- (void)tagEmptyMenu:(NSMenu*)menu {
+  NSString* empty_menu_title =
+      l10n_util::GetNSString(IDS_APP_MENU_EMPTY_SUBMENU);
+  [menu addItem:[[[NSMenuItem alloc] initWithTitle:empty_menu_title
+                                            action:NULL
+                                     keyEquivalent:@""] autorelease]];
 }
 
 - (NSMenu*)menu {

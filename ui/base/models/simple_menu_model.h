@@ -156,6 +156,7 @@ class UI_BASE_EXPORT SimpleMenuModel : public MenuModel {
   ui::ButtonMenuItemModel* GetButtonMenuItemAt(int index) const override;
   bool IsEnabledAt(int index) const override;
   bool IsVisibleAt(int index) const override;
+  bool IsMenuModelEmpty() const override;
   void HighlightChangedTo(int index) override;
   void ActivatedAt(int index) override;
   void ActivatedAt(int index, int event_flags) override;

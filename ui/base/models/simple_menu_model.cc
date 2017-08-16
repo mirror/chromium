@@ -373,6 +373,16 @@ bool SimpleMenuModel::IsVisibleAt(int index) const {
   return delegate_->IsCommandIdVisible(command_id);
 }
 
+bool SimpleMenuModel::IsMenuModelEmpty() const {
+  int count = GetItemCount();
+  bool is_empty = true;
+  for (int index = 0; index < count; index++) {
+    if (IsVisibleAt(index))
+      is_empty = false;
+  }
+  return is_empty;
+}
+
 void SimpleMenuModel::HighlightChangedTo(int index) {
   if (delegate_)
     delegate_->CommandIdHighlighted(GetCommandIdAt(index));

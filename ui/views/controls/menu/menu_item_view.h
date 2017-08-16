@@ -38,6 +38,7 @@ class MenuRunnerImpl;
 }
 
 namespace test {
+class TestMenuItemView;
 class TestMenuItemViewShown;
 }
 
@@ -350,6 +351,7 @@ class VIEWS_EXPORT MenuItemView : public View {
 
  private:
   friend class internal::MenuRunnerImpl;  // For access to ~MenuItemView.
+  friend class test::TestMenuItemView;    // For access to AddEmptyMenus();
   friend class test::TestMenuItemViewShown;  // for access to |submenu_|;
 
   enum PaintButtonMode { PB_NORMAL, PB_FOR_DRAG };
