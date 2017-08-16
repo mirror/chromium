@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6094518b_2085eea0",
+        "filename": "content/browser/frame_host/render_frame_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:25:57Z",
+      "side": 1,
+      "message": "Help me understand how this is possible?  PostTasks are always async, aren\u0027t they?  And the constructor can\u0027t suspend.",
+      "range": {
+        "startLine": 228,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "c66f4ade6bd98d9dc7f65c903f44289bfaaa2b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982b90d6_8da24abb",
+        "filename": "content/browser/frame_host/render_frame_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T00:25:57Z",
+      "side": 1,
+      "message": "I had thought mojo pointers are bound to their thread/process context on first use--I take it that they\u0027re bound on construction and can be un- and re- bound by PassInterface + Bind?  (I.e. just confirming that we can\u0027t do this work directly in the constructor.)",
+      "range": {
+        "startLine": 243,
+        "startChar": 33,
+        "endLine": 243,
+        "endChar": 47
+      },
+      "revId": "c66f4ade6bd98d9dc7f65c903f44289bfaaa2b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
