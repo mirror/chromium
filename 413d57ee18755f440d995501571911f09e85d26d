@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c9776ae_ec0bc15e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextAutoplayTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-16T17:32:04Z",
+      "side": 1,
+      "message": "Thanks - glad that we can confirm what I was doing is correct then.\n\nLike I mentioned in the description, this was me doing a speculative fix. I\u0027ll remove the |worklet_thread_| part.",
+      "parentUuid": "1f82b41a_4aca3b0c",
+      "revId": "413d57ee18755f440d995501571911f09e85d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e1cc08f_2b0763de",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextAutoplayTest.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T06:25:59Z",
       "side": 1,
       "message": "I\u0027m not sure how these tests start AudioWorklet. Do they really use it?",
+      "revId": "413d57ee18755f440d995501571911f09e85d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d87b777_29ee9ceb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextAutoplayTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-16T17:32:04Z",
+      "side": 1,
+      "message": "AudioWorkletThread::CreateSharedBackingThreadForTest();\n\nThis call in SetUp() starts the thread. AudioContext only needs a thread to run this test and does not require the actual worklet functions.",
+      "parentUuid": "5e1cc08f_2b0763de",
       "revId": "413d57ee18755f440d995501571911f09e85d26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "acb6fee2_d5c21ef3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextAutoplayTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-16T17:32:04Z",
+      "side": 1,
+      "message": "Sure, I will fix it in the next patch set.",
+      "parentUuid": "715cc5bc_d51fce2a",
+      "revId": "413d57ee18755f440d995501571911f09e85d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8425b16_89bbdf03",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextAutoplayTest.cpp",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T06:25:59Z",
       "side": 1,
       "message": "Just to confirm: IIUC, (Base)AudioContext::Create() internally starts the audio rendering thread. Is it appropriately terminated at the end of the tests?",
+      "revId": "413d57ee18755f440d995501571911f09e85d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bca321_af5954f0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextAutoplayTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-16T17:32:04Z",
+      "side": 1,
+      "message": "Yes, I checked the destructor of AudioContext/BaseAudioContext and it is properly clearing out the thread by AudioDestination::ClearRenderingThread().",
+      "parentUuid": "e8425b16_89bbdf03",
       "revId": "413d57ee18755f440d995501571911f09e85d26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
