@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e13147b_e71cd0fb",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T17:33:54Z",
+      "side": 1,
+      "message": "good thing we never used SELECT * :)",
+      "revId": "8949d1aaa41e76b027ce51436a19ca57530d4d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
