@@ -98,7 +98,9 @@ class AvatarMenu :
     // default avatar image is loaded instead.
     MISSING,
     // Nothing is loaded as the profile has been deleted.
-    PROFILE_DELETED
+    PROFILE_DELETED,
+    // This is always the last one.
+    END
   };
 
   // Constructor. |observer| can be NULL. |browser| can be NULL and a new one
