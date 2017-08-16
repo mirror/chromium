@@ -21,11 +21,6 @@ class Textfield;
 
 namespace examples {
 
-namespace {
-
-class ChildPanel;
-}
-
 class VIEWS_EXAMPLES_EXPORT BoxLayoutExample : public ExampleBase,
                                                public ButtonListener,
                                                public ComboboxListener,
