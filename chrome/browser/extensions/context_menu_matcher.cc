@@ -74,8 +74,7 @@ void ContextMenuMatcher::AppendExtensionItems(
 
   // If this is the first extension-provided menu item, and there are other
   // items in the menu, and the last item is not a separator add a separator.
-  if (*index == 0 && menu_model_->GetItemCount())
-    menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
+  bool prepend_separator = (*index == 0 && menu_model_->GetItemCount());
 
   // Extensions (other than platform apps) are only allowed one top-level slot
   // (and it can't be a radio or checkbox item because we are going to put the
@@ -85,6 +84,8 @@ void ContextMenuMatcher::AppendExtensionItems(
   // Otherwise, we automatically push them into a submenu if there is more than
   // one top-level item.
   if (extension->is_platform_app() || is_action_menu) {
+    if (prepend_separator)
+      menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
     RecursivelyAppendExtensionItems(items,
                                     can_cross_incognito,
                                     selection_text,
@@ -98,9 +99,13 @@ void ContextMenuMatcher::AppendExtensionItems(
     MenuItem::List submenu_items;
 
     if (items.size() > 1 || items[0]->type() != MenuItem::NORMAL) {
+      if (prepend_separator)
+        menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
       title = base::UTF8ToUTF16(extension->name());
       submenu_items = items;
     } else {
+      if (prepend_separator && items[0]->visible())
+        menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
       MenuItem* item = items[0];
       extension_item_map_[menu_id] = item->id();
       title = item->TitleWithReplacement(selection_text,
@@ -158,6 +163,31 @@ bool ContextMenuMatcher::IsCommandIdChecked(int command_id) const {
   if (!item)
     return false;
   return item->checked();
+}
+
+bool ContextMenuMatcher::IsCommandIdVisible(int command_id) const {
+  MenuItem* item = GetExtensionMenuItem(command_id);
+  // The context menu code creates a top-level menu item that is a container of
+  // an extension's menu items. This top-level extension menu item is not added
+  // to the context menu, so checking its visibility is a special case handled
+  // below.
+  if (command_id == IDC_EXTENSIONS_CONTEXT_CUSTOM_FIRST && !item) {
+    int index = menu_model_->GetIndexOfCommandId(command_id);
+    ui::MenuModel* model = menu_model_->GetSubmenuModelAt(index);
+    for (int i = 0; i < model->GetItemCount(); i++) {
+      item = GetExtensionMenuItem(model->GetCommandIdAt(i));
+      if (IsItemVisible(*item))
+        return true;
+    }
+    return false;
+  }
+  if (!item)
+    return false;
+  return IsItemVisible(*item);
+}
+
+bool ContextMenuMatcher::IsItemVisible(const MenuItem& item) const {
+  return item.visible();
 }
 
 bool ContextMenuMatcher::IsCommandIdEnabled(int command_id) const {
