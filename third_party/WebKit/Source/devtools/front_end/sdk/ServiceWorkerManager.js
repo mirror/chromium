@@ -210,13 +210,28 @@ SDK.ServiceWorkerManager = class extends SDK.SDKModel {
       registrations.add(registration);
     }
     for (var registration of registrations) {
-      if (registration._shouldBeRemoved()) {
+      if (registration._shouldBeRemoved() || this._isObsoleteRedundantRegistration(registration)) {
         this._registrations.delete(registration.id);
         this.dispatchEventToListeners(SDK.ServiceWorkerManager.Events.RegistrationDeleted, registration);
       } else {
         this.dispatchEventToListeners(SDK.ServiceWorkerManager.Events.RegistrationUpdated, registration);
       }
     }
+  }
+
+  /**
+   * @param {!SDK.ServiceWorkerRegistration} registration
+   * @return {boolean}
+   */
+  _isObsoleteRedundantRegistration(registration) {
+    var lastResponseTime = registration._lastScriptResponseTime();
+    if (!registration._isRedundant() || lastResponseTime === null)
+      return false;
+    for (var otherRegistration of this._registrations.values()) {
+      if (!registration._isNewer(otherRegistration))
+        return true;
+    }
+    return false;
   }
 
   /**
@@ -521,6 +536,30 @@ SDK.ServiceWorkerRegistration = class {
   clearErrors() {
     this._fingerprint = Symbol('fingerprint');
     this.errors = [];
+  }
+
+  /**
+   * @param {!SDK.ServiceWorkerRegistration} registration
+   * @return {boolean}
+   */
+  _isNewer(registration) {
+    if (this === registration)
+      return false;
+    var thisResponseTime = this._lastScriptResponseTime();
+    var thatResponseTime = registration._lastScriptResponseTime();
+    return thisResponseTime !== null && thatResponseTime !== null && thisResponseTime > thatResponseTime;
+  }
+
+  /**
+   * @return {?number}
+   */
+  _lastScriptResponseTime() {
+    var responseTime = null;
+    for (var version of this.versions.values()) {
+      if (responseTime === null || version.scriptResponseTime > responseTime)
+        responseTime = version.scriptResponseTime;
+    }
+    return responseTime;
   }
 };
 
