@@ -60,6 +60,11 @@ void ChromeLanguageDetectionClient::RegisterPage(
   if (language_histogram_ && details.is_cld_reliable)
     language_histogram_->OnPageVisited(details.cld_language);
 
+  // We can't continue if the page has been naviagted away since language
+  // detection occured.
+  if (!web_contents())
+    return;
+
   ChromeTranslateClient* const translate_client =
       ChromeTranslateClient::FromWebContents(web_contents());
   if (!translate_client)
