@@ -189,8 +189,8 @@ void MetricsCollector::UpdateUkmSourceIdForWebContents(
 }
 
 void MetricsCollector::UpdateWithFieldTrialParams() {
-  int64_t interval_ms = GetGRCRenderProcessCPUProfilingIntervalInMs();
-  int64_t duration_ms = GetGRCRenderProcessCPUProfilingDurationInMs();
+  int64_t interval_ms = GetGRCProcessCPUProfilingIntervalInMs();
+  int64_t duration_ms = GetGRCProcessCPUProfilingDurationInMs();
 
   if (interval_ms > 0 && duration_ms > 0 && duration_ms >= interval_ms) {
     max_ukm_cpu_usage_measurements_ =

@@ -46,6 +46,7 @@ class WebContents;
 namespace resource_coordinator {
 
 class BackgroundTabNavigationThrottle;
+class ResourceCoordinatorProcessMetricsHandler;
 
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
@@ -232,6 +233,7 @@ class TabManager : public TabStripModelObserver,
   bool IsLoadingBackgroundTabs() const;
 
  private:
+  friend class ResourceCoordinatorProcessMetricsHandler;
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ShouldPurgeAtDefaultTime);
@@ -286,6 +288,9 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            UrgentFastShutdownWithBeforeunloadHandler);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsTabRestoredInForeground);
+  FRIEND_TEST_ALL_PREFIXES(
+      TabManagerStatsCollectorTest,
+      HistogramSessionRestoreCPUUsage_BackgroundTabLoading);
 
   // The time of the first purging after a renderer is backgrounded.
   // The initial value was chosen because most of users activate backgrounded

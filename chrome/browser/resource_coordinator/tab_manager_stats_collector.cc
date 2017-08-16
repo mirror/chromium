@@ -95,6 +95,25 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
   }
 }
 
+void TabManagerStatsCollector::RecordCPUUsage(double cpu_usage) {
+  // Consider up to the equivalent of 64 CPU cores fully loaded.
+  const int kHistogramMin = 1;
+  const int kHistogramMax = 6400;
+  const int kHistogramBucketCount = 50;
+
+  if (tab_manager_->IsSessionRestoreLoadingTabs()) {
+    UMA_HISTOGRAM_CUSTOM_COUNTS(kHistogramSessionRestoreCPUUsage, cpu_usage,
+                                kHistogramMin, kHistogramMax,
+                                kHistogramBucketCount);
+  }
+
+  if (tab_manager_->IsLoadingBackgroundTabs()) {
+    UMA_HISTOGRAM_CUSTOM_COUNTS(kHistogramBackgroundTabOpenCPUUsage, cpu_usage,
+                                kHistogramMin, kHistogramMax,
+                                kHistogramBucketCount);
+  }
+}
+
 void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
   if (session_restore_swap_metrics_driver_)
@@ -162,5 +181,13 @@ const char TabManagerStatsCollector::
     kHistogramBackgroundTabOpenForegroundTabExpectedTaskQueueingDuration[] =
         "TabManager.BackgroundTabOpen.ForegroundTab."
         "ExpectedTaskQueueingDuration";
+
+// static
+const char TabManagerStatsCollector::kHistogramSessionRestoreCPUUsage[] =
+    "TabManager.SessionRestore.CPUUsage";
+
+// static
+const char TabManagerStatsCollector::kHistogramBackgroundTabOpenCPUUsage[] =
+    "TabManager.BackgroundTabOpen.CPUUsage";
 
 }  // namespace resource_coordinator

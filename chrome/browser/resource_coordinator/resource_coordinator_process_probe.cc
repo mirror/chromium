@@ -2,14 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h"
+#include "chrome/browser/resource_coordinator/resource_coordinator_process_probe.h"
 
 #include <vector>
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/process/process_handle.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/resource_coordinator/tab_manager.h"
+#include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
@@ -27,81 +31,92 @@ namespace {
 
 const int kDefaultMeasurementIntervalInSeconds = 1;
 
-base::LazyInstance<ResourceCoordinatorRenderProcessProbe>::DestructorAtExit
-    g_probe = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ResourceCoordinatorProcessProbe>::DestructorAtExit g_probe =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
-RenderProcessInfo::RenderProcessInfo() = default;
+ProcessInfo::ProcessInfo() = default;
+ProcessInfo::~ProcessInfo() = default;
 
+BrowserProcessInfo::BrowserProcessInfo() = default;
+BrowserProcessInfo::~BrowserProcessInfo() = default;
+
+RenderProcessInfo::RenderProcessInfo() = default;
 RenderProcessInfo::~RenderProcessInfo() = default;
 
-RenderProcessMetricsHandler::RenderProcessMetricsHandler() = default;
+ProcessMetricsHandler::ProcessMetricsHandler() = default;
+ProcessMetricsHandler::~ProcessMetricsHandler() = default;
 
-RenderProcessMetricsHandler::~RenderProcessMetricsHandler() = default;
-
-class ResourceCoordinatorRenderProcessMetricsHandler
-    : public RenderProcessMetricsHandler {
+class ResourceCoordinatorProcessMetricsHandler : public ProcessMetricsHandler {
  public:
-  ResourceCoordinatorRenderProcessMetricsHandler() = default;
-  ~ResourceCoordinatorRenderProcessMetricsHandler() override = default;
+  ResourceCoordinatorProcessMetricsHandler() = default;
+  ~ResourceCoordinatorProcessMetricsHandler() override = default;
 
   // Send collected metrics back to the |resource_coordinator| service
   // and initiates another render process metrics gather cycle.
   bool HandleMetrics(
+      const BrowserProcessInfo& browser_process_info,
       const RenderProcessInfoMap& render_process_info_map) override {
+    double total_cpu_usage = browser_process_info.cpu_usage;
     for (auto& render_process_info_map_entry : render_process_info_map) {
       auto& render_process_info = render_process_info_map_entry.second;
       // TODO(oysteine): Move the multiplier used to avoid precision loss
       // into a shared location, when this property gets used.
       render_process_info.host->GetProcessResourceCoordinator()->SetProperty(
           mojom::PropertyType::kCPUUsage, render_process_info.cpu_usage * 1000);
+      total_cpu_usage += render_process_info.cpu_usage;
     }
+
+    g_browser_process->GetTabManager()
+        ->tab_manager_stats_collector_->RecordCPUUsage(total_cpu_usage);
 
     return true;
   }
 };
 
-ResourceCoordinatorRenderProcessProbe::ResourceCoordinatorRenderProcessProbe()
+ResourceCoordinatorProcessProbe::ResourceCoordinatorProcessProbe()
     : metrics_handler_(
-          base::MakeUnique<ResourceCoordinatorRenderProcessMetricsHandler>()),
+          base::MakeUnique<ResourceCoordinatorProcessMetricsHandler>()),
       interval_ms_(
           base::TimeDelta::FromSeconds(kDefaultMeasurementIntervalInSeconds)) {
   UpdateWithFieldTrialParams();
 }
 
-ResourceCoordinatorRenderProcessProbe::
-    ~ResourceCoordinatorRenderProcessProbe() = default;
+ResourceCoordinatorProcessProbe::~ResourceCoordinatorProcessProbe() = default;
 
 // static
-ResourceCoordinatorRenderProcessProbe*
-ResourceCoordinatorRenderProcessProbe::GetInstance() {
+ResourceCoordinatorProcessProbe*
+ResourceCoordinatorProcessProbe::GetInstance() {
   return g_probe.Pointer();
 }
 
 // static
-bool ResourceCoordinatorRenderProcessProbe::IsEnabled() {
+bool ResourceCoordinatorProcessProbe::IsEnabled() {
   // Check that service_manager is active, GRC is enabled,
   // and render process CPU profiling is enabled.
   return content::ServiceManagerConnection::GetForProcess() != nullptr &&
          resource_coordinator::IsResourceCoordinatorEnabled() &&
-         base::FeatureList::IsEnabled(features::kGRCRenderProcessCPUProfiling);
+         base::FeatureList::IsEnabled(features::kGRCProcessCPUProfiling);
 }
 
-void ResourceCoordinatorRenderProcessProbe::StartGatherCycle() {
+void ResourceCoordinatorProcessProbe::StartGatherCycle() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!ResourceCoordinatorRenderProcessProbe::IsEnabled()) {
+  if (!ResourceCoordinatorProcessProbe::IsEnabled()) {
     return;
   }
 
-  timer_.Start(FROM_HERE, base::TimeDelta(), this,
-               &ResourceCoordinatorRenderProcessProbe::
-                   RegisterAliveRenderProcessesOnUIThread);
+  timer_.Start(
+      FROM_HERE, base::TimeDelta(), this,
+      &ResourceCoordinatorProcessProbe::RegisterAliveProcessesOnUIThread);
 }
 
-void ResourceCoordinatorRenderProcessProbe::
-    RegisterAliveRenderProcessesOnUIThread() {
+void ResourceCoordinatorProcessProbe::RegisterAliveProcessesOnUIThread() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  if (browser_process_info_.metrics.get() == nullptr)
+    browser_process_info_.metrics = base::ProcessMetrics::CreateProcessMetrics(
+        base::GetCurrentProcessHandle());
 
   ++current_gather_cycle_;
 
@@ -132,14 +147,16 @@ void ResourceCoordinatorRenderProcessProbe::
 
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&ResourceCoordinatorRenderProcessProbe::
-                         CollectRenderProcessMetricsOnIOThread,
-                     base::Unretained(this)));
+      base::BindOnce(
+          &ResourceCoordinatorProcessProbe::CollectProcessMetricsOnIOThread,
+          base::Unretained(this)));
 }
 
-void ResourceCoordinatorRenderProcessProbe::
-    CollectRenderProcessMetricsOnIOThread() {
+void ResourceCoordinatorProcessProbe::CollectProcessMetricsOnIOThread() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  browser_process_info_.cpu_usage =
+      browser_process_info_.metrics->GetPlatformIndependentCPUUsage();
 
   RenderProcessInfoMap::iterator iter = render_process_info_map_.begin();
   while (iter != render_process_info_map_.end()) {
@@ -159,22 +176,22 @@ void ResourceCoordinatorRenderProcessProbe::
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&ResourceCoordinatorRenderProcessProbe::
-                         HandleRenderProcessMetricsOnUIThread,
-                     base::Unretained(this)));
+      base::BindOnce(
+          &ResourceCoordinatorProcessProbe::HandleProcessMetricsOnUIThread,
+          base::Unretained(this)));
 }
 
-void ResourceCoordinatorRenderProcessProbe::
-    HandleRenderProcessMetricsOnUIThread() {
+void ResourceCoordinatorProcessProbe::HandleProcessMetricsOnUIThread() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (metrics_handler_->HandleMetrics(render_process_info_map_)) {
-    timer_.Start(FROM_HERE, interval_ms_, this,
-                 &ResourceCoordinatorRenderProcessProbe::
-                     RegisterAliveRenderProcessesOnUIThread);
+  if (metrics_handler_->HandleMetrics(browser_process_info_,
+                                      render_process_info_map_)) {
+    timer_.Start(
+        FROM_HERE, interval_ms_, this,
+        &ResourceCoordinatorProcessProbe::RegisterAliveProcessesOnUIThread);
   }
 }
 
-bool ResourceCoordinatorRenderProcessProbe::
+bool ResourceCoordinatorProcessProbe::
     AllRenderProcessMeasurementsAreCurrentForTesting() const {
   for (auto& render_process_info_map_entry : render_process_info_map_) {
     auto& render_process_info = render_process_info_map_entry.second;
@@ -186,8 +203,8 @@ bool ResourceCoordinatorRenderProcessProbe::
   return true;
 }
 
-void ResourceCoordinatorRenderProcessProbe::UpdateWithFieldTrialParams() {
-  int64_t interval_ms = GetGRCRenderProcessCPUProfilingIntervalInMs();
+void ResourceCoordinatorProcessProbe::UpdateWithFieldTrialParams() {
+  int64_t interval_ms = GetGRCProcessCPUProfilingIntervalInMs();
 
   if (interval_ms > 0) {
     interval_ms_ = base::TimeDelta::FromMilliseconds(interval_ms);

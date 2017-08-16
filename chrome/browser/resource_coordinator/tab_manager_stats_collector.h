@@ -40,6 +40,10 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   void RecordExpectedTaskQueueingDuration(content::WebContents* contents,
                                           int64_t queueing_time_milliseconds);
 
+  // Record expected task queueing durations of foreground tabs in session
+  // restore and background tab loading.
+  void RecordCPUUsage(double cpu_usage);
+
   // SessionRestoreObserver
   void OnSessionRestoreStartedLoadingTabs() override;
   void OnSessionRestoreFinishedLoadingTabs() override;
@@ -66,6 +70,8 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
       kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration[];
   static const char
       kHistogramBackgroundTabOpenForegroundTabExpectedTaskQueueingDuration[];
+  static const char kHistogramSessionRestoreCPUUsage[];
+  static const char kHistogramBackgroundTabOpenCPUUsage[];
 
   TabManager* tab_manager_;
   std::unique_ptr<content::SwapMetricsDriver>

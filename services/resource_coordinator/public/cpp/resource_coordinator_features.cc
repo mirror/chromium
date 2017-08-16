@@ -40,8 +40,8 @@ const base::Feature kGlobalResourceCoordinator{
     "GlobalResourceCoordinator", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enable render process CPU profiling for GRC.
-const base::Feature kGRCRenderProcessCPUProfiling{
-    "GRCRenderProcessCPUProfiling", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kGRCProcessCPUProfiling{"GRCProcessCPUProfiling",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace features
 
@@ -51,16 +51,16 @@ bool IsResourceCoordinatorEnabled() {
   return base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
 }
 
-bool IsGRCRenderProcessCPUProfilingEnabled() {
-  return base::FeatureList::IsEnabled(features::kGRCRenderProcessCPUProfiling);
+bool IsGRCProcessCPUProfilingEnabled() {
+  return base::FeatureList::IsEnabled(features::kGRCProcessCPUProfiling);
 }
 
-int64_t GetGRCRenderProcessCPUProfilingDurationInMs() {
+int64_t GetGRCProcessCPUProfilingDurationInMs() {
   return GetIntegerFieldTrialParam(kUkmPageLoadCPUUsageProfilingTrialName,
                                    kDurationInMsParameterName, -1);
 }
 
-int64_t GetGRCRenderProcessCPUProfilingIntervalInMs() {
+int64_t GetGRCProcessCPUProfilingIntervalInMs() {
   return GetIntegerFieldTrialParam(kUkmPageLoadCPUUsageProfilingTrialName,
                                    kIntervalInMsParameterName, -1);
 }

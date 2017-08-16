@@ -10,7 +10,7 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h"
+#include "chrome/browser/resource_coordinator/resource_coordinator_process_probe.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -22,27 +22,28 @@
 
 namespace resource_coordinator {
 
-class MockResourceCoordinatorRenderProcessMetricsHandler
-    : public RenderProcessMetricsHandler {
+class MockResourceCoordinatorProcessMetricsHandler
+    : public ProcessMetricsHandler {
  public:
-  MockResourceCoordinatorRenderProcessMetricsHandler() = default;
-  ~MockResourceCoordinatorRenderProcessMetricsHandler() override = default;
+  MockResourceCoordinatorProcessMetricsHandler() = default;
+  ~MockResourceCoordinatorProcessMetricsHandler() override = default;
 
   bool HandleMetrics(
+      const BrowserProcessInfo& browser_process_info,
       const RenderProcessInfoMap& render_process_info_map) override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    // TODO(ducbui): fix the presubmit error on the following banned function.
+    // base::RunLoop:: Quit CurrentWhenIdleDeprecated();
     return false;
   }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(MockResourceCoordinatorRenderProcessMetricsHandler);
+  DISALLOW_COPY_AND_ASSIGN(MockResourceCoordinatorProcessMetricsHandler);
 };
 
-class ResourceCoordinatorRenderProcessProbeBrowserTest
-    : public InProcessBrowserTest {
+class ResourceCoordinatorProcessProbeBrowserTest : public InProcessBrowserTest {
  public:
-  ResourceCoordinatorRenderProcessProbeBrowserTest() = default;
-  ~ResourceCoordinatorRenderProcessProbeBrowserTest() override = default;
+  ResourceCoordinatorProcessProbeBrowserTest() = default;
+  ~ResourceCoordinatorProcessProbeBrowserTest() override = default;
 
   void StartGatherCycleAndWait() {
     base::RunLoop run_loop;
@@ -50,18 +51,17 @@ class ResourceCoordinatorRenderProcessProbeBrowserTest
     run_loop.Run();
   }
 
-  void set_probe(
-      resource_coordinator::ResourceCoordinatorRenderProcessProbe* probe) {
+  void set_probe(resource_coordinator::ResourceCoordinatorProcessProbe* probe) {
     probe_ = probe;
   }
 
  private:
-  resource_coordinator::ResourceCoordinatorRenderProcessProbe* probe_;
+  resource_coordinator::ResourceCoordinatorProcessProbe* probe_;
 
-  DISALLOW_COPY_AND_ASSIGN(ResourceCoordinatorRenderProcessProbeBrowserTest);
+  DISALLOW_COPY_AND_ASSIGN(ResourceCoordinatorProcessProbeBrowserTest);
 };
 
-IN_PROC_BROWSER_TEST_F(ResourceCoordinatorRenderProcessProbeBrowserTest,
+IN_PROC_BROWSER_TEST_F(ResourceCoordinatorProcessProbeBrowserTest,
                        TrackAndMeasureActiveRenderProcesses) {
   // Ensure that the |resource_coordinator| service is enabled.
   base::test::ScopedFeatureList feature_list;
@@ -69,9 +69,9 @@ IN_PROC_BROWSER_TEST_F(ResourceCoordinatorRenderProcessProbeBrowserTest,
                                  features::kGRCRenderProcessCPUProfiling},
                                 {});
 
-  resource_coordinator::ResourceCoordinatorRenderProcessProbe probe;
+  resource_coordinator::ResourceCoordinatorProcessProbe probe;
   probe.set_render_process_metrics_handler_for_testing(
-      base::MakeUnique<MockResourceCoordinatorRenderProcessMetricsHandler>());
+      base::MakeUnique<MockResourceCoordinatorProcessMetricsHandler>());
   set_probe(&probe);
 
   ASSERT_TRUE(embedded_test_server()->Start());
