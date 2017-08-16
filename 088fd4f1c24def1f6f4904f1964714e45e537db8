@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430bbeaa_11f47fed",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-16T21:39:38Z",
+      "side": 1,
+      "message": "Printer::GetProtocol() already does this.",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "088fd4f1c24def1f6f4904f1964714e45e537db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
