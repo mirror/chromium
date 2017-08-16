@@ -1,0 +1,24 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/google/home/aboxhall/src/cr/src/third_party/WebKit/Source/devtools/scripts/local_node/runtimes/4.5.0/bin/node',
+1 verbose cli   '/usr/local/google/home/aboxhall/src/cr/src/third_party/WebKit/Source/devtools/scripts/local_node/runtimes/4.5.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'debug-test',
+1 verbose cli   '--',
+1 verbose cli   'inspector/color_picker/contrast_overlay.html' ]
+2 info using npm@2.15.9
+3 info using node@v4.5.0
+4 verbose stack Error: ENOENT: no such file or directory, open '/usr/local/google/home/aboxhall/src/cr/src/package.json'
+4 verbose stack     at Error (native)
+5 verbose cwd /usr/local/google/home/aboxhall/src/cr/src
+6 error Linux 4.4.0-79-generic
+7 error argv "/usr/local/google/home/aboxhall/src/cr/src/third_party/WebKit/Source/devtools/scripts/local_node/runtimes/4.5.0/bin/node" "/usr/local/google/home/aboxhall/src/cr/src/third_party/WebKit/Source/devtools/scripts/local_node/runtimes/4.5.0/bin/npm" "run" "debug-test" "--" "inspector/color_picker/contrast_overlay.html"
+8 error node v4.5.0
+9 error npm  v2.15.9
+10 error path /usr/local/google/home/aboxhall/src/cr/src/package.json
+11 error code ENOENT
+12 error errno -2
+13 error syscall open
+14 error enoent ENOENT: no such file or directory, open '/usr/local/google/home/aboxhall/src/cr/src/package.json'
+14 error enoent This is most likely not a problem with npm itself
+14 error enoent and is related to npm not being able to find a file.
+15 verbose exit [ -2, true ]
