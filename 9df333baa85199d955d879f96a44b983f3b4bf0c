@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "055ffb35_05d676b0",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-16T20:29:43Z",
+      "side": 1,
+      "message": "Moved it above ScheduleWriteIndex (cc file is already out of order)",
+      "parentUuid": "1e0cdc32_91cc049f",
+      "revId": "9df333baa85199d955d879f96a44b983f3b4bf0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a45669d5_675ac28b",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9df333baa85199d955d879f96a44b983f3b4bf0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfee9a85_77b86d69",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-16T20:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a45669d5_675ac28b",
+      "revId": "9df333baa85199d955d879f96a44b983f3b4bf0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
