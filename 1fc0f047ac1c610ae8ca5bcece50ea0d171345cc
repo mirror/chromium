@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c4f3be_8d1504dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "Assuming this description implies we\u0027re not merging the pools yet, please mention that explicitly (i.e. what\u0027s the intended follow-up)",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6829cd44_30595289",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "I think this is unnecessarily vague (I was confused by this until I read further), how about:\n\n// The SchedulerWorker that has |this| as a delegate. Must be set synchronously right after creating a SchedulerWorker using |this| as delegate (to ensure it is set before the first OnCanScheduleSequence() which can occur before OnMainEntry() if PostTaskNow()\u0027s WillScheduleSequence() is initially held up and released quickly thereafter).",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d78d3a_7ac2a073",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "For structs because the members aren\u0027t _ suffixed, I like to suffix the constructor\u0027s and setters\u0027 in params with _in, e.g. sequence_in. To avoid confusion about same name param / member.",
+      "range": {
+        "startLine": 189,
+        "startChar": 28,
+        "endLine": 191,
+        "endChar": 66
+      },
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3c3089_95a69deb",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "Make |num_scheduled_background_sequences_| atomic and use a CompareAndSwap scheme to do this without a lock? The lock is then only required when adding to background sequences queue which is fine.",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901dd753_080f3804",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "This (and the set of logic changes around RunNextTask()) aren\u0027t really necessary if we merge the pools, right? i.e. we would only get here if the priority_queue returned a BACKGROUND task in which case checking again right after is just as racy as not checking...\n\nIsn\u0027t it simpler to merge the pools in a first step?",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af19d74f_0f6cfb69",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "Why would |sequence| be null? Can we just DCHECK it isn\u0027t?",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf0962d_b310e7bb",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "I\u0027d replace \"|observer| will be notified when it can be rescheduled\" with \"|sequence| will be handed back to |observer| when it can be rescheduled\"",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69de61b_832763ed",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "z",
+      "range": {
+        "startLine": 207,
+        "startChar": 14,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c2048b_0a0d542f",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:02:45Z",
+      "side": 1,
+      "message": "How about using std::greater\u003cPendingBackgroundSequence\u003e as a Comparator, then you don\u0027t have to weirdly define operator\u003c backwards? http://en.cppreference.com/w/cpp/container/priority_queue",
+      "range": {
+        "startLine": 212,
+        "startChar": 47,
+        "endLine": 212,
+        "endChar": 48
+      },
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
