@@ -129,10 +129,10 @@ SDK.NetworkManager = class extends SDK.SDKModel {
 
   /**
    * @param {string} url
-   * @return {!SDK.NetworkRequest}
+   * @return {?SDK.NetworkRequest}
    */
   inflightRequestForURL(url) {
-    return this._dispatcher._inflightRequestsByURL[url];
+    return this._dispatcher._inflightRequestsByURL[url] || null;
   }
 
   /**
@@ -665,7 +665,7 @@ SDK.NetworkDispatcher = class {
       interceptionId, request, resourceType, isNavigationRequest, redirectHeaders, redirectStatusCode, redirectUrl,
       authChallenge) {
     SDK.multitargetNetworkManager._requestIntercepted(new SDK.InterceptedRequest(
-        this._manager.target().networkAgent(), interceptionId, request, resourceType, isNavigationRequest,
+        this._manager.target(), interceptionId, request, resourceType, isNavigationRequest,
         redirectHeaders, redirectStatusCode, redirectUrl, authChallenge));
   }
 
@@ -759,6 +759,8 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     this._agents = new Set();
     /** @type {!SDK.NetworkManager.Conditions} */
     this._networkConditions = SDK.NetworkManager.NoThrottlingConditions;
+    /** @type {?Promise} */
+    this._updatingInterceptionPatternsPromise = null;
 
     // TODO(allada) Remove these and merge it with request interception.
     this._blockingEnabledSetting = Common.moduleSetting('requestBlockingEnabled');
@@ -979,7 +981,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   _registerRequestInterceptor(requestInterceptor) {
     for (var pattern of requestInterceptor.patterns())
       this._requestInterceptorMap.set(pattern, requestInterceptor);
-    return this._updateInterceptionPatterns();
+    return this._updateInterceptionPatternsOnNextTick();
   }
 
   /**
@@ -989,13 +991,23 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   _unregisterRequestInterceptor(requestInterceptor) {
     for (var pattern of requestInterceptor.patterns())
       this._requestInterceptorMap.delete(pattern, requestInterceptor);
-    return this._updateInterceptionPatterns();
+    return this._updateInterceptionPatternsOnNextTick();
+  }
+
+  /**
+   * @return {!Promise}
+   */
+  _updateInterceptionPatternsOnNextTick() {
+    if (!this._updatingInterceptionPatternsPromise)
+      this._updatingInterceptionPatternsPromise = Promise.resolve().then(this._updateInterceptionPatterns.bind(this));
+    return this._updatingInterceptionPatternsPromise;
   }
 
   /**
    * @return {!Promise}
    */
   _updateInterceptionPatterns() {
+    this._updatingInterceptionPatternsPromise = null;
     var promises = [];
     for (var agent of this._agents) {
       // We do not allow ? as a single character wild card for now.
@@ -1009,12 +1021,12 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   /**
    * @param {!SDK.InterceptedRequest} interceptedRequest
    */
-  _requestIntercepted(interceptedRequest) {
+  async _requestIntercepted(interceptedRequest) {
     for (var pattern of this._requestInterceptorMap.keysArray()) {
       if (!SDK.RequestInterceptor.patternMatchesUrl(pattern, interceptedRequest.request.url))
         continue;
       for (var requestInterceptor of this._requestInterceptorMap.get(pattern)) {
-        requestInterceptor.handle(interceptedRequest);
+        await requestInterceptor.handle(interceptedRequest);
         if (interceptedRequest.hasResponded())
           return;
       }
@@ -1167,6 +1179,7 @@ SDK.RequestInterceptor = class {
 
   /**
    * @param {!SDK.InterceptedRequest} interceptedRequest
+   * @return {!Promise}
    */
   handle(interceptedRequest) {
     throw 'Not implemented.';
@@ -1175,7 +1188,7 @@ SDK.RequestInterceptor = class {
 
 SDK.InterceptedRequest = class {
   /**
-   * @param {!Protocol.NetworkAgent} networkAgent
+   * @param {!SDK.Target} target
    * @param {!Protocol.Network.InterceptionId} interceptionId
    * @param {!Protocol.Network.Request} request
    * @param {!Protocol.Page.ResourceType} resourceType
@@ -1186,9 +1199,9 @@ SDK.InterceptedRequest = class {
    * @param {!Protocol.Network.AuthChallenge=} authChallenge
    */
   constructor(
-      networkAgent, interceptionId, request, resourceType, isNavigationRequest, redirectHeaders, redirectStatusCode,
+      target, interceptionId, request, resourceType, isNavigationRequest, redirectHeaders, redirectStatusCode,
       redirectUrl, authChallenge) {
-    this._networkAgent = networkAgent;
+    this._target = target;
     this._interceptionId = interceptionId;
     this._hasResponded = false;
 
@@ -1208,10 +1221,32 @@ SDK.InterceptedRequest = class {
     return this._hasResponded;
   }
 
+  /**
+   * @param {string} content
+   * @param {string} mimeType
+   * @param {string} originalContent
+   */
+  continueRequestWithContent(content, mimeType, originalContent) {
+    this._hasResponded = true;
+    var headers = [
+      'HTTP/1.1 200 OK',
+      'Date: ' + (new Date()).toUTCString(),
+      'Server: Chrome Devtools',
+      'Connection: closed',
+      'Content-Length: ' + content.length,
+      'Content-Type: ' + mimeType,
+      '',
+      '',
+    ];
+    SDK.interceptedURLManager._registerOriginalContentProviderForTargetandUrl(this._target, new Common.StaticContentProvider(
+        this.request.url, Common.ResourceType.fromMimeType(mimeType), () => Promise.resolve(originalContent)));
+    this._target.networkAgent().continueInterceptedRequest(this._interceptionId, undefined, (headers.join('\r\n') + content).toBase64());
+  }
+
   continueRequestWithoutChange() {
     console.assert(!this._hasResponded);
     this._hasResponded = true;
-    this._networkAgent.continueInterceptedRequest(this._interceptionId);
+    this._target.networkAgent().continueInterceptedRequest(this._interceptionId);
   }
 
   /**
@@ -1220,6 +1255,75 @@ SDK.InterceptedRequest = class {
   continueRequestWithError(errorReason) {
     console.assert(!this._hasResponded);
     this._hasResponded = true;
-    this._networkAgent.continueInterceptedRequest(this._interceptionId, errorReason);
+    this._target.networkAgent().continueInterceptedRequest(this._interceptionId, errorReason);
   }
 };
+
+
+SDK.InterceptedURLManager = class {
+  constructor() {
+    /** @type {!Map<!SDK.Target, !Map<string, !Common.ContentProvider>>} */
+    this._originalContentProviderByTargetAndUrl = new Map();
+
+    this._removeNetworkManagerListeners = [];
+
+    //SDK.targetManager.observeModels(SDK.NetworkManager, this);
+  }
+
+  // /**
+  //  * @override
+  //  * @param {!SDK.NetworkManager} networkManager
+  //  */
+  // modelAdded(networkManager) {
+  //   var eventListeners = [];
+
+  //   var resourceTreeModel = networkManager.target().model(SDK.ResourceTreeModel);
+  //   if (resourceTreeModel) {
+  //     // eventListeners.push(
+  //     //     resourceTreeModel.addEventListener(SDK.ResourceTreeModel.Events.WillReloadPage, this._willReloadPage, this));
+  //     // eventListeners.push(resourceTreeModel.addEventListener(
+  //     //     SDK.ResourceTreeModel.Events.MainFrameNavigated, this._onMainFrameNavigated, this));
+  //   }
+
+  //   networkManager[SDK.InterceptedURLManager._events] = eventListeners;
+  // }
+
+  // /**
+  //  * @override
+  //  * @param {!SDK.NetworkManager} networkManager
+  //  */
+  // modelRemoved(networkManager) {
+  //   Common.EventTarget.removeEventListeners(networkManager[SDK.InterceptedURLManager._events]);
+  // }
+
+  /**
+   * @param {!SDK.Target} target
+   * @param {string} url
+   * @return {?Common.ContentProvider}
+   */
+  contentProviderForTargetAndUrl(target, url) {
+    var contentProvidersForUrlMap = this._originalContentProviderByTargetAndUrl.get(target);
+    if (!contentProvidersForUrlMap)
+      return null;
+    return contentProvidersForUrlMap.get(url) || null;
+  }
+
+  /**
+   * @param {!SDK.Target} target
+   * @param {!Common.ContentProvider} contentProvider
+   */
+  _registerOriginalContentProviderForTargetandUrl(target, contentProvider) {
+    var contentProvidersForUrlMap = this._originalContentProviderByTargetAndUrl.get(target);
+    if (!contentProvidersForUrlMap) {
+      contentProvidersForUrlMap = new Map();
+      this._originalContentProviderByTargetAndUrl.set(target, contentProvidersForUrlMap);
+    }
+    contentProvidersForUrlMap.set(contentProvider.contentURL(), contentProvider);
+  }
+
+};
+// SDK.InterceptedURLManager._events = Promise('SDK.InterceptedURLManager.events');
+
+// SDK.InterceptedURLManager._originalContentProviderPromise = Promise('OriginalContentProvider');
+
+SDK.interceptedURLManager = new SDK.InterceptedURLManager();

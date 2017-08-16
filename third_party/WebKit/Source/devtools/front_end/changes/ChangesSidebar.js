@@ -8,6 +8,15 @@ Changes.ChangesSidebar = class extends UI.Widget {
    */
   constructor(workspaceDiff) {
     super();
+
+    var toolbar = new UI.Toolbar('', this.element);
+    var persistCheckbox = new UI.ToolbarCheckbox(
+        Common.UIString('Persist changes'),
+        'Patch changes on reload/navigate.',
+        () => WorkspaceDiff.workspaceDiff().setPersistChanges(persistCheckbox.checked()));
+    persistCheckbox.setChecked(true);
+    toolbar.appendToolbarItem(persistCheckbox);
+
     this._treeoutline = new UI.TreeOutlineInShadow();
     this._treeoutline.registerRequiredCSS('changes/changesSidebar.css');
     this._treeoutline.setComparator((a, b) => a.titleAsText().compareTo(b.titleAsText()));
@@ -15,41 +24,43 @@ Changes.ChangesSidebar = class extends UI.Widget {
 
     this.element.appendChild(this._treeoutline.element);
 
-    /** @type {!Map<!Workspace.UISourceCode, !Changes.ChangesSidebar.UISourceCodeTreeElement>} */
+    /** @type {!Map<!WorkspaceDiff.WorkspaceDiff.UrlDiff, !Changes.ChangesSidebar.UrlDiffTreeElement>} */
     this._treeElements = new Map();
     this._workspaceDiff = workspaceDiff;
-    this._workspaceDiff.modifiedUISourceCodes().forEach(this._addUISourceCode.bind(this));
+    this._workspaceDiff.modifiedUrlDiffs().forEach(this._addUrlDiff.bind(this));
     this._workspaceDiff.addEventListener(
-        WorkspaceDiff.Events.ModifiedStatusChanged, this._uiSourceCodeMofiedStatusChanged, this);
+        WorkspaceDiff.Events.ModifiedStatusChanged, this._urlDiffStatusChanged, this);
   }
 
   /**
-   * @return {?Workspace.UISourceCode}
+   * @return {?WorkspaceDiff.WorkspaceDiff.UrlDiff}
    */
-  selectedUISourceCode() {
-    return this._treeoutline.selectedTreeElement ? this._treeoutline.selectedTreeElement.uiSourceCode : null;
+  selectedUrlDiff() {
+    return this._treeoutline.selectedTreeElement ? this._treeoutline.selectedTreeElement.urlDiff : null;
   }
 
   _selectionChanged() {
-    this.dispatchEventToListeners(Changes.ChangesSidebar.Events.SelectedUISourceCodeChanged);
+    this.dispatchEventToListeners(Changes.ChangesSidebar.Events.SelectedUrlDiffChanged);
   }
 
   /**
    * @param {!Common.Event} event
    */
-  _uiSourceCodeMofiedStatusChanged(event) {
-    if (event.data.isModified)
-      this._addUISourceCode(event.data.uiSourceCode);
-    else
-      this._removeUISourceCode(event.data.uiSourceCode);
+  _urlDiffStatusChanged(event) {
+    if (event.data.isModified) {
+      if (!this._treeElements.has(event.data.urlDiff))
+        this._addUrlDiff(event.data.urlDiff);
+    } else {
+      this._removeUrlDiff(event.data.urlDiff);
+    }
   }
 
   /**
-   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @param {!WorkspaceDiff.WorkspaceDiff.UrlDiff} urlDiff
    */
-  _removeUISourceCode(uiSourceCode) {
-    var treeElement = this._treeElements.get(uiSourceCode);
-    this._treeElements.delete(uiSourceCode);
+  _removeUrlDiff(urlDiff) {
+    var treeElement = this._treeElements.get(urlDiff);
+    this._treeElements.delete(urlDiff);
     if (this._treeoutline.selectedTreeElement === treeElement) {
       var nextElementToSelect = treeElement.previousSibling || treeElement.nextSibling;
       if (nextElementToSelect) {
@@ -64,11 +75,11 @@ Changes.ChangesSidebar = class extends UI.Widget {
   }
 
   /**
-   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @param {!WorkspaceDiff.WorkspaceDiff.UrlDiff} urlDiff
    */
-  _addUISourceCode(uiSourceCode) {
-    var treeElement = new Changes.ChangesSidebar.UISourceCodeTreeElement(uiSourceCode);
-    this._treeElements.set(uiSourceCode, treeElement);
+  _addUrlDiff(urlDiff) {
+    var treeElement = new Changes.ChangesSidebar.UrlDiffTreeElement(urlDiff);
+    this._treeElements.set(urlDiff, treeElement);
     this._treeoutline.appendChild(treeElement);
     if (!this._treeoutline.selectedTreeElement)
       treeElement.select(true);
@@ -79,42 +90,40 @@ Changes.ChangesSidebar = class extends UI.Widget {
  * @enum {symbol}
  */
 Changes.ChangesSidebar.Events = {
-  SelectedUISourceCodeChanged: Symbol('SelectedUISourceCodeChanged')
+  SelectedUrlDiffChanged: Symbol('SelectedUrlDiffChanged')
 };
 
-Changes.ChangesSidebar.UISourceCodeTreeElement = class extends UI.TreeElement {
+Changes.ChangesSidebar.UrlDiffTreeElement = class extends UI.TreeElement {
   /**
-   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @param {!WorkspaceDiff.WorkspaceDiff.UrlDiff} urlDiff
    */
-  constructor(uiSourceCode) {
+  constructor(urlDiff) {
     super();
-    this.uiSourceCode = uiSourceCode;
-    this.listItemElement.classList.add('navigator-' + uiSourceCode.contentType().name() + '-tree-item');
+    this.urlDiff = urlDiff;
+    //this.listItemElement.classList.add('navigator-' + uiSourceCode.contentType().name() + '-tree-item');
 
     var iconType = 'largeicon-navigator-file';
-    if (this.uiSourceCode.contentType() === Common.resourceTypes.Snippet)
-      iconType = 'largeicon-navigator-snippet';
+    // if (this.uiSourceCode.contentType() === Common.resourceTypes.Snippet)
+    //   iconType = 'largeicon-navigator-snippet';
     var defaultIcon = UI.Icon.create(iconType, 'icon');
     this.setLeadingIcons([defaultIcon]);
 
     this._eventListeners = [
-      uiSourceCode.addEventListener(Workspace.UISourceCode.Events.TitleChanged, this._updateTitle, this),
-      uiSourceCode.addEventListener(Workspace.UISourceCode.Events.WorkingCopyChanged, this._updateTitle, this),
-      uiSourceCode.addEventListener(Workspace.UISourceCode.Events.WorkingCopyCommitted, this._updateTitle, this)
     ];
 
     this._updateTitle();
   }
 
   _updateTitle() {
-    var titleText = this.uiSourceCode.displayName();
-    if (this.uiSourceCode.isDirty() || Persistence.persistence.hasUnsavedCommittedChanges(this.uiSourceCode))
-      titleText = '*' + titleText;
+    var parsedURL = this.urlDiff.parsedURL();
+    var titleText = parsedURL.displayName;
+    // if (this.uiSourceCode.isDirty() || Persistence.persistence.hasUnsavedCommittedChanges(this.uiSourceCode))
+    //   titleText = '*' + titleText;
     this.title = titleText;
 
-    var tooltip = this.uiSourceCode.url();
-    if (this.uiSourceCode.contentType().isFromSourceMap())
-      tooltip = Common.UIString('%s (from source map)', this.uiSourceCode.displayName());
+    var tooltip = parsedURL.url;
+    // if (this.uiSourceCode.contentType().isFromSourceMap())
+    //   tooltip = Common.UIString('%s (from source map)', this.uiSourceCode.displayName());
     this.tooltip = tooltip;
   }
 

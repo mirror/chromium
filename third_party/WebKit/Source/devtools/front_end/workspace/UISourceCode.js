@@ -294,10 +294,12 @@ Workspace.UISourceCode = class extends Common.Object {
    * @return {!Promise<?string>}
    */
   requestOriginalContent() {
+    if (this._originalContentPromise)
+      return this._originalContentPromise;
     var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
+    this._originalContentPromise = new Promise(fulfill => callback = fulfill);
     this._project.requestFileContent(this, callback);
-    return promise;
+    return this._originalContentPromise;
   }
 
   /**

@@ -46,6 +46,7 @@ SourceFrame.ResourceSourceFrame = class extends SourceFrame.SourceFrame {
    */
   static createSearchableView(resource, highlighterType) {
     var sourceFrame = new SourceFrame.ResourceSourceFrame(resource);
+    sourceFrame.setEditable(true);
     sourceFrame.setHighlighterType(highlighterType);
     var searchableView = new UI.SearchableView(sourceFrame);
     searchableView.setPlaceholder(Common.UIString('Find'));

@@ -17,11 +17,11 @@ Changes.ChangesView = class extends UI.VBox {
     this._workspaceDiff = WorkspaceDiff.workspaceDiff();
     this._changesSidebar = new Changes.ChangesSidebar(this._workspaceDiff);
     this._changesSidebar.addEventListener(
-        Changes.ChangesSidebar.Events.SelectedUISourceCodeChanged, this._selectedUISourceCodeChanged, this);
+        Changes.ChangesSidebar.Events.SelectedUrlDiffChanged, this._selectedUrlDiffChanged, this);
     splitWidget.setSidebarWidget(this._changesSidebar);
 
-    /** @type {?Workspace.UISourceCode} */
-    this._selectedUISourceCode = null;
+    /** @type {?WorkspaceDiff.WorkspaceDiff.UrlDiff} */
+    this._selectedUrlDiff = null;
 
     /** @type {!Array<!Changes.ChangesView.Row>} */
     this._diffRows = [];
@@ -47,18 +47,18 @@ Changes.ChangesView = class extends UI.VBox {
     this._toolbar.appendToolbarItem(this._diffStats);
     this._toolbar.setEnabled(false);
 
-    this._selectedUISourceCodeChanged();
+    this._selectedUrlDiffChanged();
   }
 
-  _selectedUISourceCodeChanged() {
-    this._revealUISourceCode(this._changesSidebar.selectedUISourceCode());
+  _selectedUrlDiffChanged() {
+    this._revealUrlDiff(this._changesSidebar.selectedUrlDiff());
   }
 
   _revert() {
-    var uiSourceCode = this._selectedUISourceCode;
-    if (!uiSourceCode)
+    var urlDiff = this._selectedUrlDiff;
+    if (!urlDiff)
       return;
-    uiSourceCode.requestOriginalContent().then(original => uiSourceCode.addRevision(original || ''));
+    //urlDiff.requestOriginalContent().then(original => uiSourceCode.addRevision(original || ''));
   }
 
   /**
@@ -69,24 +69,24 @@ Changes.ChangesView = class extends UI.VBox {
     if (!selection.isEmpty())
       return;
     var row = this._diffRows[selection.startLine];
-    Common.Revealer.reveal(
-        this._selectedUISourceCode.uiLocation(row.currentLineNumber - 1, selection.startColumn), false);
+    // Common.Revealer.reveal(
+    //     this._selectedUISourceCode.uiLocation(row.currentLineNumber - 1, selection.startColumn), false);
     event.consume(true);
   }
 
   /**
-   * @param {?Workspace.UISourceCode} uiSourceCode
+   * @param {?WorkspaceDiff.WorkspaceDiff.UrlDiff} urlDiff
    */
-  _revealUISourceCode(uiSourceCode) {
-    if (this._selectedUISourceCode === uiSourceCode)
+  _revealUrlDiff(urlDiff) {
+    if (this._selectedUrlDiff === urlDiff)
       return;
 
-    if (this._selectedUISourceCode)
-      this._workspaceDiff.unsubscribeFromDiffChange(this._selectedUISourceCode, this._refreshDiff, this);
-    if (uiSourceCode && this.isShowing())
-      this._workspaceDiff.subscribeToDiffChange(uiSourceCode, this._refreshDiff, this);
+    if (this._selectedUrlDiff)
+      this._workspaceDiff.unsubscribeFromDiffChange(this._selectedUrlDiff, this._refreshDiff, this);
+    if (urlDiff && this.isShowing())
+      this._workspaceDiff.subscribeToDiffChange(urlDiff, this._refreshDiff, this);
 
-    this._selectedUISourceCode = uiSourceCode;
+    this._selectedUrlDiff = urlDiff;
     this._refreshDiff();
   }
 
@@ -101,13 +101,13 @@ Changes.ChangesView = class extends UI.VBox {
     if (!this.isShowing())
       return;
 
-    if (!this._selectedUISourceCode) {
+    if (!this._selectedUrlDiff) {
       this._renderDiffRows(null);
       return;
     }
-    var uiSourceCode = this._selectedUISourceCode;
-    this._workspaceDiff.requestDiff(uiSourceCode).then(diff => {
-      if (this._selectedUISourceCode !== uiSourceCode)
+    var urlDiff = this._selectedUrlDiff;
+    urlDiff.requestDiff().then(diff => {
+      if (this._selectedUrlDiff !== urlDiff)
         return;
       this._renderDiffRows(diff);
     });
@@ -178,7 +178,7 @@ Changes.ChangesView = class extends UI.VBox {
       this._editor.setHighlightMode({
         name: 'devtools-diff',
         diffRows: this._diffRows,
-        mimeType: /** @type {!Workspace.UISourceCode} */ (this._selectedUISourceCode).mimeType(),
+        mimeType: /** @type {!Workspace.UISourceCode} */ (this._selectedUrlDiff).mimeType(),
         baselineLines: originalLines,
         currentLines: currentLines
       });
