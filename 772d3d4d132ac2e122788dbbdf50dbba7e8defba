@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ff5a4a_e609520d",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-16T00:22:00Z",
+      "side": 1,
+      "message": "What do these do?",
+      "range": {
+        "startLine": 616,
+        "startChar": 6,
+        "endLine": 617,
+        "endChar": 71
+      },
+      "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af022da_f4020b22",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-16T00:22:00Z",
+      "side": 1,
+      "message": "nit: s/ablation/ablation experiment\n\nAlso I don\u0027t think \"ablation\" is a very well-known term outside of Ads (or I\u0027ve just never heard it before now).  I think the next line makes it clear what\u0027s going on, though.",
+      "range": {
+        "startLine": 2088,
+        "startChar": 34,
+        "endLine": 2088,
+        "endChar": 42
+      },
+      "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31292a7_9cb484a4",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-16T00:22:00Z",
+      "side": 1,
+      "message": "// Test that there were no credit card suggestions, despite having local credit card profiles.",
+      "range": {
+        "startLine": 2109,
+        "startChar": 2,
+        "endLine": 2109,
+        "endChar": 51
+      },
+      "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
