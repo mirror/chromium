@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff6b7e5_a1c3c119",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T23:14:42Z",
+      "side": 1,
+      "message": "Do we want to have a translatable resource ID like IDS_UTILITY_PROCESS_PWG_RASTER_CONVERTOR_NAME? One place that shows up in is the task manager for utility processes. Not sure if this will show up in the task manager because (a) Mojo and (b) headless.",
+      "revId": "f991b636693b48a0f3d057779348ce28212cdf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
