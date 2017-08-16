@@ -34,6 +34,8 @@
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/transform_util.h"
 
+#include "chrome/browser/vr/elements/alert_dialog.h"
+
 namespace vr {
 
 using TargetProperty::BOUNDS;
@@ -175,7 +177,8 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateExitPrompt();
   CreateToasts();
   CreateSplashScreen();
-  CreateUnderDevelopmentNotice();
+  // CreateUnderDevelopmentNotice();
+  CreateAlertDialog();
 
   ConfigureScene();
 }
@@ -359,6 +362,29 @@ void UiSceneManager::CreateUnderDevelopmentNotice() {
   url_bar_->AddChild(text.get());
   control_elements_.push_back(text.get());
   scene_->AddUiElement(std::move(text));
+}
+
+void UiSceneManager::CreateAlertDialog() {
+  base::string16 temp_text;
+  std::unique_ptr<AlertDialog> dialog =
+      base::MakeUnique<AlertDialog>(512, kUnderDevelopmentNoticeFontHeightM * 2,
+                                    vector_icons::kLocationOnIcon, temp_text);
+  dialog->set_debug_id(kUnderDevelopmentNotice);
+  dialog->set_id(AllocateId());
+  dialog->set_draw_phase(kPhaseForeground);
+  dialog->set_hit_testable(false);
+  dialog->SetSize(kUnderDevelopmentNoticeWidthM * 2,
+                  kUnderDevelopmentNoticeHeightM * 2);
+  dialog->SetTranslate(0, -kUnderDevelopmentNoticeVerticalOffsetM, 0);
+  dialog->SetRotate(1, 0, 0, kUnderDevelopmentNoticeRotationRad);
+  dialog->SetEnabled(false);
+  dialog->SetVisible(false);
+  dialog->set_y_anchoring(YAnchoring::YBOTTOM);
+  url_bar_->AddChild(dialog.get());
+  control_elements_.push_back(dialog.get());
+  alert_dialog_ = dialog.get();
+  dialog_is_up_ = false;
+  scene_->AddUiElement(std::move(dialog));
 }
 
 void UiSceneManager::CreateBackground() {
@@ -649,6 +675,7 @@ void UiSceneManager::ConfigureScene() {
   ConfigureSecurityWarnings();
   ConfigureIndicators();
   ConfigureBackgroundColor();
+  ConfigureAlertDialog();
 }
 
 void UiSceneManager::ConfigureBackgroundColor() {
@@ -693,6 +720,16 @@ void UiSceneManager::SetLocationAccessIndicator(bool enabled) {
 void UiSceneManager::SetBluetoothConnectedIndicator(bool enabled) {
   bluetooth_connected_ = enabled;
   ConfigureIndicators();
+}
+
+void UiSceneManager::SetAlertText(base::string16 text) {
+  dialog_is_up_ = true;
+  ConfigureAlertDialog();
+  alert_dialog_->SetText(text);
+}
+
+void UiSceneManager::SetAlertButton(base::string16 text) {
+  //TODO Fill it up
 }
 
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {
@@ -762,6 +799,10 @@ void UiSceneManager::ConfigureIndicators() {
   screen_capture_indicator_->SetVisible(allowed && screen_capturing_);
   location_access_indicator_->SetVisible(allowed && location_access_);
   bluetooth_connected_indicator_->SetVisible(allowed && bluetooth_connected_);
+}
+
+void UiSceneManager::ConfigureAlertDialog() {
+  alert_dialog_->SetVisible(dialog_is_up_);
 }
 
 void UiSceneManager::ConfigureExclusiveScreenToast() {

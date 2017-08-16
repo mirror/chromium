@@ -12,6 +12,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ResourceId;
 import org.chromium.chrome.browser.permissions.AndroidPermissionRequester;
 import org.chromium.chrome.browser.tab.Tab;
+import android.util.Log;
 
 /**
  * An infobar used for prompting the user to grant a web API permission.
@@ -112,6 +113,7 @@ public class PermissionInfoBar
             int[] contentSettingsTypes, boolean showPersistenceToggle) {
         int drawableId = ResourceId.mapToDrawableId(enumeratedIconId);
 
+        Log.e("PermissionInfoBar", "VRP");
         PermissionInfoBar infoBar = new PermissionInfoBar(tab, contentSettingsTypes, drawableId,
                 iconBitmap, message, linkText, buttonOk, buttonCancel, showPersistenceToggle);
 

@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import android.util.Log;
 
 /**
  * Methods to handle requesting native permissions from Android when the user grants a website a
@@ -143,6 +144,7 @@ public class AndroidPermissionRequester {
                     TextView dialogText = (TextView) view.findViewById(R.id.text);
                     dialogText.setText(deniedStringId);
 
+                    Log.e("AndroidPermissionRequester", "VRP");
                     AlertDialog.Builder builder =
                             new AlertDialog.Builder(activity, R.style.AlertDialogTheme);
                     builder.setView(view);

@@ -36,6 +36,8 @@ static_library("vr_android") {
     "vr_shell.h",
     "vr_shell_delegate.cc",
     "vr_shell_delegate.h",
+    "vr_alert_dialog.cc",
+    "vr_alert_dialog.h",
     "vr_shell_gl.cc",
     "vr_shell_gl.h",
     "vr_usage_monitor.cc",
@@ -81,6 +83,7 @@ generate_jni("vr_shell_jni_headers") {
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCoreInfo.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+    "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
   ]
   jni_package = "vr_shell"
 }
