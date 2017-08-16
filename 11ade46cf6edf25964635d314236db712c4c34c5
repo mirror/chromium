@@ -22,6 +22,30 @@
       "revId": "11ade46cf6edf25964635d314236db712c4c34c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01bc56a0_f95b04ed",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-16T21:35:06Z",
+      "side": 1,
+      "message": "Done.\nI have made a mistake before, 9009 and 5 should be covered by GetAppOutputInternal() (https://cs.chromium.org/chromium/src/base/process/launch_win.cc?rcl\u003d2edbbbdfb91b9d9ada8fae3eef033b2210569c14\u0026l\u003d45): it triggers assertion failure when creating process failed. So both the exit_code and result value of GetAppOutputWithExitCode() on Windows cannot tell us more information.",
+      "parentUuid": "e2a70e59_6a08db60",
+      "range": {
+        "startLine": 125,
+        "startChar": 48,
+        "endLine": 125,
+        "endChar": 49
+      },
+      "revId": "11ade46cf6edf25964635d314236db712c4c34c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
