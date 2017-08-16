@@ -16,6 +16,24 @@
       "revId": "cf50e40a3791dc5814897e845c588da4791d854d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7921f2_90b8e4ab",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-08-16T21:45:54Z",
+      "side": 1,
+      "message": "I understand why you feel uncomfortable with introducing different kinds of StatusCallback, going back to StatusCallBack for now.",
+      "parentUuid": "3a57f8ce_f323da5e",
+      "revId": "cf50e40a3791dc5814897e845c588da4791d854d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
