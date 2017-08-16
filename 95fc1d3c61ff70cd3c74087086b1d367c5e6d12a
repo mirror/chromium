@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "be18d9cd_1c3ca83a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T17:39:54Z",
+      "side": 1,
+      "message": "We can experiment with this and do it in a separate change. It being the same as we currently have is fine for now.",
+      "parentUuid": "60d02238_949e89d4",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 46
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5a1952_a09c31ef",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 5
