@@ -34,6 +34,24 @@
       "revId": "ea7ff6f0cd92cdf1c407f7f3a0873abb8c80e2d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b564880_6f63c813",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-16T20:14:07Z",
+      "side": 1,
+      "message": "Yech, this is failing because the chrome_elf implementation is returning an empty user data dir in component builds. I don\u0027t understand how this would happen, the test_stubs implementation has to be seeing a different CommandLine::ForCurrentProcess()... I\u0027m rebuilding to debug - would you like me to revert this in the meantime?",
+      "parentUuid": "e3e9d94d_eba4836b",
+      "revId": "ea7ff6f0cd92cdf1c407f7f3a0873abb8c80e2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
