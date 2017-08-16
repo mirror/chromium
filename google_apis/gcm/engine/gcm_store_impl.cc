@@ -303,7 +303,7 @@ LoadStatus GCMStoreImpl::Backend::OpenStoreAndLoadData(StoreOpenMode open_mode,
   options.create_if_missing = open_mode == CREATE_IF_MISSING;
   options.paranoid_checks = true;
   leveldb::Status status =
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_);
+      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), base::nullopt, &db_);
   UMA_HISTOGRAM_ENUMERATION("GCM.Database.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(status),
                             leveldb_env::LEVELDB_STATUS_MAX);

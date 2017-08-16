@@ -1230,7 +1230,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::LazyOpen(
   }
 
   Status status = LevelDBStatusToStatus(
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
+      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), base::nullopt, &db_));
   HandleOpenResult(FROM_HERE, status);
   if (status != STATUS_OK) {
     // TODO(nhiroki): Should we retry to open the database?

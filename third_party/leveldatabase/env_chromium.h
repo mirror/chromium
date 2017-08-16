@@ -17,6 +17,8 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/metrics/histogram.h"
+#include "base/optional.h"
+#include "base/trace_event/memory_allocator_dump_guid.h"
 #include "leveldb/db.h"
 #include "leveldb/env.h"
 #include "port/port_chromium.h"
@@ -248,6 +250,8 @@ class DBTracker {
    public:
     // Name that OpenDatabase() was called with.
     virtual const std::string& name() const = 0;
+    virtual const base::Optional<base::trace_event::MemoryAllocatorDumpGuid>&
+    global_dump_id() const = 0;
   };
 
   // Opens a database and starts tracking it. As long as the opened database
@@ -255,9 +259,15 @@ class DBTracker {
   // memory-infra and is enumerated by VisitDatabases() method.
   // This function is an implementation detail of leveldb_env::OpenDB(), and
   // has similar guarantees regarding |dbptr| argument.
-  leveldb::Status OpenDatabase(const leveldb::Options& options,
-                               const std::string& name,
-                               TrackedDB** dbptr);
+  // The |global_dump_id| is the id of the global dump created by the
+  // client/embedder which is associated specifically with the current database.
+  // The tracker uses the |global_dump_id| to create global dump with
+  // appropriate database size.
+  leveldb::Status OpenDatabase(
+      const leveldb::Options& options,
+      const std::string& name,
+      base::Optional<base::trace_event::MemoryAllocatorDumpGuid> global_dump_id,
+      TrackedDB** dbptr);
 
   using DatabaseVisitor = base::RepeatingCallback<void(TrackedDB*)>;
 
@@ -291,9 +301,11 @@ class DBTracker {
 // details). The function guarantees that:
 //   1. |dbptr| is not touched on failure
 //   2. |dbptr| is not NULL on success
-leveldb::Status OpenDB(const leveldb_env::Options& options,
-                       const std::string& name,
-                       std::unique_ptr<leveldb::DB>* dbptr);
+leveldb::Status OpenDB(
+    const leveldb_env::Options& options,
+    const std::string& name,
+    base::Optional<base::trace_event::MemoryAllocatorDumpGuid> global_dump_id,
+    std::unique_ptr<leveldb::DB>* dbptr);
 
 }  // namespace leveldb_env
 

@@ -184,7 +184,7 @@ leveldb::Status ModelTypeStoreBackend::OpenDatabase(const std::string& path,
   if (env)
     options.env = env;
 
-  return leveldb_env::OpenDB(options, path, &db_);
+  return leveldb_env::OpenDB(options, path, base::nullopt, &db_);
 }
 
 leveldb::Status ModelTypeStoreBackend::DestroyDatabase(const std::string& path,

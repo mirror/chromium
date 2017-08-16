@@ -52,12 +52,13 @@ bool LevelDB::InitWithOptions(const base::FilePath& database_dir,
 
   std::string path = database_dir.AsUTF8Unsafe();
 
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status =
+      leveldb_env::OpenDB(options, path, base::nullopt, &db_);
   if (open_histogram_)
     open_histogram_->Add(leveldb_env::GetLevelDBStatusUMAValue(status));
   if (status.IsCorruption()) {
     base::DeleteFile(database_dir, true);
-    status = leveldb_env::OpenDB(options, path, &db_);
+    status = leveldb_env::OpenDB(options, path, base::nullopt, &db_);
   }
 
   if (status.ok())

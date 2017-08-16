@@ -132,7 +132,7 @@ NotificationDatabase::Status NotificationDatabase::Open(
   }
 
   Status status = LevelDBStatusToStatus(
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
+      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), base::nullopt, &db_));
   if (status != STATUS_OK)
     return status;
 

@@ -19,6 +19,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/filter_policy.h"
 #include "third_party/leveldatabase/src/include/leveldb/slice.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace leveldb {
 
 LevelDBServiceImpl::LevelDBServiceImpl(
@@ -30,8 +32,7 @@ LevelDBServiceImpl::~LevelDBServiceImpl() {}
 void LevelDBServiceImpl::Open(
     filesystem::mojom::DirectoryPtr directory,
     const std::string& dbname,
-    const base::Optional<base::trace_event::MemoryAllocatorDumpGuid>&
-        memory_dump_id,
+    const base::Optional<MemoryAllocatorDumpGuid>& memory_dump_id,
     leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
     OpenCallback callback) {
   OpenWithOptions(leveldb::mojom::OpenOptions::New(), std::move(directory),
@@ -43,8 +44,7 @@ void LevelDBServiceImpl::OpenWithOptions(
     leveldb::mojom::OpenOptionsPtr open_options,
     filesystem::mojom::DirectoryPtr directory,
     const std::string& dbname,
-    const base::Optional<base::trace_event::MemoryAllocatorDumpGuid>&
-        memory_dump_id,
+    const base::Optional<MemoryAllocatorDumpGuid>& memory_dump_id,
     leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
     OpenCallback callback) {
   leveldb_env::Options options;
@@ -68,21 +68,20 @@ void LevelDBServiceImpl::OpenWithOptions(
   options.block_cache = cache.get();
 
   std::unique_ptr<leveldb::DB> db;
-  leveldb::Status s = leveldb_env::OpenDB(options, dbname, &db);
+  leveldb::Status s = leveldb_env::OpenDB(options, dbname, memory_dump_id, &db);
 
   if (s.ok()) {
-    mojo::MakeStrongAssociatedBinding(base::MakeUnique<LevelDBDatabaseImpl>(
-                                          std::move(env_mojo), std::move(db),
-                                          std::move(cache), memory_dump_id),
-                                      std::move(database));
+    mojo::MakeStrongAssociatedBinding(
+        base::MakeUnique<LevelDBDatabaseImpl>(std::move(env_mojo),
+                                              std::move(db), std::move(cache)),
+        std::move(database));
   }
 
   std::move(callback).Run(LeveldbStatusToError(s));
 }
 
 void LevelDBServiceImpl::OpenInMemory(
-    const base::Optional<base::trace_event::MemoryAllocatorDumpGuid>&
-        memory_dump_id,
+    const base::Optional<MemoryAllocatorDumpGuid>& memory_dump_id,
     leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
     OpenCallback callback) {
   leveldb_env::Options options;
@@ -94,12 +93,12 @@ void LevelDBServiceImpl::OpenInMemory(
   options.env = env.get();
 
   std::unique_ptr<leveldb::DB> db;
-  leveldb::Status s = leveldb_env::OpenDB(options, "", &db);
+  leveldb::Status s = leveldb_env::OpenDB(options, "", memory_dump_id, &db);
 
   if (s.ok()) {
     mojo::MakeStrongAssociatedBinding(
         base::MakeUnique<LevelDBDatabaseImpl>(std::move(env), std::move(db),
-                                              nullptr, memory_dump_id),
+                                              nullptr),
         std::move(database));
   }
 

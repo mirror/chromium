@@ -87,7 +87,8 @@ class MetadataDatabaseIndexTest : public testing::Test {
     options.create_if_missing = true;
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(options, "", &db);
+    leveldb::Status status =
+        leveldb_env::OpenDB(options, "", base::nullopt, &db);
     ASSERT_TRUE(status.ok());
 
     db_.reset(new LevelDBWrapper(std::move(db)));

@@ -141,7 +141,7 @@ leveldb::Status OpenDB(
   options.block_cache = default_block_cache;
 
   // ChromiumEnv assumes UTF8, converts back to FilePath before using.
-  return leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), db);
+  return leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), base::nullopt, db);
 }
 
 int CheckFreeSpace(const char* const type, const base::FilePath& file_name) {
