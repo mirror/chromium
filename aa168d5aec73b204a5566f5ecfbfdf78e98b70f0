@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab92835f_d0f6725e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T00:14:29Z",
+      "side": 1,
+      "message": "return not needed",
+      "revId": "aa168d5aec73b204a5566f5ecfbfdf78e98b70f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
