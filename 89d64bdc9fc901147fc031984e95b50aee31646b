@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ea30cf77_d77b30fc",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T09:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8d14265_b54496a9",
+      "range": {
+        "startLine": 243,
+        "startChar": 14,
+        "endLine": 243,
+        "endChar": 19
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c28bea_2cb16e51",
         "filename": "build/mac/tweak_info_plist.py",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2d3a2a_2ccc578b",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T09:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c28bea_2cb16e51",
+      "range": {
+        "startLine": 245,
+        "startChar": 7,
+        "endLine": 245,
+        "endChar": 29
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "71712c8d_ffba8184",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T09:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd08934_734156a1",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 40
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1741a25_a09671b7",
         "filename": "ios/clean/chrome/app/steps/breakpad_initializer.mm",
         "patchSetId": 2
@@ -108,6 +180,24 @@
       "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81b3ac8_0476adc8",
+        "filename": "ios/clean/chrome/app/steps/breakpad_initializer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T09:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1741a25_a09671b7",
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
