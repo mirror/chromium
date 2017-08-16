@@ -123,7 +123,7 @@ class CookieStoreIOSTest : public testing::Test {
       NSHTTPCookieValue : base::SysUTF8ToNSString(value),
       NSHTTPCookieDomain : base::SysUTF8ToNSString(url.host()),
     }]];
-    net::CookieStoreIOS::NotifySystemCookiesChanged();
+    NotifySystemCookiesChanged();
     base::RunLoop().RunUntilIdle();
   }
 
@@ -138,8 +138,18 @@ class CookieStoreIOSTest : public testing::Test {
         break;
       }
     }
-    net::CookieStoreIOS::NotifySystemCookiesChanged();
+    NotifySystemCookiesChanged();
     base::RunLoop().RunUntilIdle();
+  }
+
+  // Notifies the CookieStore that the system cookies have changed.
+  void NotifySystemCookiesChanged() {
+    NSHTTPCookieStorage* storage =
+        [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSNotification* notification = [NSNotification
+        notificationWithName:NSHTTPCookieManagerCookiesChangedNotification
+                      object:storage];
+    store_->NotifySystemCookiesChanged(notification);
   }
 
  protected:
@@ -187,7 +197,7 @@ TEST_F(CookieStoreIOSTest, DeleteCallsHook) {
   EXPECT_EQ(1U, cookies_removed_.size());
   store_->DeleteCookieAsync(kTestCookieURL, "abc",
                             base::Bind(&IgnoreBoolean, false));
-  CookieStoreIOS::NotifySystemCookiesChanged();
+  NotifySystemCookiesChanged();
   base::RunLoop().RunUntilIdle();
 }
 

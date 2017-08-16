@@ -17,6 +17,7 @@
 #include "base/cancelable_callback.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
@@ -25,9 +26,14 @@
 #include "net/cookies/cookie_store.h"
 #include "url/gurl.h"
 
+@class NSArray;
 @class NSHTTPCookie;
 @class NSHTTPCookieStorage;
-@class NSArray;
+@class NSNotification;
+
+namespace base {
+class SingleThreadTaskRunner;
+}
 
 namespace net {
 
@@ -68,7 +74,7 @@ class CookieStoreIOS : public net::CookieStore,
   // |NSHTTPCookieStorage sharedHTTPCookieStorage| changes.
   // Affects only those CookieStoreIOS instances that are backed by
   // |NSHTTPCookieStorage sharedHTTPCookieStorage|.
-  static void NotifySystemCookiesChanged();
+  void NotifySystemCookiesChanged(NSNotification* notification);
 
   // Only one cookie store may enable metrics.
   void SetMetricsEnabled();
@@ -167,10 +173,12 @@ class CookieStoreIOS : public net::CookieStore,
   std::unique_ptr<net::CookieMonster> cookie_monster_;
   base::scoped_nsobject<NSHTTPCookieStorage> system_store_;
   std::unique_ptr<CookieCreationTimeManager> creation_time_manager_;
+  base::scoped_nsprotocol<id> system_cookies_changed_observer_;
   bool metrics_enabled_;
   base::CancelableClosure flush_closure_;
 
   base::ThreadChecker thread_checker_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // Cookie notification methods.
   // The cookie cache is updated from both the system store and the

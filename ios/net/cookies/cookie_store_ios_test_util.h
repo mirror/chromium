@@ -9,8 +9,8 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "ios/net/cookies/cookie_store_ios.h"
 #include "net/cookies/cookie_monster.h"
-#include "net/cookies/cookie_store.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -74,7 +74,7 @@ void RecordCookieChanges(std::vector<net::CanonicalCookie>* out_cookies,
 // Sets a cookie.
 void SetCookie(const std::string& cookie_line,
                const GURL& url,
-               net::CookieStore* store);
+               net::CookieStoreIOS* store);
 
 // Clears the underlying NSHTTPCookieStorage.
 void ClearCookies();

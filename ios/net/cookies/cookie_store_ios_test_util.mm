@@ -127,12 +127,16 @@ void RecordCookieChanges(std::vector<net::CanonicalCookie>* out_cookies,
 
 void SetCookie(const std::string& cookie_line,
                const GURL& url,
-               net::CookieStore* store) {
+               net::CookieStoreIOS* store) {
   net::CookieOptions options;
   options.set_include_httponly();
   store->SetCookieWithOptionsAsync(url, cookie_line, options,
                                    base::Bind(&IgnoreBoolean));
-  net::CookieStoreIOS::NotifySystemCookiesChanged();
+  NSHTTPCookieStorage* storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+  NSNotification* notification = [NSNotification
+      notificationWithName:NSHTTPCookieManagerCookiesChangedNotification
+                    object:storage];
+  store->NotifySystemCookiesChanged(notification);
   // Wait until the flush is posted.
   base::RunLoop().RunUntilIdle();
 }

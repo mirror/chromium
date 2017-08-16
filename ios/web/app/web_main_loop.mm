@@ -21,7 +21,6 @@
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
-#import "ios/web/net/cookie_notification_bridge.h"
 #include "ios/web/public/app/web_main_parts.h"
 #include "ios/web/public/global_state/ios_global_state.h"
 #import "ios/web/public/web_client.h"
@@ -268,7 +267,6 @@ void WebMainLoop::InitializeMainThread() {
 }
 
 int WebMainLoop::WebThreadsStarted() {
-  cookie_notification_bridge_.reset(new CookieNotificationBridge);
   service_manager_context_ = base::MakeUnique<ServiceManagerContext>();
   return result_code_;
 }
