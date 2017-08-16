@@ -41,12 +41,13 @@ public class PaymentRequestServiceWorkerPaymentAppTest {
         PaymentAppFactory.getInstance().addAdditionalFactory(
                 (webContents, methodNames, callback) -> {
                     String[] supportedMethodNames = {"https://bobpay.com", "basic-card"};
-                    callback.onPaymentAppCreated(new ServiceWorkerPaymentApp(webContents,
-                            0 /* registrationId */, "BobPay" /* label */,
-                            "https://bobpay.com" /* sublabel */, null /* icon */,
-                            hasSupportedMethods ? supportedMethodNames
-                                    : new String[0] /* methodNames */,
-                            new String[0] /* preferredRelatedApplicationIds */));
+                    callback.onPaymentAppCreated(
+                            new ServiceWorkerPaymentApp(webContents, 0 /* registrationId */,
+                                    "https://bobpay.com" /* scope */, "BobPay" /* label */,
+                                    "https://bobpay.com" /* sublabel */, null /* icon */,
+                                    hasSupportedMethods ? supportedMethodNames
+                                                        : new String[0] /* methodNames */,
+                                    new String[0] /* preferredRelatedApplicationIds */));
                     callback.onAllPaymentAppsCreated();
                 });
     }

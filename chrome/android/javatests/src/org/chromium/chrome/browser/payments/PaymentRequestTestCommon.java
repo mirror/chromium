@@ -861,6 +861,11 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         }
 
         @Override
+        public String getCanDedupedApplicationId() {
+            return null;
+        }
+
+        @Override
         public String getAppIdentifier() {
             return TestPay.this.toString();
         }
