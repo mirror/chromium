@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2c1a164_fbbc482d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-16T22:53:26Z",
+      "side": 1,
+      "message": "Yes, though I override the method in the duration one to prepend the \"/ \"",
+      "parentUuid": "f01cc19e_d9f890ee",
+      "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03057748_1857a8ec",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa55f391_0705a966",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-16T22:53:26Z",
+      "side": 1,
+      "message": "Done. With the change, I also went ahead and made it happen anytime SetCurrentValue is called (since we were manually doing it each time anyway)",
+      "parentUuid": "03057748_1857a8ec",
+      "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae94838_0bd61f82",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-16T22:53:26Z",
+      "side": 1,
+      "message": "With the big change to move into media_controls module, I also added a quick check that the duration time has the \"/ \". Added negative hour test",
+      "parentUuid": "ef02ddf7_f91b0d46",
+      "range": {
+        "startLine": 90,
+        "startChar": 58,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "29fb7d907f5b0c38930aff418a5a3685af512bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
