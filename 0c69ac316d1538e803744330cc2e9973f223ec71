@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d276486a_8f642733",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-16T21:14:34Z",
+      "side": 1,
+      "message": "Does this logic make sense? I feel like it\u0027s a little bulky. If you have better ideas for how to perform this check or my comment doesn\u0027t make sense, please lmk!",
+      "revId": "0c69ac316d1538e803744330cc2e9973f223ec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
