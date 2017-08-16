@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e53feaa9_34377b8e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-16T17:40:52Z",
+      "side": 1,
+      "message": "nit:\nthis.filters_ \u003d ...",
+      "range": {
+        "startLine": 1434,
+        "startChar": 4,
+        "endLine": 1434,
+        "endChar": 15
+      },
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63557cea_e7bcbf47",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-16T17:40:52Z",
+      "side": 1,
+      "message": "I think this should be\nif (key) {\n  filter \u003d ...\n} else {\n  ...\n}\nOr else we are ignoring key completely, which is not what user expects.",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96593a39_91c7e1bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-16T17:40:52Z",
+      "side": 1,
+      "message": "I think this should be just string.",
+      "range": {
+        "startLine": 142,
+        "startChar": 97,
+        "endLine": 142,
+        "endChar": 113
+      },
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c937f176_11134a02",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-16T17:40:52Z",
+      "side": 1,
+      "message": "Why template?",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22c1ac3_fefa7947",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-16T17:40:52Z",
+      "side": 1,
+      "message": "I believe that previously text filters were never negative. I think we can do negative, but only if we support quotes for exact match, e.g. \"-small.png\". Follow up maybe? Also, let\u0027s test this.",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f379017_f9e4e0ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-16T17:40:52Z",
+      "side": 1,
+      "message": "Let\u0027s have more real example?\n\n/small[\\d]+/ url:a.com/b",
+      "revId": "d01185089238ea2772c915fc8053fa42da176865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
