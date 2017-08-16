@@ -29,7 +29,8 @@ std::unique_ptr<T[]> WrapArrayUnique(T* ptr) {
   return std::unique_ptr<T[]>(ptr);
 }
 
-// TODO(crbug.com/755727): Inline all uses (even though this will lose the
+// WTF::makeUnique is std::make_unique.
+// TODO(jbroman): Inline all uses (even though this will lose the
 // static_assert).
 template <typename T, typename... Args>
 auto MakeUnique(Args&&... args)
