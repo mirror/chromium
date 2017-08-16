@@ -22,6 +22,30 @@
       "revId": "3a4c6da74aea33b5da8d77e82dbea4b1c6f82c71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54aff199_e6807810",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-16T18:30:33Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added a comment for now.",
+      "parentUuid": "b9b50c78_6571b324",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "3a4c6da74aea33b5da8d77e82dbea4b1c6f82c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
