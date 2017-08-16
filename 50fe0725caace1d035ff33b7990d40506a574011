@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac21b7e0_15343b24",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Yes to both questions.",
+      "parentUuid": "9f4a529d_a57b7abf",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5829852_df749a3b",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "50fe0725caace1d035ff33b7990d40506a574011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8c53f4_7bd4e197",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5829852_df749a3b",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6cd1d231_862efcb8",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Respective name changes were also made in item_visibility/background.js.",
+      "parentUuid": "2fb63247_494cc73b",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a952a5_b6b83c7e",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "50fe0725caace1d035ff33b7990d40506a574011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d93f3be_2ee7b743",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a952a5_b6b83c7e",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6f46c7cd_2a06bbee",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70dcd595_83c4cd7d",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8e68fa_d505107f",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "50fe0725caace1d035ff33b7990d40506a574011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228e18de_34aba2fd",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8e68fa_d505107f",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6e465ebb_5a056e47",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Does not.",
+      "parentUuid": "940ae140_af8ed729",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8461dcc4_fd22db09",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "50fe0725caace1d035ff33b7990d40506a574011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6e017d_9626ba2d",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8461dcc4_fd22db09",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "698cdb34_9e53a931",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64e30ae9_b7fba490",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d7966b_b11d6613",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "50fe0725caace1d035ff33b7990d40506a574011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee37efb_d4b2e351",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d7966b_b11d6613",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c655d10d_db680295",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81d084f0_b839dd28",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c67849_3e1fc4e9",
         "filename": "chrome/browser/extensions/context_menu_matcher.cc",
         "patchSetId": 6
@@ -203,6 +401,24 @@
       "revId": "50fe0725caace1d035ff33b7990d40506a574011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962d8ccc_0e702369",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-16T18:29:46Z",
+      "side": 1,
+      "message": "Tested removing the parent checks on Mac and Linux. If the parent is hidden, but its children are visible, the UI code does the right thing and doesn\u0027t show the children.\n\nI\u0027ll have to update the tests.",
+      "parentUuid": "e1c67849_3e1fc4e9",
+      "revId": "50fe0725caace1d035ff33b7990d40506a574011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
