@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -13,6 +14,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "net/base/filename_util.h"
 #include "net/base/io_buffer.h"
@@ -25,6 +28,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::StartsWith;
 using net::test::IsError;
 using net::test::IsOk;
 
@@ -33,6 +37,35 @@ namespace net {
 namespace {
 
 const int kBufferSize = 4096;
+
+const char kHeaderStart[] = "<script>start(\"";
+const char kEntryStart[] = "<script>addRow(\"";
+
+bool HasHeader(const std::string& data, const base::FilePath& dir) {
+  std::vector<std::string> lines = base::SplitString(
+      data, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  for (const std::string& line : lines) {
+    if (StartsWith(line, kHeaderStart, base::CompareCase::INSENSITIVE_ASCII))
+      return line.find(dir.BaseName().MaybeAsASCII()) != std::string::npos;
+  }
+  return false;
+}
+
+bool HasEntry(const std::string& data, const base::FilePath& entry) {
+  std::string needle = kEntryStart + entry.BaseName().MaybeAsASCII();
+  return data.find(needle) != std::string::npos;
+}
+
+int GetEntryCount(const std::string& data) {
+  int count = 0;
+  std::vector<std::string> lines = base::SplitString(
+      data, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  for (const std::string& line : lines) {
+    if (StartsWith(line, kEntryStart, base::CompareCase::INSENSITIVE_ASCII))
+      ++count;
+  }
+  return count;
+}
 
 class TestJobFactory : public URLRequestJobFactory {
  public:
@@ -95,7 +128,8 @@ class TestDirectoryURLRequestDelegate : public TestDelegate {
 
 class URLRequestFileDirTest : public testing::Test {
  public:
-  URLRequestFileDirTest() : buffer_(new IOBuffer(kBufferSize)) {}
+  URLRequestFileDirTest()
+      : buffer_(base::MakeRefCounted<IOBuffer>(kBufferSize)) {}
 
  protected:
   TestURLRequestContext context_;
@@ -160,9 +194,9 @@ TEST_F(URLRequestFileDirTest, DirectoryWithASingleFileSync) {
   ASSERT_GT(bytes_read, 0);
   ASSERT_LE(bytes_read, kBufferSize);
   std::string data(buffer_->data(), bytes_read);
-  EXPECT_TRUE(data.find(directory.GetPath().BaseName().MaybeAsASCII()) !=
-              std::string::npos);
-  EXPECT_TRUE(data.find(path.BaseName().MaybeAsASCII()) != std::string::npos);
+  EXPECT_TRUE(HasHeader(data, directory.GetPath()));
+  ASSERT_EQ(2, GetEntryCount(data));
+  EXPECT_TRUE(HasEntry(data, path));
 }
 
 // Test the case where reading the response completes asynchronously.
@@ -186,11 +220,9 @@ TEST_F(URLRequestFileDirTest, DirectoryWithASingleFileAsync) {
 
   ASSERT_GT(delegate.bytes_received(), 0);
   ASSERT_LE(delegate.bytes_received(), kBufferSize);
-  EXPECT_TRUE(delegate.data_received().find(
-                  directory.GetPath().BaseName().MaybeAsASCII()) !=
-              std::string::npos);
-  EXPECT_TRUE(delegate.data_received().find(path.BaseName().MaybeAsASCII()) !=
-              std::string::npos);
+  EXPECT_TRUE(HasHeader(delegate.data_received(), directory.GetPath()));
+  ASSERT_EQ(2, GetEntryCount(delegate.data_received()));
+  EXPECT_TRUE(HasEntry(delegate.data_received(), path));
 }
 
 TEST_F(URLRequestFileDirTest, DirectoryWithAFileAndSubdirectory) {
@@ -219,13 +251,10 @@ TEST_F(URLRequestFileDirTest, DirectoryWithAFileAndSubdirectory) {
 
   ASSERT_GT(delegate.bytes_received(), 0);
   ASSERT_LE(delegate.bytes_received(), kBufferSize);
-  EXPECT_TRUE(delegate.data_received().find(
-                  directory.GetPath().BaseName().MaybeAsASCII()) !=
-              std::string::npos);
-  EXPECT_TRUE(delegate.data_received().find(
-                  sub_dir.BaseName().MaybeAsASCII()) != std::string::npos);
-  EXPECT_TRUE(delegate.data_received().find(path.BaseName().MaybeAsASCII()) !=
-              std::string::npos);
+  EXPECT_TRUE(HasHeader(delegate.data_received(), directory.GetPath()));
+  ASSERT_EQ(3, GetEntryCount(delegate.data_received()));
+  EXPECT_TRUE(HasEntry(delegate.data_received(), sub_dir));
+  EXPECT_TRUE(HasEntry(delegate.data_received(), path));
 }
 
 TEST_F(URLRequestFileDirTest, EmptyDirectory) {
@@ -246,9 +275,8 @@ TEST_F(URLRequestFileDirTest, EmptyDirectory) {
 
   ASSERT_GT(delegate.bytes_received(), 0);
   ASSERT_LE(delegate.bytes_received(), kBufferSize);
-  EXPECT_TRUE(delegate.data_received().find(
-                  directory.GetPath().BaseName().MaybeAsASCII()) !=
-              std::string::npos);
+  EXPECT_TRUE(HasHeader(delegate.data_received(), directory.GetPath()));
+  ASSERT_EQ(1, GetEntryCount(delegate.data_received()));
 }
 
 }  // namespace
