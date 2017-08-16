@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4eaff1a_6449d91a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-16T14:29:38Z",
+      "side": 1,
+      "message": "Nit: while you\u0027re here, you can delete this line; 1 is the default value for |numberOfTouchesRequired|.",
+      "range": {
+        "startLine": 194,
+        "startChar": 22,
+        "endLine": 194,
+        "endChar": 45
+      },
+      "revId": "c7ab5b419edbcaf53c90c88a7a858e49cb2d335c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
