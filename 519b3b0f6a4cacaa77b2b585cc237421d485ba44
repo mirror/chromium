@@ -34,6 +34,24 @@
       "revId": "519b3b0f6a4cacaa77b2b585cc237421d485ba44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a78da7_adc3a2fb",
+        "filename": "sql/connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-16T21:18:35Z",
+      "side": 1,
+      "message": "Ah, right. Thank you very much! I had a brain fail yesterday. I really appreciate that you got the correct explanation in.",
+      "parentUuid": "ff0cd438_69e74839",
+      "revId": "519b3b0f6a4cacaa77b2b585cc237421d485ba44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
