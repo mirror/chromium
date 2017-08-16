@@ -459,6 +459,12 @@ class CONTENT_EXPORT RenderWidget
                                    bool monitor_updates);
   void SetWidgetBinding(mojom::WidgetRequest request);
 
+  // Time-To-First-Active-Paint(TTFAP) type
+  enum {
+    TTFAP_AFTER_PURGED,
+    TTFAP_5MIN_AFTER_BACKGROUNDED,
+  };
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -865,6 +871,9 @@ class CONTENT_EXPORT RenderWidget
   // local root associated with this RenderWidget.
   PepperPluginInstanceImpl* GetFocusedPepperPluginInsideWidget();
 #endif
+  void ClearTimeToFirstActivePaintRecorded();
+  bool IsTimeToFirstActivePaintRecorded(int ttfap_metric_type) const;
+  void RecordTimeToFirstActivePaint(int ttfap_metric_type);
 
   // Indicates whether this widget has focus.
   bool has_focus_;
@@ -888,7 +897,8 @@ class CONTENT_EXPORT RenderWidget
   // session, this info is sent to the browser along with other drag/drop info.
   DragEventSourceInfo possible_drag_event_info_;
 
-  bool time_to_first_active_paint_recorded_;
+  bool time_to_first_active_paint_recorded_after_purged_;
+  bool time_to_first_active_paint_recorded_5min_after_backgrounded_;
   base::TimeTicks was_shown_time_;
 
   // This is initialized to zero and is incremented on each non-same-page
