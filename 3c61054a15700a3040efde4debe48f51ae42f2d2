@@ -33,6 +33,24 @@
       "revId": "3c61054a15700a3040efde4debe48f51ae42f2d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffc2b43_a70f2479",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-16T00:31:11Z",
+      "side": 1,
+      "message": "You\u0027re right, interrupted isn\u0027t set to true in the case of those Android runs (https://storage.googleapis.com/chromium-layout-test-archives/WebKit_Android__Nexus4_/68442/layout-test-results/failing_results.json).\n\nI\u0027ll check to see if I can make it set interrupted to true when something like what happened in those Android runs happens, and then upload a separate CL with that change.",
+      "parentUuid": "896d1fd5_1c26dfa2",
+      "revId": "3c61054a15700a3040efde4debe48f51ae42f2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
