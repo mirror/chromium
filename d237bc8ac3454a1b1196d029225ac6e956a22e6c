@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c997e2_abc0b03f",
+        "filename": "chrome/app/chrome_command_ids.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "nit: more detailed description",
+      "range": {
+        "startLine": 350,
+        "startChar": 9,
+        "endLine": 350,
+        "endChar": 14
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dea4ee1_b4e05c19",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "Not necessary when explicitly calling the method on line 1212",
+      "range": {
+        "startLine": 160,
+        "startChar": 10,
+        "endLine": 160,
+        "endChar": 29
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a4fe01_40235e86",
+        "filename": "chrome/browser/ui/browser_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "unneeded import",
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e8a91d_d6c44795",
+        "filename": "ui/events/event_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "nit: could you note that this is for developing unittests",
+      "range": {
+        "startLine": 39,
+        "startChar": 33,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3613bfec_07130db0",
+        "filename": "ui/events/platform/platform_event_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "imports, aside from the direct header file, are sorted in alphabetical order",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30637778_ef350e22",
+        "filename": "ui/events/platform/platform_event_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc634470_94d9026a",
+        "filename": "ui/events/platform/platform_event_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "Could you document this? Also consider a rename, since this toggles the recorded.",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0f09dc_ec6df43e",
+        "filename": "ui/views/test/platform_event_replayer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "nit: MakeUnique",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c91ef87_d45a5051",
+        "filename": "ui/views/test/platform_event_replayer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "member variables end with _\nso file_, buffer_, size_",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502a03eb_086d9dc0",
+        "filename": "ui/views/test/platform_event_replayer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-16T18:34:01Z",
+      "side": 1,
+      "message": "docs for this class/methods",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "d237bc8ac3454a1b1196d029225ac6e956a22e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
