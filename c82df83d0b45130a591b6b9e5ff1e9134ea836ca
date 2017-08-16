@@ -16,6 +16,24 @@
       "revId": "c82df83d0b45130a591b6b9e5ff1e9134ea836ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6efd73_c01323a7",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-16T06:21:52Z",
+      "side": 1,
+      "message": "Yes. But, I\u0027d put it out of scoped of this CL, just because my tool does not cover that yet.",
+      "parentUuid": "0f82c4f0_8b22d387",
+      "revId": "c82df83d0b45130a591b6b9e5ff1e9134ea836ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
