@@ -16,6 +16,24 @@
       "revId": "ea7ff6f0cd92cdf1c407f7f3a0873abb8c80e2d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e9d94d_eba4836b",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-16T13:17:55Z",
+      "side": 1,
+      "message": "I\u0027m not seeing that - what\u0027s the build configuration, and how do you launch it? Is there a specific test that tickles this?",
+      "parentUuid": "32e74149_1ee154b9",
+      "revId": "ea7ff6f0cd92cdf1c407f7f3a0873abb8c80e2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
