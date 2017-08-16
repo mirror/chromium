@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb98504_b148a7b8",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "passed to",
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b4c26e_4f757fbb",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "if FinishRequest no longer kills us, we don\u0027t need this awkward stuff on lines 339-342 anymore",
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18949b7_a6d9aa10",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "supernit: prefer capital Mojo unless we\u0027re talking about the namespace mojo::",
+      "range": {
+        "startLine": 356,
+        "startChar": 21,
+        "endLine": 356,
+        "endChar": 25
+      },
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8723d8d3_accfd2f0",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "|version_|",
+      "range": {
+        "startLine": 356,
+        "startChar": 33,
+        "endLine": 356,
+        "endChar": 44
+      },
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d232787_c2b20393",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "|this|",
+      "range": {
+        "startLine": 357,
+        "startChar": 31,
+        "endLine": 357,
+        "endChar": 44
+      },
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ab84ae_e735db95",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "Mojo",
+      "range": {
+        "startLine": 357,
+        "startChar": 53,
+        "endLine": 357,
+        "endChar": 57
+      },
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e95510a_edc8afaf",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "Don\u0027t need this anymore",
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b848ba_cde29c68",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:48:53Z",
+      "side": 1,
+      "message": "can we get rid of this class entirely now?\n\n(I wonder if we can even remove EmbeddedWorkerInstance::Listener::OnMessageReceived())\n\n(we can always kick to a followup patch)",
+      "revId": "b5cf061574929af323467e86790b066f5725ab49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
