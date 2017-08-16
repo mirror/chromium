@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e1c4f7b_9912d640",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-16T01:17:26Z",
+      "side": 1,
+      "message": "I /think/ these two lines are not necessary. Those values should already be set in \nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_vars_css.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d69",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e616a2_f7d76876",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-16T01:17:26Z",
+      "side": 1,
+      "message": "Please use the var --settings-error-color here. It\u0027s the same value in the end, but it allows us to update all the \u0027red\u0027 stuff at once if a slightly different shade is desired by UX.\n\nSee\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_vars_css.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d23",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15935ee_4b6a5869",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-16T01:17:26Z",
+      "side": 1,
+      "message": "This is a different grey from our standardized icon color. Please either remove lines 30 to 33 or double check with UX (bettes@) that this color variance is desired.\n\nSee\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_vars_css.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d68",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c96d74_08c942cd",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-16T01:17:26Z",
+      "side": 1,
+      "message": "Could css classes two-line or three-line be used on line 41 instead of using .top-aligned-settings-box? (If that doesn\u0027t work out, the above is okay; it would just be nice to avoid adding a special case here if it can be avoided).",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
