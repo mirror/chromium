@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e6ab94_c1bd3c65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-16T00:20:47Z",
+      "side": 1,
+      "message": "This confused me a bit - perhaps reword as something like \"aria-describedby may refer to elements which are both hidden and containing no text content, but which may have a name computed from an ARIA attribute\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "e6c39118801e951a8b34c770075af4721dc17d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
