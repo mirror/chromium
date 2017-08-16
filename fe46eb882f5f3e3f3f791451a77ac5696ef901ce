@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a3f6dd7_fbb8321c",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-16T15:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a847e491_deb4d9a5",
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "827aa0bc_82dc82b5",
         "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f2450b1a_4ec9fb61",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-16T15:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827aa0bc_82dc82b5",
+      "range": {
+        "startLine": 168,
+        "startChar": 15,
+        "endLine": 168,
+        "endChar": 21
+      },
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d78684e4_d4389d2b",
         "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d12ec13c_be7729b9",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-16T15:52:05Z",
+      "side": 1,
+      "message": "Done. Using ReadFileToStringWithMaxSize [1]. Note that ReadFileToStringWithMaxSize cannot be used in GetDeviceModelId as paths (L.46-67) contain traversal \u0027..\u0027.\n\n[1] https://cs.chromium.org/chromium/src/base/files/file_util.h?rcl\u003d1dcaad6f92610fa44d91e453a666998b3bfa23fb\u0026l\u003d157",
+      "parentUuid": "d78684e4_d4389d2b",
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dc22cf5_4a0db069",
         "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f273ab_25634209",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-16T15:52:05Z",
+      "side": 1,
+      "message": "Done. Anonymous namespace.",
+      "parentUuid": "4dc22cf5_4a0db069",
+      "revId": "fe46eb882f5f3e3f3f791451a77ac5696ef901ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
