@@ -4,8 +4,10 @@
 
 // Custom binding for the desktopCapture API.
 
-var binding = require('binding').Binding.create('desktopCapture');
-var sendRequest = require('sendRequest').sendRequest;
+var binding = apiBridge || require('binding').Binding.create('desktopCapture');
+var sendRequest = bindingUtil ?
+    bindingUtil.sendRequest.bind(bindingUtil) :
+    require('sendRequest').sendRequest;
 var idGenerator = requireNative('id_generator');
 
 binding.registerCustomHook(function(bindingsAPI) {
@@ -30,18 +32,22 @@ binding.registerCustomHook(function(bindingsAPI) {
     }
     var id = idGenerator.GetNextId();
     pendingRequests[id] = callback;
-    sendRequest(this.name,
+    sendRequest('desktopCapture.chooseDesktopMedia',
                 [id, sources, target_tab, onRequestResult.bind(null, id)],
-                this.definition.parameters);
+                apiBridge ? undefined : this.definition.parameters,
+                undefined);
     return id;
   });
 
   apiFunctions.setHandleRequest('cancelChooseDesktopMedia', function(id) {
     if (id in pendingRequests) {
       delete pendingRequests[id];
-      sendRequest(this.name, [id], this.definition.parameters);
+      sendRequest('desktopCapture.cancelChooseDesktopMedia',
+                  [id], apiBridge ? undefined : this.definition.parameters,
+                  undefined);
     }
   });
 });
 
-exports.$set('binding', binding.generate());
+if (!apiBridge)
+  exports.$set('binding', binding.generate());
