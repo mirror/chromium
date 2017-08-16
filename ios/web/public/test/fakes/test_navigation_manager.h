@@ -65,6 +65,9 @@ class TestNavigationManager : public NavigationManager {
   // be either -1 or between 0 and GetItemCount()-1, inclusively.
   void SetLastCommittedItemIndex(const int index);
 
+  // Returns whether LoadURLWithParams has been called.
+  bool GetHasLoadedUrl();
+
  private:
   // A list of items constructed by calling AddItem().
   web::ScopedNavigationItemList items_;
@@ -73,6 +76,7 @@ class TestNavigationManager : public NavigationManager {
   NavigationItem* pending_item_;
   NavigationItem* last_committed_item_;
   NavigationItem* visible_item_;
+  bool has_loaded_url_;
 };
 
 }  // namespace web
