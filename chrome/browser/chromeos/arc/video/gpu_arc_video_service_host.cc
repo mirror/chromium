@@ -16,6 +16,7 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/common/video_decode_accelerator.mojom.h"
+#include "components/arc/common/video_decode_accelerator_new.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/gpu_service_registry.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -24,12 +25,19 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
+#define VLOGF(level) VLOG(level) << __func__ << "(): "
+
 namespace arc {
 
 namespace {
 
 void ConnectToVideoDecodeAcceleratorOnIOThread(
     mojom::VideoDecodeAcceleratorRequest request) {
+  content::BindInterfaceInGpuProcess(std::move(request));
+}
+
+void ConnectToVideoDecodeAcceleratorNewOnIOThread(
+    mojom::VideoDecodeAcceleratorNewRequest request) {
   content::BindInterfaceInGpuProcess(std::move(request));
 }
 
@@ -68,6 +76,14 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ConnectToVideoDecodeAcceleratorOnIOThread,
+                       base::Passed(&request)));
+  }
+
+  void CreateDecodeAcceleratorNew(
+      mojom::VideoDecodeAcceleratorNewRequest request) override {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ConnectToVideoDecodeAcceleratorNewOnIOThread,
                        base::Passed(&request)));
   }
 
@@ -132,7 +148,7 @@ void GpuArcVideoServiceHost::OnBootstrapVideoAcceleratorFactory(
   MojoResult wrap_result = mojo::edk::CreatePlatformHandleWrapper(
       channel_pair.PassClientHandle(), &wrapped_handle);
   if (wrap_result != MOJO_RESULT_OK) {
-    LOG(ERROR) << "Pipe failed to wrap handles. Closing: " << wrap_result;
+    VLOGF(1) << "Pipe failed to wrap handles. Closing: " << wrap_result;
     callback.Run(mojo::ScopedHandle(), std::string());
     return;
   }
