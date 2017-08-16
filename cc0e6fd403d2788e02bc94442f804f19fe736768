@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e672ac3_581db8d6",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-16T14:03:23Z",
+      "side": 1,
+      "message": "It was for extra safety. Removed now.",
+      "parentUuid": "8fa1474f_3a7e620a",
+      "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be46af55_cb67788d",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T14:58:33Z",
       "side": 1,
       "message": "Can this be simply profile-\u003eGetPrefs()-\u003eGetInteger(prefs::kEcryptfsMigrationStrategy) ?",
+      "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33d9eab_7ee6ed6b",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-16T14:03:23Z",
+      "side": 1,
+      "message": "Do you mean this to become:\nif (!profile-\u003eGetPrefs()-\u003eGetInteger(prefs::kEcryptfsMigrationStrategy))\n  return true\n\nThen we can\u0027t distinguish between the absence of pref and the case when it has value zero.\nDo you suggest including in the logic the fact that disallow_migration enum value is zero?",
+      "parentUuid": "be46af55_cb67788d",
       "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

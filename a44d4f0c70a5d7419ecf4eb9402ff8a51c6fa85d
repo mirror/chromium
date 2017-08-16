@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9ca04605_84613cea",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-16T14:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "005c90de_a0dc3430",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a3c083_47c4bc3c",
         "filename": "chrome/browser/chromeos/arc/arc_util.h",
         "patchSetId": 13
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "\u003e One option would be to keep it there ...\n\nI\u0027d prefer referring the same constant.\nMaybe, alternatively, define the value somewhere in appropriate which can be referred from both ARC and chromeos/login, then? Any good code location?\n\n\u003e But I\u0027m not sure it\u0027s better to convert to simple enum.\n\nCould you elaborate a bit more? Where we should put this, and \"enum\" vs. \"enum class\" sound different topic???",
       "parentUuid": "0b841cc2_1265b371",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866d99ed_f146bf9b",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-16T14:03:23Z",
+      "side": 1,
+      "message": "Sorry, I thought your suggestion was including making it a simple enum just like FileSystemCompatibilityState.\n\nI\u0027ve put it in arc_policy_util - seems like a better place now.",
+      "parentUuid": "b9058807_d86be1e0",
       "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -260,6 +296,24 @@
       "side": 1,
       "message": "I know, but it is not a part of the enum, but just a (commonly-used) hack to represent max enum value, right?\nIt has pros/cons, switch-stmt compiler check, vs avoid manual maintaining of COUNT.\nMy preference is the former, because the latter can be easily maintained at the very close to the enum definition as follows.\n\nenum class E : int32_t {\n  kEnum0, kEnum1, ... kEnumN,\n};\nconstexpr int32_t kMaxE \u003d E::kEnumN;\n\nWDYT?",
       "parentUuid": "abba6ddf_a991ed53",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faba5078_1b2fa070",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-16T14:03:23Z",
+      "side": 1,
+      "message": "Implemented the suggestion. Thanks.",
+      "parentUuid": "a5178060_1b01f9d7",
       "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -465,6 +519,24 @@
       "side": 1,
       "message": "You can search SetManagedPref in this file for references, I think.",
       "parentUuid": "14cccf51_68ff5c1c",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a971c341_d5925a04",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-16T14:03:23Z",
+      "side": 1,
+      "message": "This helped, I still don\u0027t understand how I missed it!\nThank you.",
+      "parentUuid": "9400c887_85899746",
       "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
