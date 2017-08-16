@@ -116,6 +116,30 @@
       "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11e4d7d_a6556356",
+        "filename": "extensions/renderer/resources/declarative_webrequest_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-16T23:19:47Z",
+      "side": 1,
+      "message": "Ah OK. lgtm.",
+      "parentUuid": "fe14b260_7396b6cf",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 75
+      },
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
