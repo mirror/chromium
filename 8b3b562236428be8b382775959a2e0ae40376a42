@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b28e6fd_ef7eb09c",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "Subtle: this won\u0027t work if an extension was previously disabled for UPDATE_REQUIRED and BLOCKED_BY_POLICY and then had both the disable reasons removed, even though it then wouldn\u0027t have any active disable reasons.  Instead, what if we make disable_reasons mutable, and then do:\ndisable_reasons \u0026\u003d (~reason);\nif (disable_reasons \u003d\u003d DISABLE_NONE)\n  to_enable.push_back(extension-\u003eid());\n\nThis might be something worth adding a unittest for?",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20448fc_666bcaa3",
+        "filename": "chrome/browser/extensions/extension_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "Maybe worth adding a comment that EnableExtension will *not* re-enable an extension if it needs to remain blocked by policy?",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da0a303_cf89829d",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "nit: even easier would just be\nscoped_refptr\u003cconst Extension\u003e extension;\n\n(default ctor uses null)",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d04b575_78f9c004",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "similarly here, even though this is currently correct, I think I\u0027d slightly prefer to augment disable reasons to and check equality to 0.",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5975a2dc_d46ce668",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "Why do we no longer set |error|?",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62889a3_ec130046",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "Maybe also check that EnableExtension(kAdBlockCrxId) doesn\u0027t do anything?",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c91a181_3fa0132f",
+        "filename": "extensions/browser/management_policy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T23:37:19Z",
+      "side": 1,
+      "message": "*UserMayLoad() returns false or MustRemainDisabled() returns true",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
