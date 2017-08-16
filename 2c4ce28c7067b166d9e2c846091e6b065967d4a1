@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbe7bf79_63506de9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T13:49:03Z",
+      "side": 1,
+      "message": "I don\u0027t see where this deduplication takes place. Can you give me a pointer to the code?",
+      "range": {
+        "startLine": 13,
+        "startChar": 60,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "2c4ce28c7067b166d9e2c846091e6b065967d4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bed2b24_d43d5189",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-16T13:49:03Z",
+      "side": 1,
+      "message": "Can you add a comment to |results_| in the header that to mention that the map is only used to feed into about:dns?",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "2c4ce28c7067b166d9e2c846091e6b065967d4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
