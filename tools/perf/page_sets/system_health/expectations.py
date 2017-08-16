@@ -23,6 +23,8 @@ class SystemHealthDesktopCommonExpectations(expectations.StoryExpectations):
                       'crbug.com/64939')
     self.DisableStory('browse:news:cnn',
                       [expectations.ALL_MAC], 'crbug.com/728576')
+    self.DisableStory('browse:social:facebook_infinite_scroll',
+                      [expectations.ALL_WIN], 'crbug.com/756003')
 
 
 class SystemHealthDesktopMemoryExpectations(expectations.StoryExpectations):
