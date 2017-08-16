@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c3e4058_345f8eb4",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ca4166_e74d924b",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdf9e3a3_658366f8",
         "filename": "content/browser/frame_host/cross_process_frame_connector.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3b235e94_3e49fd00",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdf9e3a3_658366f8",
+      "range": {
+        "startLine": 44,
+        "startChar": 62,
+        "endLine": 44,
+        "endChar": 70
+      },
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb21c58_db966439",
         "filename": "content/browser/renderer_host/DEPS",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f5c869_b94cf247",
+        "filename": "content/browser/renderer_host/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb21c58_db966439",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "cab34157_15285cd8",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f03cb69_25b34856",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ab5663_31898e69",
         "filename": "content/browser/renderer_host/frame_connector_delegate.h",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c51e07_70fcd07c",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ab5663_31898e69",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "d48d3a6f_bf0d22f4",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d822150_999e1386",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d825b77_d0567d3b",
         "filename": "content/browser/renderer_host/frame_connector_delegate.h",
         "patchSetId": 3
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-16T01:35:26Z",
       "side": 1,
       "message": "Hmm, this is odd to me.  I don\u0027t think delegate classes would normally have fields of their own.  Is it possible to move it to CPFC, or is there a reason it belongs here?  (If the latter, let\u0027s document why.)",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0defda_eeb8e064",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-16T16:44:30Z",
+      "side": 1,
+      "message": "It\u0027s because the virtual method returns a reference. It also ends up being convenient for testing, although that would be easy to work around. I could change the return type of ViewportIntersection() if you\u0027d prefer it not be here. That would just result in an extra struct copy.",
+      "parentUuid": "0d825b77_d0567d3b",
       "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
