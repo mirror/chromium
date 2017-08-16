@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5bb88a4_793f5d38",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "ah, nice, we should let it count as skip",
+      "parentUuid": "b58af9a9_e00999f5",
+      "range": {
+        "startLine": 149,
+        "startChar": 59,
+        "endLine": 149,
+        "endChar": 63
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe7056b_9c0f7972",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
         "patchSetId": 2
@@ -42,6 +66,23 @@
         "endLine": 44,
         "endChar": 28
       },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff70f91_e2f9171c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrTestFramework.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "Change doc",
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +160,64 @@
     },
     {
       "key": {
+        "uuid": "24884dfb_23bb862f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "You can use @SupressFBWarnings here to avoid findbug complaints. Or add filter to here: https://cs.chromium.org/chromium/src/build/android/findbugs_filter/findbugs_exclude.xml",
+      "parentUuid": "bbce9d53_58c18721",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4e5352_588be16d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/CustomTabActivityVrTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "nit: `InstrumentationRegistry.getTargetContext()`",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42b3a0b_34251ae5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "nit: consider using enum, but feel free to continue with string;",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cf64f2a_7d1820d7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
         "patchSetId": 2
@@ -163,6 +262,40 @@
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a949eea0_17f1e4d9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestrictionRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "these behaviors is very specific and customized. Would be great to create some kind of public markdown to explain this",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed00f424_54f1775e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestrictionRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T17:43:46Z",
+      "side": 1,
+      "message": "I would put the static functions in this class into a new class (e.g. VrTestRuleUtils)",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
