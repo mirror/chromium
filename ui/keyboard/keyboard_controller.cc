@@ -277,6 +277,10 @@ KeyboardController::~KeyboardController() {
   ui_->GetInputMethod()->RemoveObserver(this);
   for (KeyboardControllerObserver& observer : observer_list_)
     observer.OnKeyboardClosed();
+
+  // Ensures IME is updated when keyboard controller is gone.
+  ui_->EnsureCaretInWorkArea();
+
   ui_->SetController(nullptr);
 }
 
