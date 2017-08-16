@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcb4c187_ee6f6474",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7559cfc0_6eeac875",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 35
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "970b0b24_0bf9d564",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55978a9b_bc88b42a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970b0b24_0bf9d564",
+      "range": {
+        "startLine": 593,
+        "startChar": 59,
+        "endLine": 593,
+        "endChar": 73
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f5a8d57_36ef848c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "499e5060_3b66f2a6",
+      "range": {
+        "startLine": 685,
+        "startChar": 2,
+        "endLine": 687,
+        "endChar": 53
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c15cbe_a912e89c",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-16T18:02:52Z",
       "side": 1,
       "message": "Alternatively:\nif (workers_.size() \u003c\u003d worker_capacity_)\n  return false;\n\nsize_t excess_workers \u003d workers_.size() - worker_capacity_\nreturn idle_workers_stack_.Size() \u003c excess_workers",
+      "range": {
+        "startLine": 771,
+        "startChar": 0,
+        "endLine": 772,
+        "endChar": 37
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06d8287_f2c5107d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Changing this to\n\nint SchedulerWorkerPoolImpl::NumberOfWorkersToBecomeIdle() const {\n  lock_.AssertAcquired();\n\n  const int target_minimum_idle_workers \u003d workers_.size() - worker_capacity_;\n  return target_minimum_idle_workers - idle_workers_stack_.Size();\n}\n\nbecause this info is needed in WakeUpOnWorker.",
+      "parentUuid": "e2c15cbe_a912e89c",
       "range": {
         "startLine": 771,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "eb913e3b_425a6006",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0554e4c_0e8957ad",
+      "range": {
+        "startLine": 778,
+        "startChar": 11,
+        "endLine": 778,
+        "endChar": 12
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c14721_9cc8ad2f",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47bafe9_a61001a2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c14721_9cc8ad2f",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 25
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +327,54 @@
       "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780fa203_45317235",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "Sounds good to me - since suspension is so implicit now, it doesn\u0027t even make much sense to differentiate between the two.\n\nThough, I realized that I didn\u0027t have checks in WakeUpOneWorker to prevent waking up a \"suspended\" worker (which would just cause that worker (or another) to eventually just go back to the idle stack) - this would prevent Cleanup from happening for workers idle due to over-capacity.\n\nI\u0027m changing this method to NumberOfWorkersToBecomeIdle() because WakeUpOneWorker has to know if waking up a worker will cause a worker to just become idle again.",
+      "parentUuid": "55154cd8_18e135bc",
+      "range": {
+        "startLine": 166,
+        "startChar": 13,
+        "endLine": 166,
+        "endChar": 20
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e649b3_ab3e790b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T21:09:28Z",
+      "side": 1,
+      "message": "ShouldIdleMoreWorkers() sounds good to me.",
+      "parentUuid": "4525a427_6330f38d",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 13
+      },
+      "revId": "bb95cd01434adb9e8e914db7ef228238a0e0490f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
