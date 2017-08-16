@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827e2bbe_9aa33dd7",
+        "filename": "chrome/browser/resources/settings/site_settings/zoom_levels.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-16T22:54:22Z",
+      "side": 1,
+      "message": "Not required, but you\u0027re invited to sort these imports if ya like.",
+      "revId": "18ce8ab93b1572ab4ba574c6c85f94e5942189f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
