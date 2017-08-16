@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d705b0a_6eaef420",
+        "filename": "ash/public/cpp/shelf_item_delegate.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-16T17:42:49Z",
+      "side": 1,
+      "message": "As I mentioned in-person last week, most/all of Chrome\u0027s ShelfItemDelegate subclasses use LauncherContextMenu::Create as the impl here. I could potentially change ShelfItemDelegate to store a base::Callback for generating context menu models (with a late-binding display_id arg), and make ChromeLauncherController set that callback for most/all of the delegates it creates; that would avoid needing to override this new GetContextMenu method for each of Chrome\u0027s delegate subclasses. That may be a worthwhile consolidation/cleanup; I\u0027ll investigate after lunch...",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

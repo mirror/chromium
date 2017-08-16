@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "9f2fcff0_b55d7679",
+        "filename": "ash/shelf/shelf_application_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-16T17:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cd0154e_c0e0e387",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8a7324f_e09d7668",
         "filename": "ash/shelf/shelf_button_pressed_metric_tracker.cc",
         "patchSetId": 26
@@ -366,6 +384,24 @@
       "side": 1,
       "message": "optional: static method in the class?\n\nnot a big deal, this is fine if you think it\u0027s most readable",
       "parentUuid": "81230c5d_8c1452f4",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d43cd4_e8f946b1",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-16T17:42:49Z",
+      "side": 1,
+      "message": "Done (added as a static ShelfContextMenuModel class method)",
+      "parentUuid": "b133e24e_0140a1aa",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
