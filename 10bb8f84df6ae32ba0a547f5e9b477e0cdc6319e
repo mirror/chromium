@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce561f1_8c10457e",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-16T16:38:53Z",
+      "side": 0,
+      "message": "Seems unrelated to close button change?",
+      "range": {
+        "startLine": 509,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 40
+      },
+      "revId": "10bb8f84df6ae32ba0a547f5e9b477e0cdc6319e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
