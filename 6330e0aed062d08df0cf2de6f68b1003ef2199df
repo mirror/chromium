@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf2c7695_903f3f6b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:56:16Z",
+      "side": 1,
+      "message": "As discussed, adding SetIsOnIdleWorkersStack method",
+      "parentUuid": "439c8c9d_3ee1f9b1",
+      "range": {
+        "startLine": 504,
+        "startChar": 6,
+        "endLine": 506,
+        "endChar": 59
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246bc258_285b9ee6",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a14fc65_48d18031",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:56:16Z",
+      "side": 1,
+      "message": "As discussed, calling UnsetIsOnIdleWorkersStack instead.",
+      "parentUuid": "246bc258_285b9ee6",
+      "range": {
+        "startLine": 561,
+        "startChar": 2,
+        "endLine": 564,
+        "endChar": 36
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aa3b19b3_4f8de785",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de9be56_a2356830",
+      "range": {
+        "startLine": 572,
+        "startChar": 0,
+        "endLine": 591,
+        "endChar": 0
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0104810_7af20c90",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7f1c0b_3db9f955",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0104810_7af20c90",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 50
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

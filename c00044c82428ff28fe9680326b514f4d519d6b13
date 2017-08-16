@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "0d77aeca_dd40741e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T14:56:16Z",
+      "side": 1,
+      "message": "Sounds good.\n\nMarking resolved.",
+      "parentUuid": "1ffba20c_be13e5a0",
+      "range": {
+        "startLine": 462,
+        "startChar": 5,
+        "endLine": 465,
+        "endChar": 21
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c646481b_8861d075",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
