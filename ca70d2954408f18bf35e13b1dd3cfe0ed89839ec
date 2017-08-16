@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "df4cce36_5ced414c",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T18:07:43Z",
+      "side": 1,
+      "message": "all of these validation and further parsing time should happen in java",
+      "revId": "ca70d2954408f18bf35e13b1dd3cfe0ed89839ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f47e385b_eb05a905",
         "filename": "android_webview/browser/aw_field_trial_creator.cc",
         "patchSetId": 2
@@ -30,6 +47,57 @@
       "writtenOn": "2017-08-15T22:49:02Z",
       "side": 1,
       "message": "Here too, log the date_str ?",
+      "revId": "ca70d2954408f18bf35e13b1dd3cfe0ed89839ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9878cc9_4670586a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T18:07:43Z",
+      "side": 1,
+      "message": "should add @JNINamespace(\"android_webview\"), to the new class",
+      "revId": "ca70d2954408f18bf35e13b1dd3cfe0ed89839ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693e2446_a2bdc4cf",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T18:07:43Z",
+      "side": 1,
+      "message": "why Boolean and not boolean?",
+      "revId": "ca70d2954408f18bf35e13b1dd3cfe0ed89839ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5771e223_cd6e8d71",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T18:07:43Z",
+      "side": 1,
+      "message": "yes, we don\u0027t have a good way to return multiple things at the same time, but using static variables isn\u0027t great.\n\nshould make this object-oriented, ie create a java object that has these fields. Native can hold onto the object while it\u0027s needed. And if really want to cache the object, then you can just cache the reference to that object in native and call methods on it.",
       "revId": "ca70d2954408f18bf35e13b1dd3cfe0ed89839ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
