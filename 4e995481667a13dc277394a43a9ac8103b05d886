@@ -16,6 +16,24 @@
       "revId": "4e995481667a13dc277394a43a9ac8103b05d886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05e4423_47bf718e",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:46:42Z",
+      "side": 1,
+      "message": "I think it\u0027s clear if we just have one version of mockInstallBrowsers.",
+      "parentUuid": "628ef1e8_d2b2abd5",
+      "revId": "4e995481667a13dc277394a43a9ac8103b05d886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
