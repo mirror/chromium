@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b83d5f8_4b741b4c",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-16T21:08:30Z",
+      "side": 1,
+      "message": "Do you know why this code doean\u0027t apply to Custom Scrollbars?",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 39
+      },
+      "revId": "9e23e18354dd553217d1292624252afcb68a893f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516717f8_e718bb21",
+        "filename": "third_party/WebKit/Source/platform/scroll/Scrollbar.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-16T21:08:30Z",
+      "side": 1,
+      "message": "Is this still firing or did you just forget to remove these?",
+      "range": {
+        "startLine": 594,
+        "startChar": 2,
+        "endLine": 595,
+        "endChar": 13
+      },
+      "revId": "9e23e18354dd553217d1292624252afcb68a893f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
