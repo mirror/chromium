@@ -28,6 +28,9 @@ if (is_win) {
       "//build/win:default_exe_manifest",
       "//chrome/install_static:install_static_util",
       "//components/crash/content/app:app",
+
+      # TODO(siggi): Maybe this warrants a better name than export_thunks.
+      "//components/crash/content/app:export_thunks",
       "//components/crash/content/app:run_as_crashpad_handler",
     ]
 
@@ -122,6 +125,7 @@ if (is_win) {
       "//chrome/install_static/test:test_support",
       "//chrome/installer/mini_installer:unit_tests",
       "//chrome/installer/util:test_support",
+      "//chrome_elf:test_stubs",
       "//testing/gmock",
       "//testing/gtest",
     ]

@@ -672,6 +672,13 @@ test("headless_browsertests") {
     deps += [ ":headless_browser_tests_pak" ]
   }
 
+  if (is_win) {
+    # On Windows each binary needs to provide the crashpad stubs.
+    deps += [
+      "//components/crash/content/app:export_thunks",
+    ]
+  }
+
   if (enable_basic_printing) {
     deps += [
       "//components/printing/browser",
@@ -795,6 +802,7 @@ static_library("headless_shell_lib") {
     defines = [ "HEADLESS_USE_CRASPHAD" ]
 
     deps += [
+      "//components/crash/content/app:export_thunks",
       "//components/crash/content/app:run_as_crashpad_handler",
       "//content:sandbox_helper_win",
       "//sandbox",
