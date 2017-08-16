@@ -104,6 +104,7 @@
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/svg/SVGSVGElement.h"
 #include "platform/Histogram.h"
+#include "platform/InstanceCounters.h"
 #include "platform/Language.h"
 #include "platform/PlatformChromeClient.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -1325,6 +1326,7 @@ void LocalFrameView::UpdateLayout() {
   TRACE_EVENT_END1("devtools.timeline", "Layout", "endData",
                    InspectorLayoutEvent::EndData(root_for_this_layout));
   probe::didChangeViewport(frame_.Get());
+  InstanceCounters::IncrementCounter(InstanceCounters::kLayoutCounter);
 
   nested_layout_count_--;
   if (nested_layout_count_)

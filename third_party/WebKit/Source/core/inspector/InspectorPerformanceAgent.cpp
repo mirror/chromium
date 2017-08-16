@@ -68,6 +68,12 @@ Response InspectorPerformanceAgent::getMetrics(
   AppendMetric(
       result.get(), "ResourceCount",
       InstanceCounters::CounterValue(InstanceCounters::kResourceCounter));
+  AppendMetric(
+      result.get(), "LayoutCount",
+      InstanceCounters::CounterValue(InstanceCounters::kLayoutCounter));
+  AppendMetric(
+      result.get(), "RecalcStyleCount",
+      InstanceCounters::CounterValue(InstanceCounters::kRecalcStyleCounter));
 
   // Performance timings.
   Document* document = inspected_frames_->Root()->GetDocument();
