@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a865a26b_8bb53c54",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-16T21:01:34Z",
+      "side": 1,
+      "message": "Reworded the TODO text. \n\nAt this point, I don\u0027t think we should do that yet. We will only need this once \nwe have animation players that are attached to multiple timelines.",
+      "parentUuid": "a23ff631_e55d0b20",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e4b8f6e_c34d1146",
         "filename": "cc/animation/animation_host.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3dd17e_8fb9c270",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-16T21:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e4b8f6e_c34d1146",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5ccb6a7_da1a90a9",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-16T21:01:34Z",
+      "side": 1,
+      "message": "I think that is an internal details of AnimationHost. In particular,\nAnimationHost will always need to receive a signal that scrolling has occurred and\nthen it determines if any of its timelines have been invalidated and need ticking.\n\nI already have a TODO in AnimationHost::TickScrollAnimation regarding better\nmore fine-grained invalidation. I reworded that to make relation to timeline more accurate.",
+      "parentUuid": "e1f2dce5_00c55caf",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6d59a0d_223055b6",
         "filename": "cc/animation/animation_host.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T20:28:52Z",
       "side": 1,
       "message": "Document this. It\u0027s unclear what this means, returns or does.",
+      "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2f01e7_e8b03149",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-16T21:01:34Z",
+      "side": 1,
+      "message": "Done. Added documentation on parent class (MuatorHost) where this is declared.",
+      "parentUuid": "d6d59a0d_223055b6",
       "revId": "9d5607c9dd08a1baa73188e27be3471cb2f26faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
