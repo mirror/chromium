@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d077b4ac_ea3b9706",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-16T21:29:09Z",
+      "side": 1,
+      "message": "If that\u0027s the case then the `if(scroll_animator` below will be false, won\u0027t it?",
+      "parentUuid": "0cd13b79_dd224088",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 39
+      },
+      "revId": "9e23e18354dd553217d1292624252afcb68a893f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516717f8_e718bb21",
         "filename": "third_party/WebKit/Source/platform/scroll/Scrollbar.cpp",
         "patchSetId": 5
