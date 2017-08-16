@@ -160,6 +160,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7584b9_e7d8570b",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-16T15:57:00Z",
+      "side": 1,
+      "message": "It\u0027s currently implemented like this: https://cs.corp.google.com/chromeos_public/src/platform/minigbm/i915.c?l\u003d482. The graphics folks may have some idea if / how we can refactor the resolve_format function.",
+      "parentUuid": "c6136305_91dbe445",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
