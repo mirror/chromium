@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1804a06b_f6d1526c",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-16T15:56:13Z",
+      "side": 1,
+      "message": "Prefer features and flags that are phrased in the affirmative, so you don\u0027t end up with the gramatic and cognitive dissonance of enablint the disabling of something.\n\nI.e., prefer to have AutofillCreditCardSuggestions (or something similar) enabled by default, and then run an ablation experiment in which you disable it.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6523312_3d75af75",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-16T15:56:13Z",
+      "side": 1,
+      "message": "Is there something to be logged here?\n\nThere was some discussion about how the ablation was happening too early. If you\u0027re not logging something at this point, how is this different?",
+      "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
