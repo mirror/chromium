@@ -27,6 +27,7 @@
 
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "modules/webgl/WebGLRenderingContextBase.h"
+#include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
 
@@ -110,9 +111,17 @@ GLint WebGLTexture::ComputeLevelCount(GLsizei width,
 }
 
 void WebGLTexture::UpdateLastUploadedVideo(WebMediaPlayer* player) {
+  if (!RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()) {
+    // Avoid calling GetLastUploadedFrameInfo if the feature isn't used.
+    // This avoids setting WebMediaPlayerImpl::last_uploaded_frame_api_enabled_.
+    // https://crbug.com/639174
+    return;
+  }
+
   if (player && player->GetLastUploadedFrameInfo(
                     &last_uploaded_video_width_, &last_uploaded_video_height_,
-                    &last_uploaded_video_timestamp_)) {
+                    &last_uploaded_video_timestamp_,
+                    &last_uploaded_video_frame_was_skipped_)) {
     return;
   }
 
@@ -120,6 +129,7 @@ void WebGLTexture::UpdateLastUploadedVideo(WebMediaPlayer* player) {
   last_uploaded_video_width_ = 0;
   last_uploaded_video_height_ = 0;
   last_uploaded_video_timestamp_ = 0.0;
+  last_uploaded_video_frame_was_skipped_ = false;
 }
 
 }  // namespace blink

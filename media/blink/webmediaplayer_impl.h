@@ -141,7 +141,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   bool GetLastUploadedFrameInfo(unsigned* width,
                                 unsigned* height,
-                                double* timestamp) override;
+                                double* timestamp,
+                                bool* wasSkipped) override;
 
   // Dimensions of the video.
   blink::WebSize NaturalSize() const override;
@@ -505,6 +506,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // http://crbug.com/645998, and http://crbug.com/751823 for reasons why.
   base::TimeDelta GetCurrentTimeInternal() const;
 
+  void UpdateLastUploadedFrameInfo(VideoFrame* video_frame) const;
+
   blink::WebLocalFrame* frame_;
 
   // The playback state last reported to |delegate_|, to avoid setting duplicate
@@ -775,8 +778,16 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Whether the use of a surface layer instead of a video layer is enabled.
   bool surface_layer_for_video_enabled_ = false;
 
+  // TODO(kainino): This is for a prototype implementation for getting the
+  // width, height, and timestamp of the last frame uploaded to a WebGL
+  // texture. https://crbug.com/639174
   mutable gfx::Size last_uploaded_frame_size_;
   mutable base::TimeDelta last_uploaded_frame_timestamp_;
+  mutable bool last_uploaded_frame_was_redundant_ = false;
+  mutable int last_uploaded_frame_id_ = 0;
+  // This gets enabled if GetLastUploadedFrameInfo is called
+  // (in WebGLTexture::UpdateLastUploadedVideo).
+  mutable bool last_uploaded_frame_api_enabled_ = false;
 
   base::CancelableCallback<void(base::TimeTicks)> frame_time_report_cb_;
 

@@ -773,10 +773,13 @@ void WebMediaPlayerImpl::SelectedVideoTrackChanged(
 
 bool WebMediaPlayerImpl::GetLastUploadedFrameInfo(unsigned* width,
                                                   unsigned* height,
-                                                  double* timestamp) {
+                                                  double* timestamp,
+                                                  bool* wasSkipped) {
+  last_uploaded_frame_api_enabled_ = true;
   *width = last_uploaded_frame_size_.width();
   *height = last_uploaded_frame_size_.height();
   *timestamp = last_uploaded_frame_timestamp_.InSecondsF();
+  *wasSkipped = last_uploaded_frame_was_redundant_;
   return true;
 }
 
@@ -864,6 +867,15 @@ base::TimeDelta WebMediaPlayerImpl::GetCurrentTimeInternal() const {
   DCHECK_NE(current_time, kInfiniteDuration);
   DCHECK_GE(current_time, base::TimeDelta());
   return current_time;
+}
+
+void WebMediaPlayerImpl::UpdateLastUploadedFrameInfo(
+    VideoFrame* video_frame) const {
+  int id = video_frame->unique_id();
+  last_uploaded_frame_was_redundant_ = id == last_uploaded_frame_id_;
+  last_uploaded_frame_id_ = id;
+  last_uploaded_frame_size_ = video_frame->natural_size();
+  last_uploaded_frame_timestamp_ = video_frame->timestamp();
 }
 
 double WebMediaPlayerImpl::CurrentTime() const {
@@ -1061,6 +1073,11 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
   if (!video_frame.get() || !video_frame->HasTextures()) {
     return false;
+  }
+  if (last_uploaded_frame_api_enabled_) {
+    if (last_uploaded_frame_was_redundant_) {
+      return true;
+    }
   }
 
   Context3D context_3d;
@@ -2098,8 +2115,7 @@ scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor()
     if (!video_frame) {
       return nullptr;
     }
-    last_uploaded_frame_size_ = video_frame->natural_size();
-    last_uploaded_frame_timestamp_ = video_frame->timestamp();
+    UpdateLastUploadedFrameInfo(video_frame.get());
     return video_frame;
   }
 
@@ -2117,8 +2133,7 @@ scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor()
   if (!video_frame) {
     return nullptr;
   }
-  last_uploaded_frame_size_ = video_frame->natural_size();
-  last_uploaded_frame_timestamp_ = video_frame->timestamp();
+  UpdateLastUploadedFrameInfo(video_frame.get());
   return video_frame;
 }
 
