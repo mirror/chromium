@@ -107,8 +107,8 @@ template <typename Collection,
           typename std::enable_if<!internal::HasKeyType<Collection>::value,
                                   int>::type = 0>
 bool ContainsValue(const Collection& collection, const Value& value) {
-  return std::find(std::begin(collection), std::end(collection), value) !=
-         std::end(collection);
+  return std::find(std::cbegin(collection), std::cend(collection), value) !=
+         std::cend(collection);
 }
 
 // Returns true if the container is sorted.
