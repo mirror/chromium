@@ -311,6 +311,24 @@
       "revId": "69f59ce50cd01468f8fca0e5a771fbb4f180479e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c8b4bf_da9f67ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-16T18:14:38Z",
+      "side": 1,
+      "message": "Change it to @color/black_alpha_38 which is very closed to ltgray.",
+      "parentUuid": "82488a65_bd569164",
+      "revId": "69f59ce50cd01468f8fca0e5a771fbb4f180479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
