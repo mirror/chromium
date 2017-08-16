@@ -242,6 +242,9 @@
       <message name="IDS_NO_THANKS" desc="Used to dismiss various prompts.">
         No thanks
       </message>
+      <message name="IDS_MANAGE" desc="Used for Manage on buttons">
+        Manage
+      </message>
       <if expr="not use_titlecase">
         <message name="IDS_NOT_NOW" desc="Used on a button that avoids taking a suggested action.  The action will likely be suggested again or automatically taken later.">
           Not now

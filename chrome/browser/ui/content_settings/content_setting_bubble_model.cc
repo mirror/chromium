@@ -173,16 +173,17 @@ void ContentSettingSimpleBubbleModel::SetTitle() {
 
 void ContentSettingSimpleBubbleModel::SetManageText() {
   static const ContentSettingsTypeIdEntry kLinkIDs[] = {
-    {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_LINK},
-    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_BLOCKED_IMAGES_LINK},
-    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_BLOCKED_JAVASCRIPT_LINK},
-    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_BLOCKED_PLUGINS_LINK},
-    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_BLOCKED_POPUPS_LINK},
-    {CONTENT_SETTINGS_TYPE_GEOLOCATION, IDS_GEOLOCATION_BUBBLE_MANAGE_LINK},
-    {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, IDS_LEARN_MORE},
-    {CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS, IDS_HANDLERS_BUBBLE_MANAGE_LINK},
-    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, IDS_PPAPI_BROKER_BUBBLE_MANAGE_LINK},
-    {CONTENT_SETTINGS_TYPE_MIDI_SYSEX, IDS_MIDI_SYSEX_BUBBLE_MANAGE_LINK},
+      {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_LINK},
+      {CONTENT_SETTINGS_TYPE_IMAGES, IDS_BLOCKED_IMAGES_LINK},
+      {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_BLOCKED_JAVASCRIPT_LINK},
+      {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_BLOCKED_PLUGINS_LINK},
+      {CONTENT_SETTINGS_TYPE_POPUPS, IDS_MANAGE},
+      {CONTENT_SETTINGS_TYPE_GEOLOCATION, IDS_GEOLOCATION_BUBBLE_MANAGE_LINK},
+      {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, IDS_LEARN_MORE},
+      {CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS,
+       IDS_HANDLERS_BUBBLE_MANAGE_LINK},
+      {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, IDS_PPAPI_BROKER_BUBBLE_MANAGE_LINK},
+      {CONTENT_SETTINGS_TYPE_MIDI_SYSEX, IDS_MIDI_SYSEX_BUBBLE_MANAGE_LINK},
   };
   set_manage_text(l10n_util::GetStringUTF16(
       GetIdForContentType(kLinkIDs, arraysize(kLinkIDs), content_type())));
@@ -594,6 +595,7 @@ ContentSettingPopupBubbleModel::ContentSettingPopupBubbleModel(
   for (const auto& blocked_popup : blocked_popups)
     AddListItem(CreateListItem(blocked_popup.first, blocked_popup.second));
 
+  set_manage_text_style(ContentSettingBubbleModel::BUTTON);
   popup_blocker_observer_.Add(helper);
   content_settings::RecordPopupsAction(
       content_settings::POPUPS_ACTION_DISPLAYED_BUBBLE);
@@ -1301,7 +1303,7 @@ void ContentSettingSubresourceFilterBubbleModel::SetManageText() {
           subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI)
           ? IDS_ALWAYS_ALLOW_ADS
           : IDS_ALLOW_ADS));
-  set_show_manage_text_as_checkbox(true);
+  set_manage_text_style(ContentSettingBubbleModel::CHECKBOX);
 }
 
 void ContentSettingSubresourceFilterBubbleModel::SetMessage() {
