@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64654f00_0165f262",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b6054c_081ea927",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "are you trying to measure something close to the actual heap usage? if so, do you really want capacity()?",
+      "range": {
+        "startLine": 134,
+        "startChar": 35,
+        "endLine": 134,
+        "endChar": 41
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c5240f_b6f5619b",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "program_names is a vector of string16\u0027s, so shouldn\u0027t this be base::string16::value_type?",
+      "range": {
+        "startLine": 134,
+        "startChar": 53,
+        "endLine": 134,
+        "endChar": 77
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd85e667_0af5f231",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "nit:\nemplace_back(std::move(install_path), program_name_index)",
+      "range": {
+        "startLine": 140,
+        "startChar": 39,
+        "endLine": 140,
+        "endChar": 48
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec769da5_278c100d",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "base::string16::value_type here, too?",
+      "range": {
+        "startLine": 147,
+        "startChar": 53,
+        "endLine": 147,
+        "endChar": 77
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6575ebb_ce13a37a",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "emplace_back here as well",
+      "range": {
+        "startLine": 154,
+        "startChar": 37,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c757bae5_f77c97ca",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "should this be sizeof the pair?",
+      "range": {
+        "startLine": 204,
+        "startChar": 57,
+        "endLine": 204,
+        "endChar": 71
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a862453a_580d85dc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81166,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:50:53Z",
+      "side": 1,
+      "message": "please clarify that this is the size, in KB, of the in-memory representation of the data, or something.",
+      "range": {
+        "startLine": 81166,
+        "startChar": 16,
+        "endLine": 81166,
+        "endChar": 32
+      },
+      "revId": "760f6650e93c8f1a463daf5dbdc5663451ec5ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
