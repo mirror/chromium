@@ -66,11 +66,12 @@ class DrawQuadPerfTest : public testing::Test {
       gfx::PointF uv_top_left(0, 0);
       gfx::PointF uv_bottom_right(1, 1);
       SkColor background_color = SK_ColorRED;
+      bool needs_blending = false;
       float vertex_opacity[4] = {1.f, 1.f, 1.f, 1.f};
       bool y_flipped = false;
       bool nearest_neighbor = true;
 
-      quad->SetNew(shared_state_, rect, rect, rect, resource_id,
+      quad->SetNew(shared_state_, rect, rect, needs_blending, resource_id,
                    premultiplied_alpha, uv_top_left, uv_bottom_right,
                    background_color, vertex_opacity, y_flipped,
                    nearest_neighbor, false);
