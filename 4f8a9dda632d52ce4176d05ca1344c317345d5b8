@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1785f07_836fa273",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7253a6_5909d5e0",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "4f8a9dda632d52ce4176d05ca1344c317345d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "338892a8_3fc65b7b",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a7a9e0f2_2c0f8f10",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "338892a8_3fc65b7b",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "4f8a9dda632d52ce4176d05ca1344c317345d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45ba0121_e7a44c56",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-15T17:07:02Z",
       "side": 1,
       "message": "nit: unbalanced )",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "4f8a9dda632d52ce4176d05ca1344c317345d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee45ce3b_92144253",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ba0121_e7a44c56",
       "range": {
         "startLine": 23,
         "startChar": 15,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a223f617_b86ff54d",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Fixed. Sorry. I\u0027ve become too dependent on git cl format.",
+      "parentUuid": "81b706db_8ab7b282",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "4f8a9dda632d52ce4176d05ca1344c317345d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257c9f66_d19e96e7",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 6
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ab49e789_2212379a",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "257c9f66_d19e96e7",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "4f8a9dda632d52ce4176d05ca1344c317345d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a2d4fe_e3c62972",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-15T17:07:02Z",
       "side": 1,
       "message": "what does this give us that the file itself doesn\u0027t?",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "4f8a9dda632d52ce4176d05ca1344c317345d5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff48466_79040b65",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "A human-readable identifier of the per-display device driver that the host open()-ed to get the mojom.File so that we can\n\n* use the name of the device in logging\n* make sure that the DrmDevice created in the GpuAdapter implementation is 1-1 with the underlying kernel device as trying to issue DRM ops to a secondary fd referring to the same device will probably not work.",
+      "parentUuid": "47a2d4fe_e3c62972",
       "range": {
         "startLine": 45,
         "startChar": 20,

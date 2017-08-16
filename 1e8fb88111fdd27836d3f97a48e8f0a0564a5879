@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bc66b53b_bd00a0ff",
+        "filename": "ui/ozone/platform/drm/gpu/drm_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3df8b70_04687ea6",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "442429e6_db544ba0",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
         "patchSetId": 4
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "97f033e3_a30de545",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "442429e6_db544ba0",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b6346f0_62e3ee28",
         "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
         "patchSetId": 4
@@ -117,6 +153,24 @@
       "writtenOn": "2017-08-15T15:21:20Z",
       "side": 1,
       "message": "Why a ScopedFD if we\u0027re moving it to a FileDescriptor at the beginning of the method? Is it because handle-\u003ePassFD() returns a ScopedFD? Would it make any sense to have PassFD return another File type?\n\nI\u0027d expect a method that takes a ScopedFD to call close on the fd eventually, but IIUC this is not happening for this method.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c112bb44_7f0b725f",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this answers your question but might be helpful.\n\nDrmDisplayHost communicates to DrmThread. It does this two different ways:\n\n1. via paramtraits IPC. In which case:\n\nDrmDisplayHost -calls-\u003e DrmGpuPlatformSupportHost \u003c--IPC--\u003e DrmThreadMessageProxy -calls-\u003e DrmThread\n\n2. via mojo IPC. In which case:\n\nDrmDisplayHost -calls-\u003e MusthreadProxy \u003c--mojo--\u003e DrmThread\n\nParamtraits only uses ScopedFD fds and the IPC code closes the fd as part of passing it to the remote process.\nMojo IPC only uses File objects whose destructor closes the backing fd. I wanted to make this better but it was looking like a non-trivial change to create one ScopedFD sharable across all platforms and mojo/traditional IPC.",
+      "parentUuid": "1b6346f0_62e3ee28",
       "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "fbe3a680_2d7a5f6c",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "I wrote the TODO while trying to fix something else and never came back to fix. Now done.",
+      "parentUuid": "47fb919d_0e32c875",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4b0de13_ed507b6b",
         "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
         "patchSetId": 4
@@ -154,6 +226,24 @@
       "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f476d46_44d4453b",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4b0de13_ed507b6b",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7a5f2db8_df2824c5",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57b75fa_fe6a592f",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6695bb78_2bd92918",
         "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
         "patchSetId": 4
@@ -191,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8cb41f42_8cf9dece",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6695bb78_2bd92918",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d96d8ad_81b37246",
         "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
         "patchSetId": 4
@@ -202,6 +328,24 @@
       "writtenOn": "2017-08-15T15:21:20Z",
       "side": 1,
       "message": "Why did you decide to include ptr in the name? Wouldn\u0027t something like gpu_adapter_ be clearer?",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bbe1bd_b3ee79b1",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "7d96d8ad_81b37246",
       "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "f58fcf1e_fc21aca1",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c4c18bd_406638b7",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cfa4aae_db2d434c",
         "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
         "patchSetId": 4
@@ -236,6 +398,24 @@
       "writtenOn": "2017-08-15T15:21:20Z",
       "side": 1,
       "message": "If the thread hasn\u0027t started yet, wouldn\u0027t we fail to get the task runner we get out of the drm_thread to post the task?",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea98e124_7e69d7d7",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "I was doing something wrong here. Thanks for catching. Fixed.",
+      "parentUuid": "5cfa4aae_db2d434c",
       "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -259,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "63169787_af402fed",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabf37c3_b037fe7b",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3e7dfe_972e0cfe",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 4
@@ -270,6 +468,24 @@
       "writtenOn": "2017-08-15T15:21:20Z",
       "side": 1,
       "message": "I\u0027m not familiar with Mojo terminology. Is every \"RPC\" method called a service in Mojo?\n\nI would have guessed that GpuAdapter was the service while CreateWindow/DestroyWindow would be the RPC methods of the GpuAdapter service.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5189a96a_64bfaaad",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-16T21:46:05Z",
+      "side": 1,
+      "message": "You would be right. I\u0027d mis-written. Fixed.",
+      "parentUuid": "eb3e7dfe_972e0cfe",
       "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
