@@ -7,6 +7,9 @@ title: test1
 	ResourceCount
 	LayoutCount
 	RecalcStyleCount
+	LayoutDuration
+	RecalcStyleDuration
+	JavaScriptDuration
 	FirstMeaningfulPaint
 	DomContentLoaded
 title: test1
@@ -17,6 +20,9 @@ title: test1
 	ResourceCount
 	LayoutCount
 	RecalcStyleCount
+	LayoutDuration
+	RecalcStyleDuration
+	JavaScriptDuration
 	FirstMeaningfulPaint
 	DomContentLoaded
 title: 
@@ -27,6 +33,9 @@ title:
 	ResourceCount
 	LayoutCount
 	RecalcStyleCount
+	LayoutDuration
+	RecalcStyleDuration
+	JavaScriptDuration
 	FirstMeaningfulPaint
 	DomContentLoaded
 
