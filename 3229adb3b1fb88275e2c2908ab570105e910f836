@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f239f00a_1e12b4aa",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:10:18Z",
+      "side": 1,
+      "message": "Please add a comment here why the layers are set-up the way they are.",
+      "revId": "3229adb3b1fb88275e2c2908ab570105e910f836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12353c2_57a76fb0",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:10:18Z",
+      "side": 1,
+      "message": "Update the comment to mention the layer set-up to reduce overdraw.",
+      "revId": "3229adb3b1fb88275e2c2908ab570105e910f836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
