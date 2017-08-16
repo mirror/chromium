@@ -61,12 +61,14 @@ interface PresentationConnection {
    DidChangeState(PresentationConnectionState state);
 
    // Called when target connection calls close().
-   OnClose();
+   RequestClose();
 };
 
 interface PresentationService {
   // Sets the PresentationServiceClient.
   SetClient(PresentationServiceClient client);
+
+  SetReceiver(PresentationReceiver receiver);
 
   ///////////// Functions here are for the controller part of the API. /////////
 
@@ -132,15 +134,6 @@ interface PresentationServiceClient {
   // See PresentationService::SetDefaultPresentationURL.
   OnDefaultPresentationStarted(PresentationInfo presentation_info);
 
-  //////////  This API is implemented by an offscreen presentation frame.  /////
-
-  // Called on a presentation receiver when a connection for |presentation_info|
-  // is available from the controlling page.
-  OnReceiverConnectionAvailable(
-      PresentationInfo presentation_info,
-      PresentationConnection controller_connection_ptr,
-      PresentationConnection& receiver_connection_request);
-
   //////////  This API is implemented by both frame types.  ////////////////////
 
   // Called when the state of PresentationConnection |connection| started on
@@ -153,4 +146,18 @@ interface PresentationServiceClient {
   OnConnectionClosed(PresentationInfo presentation_info,
                      PresentationConnectionCloseReason reason,
                      string message);
+};
+
+// Receives updates of receiver PresentationConnections becoming available.
+interface PresentationReceiver {
+  // Notifies the PresentationReceiver that a receiver connection has become
+  // available.
+  // |info|: URL and ID of the PresentationConnection.
+  // |controller_connection|: Ptr to the corresponding controller connection.
+  // |receiver_connection_request|: Interface request to be bound to a receiver
+  // connection implementation.
+  OnReceiverConnectionAvailable(
+      PresentationInfo info,
+      PresentationConnection controller_connection,
+      PresentationConnection& receiver_connection_request);
 };

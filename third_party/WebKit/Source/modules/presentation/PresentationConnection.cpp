@@ -32,21 +32,43 @@ namespace blink {
 
 namespace {
 
+// TODO(crbug.com/524128): This restriction comes from Cast.  Raise this limit
+// for non-Cast presentations.
+constexpr size_t kMaxPresentationConnectionMessageSize = 64 * 1024;  // 64 KB.
+
+void OnMessageReceived(bool success) {
+  DLOG_IF(ERROR, !success)
+      << "Target PresentationConnection failed to process message!";
+}
+
+mojom::blink::PresentationConnectionMessagePtr MakeBinaryMessage(
+    const DOMArrayBuffer* buffer) {
+  WTF::Vector<uint8_t> data;
+  data.Append(static_cast<const uint8_t*>(buffer->Data()),
+              buffer->ByteLength());
+  return mojom::blink::PresentationConnectionMessage::NewData(std::move(data));
+}
+
+mojom::blink::PresentationConnectionMessagePtr MakeTextMessage(
+    const String& text) {
+  return mojom::blink::PresentationConnectionMessage::NewMessage(text);
+}
+
 const AtomicString& ConnectionStateToString(
-    WebPresentationConnectionState state) {
+    mojom::blink::PresentationConnectionState state) {
   DEFINE_STATIC_LOCAL(const AtomicString, connecting_value, ("connecting"));
   DEFINE_STATIC_LOCAL(const AtomicString, connected_value, ("connected"));
   DEFINE_STATIC_LOCAL(const AtomicString, closed_value, ("closed"));
   DEFINE_STATIC_LOCAL(const AtomicString, terminated_value, ("terminated"));
 
   switch (state) {
-    case WebPresentationConnectionState::kConnecting:
+    case mojom::blink::PresentationConnectionState::CONNECTING:
       return connecting_value;
-    case WebPresentationConnectionState::kConnected:
+    case mojom::blink::PresentationConnectionState::CONNECTED:
       return connected_value;
-    case WebPresentationConnectionState::kClosed:
+    case mojom::blink::PresentationConnectionState::CLOSED:
       return closed_value;
-    case WebPresentationConnectionState::kTerminated:
+    case mojom::blink::PresentationConnectionState::TERMINATED:
       return terminated_value;
   }
 
@@ -139,22 +161,70 @@ PresentationConnection::PresentationConnection(LocalFrame* frame,
     : ContextClient(frame),
       id_(id),
       url_(url),
-      state_(WebPresentationConnectionState::kConnecting),
-      binary_type_(kBinaryTypeArrayBuffer),
-      proxy_(nullptr) {}
+      state_(mojom::blink::PresentationConnectionState::CONNECTING),
+      connection_binding_(this),
+      binary_type_(kBinaryTypeArrayBuffer) {}
 
 PresentationConnection::~PresentationConnection() {
   DCHECK(!blob_loader_);
 }
 
-void PresentationConnection::BindProxy(
-    std::unique_ptr<WebPresentationConnectionProxy> proxy) {
-  DCHECK(proxy);
-  proxy_ = std::move(proxy);
+void PresentationConnection::OnMessage(
+    mojom::blink::PresentationConnectionMessagePtr message,
+    OnMessageCallback callback) {
+  DCHECK(!callback.is_null());
+  if (message->is_data()) {
+    const auto& data = message->get_data();
+    DidReceiveBinaryMessage(&data.front(), data.size());
+  } else {
+    DidReceiveTextMessage(message->get_message());
+  }
+
+  std::move(callback).Run(true);
+}
+
+void PresentationConnection::DidChangeState(
+    mojom::blink::PresentationConnectionState state) {
+  if (state_ == state)
+    return;
+
+  // TODO(crbug.com/749327): Remove calls of DidChangeState(CLOSED).
+  if (state == mojom::blink::PresentationConnectionState::CLOSED) {
+    DidClose();
+    return;
+  }
+
+  state_ = state;
+
+  switch (state_) {
+    case mojom::blink::PresentationConnectionState::CONNECTING:
+      return;
+    case mojom::blink::PresentationConnectionState::CONNECTED:
+      DispatchStateChangeEvent(Event::Create(EventTypeNames::connect));
+      return;
+    // Closed state is handled in |DidClose()|.
+    case mojom::blink::PresentationConnectionState::CLOSED:
+      return;
+    case mojom::blink::PresentationConnectionState::TERMINATED:
+      DispatchStateChangeEvent(Event::Create(EventTypeNames::terminate));
+      return;
+  }
+  NOTREACHED();
+}
+
+void PresentationConnection::RequestClose() {
+  DidChangeState(mojom::blink::PresentationConnectionState::CLOSED);
+
+  // TODO(crbug.com/749327): Instead of calling DidChangeState, consider
+  // supplying a callback to RequestClose() and invoking it here.
+  if (target_connection_) {
+    target_connection_->DidChangeState(
+        mojom::blink::PresentationConnectionState::CLOSED);
+  }
 }
 
 // static
-PresentationConnection* PresentationConnection::Take(
+ControllerPresentationConnection* ControllerPresentationConnection::Take(
     ScriptPromiseResolver* resolver,
     const WebPresentationInfo& presentation_info,
     PresentationRequest* request) {
@@ -175,15 +245,16 @@ PresentationConnection* PresentationConnection::Take(
 }
 
 // static
-PresentationConnection* PresentationConnection::Take(
+ControllerPresentationConnection* ControllerPresentationConnection::Take(
     PresentationController* controller,
     const WebPresentationInfo& presentation_info,
     PresentationRequest* request) {
   DCHECK(controller);
   DCHECK(request);
 
-  PresentationConnection* connection = new PresentationConnection(
-      controller->GetFrame(), presentation_info.id, presentation_info.url);
+  auto* connection = new ControllerPresentationConnection(
+      controller->GetFrame(), controller, presentation_info.id,
+      presentation_info.url);
   controller->RegisterConnection(connection);
 
   // Fire onconnectionavailable event asynchronously.
@@ -197,17 +268,114 @@ PresentationConnection* PresentationConnection::Take(
   return connection;
 }
 
+ControllerPresentationConnection::ControllerPresentationConnection(
+    LocalFrame* frame,
+    PresentationController* controller,
+    const String& id,
+    const KURL& url)
+    : PresentationConnection(frame, id, url), controller_(controller) {}
+
+ControllerPresentationConnection::~ControllerPresentationConnection() = default;
+
+DEFINE_TRACE(ControllerPresentationConnection) {
+  visitor->Trace(controller_);
+  PresentationConnection::Trace(visitor);
+}
+
+void ControllerPresentationConnection::Init() {
+  // Note that it is possible for the binding to be already bound here, because
+  // the ControllerPresentationConnection object could be reused when
+  // reconnecting in the same frame. In this case the existing connections are
+  // discarded.
+  if (connection_binding_.is_bound()) {
+    connection_binding_.Close();
+    target_connection_.reset();
+  }
+
+  mojom::blink::PresentationConnectionPtr controller_connection_ptr;
+  connection_binding_.Bind(mojo::MakeRequest(&controller_connection_ptr));
+  controller_->GetPresentationService()->SetPresentationConnection(
+      mojom::blink::PresentationInfo::New(url_, id_),
+      std::move(controller_connection_ptr),
+      mojo::MakeRequest(&target_connection_));
+}
+
+void ControllerPresentationConnection::DoClose() {
+  controller_->GetPresentationService()->CloseConnection(url_, id_);
+}
+
+void ControllerPresentationConnection::DoTerminate() {
+  controller_->GetPresentationService()->Terminate(url_, id_);
+}
+
 // static
-PresentationConnection* PresentationConnection::Take(
+ReceiverPresentationConnection* ReceiverPresentationConnection::Take(
     PresentationReceiver* receiver,
-    const WebPresentationInfo& presentation_info) {
+    const mojom::blink::PresentationInfo& presentation_info,
+    mojom::blink::PresentationConnectionPtr controller_connection,
+    mojom::blink::PresentationConnectionRequest receiver_connection_request) {
   DCHECK(receiver);
 
-  PresentationConnection* connection = new PresentationConnection(
-      receiver->GetFrame(), presentation_info.id, presentation_info.url);
+  ReceiverPresentationConnection* connection =
+      new ReceiverPresentationConnection(receiver->GetFrame(), receiver,
+                                         presentation_info.id,
+                                         presentation_info.url);
+  connection->Init(std::move(controller_connection),
+                   std::move(receiver_connection_request));
+
   receiver->RegisterConnection(connection);
 
   return connection;
+}
+
+ReceiverPresentationConnection::ReceiverPresentationConnection(
+    LocalFrame* frame,
+    PresentationReceiver* receiver,
+    const String& id,
+    const KURL& url)
+    : PresentationConnection(frame, id, url), receiver_(receiver) {}
+
+ReceiverPresentationConnection::~ReceiverPresentationConnection() = default;
+
+void ReceiverPresentationConnection::Init(
+    mojom::blink::PresentationConnectionPtr controller_connection_ptr,
+    mojom::blink::PresentationConnectionRequest receiver_connection_request) {
+  target_connection_ = std::move(controller_connection_ptr);
+  connection_binding_.Bind(std::move(receiver_connection_request));
+
+  target_connection_->DidChangeState(
+      mojom::blink::PresentationConnectionState::CONNECTED);
+  DidChangeState(mojom::blink::PresentationConnectionState::CONNECTED);
+}
+
+void ReceiverPresentationConnection::DidChangeState(
+    mojom::blink::PresentationConnectionState state) {
+  PresentationConnection::DidChangeState(state);
+  if (state == mojom::blink::PresentationConnectionState::CLOSED)
+    receiver_->RemoveConnection(this);
+}
+
+void ReceiverPresentationConnection::OnReceiverTerminated() {
+  // We don't invoke PresentationConnection::DidChangeState here because we do
+  // not want to dispatch an event, as the page might be closing.
+  state_ = mojom::blink::PresentationConnectionState::TERMINATED;
+  if (target_connection_)
+    target_connection_->DidChangeState(state_);
+}
+
+void ReceiverPresentationConnection::DoClose() {
+  // No-op
+}
+
+void ReceiverPresentationConnection::DoTerminate() {
+  // This will close the receiver window. At some point later
+  // OnReceiverTerminated() will be invoked.
+  receiver_->Terminate();
+}
+
+DEFINE_TRACE(ReceiverPresentationConnection) {
+  visitor->Trace(receiver_);
+  PresentationConnection::Trace(visitor);
 }
 
 const AtomicString& PresentationConnection::InterfaceName() const {
@@ -257,6 +425,14 @@ void PresentationConnection::send(const String& message,
   if (!CanSendMessage(exception_state))
     return;
 
+  if (message.length() > kMaxPresentationConnectionMessageSize) {
+    // TODO(crbug.com/459008): Limit the size of individual messages to 64k
+    // for now. Consider throwing DOMException or splitting bigger messages
+    // into smaller chunks later.
+    LOG(WARNING) << "String message size exceeded limit!";
+    return;
+  }
+
   messages_.push_back(new Message(message));
   HandleMessageQueue();
 }
@@ -293,29 +469,27 @@ void PresentationConnection::send(Blob* data, ExceptionState& exception_state) {
 }
 
 bool PresentationConnection::CanSendMessage(ExceptionState& exception_state) {
-  if (state_ != WebPresentationConnectionState::kConnected) {
+  if (state_ != mojom::blink::PresentationConnectionState::CONNECTED) {
     ThrowPresentationDisconnectedError(exception_state);
     return false;
   }
 
-  return !!proxy_;
+  return !!target_connection_;
 }
 
 void PresentationConnection::HandleMessageQueue() {
-  if (!proxy_)
+  if (!target_connection_)
     return;
 
   while (!messages_.IsEmpty() && !blob_loader_) {
     Message* message = messages_.front().Get();
     switch (message->type) {
       case kMessageTypeText:
-        proxy_->SendTextMessage(message->text);
+        SendMessageToTargetConnection(MakeTextMessage(message->text));
         messages_.pop_front();
         break;
       case kMessageTypeArrayBuffer:
-        proxy_->SendBinaryMessage(
-            static_cast<const uint8_t*>(message->array_buffer->Data()),
-            message->array_buffer->ByteLength());
+        SendMessageToTargetConnection(MakeBinaryMessage(message->array_buffer));
         messages_.pop_front();
         break;
       case kMessageTypeBlob:
@@ -349,8 +523,17 @@ void PresentationConnection::setBinaryType(const String& binary_type) {
   NOTREACHED();
 }
 
+void PresentationConnection::SendMessageToTargetConnection(
+    mojom::blink::PresentationConnectionMessagePtr message) {
+  if (target_connection_) {
+    target_connection_->OnMessage(
+        std::move(message),
+        ConvertToBaseCallback(WTF::Bind(&OnMessageReceived)));
+  }
+}
+
 void PresentationConnection::DidReceiveTextMessage(const WebString& message) {
-  if (state_ != WebPresentationConnectionState::kConnected)
+  if (state_ != mojom::blink::PresentationConnectionState::CONNECTED)
     return;
 
   DispatchEvent(MessageEvent::Create(message));
@@ -358,7 +541,7 @@ void PresentationConnection::DidReceiveTextMessage(const WebString& message) {
 
 void PresentationConnection::DidReceiveBinaryMessage(const uint8_t* data,
                                                      size_t length) {
-  if (state_ != WebPresentationConnectionState::kConnected)
+  if (state_ != mojom::blink::PresentationConnectionState::CONNECTED)
     return;
 
   switch (binary_type_) {
@@ -378,31 +561,29 @@ void PresentationConnection::DidReceiveBinaryMessage(const uint8_t* data,
   NOTREACHED();
 }
 
-WebPresentationConnectionState PresentationConnection::GetState() {
+mojom::blink::PresentationConnectionState PresentationConnection::GetState()
+    const {
   return state_;
 }
 
 void PresentationConnection::close() {
-  if (state_ != WebPresentationConnectionState::kConnecting &&
-      state_ != WebPresentationConnectionState::kConnected) {
+  if (state_ != mojom::blink::PresentationConnectionState::CONNECTING &&
+      state_ != mojom::blink::PresentationConnectionState::CONNECTED) {
     return;
   }
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (client)
-    client->CloseConnection(url_, id_, proxy_.get());
 
+  if (target_connection_)
+    target_connection_->RequestClose();
+
+  DoClose();
   TearDown();
 }
 
 void PresentationConnection::terminate() {
-  if (state_ != WebPresentationConnectionState::kConnected)
+  if (state_ != mojom::blink::PresentationConnectionState::CONNECTED)
     return;
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (client)
-    client->TerminatePresentation(url_, id_);
 
+  DoTerminate();
   TearDown();
 }
 
@@ -416,54 +597,15 @@ bool PresentationConnection::Matches(const String& id, const KURL& url) const {
   return url_ == url && id_ == id;
 }
 
-void PresentationConnection::DidChangeState(
-    WebPresentationConnectionState state) {
-  DidChangeState(state, true /* shouldDispatchEvent */);
-}
-
-void PresentationConnection::DidChangeState(
-    WebPresentationConnectionState state,
-    bool should_dispatch_event) {
-  if (state_ == state)
-    return;
-
-  state_ = state;
-
-  if (!should_dispatch_event)
-    return;
-
-  switch (state_) {
-    case WebPresentationConnectionState::kConnecting:
-      return;
-    case WebPresentationConnectionState::kConnected:
-      DispatchStateChangeEvent(Event::Create(EventTypeNames::connect));
-      return;
-    case WebPresentationConnectionState::kTerminated:
-      DispatchStateChangeEvent(Event::Create(EventTypeNames::terminate));
-      return;
-    // Closed state is handled in |didClose()|.
-    case WebPresentationConnectionState::kClosed:
-      NOTREACHED();
-      return;
-  }
-  NOTREACHED();
-}
-
-void PresentationConnection::NotifyTargetConnection(
-    WebPresentationConnectionState state) {
-  if (proxy_)
-    proxy_->NotifyTargetConnection(state);
-}
-
 void PresentationConnection::DidClose(
     WebPresentationConnectionCloseReason reason,
     const String& message) {
-  if (state_ == WebPresentationConnectionState::kClosed ||
-      state_ == WebPresentationConnectionState::kTerminated) {
+  if (state_ == mojom::blink::PresentationConnectionState::CLOSED ||
+      state_ == mojom::blink::PresentationConnectionState::TERMINATED) {
     return;
   }
 
-  state_ = WebPresentationConnectionState::kClosed;
+  state_ = mojom::blink::PresentationConnectionState::CLOSED;
   DispatchStateChangeEvent(PresentationConnectionCloseEvent::Create(
       EventTypeNames::close, ConnectionCloseReasonToString(reason), message));
 }
@@ -477,11 +619,9 @@ void PresentationConnection::DidFinishLoadingBlob(DOMArrayBuffer* buffer) {
   DCHECK_EQ(messages_.front()->type, kMessageTypeBlob);
   DCHECK(buffer);
   DCHECK(buffer->Buffer());
+
   // Send the loaded blob immediately here and continue processing the queue.
-  if (proxy_) {
-    proxy_->SendBinaryMessage(static_cast<const uint8_t*>(buffer->Data()),
-                              buffer->ByteLength());
-  }
+  SendMessageToTargetConnection(MakeBinaryMessage(buffer));
 
   messages_.pop_front();
   blob_loader_.Clear();
