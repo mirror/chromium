@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "926cb1f2_f6e5339c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:14:14Z",
+      "side": 1,
+      "message": "Thanks for the help!",
+      "parentUuid": "f0c6f27e_f9f161aa",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd346169_140e93f5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 1

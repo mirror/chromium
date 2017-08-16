@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68f087d8_f462ebba",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:14:14Z",
+      "side": 1,
+      "message": "We also use createSlowLoadingIntent() in WebappSplashScreenHomescreenIconTest.java and WebappSplashScreenIconTest.java, because we need to add some fields to the intent.",
+      "parentUuid": "12b379e3_790c4dca",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e87865f4_c58af1a2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c240d94b_7ac4eb38",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e87865f4_c58af1a2",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e86a48d_5421d1e0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9614185b_299a019c",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f8e0766_ae20ce6c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "72d04269_caa2d236",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8e0766_ae20ce6c",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dd925ae_9502db35",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenTest.java",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e83fe6_60283763",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd925ae_9502db35",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
