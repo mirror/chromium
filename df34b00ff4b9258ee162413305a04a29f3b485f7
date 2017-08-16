@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d09b603e_141569ad",
+        "filename": "chrome/android/java/res/layout/new_tab_page_progress_indicator.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-16T11:57:46Z",
+      "side": 1,
+      "message": "I\u0027ll change this programmatically if the feature is enabled.",
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336650b4_d5284cf7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-16T11:57:46Z",
+      "side": 1,
+      "message": "I\u0027d like to return the Spinner or the Card for the Articles Section, but we don\u0027t have easy access to it here.",
+      "range": {
+        "startLine": 254,
+        "startChar": 35,
+        "endLine": 254,
+        "endChar": 37
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7899bef_7e4628b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-16T11:57:46Z",
+      "side": 1,
+      "message": "This is incredibly ugly - I\u0027d prefer to wire the ScrollToLoadListener directly to the Articles Section.",
+      "range": {
+        "startLine": 217,
+        "startChar": 38,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b68af7a_7c1e8061",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-16T11:57:46Z",
+      "side": 1,
+      "message": "(Of course, this will be a proper feature.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
