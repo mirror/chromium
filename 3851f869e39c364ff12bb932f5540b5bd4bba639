@@ -16,6 +16,24 @@
       "revId": "3851f869e39c364ff12bb932f5540b5bd4bba639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b3d826_9b62a1f5",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 2
+      },
+      "lineNbr": 2521,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T09:30:44Z",
+      "side": 0,
+      "message": "I would like to explain what you say:\nWhen renaming test:\n1. remove old name endtry from TestExpectation/enable-blink-features\u003dLayoutNG\n2. run linux_layout_tests_layout_ng bot to see whether renamed test succeeded or failed\n3. If failed, add renamed test to TestExpecation/enable-blink-features\u003dLayoutNG\n4. If succeeded, nothing to do.",
+      "parentUuid": "1a924513_3ad60358",
+      "revId": "3851f869e39c364ff12bb932f5540b5bd4bba639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
