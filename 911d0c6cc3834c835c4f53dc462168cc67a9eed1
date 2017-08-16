@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd562f2f_16142153",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-16T16:50:07Z",
+      "side": 1,
+      "message": "Indicates whether...",
+      "range": {
+        "startLine": 466,
+        "startChar": 5,
+        "endLine": 466,
+        "endChar": 12
+      },
+      "revId": "911d0c6cc3834c835c4f53dc462168cc67a9eed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9c7a027_c9845bc4",
         "filename": "cc/trees/layer_tree_host.h",
         "patchSetId": 4
@@ -13,6 +36,30 @@
       "writtenOn": "2017-08-15T22:28:36Z",
       "side": 1,
       "message": "Should this be hacker-case is_using_layer_lists since it\u0027s basically a simple pass-through of the settings?\n\nI hate putting things in the header so I still put the impl in the .cc.",
+      "range": {
+        "startLine": 469,
+        "startChar": 7,
+        "endLine": 469,
+        "endChar": 24
+      },
+      "revId": "911d0c6cc3834c835c4f53dc462168cc67a9eed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd53a6bf_8d37adf1",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-16T16:50:07Z",
+      "side": 1,
+      "message": "This is fine.",
+      "parentUuid": "a9c7a027_c9845bc4",
       "range": {
         "startLine": 469,
         "startChar": 7,
