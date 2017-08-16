@@ -24,6 +24,7 @@ using GetChildDocumentsCallback =
     ArcFileSystemOperationRunner::GetChildDocumentsCallback;
 using GetRecentDocumentsCallback =
     ArcFileSystemOperationRunner::GetRecentDocumentsCallback;
+using GetRootsCallback = ArcFileSystemOperationRunner::GetRootsCallback;
 using AddWatcherCallback = ArcFileSystemOperationRunner::AddWatcherCallback;
 using RemoveWatcherCallback =
     ArcFileSystemOperationRunner::RemoveWatcherCallback;
@@ -78,6 +79,7 @@ void GetChildDocumentsOnIOThread(const std::string& authority,
 void GetRecentDocumentsOnIOThread(const std::string& authority,
                                   const std::string& root_id,
                                   const GetRecentDocumentsCallback& callback);
+void GetRootsOnIOThread(const GetRootsCallback& callback);
 void AddWatcherOnIOThread(const std::string& authority,
                           const std::string& document_id,
                           const WatcherCallback& watcher_callback,

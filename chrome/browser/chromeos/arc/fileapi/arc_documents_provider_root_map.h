@@ -9,9 +9,13 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
+#include "base/callback_forward.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/optional.h"
+#include "components/arc/common/file_system.mojom.h"
 
 namespace storage {
 class FileSystemURL;
@@ -27,6 +31,7 @@ class ArcDocumentsProviderRoot;
 // only on the IO thread anyway.
 class ArcDocumentsProviderRootMap {
  public:
+  using RefreshCallback = base::OnceCallback<void(const base::Optional<std::vector<mojom::RootPtr>>& roots)>;
   ArcDocumentsProviderRootMap();
   ~ArcDocumentsProviderRootMap();
 
@@ -35,6 +40,10 @@ class ArcDocumentsProviderRootMap {
   // Returns nullptr if |url| is invalid or no corresponding root is registered.
   ArcDocumentsProviderRoot* ParseAndLookup(const storage::FileSystemURL& url,
                                            base::FilePath* path) const;
+
+  // Refreshes the roots list and returns it.
+  // Call from UI thread.
+  void Refresh(const RefreshCallback& callback);
 
  private:
   // Key is (authority, root_document_id).
