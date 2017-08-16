@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51deac5e_c8a33053",
+        "filename": "chrome/common/client_hints.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T21:08:28Z",
+      "side": 1,
+      "message": "Can we pass the origin as an origin, and not a GURL?",
+      "revId": "1481844a9188944c1b8e1a71ab23956e04dfa4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a8d461_a33889f7",
+        "filename": "chrome/common/client_hints.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T21:08:28Z",
+      "side": 1,
+      "message": "Please document what this is a map of (what is the key, what is the value)\n\nFrom an IPC security perspective, it would be preferable to pass something more strongly typed than a Value here though, and convert it in the browser process. That way, we can be sure that the preference that\u0027s written will match the format we expect. That would mean passing enum values for the client hint types instead of just passing ints.\n\n(Also, I would prefer to see this mapped from constants to strings in the prefs... but that\u0027s just my opinion.)",
+      "revId": "1481844a9188944c1b8e1a71ab23956e04dfa4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
