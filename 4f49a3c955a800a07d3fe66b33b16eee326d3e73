@@ -16,6 +16,24 @@
       "revId": "4f49a3c955a800a07d3fe66b33b16eee326d3e73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cd8298_23e94175",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-16T17:59:34Z",
+      "side": 1,
+      "message": "Correct, it\u0027ll have to stay around for a while.",
+      "parentUuid": "294fc63a_b0b00c08",
+      "revId": "4f49a3c955a800a07d3fe66b33b16eee326d3e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
