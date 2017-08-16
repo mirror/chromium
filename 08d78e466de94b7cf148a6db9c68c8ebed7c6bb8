@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30339282_a003e936",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000804
+      },
+      "writtenOn": "2017-08-16T21:05:03Z",
+      "side": 1,
+      "message": "Actually, is there any reason to limit this to a power of 2?\nMaybe worth scaling down by 3/4th or some other factor (in case there are two modules trying to get space)?",
+      "revId": "08d78e466de94b7cf148a6db9c68c8ebed7c6bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
