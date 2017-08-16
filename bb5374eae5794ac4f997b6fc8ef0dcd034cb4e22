@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "113e0ef7_be91ed40",
+        "filename": "components/policy/core/browser/configuration_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-16T15:53:28Z",
+      "side": 1,
+      "message": "Is list_value really needed? It\u0027s allowed to call GetList() directly on base::Value, and thanks to CheckAndGetValue() it\u0027s fine to assume it\u0027s a legitimate call (and GetList() will DCHECK anyway if something weird happens).",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 3
+      },
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0548d98e_a3a56ac8",
+        "filename": "components/policy/core/browser/configuration_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-16T15:53:28Z",
+      "side": 1,
+      "message": "nit: I believe that name starting with an underscore are against the style guide.\nIt\u0027s also difficult to differentiate it visually from the function argument.\nMaybe just use the filtered_list argument instead? It will have to be checked for non-null only in two places, so it\u0027ll not obfuscate the code.",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70ad788_a94ea16f",
+        "filename": "components/policy/core/browser/configuration_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-16T15:53:28Z",
+      "side": 1,
+      "message": "nit: For symmetry, please either add an empty line after the following if{}, or remove this empty line.",
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52456870_4abd27f5",
+        "filename": "components/policy/core/browser/configuration_policy_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-16T15:53:28Z",
+      "side": 1,
+      "message": "That\u0027s unused, can we remove this argument and the corresponding member?\nThis also removes the constraint of supporting only a single pref with a single instance of this class - which is just a limitation that doesn\u0027t help to simplify anything.",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 41
+      },
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
