@@ -1658,6 +1658,7 @@ chrome_test_java_sources = [
   "javatests/src/org/chromium/chrome/browser/snackbar/undo/UndoBarControllerTest.java",
   "javatests/src/org/chromium/chrome/browser/suggestions/ContentSuggestionsTest.java",
   "javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetEmptyUiCaptureTest.java",
+  "javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetTilesUiCaptureTest.java",
   "javatests/src/org/chromium/chrome/browser/suggestions/NavigationRecorderTest.java",
   "javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetTest.java",
   "javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",

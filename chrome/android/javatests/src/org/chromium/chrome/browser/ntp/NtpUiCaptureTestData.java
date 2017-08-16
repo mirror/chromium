@@ -8,7 +8,6 @@ import static org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedS
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.support.test.InstrumentationRegistry;
 
 import org.junit.Assert;
@@ -47,8 +46,8 @@ public class NtpUiCaptureTestData {
             createSiteSuggestion("Shop.rr", "shop"),
             createSiteSuggestion("Now Entertainment", "movies")};
 
-    private static final int[] FAKE_MOST_VISITED_COLORS = {Color.RED, Color.BLUE, Color.GREEN,
-            Color.BLACK, Color.CYAN, Color.DKGRAY, Color.BLUE, Color.YELLOW};
+    private static final int[] FAKE_MOST_VISITED_COLORS = {0xff306090, 0xff903060, 0xff309060,
+            0xff603090, 0xff906030, 0xff303090, 0xff609060, 0xff903030};
 
     private static final SnippetArticle[] FAKE_ARTICLE_SUGGESTIONS = new SnippetArticle[] {
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion0",
