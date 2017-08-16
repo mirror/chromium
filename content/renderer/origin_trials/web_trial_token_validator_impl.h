@@ -24,7 +24,8 @@ class CONTENT_EXPORT WebTrialTokenValidatorImpl
   ~WebTrialTokenValidatorImpl() override;
 
   // blink::WebTrialTokenValidator implementation
-  blink::WebOriginTrialTokenStatus ValidateToken(
+  blink::OriginTrialTokenStatus ValidateToken(
+      const blink::TrialTokenValidator& validator,
       const blink::WebString& token,
       const blink::WebSecurityOrigin& origin,
       blink::WebString* feature_name) override;

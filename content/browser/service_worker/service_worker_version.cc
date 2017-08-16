@@ -30,7 +30,7 @@
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_registration.h"
-#include "content/common/origin_trials/trial_token_validator.h"
+#include "content/common/origin_trials/trial_policy_impl.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_messages.h"
@@ -44,6 +44,7 @@
 #include "content/public/common/result_codes.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
+#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 
 namespace content {
@@ -294,6 +295,7 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       tick_clock_(base::MakeUnique<base::DefaultTickClock>()),
       clock_(base::MakeUnique<base::DefaultClock>()),
       ping_controller_(new PingController(this)),
+      validator_(&policy_),
       weak_factory_(this) {
   DCHECK_NE(kInvalidServiceWorkerVersionId, version_id);
   DCHECK(context_);
@@ -744,9 +746,9 @@ void ServiceWorkerVersion::Doom() {
 }
 
 void ServiceWorkerVersion::SetValidOriginTrialTokens(
-    const TrialTokenValidator::FeatureToTokensMap& tokens) {
-  origin_trial_tokens_ = TrialTokenValidator::GetValidTokens(
-      url::Origin(scope()), tokens, clock_->Now());
+    const blink::TrialTokenValidator::FeatureToTokensMap& tokens) {
+  origin_trial_tokens_ =
+      validator_.GetValidTokens(url::Origin(scope()), tokens, clock_->Now());
 }
 
 void ServiceWorkerVersion::SetDevToolsAttached(bool attached) {
@@ -797,7 +799,7 @@ void ServiceWorkerVersion::SetMainScriptHttpResponseInfo(
   //     was written by old version Chrome (< M56), so |origin_trial_tokens|
   //     wasn't set in the entry.
   if (!origin_trial_tokens_) {
-    origin_trial_tokens_ = TrialTokenValidator::GetValidTokensFromHeaders(
+    origin_trial_tokens_ = validator_.GetValidTokensFromHeaders(
         url::Origin(scope()), http_info.headers.get(), clock_->Now());
   }
 

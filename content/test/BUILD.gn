@@ -1427,8 +1427,6 @@ test("content_unittests") {
     "../common/manifest_util_unittest.cc",
     "../common/media/media_devices_unittest.cc",
     "../common/navigation_params_unittest.cc",
-    "../common/origin_trials/trial_token_unittest.cc",
-    "../common/origin_trials/trial_token_validator_unittest.cc",
     "../common/origin_util_unittest.cc",
     "../common/page_state_serialization_unittest.cc",
     "../common/page_zoom_unittest.cc",

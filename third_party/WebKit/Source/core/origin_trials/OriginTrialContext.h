@@ -5,6 +5,7 @@
 #ifndef OriginTrialContext_h
 #define OriginTrialContext_h
 
+#include "common/origin_trials/trial_token_validator.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
 #include "platform/Supplementable.h"
@@ -40,7 +41,9 @@ class CORE_EXPORT OriginTrialContext final
  public:
   enum CreateMode { kCreateIfNotExists, kDontCreateIfNotExists };
 
-  OriginTrialContext(ExecutionContext&, WebTrialTokenValidator*);
+  OriginTrialContext(ExecutionContext&,
+                     WebTrialTokenValidator*,
+                     const TrialTokenValidator&);
 
   static const char* SupplementName();
 
@@ -98,7 +101,8 @@ class CORE_EXPORT OriginTrialContext final
   Vector<String> tokens_;
   HashSet<String> enabled_trials_;
   HashSet<String> installed_trials_;
-  WebTrialTokenValidator* trial_token_validator_;
+  WebTrialTokenValidator* obsolete_trial_token_validator_;
+  TrialTokenValidator trial_token_validator_;
 };
 
 }  // namespace blink
