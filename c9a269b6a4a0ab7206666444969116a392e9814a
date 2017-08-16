@@ -70,6 +70,30 @@
       "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae1253d_39eeb5d3",
+        "filename": "media/device_monitors/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-16T20:03:52Z",
+      "side": 1,
+      "message": "To be clear, you\u0027re right that this DEP is needed, thanks for pointing that out. But that analysis lead me down a trail of other issues which are likely the reasons behind the bot issues you\u0027ve had landing these patches. Thanks for your patience here.",
+      "parentUuid": "302a8150_6d1570f9",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
