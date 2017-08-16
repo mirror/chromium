@@ -22,6 +22,30 @@
       "revId": "61419e7bdddeccd59ba9d8c9069e20307302ded4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251ba237_cbaf147e",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-16T15:52:05Z",
+      "side": 0,
+      "message": "The variable is named badly. It really means:\nconnection_type_changed_since_last_network_quality_check_\n\nIf you feel like, you can rename it to connection_type_changed_since_last_nq_check_ or something better?\n\nThe comments in the header file mention this but obviously the current name is not appropriate.\n\nIf we assume that definition, then the code is fine.",
+      "parentUuid": "5f6b4481_b489e0ca",
+      "range": {
+        "startLine": 652,
+        "startChar": 2,
+        "endLine": 652,
+        "endChar": 26
+      },
+      "revId": "61419e7bdddeccd59ba9d8c9069e20307302ded4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
