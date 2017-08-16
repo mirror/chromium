@@ -16,6 +16,24 @@
       "revId": "6e9fb1e78f9e623e56c6c6f626ba6e53bd8ea216",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff9ca42_c8be511f",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T06:30:25Z",
+      "side": 1,
+      "message": "Nice catch. Done.",
+      "parentUuid": "00d6645d_5c285955",
+      "revId": "6e9fb1e78f9e623e56c6c6f626ba6e53bd8ea216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
