@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457bf42d_09ba7c20",
+        "filename": "chrome/browser/accessibility/accessibility_permission_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:49:38Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1242a532_a830d154",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:49:38Z",
+      "side": 1,
+      "message": "Where is this called? I\u0027m a bit worried about sync methods returning async info.",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fa9c4d_11d1dac4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:49:38Z",
+      "side": 1,
+      "message": "style: add `const`",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25bf906_4445c330",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:49:38Z",
+      "side": 1,
+      "message": "style: leave empty line",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6985806_3c726955",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:49:38Z",
+      "side": 1,
+      "message": "style: shouldn\u0027t this be above the member variables?",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9aa4937_cab6da7a",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-16T13:49:38Z",
+      "side": 1,
+      "message": "Could you do like the device permissions above and reject with a TypeError when the feature isn\u0027t enabled?",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
