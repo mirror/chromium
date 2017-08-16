@@ -92,6 +92,10 @@ struct CreateNewWindowReply {
   int64 cloned_session_storage_namespace_id;
 };
 
+// An interface which should be detached when all requests finish and no more
+// resource requests will be requested.
+interface RequestsTracker {};
+
 // Implemented by the frame server (i.e. the browser process). For messages that
 // must be associated with the IPC channel.
 interface FrameHost {
@@ -100,4 +104,10 @@ interface FrameHost {
   // be created.
   [Sync] CreateNewWindow(CreateNewWindowParams params)
       => (CreateNewWindowReply reply);
+
+  // Creates and returns a RequestsTracker. The caller should detach the tracker
+  // when all resource requests finish and no more resource requests will be
+  // requested.
+  // This method can be called at most once.
+  IssueRequestsTracker(RequestsTracker& tracker);
 };
