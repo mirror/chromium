@@ -22,6 +22,30 @@
       "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510a1764_92659142",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-16T08:48:36Z",
+      "side": 1,
+      "message": "I\u0027m also still investigating, but SWContextClinent seems one of the owners too. At least, I don\u0027t think we need to keep it in SWContextClient during worker is running since it\u0027s just used at the startup, and keeping SWProviderContext in SWContextClient seems problematic.",
+      "parentUuid": "944369bf_c375acc0",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
