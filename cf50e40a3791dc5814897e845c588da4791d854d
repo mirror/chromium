@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a57f8ce_f323da5e",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T06:17:17Z",
+      "side": 1,
+      "message": "Hi, I just noticed that you\u0027re working on this- thanks!\n\nSince converting StatusCallback may not be too straightforward could we start with a minimum change, i.e. just changing this Closure -\u003e OnceClosure one, and start changing some related Bind() calls into BindOnce()?\n\n(To be more specific I feel little uncomfortable with introducing Status{Once,Repeating}Callback concept, which seems to make the code less readable)",
+      "revId": "cf50e40a3791dc5814897e845c588da4791d854d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
