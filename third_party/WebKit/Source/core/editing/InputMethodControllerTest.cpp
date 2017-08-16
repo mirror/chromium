@@ -1407,12 +1407,10 @@ TEST_F(InputMethodControllerTest, ImeTextSpanAppearsCorrectlyAfterNewline) {
   ASSERT_EQ(1u, GetDocument().Markers().Markers().size());
 
   // Verify composition marker shows up on the second line, not the first
-  ASSERT_FALSE(GetDocument().Markers().MarkerAtPosition(
-      PlainTextRange(2).CreateRange(*div).StartPosition(),
-      DocumentMarker::AllMarkers()));
-  ASSERT_TRUE(GetDocument().Markers().MarkerAtPosition(
-      PlainTextRange(8).CreateRange(*div).StartPosition(),
-      DocumentMarker::AllMarkers()));
+  ASSERT_FALSE(GetDocument().Markers().FirstMarkerIntersectingOffsetRange(
+      ToText(*div->firstChild()), 2, 2, DocumentMarker::AllMarkers()));
+  ASSERT_TRUE(GetDocument().Markers().FirstMarkerIntersectingOffsetRange(
+      ToText(*div->firstChild()), 8, 8, DocumentMarker::AllMarkers()));
 
   // Verify marker has correct start/end offsets (measured from the beginning
   // of the node, which is the beginning of the line)

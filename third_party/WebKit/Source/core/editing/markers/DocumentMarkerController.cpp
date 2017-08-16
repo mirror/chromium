@@ -385,48 +385,20 @@ void DocumentMarkerController::RemoveMarkersInternal(
   }
 }
 
-DocumentMarker* DocumentMarkerController::MarkerAtPosition(
-    const Position& position,
-    DocumentMarker::MarkerTypes marker_types) {
-  if (!PossiblyHasMarkers(marker_types))
-    return nullptr;
-
-  Node* const node = position.ComputeContainerNode();
-  MarkerLists* const markers = markers_.at(node);
-  if (!markers)
-    return nullptr;
-
-  const unsigned offset =
-      static_cast<unsigned>(position.ComputeOffsetInContainerNode());
-
-  // This position can't be in the interior of a marker if it occurs at an
-  // endpoint of the node
-  if (offset == 0 ||
-      offset == static_cast<unsigned>(node->MaxCharacterOffset()))
-    return nullptr;
-
-  // Query each of the DocumentMarkerLists until we find a marker at the
-  // specified position (or have gone through all the MarkerTypes)
-  for (DocumentMarker::MarkerType type : marker_types) {
-    const DocumentMarkerList* const list = ListForType(markers, type);
-    if (!list)
-      continue;
-
-    const HeapVector<Member<DocumentMarker>>& results =
-        list->MarkersIntersectingRange(offset, offset);
-    if (!results.IsEmpty())
-      return results.front();
-  }
-
-  return nullptr;
-}
-
 DocumentMarker* DocumentMarkerController::FirstMarkerIntersectingOffsetRange(
     const Text& node,
     unsigned start_offset,
     unsigned end_offset,
     DocumentMarker::MarkerTypes types) {
   if (!PossiblyHasMarkers(types))
+    return nullptr;
+
+  // Minor optimization: if we have an empty range at a node boundary, it can't
+  // fall in the interior of any marker.
+  if (start_offset == 0 && end_offset == 0)
+    return nullptr;
+  const unsigned node_length = node.length();
+  if (start_offset == node_length && end_offset == node_length)
     return nullptr;
 
   MarkerLists* const markers = markers_.at(&node);
