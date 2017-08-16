@@ -22,6 +22,30 @@
       "revId": "7d13a96b902a57bdffa4c76fa6543d0b1262547a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f8fdb6_f6a6cd9c",
+        "filename": "third_party/libjingle_xmpp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2017-08-16T07:41:05Z",
+      "side": 1,
+      "message": "Done in: https://chromium-review.googlesource.com/c/616640.",
+      "parentUuid": "d59ac355_bd6f6fa2",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "7d13a96b902a57bdffa4c76fa6543d0b1262547a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
