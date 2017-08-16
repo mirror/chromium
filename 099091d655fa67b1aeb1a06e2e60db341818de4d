@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f10f530_dffa7507",
+        "filename": "ui/views/examples/box_layout_example.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-16T13:34:39Z",
+      "side": 1,
+      "message": "Whoa, an anonymous namespace in the header? I\u0027m surprised why it was there in the first place.\n\nSince it\u0027s empty now, could you also remove \"namespace {}\"?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "099091d655fa67b1aeb1a06e2e60db341818de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
