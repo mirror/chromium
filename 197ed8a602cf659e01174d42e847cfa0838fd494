@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e55a4212_0704dd3e",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57eb946_9b6f4f67",
+      "range": {
+        "startLine": 203,
+        "startChar": 20,
+        "endLine": 203,
+        "endChar": 29
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6678c4cc_33360f92",
         "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247c8e3c_1f65cbf5",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Length doesn\u0027t really matter, though I agree that 0 shouldn\u0027t happen.",
+      "parentUuid": "6678c4cc_33360f92",
+      "range": {
+        "startLine": 295,
+        "startChar": 25,
+        "endLine": 295,
+        "endChar": 48
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "71ddb278_56b366ff",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Sadly not.",
+      "parentUuid": "0e7b2687_eec436e3",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 37
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c956570b_c991a35b",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b25ea492_784a5384",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c956570b_c991a35b",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 363,
+        "endChar": 6
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c187c41b_9e39f9d3",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 4
@@ -108,6 +204,24 @@
       "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de129a6_10876ca8",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c187c41b_9e39f9d3",
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "a370e2a4_d96da573",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d22dd81_d5e36980",
+      "range": {
+        "startLine": 366,
+        "startChar": 7,
+        "endLine": 366,
+        "endChar": 18
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65877b00_21a6830f",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 4
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "0c2921db_f867d8c5",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65877b00_21a6830f",
+      "range": {
+        "startLine": 369,
+        "startChar": 3,
+        "endLine": 369,
+        "endChar": 59
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "279e16b8_c1fbad33",
         "filename": "chrome/installer/zucchini/zucchini_gen.h",
         "patchSetId": 4
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-15T22:51:39Z",
       "side": 1,
       "message": "Can we make ReferenceGroup::ReaderFactory specify a const member function, so we can make this param const Disassembler\u0026 ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94aebdd_65c97dfd",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Some implementation (DisassemblerWin32) rely on the function being mutable because it initializes lazily some internal state. Note that this could be worked around using mutable member data, or just initialize everything upfront. I think we should commit Disassembler first and see if it\u0027s possible to implement a const version of ReaderFactory.",
+      "parentUuid": "279e16b8_c1fbad33",
       "range": {
         "startLine": 25,
         "startChar": 42,
@@ -200,6 +386,30 @@
       "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687922eb_1716d3bd",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:59:39Z",
+      "side": 1,
+      "message": "Whoops, merge went wrong.",
+      "parentUuid": "97a35836_d51da9ca",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 23
+      },
+      "revId": "197ed8a602cf659e01174d42e847cfa0838fd494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
