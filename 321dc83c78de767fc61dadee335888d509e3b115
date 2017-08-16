@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fed1f5e0_48070a55",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-16T16:58:23Z",
+      "side": 1,
+      "message": "likely you want to un-press the keys in reverse order, like ctrl+c should be sent as ctrl down c down c up ctrl up.",
+      "revId": "321dc83c78de767fc61dadee335888d509e3b115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c659b495_1d110940",
+        "filename": "remoting/ios/app/advanced_keys_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-16T16:58:23Z",
+      "side": 1,
+      "message": "We should add a todo to limit keys for the host we are connecting to. Windows does not care about the command key, and mac does not care about the windows key... Linux cares about alt-left and alt-right, etc.",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "321dc83c78de767fc61dadee335888d509e3b115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
