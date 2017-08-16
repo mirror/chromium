@@ -16,6 +16,24 @@
       "revId": "035341f3575a776f1ce8c511a33c65de1b80eb55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c92cdaa_91e8f6f3",
+        "filename": "components/multidevice/service/cpp/multidevice_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T00:12:03Z",
+      "side": 1,
+      "message": "You want to use device_sync::mojom::kServiceName; this should fix your issues, I believe.",
+      "parentUuid": "5e96c8e1_a6572f21",
+      "revId": "035341f3575a776f1ce8c511a33c65de1b80eb55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
