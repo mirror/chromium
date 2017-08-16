@@ -138,6 +138,12 @@ id<GREYMatcher> SettingsMenuPrivacyButton();
 // Returns matcher for the Save passwords cell on the main Settings screen.
 id<GREYMatcher> SettingsMenuPasswordsButton();
 
+// Returns matcher for the payment request collection view.
+id<GREYMatcher> PaymentRequestView();
+
+// Returns matcher for the error confirmation view for payment request.
+id<GREYMatcher> PaymentRequestErrorView();
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_MATCHERS_H_

@@ -14,6 +14,8 @@
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/payments/payment_request_error_view_controller.h"
+#import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/import_data_collection_view_controller.h"
@@ -238,6 +240,15 @@ id<GREYMatcher> SettingsMenuPrivacyButton() {
 
 id<GREYMatcher> SettingsMenuPasswordsButton() {
   return ButtonWithAccessibilityLabelId(IDS_IOS_SAVE_PASSWORDS);
+}
+
+id<GREYMatcher> PaymentRequestView() {
+  return grey_accessibilityID(kPaymentRequestCollectionViewID);
+}
+
+// Returns matcher for the error confirmation view for payment request.
+id<GREYMatcher> PaymentRequestErrorView() {
+  return grey_accessibilityID(kPaymentRequestErrorCollectionViewID);
 }
 
 }  // namespace chrome_test_util
