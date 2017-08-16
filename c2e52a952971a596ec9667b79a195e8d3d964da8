@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e825fec_590df2d4",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T07:32:42Z",
+      "side": 1,
+      "message": "nit: unnecessary trailing white space.",
+      "revId": "c2e52a952971a596ec9667b79a195e8d3d964da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
