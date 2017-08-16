@@ -9,6 +9,7 @@
 
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -210,11 +211,13 @@ ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
     : context_(context), arc_bridge_service_(bridge_service), binding_(this) {
   arc_bridge_service_->voice_interaction_framework()->AddObserver(this);
   ArcSessionManager::Get()->AddObserver(this);
+  ash::Shell::Get()->session_controller()->AddObserver(this);
 }
 
 ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
   ArcSessionManager::Get()->RemoveObserver(this);
   arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
+  ash::Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
@@ -343,6 +346,17 @@ void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
   SetVoiceInteractionPrefs(std::move(status));
 }
 
+void ArcVoiceInteractionFrameworkService::OnActiveUserSessionChanged(
+    const AccountId& account_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  bool enabled = ProfileManager::GetActiveUserProfile()->GetPrefs()->GetBoolean(
+      prefs::kVoiceInteractionEnabled);
+  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
+      enabled ? ash::VoiceInteractionState::STOPPED
+              : ash::VoiceInteractionState::DISABLED);
+}
+
 void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
@@ -364,6 +378,10 @@ void ArcVoiceInteractionFrameworkService::CallAndResetMetalayerCallback() {
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
     bool enable) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
+      enable ? ash::VoiceInteractionState::STOPPED
+             : ash::VoiceInteractionState::DISABLED);
 
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(

@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "ash/session/session_observer.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -36,7 +37,8 @@ class ArcVoiceInteractionFrameworkService
     : public KeyedService,
       public mojom::VoiceInteractionFrameworkHost,
       public InstanceHolder<mojom::VoiceInteractionFrameworkInstance>::Observer,
-      public ArcSessionManager::Observer {
+      public ArcSessionManager::Observer,
+      public ash::SessionObserver {
  public:
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
@@ -70,6 +72,9 @@ class ArcVoiceInteractionFrameworkService
 
   // ArcSessionManager::Observer overrides.
   void OnArcPlayStoreEnabledChanged(bool enabled) override;
+
+  // ShellObserver overrides.
+  void OnActiveUserSessionChanged(const AccountId& account_id) override;
 
   // Starts a voice interaction session after user-initiated interaction.
   // Records a timestamp and sets number of allowed requests to 2 since by

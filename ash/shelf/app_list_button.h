@@ -119,6 +119,9 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // primary user session.
   bool is_primary_user_active_ = false;
 
+  // Whether voice interaction is enabled in system settings.
+  bool voice_interaction_settings_enabled_ = true;
+
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
 

@@ -13,7 +13,9 @@ enum class VoiceInteractionState {
   // Voice interaction session is stopped.
   STOPPED,
   // Voice interaction session is currently running.
-  RUNNING
+  RUNNING,
+  // Voice interaction session is disabled in system settings.
+  DISABLED
 };
 
 }  // namespace ash
