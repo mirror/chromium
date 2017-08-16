@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "d92c4e57_418a9da5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-16T23:59:34Z",
+      "side": 1,
+      "message": "If we move the prefs into ahs_pref_names, does that means we also need a new Controller Class in ash? (so that we could register them) Maybe for now we can just use an observer function from UserManager as xiaohui suggests?",
+      "parentUuid": "6d47d03f_d4599d71",
+      "revId": "44d1af933ade597a93950ff0700596d976de4d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c59d4af0_e95b20b6",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
