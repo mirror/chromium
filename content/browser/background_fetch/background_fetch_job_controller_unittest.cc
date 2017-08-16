@@ -15,15 +15,15 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "content/browser/background_fetch/background_fetch_constants.h"
+#include "content/browser/background_fetch/background_fetch_context.h"
 #include "content/browser/background_fetch/background_fetch_data_manager.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
+#include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_item.h"
-#include "content/public/browser/storage_partition.h"
 #include "content/public/test/fake_download_item.h"
 #include "content/public/test/mock_download_manager.h"
-#include "net/url_request/url_request_context_getter.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using testing::_;
@@ -72,24 +72,30 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
     for (const auto& pair : request_data) {
       CreateRequestWithProvidedResponse(
           pair.second, pair.first,
-          TestResponseBuilder(200 /* response_code */).Build());
+          TestResponseBuilder(true, 200 /* response_code */).Build());
     }
   }
 
   // Creates a new BackgroundFetchJobController instance.
   std::unique_ptr<BackgroundFetchJobController> CreateJobController(
       const BackgroundFetchRegistrationId& registration_id) {
-    // StoragePartition creates its own BackgroundFetchContext, but this test
-    // doesn't use that; it just uses the StoragePartition's URLRequestContext.
-    StoragePartition* storage_partition =
-        BrowserContext::GetDefaultStoragePartition(browser_context());
-
-    delegate_proxy_.reset(new BackgroundFetchDelegateProxy(
+    auto* context = new BackgroundFetchContext(
         browser_context(),
-        make_scoped_refptr(storage_partition->GetURLRequestContext())));
+        make_scoped_refptr(embedded_worker_test_helper()->context_wrapper()));
+    context->InitializeOnIOThread();
+    delegate_proxy_ = context->GetDelegateProxy();
+    DCHECK(delegate_proxy_);
+
+    // The delegate proxy needs to construct part of itself on another task
+    // runner, so we run until idle here so that this completes before the tests
+    // actually start. If we don't do this then for some tests the proxy task
+    // can rather after the test has completed and therefore destroyed most of
+    // objects on which it depends.
+    base::RunLoop run_loop;
+    run_loop.RunUntilIdle();
 
     return base::MakeUnique<BackgroundFetchJobController>(
-        delegate_proxy_.get(), registration_id, BackgroundFetchOptions(),
+        delegate_proxy_, registration_id, BackgroundFetchOptions(),
         &data_manager_,
         base::BindOnce(&BackgroundFetchJobControllerTest::DidCompleteJob,
                        base::Unretained(this)));
@@ -103,7 +109,7 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
   // available jobs. Enables use of a run loop for deterministic waits.
   base::OnceClosure job_completed_closure_;
 
-  std::unique_ptr<BackgroundFetchDelegateProxy> delegate_proxy_;
+  BackgroundFetchDelegateProxy* delegate_proxy_;
 
  private:
   void DidCreateRegistration(blink::mojom::BackgroundFetchError* out_error,
@@ -228,6 +234,9 @@ TEST_F(BackgroundFetchJobControllerTest, AbortJob) {
 
   EXPECT_EQ(controller->state(), BackgroundFetchJobController::State::ABORTED);
   EXPECT_TRUE(did_complete_job_);
+
+  // Force completion of outstanding tasks here.
+  base::RunLoop().RunUntilIdle();
 }
 
 }  // namespace

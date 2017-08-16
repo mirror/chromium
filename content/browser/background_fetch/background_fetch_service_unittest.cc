@@ -6,11 +6,10 @@
 #include <memory>
 #include <utility>
 
-#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/time/time.h"
 #include "content/browser/background_fetch/background_fetch_context.h"
+#include "content/browser/background_fetch/background_fetch_delegate_proxy.h"
 #include "content/browser/background_fetch/background_fetch_embedded_worker_test_helper.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
 #include "content/browser/background_fetch/background_fetch_service_impl.h"
@@ -122,17 +121,10 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
   void SetUp() override {
     BackgroundFetchTestBase::SetUp();
 
-    // StoragePartition creates its own BackgroundFetchContext, but this test
-    // doesn't use that since it has the wrong ServiceWorkerContextWrapper; this
-    // test just uses the StoragePartition to get a URLRequestContext.
-    StoragePartitionImpl* storage_partition =
-        static_cast<StoragePartitionImpl*>(
-            BrowserContext::GetDefaultStoragePartition(browser_context()));
     context_ = new BackgroundFetchContext(
         browser_context(),
         make_scoped_refptr(embedded_worker_test_helper()->context_wrapper()));
-    context_->InitializeOnIOThread(
-        make_scoped_refptr(storage_partition->GetURLRequestContext()));
+    context_->InitializeOnIOThread();
 
     service_ = base::MakeUnique<BackgroundFetchServiceImpl>(
         0 /* render_process_id */, context_);
@@ -339,7 +331,7 @@ TEST_F(BackgroundFetchServiceTest, FetchSuccessEventDispatch) {
 
   requests.push_back(CreateRequestWithProvidedResponse(
       "GET", "https://example.com/funny_cat.txt",
-      TestResponseBuilder(kFirstResponseCode)
+      TestResponseBuilder(true, kFirstResponseCode)
           .SetResponseData(
               "This text describes a scenario involving a funny cat.")
           .AddResponseHeader("Content-Type", "text/plain")
@@ -348,7 +340,7 @@ TEST_F(BackgroundFetchServiceTest, FetchSuccessEventDispatch) {
 
   requests.push_back(CreateRequestWithProvidedResponse(
       "GET", "https://example.com/crazy_cat.txt",
-      TestResponseBuilder(kSecondResponseCode)
+      TestResponseBuilder(true, kSecondResponseCode)
           .SetResponseData(
               "This text describes another scenario that involves a crazy cat.")
           .AddResponseHeader("Content-Type", "text/plain")
@@ -356,7 +348,7 @@ TEST_F(BackgroundFetchServiceTest, FetchSuccessEventDispatch) {
 
   requests.push_back(CreateRequestWithProvidedResponse(
       "GET", "https://chrome.com/accessible_cross_origin_cat.txt",
-      TestResponseBuilder(kThirdResponseCode)
+      TestResponseBuilder(true, kThirdResponseCode)
           .SetResponseData("This cat originates from another origin.")
           .AddResponseHeader("Access-Control-Allow-Origin", "*")
           .AddResponseHeader("Content-Type", "text/plain")
@@ -419,9 +411,6 @@ TEST_F(BackgroundFetchServiceTest, FetchSuccessEventDispatch) {
     EXPECT_EQ(fetches[i].response.error,
               blink::kWebServiceWorkerResponseErrorUnknown);
 
-    // Verify that all properties have a sensible value.
-    EXPECT_FALSE(fetches[i].response.response_time.is_null());
-
     // Verify that the response blobs have been populated. We cannot consume
     // their data here since the handles have already been released.
     ASSERT_FALSE(fetches[i].response.blob_uuid.empty());
@@ -449,11 +438,11 @@ TEST_F(BackgroundFetchServiceTest, FetchFailEventDispatch) {
 
   requests.push_back(CreateRequestWithProvidedResponse(
       "GET", "https://example.com/not_existing_cat.txt",
-      TestResponseBuilder(kFirstResponseCode).Build()));
+      TestResponseBuilder(false, kFirstResponseCode).Build()));
 
   requests.push_back(CreateRequestWithProvidedResponse(
       "GET", "https://chrome.com/inaccessible_cross_origin_cat.txt",
-      TestResponseBuilder(kSecondResponseCode)
+      TestResponseBuilder(true, kSecondResponseCode)
           .SetResponseData(
               "This is a cross-origin response not accessible to the reader.")
           .AddResponseHeader("Content-Type", "text/plain")
@@ -506,7 +495,6 @@ TEST_F(BackgroundFetchServiceTest, FetchFailEventDispatch) {
     EXPECT_TRUE(fetches[i].response.headers.empty());
     EXPECT_TRUE(fetches[i].response.blob_uuid.empty());
     EXPECT_EQ(fetches[i].response.blob_size, 0u);
-    EXPECT_FALSE(fetches[i].response.response_time.is_null());
 
     // TODO(peter): change-detector tests for unsupported properties.
     EXPECT_EQ(fetches[i].response.error,
@@ -600,7 +588,7 @@ TEST_F(BackgroundFetchServiceTest, AbortEventDispatch) {
   std::vector<ServiceWorkerFetchRequest> requests;
   requests.push_back(CreateRequestWithProvidedResponse(
       "GET", "https://example.com/funny_cat.txt",
-      TestResponseBuilder(kResponseCode)
+      TestResponseBuilder(true, kResponseCode)
           .SetResponseData("Random data about a funny cat.")
           .Build()));
 
