@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1752678a_3d454746",
+        "filename": "chrome/browser/resources/net_internals/domain_security_policy_view.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T23:41:54Z",
+      "side": 1,
+      "message": "No, nice catch, thanks. (Cribbed this mistake from sts/pkp, so added it there too. Not sure if this is practical to test because of crbug.com/397639, which is also why the tests for sts/pkp observed have been commented out for a long time.)",
+      "parentUuid": "a1cf391c_5d80e73f",
+      "range": {
+        "startLine": 267,
+        "startChar": 15,
+        "endLine": 267,
+        "endChar": 16
+      },
+      "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c5b7913_cbdb75aa",
         "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T23:12:42Z",
       "side": 1,
       "message": "nit: any reason for putting this between hstsQuery and hstsAdd?",
+      "range": {
+        "startLine": 416,
+        "startChar": 7,
+        "endLine": 416,
+        "endChar": 33
+      },
+      "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe053f4_5bcbe427",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T23:41:54Z",
+      "side": 1,
+      "message": "Moved above hstsQuery to match the method definitions.",
+      "parentUuid": "4c5b7913_cbdb75aa",
       "range": {
         "startLine": 416,
         "startChar": 7,
@@ -68,6 +116,30 @@
       "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da223c13_1234a6bd",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T23:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf757fd_06d100ae",
+      "range": {
+        "startLine": 676,
+        "startChar": 47,
+        "endLine": 676,
+        "endChar": 75
+      },
+      "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
