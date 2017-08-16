@@ -43,6 +43,8 @@ const char kExperimentEnabled[] = "true";
 
 const char kClientLoFiExperimentName[] = "PreviewsClientLoFi";
 
+const char kAMPRedirectionPreviewExperimentName[] = "PreviewsAMPRedirection";
+
 size_t GetParamValueAsSizeT(const std::string& trial_name,
                             const std::string& param_name,
                             size_t default_value) {
@@ -179,6 +181,16 @@ std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial() {
       ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
 }
 
+bool IsAMPRedirectionPreviewEnabled() {
+  return base::StartsWith(
+      base::FieldTrialList::FindFullName(kAMPRedirectionPreviewExperimentName),
+      kEnabled, base::CompareCase::SENSITIVE);
+}
+
+int AMPRedirectionPreviewsVersion() {
+  return GetParamValueAsInt(kAMPRedirectionPreviewExperimentName, kVersion, 0);
+}
+
 }  // namespace params
 
 std::string GetStringNameForType(PreviewsType type) {
@@ -189,6 +201,8 @@ std::string GetStringNameForType(PreviewsType type) {
       return "LoFi";
     case PreviewsType::LITE_PAGE:
       return "LitePage";
+    case PreviewsType::AMP_REDIRECTION:
+      return "AMPRedirection";
     case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;
