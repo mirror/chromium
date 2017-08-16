@@ -188,6 +188,20 @@ class MockPresentationServiceDelegate
   bool screen_availability_listening_supported_ = true;
 };
 
+class MockPresentationReceiver : public blink::mojom::PresentationReceiver {
+ public:
+  void OnReceiverConnectionAvailable(
+      const content::PresentationInfo& info,
+      blink::mojom::PresentationConnectionPtr controller_connection,
+      blink::mojom::PresentationConnectionRequest receiver_connection_request)
+      override {
+    OnReceiverConnectionAvailable(info);
+  }
+
+  MOCK_METHOD1(OnReceiverConnectionAvailable,
+               void(const content::PresentationInfo& info));
+};
+
 class MockReceiverPresentationServiceDelegate
     : public ReceiverPresentationServiceDelegate {
  public:
@@ -213,7 +227,7 @@ class MockPresentationConnection : public blink::mojom::PresentationConnection {
                void(const PresentationConnectionMessage& message,
                     base::OnceCallback<void(bool)>& send_message_cb));
   MOCK_METHOD1(DidChangeState, void(PresentationConnectionState state));
-  MOCK_METHOD0(OnClose, void());
+  MOCK_METHOD0(RequestClose, void());
 };
 
 class MockPresentationServiceClient
@@ -239,16 +253,6 @@ class MockPresentationServiceClient
       void(const PresentationInfo& presentation_info,
            const std::vector<PresentationConnectionMessage>& messages));
   MOCK_METHOD1(OnDefaultPresentationStarted,
-               void(const PresentationInfo& presentation_info));
-
-  void OnReceiverConnectionAvailable(
-      const PresentationInfo& presentation_info,
-      blink::mojom::PresentationConnectionPtr controller_conn_ptr,
-      blink::mojom::PresentationConnectionRequest receiver_conn_request)
-      override {
-    OnReceiverConnectionAvailable(presentation_info);
-  }
-  MOCK_METHOD1(OnReceiverConnectionAvailable,
                void(const PresentationInfo& presentation_info));
 };
 
@@ -397,11 +401,7 @@ TEST_F(PresentationServiceImplTest, ThisRenderFrameDeleted) {
   ListenForScreenAvailabilityAndWait(presentation_url1_, true);
 
   ExpectReset();
-
-  // Since the frame matched the service, |service_impl_| will be deleted.
-  PresentationServiceImpl* service = service_impl_.release();
-  EXPECT_CALL(mock_delegate_, RemoveObserver(_, _)).Times(1);
-  service->RenderFrameDeleted(main_rfh());
+  service_impl_->RenderFrameDeleted(main_rfh());
 }
 
 TEST_F(PresentationServiceImplTest, OtherRenderFrameDeleted) {
@@ -653,12 +653,12 @@ TEST_F(PresentationServiceImplTest, ReceiverPresentationServiceDelegate) {
               RegisterReceiverConnectionAvailableCallback(_))
       .WillOnce(SaveArg<0>(&callback));
 
-  blink::mojom::PresentationServiceClientPtr client_ptr;
-  client_binding_.reset(
-      new mojo::Binding<blink::mojom::PresentationServiceClient>(
-          &mock_client_, mojo::MakeRequest(&client_ptr)));
+  MockPresentationReceiver mock_receiver;
+  blink::mojom::PresentationReceiverPtr receiver_ptr;
+  mojo::Binding<blink::mojom::PresentationReceiver> receiver_binding(
+      &mock_receiver, mojo::MakeRequest(&receiver_ptr));
   service_impl.controller_delegate_ = nullptr;
-  service_impl.SetClient(std::move(client_ptr));
+  service_impl.SetReceiver(std::move(receiver_ptr));
   EXPECT_FALSE(callback.is_null());
 
   PresentationInfo presentation_info(presentation_url1_, kPresentationId);
@@ -669,8 +669,10 @@ TEST_F(PresentationServiceImplTest, ReceiverPresentationServiceDelegate) {
   mojo::Binding<blink::mojom::PresentationConnection> connection_binding(
       &mock_presentation_connection, mojo::MakeRequest(&controller_connection));
   blink::mojom::PresentationConnectionPtr receiver_connection;
-  EXPECT_CALL(mock_client_,
-              OnReceiverConnectionAvailable(InfoEquals(presentation_info)));
+
+  EXPECT_CALL(mock_receiver,
+              OnReceiverConnectionAvailable(InfoEquals(presentation_info)))
+      .Times(1);
   callback.Run(presentation_info, std::move(controller_connection),
                mojo::MakeRequest(&receiver_connection));
   base::RunLoop().RunUntilIdle();

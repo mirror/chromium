@@ -28,7 +28,11 @@ let presentationServiceMock = loadMojoModules(
           this.controllerConnectionPtr_ = null;
           this.receiverConnectionRequest_ = null;
 
+          this.client_ = null;
           this.onSetClient = null;
+
+          this.receiver_ = null;
+          this.onSetReceiver = null;
         }
 
         setClient(client) {
@@ -36,6 +40,13 @@ let presentationServiceMock = loadMojoModules(
 
           if (this.onSetClient)
             this.onSetClient();
+        }
+
+        setReceiver(receiver) {
+          this.receiver_ = receiver;
+
+          if (this.onSetReceiver)
+            this.onSetReceiver();
         }
 
         startPresentation(urls) {
@@ -87,7 +98,7 @@ let presentationServiceMock = loadMojoModules(
                 new presentationService.PresentationConnectionPtr());
           }
 
-          this.client_.onReceiverConnectionAvailable(
+          this.receiver_.onReceiverConnectionAvailable(
               { url: mojoUrl, id: id },
               controllerConnectionPtr, receiverConnectionRequest);
         }

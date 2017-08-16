@@ -18,7 +18,7 @@ presentationServiceMock.then(mockService => {
   const url = 'http://example.com/a.html';
   const id = 'fakeSessionId';
 
-  mockService.onSetClient = () => {
+  mockService.onSetReceiver = () => {
     mockService.onReceiverConnectionAvailable(
         url, id, controllerConnectionPtr, receiverConnectionRequest);
   };
