@@ -78,6 +78,7 @@ class UiSceneManager {
   void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
   void CreateBackground();
+  void CreateViewportAwareRoot();
   void CreateUrlBar();
   void CreateTransientUrlBar();
   void CreateCloseButton();
@@ -106,6 +107,7 @@ class UiSceneManager {
   UiElement* permanent_security_warning_ = nullptr;
   TransientSecurityWarning* transient_security_warning_ = nullptr;
   ExclusiveScreenToast* exclusive_screen_toast_ = nullptr;
+  ExclusiveScreenToast* exclusive_screen_toast_viewport_aware_ = nullptr;
   ExitPrompt* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
@@ -116,6 +118,7 @@ class UiSceneManager {
   UiElement* screen_capture_indicator_ = nullptr;
   UiElement* location_access_indicator_ = nullptr;
   UiElement* screen_dimmer_ = nullptr;
+  UiElement* viewport_aware_root_ = nullptr;
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
