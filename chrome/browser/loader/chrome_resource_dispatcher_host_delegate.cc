@@ -985,6 +985,13 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
             previews::params::GetBlackListedHostsForClientLoFiFieldTrial())) {
       previews_state |= content::CLIENT_LOFI_ON;
     }
+
+    if (data_reduction_proxy_io_data->IsEnabled() &&
+        previews::params::IsAMPRedirectionPreviewEnabled() &&
+        previews_io_data->IsPreviewBlacklisted(
+            url_request.url(), previews::PreviewsType::AMP_REDIRECTION)) {
+      previews_state |= content::PREVIEWS_AMP_REDIRECTION;
+    }
   }
 
   if (previews_state == content::PREVIEWS_UNSPECIFIED)

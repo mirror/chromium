@@ -312,6 +312,12 @@ void DataReductionProxyNetworkDelegate::OnBeforeURLRequestInternal(
       (request->load_flags() & net::LOAD_MAIN_FRAME_DEPRECATED)) {
     data_reduction_proxy_io_data_->SetLoFiModeActiveOnMainFrame(false);
   }
+
+  if (data_reduction_proxy_io_data_ &&
+      data_reduction_proxy_io_data_->lofi_decider()) {
+    data_reduction_proxy_io_data_->lofi_decider()->MaybeApplyAMPPreview(
+        request, new_url);
+  }
 }
 
 void DataReductionProxyNetworkDelegate::OnBeforeStartTransactionInternal(

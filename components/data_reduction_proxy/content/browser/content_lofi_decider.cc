@@ -19,6 +19,7 @@
 #include "net/base/load_flags.h"
 #include "net/http/http_request_headers.h"
 #include "net/url_request/url_request.h"
+#include "url/gurl.h"
 
 namespace data_reduction_proxy {
 
@@ -242,4 +243,19 @@ bool ContentLoFiDecider::IsClientLoFiAutoReloadRequest(
   return request_info &&
          (request_info->GetPreviewsState() & content::CLIENT_LOFI_AUTO_RELOAD);
 }
+
+void ContentLoFiDecider::MaybeApplyAMPPreview(net::URLRequest* request,
+                                              GURL* new_url) const {
+  const content::ResourceRequestInfo* request_info =
+      content::ResourceRequestInfo::ForRequest(request);
+  if (!request_info ||
+      request_info->GetResourceType() != content::RESOURCE_TYPE_MAIN_FRAME ||
+      !(request_info->GetPreviewsState() & content::PREVIEWS_AMP_REDIRECTION)) {
+    return;
+  }
+
+  // TODO(rajendrant): Apply the matching logic for |request| and update
+  // |new_url| to its AMP version.
+}
+
 }  // namespace data_reduction_proxy
