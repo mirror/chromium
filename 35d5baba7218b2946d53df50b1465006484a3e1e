@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8f8825c7_d4e86f0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T02:04:50Z",
+      "side": 1,
+      "message": "We don\u0027t keep track of the down state for the right mouse button. We only do it for the left mouse button because that\u0027s the one used for dragging to select. See PDFiumEngine::OnMouseUp().",
+      "parentUuid": "97a34a74_1c72f6f4",
+      "revId": "35d5baba7218b2946d53df50b1465006484a3e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61bfaf55_f6c0efc3",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 1
