@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94b7cdd8_5ae8255f",
+        "filename": "tools/perf/page_sets/system_health/expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T16:24:03Z",
+      "side": 1,
+      "message": "Might be helpful to annotate it with Win:crbug.com/number Mac:crbug.com/number",
+      "range": {
+        "startLine": 14,
+        "startChar": 29,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "c9232d289502ba24ad413dd56bd76f003b9a4301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
