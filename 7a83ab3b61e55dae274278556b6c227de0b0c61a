@@ -57,6 +57,24 @@
       "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa21cf09_6ec7f274",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-16T19:47:58Z",
+      "side": 1,
+      "message": "Autofill.FormEvents.CreditCard.{WithOnlyLocalData,WithOnlyServerData,WithBothServerAndLocalData} would capture the events you looking for.\n\nYou should be able to compare submission rates between the ablation and control groups as long as ablation happens after the correct form event subgroup is selected.",
+      "parentUuid": "1df4a6f9_d9f92bbb",
+      "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
