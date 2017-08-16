@@ -34,6 +34,24 @@
       "revId": "f0b44c4d86b001f914ced79e7c69b2c3d1960110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1090d59_53a9db5d",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:05:38Z",
+      "side": 1,
+      "message": "It doesn\u0027t actually; git is much smarter about that sort of thing than svn. That said, if you prefer to do it in two phases, that\u0027s fine.",
+      "parentUuid": "6b1183f1_9ed3d6ef",
+      "revId": "f0b44c4d86b001f914ced79e7c69b2c3d1960110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
