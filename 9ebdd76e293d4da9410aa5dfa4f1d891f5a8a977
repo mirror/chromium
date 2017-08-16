@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d89201d1_1ae6d33a",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-16T18:32:57Z",
+      "side": 1,
+      "message": "Could you have __gCrWeb[\u0027paymentRequestManager\u0027].isContextSecure remain true by default and change this to:\nif (!__gCrWeb[\u0027paymentRequestManager\u0027].isContextSecure || \n    !isOriginPotentiallyTrustworthy) {...}",
+      "range": {
+        "startLine": 534,
+        "startChar": 2,
+        "endLine": 534,
+        "endChar": 4
+      },
+      "revId": "9ebdd76e293d4da9410aa5dfa4f1d891f5a8a977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
