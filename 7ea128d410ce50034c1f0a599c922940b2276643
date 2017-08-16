@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f02a5f_8d46ec48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-16T17:26:22Z",
+      "side": 1,
+      "message": "thoughts on creating a wrapper listener and then you wouldn\u0027t need to add externalIntentSelected() for the view.  If this saw onPickerUserAction, it could set the boolean itself and then this dialog is handling the whole process.",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "7ea128d410ce50034c1f0a599c922940b2276643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0734f91_2e9b9107",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-16T17:26:22Z",
+      "side": 1,
+      "message": "I\u0027d use WindowAndroid.activityFromContext(mContext) to be safe here.",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "7ea128d410ce50034c1f0a599c922940b2276643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
