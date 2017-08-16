@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a52c0ed_0dd6d576",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T02:21:17Z",
+      "side": 1,
+      "message": "nit: blank line before this and a comment here that mentions that pending_key_acks_ may change and iterator become invalid when ProcessAccelerator is called.",
+      "revId": "f92b7e227ebfa6dd064c90e9bbeb2621832c39f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
