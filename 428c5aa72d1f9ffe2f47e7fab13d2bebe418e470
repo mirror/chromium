@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81d5209_0bef127c",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T01:38:06Z",
+      "side": 1,
+      "message": "Is it possible to remove this method entirely, move the DCHECK(is_active_) into WorkOnTask(), and change the remaining callsites to call WorkOnTask()?",
+      "range": {
+        "startLine": 370,
+        "startChar": 25,
+        "endLine": 370,
+        "endChar": 38
+      },
+      "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c58d5f_3ec7f2e6",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T01:38:06Z",
+      "side": 1,
+      "message": "Nit: remove the braces for internal file consistency (e.g. RecordMenuOpenHistogram()).",
+      "range": {
+        "startLine": 392,
+        "startChar": 30,
+        "endLine": 392,
+        "endChar": 31
+      },
+      "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed741bb6_54b34765",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T01:38:06Z",
+      "side": 1,
+      "message": "Nit: remove braces for internal consistency.",
+      "range": {
+        "startLine": 525,
+        "startChar": 34,
+        "endLine": 525,
+        "endChar": 35
+      },
+      "revId": "428c5aa72d1f9ffe2f47e7fab13d2bebe418e470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
