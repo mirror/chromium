@@ -120,6 +120,9 @@ public class PickerCategoryView extends RelativeLayout
     // Whether the connection to the service has been established.
     private boolean mServiceReady;
 
+    // Whether the user selected to launch an external intent.
+    private boolean mExternalIntentSelected;
+
     // The MIME types requested.
     private List<String> mMimeTypes;
 
@@ -319,6 +322,7 @@ public class PickerCategoryView extends RelativeLayout
      * Notifies the listener that the user selected to launch the gallery.
      */
     public void showGallery() {
+        mExternalIntentSelected = true;
         recordFinalUmaStats(ACTION_BROWSE);
         mListener.onPickerUserAction(PhotoPickerListener.Action.LAUNCH_GALLERY, null);
     }
@@ -327,8 +331,16 @@ public class PickerCategoryView extends RelativeLayout
      * Notifies the listener that the user selected to launch the camera intent.
      */
     public void showCamera() {
+        mExternalIntentSelected = true;
         recordFinalUmaStats(ACTION_NEW_PHOTO);
         mListener.onPickerUserAction(PhotoPickerListener.Action.LAUNCH_CAMERA, null);
+    }
+
+    /**
+     * Returns whether the user picked an external intent to launch.
+     */
+    public boolean externalIntentSelected() {
+        return mExternalIntentSelected;
     }
 
     /**
