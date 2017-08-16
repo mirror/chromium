@@ -513,6 +513,24 @@
     },
     {
       "key": {
+        "uuid": "db5b4927_2f12ac8c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T00:25:45Z",
+      "side": 1,
+      "message": "We did consider doing that, but no one has implemented it.\n\nThe other thing we\u0027re not sure about is how much of that infrastructure we\u0027ll still need once we make Document and Frame have a 1:1 correspondence: the primary concern today is that a per-frame interface will inadvertently act on a cross-origin Document, due to navigation. We might still want it though... since it doesn\u0027t seem unreasonable that the default behavior on detach is that we stop being able to call out through the Mojo interfaces.",
+      "parentUuid": "7eb95015_afe6871d",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01be1bdc_f3ab95d5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
         "patchSetId": 24
