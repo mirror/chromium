@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "471981ed_babf1582",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T20:54:07Z",
+      "side": 1,
+      "message": "`struct `is unnecessary, and this argument should be passed by const reference -- but actually I was thinking that we\u0027d pass the arguments themselves (SSLInfo and bool fatal) here rather than having NavigationRequest depend on a NavigationThrottle struct. Instead I was thinking we\u0027d stuff the arguments into a CertificateErrorInfo right before passing them into the NavigationThrottle method. If we want to include them in a struct all the way through, then we should probably define the struct separately, outside NavigationThrottle; having NavigationRequest depend on NavigationThrottle feels a little weird to me.",
+      "range": {
+        "startLine": 216,
+        "startChar": 6,
+        "endLine": 216,
+        "endChar": 12
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9174b0_e3eb4b8b",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T20:54:07Z",
+      "side": 1,
+      "message": "nit: request()-\u003eurl().host() could be inlined here (avoids a copy)",
+      "range": {
+        "startLine": 166,
+        "startChar": 39,
+        "endLine": 166,
+        "endChar": 43
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98a75fa_5d5cd208",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T20:54:07Z",
+      "side": 1,
+      "message": "unnecessary",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 10
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fedefca_69d0cf82",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T20:54:07Z",
+      "side": 1,
+      "message": "more specifically could DCHECK that IsCertificateError",
+      "range": {
+        "startLine": 550,
+        "startChar": 2,
+        "endLine": 550,
+        "endChar": 11
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dd66de_6fc61a51",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-16T20:54:07Z",
+      "side": 1,
+      "message": "errrr does this build? looks like NotifyRequestFailed no longer takes a 3rd argument",
+      "range": {
+        "startLine": 2109,
+        "startChar": 57,
+        "endLine": 2109,
+        "endChar": 64
+      },
+      "revId": "da5e65e653e462af99953db8491269007788711c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
