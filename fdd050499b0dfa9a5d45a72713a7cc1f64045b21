@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b9782c9_562b4c88",
+        "filename": "ui/touch_selection/touch_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-16T22:40:41Z",
+      "side": 1,
+      "message": "Is it possible to modify focus_top_ and focus_bottom_ ahead of time instead of applying the transformation this late?  Then you might be able to avoid passing in deviceScaleFactor this deep.",
+      "revId": "fdd050499b0dfa9a5d45a72713a7cc1f64045b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0db6ba5_68961273",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-16T22:40:41Z",
+      "side": 1,
+      "message": "I suspect you need an if statement somewhere to make sure the positioning isn\u0027t broken when the flag is *not* set?",
+      "revId": "fdd050499b0dfa9a5d45a72713a7cc1f64045b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
