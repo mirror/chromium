@@ -77,6 +77,7 @@ class CORE_EXPORT CSSPrimitiveValue : public CSSValue {
     kPixels,
     kCentimeters,
     kMillimeters,
+    kQuarterMillimeters,
     kInches,
     kPoints,
     kPicas,
