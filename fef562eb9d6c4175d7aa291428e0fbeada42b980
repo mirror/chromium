@@ -69,6 +69,30 @@
       "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce2c638_413a64cd",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-16T05:55:29Z",
+      "side": 1,
+      "message": "Agree that it\u0027s safe to call ActivateWaitingVersionWhenReady multiple times, because of the IsReadyToActivate().\n\nAnd I have some questions:\n1) Shimazu\u0027s code is better, but is it right to move \"skip_waiting_ \u003d true\"? If we call skipwaiting in oninstall (the state is INSTALLING), so the code will return before \"skip_waiting_ \u003d true\", that means skip_waiting_ \u003d\u003d false, so the following code in  ServiceWorkerRegistration::ActivateWaitingVersion will not be executed(I verified), so the skipWaiting() can not make this service worker to progress from the registration’s waiting position to active.\n----\n  // \"9. Fire a simple event named controllerchange...\"                                                                                                                                 \n  if (activating_version-\u003eskip_waiting()) {                                                                                                                                             \n    for (auto\u0026 observer : listeners_)                                                                                                                                                   \n      observer.OnSkippedWaiting(this);                                                                                                                                                  \n  } \n------\n\n2) About the running_status() check, It seems for ServiceWorkerActivationTest, I think it\u0027s necessary, right?\n\n3) About DCHECK(skip_waiting_time_.is_null()), it will limit two times usage of skipwaiting? for example the ServiceWorkerActivationTest.TimeSinceSkipWaiting_Installing. Is it proper?",
+      "parentUuid": "40d1f914_3cdc0757",
+      "range": {
+        "startLine": 1339,
+        "startChar": 2,
+        "endLine": 1339,
+        "endChar": 48
+      },
+      "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
