@@ -255,17 +255,19 @@ CommandHandler.onCommand = function(command) {
       current = current.move(cursors.Unit.CHARACTER, Dir.FORWARD);
       break;
     case 'previousCharacter':
+      dir = Dir.BACKWARD;
       didNavigate = true;
       speechProps['phoneticCharacters'] = true;
-      current = current.move(cursors.Unit.CHARACTER, Dir.BACKWARD);
+      current = current.move(cursors.Unit.CHARACTER, dir);
       break;
     case 'nextWord':
       didNavigate = true;
       current = current.move(cursors.Unit.WORD, Dir.FORWARD);
       break;
     case 'previousWord':
+      dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.WORD, Dir.BACKWARD);
+      current = current.move(cursors.Unit.WORD, dir);
       break;
     case 'forward':
     case 'nextLine':
@@ -274,8 +276,9 @@ CommandHandler.onCommand = function(command) {
       break;
     case 'backward':
     case 'previousLine':
+      dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.LINE, Dir.BACKWARD);
+      current = current.move(cursors.Unit.LINE);
       break;
     case 'nextButton':
       dir = Dir.FORWARD;
@@ -454,8 +457,9 @@ CommandHandler.onCommand = function(command) {
       break;
     case 'left':
     case 'previousObject':
+      dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.NODE, Dir.BACKWARD);
+      current = current.move(cursors.Unit.NODE, dir);
       break;
     case 'previousGroup':
       skipSync = true;
@@ -772,6 +776,58 @@ CommandHandler.onCommand = function(command) {
           return false;
         }
       }
+    }
+  }
+
+  if (current && current.start && current.start.node &&
+      ChromeVoxState.instance.currentRange.start.node) {
+    var exited = AutomationUtil.getUniqueAncestors(
+        current.start.node, ChromeVoxState.instance.currentRange.start.node);
+    var scrollable = null;
+    for (var i = 0; i < exited.length; i++) {
+      if (exited[i].scrollable) {
+        scrollable = exited[i];
+        break;
+      }
+    }
+
+    if (scrollable) {
+      var callback = function(result) {
+        if (result) {
+          var innerCallback = function(evt) {
+            scrollable.removeEventListener(
+                EventType.SCROLL_POSITION_CHANGED, innerCallback);
+
+            // Jump.
+            if (pred) {
+              CommandHandler.onCommand(command);
+              return;
+            }
+
+            // Otherwise, sync to the directed deepest child.
+            var sync = scrollable;
+            if (dir == Dir.FORWARD) {
+              while (sync.firstChild)
+                sync = sync.firstChild;
+            } else {
+              while (sync.lastChild)
+                sync = sync.lastChild;
+            }
+            ChromeVoxState.instance.navigateToRange(
+                cursors.Range.fromNode(sync), false, speechProps);
+          };
+          scrollable.addEventListener(
+              EventType.SCROLL_POSITION_CHANGED, innerCallback, true);
+        } else {
+          ChromeVoxState.instance.navigateToRange(current, false, speechProps);
+        }
+      };
+
+      if (dir == Dir.FORWARD)
+        scrollable.scrollForward(callback);
+      else
+        scrollable.scrollBackward(callback);
+      return false;
     }
   }
 
