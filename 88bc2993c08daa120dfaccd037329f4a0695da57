@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1dd3d46_2ae82598",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "These are DIPs (changes the units in histograms.xml accordingly).\nMy initial idea was to put everything over 1000dip into the overflow bucket. However I don\u0027t want to come back to this once we build a 2000dip device, so I am changing the limit to 10000.",
+      "parentUuid": "66113075_8cc1c020",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3fa6c8b_5e36b10a",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-15T22:18:37Z",
       "side": 1,
       "message": "This might be not useful because this histogram macro uses exponential bucket sizes.  You probably want equally-sized buckets, right?",
+      "range": {
+        "startLine": 110,
+        "startChar": 79,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2029d36_12f6fd54",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Changed to UMA_HISTOGRAM_PERCENTAGE",
+      "parentUuid": "b3fa6c8b_5e36b10a",
       "range": {
         "startLine": 110,
         "startChar": 79,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "08b4af72_9ac03c6f",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "My mistake. Should be the other way around. Fixed.",
+      "parentUuid": "467f5b73_b5e68c85",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a2bf74_f41a8726",
         "filename": "ash/highlighter/highlighter_gesture_util.h",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-15T22:18:37Z",
       "side": 1,
       "message": "Why do you a \"no gesture\" gesture type?  This seems odd to me...  Is it meant to be unrecognized gesture?  Or do you really need to call functions that take a HighlighterGestureType but you want to give them \"no gesture\"?",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e264803c_d94dfe07",
+        "filename": "ash/highlighter/highlighter_gesture_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Renamed kNoGesture to kNotRecognized, it is indeed a much more fitting name.",
+      "parentUuid": "09a2bf74_f41a8726",
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "ce4b2617_bc8091a5",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "712755e2_c2926818",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ddbb8db_f5982562",
         "filename": "ash/highlighter/highlighter_result_view.h",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d10386c_97129f8b",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ddbb8db_f5982562",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "7053190c_157f3650",
+        "filename": "ash/system/palette/common_palette_tool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "I am not sure I understand the question. Which restriction?",
+      "parentUuid": "ab6f1cba_440d2028",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58a135bc_d7edf9cd",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -144,6 +282,24 @@
       "writtenOn": "2017-08-15T22:18:37Z",
       "side": 1,
       "message": "I\u0027m surprised there are no other gestures like vertical line.  If you think you may want to expand this list later, please add an UNKNOWN entry as value \u003d 0.",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f247d0b5_261e2c81",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Renamed 0 to \"Not recognized\".",
+      "parentUuid": "58a135bc_d7edf9cd",
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "392ac09f_95c36a85",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Changed to 10s",
+      "parentUuid": "36866282_a190b253",
+      "range": {
+        "startLine": 2585,
+        "startChar": 62,
+        "endLine": 2585,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0961dde0_77d4f06e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -216,6 +396,30 @@
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8b0f67_9d42fe12",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T16:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0961dde0_77d4f06e",
+      "range": {
+        "startLine": 2628,
+        "startChar": 11,
+        "endLine": 2628,
+        "endChar": 17
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
