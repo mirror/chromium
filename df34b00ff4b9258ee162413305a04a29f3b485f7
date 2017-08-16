@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "51964ae2_d6020333",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:10:54Z",
+      "side": 1,
+      "message": "I think this is just used to calculate the height of the bottom spacer (which means it\u0027s only called if we have a bottom spacer). We could just return the position of that one minus one instead...",
+      "range": {
+        "startLine": 250,
+        "startChar": 25,
+        "endLine": 250,
+        "endChar": 47
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "336650b4_d5284cf7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
         "patchSetId": 2
@@ -106,6 +129,29 @@
         "startChar": 38,
         "endLine": 217,
         "endChar": 46
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e98e795_d0c41b52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:10:54Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 474,
+        "startChar": 7,
+        "endLine": 474,
+        "endChar": 36
       },
       "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
