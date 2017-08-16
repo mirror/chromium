@@ -347,6 +347,9 @@ void BleConnectionManager::OnReceivedAdvertisementFromDevice(
                << remote_device.GetTruncatedDeviceIdForLogs() << "\". "
                << "Starting authentication handshake.";
 
+  // The device has been found, so stop trying to find the device.
+  StopConnectionAttemptAndMoveToEndOfQueue(remote_device);
+
   // Create a connection to that device.
   std::unique_ptr<cryptauth::Connection> connection =
       cryptauth::weave::BluetoothLowEnergyWeaveClientConnection::Factory::
@@ -358,8 +361,6 @@ void BleConnectionManager::OnReceivedAdvertisementFromDevice(
                                                      cryptauth_service_);
   connection_metadata->SetSecureChannel(std::move(secure_channel));
 
-  // Stop trying to connect to that device, since a connection already exists.
-  StopConnectionAttemptAndMoveToEndOfQueue(remote_device);
   UpdateConnectionAttempts();
 }
 
