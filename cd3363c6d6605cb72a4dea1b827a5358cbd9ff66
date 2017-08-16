@@ -16,6 +16,24 @@
       "revId": "cd3363c6d6605cb72a4dea1b827a5358cbd9ff66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea89952f_5d084040",
+        "filename": "components/data_reduction_proxy/core/common/lofi_decider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-16T21:53:12Z",
+      "side": 1,
+      "message": "lets do that in separate CL?",
+      "parentUuid": "dbdb7b4e_b42535fb",
+      "revId": "cd3363c6d6605cb72a4dea1b827a5358cbd9ff66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
