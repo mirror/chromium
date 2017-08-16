@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9847d8c9_0c705933",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T21:13:10Z",
+      "side": 1,
+      "message": "I was thinking:\n\nViewGroup startWebappActivityAndWaitForSplashScreen(Intent intent) throws Exception {\n    intent.putExtra(ShortcutHelper.EXTRA_URL, mTestServer.getURL(\"/slow?100\"));\n    launchActivity(intent);\n\n    ...    \n}\n\nIn WebappSplashScreenHomescreenIconTest#setup()\n\npublic void setUp() throws Exception {\n    mActivityTestRule.startWebappActivityAndWaitForSplashScreen(\n            mActivityTestRule.createIntent().putExtra(\n                    ShortcutHelper.EXTRA_ICON, WebappActivityTestRule.TEST_ICON));\n}",
+      "parentUuid": "68f087d8_f462ebba",
+      "revId": "7256f5e5853ebf8ae5e34e8ee810f8d94ec6cc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e87865f4_c58af1a2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 2

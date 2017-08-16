@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555df4c5_3f0d6f83",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T21:13:10Z",
+      "side": 1,
+      "message": "I think that the above comment is inaccurate. We are not waiting for in progress page loads to complete",
+      "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0973ab8a_12177288",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T21:13:10Z",
+      "side": 1,
+      "message": "Can you instead do\n\nViewGroup splashScreen \u003d getActivity().getSplashScreenForTests();\nif (splashScreen \u003d\u003d null) {\n    Assert.fail(\"No splash screen available.\");\n}\nreturn splashScreen;\n\nstartWebappActivityAndWaitForSplashScreen()\u0027s CriteriaHelper already waits for getActivity().getSplashScreenForTests() !\u003d null\nWe don\u0027t need to do identical waiting in waitUntilSplashScreenAppears()",
+      "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9de6537_609e97b2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenThemeColorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T21:13:10Z",
+      "side": 1,
+      "message": "ShortcutHelper.EXTRA_URL interferes with the URL set via startWebappActivityAndWaitForSplashScreen(). Can we remove setting the ShortcutHelper.EXTRA_URL parameter?",
+      "revId": "2ce77845a3588b60e981a090b4c024789e6ca03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
