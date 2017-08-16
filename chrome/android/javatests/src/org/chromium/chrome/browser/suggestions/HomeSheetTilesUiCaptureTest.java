@@ -4,49 +4,41 @@
 
 package org.chromium.chrome.browser.suggestions;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNotSame;
-
 import static org.chromium.chrome.test.BottomSheetTestRule.ENABLE_CHROME_HOME;
 import static org.chromium.chrome.test.util.ChromeRestriction.RESTRICTION_TYPE_PHONE;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.uiautomator.UiDevice;
-import android.support.v7.widget.RecyclerView;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.ScreenShooter;
 import org.chromium.base.test.util.parameter.CommandLineParameter;
-import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.NtpUiCaptureTestData;
-import org.chromium.chrome.browser.ntp.cards.ItemViewType;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.test.BottomSheetTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 
 /**
- * Tests for the appearance of the various empty states of the home sheet.
+ * Tests for the appearance of the tiles in the home sheet.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @Restriction(RESTRICTION_TYPE_PHONE) // ChromeHome is only enabled on phones
 // TODO(https://crbug.com/754778) improve annotation processor. We need to remove the currently
 // registered Feature flags to be able to change them later.
 @CommandLineFlags.Remove(ENABLE_CHROME_HOME)
-@ScreenShooter.Directory("HomeSheetEmptyStates")
-public class HomeSheetEmptyUiCaptureTest {
+@ScreenShooter.Directory("HomeSheetTiles")
+public class HomeSheetTilesUiCaptureTest {
     @Rule
     public BottomSheetTestRule mActivityTestRule = new BottomSheetTestRule();
 
@@ -73,38 +65,15 @@ public class HomeSheetEmptyUiCaptureTest {
     @CommandLineParameter({ENABLE_CHROME_HOME,
             "enable-features=" + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT + ","
                     + ChromeFeatureList.CHROME_HOME})
-    @ScreenShooter.Directory("SignInPromo")
-    public void testSignInPromo() {
-        // Needs to be "Full" to for this to work on small screens in landscape.
+    @ScreenShooter.Directory("Tiles")
+    public void testTiles() {
         setSheetState(BottomSheet.SHEET_STATE_FULL);
-
-        scrollToFirstItemOfType(ItemViewType.PROMO);
-
-        mScreenShooter.shoot("SignInPromo" + (SuggestionsConfig.useModern() ? "_modern" : ""));
-    }
-
-    private void scrollToFirstItemOfType(@ItemViewType int itemViewType) {
-        SuggestionsRecyclerView recyclerView = getRecyclerView();
-        int position = recyclerView.getNewTabPageAdapter().getFirstPositionForType(itemViewType);
-        assertNotSame("Scroll target of type " + itemViewType + " not found.",
-                RecyclerView.NO_POSITION, position);
-
-        ThreadUtils.runOnUiThreadBlocking(
-                () -> recyclerView.getLinearLayoutManager().scrollToPosition(position));
-        RecyclerViewTestUtils.waitForView(recyclerView, position);
+        mScreenShooter.shoot("Tiles" + (SuggestionsConfig.useModern() ? "_modern" : ""));
     }
 
     private void setSheetState(final int position) {
         mActivityTestRule.setSheetState(position, false);
         waitForWindowUpdates();
-    }
-
-    private SuggestionsRecyclerView getRecyclerView() {
-        SuggestionsRecyclerView recyclerView =
-                mActivityTestRule.getBottomSheetContent().getContentView().findViewById(
-                        R.id.recycler_view);
-        assertNotNull(recyclerView);
-        return recyclerView;
     }
 
     /** Wait for update to start and finish. */
