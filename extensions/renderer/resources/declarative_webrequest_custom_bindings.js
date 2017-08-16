@@ -4,7 +4,8 @@
 
 // Custom binding for the declarativeWebRequest API.
 
-var binding = require('binding').Binding.create('declarativeWebRequest');
+var binding =
+    apiBridge || require('binding').Binding.create('declarativeWebRequest');
 
 var utils = require('utils');
 var validate = require('schemaUtils').validate;
@@ -31,8 +32,11 @@ binding.registerCustomHook(function(api) {
       }
     }
     instance.instanceType = 'declarativeWebRequest.' + typeId;
-    var schema = getSchema(typeId);
-    validate([instance], [schema]);
+    if (!apiBridge) {
+      var schema = getSchema(typeId);
+      // TODO(devlin): Do we need to worry about this with native bindings?
+      validate([instance], [schema]);
+    }
   }
 
   // Setup all data types for the declarative webRequest API.
@@ -93,4 +97,5 @@ binding.registerCustomHook(function(api) {
   };
 });
 
-exports.$set('binding', binding.generate());
+if (!apiBridge)
+  exports.$set('binding', binding.generate());
