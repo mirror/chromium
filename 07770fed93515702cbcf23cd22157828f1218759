@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37fb048c_56fafa4d",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-16T06:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89689a75_d5dc57c0",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "07770fed93515702cbcf23cd22157828f1218759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f8a8b9_f87efa5d",
         "filename": "ui/message_center/views/notification_header_view.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "07770fed93515702cbcf23cd22157828f1218759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b45b28_f68460b6",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-16T06:09:58Z",
+      "side": 1,
+      "message": "This is inside |app_info_container_|, and kAppInfoContainerBottomPadding is already applied to |app_info_container_|, so in my understanding it\u0027s not needed.",
+      "parentUuid": "50f8a8b9_f87efa5d",
+      "range": {
+        "startLine": 213,
+        "startChar": 57,
+        "endLine": 213,
+        "endChar": 58
+      },
+      "revId": "07770fed93515702cbcf23cd22157828f1218759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
