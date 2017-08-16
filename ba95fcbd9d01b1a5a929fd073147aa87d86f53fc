@@ -70,6 +70,30 @@
       "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f49dc70_3c983688",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T17:16:54Z",
+      "side": 0,
+      "message": "The actual test prints itself with the DISABLED_ name; you see this earlier in the output if you\u0027re running with a --gtest_filter and are seeing the stdout of each test (I think this verbose output is suppressed if you\u0027re using more than one job?). So, my observation is that tt seems weird to me if the the summary that\u0027s printed by the test runner code refers to the test by the different name.\n\nI\u0027m fine with any approach here -- I just want to be able to run disabled tests without crashing! As a non-expert in this code, I can safely reason about reverting a behavior to what it used to be before it crashed. Modifying the output of more cases seems riskier to me -- I have no idea what the downstream consumers of this output text are, e.g. would it break some kind of bot or dashboard? -- I guess not, if it\u0027s crashing today and nobody noticed?",
+      "parentUuid": "4a9a4810_afde5054",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 46
+      },
+      "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
