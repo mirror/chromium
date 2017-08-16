@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a843339_0a93a03a",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-16T17:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47002812_c091d508",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbde0ccb_ec7ad13d",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T03:12:25Z",
       "side": 1,
       "message": "kAutoHideTitleBarsInTabletMode",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca327f39_213f876c",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-16T17:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbde0ccb_ec7ad13d",
       "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "480faf33_edb35110",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-16T17:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc43fecf_311996e3",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90d6a717_15dfbe9d",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T03:12:25Z",
       "side": 1,
       "message": "let\u0027s keep this consistent with the feature flag (autohide_title_bars \u003d false;)",
+      "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71d1c26e_90c16024",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-16T17:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90d6a717_15dfbe9d",
       "revId": "be788060cc996fbfc6551580b0f1af11713abeb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
