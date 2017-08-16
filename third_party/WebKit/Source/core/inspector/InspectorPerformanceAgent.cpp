@@ -10,6 +10,7 @@
 #include "core/probe/CoreProbes.h"
 #include "platform/InstanceCounters.h"
 #include "platform/wtf/dtoa/utils.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
@@ -24,12 +25,18 @@ InspectorPerformanceAgent::~InspectorPerformanceAgent() = default;
 protocol::Response InspectorPerformanceAgent::enable() {
   enabled_ = true;
   instrumenting_agents_->addInspectorPerformanceAgent(this);
+  Platform::Current()->CurrentThread()->AddTaskTimeObserver(this);
+  // The task where the observer was added will not observe the 'Will' part.
+  // Init depth with 1 as the task is already running.
+  task_depth_ = 1;
+  last_task_time_ = 0;
   return Response::OK();
 }
 
 protocol::Response InspectorPerformanceAgent::disable() {
   enabled_ = false;
   instrumenting_agents_->removeInspectorPerformanceAgent(this);
+  Platform::Current()->CurrentThread()->RemoveTaskTimeObserver(this);
   return Response::OK();
 }
 
@@ -75,6 +82,11 @@ Response InspectorPerformanceAgent::getMetrics(
   AppendMetric(result.get(), "LayoutDuration", layout_duration_);
   AppendMetric(result.get(), "RecalcStyleDuration", recalc_style_duration_);
   AppendMetric(result.get(), "ScriptDuration", script_duration_);
+  double task_duration = task_duration_;
+  if (task_depth_ && last_task_time_)
+    task_duration += WTF::MonotonicallyIncreasingTime() - last_task_time_;
+  AppendMetric(result.get(), "TaskDuration", task_duration);
+  AppendMetric(result.get(), "IdleDuration", idle_duration_);
 
   // Performance timings.
   Document* document = inspected_frames_->Root()->GetDocument();
@@ -138,6 +150,21 @@ void InspectorPerformanceAgent::Did(const probe::UpdateLayout& probe) {
     return;
   layout_duration_ += probe.Duration();
   layout_count_++;
+}
+
+void InspectorPerformanceAgent::WillProcessTask(double start_time) {
+  if (task_depth_++)
+    return;
+  idle_duration_ += start_time - last_task_time_;
+  last_task_time_ = start_time;
+}
+
+void InspectorPerformanceAgent::DidProcessTask(double start_time,
+                                               double end_time) {
+  if (--task_depth_)
+    return;
+  task_duration_ += end_time - start_time;
+  last_task_time_ = end_time;
 }
 
 DEFINE_TRACE(InspectorPerformanceAgent) {
