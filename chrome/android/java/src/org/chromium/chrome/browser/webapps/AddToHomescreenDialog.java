@@ -14,6 +14,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
@@ -27,6 +29,7 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
     private View mProgressBarView;
     private ImageView mIconView;
     private EditText mInput;
+    private LinearLayout mReadOnlyLayout;
 
     private AddToHomescreenManager mManager;
 
@@ -50,8 +53,7 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
      * @param activity The current activity in which to create the dialog.
      */
     public void show(final Activity activity) {
-        View view = activity.getLayoutInflater().inflate(
-                R.layout.add_to_homescreen_dialog, null);
+        View view = activity.getLayoutInflater().inflate(R.layout.add_to_homescreen_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                 .setTitle(AppBannerManager.getHomescreenLanguageOption())
                 .setNegativeButton(R.string.cancel,
@@ -70,20 +72,23 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
         mProgressBarView = view.findViewById(R.id.spinny);
         mIconView = (ImageView) view.findViewById(R.id.icon);
         mInput = (EditText) view.findViewById(R.id.text);
+        mReadOnlyLayout = (LinearLayout) view.findViewById(R.id.read_only_text);
 
         // The dialog's text field is disabled till the "user title" is fetched,
-        mInput.setEnabled(false);
+        mInput.setVisibility(View.INVISIBLE);
 
         view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                     int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (mProgressBarView.getMeasuredHeight() == mInput.getMeasuredHeight()
-                        && mInput.getBackground() != null) {
+                View text =
+                        mReadOnlyLayout.getVisibility() == View.VISIBLE ? mReadOnlyLayout : mInput;
+                if (mProgressBarView.getMeasuredHeight() == text.getMeasuredHeight()
+                        && text.getBackground() != null) {
                     // Force the text field to align better with the icon by accounting for the
                     // padding introduced by the background drawable.
-                    mInput.getLayoutParams().height =
-                            mProgressBarView.getMeasuredHeight() + mInput.getPaddingBottom();
+                    text.getLayoutParams().height =
+                            mProgressBarView.getMeasuredHeight() + text.getPaddingBottom();
                     v.requestLayout();
                     v.removeOnLayoutChangeListener(this);
                 }
@@ -112,6 +117,7 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        // For installing WebAPKs, the text doesn't matter.
                         mManager.addShortcut(mInput.getText().toString());
                     }
                 });
@@ -135,12 +141,24 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
     }
 
     /**
-     * Called when the title of the page is available.
+     * Called when the Web Manifest of the page is available.
      */
     @Override
-    public void onUserTitleAvailable(String title, boolean isTitleEditable) {
-        mInput.setEnabled(isTitleEditable);
-        mInput.setText(title);
+    public void onUserTitleAvailable(
+            String shortName, String name, String origin, boolean isTitleEditable) {
+        mInput.setText(shortName);
+        if (isTitleEditable) {
+            mInput.setEnabled(true);
+            mInput.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        mInput.setVisibility(View.GONE);
+        TextView webApkName = (TextView) mReadOnlyLayout.findViewById(R.id.name);
+        TextView webApkOrigin = (TextView) mReadOnlyLayout.findViewById(R.id.origin);
+        webApkName.setText(name);
+        webApkOrigin.setText(origin);
+        mReadOnlyLayout.setVisibility(View.VISIBLE);
     }
 
     /**

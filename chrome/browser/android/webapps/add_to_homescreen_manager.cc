@@ -133,12 +133,18 @@ void AddToHomescreenManager::OnDidDetermineWebApkCompatibility(
 }
 
 void AddToHomescreenManager::OnUserTitleAvailable(
-    const base::string16& user_title) {
+    const base::string16& user_title,
+    const base::string16& name,
+    const base::string16& origin) {
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> j_user_title =
       base::android::ConvertUTF16ToJavaString(env, user_title);
+  ScopedJavaLocalRef<jstring> j_name =
+      base::android::ConvertUTF16ToJavaString(env, name);
+  ScopedJavaLocalRef<jstring> j_origin =
+      base::android::ConvertUTF16ToJavaString(env, origin);
   Java_AddToHomescreenManager_onUserTitleAvailable(
-      env, java_ref_, j_user_title,
+      env, java_ref_, j_user_title, j_name, j_origin,
       !is_webapk_compatible_ /* isTitleEditable */);
 }
 

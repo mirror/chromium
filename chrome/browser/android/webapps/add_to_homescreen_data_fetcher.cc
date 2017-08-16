@@ -21,6 +21,7 @@
 #include "components/dom_distiller/core/url_utils.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/favicon_base/favicon_types.h"
+#include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/manifest_icon_selector.h"
 #include "content/public/browser/render_frame_host.h"
@@ -96,6 +97,11 @@ std::pair<SkBitmap, bool> CreateLauncherIconFromFaviconInBackground(
                           bitmap_result.bitmap_data->size(), &decoded);
   }
   return CreateLauncherIconInBackground(start_url, decoded);
+}
+
+base::string16 FormatOrigin(const GURL& url) {
+  return url_formatter::FormatOriginForSecurityDisplay(
+      url::Origin(url), url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS);
 }
 
 }  // namespace
@@ -216,7 +222,9 @@ void AddToHomescreenDataFetcher::OnDataTimedout() {
 
   if (check_webapk_compatibility_)
     observer_->OnDidDetermineWebApkCompatibility(false);
-  observer_->OnUserTitleAvailable(shortcut_info_.user_title);
+  observer_->OnUserTitleAvailable(shortcut_info_.user_title,
+                                  shortcut_info_.name,
+                                  FormatOrigin(shortcut_info_.url));
 
   CreateLauncherIcon(raw_primary_icon_);
 }
@@ -237,7 +245,9 @@ void AddToHomescreenDataFetcher::OnDidGetManifestAndIcons(
   if (data.manifest.IsEmpty() || !data.primary_icon) {
     if (check_webapk_compatibility_)
       observer_->OnDidDetermineWebApkCompatibility(false);
-    observer_->OnUserTitleAvailable(shortcut_info_.user_title);
+    observer_->OnUserTitleAvailable(shortcut_info_.user_title,
+                                    shortcut_info_.name,
+                                    FormatOrigin(shortcut_info_.url));
     data_timeout_timer_.Stop();
     FetchFavicon();
     return;
@@ -281,7 +291,9 @@ void AddToHomescreenDataFetcher::OnDidPerformInstallableCheck(
     observer_->OnDidDetermineWebApkCompatibility(webapk_compatible);
   }
 
-  observer_->OnUserTitleAvailable(shortcut_info_.user_title);
+  observer_->OnUserTitleAvailable(shortcut_info_.user_title,
+                                  shortcut_info_.name,
+                                  FormatOrigin(shortcut_info_.url));
   if (webapk_compatible) {
     shortcut_info_.UpdateSource(ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_PWA);
     NotifyObserver(std::make_pair(raw_primary_icon_, false /* is_generated */));
