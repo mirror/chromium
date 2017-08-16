@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e74149_1ee154b9",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-16T04:00:55Z",
+      "side": 1,
+      "message": "this CHECK now fires when running a browser_test in the debugger.",
+      "revId": "ea7ff6f0cd92cdf1c407f7f3a0873abb8c80e2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
