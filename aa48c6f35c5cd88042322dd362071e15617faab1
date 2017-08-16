@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5de8ad4_808cd8aa",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskReflection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T17:51:44Z",
+      "side": 1,
+      "message": "It\u0027s for the multi-catch of exceptions below:\n\n  catch (InstantiationException | IllegalAccessException e) { ... }\n\nMulti-catch with these reflection exceptions requires API level 19 (current min is 16) because they get compiled to the common but new super type ReflectiveOperationException (API level 19). As a workaround either create individual catch statements, or catch Exception.\n\nI\u0027ve changed them to become individual catch statements and removed this @TargetApi annotation.\n\nHowever, your question is what would happen on Android J and K. I guess it\u0027d be a crash before this change if we fail to instantiate?",
+      "parentUuid": "c956ed5e_b7621b60",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "aa48c6f35c5cd88042322dd362071e15617faab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e91f600f_da870a28",
         "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerImpl.java",
         "patchSetId": 5
@@ -42,6 +66,47 @@
         "endLine": 22,
         "endChar": 10
       },
+      "revId": "aa48c6f35c5cd88042322dd362071e15617faab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b083c0a_edbacfc2",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T17:51:44Z",
+      "side": 1,
+      "message": "This is me not remembering to remove it after moving the reflection code out.",
+      "parentUuid": "e91f600f_da870a28",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "aa48c6f35c5cd88042322dd362071e15617faab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b116ca3_b846ce8d",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T17:51:44Z",
+      "side": 1,
+      "message": "This comment is new, and the @VisibleForTesting has been removed, since we need it as package protected regardless of tests.",
       "revId": "aa48c6f35c5cd88042322dd362071e15617faab1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
