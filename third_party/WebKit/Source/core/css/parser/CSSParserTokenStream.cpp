@@ -19,15 +19,24 @@ CSSParserToken CSSParserTokenStream::ConsumeIncludingWhitespace() {
   return result;
 }
 
-void CSSParserTokenStream::UncheckedConsumeComponentValue() {
-  unsigned nesting_level = 0;
+void CSSParserTokenStream::UncheckedConsumeComponentValue(
+    unsigned nesting_level) {
+  DCHECK_LT(next_index_, tokenizer_.CurrentSize());
+
+  // Can't use consume/peek in here because they can't read past start/end of
+  // blocks
   do {
-    const CSSParserToken& token = UncheckedConsume();
+    const CSSParserToken& token = tokenizer_.tokens_[next_index_++];
     if (token.GetBlockType() == CSSParserToken::kBlockStart)
       nesting_level++;
     else if (token.GetBlockType() == CSSParserToken::kBlockEnd)
       nesting_level--;
-  } while (nesting_level && !AtEnd());
+
+    if (EnsureLookAhead() == LookAhead::kIsEOF)
+      return;
+
+    DCHECK_LT(next_index_, tokenizer_.CurrentSize());
+  } while (nesting_level && !tokenizer_.tokens_[next_index_].IsEOF());
 }
 
 }  // namespace blink
