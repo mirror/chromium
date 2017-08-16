@@ -28053,12 +28053,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="IOS.ContentExtension.Index" units="index">
+  <owner>olivierrobin@chromium.org</owner>
+  <summary>
+    The index of the URL selected by the user in the Content Extension.
+  </summary>
+</histogram>
+
 <histogram name="IOS.MailtoURLRewritten" enum="Boolean">
   <owner>pkl@chromium.org</owner>
   <summary>
     Counts the times when a mailto: URL is tapped by user and whether the URL
     has been rewritten for an available native Mail client app or not.
   </summary>
+</histogram>
+
+<histogram name="IOS.SearchExtension.Action" enum="IOSSearchExtensionAction">
+  <owner>olivierrobin@chromium.org</owner>
+  <summary>The action selected by the user in the Search Extension.</summary>
 </histogram>
 
 <histogram name="IOS.SearchExtension.DisplayCount" units="count">
