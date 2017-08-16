@@ -315,6 +315,8 @@ const char* BufferUsageToString(gfx::BufferUsage usage) {
       return "GPU_READ_CPU_READ_WRITE";
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
       return "GPU_READ_CPU_READ_WRITE_PERSISTENT";
+    case gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE:
+      return "SCANOUT_CAMERA_READ_WRITE";
   }
   NOTREACHED();
   return nullptr;
