@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "818a2346_9d9df0c8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-16T21:10:30Z",
+      "side": 1,
+      "message": "can you use usermanager::UserManager instead?",
+      "range": {
+        "startLine": 214,
+        "startChar": 21,
+        "endLine": 214,
+        "endChar": 39
+      },
+      "revId": "44d1af933ade597a93950ff0700596d976de4d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c59d4af0_e95b20b6",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
@@ -47,6 +70,29 @@
       "writtenOn": "2017-08-16T20:58:33Z",
       "side": 1,
       "message": "It seems like you\u0027re using the state \"STOPPED\" to mean \"ENABLED\". It seems to conflate two concepts, enabled vs. disabled and running vs. stopped.\n\nShould there be 2 variables for this? (One for enabled/disabled and one for a state machine?) Or maybe \"stopped\" should just be called \"enabled\"?",
+      "revId": "44d1af933ade597a93950ff0700596d976de4d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1676bfa0_53bdd94f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-16T21:10:30Z",
+      "side": 1,
+      "message": "sending STOPPED may not be the right value, consider a case:\n* User A logs in\n* User A start voice interaction\n* User B logs in\n* Switch to user A\n\nNow voice interaction should still be running but we are sending STOPPED.",
+      "range": {
+        "startLine": 356,
+        "startChar": 16,
+        "endLine": 356,
+        "endChar": 51
+      },
       "revId": "44d1af933ade597a93950ff0700596d976de4d91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
