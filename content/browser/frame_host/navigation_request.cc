@@ -686,6 +686,32 @@ void NavigationRequest::OnResponseStarted(
 
 void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
                                         int net_error) {
+  OnRequestFailedInternal(has_stale_copy_in_cache, net_error, nullptr);
+}
+void NavigationRequest::OnRequestFailedWithCertificateError(
+    bool has_stale_copy_in_cache,
+    int net_error,
+    struct NavigationThrottle::CertificateErrorInfo certificate_error_info) {
+  OnRequestFailedInternal(has_stale_copy_in_cache, net_error,
+                          &certificate_error_info);
+}
+
+void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
+  if (frame_tree_node_->IsMainFrame()) {
+    TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0("navigation",
+                                          "Navigation timeToNetworkStack",
+                                          navigation_handle_.get(), timestamp);
+  }
+
+  frame_tree_node_->navigator()->LogResourceRequestTime(timestamp,
+                                                        common_params_.url);
+}
+
+// TODO(crbug.com/751941): Pass certificate_error_info to navigation throttles.
+void NavigationRequest::OnRequestFailedInternal(
+    bool has_stale_copy_in_cache,
+    int net_error,
+    struct NavigationThrottle::CertificateErrorInfo* certificate_error_info) {
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
                                "OnRequestFailed", "error", net_error);
@@ -746,17 +772,6 @@ void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
   render_frame_host->FailedNavigation(common_params_, begin_params_,
                                       request_params_, has_stale_copy_in_cache,
                                       net_error);
-}
-
-void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
-  if (frame_tree_node_->IsMainFrame()) {
-    TRACE_EVENT_ASYNC_END_WITH_TIMESTAMP0(
-        "navigation", "Navigation timeToNetworkStack", navigation_handle_.get(),
-        timestamp);
-  }
-
-  frame_tree_node_->navigator()->LogResourceRequestTime(timestamp,
-                                                        common_params_.url);
 }
 
 void NavigationRequest::OnStartChecksComplete(

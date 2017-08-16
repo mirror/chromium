@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/time/time.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/navigation_resource_handler.h"
@@ -15,6 +16,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_data.h"
+#include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/stream_handle.h"
@@ -136,18 +138,34 @@ void NavigationURLLoaderImplCore::NotifyResponseStarted(
                      is_stream));
 }
 
-void NavigationURLLoaderImplCore::NotifyRequestFailed(bool in_cache,
-                                                      int net_error) {
+void NavigationURLLoaderImplCore::NotifyRequestFailed(
+    bool in_cache,
+    int net_error,
+    const net::SSLInfo* ssl_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   TRACE_EVENT_ASYNC_END0("navigation", "Navigation redirectDelay", this);
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderImplCore", this, "success",
                          false);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestFailed, loader_,
-                     in_cache, net_error));
+  if (net::IsCertificateError(net_error)) {
+    DCHECK(ssl_info);
+
+    struct NavigationThrottle::CertificateErrorInfo certificate_error_info;
+    certificate_error_info.ssl_info = *ssl_info;
+    certificate_error_info.fatal = resource_handler_->ShouldSSLErrorsBeFatal();
+
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &NavigationURLLoaderImpl::NotifyRequestFailedWithCertificateError,
+            loader_, in_cache, net_error, certificate_error_info));
+  } else {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&NavigationURLLoaderImpl::NotifyRequestFailed, loader_,
+                       in_cache, net_error));
+  }
 }
 
 }  // namespace content

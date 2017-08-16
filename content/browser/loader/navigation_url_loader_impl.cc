@@ -115,6 +115,16 @@ void NavigationURLLoaderImpl::NotifyRequestFailed(bool in_cache,
   delegate_->OnRequestFailed(in_cache, net_error);
 }
 
+void NavigationURLLoaderImpl::NotifyRequestFailedWithCertificateError(
+    bool in_cache,
+    int net_error,
+    struct NavigationThrottle::CertificateErrorInfo certificate_error_info) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  delegate_->OnRequestFailedWithCertificateError(in_cache, net_error,
+                                                 certificate_error_info);
+}
+
 void NavigationURLLoaderImpl::NotifyRequestStarted(base::TimeTicks timestamp) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
