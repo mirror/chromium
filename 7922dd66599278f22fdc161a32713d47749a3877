@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8459447a_a79727f2",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T09:11:38Z",
+      "side": 1,
+      "message": "Usually, it\u0027s considered acceptable to write nullptr here (same comment elsewhere)",
+      "range": {
+        "startLine": 306,
+        "startChar": 19,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f965f3b9_8430b801",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T09:11:38Z",
+      "side": 1,
+      "message": "Nit: if you want, we allow you to write:\n\nbase::Passed(\u0026body_as_stream), etc\n\nThis is usually used in Chrome, since it\u0027s a bit shorter.",
+      "range": {
+        "startLine": 262,
+        "startChar": 22,
+        "endLine": 262,
+        "endChar": 61
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a704bc04_64b92e2c",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 9
@@ -42,6 +88,57 @@
         "endLine": 759,
         "endChar": 60
       },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fd421a_54196add",
+        "filename": "content/renderer/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T09:11:38Z",
+      "side": 1,
+      "message": "Remove duplicate line?",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bb53d2_83dad8f8",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T09:11:38Z",
+      "side": 1,
+      "message": "One thing I initially wondered is why we have this in Blink at all--why not just use the blob service directly here? Is this to work around threading issues?",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a71cf5_db6bd49f",
+        "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T09:11:38Z",
+      "side": 1,
+      "message": "This is currently explicitly thread-safe, so do we need to have TLS here?\n\nI\u0027m actually working on changing this to use service_manager::InterfaceProvider and having Platform do the TLS caching internally as well.",
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
