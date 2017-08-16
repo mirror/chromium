@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "039f19b5_3f8fdb6d",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "This call is actually safe and should not be confused with calling with manual write barriers.",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb2587b_7108bcd1",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "Using this one from generated bindings code as it is safe and should not be confused with TraceWrappersWithManualWriteBarrier.",
+      "range": {
+        "startLine": 181,
+        "startChar": 29,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc11316_31f15171",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "We should try to get rid of the next 3 ones in follow up CLs. I probably will have some questions when doing so :)",
+      "range": {
+        "startLine": 189,
+        "startChar": 7,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7887e16c_28a8c153",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "Reordered marking and pushing to marking deque as it should have no effect. Also removed the if block around the push call as pushing cannot fail (other than fatal OOM).",
+      "range": {
+        "startLine": 254,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 22
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3441c4fa_018830b1",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "The DCHECK ulan@ suggested in a previous CL.",
+      "range": {
+        "startLine": 266,
+        "startChar": 11,
+        "endLine": 266,
+        "endChar": 38
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec211401_1b72c989",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "Re-ordered and moved to protected section.",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 30
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3847b5_f09f0e2e",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 1,
+      "message": "Properly friending tests now so that we can hide internal state from the public API.",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 26
+      },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

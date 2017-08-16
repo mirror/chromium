@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "448430c5_a66e29e3",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-16T17:43:44Z",
+      "side": 0,
+      "message": "Remove the boolean return as pushing cannot fail other than OOM.",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 195,
+        "endChar": 15
+      },
+      "revId": "5432ec0c90b5f5d1c9802c1a676e2bff491fd957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
