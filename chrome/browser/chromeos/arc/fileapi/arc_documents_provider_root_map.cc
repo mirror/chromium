@@ -89,4 +89,9 @@ void ArcDocumentsProviderRootMap::Shutdown() {
   map_.clear();
 }
 
+void ArcDocumentsProviderRootMap::Refresh(
+    const ArcDocumentsProviderRootMap::RefreshCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+}
+
 }  // namespace arc

@@ -9,9 +9,13 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
+#include "base/callback_forward.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/optional.h"
+#include "components/arc/common/file_system.mojom.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 class Profile;
@@ -33,6 +37,8 @@ class ArcDocumentsProviderRoot;
 // All member function must be called on the UI thread.
 class ArcDocumentsProviderRootMap : public KeyedService {
  public:
+  using RefreshCallback = base::OnceCallback<
+    void(const base::Optional<std::vector<mojom::RootPtr>>& roots)>;
   ~ArcDocumentsProviderRootMap() override;
 
   // Returns an instance for the given browser context, or nullptr if ARC is not
@@ -55,6 +61,9 @@ class ArcDocumentsProviderRootMap : public KeyedService {
 
   // KeyedService overrides:
   void Shutdown() override;
+  // Refreshes the roots list and returns it.
+  // Call from UI thread.
+  void Refresh(const RefreshCallback& callback);
 
  private:
   friend class ArcDocumentsProviderRootMapFactory;
