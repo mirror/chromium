@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978490ef_dd6f347d",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T15:52:02Z",
+      "side": 1,
+      "message": "TL;DR: This is fine, but let\u0027s not move any core API tests like this.  No action needed.\n\nNote: As we\u0027ve discussed in the past, moving tests like this is potentially dangerous because app shell behavior doesn\u0027t necessarily reflect chrome\u0027s behavior.  It\u0027d be very easy to have a test pass in app shell, but fail completely in chrome.\n\nGiven this is an app-y API (and a restricted one at that), I\u0027m not opposed to moving this test as long as owners are happy, but I\u0027d be hesitant to move any more core API tests until we figure out the proper shared testing strategy.",
+      "revId": "a6eddc3aa290c33cff61c939e3431b8597d6f2d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3c9d1a_88fc451a",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T15:52:02Z",
+      "side": 1,
+      "message": "Should this be pure-virtual?  I don\u0027t see a default implementation.",
+      "revId": "a6eddc3aa290c33cff61c939e3431b8597d6f2d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bd5ef6_e7545b48",
+        "filename": "extensions/browser/browser_context_keyed_service_factories.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T15:52:02Z",
+      "side": 1,
+      "message": "nit: alphabetize.",
+      "revId": "a6eddc3aa290c33cff61c939e3431b8597d6f2d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
