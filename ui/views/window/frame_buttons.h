@@ -10,8 +10,18 @@ namespace views {
 // Identifies what a button in a window frame is.
 enum FrameButton {
   FRAME_BUTTON_MINIMIZE,
+  // FRAME_BUTTON_MAXIMIZE could either be a maximize or a restore
+  // button depending on the context.
   FRAME_BUTTON_MAXIMIZE,
   FRAME_BUTTON_CLOSE
+};
+
+enum FrameButtonDisplayType {
+  FRAME_BUTTON_DISPLAY_MINIMIZE = 0,
+  FRAME_BUTTON_DISPLAY_MAXIMIZE,
+  FRAME_BUTTON_DISPLAY_RESTORE,
+  FRAME_BUTTON_DISPLAY_CLOSE,
+  FRAME_BUTTON_DISPLAY_COUNT
 };
 
 }  // namespace views
