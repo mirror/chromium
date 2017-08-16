@@ -5,6 +5,7 @@
 #include "core/origin_trials/OriginTrialContext.h"
 
 #include <memory>
+#include "common/origin_trials/trial_token.h"
 #include "core/HTMLNames.h"
 #include "core/dom/DOMException.h"
 #include "core/frame/LocalFrameView.h"
@@ -17,7 +18,6 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/WebOriginTrialTokenStatus.h"
 #include "public/platform/WebTrialTokenValidator.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -38,32 +38,38 @@ const char kTokenPlaceholder[] = "The token contents are not used";
 class MockTokenValidator : public WebTrialTokenValidator {
  public:
   MockTokenValidator()
-      : response_(WebOriginTrialTokenStatus::kNotSupported), call_count_(0) {}
+      : response_(OriginTrialTokenStatus::kNotSupported), call_count_(0) {}
   ~MockTokenValidator() override {}
 
   // blink::WebTrialTokenValidator implementation
-  WebOriginTrialTokenStatus ValidateToken(const WebString& token,
-                                          const WebSecurityOrigin& origin,
-                                          WebString* feature_name) override {
+  OriginTrialTokenStatus ValidateToken(const TrialTokenValidator&,
+                                       const WebString& token,
+                                       const WebSecurityOrigin& origin,
+                                       WebString* feature_name) override {
     call_count_++;
     *feature_name = feature_;
     return response_;
   }
 
   // Useful methods for controlling the validator
-  void SetResponse(WebOriginTrialTokenStatus response,
-                   const WebString& feature) {
+  void SetResponse(OriginTrialTokenStatus response, const WebString& feature) {
     response_ = response;
     feature_ = feature;
   }
   int CallCount() { return call_count_; }
 
  private:
-  WebOriginTrialTokenStatus response_;
+  OriginTrialTokenStatus response_;
   WebString feature_;
   int call_count_;
 
   DISALLOW_COPY_AND_ASSIGN(MockTokenValidator);
+};
+
+class MockTrialTokenValidator : public TrialTokenValidator {
+ public:
+  MockTrialTokenValidator() : TrialTokenValidator(nullptr) {}
+  ~MockTrialTokenValidator() override {}
 };
 
 }  // namespace
@@ -75,7 +81,8 @@ class OriginTrialContextTest : public ::testing::Test {
         execution_context_(new NullExecutionContext()),
         token_validator_(WTF::MakeUnique<MockTokenValidator>()),
         origin_trial_context_(new OriginTrialContext(*execution_context_,
-                                                     token_validator_.get())),
+                                                     token_validator_.get(),
+                                                     trial_token_validator_)),
         histogram_tester_(new HistogramTester()) {
     RuntimeEnabledFeatures::SetOriginTrialsEnabled(true);
   }
@@ -100,7 +107,7 @@ class OriginTrialContextTest : public ::testing::Test {
     return origin_trial_context_->IsTrialEnabled(feature_name);
   }
 
-  void ExpectStatusUniqueMetric(WebOriginTrialTokenStatus status, int count) {
+  void ExpectStatusUniqueMetric(OriginTrialTokenStatus status, int count) {
     histogram_tester_->ExpectUniqueSample(kResultHistogram,
                                           static_cast<int>(status), count);
   }
@@ -113,24 +120,25 @@ class OriginTrialContextTest : public ::testing::Test {
   const bool framework_was_enabled_;
   Persistent<NullExecutionContext> execution_context_;
   std::unique_ptr<MockTokenValidator> token_validator_;
+  MockTrialTokenValidator trial_token_validator_;
   Persistent<OriginTrialContext> origin_trial_context_;
   std::unique_ptr<HistogramTester> histogram_tester_;
 };
 
 TEST_F(OriginTrialContextTest, EnabledNonExistingTrial) {
-  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kSuccess,
+  TokenValidator()->SetResponse(OriginTrialTokenStatus::kSuccess,
                                 kFrobulateTrialName);
   bool is_non_existing_trial_enabled =
       IsTrialEnabled(kFrobulateEnabledOrigin, kNonExistingTrialName);
   EXPECT_FALSE(is_non_existing_trial_enabled);
 
   // Status metric should be updated.
-  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kSuccess, 1);
+  ExpectStatusUniqueMetric(OriginTrialTokenStatus::kSuccess, 1);
 }
 
 // The feature should be enabled if a valid token for the origin is provided
 TEST_F(OriginTrialContextTest, EnabledSecureRegisteredOrigin) {
-  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kSuccess,
+  TokenValidator()->SetResponse(OriginTrialTokenStatus::kSuccess,
                                 kFrobulateTrialName);
   bool is_origin_enabled =
       IsTrialEnabled(kFrobulateEnabledOrigin, kFrobulateTrialName);
@@ -138,13 +146,13 @@ TEST_F(OriginTrialContextTest, EnabledSecureRegisteredOrigin) {
   EXPECT_EQ(1, TokenValidator()->CallCount());
 
   // Status metric should be updated.
-  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kSuccess, 1);
+  ExpectStatusUniqueMetric(OriginTrialTokenStatus::kSuccess, 1);
 }
 
 // ... but if the browser says it's invalid for any reason, that's enough to
 // reject.
 TEST_F(OriginTrialContextTest, InvalidTokenResponseFromPlatform) {
-  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kMalformed,
+  TokenValidator()->SetResponse(OriginTrialTokenStatus::kMalformed,
                                 kFrobulateTrialName);
   bool is_origin_enabled =
       IsTrialEnabled(kFrobulateEnabledOrigin, kFrobulateTrialName);
@@ -152,19 +160,19 @@ TEST_F(OriginTrialContextTest, InvalidTokenResponseFromPlatform) {
   EXPECT_EQ(1, TokenValidator()->CallCount());
 
   // Status metric should be updated.
-  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kMalformed, 1);
+  ExpectStatusUniqueMetric(OriginTrialTokenStatus::kMalformed, 1);
 }
 
 // The feature should not be enabled if the origin is insecure, even if a valid
 // token for the origin is provided
 TEST_F(OriginTrialContextTest, EnabledNonSecureRegisteredOrigin) {
-  TokenValidator()->SetResponse(WebOriginTrialTokenStatus::kSuccess,
+  TokenValidator()->SetResponse(OriginTrialTokenStatus::kSuccess,
                                 kFrobulateTrialName);
   bool is_origin_enabled =
       IsTrialEnabled(kFrobulateEnabledOriginUnsecure, kFrobulateTrialName);
   EXPECT_FALSE(is_origin_enabled);
   EXPECT_EQ(0, TokenValidator()->CallCount());
-  ExpectStatusUniqueMetric(WebOriginTrialTokenStatus::kInsecure, 1);
+  ExpectStatusUniqueMetric(OriginTrialTokenStatus::kInsecure, 1);
 }
 
 TEST_F(OriginTrialContextTest, ParseHeaderValue) {

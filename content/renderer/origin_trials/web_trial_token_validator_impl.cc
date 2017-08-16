@@ -5,22 +5,23 @@
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 
 #include "base/time/time.h"
-#include "content/common/origin_trials/trial_token_validator.h"
-#include "third_party/WebKit/public/platform/WebOriginTrialTokenStatus.h"
+#include "third_party/WebKit/common/origin_trials/trial_token.h"
+#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 
 namespace content {
 
 WebTrialTokenValidatorImpl::WebTrialTokenValidatorImpl() {}
 WebTrialTokenValidatorImpl::~WebTrialTokenValidatorImpl() {}
 
-blink::WebOriginTrialTokenStatus WebTrialTokenValidatorImpl::ValidateToken(
+blink::OriginTrialTokenStatus WebTrialTokenValidatorImpl::ValidateToken(
+    const blink::TrialTokenValidator& validator,
     const blink::WebString& token,
     const blink::WebSecurityOrigin& origin,
     blink::WebString* feature_name) {
   std::string feature;
-  blink::WebOriginTrialTokenStatus status = TrialTokenValidator::ValidateToken(
+  blink::OriginTrialTokenStatus status = validator.ValidateToken(
       token.Utf8(), origin, &feature, base::Time::Now());
-  if (status == blink::WebOriginTrialTokenStatus::kSuccess)
+  if (status == blink::OriginTrialTokenStatus::kSuccess)
     *feature_name = blink::WebString::FromUTF8(feature);
   return status;
 }

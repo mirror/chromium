@@ -1308,6 +1308,10 @@ RendererBlinkPlatformImpl::TrialTokenValidator() {
   return &trial_token_validator_;
 }
 
+blink::TrialPolicy* RendererBlinkPlatformImpl::OriginTrialPolicy() {
+  return &origin_trial_policy_;
+}
+
 void RendererBlinkPlatformImpl::WorkerContextCreated(
     const v8::Local<v8::Context>& worker) {
   GetContentClient()->renderer()->DidInitializeWorkerContextOnWorkerThread(
