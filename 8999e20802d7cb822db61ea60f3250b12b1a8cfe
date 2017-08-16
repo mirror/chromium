@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d1ae83_25fc864e",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-16T00:25:01Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/614425\n\nYue introduced a nice helper method in the above cl.  I guess depends on which cl gets in first...",
+      "range": {
+        "startLine": 482,
+        "startChar": 7,
+        "endLine": 482,
+        "endChar": 33
+      },
+      "revId": "8999e20802d7cb822db61ea60f3250b12b1a8cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496fbb36_5dbaaa25",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-16T00:25:01Z",
+      "side": 1,
+      "message": "Yue is also in the process of introducing a new state DISABLED, which is when user explicitly disabled OPA in ChromeOS settings.",
+      "range": {
+        "startLine": 120,
+        "startChar": 63,
+        "endLine": 120,
+        "endChar": 72
+      },
+      "revId": "8999e20802d7cb822db61ea60f3250b12b1a8cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
