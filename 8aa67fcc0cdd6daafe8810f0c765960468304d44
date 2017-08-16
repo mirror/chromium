@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c16e832_1399fd6a",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-16T15:09:01Z",
+      "side": 1,
+      "message": "The evaluation order of arguments is undefined in C++, only on win-clang did it do std::move(webrtc_sender) before RTCRtpSender::getId(webrtc_sender). This fix was to always do getId before these lines.",
+      "revId": "8aa67fcc0cdd6daafe8810f0c765960468304d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
