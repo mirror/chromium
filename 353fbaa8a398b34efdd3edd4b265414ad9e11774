@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d083d024_3bd67848",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-16T04:10:06Z",
+      "side": 1,
+      "message": "This looks a little large, i\u0027d prefer just to have the baseline propagation, and ToBoxFragment class inline, rather than extract this function out.",
+      "range": {
+        "startLine": 394,
+        "startChar": 47,
+        "endLine": 394,
+        "endChar": 59
+      },
+      "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2f3cac_c7614e8e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-16T04:10:06Z",
+      "side": 1,
+      "message": "Are you able to get this to inherit from NGLayoutAlgorithm?\n\nI.e. then the only part that really needs to be shared is \"PrepareLayout\" (e.g. the percentage \u0026 available size calculations), and this class can have its own content_size_ member, etc.\n\nI think we can remove the other added methods (e.g. UpdateSizeAfterChildLayout, FinishLayout), and just have the functionality inline, which should be simpler to reason about.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa26503_0501db18",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-16T04:10:06Z",
+      "side": 1,
+      "message": "could you use the writing mode constructor? (in process of removing other one).",
+      "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
