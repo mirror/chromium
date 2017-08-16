@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb23ca5b_a2b1eeff",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T09:08:46Z",
+      "side": 1,
+      "message": "nit: Since |end_layout_object| is never nullptr here, we don\u0027t need to have this if-statement.",
+      "revId": "5ccbc414e56a0b67bc4335312263638a4e9ce369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
