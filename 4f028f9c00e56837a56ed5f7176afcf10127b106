@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58042015_c9d3def6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T01:45:15Z",
+      "side": 1,
+      "message": "I don\u0027t understand this sentence?",
+      "revId": "4f028f9c00e56837a56ed5f7176afcf10127b106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64580c15_57fae02a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T01:45:15Z",
+      "side": 1,
+      "message": "Maybe just keep the DCHECK there but commented out with your above comment?",
+      "revId": "4f028f9c00e56837a56ed5f7176afcf10127b106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
