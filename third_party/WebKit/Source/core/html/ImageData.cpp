@@ -319,21 +319,13 @@ ImageData* ImageData::Create(NotShared<DOMUint8ClampedArray> data,
   return new ImageData(IntSize(width, height), data.View());
 }
 
-bool ColorManagementEnabled(const ImageDataColorSettings& color_settings) {
-  if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace())
-    return true;
-  if (CanvasColorParams::ColorCorrectRenderingInSRGBOnly() &&
-      color_settings.colorSpace() == kSRGBCanvasColorSpaceName)
-    return true;
-  return false;
-}
-
 ImageData* ImageData::CreateImageData(
     unsigned width,
     unsigned height,
     const ImageDataColorSettings& color_settings,
     ExceptionState& exception_state) {
-  if (!ColorManagementEnabled(color_settings))
+  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() &&
+      !RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())
     return nullptr;
 
   if (!ImageData::ValidateConstructorArguments(
@@ -357,7 +349,7 @@ ImageData* ImageData::CreateImageData(ImageDataArray& data,
                                       unsigned height,
                                       ImageDataColorSettings& color_settings,
                                       ExceptionState& exception_state) {
-  if (!ColorManagementEnabled(color_settings))
+  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
     return nullptr;
 
   DOMArrayBufferView* buffer_view = nullptr;
@@ -709,7 +701,7 @@ DOMArrayBufferBase* ImageData::BufferBase() const {
 }
 
 CanvasColorParams ImageData::GetCanvasColorParams() {
-  if (!ColorManagementEnabled(color_settings_))
+  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
     return CanvasColorParams();
   CanvasColorSpace color_space =
       ImageData::GetCanvasColorSpace(color_settings_.colorSpace());
