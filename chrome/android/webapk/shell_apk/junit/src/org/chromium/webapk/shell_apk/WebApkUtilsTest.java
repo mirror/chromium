@@ -114,6 +114,59 @@ public class WebApkUtilsTest {
 
     /**
      * This is a test for the WebAPK WITH a runtime host specified in its AndroidManifest.xml.
+     * Tests that we will return NULL if the runtime host is not installed, even if we have other
+     * browser that supports WebAPK.
+     */
+    @Test
+    public void testReturnsNullIfHostBrowserInManifestNotFoundAndAnotherBrowserSupportingWebApk() {
+        String expectedHostBrowser = BROWSER_INSTALLED_SUPPORTING_WEBAPKS;
+        mockInstallBrowser(ANOTHER_BROWSER_INSTALLED_SUPPORTING_WEBAPKS);
+        setHostBrowserInMetadata(expectedHostBrowser);
+        setHostBrowserInSharedPreferences(null);
+
+        String hostBrowser = WebApkUtils.getHostBrowserPackageName(mContext);
+        Assert.assertNull(hostBrowser);
+    }
+
+    /**
+     * This is a test for the WebAPK WITHOUT any runtime host specified in its AndroidManifest.xml.
+     * Tests that it will return another browser package name if:
+     * 1. there isn't any host browser stored in the SharedPreference, or the specified one has
+     *    been uninstalled.
+     * 2. the default browser does not support WebAPKs.
+     * 3. the browser we return is the only browser that can support WebAPKs.
+     * In this test, we only simulate the the first part of the condition 1.
+     */
+    @Test
+    public void testReturnsOtherBrowserIfDefaultBrowserNotSupportingWebApk() {
+        String defaultBrowser = BROWSER_INSTALLED_NOT_SUPPORTING_WEBAPKS;
+        mockInstallBrowsers(defaultBrowser);
+        uninstallBrowser(BROWSER_INSTALLED_SUPPORTING_WEBAPKS);
+        setHostBrowserInMetadata(null);
+        setHostBrowserInSharedPreferences(null);
+
+        String hostBrowser = WebApkUtils.getHostBrowserPackageName(mContext);
+        Assert.assertEquals(ANOTHER_BROWSER_INSTALLED_SUPPORTING_WEBAPKS, hostBrowser);
+    }
+
+    /**
+     * Tests that the package name of the host browser will be returned if it's the only browser
+     * that supports WebAPK.
+     */
+    @Test
+    public void testReturnsHostBrowserIfOnlyOneSupportingWekApk() {
+        mockInstallBrowser(BROWSER_INSTALLED_SUPPORTING_WEBAPKS);
+        mockInstallBrowser(BROWSER_INSTALLED_NOT_SUPPORTING_WEBAPKS);
+        Mockito.when(mPackageManager.resolveActivity(any(Intent.class), anyInt())).thenReturn(null);
+        setHostBrowserInMetadata(null);
+        setHostBrowserInSharedPreferences(null);
+
+        String hostBrowser = WebApkUtils.getHostBrowserPackageName(mContext);
+        Assert.assertEquals(BROWSER_INSTALLED_SUPPORTING_WEBAPKS, hostBrowser);
+    }
+
+    /**
+     * This is a test for the WebAPK WITH a runtime host specified in its AndroidManifest.xml.
      * Tests that null will be returned if:
      * 1) there isn't a host browser stored in the SharedPreference or it isn't installed.
      * And
@@ -231,6 +284,18 @@ public class WebApkUtilsTest {
 
         Mockito.when(mPackageManager.resolveActivity(any(Intent.class), anyInt()))
                 .thenReturn(defaultBrowserInfo);
+    }
+
+    private void mockInstallBrowser(String packageName) {
+        Intent intent = null;
+        try {
+            intent = Intent.parseUri("http://", Intent.URI_INTENT_SCHEME);
+        } catch (Exception e) {
+            Assert.fail();
+            return;
+        }
+
+        mPackageManager.addResolveInfoForIntent(intent, newResolveInfo(packageName));
     }
 
     private void setHostBrowserInSharedPreferences(String hostBrowserPackage) {
