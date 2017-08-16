@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121dd5bb_cc9d076e",
+        "filename": "tools/perf/page_sets/data/speedometer.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-16T14:38:11Z",
+      "side": 0,
+      "message": "You can also remove speedometer_000.wprgo.sha1",
+      "revId": "262c05e23b85a9a2cfd44a44250ea402080080b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
