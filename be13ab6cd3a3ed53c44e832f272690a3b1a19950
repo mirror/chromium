@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fffb85a_9bc8879c",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c51410_f9f8599c",
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9554e7_545eb9b2",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada97777_268cba73",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9554e7_545eb9b2",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 8
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e23a92f1_f4e774ac",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea6f9391_fff9d426",
+      "range": {
+        "startLine": 117,
+        "startChar": 43,
+        "endLine": 117,
+        "endChar": 44
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db85cabf_dd20e3a5",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.cc",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "ef054b0c_3cacb71d",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db85cabf_dd20e3a5",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dfd8e0d_273aec6c",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2017-08-15T23:16:23Z",
       "side": 1,
       "message": "It seems that GetFusedDataInternal() function can be private.\n\nditto for subclasses that implement it.",
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4aff39_27365202",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "not sure it is worthwhile, I can imagine a subclass of PlatformSensorFusionAlgorithm\u0027s subclass providing some post filtering, i.e.\nGetFusedDataInternal(...) {\n if (!Parent::GetFusedDataInternal(...))\n    return false;\n  // Do some filtering\n}\n\nwhat are the benefits for this method to be private?",
+      "parentUuid": "6dfd8e0d_273aec6c",
       "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "90023cee_19f83214",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e54848e7_c2c171c9",
+      "range": {
+        "startLine": 274,
+        "startChar": 16,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163bc035_afe57255",
         "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
         "patchSetId": 4
@@ -142,6 +274,24 @@
       "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88e5937_7dd56cdd",
+        "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T08:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163bc035_afe57255",
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
