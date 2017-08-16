@@ -328,6 +328,7 @@ class TemplateURLRef {
     LANGUAGE,
     SEARCH_TERMS,
     YANDEX_REFERRAL_ID,
+    MAIL_RU_REFERRAL_ID,
   };
 
   // Used to identify an element of the raw url that can be replaced.
