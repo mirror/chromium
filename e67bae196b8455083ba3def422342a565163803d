@@ -22,6 +22,29 @@
       "revId": "e67bae196b8455083ba3def422342a565163803d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34535bb_024a65be",
+        "filename": "ui/views/window/frame_buttons.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:12:17Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used in ui/views. Can it be moved? Also, please add a description, specially why it\u0027s needed vs just FrameButton. Lastly, prefer enum class and use kCamelCase for enums.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "e67bae196b8455083ba3def422342a565163803d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
