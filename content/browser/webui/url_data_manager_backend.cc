@@ -704,6 +704,7 @@ bool URLDataManagerBackend::IsValidNetworkErrorCode(int error_code) {
 std::vector<std::string> URLDataManagerBackend::GetWebUISchemes() {
   std::vector<std::string> schemes;
   schemes.push_back(kChromeUIScheme);
+  schemes.push_back(kChromeDevToolsScheme);
   GetContentClient()->browser()->GetAdditionalWebUISchemes(&schemes);
   return schemes;
 }
