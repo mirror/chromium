@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439c8c9d_3ee1f9b1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:24:17Z",
+      "side": 1,
+      "message": "Replace this with a helper method. Add DCHECK(!is_on_idle_workers_stack_); at the beginning of this helper method.",
+      "range": {
+        "startLine": 504,
+        "startChar": 6,
+        "endLine": 506,
+        "endChar": 59
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246bc258_285b9ee6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:24:17Z",
+      "side": 1,
+      "message": "Replace this with a helper method.",
+      "range": {
+        "startLine": 561,
+        "startChar": 2,
+        "endLine": 564,
+        "endChar": 36
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de9be56_a2356830",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:24:17Z",
+      "side": 1,
+      "message": "Not used.",
+      "range": {
+        "startLine": 572,
+        "startChar": 0,
+        "endLine": 591,
+        "endChar": 0
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0104810_7af20c90",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:24:17Z",
+      "side": 1,
+      "message": "I agree with robliao@ that this should be moved into UnsetIsOnIdleStack() (it\u0027s worth it to add the SchedulerWorker* argument).",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 50
+      },
+      "revId": "6330e0aed062d08df0cf2de6f68b1003ef2199df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
