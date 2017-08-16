@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7868167_47067e98",
+        "filename": "media/capture/video/linux/video_capture_device_factory_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-16T18:04:56Z",
+      "side": 1,
+      "message": "#include \"base/files/file_util.h\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "894ac86ed52b3999bfcb80b5af9ddc23e78cf5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
