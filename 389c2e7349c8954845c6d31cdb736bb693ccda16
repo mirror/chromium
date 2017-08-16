@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89a17072_6a6b9b80",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Manually running zucchini will reveal LOG(WARNING) message.\nNote that currently, this error will trigger zucchini to return with kStatusFatal anyway, until we implement ensemble matching.\nIf we do want to use a raw patch as fallback, we will need to figure out how to trigger non-fatal logging in gen_diffs script.",
+      "parentUuid": "b2b4300f_7b5ce578",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "374bb906_f081a90b",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T20:28:08Z",
       "side": 1,
       "message": "does GetReader return a unique_ptr? it seems *really* odd to me to return an object in a unique_ptr, and then std::move the object out of the smart ptr. am i missing something?",
+      "range": {
+        "startLine": 42,
+        "startChar": 55,
+        "endLine": 42,
+        "endChar": 64
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99b8b9d_945e5112",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "GetReader returns a unique_ptr\u003cReferenceReader\u003e.\nInsertReferences takes a ReferenceReader\u0026\u0026 as argument (because it consumes the reader). This is convenient in unittests to initialize from temporary TestReferenceReader.\nSo we end up with this weird expression. We are indeed calling std::move on the object held in a unique_ptr. However, no move constructor is involved in the expression.\nstd::move is used to \u0027indicate\u0027 that an object may be moved from, that is std::move is merely doing l-value to r-value reference conversion, and the object held in unique_ptr is not actually \u0027moved out\u0027; it will be correctly handled by unique_ptr\u0027s destructor.\nI can change signature of InsertReferences() to take a raw pointer if this is too weird, \nbut I find this alternative quite cumbersome (see image_index_unittest.cc). Let me know what you think!",
+      "parentUuid": "374bb906_f081a90b",
       "range": {
         "startLine": 42,
         "startChar": 55,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "8a450a11_bde3ccc2",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bc47122_d5ceebda",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afb5c88e_962dd6e2",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0225bd36_b3928a1d",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb5c88e_962dd6e2",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "306fe45d_c233ec53",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -93,6 +177,30 @@
       "writtenOn": "2017-08-16T18:35:30Z",
       "side": 1,
       "message": "More precisely,\n  dst_ref-\u003elocation + ref_width \u003c\u003d equiv.dst_offset",
+      "range": {
+        "startLine": 182,
+        "startChar": 13,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cc2ebd_fd6b01a7",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Both checks are equivalent if no straddle. I think current check make more sense though, because we want to make sure dst_ref is completely included in |equiv|.",
+      "parentUuid": "306fe45d_c233ec53",
       "range": {
         "startLine": 182,
         "startChar": 13,
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "ce547aac_7922baa5",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Adding the second check.\nThe first one is redundant if I keep \ndst_ref-\u003elocation \u003c equiv.dst_offset",
+      "parentUuid": "1dc4af5a_d2460dc2",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb2e4858_0ab8aba0",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -142,6 +268,30 @@
       "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea898b34_fee0a5d4",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb2e4858_0ab8aba0",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "648439f5_674d0813",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd688eb_a6f84d8b",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 36
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1380d508_a48aba6e",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -182,6 +356,24 @@
       "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0ea6fe_bf369ff1",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1380d508_a48aba6e",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "308d724b_058f398d",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c68d9d5_e2fb77b7",
+      "range": {
+        "startLine": 204,
+        "startChar": 17,
+        "endLine": 204,
+        "endChar": 27
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f085fb0_e1896542",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -222,6 +438,24 @@
       "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc0bb75_fc5e4dce",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f085fb0_e1896542",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "22132de6_941cee72",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249ec56d_8ead1e95",
+      "range": {
+        "startLine": 221,
+        "startChar": 40,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e6524f0_154ce654",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -268,6 +526,30 @@
       "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f407b749_fd72d695",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e6524f0_154ce654",
+      "range": {
+        "startLine": 256,
+        "startChar": 48,
+        "endLine": 256,
+        "endChar": 50
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "34ee7362_4a4392ee",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0938168e_75a19031",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed384b8_0c0ab67a",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 7
@@ -305,6 +611,30 @@
       "writtenOn": "2017-08-16T18:35:30Z",
       "side": 1,
       "message": "The reuse of |equivalences| and |old_sa| shows that this function is too long, and should be split.",
+      "range": {
+        "startLine": 276,
+        "startChar": 17,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa1f443_8ad8ebaf",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Extracting creating of EquivalenceMap (both steps) into CreateEquivalenceMap() and refactoring into a loop. Note that I\u0027m adding a few extra steps to reduce assumptions made by the caller, but the result remains identical.",
+      "parentUuid": "bed384b8_0c0ab67a",
       "range": {
         "startLine": 276,
         "startChar": 17,
@@ -340,6 +670,30 @@
     },
     {
       "key": {
+        "uuid": "c373f42c_bd518984",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6218f8af_f3819530",
+      "range": {
+        "startLine": 300,
+        "startChar": 46,
+        "endLine": 300,
+        "endChar": 54
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2d8259_38580ea9",
         "filename": "chrome/installer/zucchini/zucchini_gen.h",
         "patchSetId": 7
@@ -351,6 +705,30 @@
       "writtenOn": "2017-08-16T20:28:08Z",
       "side": 1,
       "message": "is |disasm| mutated by this call? could it be taken by constref?",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f1e4dd_2b3a0445",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T21:45:56Z",
+      "side": 1,
+      "message": "ReferenceGroup::ReaderFactory needs a mutable Disassembler, and some implementations rely on this (by initializing state lazily). This is not ideal, but I would rather have DisassemblerWin32 checked in before trying to refactor it.",
+      "parentUuid": "6f2d8259_38580ea9",
       "range": {
         "startLine": 25,
         "startChar": 56,
