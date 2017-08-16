@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b87a5af_704b0088",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T09:16:14Z",
+      "side": 1,
+      "message": "nit: Since, we don\u0027t use initialization value, can we use ternary operator?\n\nconst Color marker_coloer \u003d marker.IsTextColor() \n  ? inline_text_box_.GetLineLayoutItem()...\n  : SK_ColorTRANSPARENT;",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "905647e3_04e36445",
         "filename": "ui/base/ime/BUILD.gn",
         "patchSetId": 17
