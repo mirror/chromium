@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6ba6037_99f33384",
+        "filename": "chrome_elf/blacklist/blacklist.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:17:43Z",
+      "side": 1,
+      "message": "nit: omit \"blacklist::\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff097ee_da38fd0f",
+        "filename": "chrome_elf/blacklist/blacklist.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:17:43Z",
+      "side": 1,
+      "message": "uber nit:\n  g_generate_crashdump_func \u003d crashdump_function ? crashdump_function : \u0026NullCrashDumpFunction;",
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34943185_aee9f78f",
+        "filename": "chrome_elf/blacklist/blacklist.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:17:43Z",
+      "side": 1,
+      "message": "nit:\nusing GenerateCrashDumpFunction \u003d int (*)(EXCEPTION_POINTERS* exception_pointers);",
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6a6991_1b7b62da",
+        "filename": "chrome_elf/blacklist/blacklist.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:17:43Z",
+      "side": 1,
+      "message": "nit: omit comma",
+      "range": {
+        "startLine": 84,
+        "startChar": 13,
+        "endLine": 84,
+        "endChar": 14
+      },
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdd6a80_082c709e",
+        "filename": "components/crash/content/app/export_thunks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:17:43Z",
+      "side": 1,
+      "message": "do we still want to avoid exit-time destructors? if yes, how about:\n  static std::vector\u003ccrash_reporter::Report\u003e* const crash_reports \u003d\n      new std::vector\u003ccrash_reporter::Report\u003e();\nso that the vector is leaked?",
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
