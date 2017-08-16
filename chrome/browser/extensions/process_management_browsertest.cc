@@ -29,12 +29,15 @@
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_map.h"
+#include "extensions/common/manifest_handlers/web_accessible_resources_info.h"
 #include "extensions/common/switches.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 
 using content::NavigationController;
 using content::WebContents;
+
+namespace extensions {
 
 namespace {
 
@@ -65,7 +68,7 @@ class ChromeWebStoreProcessTest : public ExtensionBrowserTest {
     ASSERT_TRUE(embedded_test_server()->Start());
     gallery_url_ =
         embedded_test_server()->GetURL("chrome.webstore.test.com", "/");
-    command_line->AppendSwitchASCII(switches::kAppsGalleryURL,
+    command_line->AppendSwitchASCII(::switches::kAppsGalleryURL,
                                     gallery_url_.spec());
   }
 
@@ -448,3 +451,60 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
   EXPECT_EQ(new_site_instance->GetProcess(),
             web_contents->GetSiteInstance()->GetProcess());
 }
+
+IN_PROC_BROWSER_TEST_F(
+    ProcessManagementTest,
+    TestForkingBehaviorForUninstalledAndNonAccessibleExtensions) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  const Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("simple_with_icon"));
+  ASSERT_TRUE(extension);
+  ASSERT_FALSE(
+      WebAccessibleResourcesInfo::HasWebAccessibleResources(extension));
+
+  const GURL installed_extension = extension->url();
+  const GURL uninstalled_extension("chrome-extension://" +
+                                   std::string(32, 'a') + "/");
+  EXPECT_NE(installed_extension, uninstalled_extension);
+
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("example.com", "/empty.html"));
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  auto can_access_window = [this, web_contents](const GURL& url) {
+    bool can_access = false;
+    const char kOpenNewWindow[] = "window.newWin = window.open('%s');";
+    const char kGetAccess[] =
+        R"(
+          {
+            let canAccess = false;
+            try {
+              window.newWin.document;
+              canAccess = true;
+            } catch (e) {
+              canAccess = false;
+            }
+            window.newWin.close();
+            window.domAutomationController.send(canAccess);
+         }
+       )";
+    EXPECT_TRUE(content::ExecuteScript(
+        web_contents, base::StringPrintf(kOpenNewWindow, url.spec().c_str())));
+
+    // WaitForLoadStop() will return false on a 404, but that can happen if we
+    // navigate to a blocked or nonexistent extension page.
+    ignore_result(content::WaitForLoadStop(
+        browser()->tab_strip_model()->GetActiveWebContents()));
+
+    EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, kGetAccess,
+                                                     &can_access));
+    return can_access;
+  };
+
+  bool can_access_installed = can_access_window(installed_extension);
+  bool can_access_uninstalled = can_access_window(uninstalled_extension);
+  // Behavior for installed and uninstalled extensions should be equivalent.
+  EXPECT_EQ(can_access_installed, can_access_uninstalled);
+}
+
+}  // namespace extensions
