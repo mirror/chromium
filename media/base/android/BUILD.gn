@@ -61,10 +61,7 @@ if (is_android) {
       "routing_token_callback.h",
       "stream_texture_wrapper.h",
     ]
-    configs += [
-      "//media:media_config",
-      "//media:media_implementation",
-    ]
+    configs += [ "//media:subcomponent_config" ]
     deps = [
       ":media_jni_headers",
       "//media:media_features",
@@ -88,8 +85,7 @@ if (is_android) {
     ]
 
     deps = [
-      "//media",
-      "//media/base:test_support",
+      "//media:test_support",
       "//media/base/android:test_support",
       "//testing/gmock",
       "//testing/gtest",
@@ -99,7 +95,7 @@ if (is_android) {
     configs += [ "//media:media_config" ]
   }
 
-  source_set("test_support") {
+  static_library("test_support") {
     testonly = true
     sources = [
       "mock_android_overlay.cc",
@@ -170,5 +166,9 @@ if (is_android) {
       "java/src/org/chromium/media/MediaServerCrashListener.java",
       "java/src/org/chromium/media/MediaSwitches.java",
     ]
+  }
+} else {
+  source_set("test_support") {
+    testonly = true
   }
 }
