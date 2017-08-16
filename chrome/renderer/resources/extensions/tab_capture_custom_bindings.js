@@ -4,8 +4,18 @@
 
 // Custom binding for the Tab Capture API.
 
-var binding = require('binding').Binding.create('tabCapture');
-var lastError = require('lastError');
+var binding = apiBridge || require('binding').Binding.create('tabCapture');
+
+var runCallbackWithlastError;
+if (bindingUtil) {
+  runCallbackWithLastError = function(name, message, stack, callback, args) {
+    bindingUtil.runCallbackWithLastError(message, function() {
+      $Function.apply(callback, null, args);
+    });
+  };
+} else {
+  runCallbackWithlastError = require('lastError').run;
+}
 
 binding.registerCustomHook(function(bindingsAPI, extensionId) {
   var apiFunctions = bindingsAPI.apiFunctions;
@@ -42,14 +52,14 @@ binding.registerCustomHook(function(bindingsAPI, extensionId) {
             callback(media_stream);
           },
           function onError(error) {
-            lastError.run(
+            runCallbackWithLastError(
                 name,
                 getErrorMessage(error, "Failed to start MediaStream."),
                 request.stack,
                 function() { callback(null); });
           });
     } catch (error) {
-      lastError.run(name,
+      runCallbackWithLastError(name,
                     getErrorMessage(error, "Invalid argument(s)."),
                     request.stack,
                     function() { callback(null); });
@@ -60,4 +70,5 @@ binding.registerCustomHook(function(bindingsAPI, extensionId) {
   apiFunctions.setCustomCallback('captureOffscreenTab', proxyToGetUserMedia);
 });
 
-exports.$set('binding', binding.generate());
+if (!apiBridge)
+  exports.$set('binding', binding.generate());
