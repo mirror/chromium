@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7c520a_fa27bd5a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T15:38:48Z",
+      "side": 1,
+      "message": "To be super safe, I would add a call to AssertIsOnIdleStack() here.\n\nvoid ...::AssertIsOnIdleStack(SchedulerWorker* worker) {\n  DCHECK(is_on_idle_workers_stack_);\n  DCHECK(outer_-\u003eidle_workers_stack_.Contains(worker));\n}",
+      "revId": "c2fca9eae1c946a4b1bc44ab67d573d047710669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59970f0e_12c2abba",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T15:38:48Z",
+      "side": 1,
+      "message": "Remove empty line here. Add empty line before \"return nullptr;\".",
+      "revId": "c2fca9eae1c946a4b1bc44ab67d573d047710669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
