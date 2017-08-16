@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "f5e9a3af_ed8489ef",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T01:23:59Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd720b57_ebf926f3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T01:23:59Z",
+      "side": 1,
+      "message": "nit: URLs\napplies below as well.",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70e8ecfc_284d259c",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
         "patchSetId": 1
@@ -64,6 +104,52 @@
       "writtenOn": "2017-08-16T00:07:53Z",
       "side": 1,
       "message": "I\u0027d prefer if all this was a part of the class itself.",
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cc0d3d_20276f5f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T01:23:59Z",
+      "side": 1,
+      "message": "this definitely feels like part of the class.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7613a16_1117dd25",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T01:23:59Z",
+      "side": 1,
+      "message": "Apparently this is now OK and NOT discouraged... And I was about to ask when did we start coding in C...\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 8
+      },
       "revId": "cb84f595aff399d794b109795beb0ba34a735f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
