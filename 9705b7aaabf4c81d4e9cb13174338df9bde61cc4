@@ -22,6 +22,30 @@
       "revId": "9705b7aaabf4c81d4e9cb13174338df9bde61cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646b9e53_013ce97c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-16T15:27:37Z",
+      "side": 0,
+      "message": "base::Time::Now().ToInternalValue() is a deprecated function that is enforced by presubmit. Moving the implementation triggers the presubmit. I did not want to change the deprecated function in this CL. I should, however, file a bug to fix and move the implementation.",
+      "parentUuid": "b10a386d_780f9b56",
+      "range": {
+        "startLine": 4400,
+        "startChar": 12,
+        "endLine": 4400,
+        "endChar": 33
+      },
+      "revId": "9705b7aaabf4c81d4e9cb13174338df9bde61cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
