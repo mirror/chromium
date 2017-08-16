@@ -1,0 +1,290 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab3ebb1_3fb1db18",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "nit: int",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41e8132_528e7ac5",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "on second thought, do callers really need to be involved in the two-phase initialization? could Create not take care of this:\nstd::unique_ptr\u003cModuleWatcher\u003e ModuleWatcher::Create(...) {\n  std::unique_ptr\u003cModuleWatcher\u003e module_watcher;\n  // Create and return a new instance only if one doesn\u0027t already exist.\n  {\n    base::AutoLock lock(g_module_watcher_lock.Get());\n    if (!g_module_watcher_instance) {\n      // This thread acquired the right to create a ModuleWatcher, so do so.\n      g_module_watcher_instance \u003d new ModuleWatcher(std::move(callback));\n      module_watcher \u003d base::WrapUnique(g_module_watcher_instance);\n    }\n  }\n  // Initialize the new instance outside of the lock if one was created.\n  if (module_watcher)\n    module_watcher-\u003eInitialize();\n  return module_watcher;\n}",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9c5044_4a2d5bf7",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "?DCHECK(!initialized());?",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a005a3ab_c79c1db9",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "#include \u003ctuple\u003e",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 19
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e28116_0ac9181e",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "\"priority inversion\" is about running tasks of different priorities in the wrong order. is this not a classic deadlock due to lock ordering violation?",
+      "range": {
+        "startLine": 197,
+        "startChar": 23,
+        "endLine": 197,
+        "endChar": 41
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e9286b_b05c9132",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "may i humbly suggest:\n      switch (pending_event_iter-\u003eevent_type) {\n        case mojom::ModuleEventType::MODULE_LOADED:\n          // A load notification has been received for this module during\n          // enumeration. Drop the load event in favor of the new ALREADY_LOADED\n          // event.\n          callback_.Run(event);\n          break;\n        case mojom::ModuleEventType::MODULE_UNLOADED:\n          // An unload notification has been received for this module during\n          // enumeration. Pass along the ALREADY_LOADED event followed by the\n          // unload event.\n          callback_.Run(event);\n          callback_.Run(*pending_event_iter);\n          break;\n        case mojom::ModuleEventType::MODULE_ALREADY_LOADED:\n          // Already loaded events are never added to the collection.\n          NOTREACHED();\n          break;\n      }\n\nthis will cause a compile failure if a new type is ever added.",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c740f98a_3c3bb622",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "\"event\"?",
+      "range": {
+        "startLine": 233,
+        "startChar": 29,
+        "endLine": 233,
+        "endChar": 35
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d856077_321ec60a",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "\"to that\" -\u003e \"with the\"",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 49
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7a10cc_b6a1c124",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "wdyt of:\n  // Emit ALREADY_LOADED events for all notifications that were queued during\n  // snapshot enumeration. In case of unload notifications, follow the\n  // ALREADY_LOADED event with the queued UNLOADED event.\n  for (...) {\n    run the callback with already_loaded_module_event\n    if (the pending event is an unload event)\n      run the callback with the unload event\n  }",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2723f9_694eeb58",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "omit",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bd7842_94a4ff67",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "you can avoid the second lookup by hinting the insert with the position:\n  auto it \u003d module_watcher-\u003epending_events_-\u003efind(module_event);\n  if (it !\u003d module_watcher-\u003epending_events_-\u003eend()) {\n    auto hint \u003d module_watcher-\u003epending_events_-\u003eerase(it);\n    module_watcher-\u003epending_events_-\u003einsert(hint, module_event);\n  } else {\n    module_watcher-\u003epending_events_-\u003einsert(module_event);\n  }",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5248b3f6_6c94427e",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "update comment. i think it also makes sense to move the callback from this fn down to Initialize.",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 61,
+        "endChar": 66
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3737e166_388506ce",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "if the callback is moved to Initialize(), then testing this bool can be replaced with the bool operator of |callback_|. if you don\u0027t like that, then you can replace this bool with a private:\n\n  bool initialized() const { return pending_events_; }",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 19
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c265d30b_b1ba4664",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T08:23:21Z",
+      "side": 1,
+      "message": "to avoid someone like me suggesting base::flat_set (https://chromium.googlesource.com/chromium/src/+/dd180779b7b4bb1f5dbf35b1ad7305d8affdbf4a/base/containers/README.md), please document in the comment why std::set is the right choice.",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
