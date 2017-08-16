@@ -311,10 +311,15 @@ struct PendingPaymentResponse {
   DCHECK(_pendingPaymentRequest);
   _pendingPaymentRequest = nullptr;
   [self resetIOSPaymentInstrumentLauncherDelegate];
-  [self dismissUI];
-  [_paymentRequestJsManager rejectRequestPromiseWithErrorName:kAbortErrorName
-                                                 errorMessage:errorMessage
-                                            completionHandler:callback];
+
+  __weak PaymentRequestManager* weakSelf = self;
+  ProceduralBlock dismissUICallback = ^() {
+    [weakSelf.paymentRequestJsManager
+        rejectRequestPromiseWithErrorName:kAbortErrorName
+                             errorMessage:errorMessage
+                        completionHandler:callback];
+  };
+  [self dismissUIWithCallback:dismissUICallback];
 }
 
 - (void)resetIOSPaymentInstrumentLauncherDelegate {
@@ -662,9 +667,12 @@ struct PendingPaymentResponse {
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlock callback = ^{
     weakSelf.pendingPaymentRequest = nullptr;
-    [weakSelf dismissUI];
-    [weakSelf.paymentRequestJsManager
-        resolveResponsePromiseWithCompletionHandler:nil];
+    ProceduralBlock dismissUICallback = ^() {
+      [weakSelf.paymentRequestJsManager
+          resolveResponsePromiseWithCompletionHandler:nil];
+    };
+    [weakSelf dismissUIWithCallback:dismissUICallback];
+
   };
 
   // Display UI indicating failure if the value of |result| is "fail".
@@ -731,8 +739,8 @@ struct PendingPaymentResponse {
                              repeats:NO];
 }
 
-- (void)dismissUI {
-  [_paymentRequestCoordinator stop];
+- (void)dismissUIWithCallback:(ProceduralBlock)callback {
+  [_paymentRequestCoordinator stopWithCallback:callback];
   _paymentRequestCoordinator = nil;
 }
 
@@ -914,7 +922,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     [self resetIOSPaymentInstrumentLauncherDelegate];
   }
 
-  [self dismissUI];
+  [self dismissUIWithCallback:nil];
   [self enableActiveWebState];
 
   // The lifetime of a PaymentRequest is tied to the WebState it is associated
