@@ -29,6 +29,7 @@
  */
 
 #include "bindings/core/v8/V8Initializer.h"
+#include "build/build_config.h"
 #include "core/animation/AnimationClock.h"
 #include "modules/ModulesInitializer.h"
 #include "platform/bindings/Microtask.h"
@@ -67,6 +68,26 @@ static ModulesInitializer& GetModulesInitializer() {
 
 void Initialize(Platform* platform) {
   Platform::Initialize(platform);
+
+#if !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) && defined(OS_WIN)
+  // Reserve address space on 32 bit Windows, to make it likelier that large
+  // array buffer allocations succeed.
+  BOOL isWow64 = -1;
+  if (!IsWow64Process(GetCurrentProcess(), &isWow64))
+    isWow64 = FALSE;
+  if (!isWow64) {
+    // Try to reserve as much address space as we reasonably can.
+    const size_t kWasmAlignment = 64 << 10;         // 64K (Wasm page size)
+    const size_t kWasmMaxSize = 256 * 1024 * 1024;  // 256 MB
+    const size_t kWasmMinSize = 32 * 1024 * 1024;   // 32 MB
+    for (size_t size = kWasmMaxSize; size >= kWasmMinSize; size /= 2) {
+      if (base::ReserveAddressSpace(size, kWasmAlignment)) {
+        break;
+      }
+    }
+  }
+#endif  // !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) &&
+        // defined(OS_WIN)
 
   V8Initializer::InitializeMainThread();
 
