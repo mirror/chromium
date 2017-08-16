@@ -28,6 +28,7 @@ class TaskQueueImpl;
 }
 
 class TimeDomain;
+class WebFrameSchedulerImpl;
 
 class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
  public:
@@ -51,6 +52,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // Unregisters the task queue after which no tasks posted to it will run and
   // the TaskQueueManager's reference to it will be released soon.
   virtual void UnregisterTaskQueue();
+
+  virtual WebFrameSchedulerImpl* GetFrame() const;
+  virtual void SetFrame(WebFrameSchedulerImpl* frame);
 
   enum QueuePriority {
     // Queues with control priority will run before any other queue, and will
