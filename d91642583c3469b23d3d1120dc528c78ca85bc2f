@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81a6569c_5b5d296f",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/file_manager_private_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-16T03:52:50Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m using base::ScopedTempDir exactly?",
+      "parentUuid": "7c38d99a_52408612",
+      "range": {
+        "startLine": 451,
+        "startChar": 23,
+        "endLine": 451,
+        "endChar": 42
+      },
+      "revId": "d91642583c3469b23d3d1120dc528c78ca85bc2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99a096d5_3fcda69e",
         "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-16T03:38:25Z",
       "side": 1,
       "message": "I\u0027m worried we may clog the IO message queue with a lot of tasks. During that 10 seconds, are you able to use Files app? Could you try this scenario?\n\n1. Open Recents.\n2. Go back to Downloads before recents complete.\n3. Open some file.",
+      "revId": "d91642583c3469b23d3d1120dc528c78ca85bc2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be48f6b_6cd29508",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-16T03:52:50Z",
+      "side": 1,
+      "message": "It took several seconds to open a different directory, though it finished before getRecentFiles() completed.",
+      "parentUuid": "99a096d5_3fcda69e",
       "revId": "d91642583c3469b23d3d1120dc528c78ca85bc2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
