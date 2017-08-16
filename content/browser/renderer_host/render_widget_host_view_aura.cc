@@ -562,9 +562,7 @@ void RenderWidgetHostViewAura::Hide() {
   window_->Hide();
 
   if (!host_->is_hidden()) {
-    host_->WasHidden();
-    if (delegated_frame_host_)
-      delegated_frame_host_->WasHidden();
+    WasOccluded();
 
 #if defined(OS_WIN)
     aura::WindowTreeHost* host = window_->GetHost();
@@ -713,6 +711,24 @@ bool RenderWidgetHostViewAura::IsSurfaceAvailableForCopy() const {
 
 bool RenderWidgetHostViewAura::IsShowing() {
   return window_->IsVisible();
+}
+
+void RenderWidgetHostViewAura::WasUnOccluded() {
+  if (!host_->is_hidden())
+    return;
+
+  host_->WasShown(ui::LatencyInfo());
+  if (delegated_frame_host_)
+    delegated_frame_host_->WasShown(ui::LatencyInfo());
+}
+
+void RenderWidgetHostViewAura::WasOccluded() {
+  if (host_->is_hidden())
+    return;
+
+  host_->WasHidden();
+  if (delegated_frame_host_)
+    delegated_frame_host_->WasHidden();
 }
 
 gfx::Rect RenderWidgetHostViewAura::GetViewBounds() const {
