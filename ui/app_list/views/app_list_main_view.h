@@ -82,7 +82,13 @@ class APP_LIST_EXPORT AppListMainView : public views::View,
   // changes, necessitating a cancel of the drag operation.
   void CancelDragInActiveFolder();
 
+  // Update the bottom fading out zone based on the y position of app list,
+  // the offset will make it look like a fixed position in screen.
+  void UpdateBottomFadeout(int app_list_y_position_in_screen);
+
  private:
+  class FadeoutLayerDelegate;
+
   // Adds the ContentsView.
   void AddContentsViews();
 
@@ -104,6 +110,10 @@ class APP_LIST_EXPORT AppListMainView : public views::View,
   SearchBoxView* search_box_view_;
   ContentsView* contents_view_;  // Owned by views hierarchy.
   AppListView* const app_list_view_;  // Owned by views hierarchy.
+
+  std::unique_ptr<FadeoutLayerDelegate> fadeout_layer_delegate_;
+
+  const bool is_fullscreen_app_list_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListMainView);
 };
