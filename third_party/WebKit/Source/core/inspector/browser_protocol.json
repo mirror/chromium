@@ -1427,7 +1427,7 @@
                     { "name": "name", "type": "string", "description": "Cookie name." },
                     { "name": "value", "type": "string", "description": "Cookie value." },
                     { "name": "url", "type": "string", "optional": true, "description": "The request-URI to associate with the setting of the cookie. This value can affect the default domain and path values of the created cookie." },
-                    { "name": "domain", "type": "string", "optional": true, "description": "Cookie domain." },
+                    { "name": "domain", "type": "string", "optional": true, "description": "Cookie domain, will prepend '.' before domain if not specified" },
                     { "name": "path", "type": "string", "optional": true, "description": "Cookie path." },
                     { "name": "secure", "type": "boolean", "optional": true, "description": "True if cookie is secure." },
                     { "name": "httpOnly", "type": "boolean", "optional": true, "description": "True if cookie is http-only." },
@@ -1556,12 +1556,14 @@
                 "experimental": true
             },
             {
-                "name": "deleteCookie",
+                "name": "deleteCookies",
                 "parameters": [
-                    { "name": "cookieName", "type": "string", "description": "Name of the cookie to remove." },
-                    { "name": "url", "type": "string", "description": "URL to match cooke domain and path." }
+                    { "name": "name", "type": "string", "description": "Name of the cookies to remove." },
+                    { "name": "url", "type": "string", "optional": true, "description": "If specified, deletes all the cookies with the given name where domain and path match provided URL. Will prepend '.' before domain if not specified." },
+                    { "name": "domain", "type": "string", "optional": true, "description": "If specified, deletes only cookies with the exact domain." },
+                    { "name": "path", "type": "string", "optional": true, "description": "If specified, deletes only cookies with the exact path." }
                 ],
-                "description": "Deletes browser cookie with given name, domain and path.",
+                "description": "Deletes browser cookies with matching name and url or domain/path pair.",
                 "experimental": true
             },
             {
@@ -1570,7 +1572,7 @@
                     { "name": "name", "type": "string", "description": "Cookie name." },
                     { "name": "value", "type": "string", "description": "Cookie value." },
                     { "name": "url", "type": "string", "optional": true, "description": "The request-URI to associate with the setting of the cookie. This value can affect the default domain and path values of the created cookie." },
-                    { "name": "domain", "type": "string", "optional": true, "description": "Cookie domain." },
+                    { "name": "domain", "type": "string", "optional": true, "description": "Cookie domain, will prepend '.' before domain if not specified." },
                     { "name": "path", "type": "string", "optional": true, "description": "Cookie path." },
                     { "name": "secure", "type": "boolean", "optional": true, "description": "True if cookie is secure." },
                     { "name": "httpOnly", "type": "boolean", "optional": true, "description": "True if cookie is http-only." },
