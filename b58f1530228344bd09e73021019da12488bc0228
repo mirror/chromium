@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44006740_4bdd6985",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-16T22:02:06Z",
+      "side": 1,
+      "message": "let\u0027s do the same thing we do in Styles bindings (a composite content provider for UISourceCodes)",
+      "revId": "b58f1530228344bd09e73021019da12488bc0228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6edc5a_493d6943",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/SourceMapManager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-16T22:02:06Z",
+      "side": 1,
+      "message": ".then(sourceMapLoaded)",
+      "revId": "b58f1530228344bd09e73021019da12488bc0228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

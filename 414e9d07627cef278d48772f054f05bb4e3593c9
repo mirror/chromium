@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dde8536_6d1f08b5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-16T22:02:06Z",
+      "side": 0,
+      "message": "why is this removed?",
+      "revId": "414e9d07627cef278d48772f054f05bb4e3593c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
