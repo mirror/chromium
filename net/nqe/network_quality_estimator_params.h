@@ -155,6 +155,18 @@ class NET_EXPORT NetworkQualityEstimatorParams {
     return upper_bound_http_rtt_transport_rtt_multiplier_;
   }
 
+  base::TimeDelta increase_in_transport_rtt_logging_interval() const {
+    return increase_in_transport_rtt_logging_interval_;
+  }
+
+  base::TimeDelta recent_time_threshold() const {
+    return recent_time_threshold_;
+  }
+
+  base::TimeDelta historical_time_threshold() const {
+    return historical_time_threshold_;
+  }
+
  private:
   // Map containing all field trial parameters related to
   // NetworkQualityEstimator field trial.
@@ -169,6 +181,9 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   const base::TimeDelta min_socket_watcher_notification_interval_;
   const double lower_bound_http_rtt_transport_rtt_multiplier_;
   const double upper_bound_http_rtt_transport_rtt_multiplier_;
+  const base::TimeDelta increase_in_transport_rtt_logging_interval_;
+  const base::TimeDelta recent_time_threshold_;
+  const base::TimeDelta historical_time_threshold_;
 
   EffectiveConnectionTypeAlgorithm effective_connection_type_algorithm_;
 
