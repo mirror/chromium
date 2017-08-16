@@ -50,6 +50,24 @@
       "revId": "617950d42afe0474e61963788d58869807249071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654f579f_e35f9247",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T16:15:24Z",
+      "side": 1,
+      "message": "FWIW, I also found this subtle.",
+      "parentUuid": "bf697b8a_3d5010e0",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
