@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73cecdc4_d2d2af5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T21:41:25Z",
+      "side": 1,
+      "message": "As I mentioned previously \"also\" makes it sound like this is an additional change piggy-backing on the main changes in the CL.  I\u0027d expect to see something like:\n\n\"\"\"\nFix content/renderer sandbox setup to compile under Fuchsia.\n\n- Disable portions of the sandbox setup logic.\n- Introduce a RendererMainPlatformDelegate stub for Fuchsia,\n  to which the sandbox implementation will be added.\n\"\"\"",
+      "revId": "d57fa34a775b097e8d3f7253396f1c78e7a94026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
