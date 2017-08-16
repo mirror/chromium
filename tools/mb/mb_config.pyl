@@ -433,8 +433,11 @@
       'Android Builder (dbg)': 'android_debug_static_bot',
       'Android Builder ARM64 (dbg)': 'android_debug_static_bot_arm64',
       'Linux Builder': 'release_bot_chrome_with_codecs',
+      'Linux Builder (dbg)': 'debug_trybot',
       'Mac Builder': 'chrome_with_codecs_blink_logging_release_trybot',
+      'Mac Builder (dbg)': 'debug_trybot',
       'Win Builder': 'chrome_with_codecs_blink_logging_release_trybot_x86',
+      'Win Builder (dbg)': 'debug_trybot_x86_minimal_symbols',
     },
 
     'chromium.win': {
