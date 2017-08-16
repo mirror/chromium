@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db84eb6c_df8f66ff",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-16T22:21:39Z",
+      "side": 1,
+      "message": "You\u0027re right. Removed these two lines.",
+      "parentUuid": "8e1c4f7b_9912d640",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26e616a2_f7d76876",
         "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b035d040_b39e3348",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-16T22:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e616a2_f7d76876",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ac7772f6_ea7b96bf",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-16T22:21:39Z",
+      "side": 1,
+      "message": "Agreed. It\u0027s better to be consisted.",
+      "parentUuid": "a15935ee_4b6a5869",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c96d74_08c942cd",
         "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632c7445_bba7be19",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-16T22:21:39Z",
+      "side": 1,
+      "message": "ACK. \ntwo-line and three-line look a little off with the icon.",
+      "parentUuid": "54c96d74_08c942cd",
+      "revId": "b0e010f1555670c78e28a97b6040abde33c52808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
