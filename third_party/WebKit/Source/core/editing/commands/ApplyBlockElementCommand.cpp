@@ -55,7 +55,7 @@ ApplyBlockElementCommand::ApplyBlockElementCommand(
     : CompositeEditCommand(document), tag_name_(tag_name) {}
 
 void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
-  if (!EndingVisibleSelection().RootEditableElement())
+  if (!RootEditableElementOf(EndingSelection().Start()))
     return;
 
   // ApplyBlockElementCommands are only created directly by editor commands'
