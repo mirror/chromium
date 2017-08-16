@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9daebffc_4e4d2e96",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadManagerServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-16T21:42:21Z",
+      "side": 1,
+      "message": "nit: remove this?",
+      "revId": "2d600ae010421ea451ed3136c9840613b7449b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3a1dcb_697ed49b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadManagerServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-16T21:42:21Z",
+      "side": 1,
+      "message": "nit: remove this",
+      "revId": "2d600ae010421ea451ed3136c9840613b7449b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
