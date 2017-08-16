@@ -50,7 +50,8 @@ class CORE_EXPORT MouseEventManager final
                                          const WebMouseEvent&,
                                          const String& canvas_region_id,
                                          EventTarget* related_target,
-                                         bool check_for_listener = false);
+                                         bool check_for_listener = false,
+                                         unsigned event_data = 0);
 
   WebInputEventResult SetMousePositionAndDispatchMouseEvent(
       Node* target_node,
