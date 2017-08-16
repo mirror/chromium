@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/debug/alias.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/profiler/scoped_tracker.h"
@@ -84,7 +83,7 @@ void FileStream::Context::Orphan() {
 void FileStream::Context::Open(const base::FilePath& path,
                                int open_flags,
                                const CompletionCallback& callback) {
-  CheckNoAsyncInProgress();
+  DCHECK(!async_in_progress_);
 
   bool posted = base::PostTaskAndReplyWithResult(
       task_runner_.get(),
@@ -94,12 +93,12 @@ void FileStream::Context::Open(const base::FilePath& path,
       base::Bind(&Context::OnOpenCompleted, base::Unretained(this), callback));
   DCHECK(posted);
 
-  last_operation_ = OPEN;
   async_in_progress_ = true;
 }
 
 void FileStream::Context::Close(const CompletionCallback& callback) {
-  CheckNoAsyncInProgress();
+  DCHECK(!async_in_progress_);
+
   bool posted = base::PostTaskAndReplyWithResult(
       task_runner_.get(),
       FROM_HERE,
@@ -109,13 +108,12 @@ void FileStream::Context::Close(const CompletionCallback& callback) {
                  IntToInt64(callback)));
   DCHECK(posted);
 
-  last_operation_ = CLOSE;
   async_in_progress_ = true;
 }
 
 void FileStream::Context::Seek(int64_t offset,
                                const Int64CompletionCallback& callback) {
-  CheckNoAsyncInProgress();
+  DCHECK(!async_in_progress_);
 
   bool posted = base::PostTaskAndReplyWithResult(
       task_runner_.get(), FROM_HERE,
@@ -123,12 +121,11 @@ void FileStream::Context::Seek(int64_t offset,
       base::Bind(&Context::OnAsyncCompleted, base::Unretained(this), callback));
   DCHECK(posted);
 
-  last_operation_ = SEEK;
   async_in_progress_ = true;
 }
 
 void FileStream::Context::Flush(const CompletionCallback& callback) {
-  CheckNoAsyncInProgress();
+  DCHECK(!async_in_progress_);
 
   bool posted = base::PostTaskAndReplyWithResult(
       task_runner_.get(),
@@ -139,22 +136,11 @@ void FileStream::Context::Flush(const CompletionCallback& callback) {
                  IntToInt64(callback)));
   DCHECK(posted);
 
-  last_operation_ = FLUSH;
   async_in_progress_ = true;
 }
 
 bool FileStream::Context::IsOpen() const {
   return file_.IsValid();
-}
-
-void FileStream::Context::CheckNoAsyncInProgress() const {
-  if (!async_in_progress_)
-    return;
-  LastOperation state = last_operation_;
-  base::debug::Alias(&state);
-  // TODO(xunjieli): Once https://crbug.com/487732 is fixed, use
-  // DCHECK(!async_in_progress_) directly at call places.
-  CHECK(!async_in_progress_);
 }
 
 FileStream::Context::OpenResult FileStream::Context::OpenFileImpl(
@@ -212,10 +198,7 @@ void FileStream::Context::OnOpenCompleted(const CompletionCallback& callback,
 }
 
 void FileStream::Context::CloseAndDelete() {
-  // TODO(ananta)
-  // Replace this CHECK with a DCHECK once we figure out the root cause of
-  // http://crbug.com/455066
-  CheckNoAsyncInProgress();
+  DCHECK(!async_in_progress_);
 
   if (file_.IsValid()) {
     bool posted = task_runner_.get()->PostTask(
@@ -243,7 +226,6 @@ void FileStream::Context::OnAsyncCompleted(
   // should be reset before Close() because it shouldn't run if any async
   // operation is in progress.
   async_in_progress_ = false;
-  last_operation_ = NONE;
   if (orphaned_)
     CloseAndDelete();
   else
