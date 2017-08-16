@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a4b627_a2358f87",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-16T01:40:03Z",
+      "side": 1,
+      "message": "I think you need to get a list of all Operation names that currently have ongoing requests and not update their state... I have a CL with a method for that on PrefetchNetworkRequestFactory.",
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded5d08d_31f68cf5",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-16T01:40:03Z",
+      "side": 1,
+      "message": "Why not just run both UPDATE statements in a single UpdateAffectedRowsSync function, so you don\u0027t need 2 Execute calls?\n\nAlso, there should be sql::TRansaction in it.",
+      "revId": "4f88a22f75c7addf94f15f083c27a05a4a1bc197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
