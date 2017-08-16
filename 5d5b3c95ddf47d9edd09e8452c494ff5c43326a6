@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d49239c_60f01901",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:28:27Z",
+      "side": 1,
+      "message": "I can try to split up the patch if that makes review easier. For example, I can probably split up the fixes for spelling markers and the fixes for composition markers.\n\nWould it be better to land all the tests first (with incorrect baselines since the current behavior is broken) to make it easy to see what\u0027s changed with each CL?",
+      "parentUuid": "c3efc814_7907f33d",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebeb2ef6_f99cd699",
         "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T00:13:43Z",
       "side": 1,
       "message": "Do you know how Firefox or Edge handle these cases? Does this patch improve our compatibility with them?",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f16f9f8_d28163c2",
+        "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:28:27Z",
+      "side": 1,
+      "message": "I didn\u0027t really test composition markers in other browsers, but for both composition and spelling markers, the existing behavior in Chrome is clearly incorrect (we paint the underline and highlight on different parts of the text). I did verify that bug exhibited by test case (where if you click on the word, the spelling underline appears under the ellipsis):\n\ndata:text/html, \u003cdiv contenteditable style\u003d\"width:40px; font: 12px; overflow:hidden; text-overflow:ellipsis;direction:rtl; white-space:nowrap\"\u003echorme\u003c/div\u003e\n\ndoesn\u0027t occur in either Firefox or desktop Safari.\n\nThe only thing I know of that might be different in other browsers is that in Firefox, text match markers (when you do \"find in page\") don\u0027t paint over the truncation ellipsis. Safari matches Chrome\u0027s behavior here. I\u0027m not changing this at all in this CL though.",
+      "parentUuid": "ebeb2ef6_f99cd699",
       "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a4e0cbe9_34f5f8f1",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:28:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bda77d43_e952b409",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e49aaf6_316287a3",
         "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T00:13:43Z",
       "side": 1,
       "message": "Did you mean to change this to std::min\u003cint\u003e?",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9852a5d7_a513dc6a",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:28:27Z",
+      "side": 1,
+      "message": "Oops, this is probably not necessary.",
+      "parentUuid": "3e49aaf6_316287a3",
       "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab01414f_bc15ba09",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:28:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2cb43e3e_5d6cb1b2",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d732feb8_28390797",
         "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-16T00:13:43Z",
       "side": 1,
       "message": "This is my first time seeing std::tie. Pretty cool!\n\nOptional nit: I wonder if this would be cleaner to implement with a simple struct though, since you can give the return values real names instead of the nameless std::pair.\nE.g.,\nstruct MarkerOffsets {\n  unsigned start;\n  unsigned end;\n}\nauto offsets \u003d MarkerPaintStartAndEnd(styleable_marker);",
+      "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2afefe0_62de372c",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T00:28:27Z",
+      "side": 1,
+      "message": "Ok, we can do that.",
+      "parentUuid": "d732feb8_28390797",
       "revId": "5d5b3c95ddf47d9edd09e8452c494ff5c43326a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
