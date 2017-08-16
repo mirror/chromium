@@ -251,7 +251,7 @@ Canvas2DLayerBridge::~Canvas2DLayerBridge() {
 
 void Canvas2DLayerBridge::Init() {
   Clear();
-  if (CheckSurfaceValid())
+  if (acceleration_mode_ != kDisableAcceleration && CheckSurfaceValid())
     FlushInternal();
 }
 
@@ -822,6 +822,10 @@ bool Canvas2DLayerBridge::WritePixels(const SkImageInfo& orig_info,
                                       int y) {
   if (!GetOrCreateSurface())
     return false;
+  if (acceleration_mode_ == kDisableAcceleration) {
+    return surface_->getCanvas()->writePixels(orig_info, pixels, row_bytes, x,
+                                              y);
+  }
   if (x <= 0 && y <= 0 && x + orig_info.width() >= size_.Width() &&
       y + orig_info.height() >= size_.Height()) {
     SkipQueuedDrawCommands();
@@ -1160,6 +1164,8 @@ RefPtr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
     return nullptr;
   if (!GetOrCreateSurface(hint))
     return nullptr;
+  if (acceleration_mode_ == kDisableAcceleration)
+    return StaticBitmapImage::Create(surface_->makeImageSnapshot());
   FlushInternal();
   // A readback operation may alter the texture parameters, which may affect
   // the compositor's behavior. Therefore, we must trigger copy-on-write
