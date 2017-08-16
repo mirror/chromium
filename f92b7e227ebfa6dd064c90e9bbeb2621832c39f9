@@ -16,6 +16,24 @@
       "revId": "f92b7e227ebfa6dd064c90e9bbeb2621832c39f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf89f25_4a699046",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-16T05:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a52c0ed_0dd6d576",
+      "revId": "f92b7e227ebfa6dd064c90e9bbeb2621832c39f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
