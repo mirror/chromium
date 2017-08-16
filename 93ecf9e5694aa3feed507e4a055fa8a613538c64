@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3b44b7b_9d8a7ac6",
+        "filename": "chrome/browser/chromeos/drive/fileapi/async_file_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:31:01Z",
+      "side": 0,
+      "message": "nice!",
+      "revId": "93ecf9e5694aa3feed507e4a055fa8a613538c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f381e0_ac73b114",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:31:01Z",
+      "side": 1,
+      "message": "I think this can be unified to L30?",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c190ae15_89321523",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:31:01Z",
+      "side": 1,
+      "message": "BTW, do you hit the actual use case of Repeating?\nAlthough when we worked on google_apis there is no OnceCallback so we didn\u0027t care much,\nIIRC, most use cases are suitable for OnceCallback?",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d8f4b2_414dc671",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:31:01Z",
+      "side": 1,
+      "message": "Looks weird?\nRun is now designed to call runner with callback only once?",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e33685f_b88d0e5b",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:31:01Z",
+      "side": 1,
+      "message": "Just curious: why don\u0027t you do this in advance, so that you can just remove these code as you TODO\u0027ed?",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
