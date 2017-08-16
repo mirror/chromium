@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "content/browser/loader/navigation_url_loader.h"
+#include "content/public/browser/navigation_throttle.h"
 
 namespace net {
 struct RedirectInfo;
@@ -62,6 +63,13 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
 
   // Notifies the delegate the request failed to return a response.
   void NotifyRequestFailed(bool in_cache, int net_error);
+
+  // Notifies the delegate the request failed to return a response due to a
+  // certificate error.
+  void NotifyRequestFailedWithCertificateError(
+      bool in_cache,
+      int net_error,
+      struct NavigationThrottle::CertificateErrorInfo certificate_error_info);
 
   // Notifies the delegate the begin navigation request was handled and a
   // potential first network request is about to be made.
