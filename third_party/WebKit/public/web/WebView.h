@@ -418,9 +418,6 @@ class WebView : protected WebWidget {
   virtual void TransferActiveWheelFlingAnimation(
       const WebActiveWheelFlingParameters&) = 0;
 
-  // Cancels an active fling, returning true if a fling was active.
-  virtual bool EndActiveFlingAnimation() = 0;
-
   // Returns true if there's an active fling animation.
   virtual bool IsFlinging() const = 0;
 
