@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "304a72c0_e87d4e1e",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/device_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "optional in this CL: DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);\n\nPlease see the reason in base/threading/thread_checker.h.\nYou may want to do this with other DCHECKs in another CL at once.",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9eb948_542b7672",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/device_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "How about using ?: for consistency with L141?",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260e9843_77535489",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "(off topic): Probably better to replace by base::Optional\u003cVolume\u003e.",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9f3bbc_64cdb8a2",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "style: disk_map_iter. (Please use snake_case to follow the style guide.)",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f902aa64_8e3a65a0",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "Could you comment what\u0027s the key and what\u0027s the value?",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32a8e7a_27b3d65a",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "default ctor won\u0027t initialize POD. Do you really need this?",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87cd8dc_e56d08f9",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T16:14:46Z",
+      "side": 1,
+      "message": "it: this is not an iterator.",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
