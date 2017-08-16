@@ -1,0 +1,710 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a249c2_8ca56050",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "DCHECK(!GetCurrentWorkerPool());",
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b10827_1138e10d",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "in parallel.\n\nExecutionMode is an enum that we don\u0027t have anymore.",
+      "range": {
+        "startLine": 32,
+        "startChar": 33,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f88d80_c065fd9f",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "MakeRefCounted\u003cSequence\u003e()\n\nMakeRefCounted didn\u0027t exist when I wrote this code. Since you\u0027re changing the code, you should also migrate to new APIs.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 40
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f2f941_0d24e244",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "in sequence.\n\nExecutionMode is an enum that we don\u0027t have anymore.",
+      "range": {
+        "startLine": 67,
+        "startChar": 33,
+        "endLine": 67,
+        "endChar": 66
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378f283e_23f19db9",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "MakeUnique\u003cTask\u003e\n\nMakeUnique didn\u0027t exist when I wrote this code. Since you\u0027re changing the code, you should also migrate to new APIs.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 16
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b593f969_48d4d422",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "MakeRefCounted\u003cSequence\u003e()\n\nMakeRefCounted didn\u0027t exist when I wrote this code. Since you\u0027re changing the code, you should also migrate to new APIs.",
+      "range": {
+        "startLine": 106,
+        "startChar": 44,
+        "endLine": 106,
+        "endChar": 56
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7435714_31236610",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "MakeRefCounted",
+      "range": {
+        "startLine": 116,
+        "startChar": 9,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b320eeb_e2420910",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "MakeRefCounted",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 60
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bb16ed_865a4b12",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "I don\u0027t think that BASE_EXPORT is needed for forward declarations.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bece2d_1bcb1107",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "protected instead of public?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2bb1b0_ff79be87",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "I think this could be a function in the anonymous namespace instead of a static method. See my comment at https://chromium-review.googlesource.com/c/615667/1/base/task_scheduler/scheduler_worker_pool_impl.cc#285",
+      "range": {
+        "startLine": 56,
+        "startChar": 36,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7fb93c_c153b551",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cb6e84_98addf9e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e86d5ab_b028cd3c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a24091c_a7d841da",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Move this DCHECK inside SetCurrentWorkerPool(). That way, you don\u0027t have to expose GetCurrentWorkerPool().",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 55
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1a95f5_d3079908",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "If you want this to compile on non-Windows platforms, you\u0027ll need some #if defined(OS_WIN):\n\n#include \"build/build_config.h\"\n\n#if defined(OS_WIN)\n#include \"base/task_scheduler/scheduler_worker_pool_windows_impl.h\n#endif",
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656b4c4e_f57ce6c3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "No trailing underscore for struct data members https://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c04a1eb_75c1a84e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 59,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2760acad_613f88dc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "No braces",
+      "range": {
+        "startLine": 70,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7659003d_8347e458",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "CreateStartWorkerPoolWithType can access GetParam() directly. No need to pass this argument.",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 55
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b917c6c3_70a5863f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "CreateAndStart\n\n\"CreateAndStart\" is more common than \"CreateStart\" in base/task/scheduler/ https://cs.chromium.org/search/?q\u003dcreateandstart+file:%5Esrc/base/task_scheduler/+package:%5Echromium$\u0026type\u003dcs",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 15
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ff6285_64e3b6fd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "I would move this directly in SetUp() and keep only code that actually \"creates and starts\" a worker pool in this method.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 63
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504b84de_b170f13a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "PARALLEL first, for consistency.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 80
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b269c2c_c82fae77",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "I would move this to a JoinForTesting() method and add JoinForTesting() on the SchedulerWorkerPool interface. The comment for this method could be:\n\n// Prevents new tasks from being scheduled and waits for currently scheduled\n// tasks to complete their execution. It is guaranteed that no thread will\n// do work on behalf of this SchedulerWorkerPool after this returns. \n// It is invalid to post a task once this is called. TaskTracker::Flush()\n// can be called before this to complete existing tasks, which might\n// otherwise post a task during JoinForTesting(). This can only be called\n// once.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffae61e2_a656bbed",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "START\n1  started_.Set()\n2  Lock PQ (create the transaction)\n3    For each sequence in PQ\n4      if (is_started_)\n5        SubmitThreadPoolWork()\n6  Unlock PQ (free the transaction)\n\nPOST\n7  Lock PQ (create the transaction)\n8    Add sequence to PQ\n9  Unlock PQ\n10 if (is_started_)\n11   SubmitThreadPoolWork()\n\nIt is possible to have 2 calls to SubmitThreadPoolWork if operations run in this order: 7, 8, 9, 1, 10, 11, 3, 4, 5, 6.\n\nYou could avoid this by making |started_| a bool that is always accessed within the scope of the PQ lock (no extra lock acquisition).\n\nSTART\nlocal_num_sequences_before_start\nLock PQ (create the transaction)\n  started \u003d true\n  local_num_sequences_before_start \u003d PQ-\u003eSize()\nUnlock PQ (free the transaction)\nCall SubmitThreadPoolWork |local_num_sequences_before_start| times.\n\nPOST\nlocal_started\nLock PQ (create the transaction)\n  Add sequence to PQ\n  local_started \u003d started\nUnlock PQ\nif (local_started)\n  SubmitThreadPoolWork()",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54054b3_4652fbe2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "No braces.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89dd98a6_17b0c187",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Only this code changes between SchedulerWorkerPoolImpl/SchedulerWorkerWindowsPoolImpl. Could you make PostTaskWithSequenceNow() a non-virtual method on SchedulerWorkerPool, and have a virtual method just for the part that changes between both implementations?",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e53b5ed_fb597f7d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "#include \u003cwindows.h\u003e\n\nWe use \u003c\u003e for system headers and \"\" for Chrome-specific headers.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e7a01a_36ca6fda",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Add class comment. Maybe something like:\n\n// A SchedulerWorkerPool implementation backed by the Windows Thread Pool API.\n// \n// Windows Thread Pool API official documentation:\n// https://msdn.microsoft.com/en-us/library/windows/desktop/ms686766(v\u003dvs.85).aspx\n//\n// Blog posts on the Windows Thread Pool API:\n// [Links to the posts that I shared with you]",
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6750b9_8810c6c3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "Add comments for these variables (briefly explain what these types mean to someone who has no knowledge of the Windows thread pool API).",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae11840_aa723e60",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "priority_queue_\n\nThe \"shared_\" prefix is there because we previously also had non-shared priority queues.",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3953c505_5d9dd623",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-16T14:09:13Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "1f803615f9a36b3301ae6d9adbb839c5771f228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
