@@ -2847,7 +2847,14 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollBeginImpl(
     scroll_status.main_thread_scrolling_reasons =
         MainThreadScrollingReason::kNoScrollingLayer;
     return scroll_status;
+  } else if (touchpad_and_wheel_scroll_latching_enabled_) {
+    // TODO(chaopeng) ScrollBegin and ScrollEnd will be paired after
+    // TouchpadAndWheelScrollLatching land.
+    ScrollbarAnimationController* scrollbar_animation_controller =
+        ScrollbarAnimationControllerForElementId(scrolling_node->element_id);
+    scrollbar_animation_controller->DidScrollBegin();
   }
+
   scroll_status.thread = SCROLL_ON_IMPL_THREAD;
   mutator_host_->ScrollAnimationAbort();
 
@@ -2957,6 +2964,14 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollBegin(
                                     kScrollerSizeBucketCount);
       }
     }
+  }
+
+  // TODO(chaopeng) ScrollBegin and ScrollEnd will be paired after
+  // TouchpadAndWheelScrollLatching land.
+  if (touchpad_and_wheel_scroll_latching_enabled_ && scrolling_node) {
+    ScrollbarAnimationController* scrollbar_animation_controller =
+        ScrollbarAnimationControllerForElementId(scrolling_node->element_id);
+    scrollbar_animation_controller->DidScrollBegin();
   }
 
   if (scroll_on_main_thread) {
@@ -3636,6 +3651,17 @@ void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state) {
 
   DistributeScrollDelta(scroll_state);
   browser_controls_offset_manager_->ScrollEnd();
+
+  // TODO(chaopeng) ScrollBegin and ScrollEnd will be paired after
+  // TouchpadAndWheelScrollLatching land.
+  if (touchpad_and_wheel_scroll_latching_enabled_) {
+    if (ScrollNode* scrolling_node = CurrentlyScrollingNode()) {
+      ScrollbarAnimationController* scrollbar_animation_controller =
+          ScrollbarAnimationControllerForElementId(scrolling_node->element_id);
+      scrollbar_animation_controller->DidScrollEnd();
+    }
+  }
+
   ClearCurrentlyScrollingNode();
 }
 
