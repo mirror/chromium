@@ -274,6 +274,24 @@
     },
     {
       "key": {
+        "uuid": "7d7c1aaf_fb6baeff",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-16T23:15:19Z",
+      "side": 1,
+      "message": "Thanks for raising this question :) TBH I don\u0027t feel like adding modifier to a string make much sense. Strings should probably just be sent as strings and injected as strings...\n\nIn the next patch I will remove the modifiers parameter from HandleTextEvent and HandleDeleteEvent and provide a static function in KeyboardInterpreter to convert an ASCII char to key code instead.\n\nI think we can just ignore the input if the soft keyboard returns a string with multiple characters while the modifier keys are being pressed...",
+      "parentUuid": "b30116d6_e92683aa",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66b87959_7ab29eb9",
         "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
         "patchSetId": 8
