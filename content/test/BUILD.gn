@@ -942,6 +942,7 @@ test("content_browsertests") {
     ]
     deps += [
       ":content_browsertests_java",
+      ":motionevent_jni_headers",
       "//content/shell:content_shell_lib",
       "//content/shell/android:content_shell_assets",
       "//content/shell/android:content_shell_jni_headers",
@@ -1069,6 +1070,13 @@ test("content_browsertests") {
       # to fail.
       "../browser/frame_host/data_url_navigation_browsertest.cc",
     ]
+  }
+}
+
+if (is_android) {
+  generate_jar_jni("motionevent_jni_headers") {
+    jni_package = "content"
+    classes = [ "android/view/MotionEvent.class" ]
   }
 }
 
