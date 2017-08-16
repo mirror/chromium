@@ -11,6 +11,7 @@
 #include "remoting/base/compound_buffer.h"
 #include "remoting/protocol/fake_message_pipe_wrapper.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/protobuf/src/google/protobuf/message_lite.h"
 
 namespace remoting {
 namespace protocol {
@@ -92,6 +93,11 @@ void FakeMessagePipe::SendImpl(
     google::protobuf::MessageLite* message,
     const base::Closure& done) {
   ASSERT_TRUE(pipe_opened_);
+
+  std::string message_string;
+  message->SerializeToString(&message_string);
+  sent_messages_.push(message_string);
+
   if (done) {
     done.Run();
   }
@@ -118,6 +124,10 @@ void FakeMessagePipe::ClosePipeImpl() {
   ASSERT_TRUE(event_handler_ != nullptr);
   pipe_opened_ = false;
   event_handler_->OnMessagePipeClosed();
+}
+
+std::queue<std::string> FakeMessagePipe::sent_messages() {
+  return sent_messages_;
 }
 
 }  // namespace protocol
