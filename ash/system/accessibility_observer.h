@@ -18,7 +18,7 @@ class ASH_EXPORT AccessibilityObserver {
   // * Show the accessibility menu when any feature is enabled.
   // * Show notifications when spoken feedback or braille is enabled.
   // TODO(jamescook): Split into two methods.
-  virtual void OnAccessibilityModeChanged(
+  virtual void OnAccessibilityStatusChanged(
       AccessibilityNotificationVisibility notify) = 0;
 };
 

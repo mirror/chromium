@@ -44,7 +44,7 @@ class ASH_EXPORT SystemTrayNotifier {
   void AddAccessibilityObserver(AccessibilityObserver* observer);
   void RemoveAccessibilityObserver(AccessibilityObserver* observer);
   // TODO(jamescook): Rename to NotifyAccessibilityPrefChanged() or similar.
-  void NotifyAccessibilityModeChanged(
+  void NotifyAccessibilityStatusChanged(
       AccessibilityNotificationVisibility notify);
 
   // Bluetooth.
