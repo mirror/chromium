@@ -226,6 +226,10 @@ class BASE_EXPORT RunLoop {
     RunLoopStack active_run_loops_;
     ObserverList<RunLoop::NestingObserver> nesting_observers_;
 
+#if DCHECK_IS_ON()
+    bool allow_running_for_testing_ = true;
+#endif
+
     // True once this Delegate is bound to a thread via
     // RegisterDelegateForCurrentThread().
     bool bound_ = false;
@@ -252,6 +256,36 @@ class BASE_EXPORT RunLoop {
   // and increase readability.
   static void QuitCurrentDeprecated();
   static void QuitCurrentWhenIdleDeprecated();
+
+#if DCHECK_IS_ON()
+  // Run() will DCHECK if called while there's a ScopedDisallowRunningForTesting
+  // in scope on its thread. This is useful to add safety to some test
+  // constructs which allow multiple task runners to share the main thread in
+  // unit tests. While the main thread can be shared by multiple runners to
+  // deterministically fake multi threading, there can still only be a single
+  // RunLoop::Delegate per thread and RunLoop::Run() should only be invoked from
+  // it (or it would result in incorrectly driving TaskRunner A while in
+  // TaskRunner B's context).
+  class BASE_EXPORT ScopedDisallowRunningForTesting {
+   public:
+    ScopedDisallowRunningForTesting();
+    ~ScopedDisallowRunningForTesting();
+
+   private:
+    Delegate* current_delegate_;
+    const bool previous_run_allowance_;
+    DISALLOW_COPY_AND_ASSIGN(ScopedDisallowRunningForTesting);
+  };
+#else   // DCHECK_IS_ON()
+  class BASE_EXPORT ScopedDisallowRunningForTesting {
+   public:
+    ScopedDisallowRunningForTesting() = default;
+    ~ScopedDisallowRunningForTesting() = default;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(ScopedDisallowRunningForTesting);
+  };
+#endif  // DCHECK_IS_ON()
 
  private:
 #if defined(OS_ANDROID)
