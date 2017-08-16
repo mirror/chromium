@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "aa2f74e6_42a4ff7e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-16T08:46:30Z",
+      "side": 1,
+      "message": "I tried that initially but I abandoned it because violation events will not necessarily be coupled with a ResourceError (because report-only policies exist and they will fire an event but won\u0027t block the resource from loading).",
+      "parentUuid": "d993a1f0_cf039e05",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed4a108d_04083ae6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 6
