@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63280b95_132559b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-16T23:55:25Z",
+      "side": 1,
+      "message": "To limit the amount of wasted space. People use queues pretty differently than e.g. vector and in many places and I think expect it to shrink. You say you use shrink_to_fit, but this is clearly not the case for Chromium developers. There are only 29 matches for shrink_to_fit() in the entire code base, and about half of those are in containers and the associated tests and comments.",
+      "parentUuid": "d0c023f9_5be27fe2",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "6e78134e48acabdd1ecb4b77b271c68f04584037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26b2b9fa_b7e54372",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 2
@@ -83,6 +107,30 @@
       "writtenOn": "2017-08-15T23:37:08Z",
       "side": 1,
       "message": "Cruft?",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "6e78134e48acabdd1ecb4b77b271c68f04584037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72410d38_3ad31dbc",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-16T23:55:25Z",
+      "side": 1,
+      "message": "Whoops! Testing stuff.",
+      "parentUuid": "689dd1e0_3e2f26c7",
       "range": {
         "startLine": 26,
         "startChar": 5,
