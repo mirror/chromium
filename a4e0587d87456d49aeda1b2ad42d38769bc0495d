@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "751e8704_794f6932",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T18:26:12Z",
+      "side": 1,
+      "message": "From Rob\u0027s comment here: https://chromium-review.googlesource.com/c/611123/11/base/threading/scoped_blocking_call.cc#26\n\nI\u0027m not really familiar with w/ the MessageLoop+TaskScheduler unification, so I guess you can verify if it\u0027s necessary to include this (or include it in this CL).",
+      "parentUuid": "ea56e26c_8e39abca",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "a4e0587d87456d49aeda1b2ad42d38769bc0495d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9cc6cce_ce6d324f",
         "filename": "base/threading/scoped_blocking_call.h",
         "patchSetId": 15
