@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03f2e6ae_b9141915",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-16T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be853012_51d74dbd",
+      "range": {
+        "startLine": 466,
+        "startChar": 45,
+        "endLine": 466,
+        "endChar": 53
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "545ef30a_62665daf",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076d0ee6_346074ef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-16T15:20:09Z",
+      "side": 1,
+      "message": "I\u0027ve noticed domModel is no longer referenced, so it\u0027s safe to just remove the check here.",
+      "parentUuid": "545ef30a_62665daf",
+      "range": {
+        "startLine": 645,
+        "startChar": 6,
+        "endLine": 645,
+        "endChar": 12
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1adedb72_5a03cbc7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-16T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979fdedf_5ba36e76",
+      "range": {
+        "startLine": 658,
+        "startChar": 16,
+        "endLine": 658,
+        "endChar": 27
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be42887_824e1d18",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7e0a59_9a86c1d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-16T15:20:09Z",
+      "side": 1,
+      "message": "resolveNode returns null if the backendNodeId does not exist and createRemoteObject always returns an object, so this should return null rather than undefined. (In addition, this mirrors the definition of resolveToObject in SDK.DOMNode.)",
+      "parentUuid": "9be42887_824e1d18",
+      "range": {
+        "startLine": 983,
+        "startChar": 77,
+        "endLine": 983,
+        "endChar": 0
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
