@@ -51,6 +51,13 @@ class OpaqueBrowserFrameViewLayoutDelegate {
   // it.
   virtual gfx::Size GetTabstripPreferredSize() const = 0;
 
+  // Used on desktop Linux to determine if we should use GTK to draw
+  // native-looking window navigation buttons.
+  virtual bool ShouldRenderNativeNavButtons() const = 0;
+
+  // Computes the height of the top area of the frame.
+  virtual int GetTopAreaHeight() const = 0;
+
  protected:
   virtual ~OpaqueBrowserFrameViewLayoutDelegate() {}
 };

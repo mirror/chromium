@@ -40,6 +40,12 @@ class ScopedGObject {
     Ref();
   }
 
+  T* release() {
+    T* obj = obj_;
+    obj_ = nullptr;
+    return obj;
+  }
+
  private:
   void Ref() {
     // Remove the floating reference from |obj_| if it has one.
