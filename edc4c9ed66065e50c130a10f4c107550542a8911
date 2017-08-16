@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53115868_b5584cb2",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:55:30Z",
+      "side": 1,
+      "message": "struct FormatChange {\n  std::string volume_name;\n  std::string file_system_type;\n};\n\nlooks enough?",
+      "revId": "edc4c9ed66065e50c130a10f4c107550542a8911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797efc01_726c30cf",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:55:30Z",
+      "side": 1,
+      "message": "style: one space indent for public:, protected:, private: labels.\nYou can find examples in the enclosing class.",
+      "revId": "edc4c9ed66065e50c130a10f4c107550542a8911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c768e84_4a5b882b",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:55:30Z",
+      "side": 1,
+      "message": "style: white space between ) and {.\nTrailing semicolon is redundant.",
+      "revId": "edc4c9ed66065e50c130a10f4c107550542a8911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbea1d32_22b7bb4d",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:55:30Z",
+      "side": 1,
+      "message": "struct is by default copy-able. This is redundant.",
+      "revId": "edc4c9ed66065e50c130a10f4c107550542a8911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816bbe01_c570507e",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:55:30Z",
+      "side": 1,
+      "message": "If above struct definition is to make FormatChange immutable, you may want to annotate const?\nGood to comment what std::string represents.",
+      "revId": "edc4c9ed66065e50c130a10f4c107550542a8911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8e6343_075a6541",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T15:55:30Z",
+      "side": 1,
+      "message": "auto for consistency?",
+      "revId": "edc4c9ed66065e50c130a10f4c107550542a8911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
