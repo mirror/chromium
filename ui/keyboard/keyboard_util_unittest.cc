@@ -5,9 +5,35 @@
 #include "ui/keyboard/keyboard_util.h"
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/ime/dummy_input_method.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_ui.h"
 
 namespace keyboard {
+namespace {
+
+class FakeKeyboardUI : public KeyboardUI {
+ public:
+  FakeKeyboardUI() : ime_() {}
+  ~FakeKeyboardUI() override {}
+
+  bool HasContentsWindow() const override { return false; }
+  bool ShouldWindowOverscroll(aura::Window* window) const override {
+    return true;
+  }
+  aura::Window* GetContentsWindow() override { return nullptr; }
+  ui::InputMethod* GetInputMethod() override { return &ime_; }
+  void ReloadKeyboardIfNeeded() override {}
+  void InitInsets(const gfx::Rect& keyboard_bounds) override {}
+  void ResetInsets() override {}
+
+ private:
+  ui::DummyInputMethod ime_;
+
+  DISALLOW_COPY_AND_ASSIGN(FakeKeyboardUI);
+};
 
 class KeyboardUtilTest : public testing::Test {
  public:
@@ -113,4 +139,32 @@ TEST_F(KeyboardUtilTest, HideKeyboardWhenTouchEnabled) {
   ASSERT_TRUE(keyboard::IsKeyboardEnabled());
 }
 
+TEST_F(KeyboardUtilTest, IsOverscrollEnabled) {
+  ResetAllFlags();
+
+  // Return false when keyboard is disabled.
+  EXPECT_FALSE(keyboard::IsKeyboardOverscrollEnabled());
+
+  // Enable the virtual keyboard.
+  keyboard::SetTouchKeyboardEnabled(true);
+  EXPECT_TRUE(keyboard::IsKeyboardOverscrollEnabled());
+
+  // Override overscroll enabled state.
+  keyboard::SetKeyboardOverscrollOverride(
+      KEYBOARD_OVERSCROLL_OVERRIDE_DISABLED);
+  EXPECT_FALSE(keyboard::IsKeyboardOverscrollEnabled());
+  keyboard::SetKeyboardOverscrollOverride(KEYBOARD_OVERSCROLL_OVERRIDE_NONE);
+  EXPECT_TRUE(keyboard::IsKeyboardOverscrollEnabled());
+
+  // Set keyboard_locked() to true.
+  auto ui = base::MakeUnique<FakeKeyboardUI>();
+  KeyboardController controller(std::move(ui), nullptr);
+  KeyboardController::ResetInstance(&controller);
+  controller.set_keyboard_locked(true);
+  EXPECT_TRUE(controller.keyboard_locked());
+  EXPECT_FALSE(keyboard::IsKeyboardOverscrollEnabled());
+  KeyboardController::ResetInstance(nullptr);
+}
+
+}  // namespace
 }  // namespace keyboard
