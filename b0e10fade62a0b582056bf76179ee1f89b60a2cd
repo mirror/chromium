@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1cf391c_5d80e73f",
+        "filename": "chrome/browser/resources/net_internals/domain_security_policy_view.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-16T23:12:42Z",
+      "side": 1,
+      "message": "is it intentional that dynamic_expect_ct_expiry isn\u0027t here?",
+      "range": {
+        "startLine": 267,
+        "startChar": 15,
+        "endLine": 267,
+        "endChar": 16
+      },
+      "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5b7913_cbdb75aa",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-16T23:12:42Z",
+      "side": 1,
+      "message": "nit: any reason for putting this between hstsQuery and hstsAdd?",
+      "range": {
+        "startLine": 416,
+        "startChar": 7,
+        "endLine": 416,
+        "endChar": 33
+      },
+      "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf757fd_06d100ae",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-16T23:12:42Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t match order in class definition.",
+      "range": {
+        "startLine": 676,
+        "startChar": 47,
+        "endLine": 676,
+        "endChar": 75
+      },
+      "revId": "b0e10fade62a0b582056bf76179ee1f89b60a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
