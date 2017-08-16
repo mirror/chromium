@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3f68b35_b9bbe03a",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1cfbeea_b801432e",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce28c45f_4a3b6e34",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43719940_f02d45c0",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce28c45f_4a3b6e34",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "352115bc_0f4536ec",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d95b52_109df13b",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e48a605_c9158362",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T21:03:21Z",
       "side": 1,
       "message": "How is the case of image_data-\u003eupload.image() !\u003d nullptr, but TryLockImage being false handled. Is the image reset by TryLock?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4db2b4c_25d066f0",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "I removed that code and re-arranged so that TryLockImage is predicatable, I agree that this was confusing.",
+      "parentUuid": "7e48a605_c9158362",
       "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "214596b9_e1dd0ccf",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6b9dff_c7838beb",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70aefa31_3bc8d583",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0c31d4_a1c23683",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70aefa31_3bc8d583",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "23f5944c_d0e93103",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5e26df_52cefb5f",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0acd093b_0bf050f4",
         "filename": "cc/tiles/gpu_image_decode_cache.h",
         "patchSetId": 5
@@ -132,6 +258,24 @@
       "writtenOn": "2017-06-26T21:03:21Z",
       "side": 1,
       "message": "Is there a better type or do we just use uint32_ts?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c979aa89_d8854189",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "I guess GrGLuint is better...",
+      "parentUuid": "0acd093b_0bf050f4",
       "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "543981ce_147fac17",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Updated name and added a comment.",
+      "parentUuid": "a9f1a81c_81fbf5a5",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0a53224_5bbf5244",
         "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
         "patchSetId": 5
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c60fc82d_90af5e27",
+        "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "Clarified comment.",
+      "parentUuid": "f0a53224_5bbf5244",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e524eef6_450c4c62",
         "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
         "patchSetId": 5
@@ -183,6 +363,24 @@
       "writtenOn": "2017-06-26T21:03:21Z",
       "side": 1,
       "message": "\u003c_________\u003c",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b506ab24_bc6cb95b",
+        "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T20:37:22Z",
+      "side": 1,
+      "message": "\u003e_________\u003e",
+      "parentUuid": "e524eef6_450c4c62",
       "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
