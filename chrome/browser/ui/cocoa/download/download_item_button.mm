@@ -6,16 +6,32 @@
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
+#include "chrome/browser/download/download_item_model.h"
 #import "chrome/browser/ui/cocoa/download/download_item_cell.h"
 #import "chrome/browser/ui/cocoa/download/download_item_controller.h"
-#import "chrome/browser/ui/cocoa/download/download_shelf_context_menu_controller.h"
 #import "chrome/browser/ui/cocoa/view_id_util.h"
 #import "ui/base/cocoa/nsview_additions.h"
 
 @implementation DownloadItemButton
 
-@synthesize download = downloadPath_;
 @synthesize controller = controller_;
+
+// For initialization from tests.
++ (Class)cellClass {
+  return [DownloadItemCell class];
+}
+
+- (void)setStateFromDownload:(DownloadItemModel*)downloadModel {
+  [self.cell setStateFromDownload:downloadModel];
+
+  // Set path to draggable download on completion.
+  if (downloadModel->download()->GetState() == content::DownloadItem::COMPLETE)
+    downloadPath_ = downloadModel->download()->GetTargetFilePath();
+}
+
+- (void)setImage:(NSImage*)image {
+  [self.cell setImage:image];
+}
 
 // Overridden from DraggableButton.
 - (void)beginDrag:(NSEvent*)event {
@@ -23,18 +39,6 @@
     NSString* filename = base::SysUTF8ToNSString(downloadPath_.value());
     [self dragFile:filename fromRect:[self bounds] slideBack:YES event:event];
   }
-}
-
-- (void)showContextMenu {
-  base::scoped_nsobject<DownloadShelfContextMenuController> menuController(
-      [[DownloadShelfContextMenuController alloc]
-          initWithItemController:controller_
-                    withDelegate:self]);
-  contextMenu_.reset([[menuController menu] retain]);
-  [NSMenu popUpContextMenu:contextMenu_.get()
-                 withEvent:[NSApp currentEvent]
-                   forView:self];
-  contextMenu_.reset();
 }
 
 // Override to show a context menu on mouse down if clicked over the context
@@ -48,7 +52,7 @@
     [self.draggableButton mouseDownImpl:event];
   } else {
     [cell setHighlighted:YES];
-    [self showContextMenu];
+    [controller_ showContextMenu:self];
   }
 }
 

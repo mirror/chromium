@@ -345,6 +345,12 @@ const char kEnableIdleTimeSpellCheckingDescription[] =
     "Make spell-checking code run only when the browser is idle, so that input "
     "latency is reduced, especially when editing long articles, emails, etc.";
 
+const char kEnableMacMaterialDesignDownloadShelfName[] =
+    "Enable Material Design download shelf";
+
+const char kEnableMacMaterialDesignDownloadShelfDescription[] =
+    "If enabled, the download shelf uses Material Design.";
+
 const char kEnableManualFallbacksFillingName[] =
     "Manual fallbacks for password manager forms filling";
 const char kEnableManualFallbacksFillingDescription[] =
