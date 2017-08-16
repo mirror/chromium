@@ -416,6 +416,7 @@ void ResourceDispatcherHostImpl::SetAllowCrossOriginAuthPrompt(bool value) {
 
 void ResourceDispatcherHostImpl::CancelRequestsForContext(
     ResourceContext* context) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(context);
 
@@ -811,6 +812,7 @@ void ResourceDispatcherHostImpl::OnInit() {
 
 void ResourceDispatcherHostImpl::OnShutdown() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   is_shutdown_ = true;
   pending_loaders_.clear();
@@ -947,6 +949,7 @@ void ResourceDispatcherHostImpl::OnSyncLoad(
 
 bool ResourceDispatcherHostImpl::IsRequestIDInUse(
     const GlobalRequestID& id) const {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (pending_loaders_.find(id) != pending_loaders_.end())
     return true;
   for (const auto& blocked_loaders : blocked_loaders_map_) {
@@ -967,6 +970,7 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
     LoaderMap::iterator iter,
     mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(requester_info->IsRenderer());
   int child_id = requester_info->child_id();
   ResourceRequestInfoImpl* info = iter->second->GetRequestInfo();
@@ -1050,6 +1054,7 @@ void ResourceDispatcherHostImpl::CompleteTransfer(
     int route_id,
     mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(requester_info->IsRenderer());
   // Caller should ensure that |request_data| is associated with a transfer.
   DCHECK(request_data.transferred_request_child_id != -1 ||
@@ -1839,6 +1844,7 @@ void ResourceDispatcherHostImpl::CancelRequestsForProcess(int child_id) {
 
 void ResourceDispatcherHostImpl::CancelRequestsForRoute(
     const GlobalFrameRoutingId& global_routing_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Since pending_requests_ is a map, we first build up a list of all of the
   // matching requests to be cancelled, and then we cancel them.  Since there
   // may be more than one request to cancel, we cannot simply hold onto the map
@@ -1921,6 +1927,7 @@ void ResourceDispatcherHostImpl::CancelRequestsForRoute(
 // Cancels the request and removes it from the list.
 void ResourceDispatcherHostImpl::RemovePendingRequest(int child_id,
                                                       int request_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   LoaderMap::iterator i = pending_loaders_.find(
       GlobalRequestID(child_id, request_id));
   if (i == pending_loaders_.end()) {
@@ -1932,6 +1939,7 @@ void ResourceDispatcherHostImpl::RemovePendingRequest(int child_id,
 
 void ResourceDispatcherHostImpl::RemovePendingLoader(
     const LoaderMap::iterator& iter) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ResourceRequestInfoImpl* info = iter->second->GetRequestInfo();
 
   // Remove the memory credit that we added when pushing the request onto
@@ -2454,6 +2462,7 @@ void ResourceDispatcherHostImpl::CancelRequestFromRenderer(
 void ResourceDispatcherHostImpl::StartLoading(
     ResourceRequestInfoImpl* info,
     std::unique_ptr<ResourceLoader> loader) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/456331 is fixed.
   tracked_objects::ScopedTracker tracking_profile(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
@@ -2535,6 +2544,7 @@ ResourceDispatcherHostImpl::PickMoreInterestingLoadInfos(
 
 std::unique_ptr<ResourceDispatcherHostImpl::LoadInfoList>
 ResourceDispatcherHostImpl::GetLoadInfoForAllRoutes() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::unique_ptr<LoadInfoList> infos(new LoadInfoList);
 
   for (const auto& loader : pending_loaders_) {
@@ -2670,6 +2680,7 @@ bool ResourceDispatcherHostImpl::IsTransferredNavigation(
 ResourceLoader* ResourceDispatcherHostImpl::GetLoader(
     const GlobalRequestID& id) const {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   LoaderMap::const_iterator i = pending_loaders_.find(id);
   if (i == pending_loaders_.end())
