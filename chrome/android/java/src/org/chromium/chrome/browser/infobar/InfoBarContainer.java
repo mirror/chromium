@@ -207,7 +207,6 @@ public class InfoBarContainer extends SwipableOverlayView {
         if (mTab != null && mTab.getActivity() != null) {
             return mTab.getActivity().getSnackbarManager();
         }
-
         return null;
     }
 
