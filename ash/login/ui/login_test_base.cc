@@ -4,6 +4,11 @@
 
 #include "ash/login/ui/login_test_base.h"
 
+#include "ash/public/cpp/config.h"
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
+#include "services/ui/public/cpp/property_type_converters.h"
+#include "services/ui/public/interfaces/window_manager.mojom.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -42,6 +47,19 @@ void LoginTestBase::ShowWidgetWithContent(views::View* content) {
   params.context = CurrentContext();
   params.bounds = gfx::Rect(0, 0, 800, 800);
   params.delegate = delegate_.get();
+
+  // Set the widget to the lock screen container, since a test may change the
+  // session state to locked, which will hide all widgets not container
+  // associated with the lock screen.
+  const int kLockContainer = ash::kShellWindowId_LockScreenContainer;
+  if (ash::Shell::GetAshConfig() == Config::MASH) {
+    params.mus_properties[ui::mojom::WindowManager::kContainerId_InitProperty] =
+        mojo::ConvertTo<std::vector<uint8_t>>(kLockContainer);
+  } else {
+    params.parent = ash::Shell::GetContainer(ash::Shell::GetPrimaryRootWindow(),
+                                             kLockContainer);
+  }
+
   widget_ = new views::Widget();
   widget_->Init(params);
   widget_->SetContentsView(content);
