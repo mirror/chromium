@@ -400,6 +400,30 @@
       "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c16a5bb_56d82359",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-16T13:09:58Z",
+      "side": 1,
+      "message": "Filed https://github.com/w3c/mediacapture-main/issues/477",
+      "parentUuid": "2538b83b_2d3c30ef",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
