@@ -45,6 +45,30 @@
       "revId": "8b23c9e6b6b299b211e27e36ee1d670ebd436492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1298b75_cb161683",
+        "filename": "ui/aura/client/window_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-16T18:18:00Z",
+      "side": 1,
+      "message": "Ah.. then we come back to square 1. The CL started out with adding a aura constant.. then following David and Oshima\u0027s suggestion we moved to window type. So do you have any suggestion for the naming of aura contant?",
+      "parentUuid": "3ea8cc47_b37549bd",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "8b23c9e6b6b299b211e27e36ee1d670ebd436492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
