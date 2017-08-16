@@ -134,6 +134,30 @@
     },
     {
       "key": {
+        "uuid": "17b2e5d3_4ef471d5",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T23:35:41Z",
+      "side": 1,
+      "message": "That\u0027ll be handled in the browser process.\n\n(I don\u0027t think we can tell that in the renderer process at this point until we make a read)",
+      "parentUuid": "4fa97eae_b42c7ad4",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 63
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31bb53d2_83dad8f8",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 9
@@ -192,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "5540d199_64d59be6",
+        "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T23:35:41Z",
+      "side": 1,
+      "message": "Oh yes, this macro does some additional checks for GC\u0027ed object... while we may really not need it.",
+      "parentUuid": "25928276_59201767",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39a71cf5_db6bd49f",
         "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
         "patchSetId": 9
@@ -203,6 +251,24 @@
       "writtenOn": "2017-08-16T09:11:38Z",
       "side": 1,
       "message": "This is currently explicitly thread-safe, so do we need to have TLS here?\n\nI\u0027m actually working on changing this to use service_manager::InterfaceProvider and having Platform do the TLS caching internally as well.",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d75822_19d9c91d",
+        "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T23:35:41Z",
+      "side": 1,
+      "message": "I think yes, GetInterface does post-message thing but I believe the BlobRegistry that\u0027s obtained is not thread-safe (i.e. needs to be used and destructed on the same thread as it\u0027s allocated)",
+      "parentUuid": "39a71cf5_db6bd49f",
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
