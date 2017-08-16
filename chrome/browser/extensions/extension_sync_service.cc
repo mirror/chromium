@@ -99,6 +99,26 @@ bool ShouldAllowInstall(const Extension* extension) {
          extensions::sync_helper::IsSyncable(extension);
 }
 
+// Returns whether we should allow the extension with |state| to be reported to
+// Chrome Sync as enabled.
+// Note that BLACKLISTED_MALWARE extensions are blacklisted (not greylisted) and
+// should never be synced as enabled.
+bool IsSyncAllowedBlacklistState(const extensions::BlacklistState state) {
+  switch (state) {
+    case extensions::BLACKLISTED_SECURITY_VULNERABILITY:
+    case extensions::BLACKLISTED_MALWARE:
+      return false;
+    case extensions::BLACKLISTED_CWS_POLICY_VIOLATION:
+    case extensions::BLACKLISTED_POTENTIALLY_UNWANTED:
+    case extensions::NOT_BLACKLISTED:
+      return true;
+    default:
+      NOTREACHED() << "Unexpected extension blacklist state: " << state;
+      break;
+  }
+  return false;
+}
+
 syncer::SyncDataList ToSyncerSyncDataList(
     const std::vector<ExtensionSyncData>& data) {
   syncer::SyncDataList result;
@@ -275,9 +295,13 @@ ExtensionSyncData ExtensionSyncService::CreateSyncData(
   // for the existence of disable reasons instead), we're just setting it here
   // for older Chrome versions (<M48).
   bool enabled = (disable_reasons == Extension::DISABLE_NONE);
-  enabled = enabled &&
-      extension_prefs->GetExtensionBlacklistState(extension.id()) ==
-          extensions::NOT_BLACKLISTED;
+  // Blacklisted extensions and some kinds of greylisted extensions should never
+  // be reported to Sync as enabled even if the user manually re-enabled them.
+  if (!IsSyncAllowedBlacklistState(
+          extension_prefs->GetExtensionBlacklistState(extension.id()))) {
+    enabled = false;
+  }
+
   bool incognito_enabled = extensions::util::IsIncognitoEnabled(id, profile_);
   bool remote_install =
       extension_prefs->HasDisableReason(id, Extension::DISABLE_REMOTE_INSTALL);
