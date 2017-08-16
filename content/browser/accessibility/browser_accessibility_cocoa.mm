@@ -876,8 +876,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   // Given an image where there's no other title, return the base part
   // of the filename as the description.
   if ([[self role] isEqualToString:NSAccessibilityImageRole]) {
-    if (browserAccessibility_->HasExplicitlyEmptyName())
-      return @"";
     if ([self titleUIElement])
       return @"";
 
@@ -1453,6 +1451,10 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
     return NSAccessibilityTextAreaRole;
   }
 
+  if (role == ui::AX_ROLE_IMAGE &&
+      browserAccessibility_->HasExplicitlyEmptyName())
+    return NSAccessibilityUnknownRole;
+
   // If this is a web area for a presentational iframe, give it a role of
   // something other than WebArea so that the fact that it's a separate doc
   // is not exposed to AT.
@@ -2024,7 +2026,10 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   for (uint32_t index = 0; index < childCount; ++index) {
     BrowserAccessibilityCocoa* child = ToBrowserAccessibilityCocoa(
         browserAccessibility_->PlatformGetChild(index));
-    [ret addObject:child];
+    if ([child isIgnored])
+      [ret addObjectsFromArray:[child visibleChildren]];
+    else
+      [ret addObject:child];
   }
   return ret;
 }
