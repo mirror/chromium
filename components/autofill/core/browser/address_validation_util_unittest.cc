@@ -7,8 +7,11 @@
 #include <memory>
 #include <string>
 
+#include "base/base_paths.h"
 #include "base/bind.h"
+#include "base/files/file_path.h"
 #include "base/guid.h"
+#include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
@@ -23,72 +26,28 @@ using ::i18n::addressinput::Storage;
 using ::i18n::addressinput::NullStorage;
 using ::i18n::addressinput::TestdataSource;
 
-// Used to load region rules for this test.
-class ValidationTestDataSource : public TestdataSource {
- public:
-  ValidationTestDataSource() : TestdataSource(true) {}
-
-  ~ValidationTestDataSource() override {}
-
-  void Get(const std::string& key, const Callback& data_ready) const override {
-    data_ready(
-        true, key,
-        new std::string(
-            "{"
-            "\"data/CA\": "
-            "{\"lang\": \"en\", \"upper\": \"ACNOSZ\", "
-            "\"zipex\": \"H3Z 2Y7,V8X 3X4,T0L 1K0,T0H 1A0\", "
-            "\"name\": \"CANADA\", "
-            "\"fmt\": \"%N%n%O%n%A%n%C %S %Z\", \"id\": \"data/CA\", "
-            "\"languages\": \"en~fr\", \"sub_keys\": \"NB~QC\", \"key\": "
-            "\"CA\", "
-            "\"require\": \"ACSZ\", \"sub_names\": \"New Brunswick~Quebec\", "
-            "\"sub_zips\": \"E~G|H|J\"}, "
-            "\"data/CA--fr\": "
-            "{\"lang\": \"fr\", \"upper\": \"ACNOSZ\", "
-            "\"zipex\": \"H3Z 2Y7,V8X 3X4,T0L 1K0,T0H 1A0\", "
-            "\"name\": \"CANADA\", "
-            "\"fmt\": \"%N%n%O%n%A%n%C %S %Z\", \"require\": \"ACSZ\", "
-            "\"sub_keys\": \"NB~QC\", \"key\": \"CA\", "
-            "\"id\": \"data/CA--fr\", "
-            "\"sub_names\":\"Nouveau-Brunswick~Québec\","
-            "\"sub_zips\": \"E~G|H|J\"}, "
-            "\"data/CA/QC\": "
-            "{\"lang\": \"en\", \"key\": \"QC\", "
-            "\"id\": \"data/CA/QC\", \"zip\": \"G|H|J\", \"name\": \"Quebec\"},"
-            "\"data/CA/QC--fr\": "
-            "{\"lang\": \"fr\", \"key\": \"QC\", \"id\": \"data/CA/QC--fr\", "
-            "\"zip\": \"G|H|J\", \"name\": \"Québec\"}, "
-            "\"data/CA/NB\": "
-            "{\"lang\": \"en\", \"key\": \"NB\", \"id\": \"data/CA/NB\", "
-            "\"zip\": \"E\", \"name\": \"New Brunswick\"}, "
-            "\"data/CA/NB--fr\": "
-            "{\"lang\": \"fr\", \"key\": \"NB\", \"id\": \"data/CA/NB--fr\", "
-            "\"zip\": \"E\", \"name\": \"Nouveau-Brunswick\"}"
-            "}"));
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(ValidationTestDataSource);
-};
 
 class AutofillAddressValidationTest : public testing::Test, LoadRulesListener {
  public:
-  AutofillAddressValidationTest()
-      : validator_(std::unique_ptr<Source>(new ValidationTestDataSource()),
-                   std::unique_ptr<Storage>(new NullStorage),
-                   this) {
-    validator_.LoadRules("CA");
+  AutofillAddressValidationTest() {
+    base::FilePath src_path;
+    CHECK(PathService::Get(base::DIR_SOURCE_ROOT, &src_path));
+
+    validator_ =
+        new AddressValidator(std::unique_ptr<Source>(new TestdataSource(
+                                 true, src_path.value() + '/')),
+                             std::unique_ptr<Storage>(new NullStorage), this);
+    validator_->LoadRules("CA");
   }
 
   AutofillProfile::ValidityState ValidateAddressTest(AutofillProfile* profile) {
-    return address_validation_util::ValidateAddress(profile, &validator_);
+    return address_validation_util::ValidateAddress(profile, validator_);
   }
 
-  ~AutofillAddressValidationTest() override {}
+  ~AutofillAddressValidationTest() override { delete validator_; }
 
  private:
-  AddressValidator validator_;
+  AddressValidator* validator_;
 
   // LoadRulesListener implementation.
   void OnAddressValidationRulesLoaded(const std::string& country_code,
