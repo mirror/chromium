@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c6bfad3_dfbe3cc1",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-16T17:21:00Z",
+      "side": 1,
+      "message": "This functionality isn\u0027t actually changed in this CL.  The code generated builders don\u0027t actually prevent recording the same metric multiple times any more than original API does. crbug/755407 just documents the intent to deprecate that behavior, and I\u0027m adding the warning here in case anyone is looking at this code as an example.",
+      "parentUuid": "57963b27_7db3affd",
+      "revId": "d1922fac257bd61f5bef683308fe23f1d36d6592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43fffe65_6ca7eb98",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T08:43:52Z",
       "side": 1,
       "message": "nit: \"records ... to be recorded ...\" sounds weird.",
+      "revId": "d1922fac257bd61f5bef683308fe23f1d36d6592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23eb44b6_bd091f68",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-16T17:21:00Z",
+      "side": 1,
+      "message": "Reworded Records-\u003eHolds",
+      "parentUuid": "43fffe65_6ca7eb98",
       "revId": "d1922fac257bd61f5bef683308fe23f1d36d6592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
