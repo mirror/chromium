@@ -16,6 +16,24 @@
       "revId": "c2e52a952971a596ec9667b79a195e8d3d964da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3614b062_e01c71e4",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-16T14:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e825fec_590df2d4",
+      "revId": "c2e52a952971a596ec9667b79a195e8d3d964da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
