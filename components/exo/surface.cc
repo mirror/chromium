@@ -404,6 +404,7 @@ void Surface::Commit() {
 
 void Surface::CommitSurfaceHierarchy(
     const gfx::Point& origin,
+    float device_scale_factor,
     FrameType frame_type,
     LayerTreeFrameSinkHolder* frame_sink_holder,
     cc::CompositorFrame* frame,
@@ -479,11 +480,12 @@ void Surface::CommitSurfaceHierarchy(
     // Synchronsouly commit all pending state of the sub-surface and its
     // decendents.
     sub_surface->CommitSurfaceHierarchy(
-        origin + sub_surface_entry.second.OffsetFromOrigin(), frame_type,
-        frame_sink_holder, frame, frame_callbacks, presentation_callbacks);
+        origin + sub_surface_entry.second.OffsetFromOrigin(),
+        device_scale_factor, frame_type, frame_sink_holder, frame,
+        frame_callbacks, presentation_callbacks);
   }
 
-  AppendContentsToFrame(origin, frame, needs_full_damage);
+  AppendContentsToFrame(origin, device_scale_factor, needs_full_damage, frame);
 
   // Reset damage.
   if (needs_commit)
@@ -652,8 +654,9 @@ void Surface::UpdateResource(LayerTreeFrameSinkHolder* frame_sink_holder,
 }
 
 void Surface::AppendContentsToFrame(const gfx::Point& origin,
-                                    cc::CompositorFrame* frame,
-                                    bool needs_full_damage) {
+                                    float device_scale_factor,
+                                    bool needs_full_damage,
+                                    cc::CompositorFrame* frame) {
   const std::unique_ptr<cc::RenderPass>& render_pass =
       frame->render_pass_list.back();
   gfx::Rect output_rect = gfx::Rect(origin, content_size_);
@@ -668,12 +671,18 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
     damage_rect.Intersect(output_rect);
   }
 
-  render_pass->damage_rect.Union(damage_rect);
+  // Wayland uses DIP, but the |render_pass->damage_rect| uses pixels, so we
+  // need scale it beased on the |device_scale_factor|.
+  render_pass->damage_rect.Union(
+      gfx::ScaleToRoundedRect(damage_rect, device_scale_factor));
   cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
+
+  // Wayland uses DIP, we need scale it based on the |device_scale_factor|.
+  gfx::Transform quad_to_target_transform;
+  quad_to_target_transform.Scale(device_scale_factor, device_scale_factor);
   quad_state->SetAll(
-      gfx::Transform() /* quad_to_target_transform */,
-      gfx::Rect(content_size_) /* quad_layer_rect */,
+      quad_to_target_transform, gfx::Rect(content_size_) /* quad_layer_rect */,
       quad_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
       false /* is_clipped */, state_.alpha /* opacity */,
       SkBlendMode::kSrcOver /* blend_mode */, 0 /* sorting_context_id */);

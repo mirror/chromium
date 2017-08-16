@@ -19,11 +19,21 @@
 #include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/cursor/cursor.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/path.h"
 
 namespace exo {
 
 namespace {
+
+// Helper function to get the device_scale_factor() of the display::Display
+// nearest to |window|.
+float DeviceScaleFactorForDisplay(aura::Window* window) {
+  return display::Screen::GetScreen()
+      ->GetDisplayNearestWindow(window)
+      .device_scale_factor();
+}
 
 class CustomWindowTargeter : public aura::WindowTargeter {
  public:
@@ -285,15 +295,19 @@ void SurfaceTreeHost::SubmitCompositorFrame(Surface::FrameType frame_type) {
   render_pass->SetNew(kRenderPassId, gfx::Rect(), gfx::Rect(),
                       gfx::Transform());
   frame.render_pass_list.push_back(std::move(render_pass));
+  float device_scale_factor = DeviceScaleFactorForDisplay(host_window());
   root_surface_->CommitSurfaceHierarchy(
-      gfx::Point(), frame_type, layer_tree_frame_sink_holder_.get(), &frame,
-      &frame_callbacks_, &presentation_callbacks_);
+      gfx::Point(), device_scale_factor, frame_type,
+      layer_tree_frame_sink_holder_.get(), &frame, &frame_callbacks_,
+      &presentation_callbacks_);
+  // Wayland uses DIP, but the |output_rect| uses pixels, so we need
+  // scale it beased on the |device_scale_factor|.
   frame.render_pass_list.back()->output_rect =
-      gfx::Rect(root_surface_->content_size());
+      gfx::Rect(gfx::ScaleToRoundedSize(root_surface_->content_size(),
+                                        device_scale_factor));
   host_window_->layer()->SetFillsBoundsOpaquely(
       root_surface_->FillsBoundsOpaquely());
-  frame.metadata.device_scale_factor =
-      host_window_->layer()->device_scale_factor();
+  frame.metadata.device_scale_factor = device_scale_factor;
   layer_tree_frame_sink_holder_->frame_sink()->SubmitCompositorFrame(
       std::move(frame));
 

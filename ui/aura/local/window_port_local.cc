@@ -16,6 +16,14 @@
 namespace aura {
 namespace {
 
+// Helper function to get the device_scale_factor() of the display::Display
+// nearest to |window|.
+float DeviceScaleFactorForDisplay(Window* window) {
+  return display::Screen::GetScreen()
+      ->GetDisplayNearestWindow(window)
+      .device_scale_factor();
+}
+
 class ScopedCursorHider {
  public:
   explicit ScopedCursorHider(Window* window)
@@ -131,7 +139,8 @@ void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceId& surface_id,
                                        const gfx::Size& surface_size) {
   DCHECK_EQ(surface_id.frame_sink_id(), frame_sink_id_);
   local_surface_id_ = surface_id.local_surface_id();
-  viz::SurfaceInfo surface_info(surface_id, 1.0f, surface_size);
+  viz::SurfaceInfo surface_info(
+      surface_id, DeviceScaleFactorForDisplay(window_), surface_size);
   scoped_refptr<viz::SurfaceReferenceFactory> reference_factory =
       aura::Env::GetInstance()
           ->context_factory_private()
