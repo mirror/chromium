@@ -542,6 +542,32 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
                         range:entireString];
   }
 
+// TODO(crbug.com/751801): remove this workaround.
+// In iOS 11, UITextField has a bug: when the first character has strikethrough
+// attribute, typing and setting text without strikethrough attribute will still
+// result in strikethrough. The following is a workaround prefixing the string
+// with U+200B (zero-width whitespace) character.
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11, *)) {
+    if (mutableText.length > 0) {
+      NSRangePointer rangePtr = nil;
+      NSDictionary* attributes =
+          [mutableText attributesAtIndex:0 effectiveRange:rangePtr];
+      id val = [attributes objectForKey:NSStrikethroughStyleAttributeName];
+      if (val) {
+        // U+200B is an invisible "zero-width whitespace" character.
+        char whitespace[] = "\u200b";
+        NSMutableAttributedString* prefixedString = [
+            [NSMutableAttributedString alloc]
+            initWithString:[NSString stringWithCString:whitespace
+                                              encoding:NSUTF8StringEncoding]];
+        [prefixedString appendAttributedString:mutableText];
+        mutableText = prefixedString;
+      }
+    }
+  }
+#endif
+
   [super setAttributedText:mutableText];
 }
 
