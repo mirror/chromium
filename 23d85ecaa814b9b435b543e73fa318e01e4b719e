@@ -22,6 +22,30 @@
       "revId": "23d85ecaa814b9b435b543e73fa318e01e4b719e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12576a84_bf51abd2",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-16T19:16:25Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "e9106c2a_e097030e",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 10
+      },
+      "revId": "23d85ecaa814b9b435b543e73fa318e01e4b719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
