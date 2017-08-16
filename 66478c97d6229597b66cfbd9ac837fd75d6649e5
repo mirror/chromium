@@ -51,6 +51,24 @@
       "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb3c91f_0c14448d",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T18:00:54Z",
+      "side": 1,
+      "message": "I\u0027ll note that I believe this will cause *less* starvation than there was previously for message_pump_android.\n\nIdleHandler is fired even with delayed tasks on the queue. From the MessageQueue source:\n// Idle handles only run if the queue is empty or if the first message\n// in the queue (possibly a barrier) is due to be handled in the future.",
+      "parentUuid": "80b967a7_9397636d",
+      "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
