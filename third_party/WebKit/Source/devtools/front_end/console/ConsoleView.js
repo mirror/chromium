@@ -183,6 +183,8 @@ Console.ConsoleView = class extends UI.VBox {
     ConsoleModel.consoleModel.addEventListener(
         ConsoleModel.ConsoleModel.Events.MessageUpdated, this._onConsoleMessageUpdated, this);
     ConsoleModel.consoleModel.addEventListener(
+        ConsoleModel.ConsoleModel.Events.MessageRemoved, this._onConsoleMessageRemoved, this);
+    ConsoleModel.consoleModel.addEventListener(
         ConsoleModel.ConsoleModel.Events.CommandEvaluated, this._commandEvaluated, this);
     ConsoleModel.consoleModel.messages().forEach(this._addConsoleMessage, this);
   }
@@ -451,6 +453,19 @@ Console.ConsoleView = class extends UI.VBox {
     var viewMessage = message[this._viewMessageSymbol];
     if (viewMessage) {
       viewMessage.updateMessageElement();
+      this._updateMessageList();
+    }
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _onConsoleMessageRemoved(event) {
+    var message = /** @type {!ConsoleModel.ConsoleMessage} */ (event.data);
+    var viewMessage = message[this._viewMessageSymbol];
+    var index = this._consoleMessages.indexOf(viewMessage);
+    if (viewMessage && index !== -1) {
+      this._consoleMessages.splice(index, 1);
       this._updateMessageList();
     }
   }

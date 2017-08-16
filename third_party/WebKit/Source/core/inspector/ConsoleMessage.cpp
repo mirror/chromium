@@ -51,6 +51,18 @@ ConsoleMessage* ConsoleMessage::CreateFromWorker(
   return console_message;
 }
 
+// static
+ConsoleMessage* ConsoleMessage::CreateForDOMNodes(
+    MessageLevel level,
+    const String& message,
+    Vector<DOMNodeId> backend_node_ids,
+    std::unique_ptr<SourceLocation> location) {
+  ConsoleMessage* console_message = ConsoleMessage::Create(
+      kDOMMessageSource, level, message, std::move(location));
+  console_message->backend_node_ids_ = std::move(backend_node_ids);
+  return console_message;
+}
+
 ConsoleMessage::ConsoleMessage(MessageSource source,
                                MessageLevel level,
                                const String& message,
@@ -90,6 +102,10 @@ const String& ConsoleMessage::Message() const {
 
 const String& ConsoleMessage::WorkerId() const {
   return worker_id_;
+}
+
+const Vector<DOMNodeId>& ConsoleMessage::BackendNodeIds() const {
+  return backend_node_ids_;
 }
 
 DEFINE_TRACE(ConsoleMessage) {}

@@ -1170,6 +1170,9 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
 
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
 
+  // Provide warnings about the accessibility of password forms on the page.
+  devtools_page_analyser.AnalyseDocumentDOM(render_frame()->GetWebFrame());
+
   // Make sure that this security origin is allowed to use password manager.
   blink::WebSecurityOrigin origin = frame->GetDocument().GetSecurityOrigin();
   if (logger) {
@@ -1297,6 +1300,7 @@ void PasswordAutofillAgent::DidFinishDocumentLoad() {
   // PasswordManager know that forms are loaded, even though we can't yet tell
   // whether they're visible.
   form_util::ScopedLayoutPreventer layout_preventer;
+  devtools_page_analyser.Reset();
   SendPasswordForms(false);
 }
 

@@ -255,12 +255,15 @@ Console.ConsoleViewMessage = class {
       } else {
         messageElement = this._format([messageText]);
       }
+    } else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.DOM) {
+      messageText = Common.UIString('[DOM] %s', messageText);
+      messageElement = this._formatAsDOMMessage(messageText, new Set(this._message.backendNodeIds));
     } else {
       if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
         messageText = Common.UIString('[Violation] %s', messageText);
       else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Intervention)
         messageText = Common.UIString('[Intervention] %s', messageText);
-      if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
+      else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
         messageText = Common.UIString('[Deprecation] %s', messageText);
       var args = this._message.parameters || [messageText];
       messageElement = this._format(args);
@@ -617,6 +620,55 @@ Console.ConsoleViewMessage = class {
         note.title = Common.UIString('Function was resolved from bound function.');
       }
       result.addEventListener('contextmenu', this._contextMenuEventFired.bind(this, targetFunction), false);
+    }
+  }
+
+  /**
+   * @param {string} text
+   * @param {!Set<number>} backendNodeIds
+   * @return {!Element}
+   */
+  _formatAsDOMMessage(text, backendNodeIds) {
+    var formattedResult = createElement('span');
+    formattedResult.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(text));
+    this._appendNodeReferences(formattedResult, backendNodeIds);
+    return formattedResult;
+  }
+
+  /**
+   * @param {!Element} container
+   * @param {!Set<number>} backendNodeIds
+   */
+  async _appendNodeReferences(container, backendNodeIds) {
+    var objects =
+        await resolveBackendIdsToObjects(this._message.runtimeModel().target(), this._message, backendNodeIds);
+    if (objects.length === 0) {
+      // If all of the nodes that were causing issues no longer exist, there is no point displaying the console message.
+      ConsoleModel.consoleModel.removeMessage(this._message);
+      return;
+    }
+    for (var object of objects)
+      container.appendChild(this._formatParameter(object));
+    if (objects.length < backendNodeIds.size) {
+      var warning = createElementWithClass('span', 'gray-info-message');
+      warning.createTextChild(Common.UIString('(Some nodes could not be found.)'));
+      container.appendChild(warning);
+    }
+
+    /**
+     * @param {!SDK.Target} target
+     * @param {!ConsoleModel.ConsoleMessage} message
+     * @param {!Set<number>} backendNodeIds
+     * @return {!Promise<!Array<!SDK.RemoteObject>>}
+     */
+    async function resolveBackendIdsToObjects(target, message, backendNodeIds) {
+      /** @type {!Array<!Promise<?SDK.RemoteObject>>} */
+      var objects = [];
+      for (var backendNodeId of backendNodeIds) {
+        objects.push(
+            new SDK.DeferredDOMNode(message.runtimeModel().target(), backendNodeId).resolveToObject('console'));
+      }
+      return (await Promise.all(objects)).filter(object => object !== null);
     }
   }
 
