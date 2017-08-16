@@ -30,6 +30,7 @@
 #include "ui/keyboard/keyboard_layout_manager.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
+#include "ui/wm/core/window_animations.h"
 
 #if defined(OS_CHROMEOS)
 #include "base/process/launch.h"
@@ -415,9 +416,10 @@ void KeyboardController::HideKeyboard(HideReason reason) {
                          base::Unretained(this))));
       container_animator->AddObserver(animation_observer_.get());
 
-      ui::ScopedLayerAnimationSettings settings(container_animator);
-      settings.SetTweenType(gfx::Tween::FAST_OUT_LINEAR_IN);
-      settings.SetTransitionDuration(
+      wm::ScopedHidingAnimationSettings settings(container_.get());
+      settings.layer_animation_settings()->SetTweenType(
+          gfx::Tween::FAST_OUT_LINEAR_IN);
+      settings.layer_animation_settings()->SetTransitionDuration(
           base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
       gfx::Transform transform;
       transform.Translate(0, kAnimationDistance);
