@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6df187b_0a5f43d3",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-16T17:25:43Z",
+      "side": 1,
+      "message": "Do we need to reset .isInvalid on the password fields here?",
+      "revId": "d2d6ff5a501fac2afd8a8b0a8cf7ade5393c6969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
