@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "32703b76_83a5f18c",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T01:34:02Z",
+      "side": 1,
+      "message": "IIUC, the animator_-\u003eobservers_ are added to the animation_sequence in LayerAnimator::OnScheduled [1]. So even animator_ removed all the observer, when animation_sequence finishes, the observer will still be called.\n[1] https://cs.chromium.org/chromium/src/ui/compositor/layer_animator.cc?l\u003d877\u0026rcl\u003daa7fa15ec4c7e97eaf67f08a3c3f985191b2c563",
+      "parentUuid": "de0caa30_17278947",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e1f2f6_96a16d4c",
         "filename": "ui/compositor/scoped_layer_animation_settings.h",
         "patchSetId": 1
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "The logic here: https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?rcl\u003d74ccc9ea10c5f94bcdddb1e0dc052f3f6fdcc762\u0026l\u003d150\nsuggests that the ui::Layer won\u0027t be destroyed before the animation is destroyed (the comment there is very old, so the references to \"WebLayer\" should be interpreted as \"cc::Layer\"). \n\nSimilarly, there\u0027s logic here: https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?rcl\u003d74ccc9ea10c5f94bcdddb1e0dc052f3f6fdcc762\u0026l\u003d613\nto destroy composited animations whenever the ui::Layer\u0027s cc::Layer is changed.\n\nThe delegate_ is itself a ui::Layer (in practice). Is the delegate change you\u0027re asking about the one in LayerAnimator::SetDelegate? That stops all animations before changing the delegate: https://cs.chromium.org/chromium/src/ui/compositor/layer_animator.cc?rcl\u003d27c9dfacea818a6aca8ca96a2e01fcb72e966322\u0026l\u003d128\n\nDid you have any other lifetime issues in mind?",
       "parentUuid": "f20ee3d3_61b69100",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d8d539_c5a5b274",
+        "filename": "ui/compositor/scoped_layer_animation_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T01:34:02Z",
+      "side": 1,
+      "message": "No. Thanks a lot. It is very helpful.\nI will upload the second solution soon.",
+      "parentUuid": "59e88ca3_9273ff90",
       "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
