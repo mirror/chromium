@@ -13,6 +13,7 @@ public final class WebApkMetaDataKeys {
     public static final String RUNTIME_HOST_APPLICATION_NAME =
             "org.chromium.webapk.shell_apk.runtimeHostApplicationName";
     public static final String START_URL = "org.chromium.webapk.shell_apk.startUrl";
+    public static final String INCLUDE_START_URL = "org.chromium.webapk.shell_apk.includeStartUrl";
     public static final String NAME = "org.chromium.webapk.shell_apk.name";
     public static final String SHORT_NAME = "org.chromium.webapk.shell_apk.shortName";
     public static final String SCOPE = "org.chromium.webapk.shell_apk.scope";
