@@ -20,13 +20,20 @@ def main():
 
   # mc writes to stderr, so this explicitly redirects to stdout and eats it.
   try:
-    # This needs shell=True to search the path in env_dict for the mc
-    # executable.
     rest = sys.argv[2:]
-    subprocess.check_output(['mc.exe'] + rest,
+    if sys.platform == 'win32':
+      mc = ['mc.exe']
+      # This needs shell=True to search the path in env_dict for the mc
+      # executable.
+      needs_shell = True
+    else:
+      # TODO(thakis): We don't necessarily need to set env_dict in this path.
+      mc = [sys.executable, os.path.join(os.path.dirname(__file__), 'mc.py')]
+      needs_shell = False
+    subprocess.check_output(mc + rest,
                             env=env_dict,
                             stderr=subprocess.STDOUT,
-                            shell=True)
+                            shell=needs_shell)
     # We require all source code (in particular, the header generated here) to
     # be UTF-8. jinja can output the intermediate .mc file in UTF-8 or UTF-16LE.
     # However, mc.exe only supports Unicode via the -u flag, and it assumes when
