@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b73dd0c9_e525225e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:28:16Z",
+      "side": 1,
+      "message": "nit: You don\u0027t have to have a function to get the URL here as you only used it once. Or you can have a const char* as a const put in anonymous namespace.",
+      "revId": "54b2df81c066c960c2302c50ff68fdb021a9ec74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
