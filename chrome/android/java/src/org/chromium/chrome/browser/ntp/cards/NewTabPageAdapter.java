@@ -274,6 +274,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         assert child == mRoot;
         notifyItemRangeInserted(itemPosition, itemCount);
         if (mBottomSpacer != null) mBottomSpacer.refresh();
+        if (mSections.hasRecentlyInsertedContent()) mRecyclerView.highlightContentLength();
 
         updateAllDismissedVisibility();
     }
