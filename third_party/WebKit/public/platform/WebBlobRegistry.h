@@ -33,6 +33,7 @@
 
 #include "WebCommon.h"
 #include "WebThreadSafeData.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 
 #include <memory>
 
@@ -95,6 +96,11 @@ class WebBlobRegistry {
   virtual void RemoveBlobDataRef(const WebString& uuid) {}
   virtual void RegisterPublicBlobURL(const WebURL&, const WebString& uuid) {}
   virtual void RevokePublicBlobURL(const WebURL&) {}
+
+  // This is a transient method for easier transition for legacy code that
+  // still relies on Blob UUID.
+  BLINK_PLATFORM_EXPORT static mojo::ScopedMessagePipeHandle GetBlobPtrFromUUID(
+      const WebString& uuid);
 };
 
 }  // namespace blink
