@@ -70,6 +70,30 @@
       "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c824e230_15da83f6",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T18:25:30Z",
+      "side": 1,
+      "message": "The primary reason of using a SessionType here is for swap metrics in this CL. We need one driver for SessionRestore and the other for BackgroundTabOpen. We will need names for those two drivers any way. If the driver is already called |background_tab_open_swap_metrics_driver_|, it  makes sense to just define the SessionType to match the name. In addition, we have OnBackgroundTabOpenSession[Started|Ended] and need a clear definition of BackgroundTabOpen anyway.",
+      "parentUuid": "d7648b5e_581dc953",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
