@@ -21,6 +21,7 @@ TEST_PAGES_LOCATION_BY_REPO = {
     'test-pages': {
         'dirs': [
             'src/canvas-capture',
+            'src/codec_constraints',
             'src/multiple-peerconnections',
             'src/pause-play',
         ],
