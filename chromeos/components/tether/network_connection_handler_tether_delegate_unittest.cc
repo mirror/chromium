@@ -96,6 +96,9 @@ class MockTetherDisconnector : public TetherDisconnector {
       void(const std::string& tether_network_guid,
            const base::Closure& success_callback,
            const network_handler::StringResultCallback& error_callback));
+
+  MOCK_METHOD3(SendDisconnectTetheringRequest,
+               void(const std::string& tether_network_guid));
 };
 
 }  // namespace
