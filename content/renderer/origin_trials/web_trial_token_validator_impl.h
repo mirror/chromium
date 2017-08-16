@@ -17,6 +17,9 @@ namespace content {
 // Blink to validate tokens to enable experimental features.
 //
 // This class is thread-safe.
+// TODO(crbug.com/738505)  Move this to WebKit/core once conversion between
+// blink::WebSecurityOrigin and url::Origin is allowed in blink. See
+// https://crbug.com/490074
 class CONTENT_EXPORT WebTrialTokenValidatorImpl
     : public blink::WebTrialTokenValidator {
  public:
@@ -24,7 +27,8 @@ class CONTENT_EXPORT WebTrialTokenValidatorImpl
   ~WebTrialTokenValidatorImpl() override;
 
   // blink::WebTrialTokenValidator implementation
-  blink::WebOriginTrialTokenStatus ValidateToken(
+  blink::OriginTrialTokenStatus ValidateToken(
+      const blink::TrialTokenValidator& validator,
       const blink::WebString& token,
       const blink::WebSecurityOrigin& origin,
       blink::WebString* feature_name) override;
