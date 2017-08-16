@@ -4,7 +4,6 @@
 
 #include "platform/graphics/CanvasColorParams.h"
 
-#include "platform/RuntimeEnabledFeatures.h"
 #include "ui/gfx/color_space.h"
 
 namespace blink {
@@ -51,25 +50,6 @@ void CanvasColorParams::SetCanvasPixelFormat(CanvasPixelFormat pixel_format) {
 
 bool CanvasColorParams::UsesOutputSpaceBlending() const {
   return color_space_ == kLegacyCanvasColorSpace;
-}
-
-bool CanvasColorParams::ColorCorrectRenderingEnabled() {
-  return RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
-}
-
-bool CanvasColorParams::ColorCorrectRenderingInSRGBOnly() {
-  return RuntimeEnabledFeatures::ColorCorrectRenderingEnabled() &&
-         !RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-}
-
-bool CanvasColorParams::ColorCorrectRenderingInAnyColorSpace() {
-  return RuntimeEnabledFeatures::ColorCorrectRenderingEnabled() &&
-         RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-}
-
-bool CanvasColorParams::ColorCorrectNoColorSpaceToSRGB() const {
-  return color_space_ == kLegacyCanvasColorSpace &&
-         RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
 }
 
 sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpaceForSkSurfaces() const {
