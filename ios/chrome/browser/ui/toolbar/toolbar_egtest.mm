@@ -313,10 +313,11 @@ void SelectNewTabPagePanel(NewTabPage::PanelIdentifier panel_type) {
     // Can't access share menu from xctest on iOS 11+, so use the text field
     // callout bar instead.
     [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
-        performAction:grey_longPress()];
-    [[[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Select All")]
-        inRoot:grey_kindOfClass(NSClassFromString(@"UICalloutBarButton"))]
         performAction:grey_tap()];
+    // Tap twice to get the pre-edit label callout bar copy button.
+    [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
+        performAction:grey_tap()];
+
     [[[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Copy")]
         inRoot:grey_kindOfClass(NSClassFromString(@"UICalloutBarButton"))]
         performAction:grey_tap()];
