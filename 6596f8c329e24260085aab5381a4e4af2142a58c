@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ac881fc1_fffc775b",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-16T23:17:45Z",
+      "side": 1,
+      "message": "Done.\n\nShould we add a scope in accelerator id:\nstruct AcceleratorId {\n  int scope;  // browser / ash, etc, defined in ui/base/accelerators/\n  int value;\n};\n\nI have no idea if positive / negative can handle all the cases, which equals to have only two scopes. Is there any possibility we have a third scope?",
+      "parentUuid": "7c086556_1734cfc0",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 79
+      },
+      "revId": "6596f8c329e24260085aab5381a4e4af2142a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3fac8a3_431e2f41",
         "filename": "ash/accelerators/accelerator_controller.h",
         "patchSetId": 5
@@ -69,6 +93,30 @@
       "revId": "6596f8c329e24260085aab5381a4e4af2142a58c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f5c57a_502ee573",
+        "filename": "ash/accelerators/accelerator_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-16T23:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3fac8a3_431e2f41",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 48
+      },
+      "revId": "6596f8c329e24260085aab5381a4e4af2142a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
