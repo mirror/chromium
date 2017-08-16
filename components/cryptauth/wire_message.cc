@@ -153,6 +153,11 @@ std::string WireMessage::Serialize() const {
     body.SetString(kPayloadKey, base64_payload);
     body.SetString(kFeatureKey, feature_);
 
+    // Debugging purposes: Add an extra key/value pair, where the value is a
+    // string of length 50,000.
+    std::string long_string(50000u, 'a');
+    body.SetString("longDebugField", long_string);
+
     if (!base::JSONWriter::Write(body, &json_body)) {
       PA_LOG(ERROR) << "Failed to convert WireMessage body to JSON: " << body;
       return std::string();
