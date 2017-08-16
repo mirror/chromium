@@ -16,6 +16,29 @@
       "revId": "54b2df81c066c960c2302c50ff68fdb021a9ec74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e47604_e9e56788",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 80718,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T19:40:29Z",
+      "side": 1,
+      "message": "nit: metric (not plural)",
+      "range": {
+        "startLine": 80718,
+        "startChar": 67,
+        "endLine": 80718,
+        "endChar": 74
+      },
+      "revId": "54b2df81c066c960c2302c50ff68fdb021a9ec74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
