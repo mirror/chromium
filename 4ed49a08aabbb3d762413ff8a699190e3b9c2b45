@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b16c9756_17e4b391",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7136b3_c7139174",
+      "range": {
+        "startLine": 9,
+        "startChar": 77,
+        "endLine": 9,
+        "endChar": 88
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87d448ae_850b1588",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a6213c_bddb175d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d448ae_850b1588",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 90
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f47ff7bb_20b89a10",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "Removal of functionality will happen in a separate CL.",
+      "parentUuid": "8b68da92_285f5637",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75aeef2b_590e643d",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 9
@@ -106,6 +178,30 @@
       "writtenOn": "2017-08-16T04:06:57Z",
       "side": 1,
       "message": "Has this gone through UI review / been reviewed by the Settings team? You are adding a new piece of UI to the top-level Settings page so I think it should.\n\nThis looks fairly out-of-place (just a piece of text indented). I would\u0027ve thought it would be styled differently (with a warning triangle, grey text, etc).",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 41
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2099186f_15f46015",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "A member of the settings team (dpapad@) has reviewed this CL.",
+      "parentUuid": "75aeef2b_590e643d",
       "range": {
         "startLine": 149,
         "startChar": 12,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ddfd780f_5f5c5fde",
+        "filename": "chrome/browser/search/hotword_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "I\u0027ve simplified this CL based on your suggestion, thanks!",
+      "parentUuid": "71dbabc3_e088b387",
+      "range": {
+        "startLine": 416,
+        "startChar": 37,
+        "endLine": 416,
+        "endChar": 70
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5fe05b0_626362a3",
         "filename": "chrome/browser/search/hotword_service_unittest.cc",
         "patchSetId": 9
@@ -152,6 +272,30 @@
       "writtenOn": "2017-08-16T04:06:57Z",
       "side": 1,
       "message": "As above, this feature does not exist at all on non-ChromeOS, so this test can be deleted.",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 348,
+        "endChar": 25
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3628586a_86231e2b",
+        "filename": "chrome/browser/search/hotword_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "This file is no longer modified.  Removal of hotword functionality will be done in a separate CL.",
+      "parentUuid": "b5fe05b0_626362a3",
       "range": {
         "startLine": 348,
         "startChar": 4,
@@ -181,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "77e15ad6_4b84cb5d",
+        "filename": "chrome/browser/search/hotword_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "This file is no longer modified.  Removal of hotword functionality will be done in a separate CL.",
+      "parentUuid": "a3ed9e5c_6a6c13ae",
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e9a089f_f77cfa68",
         "filename": "chrome/test/data/webui/settings/search_page_test.js",
         "patchSetId": 9
@@ -192,6 +354,30 @@
       "writtenOn": "2017-08-16T04:06:57Z",
       "side": 1,
       "message": "Delete this block. As above, hotwording is not a thing on non-ChromeOS.",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 22
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50526528_1c084315",
+        "filename": "chrome/test/data/webui/settings/search_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-16T23:37:13Z",
+      "side": 1,
+      "message": "This file is no longer modified.  Removal of hotword functionality will be done in a separate CL.",
+      "parentUuid": "2e9a089f_f77cfa68",
       "range": {
         "startLine": 122,
         "startChar": 9,
