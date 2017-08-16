@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb1657ee_053d8e0c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-16T09:34:32Z",
+      "side": 0,
+      "message": "How come this isn\u0027t needed any more?",
+      "revId": "a557c8af25770cbc8be68985f19172a4e8fdfdea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

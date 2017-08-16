@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a244aee_60e8b077",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-16T09:34:32Z",
+      "side": 1,
+      "message": "This isn\u0027t obvious to me. Maybe it\u0027s the flu, or maybe it\u0027s subtle? I expect it is something like:\n- if we are using modal dialogs, they are modal so this shouldn\u0027t happen or something\n- if we using infobars, the infobar system will keep the view but hide it automatically for us.\n\nIs that right? If so I think a comment would help.",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9922ae_e209bbc6",
+        "filename": "chrome/browser/permissions/permission_request_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-16T09:34:32Z",
+      "side": 1,
+      "message": "Any reason you can\u0027t do this now?",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
