@@ -31,6 +31,9 @@ class COMPOSITOR_EXPORT ScopedLayerAnimationSettings {
 
   void SetAnimationMetricsReporter(AnimationMetricsReporter* reporter);
   void SetTransitionDuration(base::TimeDelta duration);
+  // This will call SetCacheRenderSurface on the animating ui::Layer. The cache
+  // flag will be reset at the end of the animation.
+  void CacheRenderSurface();
   base::TimeDelta GetTransitionDuration() const;
 
   // Locks transition duration in |animator_|. When transition duration
@@ -46,6 +49,8 @@ class COMPOSITOR_EXPORT ScopedLayerAnimationSettings {
   LayerAnimator::PreemptionStrategy GetPreemptionStrategy() const;
 
  private:
+  class CleanupCacheRenderSurfaceObserver;
+
   scoped_refptr<LayerAnimator> animator_;
   bool old_is_transition_duration_locked_;
   base::TimeDelta old_transition_duration_;

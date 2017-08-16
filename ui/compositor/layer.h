@@ -461,6 +461,7 @@ class COMPOSITOR_EXPORT Layer
   SkColor GetColorForAnimation() const override;
   float GetTemperatureFromAnimation() const override;
   float GetDeviceScaleFactor() const override;
+  ui::Layer* GetUiLayer() override;
   cc::Layer* GetCcLayer() const override;
   LayerThreadedAnimationDelegate* GetThreadedAnimationDelegate() override;
   LayerAnimatorCollection* GetLayerAnimatorCollection() override;
