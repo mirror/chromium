@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a87a5e_e6c4d8fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:40:21Z",
+      "side": 1,
+      "message": "lines 7-8 should be one line: the first line is the summary of the CL",
+      "revId": "af42b32bf1661c55325bb1a7aa46e27b735a4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a5405c_dbb4800d",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:40:21Z",
+      "side": 1,
+      "message": "can this be const GURL\u0026",
+      "revId": "af42b32bf1661c55325bb1a7aa46e27b735a4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78eafd9a_f2581183",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:40:21Z",
+      "side": 1,
+      "message": "is |host_| ever null? looks like the constructor sets it and it never changes",
+      "revId": "af42b32bf1661c55325bb1a7aa46e27b735a4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7614afcf_54d78d43",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:40:21Z",
+      "side": 1,
+      "message": "const GURL\u0026",
+      "revId": "af42b32bf1661c55325bb1a7aa46e27b735a4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0b7535_a08419ff",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:40:21Z",
+      "side": 1,
+      "message": "Raw pointers tend to be scary. It looks like |host_| owns SharedWorkerContentSettingsProxyImpl, so you could either:\n1) Add a comment like \"// Owns |this|\"\n2) Just rename |host_| to |owner_| then you don\u0027t need a comment.\n\nI prefer 2) and also mentioning in the class comments that SharedWorkerHost owns this class.",
+      "revId": "af42b32bf1661c55325bb1a7aa46e27b735a4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d03bea3_59b8c12f",
+        "filename": "third_party/WebKit/public/web/worker_content_settings_proxy.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T01:40:21Z",
+      "side": 1,
+      "message": "can remove this",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "af42b32bf1661c55325bb1a7aa46e27b735a4fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
