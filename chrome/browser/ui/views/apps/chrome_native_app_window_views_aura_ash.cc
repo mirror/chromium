@@ -14,6 +14,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
 #include "ash/wm/panels/panel_frame_view.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_state_delegate.h"
@@ -118,9 +119,24 @@ class NativeAppWindowStateDelegate : public ash::wm::WindowStateDelegate,
 
 }  // namespace
 
-ChromeNativeAppWindowViewsAuraAsh::ChromeNativeAppWindowViewsAuraAsh() {}
+ChromeNativeAppWindowViewsAuraAsh::ChromeNativeAppWindowViewsAuraAsh() {
+  // TODO(crbug.com/756046): Remove this check once this class uses
+  // TouchViewObserver.
+  if (!ash_util::IsRunningInMash()) {
+    DCHECK(ash::Shell::HasInstance());
+    ash::Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  }
+}
 
-ChromeNativeAppWindowViewsAuraAsh::~ChromeNativeAppWindowViewsAuraAsh() {}
+ChromeNativeAppWindowViewsAuraAsh::~ChromeNativeAppWindowViewsAuraAsh() {
+  // TODO(crbug.com/756046): Remove this check once this class uses
+  // TouchViewObserver.
+  if (!ash_util::IsRunningInMash()) {
+    DCHECK(ash::Shell::HasInstance());
+    if (ash::Shell::Get()->tablet_mode_controller())
+      ash::Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  }
+}
 
 void ChromeNativeAppWindowViewsAuraAsh::InitializeWindow(
     AppWindow* app_window,
@@ -185,8 +201,8 @@ ChromeNativeAppWindowViewsAuraAsh::CreateNonStandardAppFrame() {
       HasFrameColor(), ActiveFrameColor(), InactiveFrameColor());
   frame->Init();
 
-// For Aura windows on the Ash desktop the sizes are different and the user
-// can resize the window from slightly outside the bounds as well.
+  // For Aura windows on the Ash desktop the sizes are different and the user
+  // can resize the window from slightly outside the bounds as well.
   frame->SetResizeSizes(ash::kResizeInsideBoundsSize,
                         ash::kResizeOutsideBoundsSize,
                         ash::kResizeAreaCornerSize);
@@ -301,6 +317,19 @@ ChromeNativeAppWindowViewsAuraAsh::CreateNonClientFrameView(
       immersive_fullscreen_controller_.get());
   custom_frame_view->GetHeaderView()->set_context_menu_controller(this);
 
+  // Enter immersive mode if the app is opened in tablet mode with the hide
+  // titlebars feature enabled.
+  if (!ash_util::IsRunningInMash()) {
+    DCHECK(ash::Shell::HasInstance());
+    if (ash::Shell::Get()
+            ->tablet_mode_controller()
+            ->ShouldAutoHideTitlebars() &&
+        CanMaximize()) {
+      immersive_fullscreen_controller_->SetEnabled(
+          ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, true);
+    }
+  }
+
   if (HasFrameColor()) {
     custom_frame_view->SetFrameColors(ActiveFrameColor(),
                                       InactiveFrameColor());
@@ -313,11 +342,23 @@ void ChromeNativeAppWindowViewsAuraAsh::SetFullscreen(int fullscreen_types) {
   ChromeNativeAppWindowViewsAura::SetFullscreen(fullscreen_types);
 
   if (immersive_fullscreen_controller_.get()) {
-    // |immersive_fullscreen_controller_| should only be set if immersive
-    // fullscreen is the fullscreen type used by the OS.
-    immersive_fullscreen_controller_->SetEnabled(
-        ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP,
-        (fullscreen_types & AppWindow::FULLSCREEN_TYPE_OS) != 0);
+    // Immersive mode should not change if we set fullscreen on a maximizable
+    // app in tablet mode when the hide titlebars feature is enabled.
+    bool hide_titlebars_enabled = false;
+    if (!ash_util::IsRunningInMash()) {
+      hide_titlebars_enabled = ash::Shell::Get()
+                                   ->tablet_mode_controller()
+                                   ->ShouldAutoHideTitlebars() &&
+                               CanMaximize();
+    }
+    if (!hide_titlebars_enabled) {
+      // |immersive_fullscreen_controller_| should only be set if immersive
+      // fullscreen is the fullscreen type used by the OS.
+      immersive_fullscreen_controller_->SetEnabled(
+          ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP,
+          (fullscreen_types & AppWindow::FULLSCREEN_TYPE_OS) != 0);
+    }
+
     // Autohide the shelf instead of hiding the shelf completely when only in
     // OS fullscreen.
     ash::wm::WindowState* window_state =
@@ -362,6 +403,29 @@ void ChromeNativeAppWindowViewsAuraAsh::SetActivateOnPointer(
     bool activate_on_pointer) {
   widget()->GetNativeWindow()->SetProperty(aura::client::kActivateOnPointerKey,
                                            activate_on_pointer);
+}
+
+void ChromeNativeAppWindowViewsAuraAsh::OnTabletModeStarted() {
+  // Enter immersive mode if the widget was can maximize and the hide titlebars
+  // in tablet mode feature is enabled.
+  if (immersive_fullscreen_controller_.get() &&
+      ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
+      CanMaximize()) {
+    immersive_fullscreen_controller_->SetEnabled(
+        ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, true);
+  }
+}
+
+void ChromeNativeAppWindowViewsAuraAsh::OnTabletModeEnded() {
+  // Exit immersive mode if the widget was maximized and the hide titlebars in
+  // tablet mode feature is enabled, but remain in immersive mode if the widget
+  // is fullscreened.
+  if (immersive_fullscreen_controller_.get() && !widget()->IsFullscreen() &&
+      ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
+      CanMaximize()) {
+    immersive_fullscreen_controller_->SetEnabled(
+        ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, false);
+  }
 }
 
 void ChromeNativeAppWindowViewsAuraAsh::OnMenuClosed() {

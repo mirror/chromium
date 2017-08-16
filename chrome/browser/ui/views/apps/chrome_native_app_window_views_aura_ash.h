@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/gtest_prod_util.h"
 #include "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura.h"
 #include "ui/views/context_menu_controller.h"
@@ -26,18 +27,19 @@ class MenuRunner;
 
 // Ash-specific parts of ChromeNativeAppWindowViewsAura. This is used on CrOS.
 class ChromeNativeAppWindowViewsAuraAsh : public ChromeNativeAppWindowViewsAura,
-                                          public views::ContextMenuController {
+                                          public views::ContextMenuController,
+                                          public ash::TabletModeObserver {
  public:
   ChromeNativeAppWindowViewsAuraAsh();
   ~ChromeNativeAppWindowViewsAuraAsh() override;
 
  protected:
-  // NativeAppWindowViews implementation.
+  // NativeAppWindowViews:
   void InitializeWindow(
       extensions::AppWindow* app_window,
       const extensions::AppWindow::CreateParams& create_params) override;
 
-  // ChromeNativeAppWindowViews implementation.
+  // ChromeNativeAppWindowViews:
   void OnBeforeWidgetInit(
       const extensions::AppWindow::CreateParams& create_params,
       views::Widget::InitParams* init_params,
@@ -46,25 +48,29 @@ class ChromeNativeAppWindowViewsAuraAsh : public ChromeNativeAppWindowViewsAura,
                                views::Widget* widget) override;
   views::NonClientFrameView* CreateNonStandardAppFrame() override;
 
-  // ui::BaseWindow implementation.
+  // ui::BaseWindow:
   gfx::Rect GetRestoredBounds() const override;
   ui::WindowShowState GetRestoredState() const override;
   bool IsAlwaysOnTop() const override;
 
-  // views::ContextMenuController implementation.
+  // views::ContextMenuController:
   void ShowContextMenuForView(views::View* source,
                               const gfx::Point& p,
                               ui::MenuSourceType source_type) override;
 
-  // WidgetDelegate implementation.
+  // WidgetDelegate:
   views::NonClientFrameView* CreateNonClientFrameView(
       views::Widget* widget) override;
 
-  // NativeAppWindow implementation.
+  // NativeAppWindow:
   void SetFullscreen(int fullscreen_types) override;
   void UpdateDraggableRegions(
       const std::vector<extensions::DraggableRegion>& regions) override;
   void SetActivateOnPointer(bool activate_on_pointer) override;
+
+  // ash:TabletModeObserver:
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ShapedAppWindowTargeterTest,
