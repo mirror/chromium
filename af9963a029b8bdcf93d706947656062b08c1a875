@@ -69,6 +69,24 @@
       "revId": "af9963a029b8bdcf93d706947656062b08c1a875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3497a1a_0d5cfe0f",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-16T00:46:36Z",
+      "side": 1,
+      "message": "Ah, I see. Okay.",
+      "parentUuid": "a81bc28a_3cbf161a",
+      "revId": "af9963a029b8bdcf93d706947656062b08c1a875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
