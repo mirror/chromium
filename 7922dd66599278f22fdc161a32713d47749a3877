@@ -111,6 +111,29 @@
     },
     {
       "key": {
+        "uuid": "4fa97eae_b42c7ad4",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-16T20:23:40Z",
+      "side": 1,
+      "message": "Please handle the case where the blob here is non-existent.",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 63
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31bb53d2_83dad8f8",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 9
@@ -140,6 +163,29 @@
       "side": 1,
       "message": "Oh yeah... I wasn\u0027t sure about how to Get InterfaceProvider here, then I tried Platform::Current()-\u003eGetInterfaceProvider, then I got linker error by trying to instantiate blink variant of BlobRegistryPtr in content (onky on win), and added up some work around like this.  I\u0027d love to hear better alternative way!",
       "parentUuid": "31bb53d2_83dad8f8",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25928276_59201767",
+        "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-16T20:23:40Z",
+      "side": 1,
+      "message": "Question: with c++11 isn\u0027t this guaranteed for a scoped static variable? Threadsafe initialization?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 33
+      },
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
