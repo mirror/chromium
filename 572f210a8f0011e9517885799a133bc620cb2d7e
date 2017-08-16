@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0778e7_6c822e67",
+        "filename": "ash/system/network/network_state_list_detailed_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T17:19:15Z",
+      "side": 1,
+      "message": "Hrm, we really ought to add an | operator to NetworkTypePattern so that we can do:\n\nnetwork_state_handler-\u003eGetScanningByType(NetworkTypePattern::WiFi() | NetworkTypePattern::Tether());\n\nThis is kind of inefficient as-is. Can you either do that here or create an issue (you can assign it to me) to do that, and add a TODO referencing the issue here? Thanks!",
+      "revId": "572f210a8f0011e9517885799a133bc620cb2d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
