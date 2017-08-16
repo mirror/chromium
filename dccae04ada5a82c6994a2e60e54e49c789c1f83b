@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2734af7_8b5aee91",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T20:56:25Z",
+      "side": 1,
+      "message": "Isn\u0027t this test identical to testReturnsNullIfHostBrowserSpecifiedInManifestIsUninstalled()",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f25833_89b39b03",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T20:56:25Z",
+      "side": 1,
+      "message": "Instead of sInstalledBrowsers, can you use\nnew String[] {ANOTHER_BROWSER_INSTALLED_SUPPORTING_WEBAPKS, BROWSER_INSTALLED_NOT_SUPPORTING_WEBAPKS}\n\nThis way you don\u0027t need to call uninstallBrowser()",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e6772f_dd6a204a",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T20:56:25Z",
+      "side": 1,
+      "message": "Can you make the function comment more descriptive. From the comment I don\u0027t know how this test is different from testReturnsOtherBrowserIfDefaultBrowserNotSupportingWebApk().",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a338c7c_13a95c1e",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -84,6 +135,23 @@
     },
     {
       "key": {
+        "uuid": "853de4f2_8b775e4a",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T20:56:25Z",
+      "side": 1,
+      "message": "For the sake of clarity can you replace sInstalledBrowsers with\n\nnew String[] {BROWSER_INSTALLED_SUPPORTING_WEBAPKS}",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b733cee5_172fe64f",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -128,6 +196,30 @@
       "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92bfa9e6_49cf5e2b",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T20:56:25Z",
+      "side": 1,
+      "message": "I double checked this locally. A user may have just one browser installed which does not have android.intent.category.DEFAULT category set in\n\n\u003cintent-filter\u003e\n   \u003caction android:name\u003d\"android.intent.action.VIEW\" /\u003e\n   \u003cdata android:scheme\u003d\"http\" /\u003e\n\u003c/intent-filter\u003e\n\nin which case WebApkUtils#getDefaultBrowserPackageName() returns null",
+      "parentUuid": "b733cee5_172fe64f",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 50
+      },
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
