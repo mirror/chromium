@@ -382,7 +382,8 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
 #if defined(OS_MACOSX)
       text_input_client_observer_(new TextInputClientObserver(this)),
 #endif
-      time_to_first_active_paint_recorded_(true),
+      time_to_first_active_paint_recorded_after_purged_(true),
+      time_to_first_active_paint_recorded_5min_after_backgrounded_(true),
       was_shown_time_(base::TimeTicks::Now()),
       current_content_source_id_(0),
       widget_binding_(this, std::move(widget_request)),
@@ -992,17 +993,49 @@ void RenderWidget::UpdateVisualState() {
   GetWebWidget()->UpdateAllLifecyclePhases();
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(false);
 
-  if (time_to_first_active_paint_recorded_)
+  RecordTimeToFirstActivePaint(TTFAP_AFTER_PURGED);
+  RecordTimeToFirstActivePaint(TTFAP_5MIN_AFTER_BACKGROUNDED);
+}
+
+void RenderWidget::ClearTimeToFirstActivePaintRecorded() {
+  time_to_first_active_paint_recorded_after_purged_ = false;
+  time_to_first_active_paint_recorded_5min_after_backgrounded_ = false;
+}
+
+bool RenderWidget::IsTimeToFirstActivePaintRecorded(
+    int ttfap_metric_type) const {
+  return ttfap_metric_type == TTFAP_AFTER_PURGED
+             ? time_to_first_active_paint_recorded_after_purged_
+             : time_to_first_active_paint_recorded_5min_after_backgrounded_;
+}
+
+void RenderWidget::RecordTimeToFirstActivePaint(int ttfap_metric_type) {
+  if (IsTimeToFirstActivePaintRecorded(ttfap_metric_type))
     return;
 
   RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
-  if (!render_thread_impl->NeedsToRecordFirstActivePaint())
-    return;
+  bool needs_update =
+      render_thread_impl->NeedsToRecordFirstActivePaint(ttfap_metric_type);
 
-  time_to_first_active_paint_recorded_ = true;
   base::TimeDelta sample = base::TimeTicks::Now() - was_shown_time_;
-  UMA_HISTOGRAM_TIMES("PurgeAndSuspend.Experimental.TimeToFirstActivePaint",
-                      sample);
+  switch (ttfap_metric_type) {
+    case TTFAP_AFTER_PURGED:
+      if (needs_update) {
+        UMA_HISTOGRAM_TIMES(
+            "PurgeAndSuspend.Experimental.TimeToFirstActivePaint", sample);
+      }
+      time_to_first_active_paint_recorded_after_purged_ = true;
+      break;
+    case TTFAP_5MIN_AFTER_BACKGROUNDED:
+      if (needs_update) {
+        UMA_HISTOGRAM_TIMES(
+            "PurgeAndSuspend.Experimental.TimeToFirstActivePaint."
+            "AfterBackgrounded.5min",
+            sample);
+      }
+      time_to_first_active_paint_recorded_5min_after_backgrounded_ = true;
+      break;
+  }
 }
 
 void RenderWidget::WillBeginCompositorFrame() {
@@ -2012,7 +2045,7 @@ void RenderWidget::SetHidden(bool hidden) {
 
   if (is_hidden_) {
     RenderThreadImpl::current()->WidgetHidden();
-    time_to_first_active_paint_recorded_ = false;
+    ClearTimeToFirstActivePaintRecorded();
   } else
     RenderThreadImpl::current()->WidgetRestored();
 
