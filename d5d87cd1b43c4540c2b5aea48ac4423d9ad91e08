@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b801b2_c2aaa19e",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T14:23:06Z",
+      "side": 1,
+      "message": "nit: you can move this above the declaration of \"DragContentForReporting\" enum.",
+      "revId": "d5d87cd1b43c4540c2b5aea48ac4423d9ad91e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17e425b_744e406a",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T14:23:06Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"__IPHONE_11_0\" here and everywhere else?",
+      "range": {
+        "startLine": 24,
+        "startChar": 66,
+        "endLine": 24,
+        "endChar": 79
+      },
+      "revId": "d5d87cd1b43c4540c2b5aea48ac4423d9ad91e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
