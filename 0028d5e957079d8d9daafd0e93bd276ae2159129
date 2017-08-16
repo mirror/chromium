@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1a498f3d_a14dbf56",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T20:17:53Z",
+      "side": 1,
+      "message": "Since we\u0027re in the browser I wanted to be sure it wouldn\u0027t crash on a NULL pointer. But since nobody else is checking this, I\u0027ve removed it.",
+      "parentUuid": "00195431_7b80d213",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb3814f_d2354d12",
         "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "81779009_dc09498d",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T20:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cb3814f_d2354d12",
+      "range": {
+        "startLine": 143,
+        "startChar": 6,
+        "endLine": 143,
+        "endChar": 9
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "238928da_7c407df5",
         "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
         "patchSetId": 2
@@ -115,6 +163,30 @@
       "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5b3451_f30af708",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T20:17:53Z",
+      "side": 1,
+      "message": "Done. Reordered so that it\u0027s clear that |salt| is empty.",
+      "parentUuid": "238928da_7c407df5",
+      "range": {
+        "startLine": 154,
+        "startChar": 35,
+        "endLine": 154,
+        "endChar": 42
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
