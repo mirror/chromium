@@ -681,6 +681,8 @@ PASS Set Document.ontouchstart
 PASS Enumerate Document.ontouchstart 
 PASS Set Window.ontouchstart 
 PASS Enumerate Window.ontouchstart 
+PASS Set Document.onvisibilitychange 
+PASS Enumerate Document.onvisibilitychange 
 PASS No Element.onvolumechange 
 PASS Set HTMLElement.onvolumechange 
 PASS Enumerate HTMLElement.onvolumechange 
