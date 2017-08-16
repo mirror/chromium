@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99ffdac_4d2209e6",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "I prefer to \u0027store_true\u0027 for boolean flags (that can only take True or False value), this would require changing the variable declaration to\n\n  parser.add_option(\u0027--staging_breakpad\u0027, dest\u003d\u0027use_breakpad_staging\u0027,\n      action\u003d\u0027store_true\u0027, default\u003dFalse,\n      help\u003d\u0027Use staging breakpad to upload reports. Ignored if --breakpad\u003d0.\u0027)\n\nThis will also require changing use to \u0027--staging_breakpad\u0027 instead of \u0027--staging_breakpad\u003d1\u0027.",
+      "range": {
+        "startLine": 243,
+        "startChar": 14,
+        "endLine": 243,
+        "endChar": 19
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d14265_b54496a9",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: I prefer to \u0027store_true\u0027 for boolean flags (that can only take True or False value), this would require changing the variable declaration to\n\n  parser.add_option(\u0027--staging_breakpad\u0027, dest\u003d\u0027use_breakpad_staging\u0027,\n      action\u003d\u0027store_true\u0027, default\u003dFalse,\n      help\u003d\u0027Use staging breakpad to upload reports. Ignored if --breakpad\u003d0.\u0027)\n\nThis will also require changing use to \u0027--staging_breakpad\u0027 instead of \u0027--staging_breakpad\u003d1\u0027.",
+      "range": {
+        "startLine": 243,
+        "startChar": 14,
+        "endLine": 243,
+        "endChar": 19
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c28bea_2cb16e51",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: this is not true, instead it is ignore if --breakpad\u003d\u003d0\n\n  \u0027Ignored if --breakpad\u003d0.\u0027",
+      "range": {
+        "startLine": 245,
+        "startChar": 7,
+        "endLine": 245,
+        "endChar": 29
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd08934_734156a1",
+        "filename": "build/mac/tweak_info_plist.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: can you update this comment to\n\n  # Map \"target_os\" passed from gn via the --platform parameter\n  # to the platform as known by breakpad.",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 40
+      },
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1741a25_a09671b7",
+        "filename": "ios/clean/chrome/app/steps/breakpad_initializer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: can\u0027t this be written on a singe line?\n\n  self.requiredFeatures \u003d @[];",
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9794ae0_5b39992d",
+        "filename": "ios/clean/chrome/app/steps/foregrounder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: trailing comma",
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865f7a12_9a00e5fb",
+        "filename": "ios/clean/chrome/app/steps/step_collections.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:23:47Z",
+      "side": 1,
+      "message": "nit: trailing comma",
+      "revId": "89d64bdc9fc901147fc031984e95b50aee31646b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
