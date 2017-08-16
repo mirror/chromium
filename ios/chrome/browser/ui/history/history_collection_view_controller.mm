@@ -13,13 +13,19 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/browsing_data/core/history_notice_utils.h"
+#include "components/history/core/browser/browsing_history_service.h"
+#include "components/history/core/browser/browsing_history_service_handler.h"
+#include "components/keyed_service/core/service_access_type.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#include "ios/chrome/browser/history/history_service_factory.h"
 #import "ios/chrome/browser/signin/authentication_service.h"
 #include "ios/chrome/browser/signin/authentication_service_factory.h"
+#include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
 #include "ios/chrome/browser/sync/sync_setup_service.h"
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
 #import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
@@ -71,6 +77,8 @@ const CGFloat kSeparatorInset = 10;
                                               HistoryServiceFacadeDelegate> {
   // Facade for communicating with HistoryService and WebHistoryService.
   std::unique_ptr<HistoryServiceFacade> _historyServiceFacade;
+  // Abstraction to communicate with HistoryService and WebHistoryService.
+  std::unique_ptr<BrowsingHistoryService> _browsingHistoryService;
   // The main browser state. Not owned by HistoryCollectionViewController.
   ios::ChromeBrowserState* _browserState;
   // Backing ivar for delegate property.
@@ -152,6 +160,11 @@ const CGFloat kSeparatorInset = 10;
       [super initWithLayout:layout style:CollectionViewControllerStyleDefault];
   if (self) {
     _historyServiceFacade.reset(new HistoryServiceFacade(browserState, self));
+    _browsingHistoryService.reset(new BrowsingHistoryService(
+        _historyServiceFacade.get(),
+        ios::HistoryServiceFactory::GetForBrowserState(
+            browserState, ServiceAccessType::EXPLICIT_ACCESS),
+        IOSChromeProfileSyncServiceFactory::GetForBrowserState(browserState)));
     _browserState = browserState;
     _delegate = delegate;
     _URLLoader = loader;
@@ -215,14 +228,16 @@ const CGFloat kSeparatorInset = 10;
 
 - (void)deleteSelectedItemsFromHistory {
   NSArray* deletedIndexPaths = self.collectionView.indexPathsForSelectedItems;
-  std::vector<HistoryServiceFacade::RemovedEntry> entries;
+  std::vector<BrowsingHistoryService::HistoryEntry> entries;
   for (NSIndexPath* indexPath in deletedIndexPaths) {
     HistoryEntryItem* object = base::mac::ObjCCastStrict<HistoryEntryItem>(
         [self.collectionViewModel itemAtIndexPath:indexPath]);
-    entries.push_back(
-        HistoryServiceFacade::RemovedEntry(object.URL, object.timestamp));
+    BrowsingHistoryService::HistoryEntry entry;
+    entry.url = object.URL;
+    entry.all_timestamps.insert(object.timestamp.ToInternalValue());
+    entries.push_back(entry);
   }
-  _historyServiceFacade->RemoveHistoryEntries(entries);
+  _browsingHistoryService->RemoveVisits(entries);
   [self removeSelectedItemsFromCollection];
 }
 
@@ -317,45 +332,40 @@ const CGFloat kSeparatorInset = 10;
 
 #pragma mark - HistoryServiceFacadeDelegate
 
-- (void)historyServiceFacade:(HistoryServiceFacade*)facade
-       didReceiveQueryResult:(HistoryServiceFacade::QueryResult)result {
+- (void)
+historyServiceFacadeOnQueryComplete:(HistoryServiceFacade*)facade
+                            results:(const std::vector<
+                                        BrowsingHistoryService::HistoryEntry>&)
+                                        results
+                 query_results_info:
+                     (const BrowsingHistoryService::QueryResultsInfo&)
+                         query_results_info {
   self.loading = NO;
-  // If history sync is enabled and there hasn't been a response from synced
-  // history, try fetching again.
-  SyncSetupService* syncSetupService =
-      SyncSetupServiceFactory::GetForBrowserState(_browserState);
-  if (syncSetupService->IsSyncEnabled() &&
-      syncSetupService->IsDataTypeEnabled(syncer::HISTORY_DELETE_DIRECTIVES) &&
-      !result.sync_returned) {
-    [self showHistoryMatchingQuery:_currentQuery];
-    return;
-  }
 
   // If there are no results and no URLs have been loaded, report that no
   // history entries were found.
-  if (result.entries.empty() && !self.hasHistoryEntries) {
+  if (results.empty() && !self.hasHistoryEntries) {
     DCHECK(self.entriesType == NO_ENTRIES);
     [self updateEntriesStatusMessage];
     [self.delegate historyCollectionViewControllerDidChangeEntries:self];
     return;
   }
 
-  self.finishedLoading = result.has_synced_results
-                             ? result.finished && result.sync_finished
-                             : result.finished;
-  self.entriesType = result.has_synced_results ? SYNCED_ENTRIES : LOCAL_ENTRIES;
-  std::vector<history::HistoryEntry> entries = result.entries;
+  self.finishedLoading = query_results_info.reached_beginning;
+  self.entriesType =
+      query_results_info.has_synced_results ? SYNCED_ENTRIES : LOCAL_ENTRIES;
 
   // Header section should be updated outside of batch updates, otherwise
   // loading indicator removal will not be observed.
   [self updateEntriesStatusMessage];
 
   __block NSMutableArray* filterResults = [NSMutableArray array];
-  __block NSString* searchQuery = [base::SysUTF16ToNSString(result.query) copy];
+  __block NSString* searchQuery =
+      [base::SysUTF16ToNSString(query_results_info.search_text) copy];
   [self.collectionView performBatchUpdates:^{
     // There should always be at least a header section present.
     DCHECK([[self collectionViewModel] numberOfSections]);
-    for (const history::HistoryEntry& entry : entries) {
+    for (const BrowsingHistoryService::HistoryEntry& entry : results) {
       HistoryEntryItem* item =
           [[HistoryEntryItem alloc] initWithType:ItemTypeHistoryEntry
                                     historyEntry:entry
@@ -372,8 +382,8 @@ const CGFloat kSeparatorInset = 10;
         if (([self isSearching] && [searchQuery length] > 0 &&
              [self.currentQuery isEqualToString:searchQuery]) ||
             self.filterQueryResult) {
-          // If in search mode, filter out entries that are not
-          // part of the search result.
+          // If in search mode, filter out entries that are not part of the
+          // search result.
           [self filterForHistoryEntries:filterResults];
           self.filterQueryResult = NO;
         }
@@ -555,10 +565,7 @@ const CGFloat kSeparatorInset = 10;
   options.max_count = kMaxFetchCount;
   options.matching_algorithm =
       query_parser::MatchingAlgorithm::ALWAYS_PREFIX_SEARCH;
-  _historyServiceFacade->QueryHistory(queryString, options);
-  // Also determine whether notice regarding other forms of browsing history
-  // should be shown.
-  _historyServiceFacade->QueryOtherFormsOfBrowsingHistory();
+  _browsingHistoryService->QueryHistory(queryString, options);
 }
 
 - (void)updateEntriesStatusMessage {

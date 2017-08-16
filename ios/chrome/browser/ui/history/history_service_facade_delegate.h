@@ -5,18 +5,27 @@
 #ifndef IOS_CHROME_BROWSER_UI_HISTORY_HISTORY_SERVICE_FACADE_DELEGATE_H_
 #define IOS_CHROME_BROWSER_UI_HISTORY_HISTORY_SERVICE_FACADE_DELEGATE_H_
 
+#include <vector>
+
+#include "components/history/core/browser/browsing_history_service.h"
 #include "ios/chrome/browser/ui/history/history_service_facade.h"
 
 // Delegate for HistoryServiceFacade. Defines methods to manage history query
-// results and deletion actions.
+// results, deletion actions, and other dependecies.
 @protocol HistoryServiceFacadeDelegate<NSObject>
 
 @optional
 
 // Notifies the delegate that the result of a history query has been retrieved.
 // Entries in |result| are already sorted.
-- (void)historyServiceFacade:(HistoryServiceFacade*)facade
-       didReceiveQueryResult:(HistoryServiceFacade::QueryResult)result;
+- (void)
+historyServiceFacadeOnQueryComplete:(HistoryServiceFacade*)facade
+                            results:(const std::vector<
+                                        BrowsingHistoryService::HistoryEntry>&)
+                                        results
+                 query_results_info:
+                     (const BrowsingHistoryService::QueryResultsInfo&)
+                         query_results_info;
 
 // Notifies the delegate that history entries have been deleted by a different
 // client and that the UI should be updated.
@@ -27,10 +36,6 @@
 // browsing history.
 - (void)historyServiceFacade:(HistoryServiceFacade*)facade
     shouldShowNoticeAboutOtherFormsOfBrowsingHistory:(BOOL)shouldShowNotice;
-
-// Notifies the delegate that history entry deletion has completed.
-- (void)historyServiceFacadeDidCompleteEntryRemoval:
-    (HistoryServiceFacade*)facade;
 
 @end
 

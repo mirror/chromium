@@ -91,7 +91,7 @@ NSString* FormattedTitle(const base::string16& title, const GURL& url) {
 @synthesize timestamp = _timestamp;
 
 - (instancetype)initWithType:(NSInteger)type
-                historyEntry:(const history::HistoryEntry&)entry
+                historyEntry:(const BrowsingHistoryService::HistoryEntry&)entry
                 browserState:(ios::ChromeBrowserState*)browserState
                     delegate:(id<HistoryEntryItemDelegate>)delegate {
   self = [super initWithType:type];
