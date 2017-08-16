@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15758f17_bd36b3a1",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-16T17:06:48Z",
+      "side": 1,
+      "message": "All the whitespace changes are the result of `git cl format`, not sure why, it looks ugly to me :/",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
