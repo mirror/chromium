@@ -483,12 +483,15 @@ chrome.test.runTests([
   function getRecentSetup() {
     // Clean up tree
     ["1", "2"].forEach(function(id) {
+      //chrome.bookmarks.getChildren(id, pass(function(children) {
       chrome.bookmarks.getChildren(id, pass(function(children) {
         children.forEach(function(child, i) {
-          chrome.bookmarks.removeTree(child.id, pass(function() {}));
+          chrome.bookmarks.removeTree(child.id, pass(function() {console.log('**pass**');}));
           // When we have removed the last child we can continue.
-          if (id == "2" && i == children.length - 1)
+          if (id == "2" && i == children.length - 1) {
+            console.log('afterRemove');
             afterRemove();
+          }
         });
       }));
     });
@@ -496,6 +499,7 @@ chrome.test.runTests([
     function afterRemove() {
       // Once done add 3 nodes
       chrome.bookmarks.getTree(pass(function(results) {
+        console.log('afterRemove.getTree.result');
         chrome.test.assertEq(0, results[0].children[0].children.length);
         chrome.test.assertEq(0, results[0].children[1].children.length);
         expected = results;
