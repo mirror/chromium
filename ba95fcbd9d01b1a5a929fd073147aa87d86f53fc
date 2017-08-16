@@ -46,6 +46,30 @@
       "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9a4810_afde5054",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-08-16T11:59:44Z",
+      "side": 0,
+      "message": "I am not sure what you are referring to when you say \"what I see earlier in the output\". I think we should not print DISABLED_ in the log either, although I don\u0027t have a strong opinion about it. However, we should definitely not report test locations with DISABLED_ prefix since it requires to move logic removing the prefix and merging results with and without prefix into event_mon pipeline and/or all systems that depend on it.",
+      "parentUuid": "f8a55637_485d22cd",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 46
+      },
+      "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
