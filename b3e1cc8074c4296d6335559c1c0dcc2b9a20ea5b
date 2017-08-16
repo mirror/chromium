@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "07885bea_648114cc",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-16T08:13:15Z",
+      "side": 1,
+      "message": "After looking for crashes, I found crbug.com/669239 which is likely caused by the race on |audio_devices_|.",
+      "parentUuid": "03ceb41b_bfdf2a63",
+      "revId": "b3e1cc8074c4296d6335559c1c0dcc2b9a20ea5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fedf7d4_71d546ab",
         "filename": "chromeos/dbus/cras_audio_client.h",
         "patchSetId": 7
