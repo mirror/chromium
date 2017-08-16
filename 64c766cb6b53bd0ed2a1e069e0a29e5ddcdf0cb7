@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0cd7b6ff_9d47a1f4",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T23:11:54Z",
+      "side": 1,
+      "message": "I suppose we don\u0027t need to block this, at the risk of having the approach copied into other places and having to update them as well.  But since we don\u0027t have a concrete plan for how to improve and it would be good to have enforcement for this, we can probably proceed.\n\nI would be curious to know what a renderer kill crash report for this would look like, since there\u0027s a chance we might see them in the wild (similar to the password kills like crash adf9395d1e7397da).  Maybe we can trigger one via a debugger attached to a Canary after this lands?",
+      "parentUuid": "3541b969_93b15507",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89daa50_f88a096c",
         "filename": "content/browser/storage_partition_impl.cc",
         "patchSetId": 5
@@ -243,6 +261,24 @@
       "side": 1,
       "message": "Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756115.",
       "parentUuid": "c35d6eb3_5027de38",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e98902_d54ab409",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T23:11:54Z",
+      "side": 1,
+      "message": "Thanks.  Discussion underway there, and agreed that we don\u0027t need to block this CL on it.",
+      "parentUuid": "7c6effe4_ee1ce31a",
       "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
