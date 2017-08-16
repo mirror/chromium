@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afc87493_0cf51bd9",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T23:14:12Z",
+      "side": 1,
+      "message": "For RELATIVE_ORIENTATION_EULER_ANGLES, converts the data produced by RELATIVE_ORIENTATION_QUATERNION to euler angles.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "c682a6caccb45f190708129e953c70a777ca841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74eba41c_591f8d7d",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T23:14:12Z",
+      "side": 1,
+      "message": "Replace the \"see below\" note above with \"TYPE_GAME_ROTATION_VECTOR\".",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "c682a6caccb45f190708129e953c70a777ca841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74e9200_cabc669d",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T23:14:12Z",
+      "side": 1,
+      "message": "This case can be removed because CreateRelativeOrientationQuaternionSensor is equivalent to the default case.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "c682a6caccb45f190708129e953c70a777ca841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
