@@ -27,20 +27,26 @@ TerminationStatus GetTerminationStatus(ProcessHandle handle, int* exit_code) {
                          sizeof(process_info), nullptr, nullptr);
   if (status != MX_OK) {
     DLOG(ERROR) << "unable to get termination status for " << handle;
-    *exit_code = 0;
+    if (exit_code)
+      *exit_code = 0;
     return TERMINATION_STATUS_NORMAL_TERMINATION;
   }
   if (!process_info.started) {
+    if (exit_code)
+      *exit_code = 0;
     return TERMINATION_STATUS_LAUNCH_FAILED;
   }
   if (!process_info.exited) {
+    if (exit_code)
+      *exit_code = 0;
     return TERMINATION_STATUS_STILL_RUNNING;
   }
 
   // TODO(fuchsia): Is there more information about types of crashes, OOM, etc.
   // available? https://crbug.com/706592.
 
-  *exit_code = process_info.return_code;
+  if (exit_code)
+    *exit_code = process_info.return_code;
   return process_info.return_code == 0
              ? TERMINATION_STATUS_NORMAL_TERMINATION
              : TERMINATION_STATUS_ABNORMAL_TERMINATION;
