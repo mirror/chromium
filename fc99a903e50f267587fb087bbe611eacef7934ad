@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae703b0c_1bd6a570",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T21:22:56Z",
+      "side": 1,
+      "message": "This name is a bit awkward to me - maybe CanBeEnabledInSync(), or similar?",
+      "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61aa7729_bb5c23b7",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T21:22:56Z",
+      "side": 1,
+      "message": "prefer specifying BLACKLISTED_UNKNOWN directly and removing the default case; that way, new reasons being added break compilation.",
+      "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e75ee73_3cbc753b",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T21:22:56Z",
+      "side": 1,
+      "message": ":( Yet another oddity of our sync system.\n\nIdeally, we\u0027d actually just store any enabled state, because chrome shouldn\u0027t let the user re-enable an extension for malware/security vulnerability, and this wouldn\u0027t be an issue.  Can we add a TODO to that effect, in case someone\u0027s ever brave enough to take a stab at this?",
+      "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
