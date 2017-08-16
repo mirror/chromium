@@ -1,0 +1,273 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285c3bc8_af51db50",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "nit: get -\u003e are",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 31
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffe5f86_da871fde",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "before being accessed",
+      "range": {
+        "startLine": 183,
+        "startChar": 24,
+        "endLine": 183,
+        "endChar": 43
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b94cc9_ce4102b5",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "gets -\u003e is",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 14
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58331d7_403cd086",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "fails -\u003e fail",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 18
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d36c09_9b1615a3",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "does require...to be funneled through -\u003e requires funneling all...through",
+      "range": {
+        "startLine": 215,
+        "startChar": 8,
+        "endLine": 215,
+        "endChar": 20
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91146b18_e5b7cb6b",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "nit: omit comma",
+      "range": {
+        "startLine": 216,
+        "startChar": 72,
+        "endLine": 216,
+        "endChar": 73
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c7386_d132bac0",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "nit: while -\u003e after since unloading is an atomic operation.",
+      "range": {
+        "startLine": 284,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 17
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e14590_c252a563",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "would load(\"C:\\Foo\\Bar\\baz.dll\") -\u003e unload -\u003e load(\"C:\\foo\\bar\\baz.dll\") cause this to return false for the same dll at the same address?",
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d088f38_cea8415c",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "? :-)",
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a458d7ee_9c606d8a",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "can you do away with HandleModuleLoadEventWithTimeDateStamp and instead bind directly to OnModuleLoad here and below?",
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5e4e65_e5741d1a",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "nit: remove these unnecessary braces here and on the MODULE_UNLOADED case",
+      "range": {
+        "startLine": 346,
+        "startChar": 48,
+        "endLine": 346,
+        "endChar": 49
+      },
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137ce5d7_b1347eb9",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "similar comment: do away with HandleModuleUnloadEvent and bind directly to the database\u0027s OnModuleUnload here?",
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f110e868_fd45ef9c",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T09:04:54Z",
+      "side": 1,
+      "message": "i humbly submit this for the first two paragraphs:\n  // The type of callback that will be invoked for each module event. This\n  // callback may be run from any thread in the process, and may be invoked\n  // during initialization, while iterating over already loaded modules, or in\n  // response to LdrDllNotifications received from the loader. As such, keep the\n  // amount of work performed here to an absolute minimum.\n  //\n  // MODULE_LOADED events are always dispatched directly from the loader while\n  // under the loader\u0027s lock, so the module is guaranteed to be loaded in memory\n  // (it is safe to access module_load_address).",
+      "revId": "bae0a88119327101b8e29311e1be1f61b145cfe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
