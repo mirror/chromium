@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0d89980_277b8e8c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-16T11:12:38Z",
+      "side": 1,
+      "message": "Done. Gone, actually. :)",
+      "parentUuid": "d083d024_3bd67848",
+      "range": {
+        "startLine": 394,
+        "startChar": 47,
+        "endLine": 394,
+        "endChar": 59
+      },
+      "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea2f3cac_c7614e8e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6ad17db2_11e08df9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-16T11:12:38Z",
+      "side": 1,
+      "message": "Done. All the other methods disappeared. Added some length utils instead.",
+      "parentUuid": "ea2f3cac_c7614e8e",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa26503_0501db18",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f517fb_922ac1c4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-16T11:12:38Z",
+      "side": 1,
+      "message": "Done. Maybe you can also rename the parameter to that constructor to parent_writing_mode or something. Before realizing it was about the parent, I found it strange that we pass writing-mode both to the constructor and later to ToConstraintSpace().",
+      "parentUuid": "5fa26503_0501db18",
+      "revId": "353fbaa8a398b34efdd3edd4b265414ad9e11774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
