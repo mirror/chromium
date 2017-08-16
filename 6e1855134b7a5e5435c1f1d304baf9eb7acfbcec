@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd91df2_4afe42fc",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-16T16:20:47Z",
+      "side": 1,
+      "message": "I think it is necessary to change Async to Synchronous.\nOne scenario is: \nHidService has finished its devices enumeration. The HidDeviceManager lazily call the GetDevices(OnEnumerationCompleteCallback) and add itself as observer. Because the callback is Async so it is not run immediately. If there is a \"OnDeviceRemoved\" event happens, HidDeviceManager will receive the OnDeviceRemoved() notification, but the OnEnumerationCompleteCallback has not been run yet, Then the HidDeviceManager crashes on some DCHECK().\n\nIt is detected by the case of DevicePermissionsManagerTest.DisconnectDevice, after DevicePermissionManager explicitly depends on the HidDeviceManager.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "6e1855134b7a5e5435c1f1d304baf9eb7acfbcec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8747b513_1c99da2d",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-16T16:20:47Z",
+      "side": 1,
+      "message": "As we change the HidService::GetDevices() callback from Async to Sync, each OnDeviceChanged() will trigger the Dismissed(), we should make sure the Dismissed()be triggered only once.\n\nPreviously, after the executation of callback of the GetDevices(), the HidGetUserSelectedDevicesFunction will be deleted, the TestDevicePermissionPrompt will also be deleted, so the Dismissed() runs only once.\n\nChanging the HidService::GetDevices() callback from Async to Sync is safe to production code, because the Dismissed() is triggered by user, not the OnDeviceAdded()/OnDeviceRemoved().",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "6e1855134b7a5e5435c1f1d304baf9eb7acfbcec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
