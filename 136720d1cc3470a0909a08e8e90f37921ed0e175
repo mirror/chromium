@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "002f9378_c8060429",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T21:44:46Z",
+      "side": 1,
+      "message": "I wonder if there should be a source_set(\"shared_memory_support\") in //media/base, and then this just has a deps to it? Same thing for the mac ones?",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 9
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e2ad2c_b2d6f844",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T21:44:46Z",
+      "side": 1,
+      "message": "I think you\u0027re doing this so that references to test_support don\u0027t need to also reference //media. As discussed offline, this looks to be the recommended practice. However, should the public_deps be on //media:test_support, and not here?",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 13
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8147c3_3cb0785c",
+        "filename": "media/base/media_shmem_export.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T21:44:46Z",
+      "side": 1,
+      "message": "s/2012/2017/ since it\u0027s a new file (and no (c)).",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4110dad2_63ddc1cb",
+        "filename": "media/cast/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T21:44:46Z",
+      "side": 1,
+      "message": "Do these tests require specific stuff from test_support, or is //media sufficient?",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 25
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835f7bf2_bbe14db1",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-16T21:44:46Z",
+      "side": 1,
+      "message": "Merge with next line.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 8
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
