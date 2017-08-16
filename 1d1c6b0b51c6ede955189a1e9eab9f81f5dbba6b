@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2195d55_4a37ffbe",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "Given recent changes I think this (and other similar places) is clearer to read without the intermediate variables:\n\nif (!ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(\n        gravity_reading.accel.x, gravity_reading.accel.y,\n        gravity_reading.accel.z, geomagnetic_reading.magn.x,\n        geomagnetic_reading.magn.y, geomagnetic_reading.magn.z,\n        \u0026fused_reading-\u003eorientation_euler.z /* alpha */,\n        \u0026fused_reading-\u003eorientation_euler.x /* beta */,\n        \u0026fused_reading-\u003eorientation_euler.y /* gamma */)) {",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 3
+      },
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8497c2_eac8420b",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25069b2_cbd34ab4",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "I\u0027m a little biased towards trying to create an instance of the algorithm object and providing a FakePlatformSensorFusion object that can return the test values from GetLatestReading().",
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798589c7_32a025dd",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "Add to the end of these statements so we know what test failed:\n\n\u003c\u003c \"on test value \" \u003c\u003c i;",
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15471270_f9951b1e",
+        "filename": "services/device/generic_sensor/orientation_quaternion_fusion_algorithm_using_euler_angles.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e064e6_a5abdcf0",
+        "filename": "services/device/generic_sensor/orientation_quaternion_fusion_algorithm_using_euler_angles_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "Same in this test.",
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31061a7b_87aa67b2",
+        "filename": "services/device/generic_sensor/orientation_test_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "kRootTwoOverTwo",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420cc853_62b0c263",
+        "filename": "services/device/generic_sensor/orientation_test_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "2.0",
+      "range": {
+        "startLine": 15,
+        "startChar": 55,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3047b9a9_20f6880a",
+        "filename": "services/device/generic_sensor/orientation_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T22:20:01Z",
+      "side": 1,
+      "message": "Can you document the reason for this change from the original algorithm?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 66
+      },
+      "revId": "1d1c6b0b51c6ede955189a1e9eab9f81f5dbba6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
