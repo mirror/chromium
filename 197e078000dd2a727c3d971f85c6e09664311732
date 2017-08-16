@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "fc32b593_43a754ec",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T19:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ecc1e9_e4d933b5",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79080769_5447eb8a",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -276,6 +300,24 @@
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f7e18f_b39ff264",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T19:48:09Z",
+      "side": 1,
+      "message": "I added a comment that we are updating the GUID on purpose.",
+      "parentUuid": "811a16e5_01342752",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
