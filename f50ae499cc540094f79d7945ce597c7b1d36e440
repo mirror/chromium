@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4f72858_f42cb33c",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T20:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b3385da_b762d14a",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bfe2500_8003d557",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b2033e_c0fd1465",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T20:02:21Z",
+      "side": 1,
+      "message": "Right you are.  That\u0027s what I get for c\u0026ping without care.  Now moot because of responses to your other comments. \n\nThere are tests--I failed some when my first pass destroyed the object soon after creating it--but I didn\u0027t look at them and I could easily imagine they don\u0027t cover all the cases.  I figure if I\u0027m doing a pure refactor without adding or removing functionality I\u0027m not going to worry much about tests.  \n\nHaving said that, scanning base/memory/weak_ptr.* I see an IsValid() implementation, but I don\u0027t see it being called on destruction, so this may not be something that would happening automatically even if the weak pointer is being used.  But I might be missing something.",
+      "parentUuid": "7bfe2500_8003d557",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "140529f5_fd1a29ef",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T20:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd60ad00_025a5f99",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 23
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b31a8979_b20bb45f",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c303aef9_caf3e2b0",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T20:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31a8979_b20bb45f",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 56
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fa2f84f_060898ec",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69048d40_02422f2e",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-16T20:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa2f84f_060898ec",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
