@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25e77e4c_6d2d84b6",
+        "filename": "chrome/browser/chromeos/extensions/default_keyboard_extension_browser_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-16T07:39:58Z",
+      "side": 1,
+      "message": "Please rename this for fixing the compile error.",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "98c0967a87423f5f4bbcc97dbb9c1d26ee1120cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
