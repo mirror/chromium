@@ -43,6 +43,11 @@ class CORE_EXPORT SubresourceFilter final
   void ReportLoad(const KURL& resource_url,
                   WebDocumentSubresourceFilter::LoadPolicy);
 
+  typedef HashMap<std::pair<String, WebURLRequest::RequestContext>,
+                  WebDocumentSubresourceFilter::LoadPolicy>
+      URLLoadPolicyHashMap;
+  URLLoadPolicyHashMap url_load_policy_cache_;
+
   Member<ExecutionContext> execution_context_;
   std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter_;
 };

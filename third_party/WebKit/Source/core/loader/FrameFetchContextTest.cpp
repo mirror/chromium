@@ -97,11 +97,16 @@ class FrameFetchContextMockLocalFrameClient : public EmptyLocalFrameClient {
 
 class FixedPolicySubresourceFilter : public WebDocumentSubresourceFilter {
  public:
-  FixedPolicySubresourceFilter(LoadPolicy policy, int* filtered_load_counter)
-      : policy_(policy), filtered_load_counter_(filtered_load_counter) {}
+  FixedPolicySubresourceFilter(LoadPolicy policy,
+                               int* filtered_load_counter,
+                               int* get_load_policy_call_counter)
+      : policy_(policy),
+        filtered_load_counter_(filtered_load_counter),
+        get_load_policy_call_counter_(get_load_policy_call_counter) {}
 
   LoadPolicy GetLoadPolicy(const WebURL& resource_url,
                            WebURLRequest::RequestContext) override {
+    ++*get_load_policy_call_counter_;
     return policy_;
   }
 
@@ -116,6 +121,7 @@ class FixedPolicySubresourceFilter : public WebDocumentSubresourceFilter {
  private:
   const LoadPolicy policy_;
   int* filtered_load_counter_;
+  int* get_load_policy_call_counter_;
 };
 
 class FrameFetchContextTest : public ::testing::Test {
@@ -165,11 +171,6 @@ class FrameFetchContextTest : public ::testing::Test {
 
 class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
  protected:
-  void SetUp() override {
-    FrameFetchContextTest::SetUp();
-    filtered_load_callback_counter_ = 0;
-  }
-
   void TearDown() override {
     document->Loader()->SetSubresourceFilter(nullptr);
     FrameFetchContextTest::TearDown();
@@ -179,10 +180,15 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
     return filtered_load_callback_counter_;
   }
 
+  int GetGetLoadPolicyCallCount() const {
+    return get_load_policy_call_counter_;
+  }
+
   void SetFilterPolicy(WebDocumentSubresourceFilter::LoadPolicy policy) {
     document->Loader()->SetSubresourceFilter(SubresourceFilter::Create(
         *document, WTF::MakeUnique<FixedPolicySubresourceFilter>(
-                       policy, &filtered_load_callback_counter_)));
+                       policy, &filtered_load_callback_counter_,
+                       &get_load_policy_call_counter_)));
   }
 
   ResourceRequestBlockedReason CanRequest() {
@@ -208,7 +214,8 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
         ResourceRequest::RedirectStatus::kNoRedirect);
   }
 
-  int filtered_load_callback_counter_;
+  int filtered_load_callback_counter_ = 0;
+  int get_load_policy_call_counter_ = 0;
 };
 
 // This test class sets up a mock frame loader client.
@@ -968,6 +975,21 @@ TEST_F(FrameFetchContextSubresourceFilterTest, WouldDisallow) {
 
   EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequestPreload());
   EXPECT_EQ(0, GetFilteredLoadCallCount());
+}
+
+TEST_F(FrameFetchContextSubresourceFilterTest, GetLoadPolicyResultCaching) {
+  SetFilterPolicy(WebDocumentSubresourceFilter::kAllow);
+
+  EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequest());
+  EXPECT_EQ(1, GetGetLoadPolicyCallCount());
+
+  // GetLoadPolicy call counter is not increased as long as CanRequest calls
+  // use the same test url.
+  EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequest());
+  EXPECT_EQ(1, GetGetLoadPolicyCallCount());
+
+  EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequestPreload());
+  EXPECT_EQ(1, GetGetLoadPolicyCallCount());
 }
 
 TEST_F(FrameFetchContextTest, AddAdditionalRequestHeadersWhenDetached) {

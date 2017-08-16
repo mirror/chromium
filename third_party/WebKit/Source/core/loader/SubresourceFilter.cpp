@@ -53,10 +53,17 @@ bool SubresourceFilter::AllowLoad(
     const KURL& resource_url,
     WebURLRequest::RequestContext request_context,
     SecurityViolationReportingPolicy reporting_policy) {
-  // TODO(csharrison): Implement a caching layer here which is a HashMap of
-  // Pair<url string, context> -> LoadPolicy.
-  WebDocumentSubresourceFilter::LoadPolicy load_policy =
-      subresource_filter_->GetLoadPolicy(resource_url, request_context);
+  WebDocumentSubresourceFilter::LoadPolicy load_policy;
+  const URLLoadPolicyHashMap::KeyType cache_key{resource_url.GetString(),
+                                                request_context};
+  auto cache_it = url_load_policy_cache_.find(cache_key);
+  if (cache_it != url_load_policy_cache_.end()) {
+    load_policy = cache_it->value;
+  } else {
+    load_policy =
+        subresource_filter_->GetLoadPolicy(resource_url, request_context);
+    url_load_policy_cache_.insert(cache_key, load_policy);
+  }
 
   if (reporting_policy == SecurityViolationReportingPolicy::kReport)
     ReportLoad(resource_url, load_policy);
