@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85df6a3b_4f4bc118",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-16T01:17:08Z",
+      "side": 1,
+      "message": "Please find a detailed explanation at b/64581307. Copying pasting what I wrote there -\n\nThe Android container uses the timerfd_settime syscall to set alarms. This happens in the file frameworks/base/services/core/jni/com_android_server_AlarmManagerService.cpp . Currently, the container doesn\u0027t have the CAP_WAKE_ALARM capability. This prevents it from setting wake up alarms i.e. alarms that wake the processor up from suspend. This capability is explicitly checked by timerfd_settime while\nsetting wake up alarms.\n\nFor Chrome OS tablets slated to release in the future, Calendar and Alarm apps should be able to set wake up alarms. One way to do is to just give CAP_WAKE_ALARM to the container. However, this means that Android apps can potentially use the raw syscall interface and keep setting wake up alarms. Also, these alarms won\u0027t necessarily work well with Chrome OS alarms i.e if Android and Chrome OS alarms can\u0027t be coalesced and may result in excessive wake ups.\n\nTo counter these two issues it is decided that instead of giving permission to the container the JNI layer redirects wake up alarm calls to Chrome via mojo. Chrome then calls powerd using existing or new APIs to set wake up alarms on the behalf of the container. Powerd then sets and manages alarms like a native alarm knowing when to batch or restrict alarms in case of malicious use. This is better for battery and overall experience.",
+      "parentUuid": "40d65276_974458ab",
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ea7485_bf1b0332",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 3
