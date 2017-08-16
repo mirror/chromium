@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b41a98a_81f860a6",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-16T15:07:52Z",
+      "side": 1,
+      "message": "I didn\u0027t think so. I thought this gives a WindowTargeter a nice ability to customize the clipping area. Maybe something to document a bit more?",
+      "parentUuid": "af5dda84_02ccfcea",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a23199ac_a312cdf3",
         "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be15b79_715992bb",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-16T15:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a23199ac_a312cdf3",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6996ad8a_860fbcbf",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-16T15:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93d5174d_6ca04daa",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ccd5c0_7f9d11f8",
         "filename": "ui/aura/window_targeter.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03527bf_1c220395",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-16T15:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ccd5c0_7f9d11f8",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
