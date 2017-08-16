@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53971a42_fe8d0ffa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstallService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T19:25:39Z",
+      "side": 1,
+      "message": "Nit: Rename \"title\" to \"shortName\" here and in the other functions too\n\nShortcutInfo::user_title and ShortcutInfo::short_name are the same. However, I find it easier to reason about ShortcutInfo::short_name (And you are converting ShortcutInfo::short_name to a jstring in webapk_install_service.cc)",
+      "revId": "23171f23447875674b8fd7bb55f3e8756432960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26421f3c_edeb2596",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 20
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T19:25:39Z",
+      "side": 1,
+      "message": "Nit: \"start\" -\u003e \"is in progress.\"",
+      "revId": "23171f23447875674b8fd7bb55f3e8756432960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659a98bd_0ea2e5da",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T19:25:39Z",
+      "side": 1,
+      "message": "Nit: webapk::TrackInstallSource(install_source) should probably be called after adding to |installs_|.",
+      "revId": "23171f23447875674b8fd7bb55f3e8756432960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747c8d4a_8743e4cd",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T19:25:39Z",
+      "side": 1,
+      "message": "Don\u0027t we want to do this only if result \u003d\u003d WebApkInstallResult::FAILURE. Note that |result| can have three possible values. Not just SUCCESS and FAILURE",
+      "revId": "23171f23447875674b8fd7bb55f3e8756432960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4778047a_e7065f3c",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T19:25:39Z",
+      "side": 1,
+      "message": "Nit: java_title -\u003e java_short_name",
+      "revId": "23171f23447875674b8fd7bb55f3e8756432960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2579f2_eb78ded7",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T19:25:39Z",
+      "side": 1,
+      "message": "Nit: java_title -\u003e java_short_name",
+      "revId": "23171f23447875674b8fd7bb55f3e8756432960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
