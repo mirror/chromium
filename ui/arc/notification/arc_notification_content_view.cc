@@ -314,9 +314,6 @@ void ArcNotificationContentView::MaybeCreateFloatingControlButtons() {
       new message_center::NotificationControlButtonsView(notification_view);
   control_buttons_view_->SetBackgroundColor(
       GetControlButtonBackgroundColor(item_->GetShownContents()));
-  control_buttons_view_->ShowSettingsButton(
-      item_->IsOpeningSettingsSupported());
-  control_buttons_view_->ShowCloseButton(!item_->GetPinned());
 
   views::Widget::InitParams params(views::Widget::InitParams::TYPE_CONTROL);
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
@@ -425,7 +422,6 @@ void ArcNotificationContentView::UpdatePinnedState() {
   if (!control_buttons_view_)
     return;
 
-  control_buttons_view_->ShowCloseButton(!item_->GetPinned());
   Layout();
 }
 
