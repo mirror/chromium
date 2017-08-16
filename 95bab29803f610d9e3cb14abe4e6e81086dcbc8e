@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a3c18ba_7699bdf8",
+        "filename": "testing/buildbot/filters/fuchsia.base_unittests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-16T23:53:42Z",
+      "side": 0,
+      "message": "Ah, I must have been assuming these use Terminate(), but they actually use TerminateCurrentProcessImmediately() (not surprising given their name).\n\n... Oh, and the terminate test doesn\u0027t check the exit_code.\n\nAlrighty then!",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "95bab29803f610d9e3cb14abe4e6e81086dcbc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
