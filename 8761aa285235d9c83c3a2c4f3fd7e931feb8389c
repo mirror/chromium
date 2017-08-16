@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "628f1d90_c249db62",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb2e37e_8ffa24ab",
+      "range": {
+        "startLine": 318,
+        "startChar": 42,
+        "endLine": 318,
+        "endChar": 46
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4160b863_12c84ca3",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T06:24:30Z",
       "side": 1,
       "message": "nit: dir \u003d Dir.FORWARD",
+      "range": {
+        "startLine": 255,
+        "startChar": 53,
+        "endLine": 255,
+        "endChar": 64
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6eda41_cd781224",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "dir\u0027s initial value is Dir.FORWARD. I removed all other instances where I\u0027m setting it (as cleanup).",
+      "parentUuid": "4160b863_12c84ca3",
       "range": {
         "startLine": 255,
         "startChar": 53,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c77e29a_df6adf6e",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0a616be_f2307cba",
+      "range": {
+        "startLine": 265,
+        "startChar": 48,
+        "endLine": 265,
+        "endChar": 59
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae65a62_316ace31",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a25410_6f5ed8f8",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ae65a62_316ace31",
+      "range": {
+        "startLine": 275,
+        "startChar": 48,
+        "endLine": 275,
+        "endChar": 59
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "42651611_d8f97ddd",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6fd9bea_c35440c6",
+      "range": {
+        "startLine": 456,
+        "startChar": 48,
+        "endLine": 456,
+        "endChar": 59
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c064ee1_6de8c1bf",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
         "patchSetId": 11
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-16T06:24:30Z",
       "side": 1,
       "message": "optional: Will it be possible to focus on the previously focused item (or the next item for forward)? Scroll doesn\u0027t always happen at one page granularity. There can be a overlap sometimes. e.g. A list has 15 items in it. Item 1-10 is shown initially, and item 6-15 will be shown after the scroll. The focus will move to item 6 in this case. But I think it would be better if we can keep the focus on item 10.\n\nTODO should be enough for this CL.",
+      "range": {
+        "startLine": 808,
+        "startChar": 12,
+        "endLine": 815,
+        "endChar": 13
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afa30b2_ccd50de4",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "Good observation. How does Talkback handle this? What I\u0027m seeing:\nin lists, Android re-uses ax id\u0027s so we\u0027re not able to retain context on the ChromeVox side of things. I\u0027m guessing we maybe could use collection info to figure out proper positioning, but agreed on TODO.",
+      "parentUuid": "9c064ee1_6de8c1bf",
       "range": {
         "startLine": 808,
         "startChar": 12,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d9b7c0c6_bff26c5a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "I don\u0027t think a race condition is possible here. This is js, so these callbacks will be called in order / will not interleave. The action result and scroll event are just messages on an event loop.\n\nThe only way for the action to be received after the scroll is if:\n- in the Android service, we call perform action on a node\n- before the call returns, we get a scroll event\n\nIs this what you\u0027re thinking?\n\nThe issue with this then is that we can\u0027t rely on the ordering of events which would be a larger issue indeed and not a ChromeVox one here. What happens if I scroll manually right before programmatically performing an action? What happens if I perform two scroll actions programmatically repeatedly?",
+      "parentUuid": "ef74c04d_4ff22b74",
+      "range": {
+        "startLine": 819,
+        "startChar": 10,
+        "endLine": 820,
+        "endChar": 70
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5b54de5_f81d8854",
         "filename": "chrome/common/extensions/api/automation.idl",
         "patchSetId": 11
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-16T06:24:30Z",
       "side": 1,
       "message": "question: why this is added in this CL? where is this used in this CL?",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 11
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c40382_87202d99",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T16:51:36Z",
+      "side": 1,
+      "message": "During the externs auto generation and some of the PRESUBMIT checks, we had removed focused state since it doesn\u0027t exist in ax_enums.idl. It is now getting flagged by Closure compiler because we\u0027re using it in ChromeVox. Rather than being part of the platform egonistic idl, we\u0027re adding focused state manually in chrome/renderer/extensions/automation_internal_custom_bindings.cc.",
+      "parentUuid": "b5b54de5_f81d8854",
       "range": {
         "startLine": 208,
         "startChar": 4,
