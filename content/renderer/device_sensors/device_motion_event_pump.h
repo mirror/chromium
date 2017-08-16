@@ -32,8 +32,7 @@ namespace content {
 class RenderFrame;
 
 class CONTENT_EXPORT DeviceMotionEventPump
-    : NON_EXPORTED_BASE(
-          public PlatformEventObserver<blink::WebDeviceMotionListener>) {
+    : public PlatformEventObserver<blink::WebDeviceMotionListener> {
  public:
   DeviceMotionEventPump(RenderThread* thread, RenderFrame* render_frame);
   ~DeviceMotionEventPump() override;
