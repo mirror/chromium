@@ -15,13 +15,12 @@
 #include "base/macros.h"
 #include "base/time/clock.h"
 #include "base/values.h"
-#include "chrome/browser/history/browsing_history_service_handler.h"
+#include "chrome/browser/history/profile_based_history_handler.h"
 #include "content/public/browser/web_ui_message_handler.h"
 
 // The handler for Javascript messages related to the "history" view.
-class BrowsingHistoryHandler :
-    public content::WebUIMessageHandler,
-    public BrowsingHistoryServiceHandler {
+class BrowsingHistoryHandler : public content::WebUIMessageHandler,
+                               public ProfileBasedHistoryHandler {
  public:
   BrowsingHistoryHandler();
   ~BrowsingHistoryHandler() override;
@@ -43,13 +42,17 @@ class BrowsingHistoryHandler :
 
   // BrowsingHistoryServiceHandler implementation.
   void OnQueryComplete(
-      std::vector<BrowsingHistoryService::HistoryEntry>* results,
-      BrowsingHistoryService::QueryResultsInfo* query_results_info) override;
+      const std::vector<BrowsingHistoryService::HistoryEntry>& results,
+      const BrowsingHistoryService::QueryResultsInfo& query_results_info)
+      override;
   void OnRemoveVisitsComplete() override;
   void OnRemoveVisitsFailed() override;
   void HistoryDeleted() override;
   void HasOtherFormsOfBrowsingHistory(
       bool has_other_forms, bool has_synced_results) override;
+
+  // ProfileBasedHistoryHandler implementation.
+  Profile* GetProfile() override;
 
   // For tests.
   void set_clock(std::unique_ptr<base::Clock> clock) {
