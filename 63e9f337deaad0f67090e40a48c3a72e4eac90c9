@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49613504_400f76cb",
+        "filename": "third_party/WebKit/LayoutTests/inspector/sources/debugger/navigator-view.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-16T01:41:40Z",
+      "side": 1,
+      "message": "With my CL, when I navigate to this site, I can see the border-color.js in the source tab, but the test result is not showing that. Am I missing something in this test?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 113
+      },
+      "revId": "63e9f337deaad0f67090e40a48c3a72e4eac90c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
