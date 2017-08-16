@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e059697_bcb576c1",
+        "filename": "chrome/browser/resources/settings/settings_main/settings_main.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-16T21:25:44Z",
+      "side": 0,
+      "message": "This seems completely equivalent to \"text-align: center\". Is there\u0027s any reason why we were doing ^ just to center the content?",
+      "revId": "5f1653ef581c7412c66561f98b152cd274d9a0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
