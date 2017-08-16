@@ -22,6 +22,30 @@
       "revId": "31b59930233c36da37dc654b1dca1f0d170247e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d67954a_d0a73aa5",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-16T13:57:18Z",
+      "side": 1,
+      "message": "The replacement of uses is done in this CL (I guess I can remove this reference). Linked to discussion thread.",
+      "parentUuid": "239e8e8a_7e4e7803",
+      "range": {
+        "startLine": 611,
+        "startChar": 141,
+        "endLine": 611,
+        "endChar": 148
+      },
+      "revId": "31b59930233c36da37dc654b1dca1f0d170247e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
