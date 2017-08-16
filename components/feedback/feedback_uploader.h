@@ -15,6 +15,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "components/signin/core/browser/signin_manager.h"
+#include "google_apis/gaia/oauth2_token_service.h"
 #include "url/gurl.h"
 
 namespace feedback {
@@ -47,18 +49,18 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
 
   base::TimeDelta retry_delay() const { return retry_delay_; }
 
-  const GURL& feedback_post_url() const { return feedback_post_url_; }
-
  protected:
   // Invoked when a feedback report upload succeeds. It will reset the
   // |retry_delay_| to its minimum value and schedules the next report upload if
   // any.
   void OnReportUploadSuccess();
 
-  // Invoked when |report| fails to upload. It will double the |retry_delay_|
-  // and reenqueue |report| with the new delay. All subsequent retries will keep
-  // increasing the delay until a successful upload is encountered.
-  void OnReportUploadFailure(scoped_refptr<FeedbackReport> report);
+  // Invoked when |report| fails to upload. If |should_retry| is true, it will
+  // double the |retry_delay_| and reenqueue |report| with the new delay. All
+  // subsequent retries will keep increasing the delay until a successful upload
+  // is encountered.
+  void OnReportUploadFailure(scoped_refptr<FeedbackReport> report,
+                             bool should_retry);
 
  private:
   friend class FeedbackUploaderTest;
@@ -68,7 +70,9 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
                     const scoped_refptr<FeedbackReport>& b) const;
   };
 
-  // Dispatches the report to be uploaded.
+  // Dispatches the report to be uploaded. Dispatchers must call either
+  // OnReportUploadSuccess() or OnReportUploadFailure() so that dispatching
+  // reports can progress.
   virtual void DispatchReport(scoped_refptr<FeedbackReport> report) = 0;
 
   // Update our timer for uploading the next report.
@@ -92,7 +96,10 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
       reports_queue_;
 
   base::TimeDelta retry_delay_;
-  const GURL feedback_post_url_;
+
+  // True when a report is currently being dispatched. Only a single report
+  // at-a-time should be dispatched.
+  bool is_dispatching_;
 
   DISALLOW_COPY_AND_ASSIGN(FeedbackUploader);
 };

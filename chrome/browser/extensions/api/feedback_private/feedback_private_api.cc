@@ -21,6 +21,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/feedback_private/feedback_service.h"
+#include "chrome/browser/feedback/feedback_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/simple_message_box.h"
@@ -282,7 +283,9 @@ ExtensionFunction::ResponseAction FeedbackPrivateSendFeedbackFunction::Run() {
   const FeedbackInfo &feedback_info = params->feedback;
 
   // Populate feedback data.
-  scoped_refptr<FeedbackData> feedback_data(new FeedbackData());
+  scoped_refptr<FeedbackData> feedback_data =
+      base::MakeRefCounted<FeedbackData>(
+          base::Bind(&feedback_util::UploadFeedbackData));
   feedback_data->set_context(browser_context());
   feedback_data->set_description(feedback_info.description);
 

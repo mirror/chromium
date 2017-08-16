@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/feedback/feedback_uploader_chrome.h"
+#include "chrome/browser/feedback/feedback_uploader_chrome.h"
 
 #include <string>
 
@@ -11,10 +11,10 @@
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
-#include "components/feedback/feedback_uploader_factory.h"
+#include "chrome/browser/feedback/feedback_uploader_factory.h"
+#include "chrome/test/base/testing_profile.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_http_header_provider.h"
-#include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -54,8 +54,11 @@ class FeedbackUploaderChromeTest : public ::testing::Test {
     base::FieldTrialList::CreateFieldTrial(trial_name, group_name)->group();
   }
 
+  Profile* profile() { return &profile_; }
+
  private:
   content::TestBrowserThreadBundle browser_thread_bundle_;
+  TestingProfile profile_;
 
   DISALLOW_COPY_AND_ASSIGN(FeedbackUploaderChromeTest);
 };
@@ -68,9 +71,8 @@ TEST_F(FeedbackUploaderChromeTest, VariationHeaders) {
   base::FieldTrialList field_trial_list_(NULL);
   CreateFieldTrialWithId("Test", "Group1", 123);
 
-  content::TestBrowserContext context;
   FeedbackUploaderChrome uploader(
-      &context, FeedbackUploaderFactory::CreateUploaderTaskRunner());
+      profile(), FeedbackUploaderFactory::CreateUploaderTaskRunner());
 
   net::TestURLFetcherFactory factory;
   uploader.QueueReport("test");
@@ -88,10 +90,9 @@ TEST_F(FeedbackUploaderChromeTest, VariationHeaders) {
 }
 
 TEST_F(FeedbackUploaderChromeTest, TestVariousServerResponses) {
-  content::TestBrowserContext context;
   FeedbackUploader::SetMinimumRetryDelayForTesting(kTestRetryDelay);
   FeedbackUploaderChrome uploader(
-      &context, FeedbackUploaderFactory::CreateUploaderTaskRunner());
+      profile(), FeedbackUploaderFactory::CreateUploaderTaskRunner());
 
   EXPECT_EQ(kTestRetryDelay, uploader.retry_delay());
   // Successful reports should not introduce any retries, and should not

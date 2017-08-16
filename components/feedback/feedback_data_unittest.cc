@@ -9,10 +9,10 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "components/feedback/feedback_report.h"
 #include "components/feedback/feedback_uploader.h"
-#include "components/feedback/feedback_uploader_factory.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/user_prefs/user_prefs.h"
@@ -39,14 +39,6 @@ class MockUploader : public feedback::FeedbackUploader, public KeyedService {
   MOCK_METHOD1(DispatchReport, void(scoped_refptr<FeedbackReport>));
 };
 
-std::unique_ptr<KeyedService> CreateFeedbackUploaderService(
-    content::BrowserContext* context) {
-  auto uploader = base::MakeUnique<MockUploader>(
-      context, FeedbackUploaderFactory::CreateUploaderTaskRunner());
-  EXPECT_CALL(*uploader, DispatchReport(testing::_)).Times(1);
-  return std::move(uploader);
-}
-
 std::unique_ptr<std::string> MakeScoped(const char* str) {
   return base::MakeUnique<std::string>(str);
 }
@@ -56,17 +48,10 @@ std::unique_ptr<std::string> MakeScoped(const char* str) {
 class FeedbackDataTest : public testing::Test {
  protected:
   FeedbackDataTest()
-      : context_(new content::TestBrowserContext()),
-        prefs_(new TestingPrefServiceSimple()),
-        data_(new FeedbackData()) {
-    user_prefs::UserPrefs::Set(context_.get(), prefs_.get());
-    data_->set_context(context_.get());
-    data_->set_send_report_callback(base::Bind(
-        &FeedbackDataTest::set_send_report_callback, base::Unretained(this)));
-
-    FeedbackUploaderFactory::GetInstance()->SetTestingFactory(
-        context_.get(), &CreateFeedbackUploaderService);
-  }
+      : data_(base::MakeRefCounted<FeedbackData>(
+            base::Bind(&FeedbackDataTest::set_send_report_callback,
+                       base::Unretained(this)))) {}
+  ~FeedbackDataTest() override = default;
 
   void Send() {
     bool attached_file_completed =
@@ -91,8 +76,6 @@ class FeedbackDataTest : public testing::Test {
 
   base::Closure quit_closure_;
   std::unique_ptr<base::RunLoop> run_loop_;
-  std::unique_ptr<content::TestBrowserContext> context_;
-  std::unique_ptr<PrefService> prefs_;
   scoped_refptr<FeedbackData> data_;
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
 };

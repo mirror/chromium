@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/feedback/feedback_uploader_delegate.h"
+#include "chrome/browser/feedback/feedback_uploader_delegate.h"
 
 #include <memory>
 #include <sstream>
@@ -61,8 +61,7 @@ void FeedbackUploaderDelegate::OnURLFetchComplete(
       error_stream << "Unknown error: HTTP response code " << response_code;
     }
 
-    if (should_retry)
-      error_callback_.Run(pending_report_);
+    error_callback_.Run(pending_report_, should_retry);
   }
 
   LOG(WARNING) << "FEEDBACK: Submission to feedback server ("
