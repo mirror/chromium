@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5285e2f7_f25305ef",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-16T19:40:24Z",
+      "side": 1,
+      "message": "nit: will not\n\nthe UX folks suggested \"won\u0027t\" here?",
+      "range": {
+        "startLine": 244,
+        "startChar": 97,
+        "endLine": 244,
+        "endChar": 102
+      },
+      "revId": "1d6a8a45ba3a2b3de085966033d38a8f842be9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
