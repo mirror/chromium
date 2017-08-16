@@ -94,6 +94,7 @@
 #include "ui/display/display_switches.h"
 #include "ui/display/screen.h"
 #include "ui/events/base_event_utils.h"
+#include "ui/events/blink/blink_features.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/gesture_detection/gesture_configuration.h"
@@ -633,7 +634,10 @@ void SitePerProcessBrowserTest::SetUpCommandLine(
 #if !defined(OS_ANDROID)
   // TODO(bokan): Needed for scrollability check in
   // FrameOwnerPropertiesPropagationScrolling. crbug.com/662196.
-  feature_list_.InitAndDisableFeature(features::kOverlayScrollbar);
+  feature_list_.InitWithFeatures({features::kVsyncAlignedInputEvents},
+                                 {features::kOverlayScrollbar});
+#else
+  feature_list_.InitWithFeatures({features::kVsyncAlignedInputEvents}, {});
 #endif
 }
 
