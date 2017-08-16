@@ -22,6 +22,30 @@
       "revId": "099091d655fa67b1aeb1a06e2e60db341818de4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a52fa74_e921e3c2",
+        "filename": "ui/views/examples/box_layout_example.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1235550
+      },
+      "writtenOn": "2017-08-16T13:43:54Z",
+      "side": 1,
+      "message": "And I completely overlooked that it\u0027s empty now.. Thank you for spotting it!",
+      "parentUuid": "4f10f530_dffa7507",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "099091d655fa67b1aeb1a06e2e60db341818de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
