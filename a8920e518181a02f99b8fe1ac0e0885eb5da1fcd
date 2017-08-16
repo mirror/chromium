@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "844b88c0_686d1960",
+        "filename": "chrome/browser/safe_browsing/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this belongs here - chrome/browser/DEPS explicitly removes chrome/browser/ui/views because views dependencies should be introduced under chrome/browser/ui/views only (e.g. chrome/browser/ui/views/safe_browsing).\n\nThe approach in use currently is to declare the signature of a toolkit-agnostic method that shows the dialog, which then has views- and cocoa- implementations in the right places.\n\nE.g. in chrome_password_protection_service.h\n\nnamespace safe_browsing {\n\nusing OnWarningDone \u003d\n      base::Callback\u003cvoid(PasswordProtectionService::WarningAction)\u003e;\n\nvoid ShowPasswordReuseModalWarningDialog(\n      content::WebContents* web_contents,\n      const OnWarningDone\u0026 done);\n\n}\n\nand in password_reuse_modal_warning_dialog.cc\n\nnamespace safe_browsing {\n\nvoid ShowPasswordReuseModalWarningDialog(\n      content::WebContents* web_contents,\n      const OnWarningDone\u0026 done) {\n  /* inline code from ::Create() */\n}\n\n}\n\n\nthen something similar in the cocoa version.\n\nThen you don\u0027t need to #include password_reuse_modal_warning_dialog.h, and you don\u0027t need this DEPS line",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7316c5b4_605b5af8",
+        "filename": "chrome/browser/ui/views/safe_browsing/OWNER",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "OWNER -\u003e OWNERS?",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d427669_b783ae5d",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -94,6 +128,23 @@
     },
     {
       "key": {
+        "uuid": "ad8a3465_c3d93997",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "This needs to use GridLayout::CreatePanel() instead, and the code above removed. If that\u0027s giving incorrect results, it\u0027s a framework issue (or the mocks are wrong).",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18c5c0ce_7a026aa7",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -117,6 +168,23 @@
     },
     {
       "key": {
+        "uuid": "8547db4b_07e075fe",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "You shouldn\u0027t be adding your own title View at all. Override WidgetDelegate::GetWindowTitle() and just return GetTitle() instead.\n\nLikewise, override WidgetDelegate::GetWindowIcon() to put the an icon next to it -- the |icon| should also be removed.\n\nIf these don\u0027t allow your dialog to match the mocks, then either the mocks are wrong or we need to update the framework (or this dialog needs to make appropriate adjustments via things already exposed by the framework)",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5aefb2c_3874cd37",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -134,6 +202,40 @@
         "endLine": 78,
         "endChar": 54
       },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a01cd28_7513cac5",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "After removing |contents_view_| this shouldn\u0027t be necessary -- the Layout\u0027s preferred size will propagate up.\n\nAnd after removing title and icon, the most of the layout logic can go away too.",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d1793c_7fa0ec7f",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "OnceCallback -- see src/docs/callback.md",
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -180,6 +282,40 @@
         "endLine": 40,
         "endChar": 49
       },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b384e96f_af0313f4",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "// views::DialogDelegateView:",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622a63f8_a049c170",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "(and remove this - we tend not to name ancestors - just parent classes listed in the `class Foo: public .. ` line)",
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -249,6 +385,23 @@
         "endLine": 57,
         "endChar": 2
       },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c52576c_9d5c04c5",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-16T00:29:24Z",
+      "side": 1,
+      "message": "can you add a \"dialog\" test -- see chrome/browser/ui/test/test_browser_dialog.h (and test_browser_dialog.md). This gives a consistent way for us to show the dialog \"interactively\", e.g., to take screenshots and look for regressions.",
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
