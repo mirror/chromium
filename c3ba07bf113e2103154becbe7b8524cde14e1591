@@ -1,0 +1,283 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b59e203_491a007c",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "According to https://w3c.github.io/webdriver/webdriver-spec.html#dfn-process-pointer-parameters, item 2, |parameters| is optional.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d1846e_0c506615",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "According to https://w3c.github.io/webdriver/webdriver-spec.html#dfn-process-pointer-parameters, item 5, |pointerType| is optional.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02c5573_afc39e1a",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "This is unnecessary, as pointerType was set just a few lines above. I suppose this is intended for the case where the input source is found?",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e2d9b2_5fa24294",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "These 3 lines of code are common to all input types, so I\u0027d move them out of the if statement, and share the code for all input inputs. Then you can get rid of |if (type \u003d\u003d \"none\")|.",
+      "range": {
+        "startLine": 796,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 62
+      },
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54a6dac_90517be4",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "else if",
+      "range": {
+        "startLine": 817,
+        "startChar": 4,
+        "endLine": 817,
+        "endChar": 6
+      },
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65126632_fc8b50ef",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "Duplicate with the code inside if statement below",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2bc7ab_4f88e707",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "|duration| should be optional.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dc29f7_ba3ac8c2",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "else if",
+      "range": {
+        "startLine": 884,
+        "startChar": 4,
+        "endLine": 884,
+        "endChar": 6
+      },
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f770e5b0_0d926039",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "|duration| should be optional.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da10f4b_48563b90",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "else if",
+      "range": {
+        "startLine": 912,
+        "startChar": 4,
+        "endLine": 912,
+        "endChar": 6
+      },
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae83249_d46b964f",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "There is also a \"pointerCancel\".",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c92e4f_817c5e99",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "Probably should share code for \"pause\" among all input source types.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c358971_3615f4c3",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "|duration| should be optional.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b19181_5c2471be",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "According to https://w3c.github.io/webdriver/webdriver-spec.html#dfn-process-a-pointer-move-action item 9, |x| is allowed to be negative. Same for |y|.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc60e4f_6ebc7299",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-16T23:58:21Z",
+      "side": 1,
+      "message": "This doesn\u0027t match https://w3c.github.io/webdriver/webdriver-spec.html#dfn-extract-an-action-sequence, item 5.2.3.",
+      "revId": "c3ba07bf113e2103154becbe7b8524cde14e1591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
