@@ -292,7 +292,7 @@ HttpHandler::HttpHandler(
           WrapToCommand("MaximizeWindow", base::Bind(&ExecuteMaximizeWindow))),
       CommandMapping(kPost, "session/:sessionId/window/fullscreen",
                      WrapToCommand("FullscreenWindow",
-                                   base::Bind(&ExecuteUnimplementedCommand))),
+                                   base::Bind(&ExecuteFullScreenWindow))),
       CommandMapping(kDelete, "session/:sessionId/window",
                      WrapToCommand("CloseWindow", base::Bind(&ExecuteClose))),
       CommandMapping(
