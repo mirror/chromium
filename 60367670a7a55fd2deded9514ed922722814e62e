@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bf8b191_f7837639",
+        "filename": "ui/compositor/layer_animation_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T16:55:09Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "dd4dc8ba_46e38b36",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b621e3a_f340dea0",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T16:19:25Z",
       "side": 1,
       "message": "doesn\u0027t look like this needs to be part of this class. can you move it up to anonymous namespace instead?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e76b6c_f0d1cc74",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T16:55:09Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0b621e3a_f340dea0",
       "range": {
         "startLine": 22,
         "startChar": 6,
@@ -82,6 +130,54 @@
       "writtenOn": "2017-08-16T16:19:25Z",
       "side": 1,
       "message": "is it guaranteed that OnImplicitAnimationsCompleted is called before |layer_| is destroyed?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bdded3_157bfce9",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T16:55:09Z",
+      "side": 1,
+      "message": "Good point. I have thought about this to reset the cache flag to the status before animation. But it is not possible for current design. One problem is that, for example, there are two animations on a layer: ani1 and ani2. And the original cache status of layer is false. ani1 is called first and set the cache to true during animation. This time ani2 starts and try to remember the \"original\" cache status of layer, it will think the status is \"true\". When ani1 finishes, it reset cache to false, but when ani2 finishes, it will reset the cache to true.\n\nMaybe we can maintain an internal counter should_cache_ for cache status of layer, to indicate should we cache at last? Still use the above example, ani1 starts and should_cache_ \u003d 1, so we set cache true. ani2 starts and should_cache_ \u003d 2, so we set cache true. ani1 finishes and should_cache_ \u003d 1, so we still set cache true. When ani2 finishes and should_cache_ \u003d 0, we will set cache to false.\n\nIf cache status is true before animation so should_cache_ \u003e\u003d 1 (say 1 here), ani1 starts and should_cache_ \u003d 2, so we set cache true. ani2 starts and should_cache_ \u003d 3, so we set cache true. ani1 finishes and should_cache_ \u003d 2, so we still set cache true. When ani2 finishes and should_cache_ \u003d 1, we will set cache to true.\n\nI can impl this if it make sense.",
+      "parentUuid": "459dbc5d_628a0972",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "60367670a7a55fd2deded9514ed922722814e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff21ee0f_b2495a1f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-16T16:55:09Z",
+      "side": 1,
+      "message": "Yes. As Ali pointed out in earlier comment, when layer is destroying, it will set layer-\u003eanimator_ to null. This will case animation first, which will trigger the observer[1].\n\nBut what if the observers are removed from animator_, will it still called? I will add a test for this.\n[1] https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?l\u003d153\u0026rcl\u003d51017858e0d205f679dc0ceb687afe763adf3ab2",
+      "parentUuid": "927b6ec3_a7e83e95",
       "range": {
         "startLine": 29,
         "startChar": 4,
