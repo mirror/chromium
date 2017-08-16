@@ -691,7 +691,10 @@ class CONTENT_EXPORT RenderFrameImpl
       base::SingleThreadTaskRunner* task_runner) override;
   void DraggableRegionsChanged() override;
 
-  const URLLoaderFactoryContainer& GetDefaultURLLoaderFactoryContainer();
+  // Returns non-null.
+  // It is invalid to call this in an incomplete env where
+  // RenderThreadImpl::current() returns null (e.g. some tests).
+  URLLoaderFactoryContainer* GetDefaultURLLoaderFactoryContainer();
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(
@@ -1486,7 +1489,7 @@ class CONTENT_EXPORT RenderFrameImpl
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
       custom_url_loader_factory_;
 
-  std::unique_ptr<URLLoaderFactoryContainer> url_loader_factory_container_;
+  base::scoped_ptr<URLLoaderFactoryContainer> url_loader_factory_container_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;

@@ -77,6 +77,9 @@
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextProxy.h"
 
+#include "third_party/WebKit/public/platform/Platform.h"
+#include "third_party/WebKit/public/platform/WebBlobRegistry.h"
+
 using blink::WebURLRequest;
 
 namespace content {
@@ -1019,16 +1022,27 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
   const mojom::ServiceWorkerFetchResponseCallbackPtr& response_callback =
       context_->fetch_response_callbacks[fetch_event_id];
   if (response.blob_uuid.size()) {
-    // Send the legacy IPC due to the ordering issue between respondWith and
-    // blob.
-    // TODO(shimazu): mojofy this IPC after blob starts using sync IPC for
-    // creation or is mojofied: https://crbug.com/611935.
-    Send(new ServiceWorkerHostMsg_FetchEventResponse(
-        GetRoutingID(), fetch_event_id, response,
-        base::Time::FromDoubleT(event_dispatch_time)));
+    if (ServiceWorkerUtils::IsServicificationEnabled()) {
+      // TODO(kinuko): Always take this code path even if servicification
+      // is not enabled.
+      // TODO(kinuko): Remove the line below once crbug.com/755523 is resolved.
+      response.blob = nullptr;  // |blob| cannot be passed over mojo calls.
+      storage::mojom::BlobPtr blob_ptr;
+      blob_registry_->GetBlobFromUUID(
+          mojo::MakeRequest(&blob_ptr),
+          blink::WebString::FromASCII(response.blob_uuid));
+      response_callback->OnResponseBlob(
+          response, std::move(blob_ptr),
+          base::Time::FromDoubleT(event_dispatch_time));
+    } else {
+      Send(new ServiceWorkerHostMsg_FetchEventResponse(
+              GetRoutingID(), fetch_event_id, response,
+              base::Time::FromDoubleT(event_dispatch_time)));
+    }
   } else {
-    response_callback->OnResponse(response,
-                                  base::Time::FromDoubleT(event_dispatch_time));
+    response_callback->OnResponse(
+        response,
+        base::Time::FromDoubleT(event_dispatch_time));
   }
   context_->fetch_response_callbacks.erase(fetch_event_id);
 }
