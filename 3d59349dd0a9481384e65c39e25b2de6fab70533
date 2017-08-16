@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "26daec47_2f47c84f",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:39:44Z",
+      "side": 1,
+      "message": "Optional nit: s/URL/Url \n\nI know that we are very inconsistent with this (even in current header), so feel free to ignore me :)",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 27
+      },
+      "revId": "3d59349dd0a9481384e65c39e25b2de6fab70533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9624b6b0_9a86d6f3",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:39:44Z",
+      "side": 1,
+      "message": "Optional nit:\n\nif (!pending_item || url \u003d\u003d pending_item-\u003eGetURL())\n  return;",
+      "revId": "3d59349dd0a9481384e65c39e25b2de6fab70533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ced58946_49b03c8f",
         "filename": "ios/web/navigation/navigation_manager_impl.mm",
         "patchSetId": 1
@@ -18,6 +58,29 @@
         "startChar": 32,
         "endLine": 138,
         "endChar": 0
+      },
+      "revId": "3d59349dd0a9481384e65c39e25b2de6fab70533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ba7e59_d4e4448d",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:39:44Z",
+      "side": 1,
+      "message": "s/EXPECT_EQ/ASSERT_EQ\n\nOtherwise the next line may crash",
+      "range": {
+        "startLine": 2182,
+        "startChar": 2,
+        "endLine": 2182,
+        "endChar": 11
       },
       "revId": "3d59349dd0a9481384e65c39e25b2de6fab70533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
