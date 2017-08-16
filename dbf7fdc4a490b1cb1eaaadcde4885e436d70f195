@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ec55e09_d1b1d196",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "Doesn\u0027t this allow same-origin iframes, unlike the WebKit code?",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9cf163d_f995e8cb",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "Ooh, merging these permissions is tantalizingly close.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 14
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a25762ef_c284aa98",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be BLOCK, since the origins are different? (ditto below) Why did this change?",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 31
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccca761_9fbe581a",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "Also test insecure requestor inside secure embedder, to make sure we\u0027re checking the right origin\u0027s security? And vice versa too - turns out you can embed an http://untrusted.example.com iframe inside a potentially trusted http://127.0.0.1 frame (https://groups.google.com/a/chromium.org/d/topic/security-dev/29Ftfgn-w0I/discussion).",
+      "range": {
+        "startLine": 209,
+        "startChar": 39,
+        "endLine": 209,
+        "endChar": 54
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c37acc_1f0d8872",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "Should this be preceded by a probe::breakableLocation?",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 71
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73323c9_52e9f23e",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "`!frame || !frame-\u003eIsMainFrame()` seems more robust, e.g. do DocumentFragments have a frame?",
+      "range": {
+        "startLine": 362,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c322f8f_0d39b542",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "Ditto `!frame ||`. (shame about this duplication; can\u0027t see any obvious ways of avoiding it though).",
+      "range": {
+        "startLine": 415,
+        "startChar": 8,
+        "endLine": 415,
+        "endChar": 13
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0ed7c93_9b40cae1",
         "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
         "patchSetId": 4
@@ -31,6 +192,24 @@
       "side": 1,
       "message": "We don\u0027t have the required knowledge in the browser process, notably the associated frame (if any) and its ancestry. The two existing code paths for determining the permission status have already led to inconsistencies[1], which this CL addresses as well. It\u0027ll be a while before notifications completely align with other permissions, but it\u0027s yet another step.\n\nNote that this is a first in regards to denying permission requests from same-origin iframes too.\n\nI\u0027m not worried about cross-module dependencies. It\u0027s common practice (notably in media and Service Worker/fetch related modules) and we dropped the plans to have separate per-module libraries.\n\n[1] https://chromium-review.googlesource.com/c/613901/1/third_party/WebKit/LayoutTests/http/tests/notifications/permission-behaviour.html",
       "parentUuid": "c0ed7c93_9b40cae1",
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186709a8_794ec974",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T18:08:05Z",
+      "side": 1,
+      "message": "\u003e The two existing code paths for determining the permission status have already led to inconsistencies\n\nInstead of making permissions defer to notifications, it feels it would be a little cleaner for notifications to defer to permissions\u0027 behaviour (and increase the chances that notifications behave consistently with other permissions). But I guess that would require moving the sync IPC into the permissions code which is awkward...",
+      "parentUuid": "6b3cf930_aef2965f",
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
