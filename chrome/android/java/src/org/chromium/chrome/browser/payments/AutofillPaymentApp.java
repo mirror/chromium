@@ -185,6 +185,11 @@ public class AutofillPaymentApp implements PaymentApp {
         return null;
     }
 
+    @Override
+    public String getCanDedupedApplicationId() {
+        return null;
+    }
+
     /** @return True if the merchant methodDataMap supports autofill payment instruments. */
     public static boolean merchantSupportsAutofillPaymentInstruments(
             Map<String, PaymentMethodData> methodDataMap) {

@@ -98,6 +98,7 @@ public class AndroidPaymentApp
     private InstrumentsCallback mInstrumentsCallback;
     private InstrumentDetailsCallback mInstrumentDetailsCallback;
     private ServiceConnection mServiceConnection;
+    private String mCanDedupedApplicationId;
     private boolean mIsReadyToPayQueried;
 
     /**
@@ -112,7 +113,8 @@ public class AndroidPaymentApp
      * @param isIncognito Whether the user is in incognito mode.
      */
     public AndroidPaymentApp(WebContents webContents, String packageName, String activity,
-            String label, Drawable icon, boolean isIncognito) {
+            String label, Drawable icon, boolean isIncognito,
+            @Nullable String canDedupedApplicationId) {
         super(packageName, label, null, icon);
         ThreadUtils.assertOnUiThread();
         mHandler = new Handler();
@@ -124,6 +126,7 @@ public class AndroidPaymentApp
         mPayIntent.setAction(ACTION_PAY);
         mMethodNames = new HashSet<>();
         mIsIncognito = isIncognito;
+        mCanDedupedApplicationId = canDedupedApplicationId;
     }
 
     /** @param methodName A payment method that this app supports, e.g., "https://bobpay.com". */
@@ -241,6 +244,11 @@ public class AndroidPaymentApp
     @Override
     public Set<String> getPreferredRelatedApplicationIds() {
         return null;
+    }
+
+    @Override
+    public String getCanDedupedApplicationId() {
+        return mCanDedupedApplicationId;
     }
 
     @Override
