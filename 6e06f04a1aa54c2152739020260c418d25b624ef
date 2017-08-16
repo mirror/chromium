@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3602f462_309bde5c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/OWebContentsAccessibility.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:50:02Z",
+      "side": 1,
+      "message": "Remove extra () around both?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "6e06f04a1aa54c2152739020260c418d25b624ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa434685_72d40bfd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:50:02Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 894,
+        "startChar": 8,
+        "endLine": 899,
+        "endChar": 16
+      },
+      "revId": "6e06f04a1aa54c2152739020260c418d25b624ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
