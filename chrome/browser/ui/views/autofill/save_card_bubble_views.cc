@@ -362,11 +362,14 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
   request_cvc_view->SetBackground(views::CreateThemedSolidBackground(
       request_cvc_view.get(), ui::NativeTheme::kColorId_BubbleBackground));
 
-  views::Label* explanation_label = new views::Label(l10n_util::GetStringUTF16(
-      IDS_AUTOFILL_SAVE_CARD_PROMPT_ENTER_CVC_EXPLANATION));
-  explanation_label->SetMultiLine(true);
-  explanation_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  request_cvc_view->AddChildView(explanation_label);
+  const CreditCard& card = controller_->GetCard();
+  views::Label* explanation_label_top =
+      new views::Label(l10n_util::GetStringFUTF16(
+          IDS_AUTOFILL_SAVE_CARD_PROMPT_ENTER_CVC_EXPLANATION_TOP,
+          card.NetworkAndLastFourDigits()));
+  explanation_label_top->SetMultiLine(true);
+  explanation_label_top->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  request_cvc_view->AddChildView(explanation_label_top);
 
   views::View* cvc_entry_view = new views::View();
   views::BoxLayout* layout = new views::BoxLayout(
@@ -388,6 +391,14 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
   cvc_entry_view->AddChildView(cvc_image);
 
   request_cvc_view->AddChildView(cvc_entry_view);
+
+  views::Label* explanation_label_bottom =
+      new views::Label(l10n_util::GetStringUTF16(
+          IDS_AUTOFILL_SAVE_CARD_PROMPT_ENTER_CVC_EXPLANATION_BOTTOM));
+  explanation_label_bottom->SetMultiLine(true);
+  explanation_label_bottom->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  request_cvc_view->AddChildView(explanation_label_bottom);
+
   return request_cvc_view;
 }
 
