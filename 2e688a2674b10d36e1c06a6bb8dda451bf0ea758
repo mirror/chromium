@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bf8dc9b_e3238c75",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-16T20:10:57Z",
+      "side": 1,
+      "message": "We could avoid introducing this flag by only adding the session observer if needed in the constructor, and removing it here. But I think the flag is easier to follow.",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 33
+      },
+      "revId": "2e688a2674b10d36e1c06a6bb8dda451bf0ea758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
