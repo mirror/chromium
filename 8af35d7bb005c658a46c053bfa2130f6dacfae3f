@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64cb7f28_87aa9255",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Can you expand the title a little to make clear what \"advanced key support\" actually means, i.e. what is an \"advanced key\"?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c260fe9_2e04b866",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "nit: I\u0027d get rid of \"This CL:\" and just have the bullets follow the title.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e9b69a_0848b5ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "nit: Missing . at end of line, here and below.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740bc476_903bafd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "nit: keyboardInterpreter -\u003e KeyboardInterpreter\n\nIt\u0027s not clear from this comment what \"makes the modifiers ... work\" means - what didn\u0027t work about them previously?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5072080_a06d36ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Can you give an example of what that means? Where is support being added? Why was it not possible to do that previously?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3177052_44c33adc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Can you clarify why that is required?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a62659_8596bc9f",
+        "filename": "remoting/client/input/keyboard_input_strategy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "This comment isn\u0027t really helpful - the function is already called HandleTextEvent, after all :P\n\nSince you\u0027re changing the meaning of |modifiers| to be a vector of pressed modifier _keys_, you could update the comments here to clarify what the parameters mean, to make the comment more useful.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f17fae6_bc6f7774",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "This means performing an allocation on every HandleDeleteEvent, to set up the |keys| vector - is that acceptable?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfe37de_ef5a8a24",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Are you sure you should be pushing a DomCode here, rather than a DomKey? We use DomKey to express the *meaning* of a key, whereas DomCode is about the physical key, so it only really makes sense in the context of a PC keyboard.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cf4b06_f754436a",
+        "filename": "remoting/client/input/keyboard_interpreter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "s/covert/convert, here and bwlo.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f0026f_34522cba",
+        "filename": "remoting/client/input/keyboard_interpreter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Please add a comment to clarify what you mean by a \"combination\", e.g. is a \"combination\" a set of keys A, B, C such that we do the equivalent of keydown-A, keydown-B, keydown-C, keyup-C, keyup-B, keyup-A, etc, or something else?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99351096_5634244c",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "This comment really belongs on kAsciiToKeyCodeUS, rather than here.\n\nCan you clarify what you mean by \"Chromoting keycodes\"?  Looking at the table below, it appears that you\u0027re using the DomCode values (which match what Chromoting sends on the wire, by design), so I think it\u0027d be clearer to describe this as a DomCode to characters mapping, and to use the DomCode constants in the table itself.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6020d404_686dce19",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "This comment says _what_ these constants are, but not _why_ we need them - can we add some explanation of why we define these?\n\nThese values are all named kFooIndex, suggesting that they are indexes into the table below, but immediately above this, you describe the max index as 126 - it looks like you already have these at the end of the table, though, so do we really need these constants?  Effectively these are character values that we\u0027re using to represent modifier keys - are they specific to Chromoting, or does the platform itself use these values?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5f8dfc_a5c11e8b",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Isn\u0027t the Escape key one of the keys you wanted to add support for?  That\u0027s ASCII code 27, so should it have an entry here?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a054dc0_31ba643e",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "nit: \"If modifiers are present then text input...\"",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30116d6_e92683aa",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Is this generally the case?  e.g. if I see the text \"A\" with Shift down then do I need to do this or can I safely just inject \"A\" directly as text?\n\nBasically I\u0027d have expected that this is primarily something we need to do for Ctrl+\u003ckey\u003e combinations?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b87959_7ab29eb9",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T22:11:30Z",
+      "side": 1,
+      "message": "Won\u0027t this clash with Shift appearing in |modifiers|?",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
