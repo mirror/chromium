@@ -16,6 +16,24 @@
       "revId": "8574f7621b66a7e644fa4bf91fc7588b166c3b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa82e89f_a8c87200",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-16T09:01:58Z",
+      "side": 1,
+      "message": "Good idea! Thanks for the input!",
+      "parentUuid": "8e5b7e35_b8446008",
+      "revId": "8574f7621b66a7e644fa4bf91fc7588b166c3b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
