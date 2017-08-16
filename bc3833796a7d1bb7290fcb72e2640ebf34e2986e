@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "d460ef14_a918c234",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-16T20:14:24Z",
+      "side": 1,
+      "message": "What will we use for non-HDR bitstream?",
+      "parentUuid": "4d97a8f7_3c4fe80a",
+      "range": {
+        "startLine": 245,
+        "startChar": 9,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db663b4_2b788bd4",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 8
@@ -402,6 +426,30 @@
       "side": 1,
       "message": "Sorry, I am not familiar with this topic. Please correct me if I am wrong.\nFrameProcessor::HandlePartialAppendWindowTrimming() seems working on StreamParserBuffer, not AudioBuffer.\nAudioBuffer::Trim*() are only used in\n1) AudioRendererImpl::HandleDecodedBuffer_Locked(), which is avoided in bitstream case.\n2) AudioDiscardHelper, which is only used by FFmpegAudioDecoder. Currently, bitstream formats are only coming from MediaCodecAudioDecoder.\n\nMaybe we can use DCHECK(!IsBitstreamFormat())?",
       "parentUuid": "e7ec4c33_7838580b",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 67
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a04a83_a80d5028",
+        "filename": "media/base/audio_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-16T20:14:24Z",
+      "side": 1,
+      "message": "Trimming instructions are set down on with the encoded StreamParserBuffer. When ffmpeg decode\u0027s this into to an AudioBuffer, the AudioDiscardHelper does the work of actually removing the \"trimming\" frames described in the StreamParserBuffer.\n\nWhat I didn\u0027t realize until just now is that MediaCodecAudioDecoder doesn\u0027t do any of this. This isn\u0027t a huge deal because I think ffmpeg audio decoder is used for all official MSE codecs now (Dale, LMK if I\u0027m wrong). \n\nEAC3 is not officially a supported MSE bytestream. So maybe its reasonable if some MSE features like append window trimming are not complete while this remains in \"unofficial\" status. Really its up to cast - do cast EAC3 users desire to use append window trimming? If not, you\u0027re fine (and DCHECK sounds reasonable). But if cast users want window trimming, you\u0027ll need to take extra steps to \"trim whole frames\" as discussed in your past CL. Those extra steps might involve using the AudioDiscardHelper in MediaCodecAudioDecoder, much like you see in FFmpegAudioDecoder.",
+      "parentUuid": "5eccc25b_31747965",
       "range": {
         "startLine": 335,
         "startChar": 0,
