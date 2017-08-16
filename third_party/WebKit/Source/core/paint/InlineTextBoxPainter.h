@@ -79,9 +79,15 @@ class InlineTextBoxPainter {
 
   void PaintStyleableMarkerUnderline(GraphicsContext&,
                                      const LayoutPoint& box_origin,
-                                     const StyleableMarker&);
-  unsigned MarkerPaintStart(const DocumentMarker&);
-  unsigned MarkerPaintEnd(const DocumentMarker&);
+                                     const StyleableMarker&,
+                                     const ComputedStyle&,
+                                     const Font&);
+  struct MarkerOffsets {
+    unsigned start;
+    unsigned end;
+  };
+  MarkerOffsets MarkerPaintStartAndEnd(const DocumentMarker&);
+
   bool ShouldPaintTextBox(const PaintInfo&);
   void ExpandToIncludeNewlineForSelection(LayoutRect&);
   LayoutObject& InlineLayoutObject() const;
