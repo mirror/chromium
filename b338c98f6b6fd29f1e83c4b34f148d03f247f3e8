@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ad36ebd3_070a5dc4",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-16T20:06:18Z",
+      "side": 1,
+      "message": "We just need to be careful to only expose a timer interface in the container that\u0027s safe. Rule of thumb: assume the container is fully malicious. How do you design an API that cannot be trivially abused?\n\nEssentially, if your Mojo API doesn\u0027t do any useful checks on the requests coming from the container, having a Mojo API is not better than allowing access to the raw syscall.",
+      "parentUuid": "4b47cf64_86fa0166",
+      "revId": "b338c98f6b6fd29f1e83c4b34f148d03f247f3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ea7485_bf1b0332",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 3
