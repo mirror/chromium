@@ -298,14 +298,14 @@ extern "C" void __declspec(dllexport) __cdecl SetCrashKeyValueImpl(
 }
 
 extern "C" void __declspec(dllexport) __cdecl ClearCrashKeyValueImpl(
-    const wchar_t* key) {
+    const char* key) {
   CrashKeysWin* keeper = CrashKeysWin::keeper();
   if (!keeper)
     return;
 
   // TODO(siggi): This doesn't look quite right - there's NULL deref potential
   //    here, and an implicit std::wstring conversion. Fixme.
-  keeper->ClearCrashKeyValue(key);
+  keeper->ClearCrashKeyValue(base::UTF8ToWide(key).data());
 }
 
 static bool WrapMessageBoxWithSEH(const wchar_t* text, const wchar_t* caption,

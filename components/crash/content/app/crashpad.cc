@@ -327,13 +327,12 @@ void SetUploadConsentImpl(bool consent) {
 // change the name or signature of this function you will break SyzyASAN
 // instrumented releases of Chrome. Please contact syzygy-team@chromium.org
 // before doing so! See also http://crbug.com/567781.
-void SetCrashKeyValueImpl(const wchar_t* key, const wchar_t* value) {
-  crash_reporter::SetCrashKeyValue(base::UTF16ToUTF8(key),
-                                   base::UTF16ToUTF8(value));
+void SetCrashKeyValueImpl(const char* key, const char* value) {
+  crash_reporter::SetCrashKeyValue(key, value);
 }
 
-void ClearCrashKeyValueImpl(const wchar_t* key) {
-  crash_reporter::ClearCrashKey(base::UTF16ToUTF8(key));
+void ClearCrashKeyValueImpl(const char* key) {
+  crash_reporter::ClearCrashKey(key);
 }
 
 // This helper is invoked by code in chrome.dll to request a single crash report

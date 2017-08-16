@@ -21,11 +21,11 @@ namespace {
 
 // exported in breakpad_win.cc/crashpad_win.cc:
 //    void __declspec(dllexport) __cdecl SetCrashKeyValueImpl.
-typedef void(__cdecl* SetCrashKeyValue)(const wchar_t*, const wchar_t*);
+typedef void(__cdecl* SetCrashKeyValue)(const char*, const char*);
 
 // exported in breakpad_win.cc/crashpad_win.cc:
 //    void __declspec(dllexport) __cdecl ClearCrashKeyValueImpl.
-typedef void(__cdecl* ClearCrashKeyValue)(const wchar_t*);
+typedef void(__cdecl* ClearCrashKeyValue)(const char*);
 
 void SetCrashKeyValueTrampoline(const base::StringPiece& key,
                                 const base::StringPiece& value) {
@@ -36,8 +36,7 @@ void SetCrashKeyValueTrampoline(const base::StringPiece& key,
                    : nullptr);
   }();
   if (set_crash_key) {
-    (set_crash_key)(base::UTF8ToWide(key).data(),
-                    base::UTF8ToWide(value).data());
+    (set_crash_key)(key.data(), value.data());
   }
 }
 
@@ -49,7 +48,7 @@ void ClearCrashKeyValueTrampoline(const base::StringPiece& key) {
                    : nullptr);
   }();
   if (clear_crash_key)
-    (clear_crash_key)(base::UTF8ToWide(key).data());
+    (clear_crash_key)(key.data());
 }
 
 }  // namespace
