@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb25cc13_e2658816",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-16T22:04:17Z",
+      "side": 1,
+      "message": "Can we access ExclusiveAccessBubble::kInitialDelayMs here? Maybe add FullscreenControllerTest as a friend class? And then maybe divide it by 2?",
+      "range": {
+        "startLine": 115,
+        "startChar": 56,
+        "endLine": 115,
+        "endChar": 72
+      },
+      "revId": "be0f48b168b5c19af0ad4a5f11cd73ac1fbfaa43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffabdac_2cb4c702",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-16T22:04:17Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "be0f48b168b5c19af0ad4a5f11cd73ac1fbfaa43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8ab11c_c7b11d50",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-16T22:04:17Z",
+      "side": 1,
+      "message": "Why the desire to store it as a uintptr_t? why not use a WebContents*?",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "be0f48b168b5c19af0ad4a5f11cd73ac1fbfaa43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
