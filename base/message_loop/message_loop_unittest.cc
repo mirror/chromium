@@ -1539,31 +1539,6 @@ TEST(MessageLoopTest, IOHandler) {
 TEST(MessageLoopTest, WaitForIO) {
   RunTest_WaitForIO();
 }
-
-TEST(MessageLoopTest, HighResolutionTimer) {
-  MessageLoop message_loop;
-  Time::EnableHighResolutionTimer(true);
-
-  const TimeDelta kFastTimer = TimeDelta::FromMilliseconds(5);
-  const TimeDelta kSlowTimer = TimeDelta::FromMilliseconds(100);
-
-  EXPECT_FALSE(message_loop.HasHighResolutionTasks());
-  // Post a fast task to enable the high resolution timers.
-  message_loop.task_runner()->PostDelayedTask(
-      FROM_HERE, BindOnce(&PostNTasksThenQuit, 1), kFastTimer);
-  EXPECT_TRUE(message_loop.HasHighResolutionTasks());
-  RunLoop().Run();
-  EXPECT_FALSE(message_loop.HasHighResolutionTasks());
-  EXPECT_FALSE(Time::IsHighResolutionTimerInUse());
-  // Check that a slow task does not trigger the high resolution logic.
-  message_loop.task_runner()->PostDelayedTask(
-      FROM_HERE, BindOnce(&PostNTasksThenQuit, 1), kSlowTimer);
-  EXPECT_FALSE(message_loop.HasHighResolutionTasks());
-  RunLoop().Run();
-  EXPECT_FALSE(message_loop.HasHighResolutionTasks());
-  Time::EnableHighResolutionTimer(false);
-}
-
 #endif  // defined(OS_WIN)
 
 namespace {
