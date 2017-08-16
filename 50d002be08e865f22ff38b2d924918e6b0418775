@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3e1750d3_975952ae",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:14:45Z",
+      "side": 1,
+      "message": "\u003e I\u0027m actually happy that you asked this question.\n\u003e \n\u003e Even though it may be interesting to test a wide range of images, there is no guarantees if the current range of values (i.e. colors) in a given image would trigger any ill condition where the checksum would fail.\n\u003e \n\u003e It would test the client code (e.g. libpng) for a given image but not necessarily the correctness of the checksum computation for *any* values.\n\nI was asking about speed here, not correctness.  I expect some PNG images would improve speed-wise, and I expect that some won\u0027t.\n\n\u003e Instead, I validated this implementation by comparing the calculated checksum of the C code versus the results of the NEON implementation in vectors of random data.\n\u003e \n\u003e The tests were written along the implementation of the code, please check:\n\u003e https://gist.github.com/Adenilson/a238ffb82ea36c19a275f340091e1d30\n\u003e \n\u003e And the expected result:\n\u003e https://gist.github.com/Adenilson/5e76240d45d385bcb941ea866d18a084\n\nThese are the details I was asking for: please add them to the change description.\n\n\u003e It is a bit sad that zlib doesn\u0027t have support for unit tests, it would be nice to have this added as gtests.\n\nA follow-up bug could deal with adding tests.\n \n\u003e So for the near 90 lines of code (LOCs) in the NEON implementation, I had close to 400 LOCs in tests, with random generated values and vectors ranging from 16 to 20K in size, comparing the computed checksums (C x NEON).\n\u003e\n\u003e I also validated the implementation using the prime zlib client, libpng. It has a helper app called \u0027pngtest\u0027 that will open/decompress a PNG file and next create from the raw data a new png and compare if they match. The results for image validation were the same while using the C X NEON implementation.\n\nYour change description could briefly mention how you used pngtest for validation.\n \n\u003e Concerning *what* the code does, please refer to the \u0027Algorithm\u0027 section of: https://en.wikipedia.org/wiki/Adler-32\n\u003e \n\u003e Here, \u0027taps\u0027 represents the \u0027n\u0027 scalar multiplier of \u0027B\u0027, which will be multiplied and accumulated. Think of it as a vectorized form of the code implemented to handle the tail.\n\u003e\n\nGood details once again, where should we write down those details?",
+      "parentUuid": "a5eb22da_f84bafff",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5621126_9985a2e5",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2017-08-15T04:41:44Z",
       "side": 1,
       "message": "nit: compound declaration (here and elsewhere).",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe015ee_fd644e6b",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:14:45Z",
+      "side": 1,
+      "message": "\u003e nit: compound declaration (here and elsewhere).\n\nI see you know of https://godbolt.org -- it\u0027s a good place to experiment with asm output, compiler flags, for some code we\u0027re testing.  Experimentation is even easier when there are no compound declarations, I note.",
+      "parentUuid": "f5621126_9985a2e5",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "Any good compiler should identify that and move the code outside of the loop, please see (check lines 24 and 27): https://godbolt.org/g/KMeBAJ\n\nUnless this is a main issue, I prefer the keep the code as it is.",
       "parentUuid": "0e89ec9c_ff79c5a1",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4017d42_6365e708",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:14:45Z",
+      "side": 1,
+      "message": "Thank you for the https://godbolt.org/g/KMeBAJ results, they look good (the constants hoisted out of the loop).",
+      "parentUuid": "cfeb072c_746d880a",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -159,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "88546e63_e3ffc2f7",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:14:45Z",
+      "side": 1,
+      "message": "\u003e Nice catch! :-)\n\nnit: const int M_NMAX \u003d 5552; is _signed_ :)  \n\nMaybe using a #define (as zlib does, see adler32.c) would be better.",
+      "parentUuid": "55b01dc3_0e93c397",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00954fc6_fa1d0908",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -229,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "2970435e_4464dfb6",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:14:45Z",
+      "side": 1,
+      "message": "The \"it can be supplied by ...\" is not so irrelevant, let\u0027s remove it please.\nThe /* split Adler-32 into component sums */ part proceeds this code elsewhere in zlib, best to stick with that.",
+      "parentUuid": "03de89f2_85d71191",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b258551c_76a74e73",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -258,6 +348,24 @@
       "side": 1,
       "message": "Nopes, because it may be passed along to the function from a previous computation.\n\nThat would require to change the public function interface (e.g. the NEON implementation must be a drop-in replacement) as also call sites in zlib (and maybe client code in libpng).",
       "parentUuid": "b258551c_76a74e73",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e49699d_bcab589e",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-16T07:14:45Z",
+      "side": 1,
+      "message": "\u003e Nopes, because it may be passed along to the function from a previous computation.\n\u003e\n\u003e That would require to change the public function interface (e.g. the NEON implementation must be a drop-in replacement) as also call sites in zlib (and maybe client code in libpng).\n\nThe calculation only uses the lower 2 bytes of that \"previous computation\",\nand ignores the rest.\n\nNEON_adler32 is an internal detail (or should be). The public interface is adler32(), which what clients like zlib / libpng call.\n\nBrings up another point.  adler32_z() is also on the public interface too, but for some reason you did not update that path with NEON support.",
+      "parentUuid": "97ccaeea_960aa2d6",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
