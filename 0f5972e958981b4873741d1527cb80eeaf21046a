@@ -16,6 +16,24 @@
       "revId": "0f5972e958981b4873741d1527cb80eeaf21046a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53be550_9b516824",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:54:00Z",
+      "side": 1,
+      "message": "Ah!  No, I don\u0027t think this is sufficient.  :)\n\n1) It\u0027s 300 lines into the file and hard to find.  (I looked for it before asking and couldn\u0027t find it.)\n\n2) It\u0027s apparently easy to misuse, given this bug you\u0027re fixing.  I\u0027m guessing you\u0027re supposed to run this code before making the change to the format, and many people were running it afterward?  I\u0027m glad you\u0027re adding an expectation to catch that, but it would help to mention it in the howto.\n\nJust adding something like \"Note: See the PageStateSerializationTest DumpExpectedPageStateForBackwardsCompat test for instructions on how to generate .dat files when adding new versions\" to page_state_serialization.h would help leave a breadcrumb.  That plus being a bit more explicit in this comment to fix #2 should be enough.  Thanks!",
+      "parentUuid": "852706e0_c4ae9703",
+      "revId": "0f5972e958981b4873741d1527cb80eeaf21046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
