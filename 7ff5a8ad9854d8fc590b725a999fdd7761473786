@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81ddef9_f4b96ca3",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-16T18:23:07Z",
+      "side": 1,
+      "message": "I wonder if NotifyAccessibilityPrefChanged or\nNotifyAccessibilityPrefWasToggled might be more clear?\n\nWe don\u0027t have a clear concept of \"accessibility mode\" in\nash/ or chrome/browser/chromeos/ and it\u0027s not really obvious\nif it should be interpreted as \"the\" accessibility mode or\n\"a\" accessibility mode.",
+      "revId": "7ff5a8ad9854d8fc590b725a999fdd7761473786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
