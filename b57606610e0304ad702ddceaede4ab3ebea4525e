@@ -351,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "00ed21fe_c9992b2f",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-16T14:30:05Z",
+      "side": 1,
+      "message": "That\u0027s very strange. It shouldn\u0027t. :(",
+      "parentUuid": "808bd02b_1ab39b1d",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23fa5586_48958843",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -403,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "e2995bd6_47df3986",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-16T14:30:05Z",
+      "side": 1,
+      "message": "Ok. *shrug* Then file an issue against the explainer? We need to record this somewhere.",
+      "parentUuid": "62b7ff4a_036989af",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6fc4138_88b4ce27",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -449,6 +485,24 @@
       "side": 1,
       "message": "Naah.\n\nIf this is important to you, I\u0027ll try to find a way to initialize this with a const_expr std::min(... all the algos ...), which is really what we want here.",
       "parentUuid": "8b2bcd0e_f7d9e7fb",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc39e62b_ab6ab271",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-16T14:30:05Z",
+      "side": 1,
+      "message": "I\u0027d be happy with anything that doesn\u0027t make the reader think about why SHA-256 was chosen. A comment would be enough, I suppose.",
+      "parentUuid": "29645984_2db67a0a",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -609,6 +663,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7ccf91_8f7dd01e",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-16T14:30:05Z",
+      "side": 1,
+      "message": "Ok. I can live with that. :)",
+      "parentUuid": "7921d169_0abed486",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -798,6 +870,24 @@
       "side": 1,
       "message": "This indeed shouldn\u0027t be checked in. This is currently being changed in another CL, and I assume that one will land before this one, and hence I\u0027ll have to change this anyhow.\n\nSo, leaving this for now; knowing this will block this CL.",
       "parentUuid": "a8896280_433a2ab0",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5189154a_8ead9dad",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-16T14:30:05Z",
+      "side": 1,
+      "message": "Hrm. What\u0027s the timeline? :)\n\nIt would be nice to get an initial pass at this landed in the somewhat near future so we can go back to the internal teams that need it to get some feedback about whether or not it actually works for them.",
+      "parentUuid": "c59e790e_b0d0f20e",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
