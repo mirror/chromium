@@ -32,8 +32,7 @@ TEST(NGConstraintSpaceBuilderTest, AvailableSizeFromHorizontalICB) {
   horizontal_builder.SetAvailableSize(fixed_size);
   horizontal_builder.SetPercentageResolutionSize(fixed_size);
 
-  NGConstraintSpaceBuilder vertical_builder(
-      horizontal_builder.ToConstraintSpace(kHorizontalTopBottom).Get());
+  NGConstraintSpaceBuilder vertical_builder(kHorizontalTopBottom);
 
   vertical_builder.SetAvailableSize(indefinite_size);
   vertical_builder.SetPercentageResolutionSize(indefinite_size);
@@ -56,8 +55,7 @@ TEST(NGConstraintSpaceBuilderTest, AvailableSizeFromVerticalICB) {
   horizontal_builder.SetAvailableSize(fixed_size);
   horizontal_builder.SetPercentageResolutionSize(fixed_size);
 
-  NGConstraintSpaceBuilder vertical_builder(
-      horizontal_builder.ToConstraintSpace(kVerticalLeftRight).Get());
+  NGConstraintSpaceBuilder vertical_builder(kVerticalLeftRight);
 
   vertical_builder.SetAvailableSize(indefinite_size);
   vertical_builder.SetPercentageResolutionSize(indefinite_size);

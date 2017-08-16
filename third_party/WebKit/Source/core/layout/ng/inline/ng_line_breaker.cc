@@ -440,7 +440,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
   LayoutBox* layout_box = ToLayoutBox(item.GetLayoutObject());
   NGBlockNode node = NGBlockNode(layout_box);
   const ComputedStyle& style = node.Style();
-  NGConstraintSpaceBuilder constraint_space_builder(constraint_space_);
+  NGConstraintSpaceBuilder constraint_space_builder(
+      constraint_space_->WritingMode());
   // Request to compute baseline during the layout, except when we know the box
   // would synthesize box-baseline.
   if (NGBaseline::ShouldPropagateBaselines(layout_box)) {
@@ -455,6 +456,9 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
   RefPtr<NGConstraintSpace> constraint_space =
       constraint_space_builder.SetIsNewFormattingContext(true)
           .SetIsShrinkToFit(true)
+          .SetAvailableSize(constraint_space_->AvailableSize())
+          .SetPercentageResolutionSize(
+              constraint_space_->PercentageResolutionSize())
           .SetTextDirection(style.Direction())
           .ToConstraintSpace(FromPlatformWritingMode(style.GetWritingMode()));
   item_result->layout_result = node.Layout(constraint_space.Get());

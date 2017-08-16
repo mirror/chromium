@@ -114,7 +114,7 @@ RefPtr<NGConstraintSpace> CreateConstraintSpaceForFloat(
     WTF::Optional<LayoutUnit> fragmentation_offset = WTF::nullopt) {
   const ComputedStyle& style = unpositioned_float.node.Style();
 
-  NGConstraintSpaceBuilder builder(parent_space);
+  NGConstraintSpaceBuilder builder(parent_space->WritingMode());
 
   if (fragmentation_offset) {
     builder.SetFragmentainerSpaceAvailable(fragmentation_offset.value())

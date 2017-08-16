@@ -10,28 +10,6 @@
 
 namespace blink {
 
-NGConstraintSpaceBuilder::NGConstraintSpaceBuilder(
-    const NGConstraintSpace* parent_space)
-    : available_size_(parent_space->AvailableSize()),
-      percentage_resolution_size_(parent_space->PercentageResolutionSize()),
-      parent_percentage_resolution_size_(
-          parent_space->PercentageResolutionSize()),
-      initial_containing_block_size_(
-          parent_space->InitialContainingBlockSize()),
-      fragmentainer_space_available_(NGSizeIndefinite),
-      parent_writing_mode_(parent_space->WritingMode()),
-      is_fixed_size_inline_(false),
-      is_fixed_size_block_(false),
-      is_shrink_to_fit_(false),
-      is_inline_direction_triggers_scrollbar_(false),
-      is_block_direction_triggers_scrollbar_(false),
-      fragmentation_type_(parent_space->BlockFragmentationType()),
-      is_new_fc_(parent_space->IsNewFormattingContext()),
-      is_anonymous_(false),
-      text_direction_(static_cast<unsigned>(parent_space->Direction())),
-      bfc_offset_(parent_space->bfc_offset_),
-      exclusion_space_(parent_space->ExclusionSpace()) {}
-
 NGConstraintSpaceBuilder::NGConstraintSpaceBuilder(NGWritingMode writing_mode)
     : initial_containing_block_size_{NGSizeIndefinite, NGSizeIndefinite},
       fragmentainer_space_available_(NGSizeIndefinite),

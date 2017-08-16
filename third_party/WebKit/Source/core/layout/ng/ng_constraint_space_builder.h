@@ -16,8 +16,6 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   DISALLOW_NEW();
 
  public:
-  NGConstraintSpaceBuilder(const NGConstraintSpace* parent_space);
-
   NGConstraintSpaceBuilder(NGWritingMode writing_mode);
 
   NGConstraintSpaceBuilder& SetAvailableSize(NGLogicalSize available_size);
