@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80ca50fa_ae2a36c5",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:07:59Z",
+      "side": 1,
+      "message": "Done. Ah, I missed this, you are right. Added it now. Planned for that, but Vim throwed me off to look at entire flow at once. Also do I need to go into individual suggestions to make sure CC is present. Let us say we have a cc form with address + cc and we have just addresses, what does suggestions contain.",
+      "parentUuid": "c690202b_c2c2f450",
+      "range": {
+        "startLine": 613,
+        "startChar": 8,
+        "endLine": 613,
+        "endChar": 28
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02b7797_7e411488",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T21:18:53Z",
       "side": 1,
       "message": "Alternatively, lately I\u0027ve seen it suggested where you add the feature to autofill_experiments.h and .cc.  You define the experiment\u0027s enabled condition with the same base::FeatureList code, but it goes in autofill_experiments, like so:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_experiments.cc?l\u003d265-271\u0026rcl\u003de99ddc1455117eba392cc9cd354a8f49fe3d6838\nand then here in autofill_manager.cc you can write the more readable \"IsAutofillCreditCardDisabledExperimentEnabled()\".\n\nHere\u0027s an example of the CL I submitted today that contained a flag that did this:\nhttps://chromium-review.googlesource.com/c/611727",
+      "range": {
+        "startLine": 614,
+        "startChar": 8,
+        "endLine": 614,
+        "endChar": 65
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8386dd27_accc6fee",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:07:59Z",
+      "side": 1,
+      "message": "Yep. This looks cleaner to me. Roger, any objections ? (Otherwise will update it).",
+      "parentUuid": "f02b7797_7e411488",
       "range": {
         "startLine": 614,
         "startChar": 8,
