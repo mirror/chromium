@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb2b463_3f21519e",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T17:50:15Z",
+      "side": 1,
+      "message": "\"Boolean that specifies whether ...\"",
+      "revId": "990450a503d3bd236f87e64e0c0b7b7856d11349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c45d532_491e5eee",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1763,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T17:50:15Z",
+      "side": 1,
+      "message": "Should this go under \"policy.\" or something? \"policy.cloud_override\"? it\u0027s nice to group related prefs together and there are already seems to be a \"policy.\" group.",
+      "range": {
+        "startLine": 1763,
+        "startChar": 50,
+        "endLine": 1763,
+        "endChar": 73
+      },
+      "revId": "990450a503d3bd236f87e64e0c0b7b7856d11349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65881439_fbd269cd",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T17:50:15Z",
+      "side": 1,
+      "message": "Align with position in .cc",
+      "revId": "990450a503d3bd236f87e64e0c0b7b7856d11349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
