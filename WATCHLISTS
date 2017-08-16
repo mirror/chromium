@@ -164,7 +164,12 @@
       'filepath': 'background_fetch',
     },
     'background_sync': {
-      'filepath': 'background_sync',
+      'filepath': 'chrome/browser/background_sync/'\
+                  '|content/child/background_sync/'\
+                  '|content/browser/background_sync/'\
+                  '|content/test/data/background_sync/'\
+                  '|chrome/browser/background_sync/'\
+                  '|third_party/WebKit/Source/modules/background_sync/',
     },
     'banners': {
       'filepath': 'chrome/android/java/src/org/chromium/chrome/browser/banners/|'\
@@ -629,7 +634,10 @@
                   'components/bubble/',
     },
     'cache_storage': {
-      'filepath': 'cache_storage',
+      'filepath': 'content/common/cache_storage/'\
+                  '|content/browser/cache_storage/'\
+                  '|content/renderer/cache_storage/'\
+                  '|third_party/WebKit/Source/modules/cachestorage/',
     },
     'cast': {
       'filepath': 'media/cast/'\
@@ -1167,7 +1175,7 @@
                   '|net/data/websocket/'
     },
     'netinfo': {
-      'filepath': 'netinfo',
+      'filepath': 'third_party/WebKit/Source/modules/netinfo/',
     },
     'notifications': {
       'filepath': 'chrome/browser/extensions/api/notifications/|' \
