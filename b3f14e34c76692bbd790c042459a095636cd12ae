@@ -506,6 +506,24 @@
     },
     {
       "key": {
+        "uuid": "565f3a52_f709178a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "I have the suspicion that isn\u0027t actually necessary (why would we have a request for a null DownloadItem?). But we could investigate that in a followup.\n\nWhat you should do however is update the Javadoc comment for ThumbnailRequest, which says these fields should be NonNull :) (Or actually, just remove the comment if there already is an annotation? Otherwise it just leads to inconsistencies -- case in point 😃)",
+      "parentUuid": "b85c172b_e082f24f",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c181fd2c_e246dfa5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
         "patchSetId": 20

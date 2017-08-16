@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4a483f_e734b129",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "If this is private, it can\u0027t be visible for testing :)",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c41f11_0cd88764",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "Why do you need to initialize this lazily?",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db9523c_9f2c7b9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "If asserts are off, the block is a no-op, so you could move this into the assert straight away?",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d45fe5_ae999bb8",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary -- the |java_delegate_| member will be destroyed immediately afterwards, which will also reset it.",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85392c71_766850fb",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "This shouldn\u0027t happen.",
+      "range": {
+        "startLine": 160,
+        "startChar": 6,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1bb0621_fa07680b",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "Hm, you only pass the content ID back to Java, right? You could just pass it as a ScopedJavaGlobalRef\u003cjstring\u003e too, to avoid converting it back and forth.",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 24
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea46d808_855fc26e",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "You can directly initialize the ScopedJavaGlobalRef with the callback in the constructor.",
+      "range": {
+        "startLine": 185,
+        "startChar": 61,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fd0ef5_aacb09db",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-16T14:36:24Z",
+      "side": 1,
+      "message": "This could be private.",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
