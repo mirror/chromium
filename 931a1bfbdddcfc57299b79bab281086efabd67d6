@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed194c4_f888a424",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "Why not use FRIEND_TES_ALL_PREFIXES?",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a991a3_228ecd48",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "s/loading/open/ as we are using BackgroundTabOpen as the name.",
+      "range": {
+        "startLine": 70,
+        "startChar": 73,
+        "endLine": 70,
+        "endChar": 80
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9768279e_3697e427",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "Is it possible to use TabManager::ActiveTabChanged instead of manual switch?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37f7d24_95dce7d7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80534,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "s/loading/opening",
+      "range": {
+        "startLine": 80534,
+        "startChar": 54,
+        "endLine": 80534,
+        "endChar": 61
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968b61c2_3b8cee79",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80534,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "s/loading/opening",
+      "range": {
+        "startLine": 80534,
+        "startChar": 15,
+        "endLine": 80534,
+        "endChar": 22
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fb4292_67d05f32",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80635,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "s/loading/opening",
+      "range": {
+        "startLine": 80635,
+        "startChar": 71,
+        "endLine": 80635,
+        "endChar": 78
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408a6dc5_6601a277",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80636,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "s/loading/opening",
+      "range": {
+        "startLine": 80636,
+        "startChar": 35,
+        "endLine": 80636,
+        "endChar": 42
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

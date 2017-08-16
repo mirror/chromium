@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "d955aaec_df225673",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-16T17:54:02Z",
+      "side": 1,
+      "message": "Where will you use OnBackgroundTabOpenSession[Started|Ended] in this CL? I think that is only needed by the swap metrics, which will be added by my CL.",
+      "parentUuid": "8353df38_cb053803",
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0894ae5a_fa68f941",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 2
