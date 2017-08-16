@@ -124,6 +124,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbf12a8_7aa2604e",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-16T15:31:48Z",
+      "side": 1,
+      "message": "The need to resolve the buffer format is due to the flexible format used by Android camera HAL. The camera HAL has two flexible formats: HAL_PIXEL_FORMAT_IMPLEMENTATION_DEFINED (for camera preview) and HAL_PIXEL_FORMAT_YUV420_888 (for generic YUV processing), which in Android world each board is free to choose a format that suits its needs.\n\nIn ARC++ we need to support multiple boards of different architecture, and each board may need a different buffer format to back the Android flexible formats. So we let the buffer allocator (i.e. cros-gralloc on Android / minigbm on CrOS) to hold the knowledge of the actual formats used on each platform. In all other places we query the buffer allocator to see which format is supported as camera buffer, but since we don\u0027t have a query interface in GpuMemoryBufferManager, I have to do query by actually allocating a buffer.\n\nWe\u0027ve thought about injecting the per-platform buffer format during build time, such as setting flags to some executables or creating an env var which can be consumed by packages that need to know the format. We decided not to do so because we want to consolidate the knowledge about the flexible buffer formats only in the buffer allocator.",
+      "parentUuid": "dec22222_394a8693",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
