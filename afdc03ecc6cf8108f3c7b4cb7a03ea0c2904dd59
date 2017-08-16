@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80f9e6c8_fa71a4ef",
+        "filename": "ios/chrome/app/resources/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T12:46:14Z",
+      "side": 1,
+      "message": "nit: restore alphabetical order.",
+      "range": {
+        "startLine": 155,
+        "startChar": 10,
+        "endLine": 155,
+        "endChar": 36
+      },
+      "revId": "afdc03ecc6cf8108f3c7b4cb7a03ea0c2904dd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e648b313_1ed3d390",
+        "filename": "ios/chrome/app/resources/quick_action_camera_search.imageset/quick_action_camera_search@3x.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-16T12:46:14Z",
+      "side": 1,
+      "message": "I understand this is not the scope of this CL, but this icon is more related to search by image (-\u003e Google Goggles) than QR code.\nHas this been discussed somewhere?",
+      "revId": "afdc03ecc6cf8108f3c7b4cb7a03ea0c2904dd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
