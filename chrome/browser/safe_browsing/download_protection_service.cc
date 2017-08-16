@@ -41,6 +41,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/download_feedback_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/safe_browsing_util.h"
 #include "chrome/browser/safe_browsing/sandboxed_zip_analyzer.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
@@ -546,12 +547,16 @@ class DownloadProtectionService::CheckClientDownloadRequest
 
   // From the net::URLFetcherDelegate interface.
   void OnURLFetchComplete(const net::URLFetcher* source) override {
+    LOG(ERROR) << "in OnURLFetchComplete";
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK_EQ(source, fetcher_.get());
     DVLOG(2) << "Received a response for URL: "
              << item_->GetUrlChain().back() << ": success="
              << source->GetStatus().is_success() << " response_code="
              << source->GetResponseCode();
+    LOG(ERROR) << "Received a response for URL: " << item_->GetUrlChain().back()
+               << ": success=" << source->GetStatus().is_success()
+               << " response_code=" << source->GetResponseCode();
     if (source->GetStatus().is_success()) {
       UMA_HISTOGRAM_SPARSE_SLOWLY(
           "SBClientDownload.DownloadRequestResponseCode",
@@ -563,20 +568,31 @@ class DownloadProtectionService::CheckClientDownloadRequest
     DownloadCheckResultReason reason = REASON_SERVER_PING_FAILED;
     DownloadCheckResult result = UNKNOWN;
     std::string token;
+    LOG(ERROR) << "here1";
+    LOG(ERROR) << "source->GetStatus().is_success(): "
+               << source->GetStatus().is_success();
+    LOG(ERROR) << "net::HTTP_OK == source->GetResponseCode(): "
+               << (net::HTTP_OK == source->GetResponseCode());
+    LOG(ERROR) << "net::HTTP_OK: " << net::HTTP_OK;
     if (source->GetStatus().is_success() &&
         net::HTTP_OK == source->GetResponseCode()) {
       ClientDownloadResponse response;
       std::string data;
       bool got_data = source->GetResponseAsString(&data);
+      LOG(ERROR) << "data: " << data;
       DCHECK(got_data);
+      LOG(ERROR) << "here2";
       if (!response.ParseFromString(data)) {
+        LOG(ERROR) << "here3";
         reason = REASON_INVALID_RESPONSE_PROTO;
         result = UNKNOWN;
       } else if (type_ == ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE) {
         // Ignore the verdict because we were just reporting a sampled file.
+        LOG(ERROR) << "here4";
         reason = REASON_SAMPLED_UNSUPPORTED_FILE;
         result = UNKNOWN;
       } else {
+        LOG(ERROR) << "here5";
         switch (response.verdict()) {
           case ClientDownloadResponse::SAFE:
             reason = REASON_DOWNLOAD_SAFE;
@@ -588,8 +604,17 @@ class DownloadProtectionService::CheckClientDownloadRequest
             token = response.token();
             break;
           case ClientDownloadResponse::UNCOMMON:
-            reason = REASON_DOWNLOAD_UNCOMMON;
-            result = UNCOMMON;
+            // if file was downloaded on local network, set reason/result to
+            // something else.
+            LOG(ERROR) << "IP source: " << item_->GetRemoteAddress();
+            if (IsPrivateIPAddress(item_->GetRemoteAddress())) {
+              LOG(ERROR) << "private IP address";
+              reason = REASON_VERDICT_UNKNOWN;
+              result = UNKNOWN;
+            } else {
+              reason = REASON_DOWNLOAD_UNCOMMON;
+              result = UNCOMMON;
+            }
             token = response.token();
             break;
           case ClientDownloadResponse::DANGEROUS_HOST:
@@ -1788,6 +1813,8 @@ bool DownloadProtectionService::IsHashManuallyBlacklisted(
 void DownloadProtectionService::CheckClientDownload(
     content::DownloadItem* item,
     const CheckDownloadCallback& callback) {
+  LOG(ERROR) << "in CheckClientDownload";
+  LOG(ERROR) << "IP source: " << item->GetRemoteAddress();
   scoped_refptr<CheckClientDownloadRequest> request(
       new CheckClientDownloadRequest(item, callback, this,
                                      database_manager_,
