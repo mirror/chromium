@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "563766fb_9de2bf05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "ad4a483f_e734b129",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47c41f11_0cd88764",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9698ecd5_ab807d03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "I was trying to avoid calling native code in the test, so I moved the initialization to happen in retrieveThumbnail, which is overriden in the test. Do you have a better way to do this in mind?",
+      "parentUuid": "47c41f11_0cd88764",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3ca7a897_8f508725",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "I see. I\u0027ve moved it into the assert.",
+      "parentUuid": "4db9523c_9f2c7b9e",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35d45fe5_ae999bb8",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
         "patchSetId": 23
@@ -91,6 +163,30 @@
       "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7944eb_877784fd",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d45fe5_ae999bb8",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "23d7d06d_6345bdc6",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85392c71_766850fb",
+      "range": {
+        "startLine": 160,
+        "startChar": 6,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1bb0621_fa07680b",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
         "patchSetId": 23
@@ -137,6 +257,30 @@
       "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98153a66_d8bae8c0",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "Good idea :) Is this the right way to do it?",
+      "parentUuid": "b1bb0621_fa07680b",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 24
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "883a7fef_168219b7",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea46d808_855fc26e",
+      "range": {
+        "startLine": 185,
+        "startChar": 61,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fd0ef5_aacb09db",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
         "patchSetId": 23
@@ -183,6 +351,30 @@
       "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e47e62c_baf5d81c",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-16T17:59:46Z",
+      "side": 1,
+      "message": "Good catch, thanks. I missed this in the rebase.",
+      "parentUuid": "62fd0ef5_aacb09db",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
