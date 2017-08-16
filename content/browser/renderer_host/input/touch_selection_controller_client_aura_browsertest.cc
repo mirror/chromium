@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_timeouts.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
@@ -27,6 +28,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/display/display_switches.h"
+#include "ui/events/blink/blink_features.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/touch_selection/touch_selection_controller_test_api.h"
@@ -127,7 +129,9 @@ class TestTouchSelectionControllerClientAura
 
 class TouchSelectionControllerClientAuraTest : public ContentBrowserTest {
  public:
-  TouchSelectionControllerClientAuraTest() {}
+  TouchSelectionControllerClientAuraTest() {
+    feature_list_.InitAndEnableFeature(features::kVsyncAlignedInputEvents);
+  }
   ~TouchSelectionControllerClientAuraTest() override {}
 
  protected:
@@ -196,6 +200,8 @@ class TouchSelectionControllerClientAuraTest : public ContentBrowserTest {
 
   TestTouchSelectionControllerClientAura* selection_controller_client_ =
       nullptr;
+
+  base::test::ScopedFeatureList feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchSelectionControllerClientAuraTest);
 };
