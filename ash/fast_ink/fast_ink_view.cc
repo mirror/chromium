@@ -331,6 +331,7 @@ void FastInkView::UpdateSurface() {
   transferable_resource.is_overlay_candidate = true;
 
   gfx::Rect quad_rect(widget_->GetNativeView()->GetBoundsInScreen().size());
+  bool needs_blending = true;
 
   const int kRenderPassId = 1;
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
@@ -360,7 +361,7 @@ void FastInkView::UpdateSurface() {
   float vertex_opacity[4] = {1.0, 1.0, 1.0, 1.0};
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
-  texture_quad->SetNew(quad_state, quad_rect, gfx::Rect(), quad_rect,
+  texture_quad->SetNew(quad_state, quad_rect, quad_rect, needs_blending,
                        transferable_resource.id, true, uv_top_left,
                        uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity,
                        false, false, false);

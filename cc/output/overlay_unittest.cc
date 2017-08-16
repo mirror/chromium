@@ -288,6 +288,7 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
                                        const SharedQuadState* shared_quad_state,
                                        RenderPass* render_pass,
                                        const gfx::Rect& rect) {
+  bool needs_blending = false;
   bool premultiplied_alpha = false;
   bool flipped = false;
   bool nearest_neighbor = false;
@@ -299,10 +300,10 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
 
   TextureDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, rect, resource_id,
-                       premultiplied_alpha, kUVTopLeft, kUVBottomRight,
-                       SK_ColorTRANSPARENT, vertex_opacity, flipped,
-                       nearest_neighbor, false);
+  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
+                       resource_id, premultiplied_alpha, kUVTopLeft,
+                       kUVBottomRight, SK_ColorTRANSPARENT, vertex_opacity,
+                       flipped, nearest_neighbor, false);
   overlay_quad->set_resource_size_in_pixels(resource_size_in_pixels);
 
   return overlay_quad;
@@ -316,13 +317,14 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
     const gfx::Transform& transform) {
   gfx::Size resource_size_in_pixels = rect.size();
   bool is_overlay_candidate = true;
+  bool needs_blending = false;
   viz::ResourceId resource_id = CreateResource(
       resource_provider, resource_size_in_pixels, is_overlay_candidate);
 
   StreamVideoDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<StreamVideoDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, rect, resource_id,
-                       resource_size_in_pixels, transform);
+  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
+                       resource_id, resource_size_in_pixels, transform);
 
   return overlay_quad;
 }
@@ -351,6 +353,7 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
     RenderPass* render_pass) {
   gfx::RectF tex_coord_rect(0, 0, 1, 1);
   gfx::Rect rect = render_pass->output_rect;
+  bool needs_blending = false;
   gfx::Size resource_size_in_pixels = rect.size();
   bool is_overlay_candidate = true;
   viz::ResourceId resource_id = CreateResource(
@@ -358,8 +361,8 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
 
   YUVVideoDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, rect, tex_coord_rect,
-                       tex_coord_rect, resource_size_in_pixels,
+  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
+                       tex_coord_rect, tex_coord_rect, resource_size_in_pixels,
                        resource_size_in_pixels, resource_id, resource_id,
                        resource_id, resource_id, YUVVideoDrawQuad::REC_601,
                        gfx::ColorSpace(), 0, 1.0, 8);
@@ -531,7 +534,7 @@ TEST_F(FullscreenOverlayTest, AlphaFail) {
   TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
       resource_provider_.get(), pass->shared_quad_state_list.back(),
       pass.get());
-  original_quad->opaque_rect = gfx::Rect(0, 0, 0, 0);
+  original_quad->needs_blending = true;
 
   // Check for potential candidates.
   OverlayCandidateList candidate_list;
@@ -873,7 +876,6 @@ TEST_F(SingleOverlayOnTopTest, AcceptBlending) {
                                     pass->shared_quad_state_list.back(),
                                     pass.get());
   quad->needs_blending = true;
-  quad->opaque_rect = gfx::Rect(0, 0, 0, 0);
 
   OverlayCandidateList candidate_list;
   OverlayProcessor::FilterOperationsMap render_pass_filters;
@@ -1246,8 +1248,8 @@ TEST_F(SingleOverlayOnTopTest, RejectTransparentColorOnTopWithoutBlending) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   CreateSolidColorQuadAt(shared_state, SK_ColorTRANSPARENT, pass.get(),
-                         kOverlayBottomRightRect)->opaque_rect =
-      kOverlayBottomRightRect;
+                         kOverlayBottomRightRect)
+      ->needs_blending = false;
   CreateCandidateQuadAt(resource_provider_.get(), shared_state, pass.get(),
                         kOverlayBottomRightRect);
 
@@ -1381,7 +1383,6 @@ TEST_F(UnderlayTest, OverlayLayerUnderMainLayer) {
   EXPECT_EQ(main_pass->quad_list.back()->material, DrawQuad::SOLID_COLOR);
   SolidColorDrawQuad* quad =
       static_cast<SolidColorDrawQuad*>(main_pass->quad_list.back());
-  EXPECT_EQ(quad->rect, quad->opaque_rect);
   EXPECT_EQ(quad->rect, quad->visible_rect);
   EXPECT_EQ(false, quad->needs_blending);
   EXPECT_EQ(SK_ColorTRANSPARENT, quad->color);
@@ -1412,7 +1413,6 @@ TEST_F(UnderlayTest, AllowOnTop) {
   EXPECT_EQ(main_pass->quad_list.front()->material, DrawQuad::SOLID_COLOR);
   SolidColorDrawQuad* quad =
       static_cast<SolidColorDrawQuad*>(main_pass->quad_list.front());
-  EXPECT_EQ(quad->rect, quad->opaque_rect);
   EXPECT_EQ(quad->rect, quad->visible_rect);
   EXPECT_EQ(false, quad->needs_blending);
   EXPECT_EQ(SK_ColorTRANSPARENT, quad->color);

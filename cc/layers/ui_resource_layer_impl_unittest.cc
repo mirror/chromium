@@ -94,9 +94,9 @@ TEST(UIResourceLayerImplTest, VerifyDrawQuads) {
   QuadSizeTest(&host_impl, std::move(layer), expected_quad_size);
 }
 
-void OpaqueBoundsTest(FakeUIResourceLayerTreeHostImpl* host_impl,
-                      std::unique_ptr<UIResourceLayerImpl> layer,
-                      const gfx::Rect& expected_opaque_bounds) {
+void NeedsBlendingTest(FakeUIResourceLayerTreeHostImpl* host_impl,
+                       std::unique_ptr<UIResourceLayerImpl> layer,
+                       const bool needs_blending) {
   host_impl->active_tree()->SetRootLayerForTesting(std::move(layer));
   host_impl->active_tree()->BuildPropertyTreesForTesting();
 
@@ -106,11 +106,9 @@ void OpaqueBoundsTest(FakeUIResourceLayerTreeHostImpl* host_impl,
   host_impl->active_tree()->root_layer_for_testing()->AppendQuads(
       render_pass.get(), &data);
 
-  // Verify quad rects
+  // Verify needs_blending is set appropriately.
   const QuadList& quads = render_pass->quad_list;
-  EXPECT_GE(quads.size(), (size_t)0);
-  gfx::Rect opaque_rect = quads.front()->opaque_rect;
-  EXPECT_EQ(expected_opaque_bounds, opaque_rect);
+  EXPECT_EQ(needs_blending, quads.front()->needs_blending);
 
   host_impl->active_tree()->DetachLayers();
 }
@@ -131,8 +129,7 @@ TEST(UIResourceLayerImplTest, VerifySetOpaqueOnSkBitmap) {
   UIResourceId uid = 1;
   std::unique_ptr<UIResourceLayerImpl> layer =
       GenerateUIResourceLayer(&host_impl, bitmap_size, layer_size, opaque, uid);
-  gfx::Rect expected_opaque_bounds;
-  OpaqueBoundsTest(&host_impl, std::move(layer), expected_opaque_bounds);
+  NeedsBlendingTest(&host_impl, std::move(layer), true);
 
   opaque = true;
   layer = GenerateUIResourceLayer(&host_impl,
@@ -140,8 +137,7 @@ TEST(UIResourceLayerImplTest, VerifySetOpaqueOnSkBitmap) {
                                   layer_size,
                                   opaque,
                                   uid);
-  expected_opaque_bounds = gfx::Rect(layer->bounds());
-  OpaqueBoundsTest(&host_impl, std::move(layer), expected_opaque_bounds);
+  NeedsBlendingTest(&host_impl, std::move(layer), false);
 }
 
 TEST(UIResourceLayerImplTest, VerifySetOpaqueOnLayer) {
@@ -161,14 +157,12 @@ TEST(UIResourceLayerImplTest, VerifySetOpaqueOnLayer) {
   std::unique_ptr<UIResourceLayerImpl> layer = GenerateUIResourceLayer(
       &host_impl, bitmap_size, layer_size, skbitmap_opaque, uid);
   layer->SetContentsOpaque(false);
-  gfx::Rect expected_opaque_bounds;
-  OpaqueBoundsTest(&host_impl, std::move(layer), expected_opaque_bounds);
+  NeedsBlendingTest(&host_impl, std::move(layer), true);
 
   layer = GenerateUIResourceLayer(
       &host_impl, bitmap_size, layer_size, skbitmap_opaque, uid);
   layer->SetContentsOpaque(true);
-  expected_opaque_bounds = gfx::Rect(layer->bounds());
-  OpaqueBoundsTest(&host_impl, std::move(layer), expected_opaque_bounds);
+  NeedsBlendingTest(&host_impl, std::move(layer), false);
 }
 
 TEST(UIResourceLayerImplTest, Occlusion) {
