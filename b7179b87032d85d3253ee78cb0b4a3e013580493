@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5fad7f_b97e102d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/browser_overlay_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:07:18Z",
+      "side": 1,
+      "message": "Here and in every other file, please put DISALLOW_COPY_AND_ASSIGN() last in the class declaration.",
+      "revId": "b7179b87032d85d3253ee78cb0b4a3e013580493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932ba285_553e6256",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:07:18Z",
+      "side": 1,
+      "message": "You need to add a call to OverlayServiceFactory::GetInstance() in ios/chrome/browser/browser_state/browser_state_keyed_service_factories.mm.",
+      "revId": "b7179b87032d85d3253ee78cb0b4a3e013580493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -790,6 +790,30 @@
     },
     {
       "key": {
+        "uuid": "6c53d37c_5e4eedf5",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-16T09:07:18Z",
+      "side": 1,
+      "message": "Yes using GetBrowserStateOwnInstanceInIncognito() is enough.",
+      "parentUuid": "56cf9a08_82fdc50b",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "670451f5_f114a773",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
         "patchSetId": 2
