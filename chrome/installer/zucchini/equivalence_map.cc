@@ -199,6 +199,18 @@ void EquivalenceMap::Build(const std::vector<offset_t>& old_sa,
             << new_image.size() - coverage << " / " << new_image.size();
 }
 
+std::vector<Equivalence> EquivalenceMap::MakeForwardEquivalences() const {
+  // |equivalences| contains equivalences sorted by |src_offset|.
+  std::vector<Equivalence> equivalences(size());
+  std::transform(begin(), end(), equivalences.begin(),
+                 [](const EquivalenceCandidate& c) { return c.eq; });
+  std::sort(equivalences.begin(), equivalences.end(),
+            [](const Equivalence& a, const Equivalence& b) {
+              return a.src_offset < b.src_offset;
+            });
+  return equivalences;
+}
+
 void EquivalenceMap::CreateCandidates(const std::vector<offset_t>& old_sa,
                                       const ImageIndex& old_image,
                                       const ImageIndex& new_image,

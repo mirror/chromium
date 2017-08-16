@@ -20,6 +20,13 @@ struct BufferRegion {
   // indexing in a buffer view.
   size_t offset;
   size_t size;
+
+  static bool operator==(const BufferRegion& a, const BufferRegion& b) {
+    return a.offset == b.offset && a.size == b.size;
+  }
+  static bool operator!=(const BufferRegion& a, const BufferRegion& b) {
+    return !(a == b);
+  }
 };
 
 namespace internal {
