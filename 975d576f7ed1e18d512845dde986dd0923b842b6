@@ -16,6 +16,24 @@
       "revId": "975d576f7ed1e18d512845dde986dd0923b842b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc54eb9f_8d44c814",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T16:51:13Z",
+      "side": 0,
+      "message": "oops, got carried away in my excitement to delete code! thanks :)",
+      "parentUuid": "0ea88871_7bb9affc",
+      "revId": "975d576f7ed1e18d512845dde986dd0923b842b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
