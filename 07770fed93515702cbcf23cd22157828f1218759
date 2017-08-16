@@ -93,6 +93,30 @@
       "revId": "07770fed93515702cbcf23cd22157828f1218759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbc0700c_254f7f3b",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-16T06:14:11Z",
+      "side": 1,
+      "message": "Got it, Thank you for explanation.",
+      "parentUuid": "a0b45b28_f68460b6",
+      "range": {
+        "startLine": 213,
+        "startChar": 57,
+        "endLine": 213,
+        "endChar": 58
+      },
+      "revId": "07770fed93515702cbcf23cd22157828f1218759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
