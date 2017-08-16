@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc5cdc2e_75012749",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T17:56:15Z",
+      "side": 1,
+      "message": "See other comment in OnWillDeleteNode. Still don\u0027t think you need this.",
+      "revId": "9fb1713838e71ca8fa1a9d16e937b48ccd4f95c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b7cff0e_74a1393d",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T17:56:15Z",
+      "side": 1,
+      "message": "My only preference here is to keep platform specifics away from this class. Optional at this point though.",
+      "revId": "9fb1713838e71ca8fa1a9d16e937b48ccd4f95c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b4cafe0_d0bbc308",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T17:56:15Z",
+      "side": 1,
+      "message": "Re: your comment regarding deletions. Seems like this is the place to clear out nodes.",
+      "revId": "9fb1713838e71ca8fa1a9d16e937b48ccd4f95c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f98886bb_0423bfd7",
+        "filename": "ui/accessibility/ax_event_generator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T17:56:15Z",
+      "side": 1,
+      "message": "Also, if you put the enum in ax_enums.idl, this gets generated for free.",
+      "revId": "9fb1713838e71ca8fa1a9d16e937b48ccd4f95c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
