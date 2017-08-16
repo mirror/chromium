@@ -1137,6 +1137,11 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (BOOL)isIgnored {
   if (![self instanceActive])
     return YES;
+  // Don't expose images with explictly empty name, e.g. alt="".
+  if ([[self role] isEqualToString:NSAccessibilityImageRole] &&
+      browserAccessibility_->HasExplicitlyEmptyName())
+    return YES;
+
   return [[self role] isEqualToString:NSAccessibilityUnknownRole];
 }
 
