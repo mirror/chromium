@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "852706e0_c4ae9703",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-16T01:45:28Z",
+      "side": 1,
+      "message": "This is the code that generates the expected file. Given this comment already exists, do you think this is sufficient?",
+      "revId": "0f5972e958981b4873741d1527cb80eeaf21046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
