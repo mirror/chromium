@@ -22,6 +22,30 @@
       "revId": "e8f748ed1a043bcb32e456ff5b98cb27b7b34203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892f9666_b0f20eec",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-16T20:36:40Z",
+      "side": 1,
+      "message": "Don\u0027t you mean trylock on audio thread and lock on main thread?\n\nI think if we want to do this, we should fix DisableOutputsIfNecessary (or higher) since that\u0027s where this is called.",
+      "parentUuid": "0803805c_681272a9",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "e8f748ed1a043bcb32e456ff5b98cb27b7b34203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
