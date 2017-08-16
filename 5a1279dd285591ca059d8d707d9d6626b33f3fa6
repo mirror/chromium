@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "705a7bad_e34517a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T22:48:50Z",
+      "side": 1,
+      "message": "This change only enables you to be able to do that if you invoke #setThreadAssertsDisabledForTesting(true), right?\n\nCould you clarify that in the CL description?",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "5a1279dd285591ca059d8d707d9d6626b33f3fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095d4732_381087c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T22:48:50Z",
+      "side": 1,
+      "message": "Is there a bug that this change is related to?",
+      "revId": "5a1279dd285591ca059d8d707d9d6626b33f3fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
