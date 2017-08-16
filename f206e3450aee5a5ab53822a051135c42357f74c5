@@ -46,6 +46,30 @@
       "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f09517_86b68c24",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T23:19:52Z",
+      "side": 1,
+      "message": "Let me investigate the failures too. I suspect this CL is unmasking some bug in the our current code.\n\nHum, I totally missed that ServiceWorkerContextClient also has a ref ptr to ServiceWorkerProviderContext as shimazu mentions above.\n\nI don\u0027t think we want to kill the bindings in the network provider dtor, since that kills the ProviderHost on the browser. As speculated on the crash bug, it\u0027s conceivable that WebServiceWorkerProviderImpl still is alive and causes IPC with the same provider_id to be sent to the browser. It seems we should keep the bindings alive as long as ServiceWorkerProviderContext is alive.",
+      "parentUuid": "510a1764_92659142",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
