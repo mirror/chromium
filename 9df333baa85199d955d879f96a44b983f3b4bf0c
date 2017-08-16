@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0cdc32_91cc049f",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-16T19:30:16Z",
+      "side": 1,
+      "message": "please put the method body in the .cc file in the same order as its declaration in the .h file",
+      "revId": "9df333baa85199d955d879f96a44b983f3b4bf0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45669d5_675ac28b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-16T19:30:16Z",
+      "side": 1,
+      "message": "naming nit: it\u0027d be good use consistent in naming form end-to-end, \u0027contentUpdated\u0027 vs \u0027contentDirty\u0027",
+      "revId": "9df333baa85199d955d879f96a44b983f3b4bf0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
