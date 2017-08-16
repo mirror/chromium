@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c16c681_ab503b21",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:53:30Z",
+      "side": 1,
+      "message": "It\u0027s very error prone (and misleading) to keep WindowIdToTransportId at this point. I think we want a variant of MakeClientWindowId that takes either a ServerWindow or ServerWindowId.",
+      "range": {
+        "startLine": 247,
+        "startChar": 24,
+        "endLine": 247,
+        "endChar": 46
+      },
+      "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bbc7d57_944e7203",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 1
@@ -42,6 +65,52 @@
         "startChar": 2,
         "endLine": 529,
         "endChar": 13
+      },
+      "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c7466e_b8523b09",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:53:30Z",
+      "side": 1,
+      "message": "I think we want do to this all the time for clients other than the window-manager, right? Could we enforce this? Perhaps failing if the high-bits are set for non-window-managers?",
+      "range": {
+        "startLine": 1459,
+        "startChar": 4,
+        "endLine": 1459,
+        "endChar": 70
+      },
+      "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e12622d_e5845b87",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:53:30Z",
+      "side": 1,
+      "message": "Please add a description.",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 66
       },
       "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
