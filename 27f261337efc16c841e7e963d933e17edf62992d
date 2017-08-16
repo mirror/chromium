@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56c5dcd7_ed811a8b",
+        "filename": "ios/web/public/web_state/web_state_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-16T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f248d491_0240ee1d",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32f8fdb6_511e1063",
         "filename": "ios/web/public/web_state/web_state_delegate_bridge.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T15:52:24Z",
       "side": 1,
       "message": "Is this comment still valid?",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c2e488_69f90201",
+        "filename": "ios/web/public/web_state/web_state_delegate_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-16T22:04:34Z",
+      "side": 1,
+      "message": "No it\u0027s not. No context method will be displayed. I\u0027ve updated it.",
+      "parentUuid": "32f8fdb6_511e1063",
       "range": {
         "startLine": 37,
         "startChar": 38,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed343e87_448626ba",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-16T22:04:34Z",
+      "side": 1,
+      "message": "Sorry, you\u0027re right. I was mistakingly thinking that we could now use any delay, but that isn\u0027t correct because we don\u0027t cancel the default context menu until after our recognizer has recognized.",
+      "parentUuid": "040c8b78_2fb97d4e",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b45ebdc_6d17da4c",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9999c940_86e70796",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-16T22:04:34Z",
+      "side": 1,
+      "message": "Agreed. Done.",
+      "parentUuid": "5b45ebdc_6d17da4c",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "369e13cd_88a99788",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-21T15:52:24Z",
       "side": 1,
       "message": "This is pretty significant change to UX. If setDOMElementForLastTouch: is called after user moved the finger then Chrome should not show the context menu. We probably need a custom gesture recognizer for this task and how context menu from setDOMElementForLastTouch: callback only if user is still performing long press on a link.",
+      "range": {
+        "startLine": 192,
+        "startChar": 10,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a006ea_c73dfa13",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-16T22:04:34Z",
+      "side": 1,
+      "message": "This should be fixed in the latest patch by setting _contextMenuNeedsDisplay to NO inside |longPressGestureRecognizerChanged| if the user moved their finger.",
+      "parentUuid": "369e13cd_88a99788",
       "range": {
         "startLine": 192,
         "startChar": 10,
@@ -137,6 +257,30 @@
       "revId": "27f261337efc16c841e7e963d933e17edf62992d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db3cdab_94010c46",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-16T22:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a72d0154_fb8c4018",
+      "range": {
+        "startLine": 268,
+        "startChar": 11,
+        "endLine": 268,
+        "endChar": 0
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
