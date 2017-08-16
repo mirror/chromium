@@ -408,6 +408,11 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // shared) worker, when the connection to the worker is disconnected.
   void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
 
+  // mojom::ServiceWorkerProviderHost
+  void Register(const GURL& script_url,
+                const ServiceWorkerRegistrationOptions& options,
+                RegisterCallback callback) override;
+
   std::string client_uuid_;
   base::TimeTicks create_time_;
   int render_process_id_;

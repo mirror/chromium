@@ -10,6 +10,10 @@ shimazu@chromium.org
 
 per-file *.mojom=set noparent
 per-file *.mojom=file://ipc/SECURITY_OWNERS
+per-file *.typemap=set noparent
+per-file *.typemap=file://ipc/SECURITY_OWNERS
+per-file *EnumTraits*.*=set noparent
+per-file *EnumTraits*.*=file://ipc/SECURITY_OWNERS
 
 # TEAM: worker-dev@chromium.org
 # COMPONENT: Blink>ServiceWorker

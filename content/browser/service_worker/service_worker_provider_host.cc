@@ -1121,4 +1121,11 @@ void ServiceWorkerProviderHost::NotifyControllerToAssociatedProvider() {
   }
 }
 
+void ServiceWorkerProviderHost::Register(
+    const GURL& script_url,
+    const ServiceWorkerRegistrationOptions& options,
+    RegisterCallback callback) {
+  NOTREACHED();
+}
+
 }  // namespace content

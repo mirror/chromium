@@ -4,12 +4,25 @@
 
 module content.mojom;
 
+import "content/common/service_worker/service_worker_types.mojom";
+import "mojo/common/string16.mojom";
+import "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom";
+import "url/mojo/url.mojom";
+
+// TODO(leonhsl): implement this interface.
 // mojom::ServiceWorkerProviderHost is a browser-side interface. The renderer
 // uses this interface to request the browser to do operations involving service
 // worker registrations.
 interface ServiceWorkerProviderHost {
-  // TODO(shimazu): implement them.
-  // register() => ();
+  // Registers the service worker javascript |script_url| with the |options|.
+  // Returns null |error_msg|, non-null |registration| and non-null |attributes|
+  // for success, otherwise returns non-null |error_msg|, null |registration|
+  // and null |attributes|.
+  Register(url.mojom.Url script_url, ServiceWorkerRegistrationOptions options)
+    => (blink.mojom.WebServiceWorkerErrorType error,
+        mojo.common.mojom.String16? error_msg,
+        ServiceWorkerRegistrationObjectInfo? registration,
+        ServiceWorkerVersionAttributes? attributes);
   // getRegistation() => ();
   // getRegistrations() => ();
   // getRegistrationForReady() => ();
