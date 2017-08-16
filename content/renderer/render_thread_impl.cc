@@ -420,8 +420,8 @@ void CreateSingleSampleMetricsProvider(
 
   task_runner->PostTask(
       FROM_HERE,
-      base::Bind(&CreateSingleSampleMetricsProvider, std::move(task_runner),
-                 connector, base::Passed(&request)));
+      base::BindOnce(&CreateSingleSampleMetricsProvider, std::move(task_runner),
+                     connector, base::Passed(&request)));
 }
 
 class RendererLocalSurfaceIdProvider : public viz::LocalSurfaceIdProvider {
@@ -1141,7 +1141,8 @@ void RenderThreadImpl::InitializeCompositorThread() {
   compositor_task_runner_ = compositor_thread_->GetTaskRunner();
   compositor_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(base::IgnoreResult(&ThreadRestrictions::SetIOAllowed), false));
+      base::BindOnce(base::IgnoreResult(&ThreadRestrictions::SetIOAllowed),
+                     false));
 #if defined(OS_LINUX)
   ChildThreadImpl::current()->SetThreadPriority(compositor_thread_->ThreadId(),
                                                 base::ThreadPriority::DISPLAY);
@@ -1410,9 +1411,10 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
             GetMediaThreadTaskRunner();
         media_task_runner->PostTask(
             FROM_HERE,
-            base::Bind(base::IgnoreResult(
-                           &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
-                       base::Unretained(gpu_factories_.back().get())));
+            base::BindOnce(
+                base::IgnoreResult(
+                    &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
+                base::Unretained(gpu_factories_.back().get())));
       }
     }
   }
@@ -1695,20 +1697,21 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
     needs_to_record_first_active_paint_ = false;
     GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
-                   base::Unretained(this), "5min", process_foregrounded_count_),
+        base::BindOnce(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
+                       base::Unretained(this), "5min",
+                       process_foregrounded_count_),
         base::TimeDelta::FromMinutes(5));
     GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
-                   base::Unretained(this), "10min",
-                   process_foregrounded_count_),
+        base::BindOnce(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
+                       base::Unretained(this), "10min",
+                       process_foregrounded_count_),
         base::TimeDelta::FromMinutes(10));
     GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
-                   base::Unretained(this), "15min",
-                   process_foregrounded_count_),
+        base::BindOnce(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
+                       base::Unretained(this), "15min",
+                       process_foregrounded_count_),
         base::TimeDelta::FromMinutes(15));
   } else {
     process_foregrounded_count_++;
@@ -1733,18 +1736,21 @@ void RenderThreadImpl::OnProcessPurgeAndSuspend() {
   purge_and_suspend_memory_metrics_ = memory_metrics;
   GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
-                 base::Unretained(this), "30min", process_foregrounded_count_),
+      base::BindOnce(
+          &RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
+          base::Unretained(this), "30min", process_foregrounded_count_),
       base::TimeDelta::FromMinutes(30));
   GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
-                 base::Unretained(this), "60min", process_foregrounded_count_),
+      base::BindOnce(
+          &RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
+          base::Unretained(this), "60min", process_foregrounded_count_),
       base::TimeDelta::FromMinutes(60));
   GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
-                 base::Unretained(this), "90min", process_foregrounded_count_),
+      base::BindOnce(
+          &RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
+          base::Unretained(this), "90min", process_foregrounded_count_),
       base::TimeDelta::FromMinutes(90));
 }
 
@@ -2312,8 +2318,8 @@ void RenderThreadImpl::OnPurgeMemory() {
 
   GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeMemory, base::Unretained(this),
-                 std::move(metrics)),
+      base::BindOnce(&RenderThreadImpl::RecordPurgeMemory,
+                     base::Unretained(this), std::move(metrics)),
       base::TimeDelta::FromSeconds(2));
 
   OnTrimMemoryImmediately();
@@ -2479,8 +2485,8 @@ RenderThreadImpl::PendingFrameCreate::PendingFrameCreate(
   // In that case, the RenderFrameHost should cancel the create, which is
   // detected by setting an error handler on |frame_host_interface_broker_|.
   frame_host_interface_broker_.set_connection_error_handler(
-      base::Bind(&RenderThreadImpl::PendingFrameCreate::OnConnectionError,
-                 base::Unretained(this)));
+      base::BindOnce(&RenderThreadImpl::PendingFrameCreate::OnConnectionError,
+                     base::Unretained(this)));
 }
 
 RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() {

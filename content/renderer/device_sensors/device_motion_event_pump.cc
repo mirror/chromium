@@ -77,8 +77,8 @@ void DeviceMotionEventPump::SendStartMessage() {
     DCHECK(render_frame_);
     render_frame_->GetRemoteInterfaces()->GetInterface(std::move(request));
     sensor_provider_.set_connection_error_handler(
-        base::Bind(&DeviceMotionEventPump::HandleSensorProviderError,
-                   base::Unretained(this)));
+        base::BindOnce(&DeviceMotionEventPump::HandleSensorProviderError,
+                       base::Unretained(this)));
     GetSensor(&accelerometer_);
     GetSensor(&linear_acceleration_sensor_);
     GetSensor(&gyroscope_);
@@ -179,9 +179,9 @@ void DeviceMotionEventPump::SensorEntry::OnSensorCreated(
   default_config.set_frequency(kDefaultPumpFrequencyHz);
 
   sensor->ConfigureReadingChangeNotifications(false /* disabled */);
-  sensor->AddConfiguration(default_config,
-                           base::Bind(&SensorEntry::OnSensorAddConfiguration,
-                                      base::Unretained(this)));
+  sensor->AddConfiguration(
+      default_config, base::BindOnce(&SensorEntry::OnSensorAddConfiguration,
+                                     base::Unretained(this)));
 }
 
 void DeviceMotionEventPump::SensorEntry::OnSensorAddConfiguration(
@@ -297,9 +297,9 @@ void DeviceMotionEventPump::GetDataFromSharedMemory(device::MotionData* data) {
 void DeviceMotionEventPump::GetSensor(SensorEntry* sensor_entry) {
   auto request = mojo::MakeRequest(&sensor_entry->sensor);
   sensor_provider_->GetSensor(sensor_entry->type, std::move(request),
-                              base::Bind(&SensorEntry::OnSensorCreated,
-                                         base::Unretained(sensor_entry)));
-  sensor_entry->sensor.set_connection_error_handler(base::Bind(
+                              base::BindOnce(&SensorEntry::OnSensorCreated,
+                                             base::Unretained(sensor_entry)));
+  sensor_entry->sensor.set_connection_error_handler(base::BindOnce(
       &SensorEntry::HandleSensorError, base::Unretained(sensor_entry)));
 }
 
