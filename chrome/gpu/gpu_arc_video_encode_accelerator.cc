@@ -55,6 +55,11 @@ void GpuArcVideoEncodeAccelerator::NotifyError(Error error) {
   client_->NotifyError(error);
 }
 
+void GpuArcVideoEncodeAccelerator::NotifyFlushDone() {
+  DVLOGF(2);
+  NOTIMPLEMENTED();
+}
+
 // ::arc::mojom::VideoEncodeAccelerator implementation.
 void GpuArcVideoEncodeAccelerator::GetSupportedProfiles(
     const GetSupportedProfilesCallback& callback) {

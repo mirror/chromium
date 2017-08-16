@@ -43,6 +43,7 @@ class GpuArcVideoEncodeAccelerator
                             bool key_frame,
                             base::TimeDelta timestamp) override;
   void NotifyError(Error error) override;
+  void NotifyFlushDone() override;
 
   // ::arc::mojom::VideoEncodeAccelerator implementation.
   void GetSupportedProfiles(

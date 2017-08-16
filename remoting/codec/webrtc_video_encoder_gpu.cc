@@ -175,6 +175,10 @@ void WebrtcVideoEncoderGpu::NotifyError(
   LOG(ERROR) << __func__ << " error: " << error;
 }
 
+void WebrtcVideoEncoderGpu::NotifyFlushDone() {
+  NOTIMPLEMENTED();
+}
+
 void WebrtcVideoEncoderGpu::BeginInitialization() {
   DVLOG(3) << __func__;
 

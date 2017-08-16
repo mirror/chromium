@@ -43,6 +43,7 @@ class VEAEncoder final : public VideoTrackRecorder::Encoder,
                             bool key_frame,
                             base::TimeDelta timestamp) override;
   void NotifyError(media::VideoEncodeAccelerator::Error error) override;
+  void NotifyFlushDone() override;
 
  private:
   using VideoFrameAndTimestamp =

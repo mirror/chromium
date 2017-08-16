@@ -52,6 +52,7 @@ class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
                             bool key_frame,
                             base::TimeDelta timestamp) override;
   void NotifyError(media::VideoEncodeAccelerator::Error error) override;
+  void NotifyFlushDone() override;
 
  private:
   enum State { UNINITIALIZED, INITIALIZING, INITIALIZED, INITIALIZATION_ERROR };

@@ -190,6 +190,10 @@ void MojoVideoEncodeAccelerator::RequestEncodingParametersChange(
   vea_->RequestEncodingParametersChange(bitrate, framerate);
 }
 
+void MojoVideoEncodeAccelerator::Flush() {
+  NOTIMPLEMENTED();
+}
+
 void MojoVideoEncodeAccelerator::Destroy() {
   DVLOG(1) << __func__;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
