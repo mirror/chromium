@@ -41,6 +41,8 @@ namespace blink {
   V(AudioHandler)                 \
   V(Document)                     \
   V(Frame)                        \
+  V(Layout)                       \
+  V(RecalcStyle)                  \
   V(JSEventListener)              \
   V(LayoutObject)                 \
   V(MediaKeySession)              \
