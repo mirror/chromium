@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de5d734_4a2312b3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-16T08:33:35Z",
+      "side": 1,
+      "message": "I think I\u0027d like dgrogan to comment on the use of absolute vs. effective column indices, and the use of ColElementAtAbsoluteColumn(). Converting between the two index types seems potentially expensive on its own.\n\nFurthermore, it seems to me that ColElementAtAbsoluteColumn() (called from IsAbsoluteColumnCollapsed()) has quadratic performance complexity (because it calls SlowColElementAtAbsoluteColumn()). We have a column_layout_objects_ vector, and for any index we start at item 0, accumulate their span attribute values, and return when we have reached the value denoted by the index. That\u0027s really not a bottleneck? Because on the world wild web, nobody uses table columns anyway? Or something?\n\nIf we\u0027re worried about performance impact here, we could work more directly on the column_layout_objects_ vector, i.e. iterate over it, keep track of the accumulated column index on our own, and build the col_collapsed_width vector like before. That way we\u0027d get O(n) instead of O(n^2).\n\nLong-term (if we even care) it would be even better if the table could hold something more useful than a collection of all column elements. How about a vector whose index was a (uhm... effective? Absolute?) column index to get the column at said index? So that if you had \u003ccol span\u003d\"8\"\u003e, the vector with have 8 entries with a pointer to that column. And then, SlowColElementAtAbsoluteColumn() could be simplified to just returning the element at the specified vector index and also be renamed to FastColElementAtAbsoluteColumn(). :)",
+      "revId": "b4151c7c91c142c7a25f633bd8853db54450619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41757d7_1957edf3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-16T08:33:35Z",
+      "side": 1,
+      "message": "While this cost seems acceptable if there are, or used to be, collapsed columns in the table, I think we need to avoid going through every cell in the table at every layout pass like this on a general basis.\n\nMaybe if the table is informed when one of its columns that used to be collapsed, no longer is collapsed? Maybe something to track in LayoutTableCol::StyleDidChange(). Hmm.. no, that might not work, because you may delete a table cell early on a row, which will affect which columns the subsequent cells belong to, which may affect their collapsedness even if no column changed style. So, the only optimization I could think of then, would be for the table to hold a bit that\u0027s only set if it ever has had collapsed columns, and only walk through all cells if it\u0027s set.\n\nOr, if we could do without this bit at all, that would be awesome, of course. That turned out to be difficult for collapsed rows. Not sure how it would be for collapsed columns. It seems to me that it could work. We only need to involve ColElementAtAbsoluteColumn(), as far as I can tell. That looks safe, but maybe too slow?",
+      "revId": "b4151c7c91c142c7a25f633bd8853db54450619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
