@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3fa40ac_44ed0b97",
+        "filename": "ios/web/navigation/navigation_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T00:39:10Z",
+      "side": 1,
+      "message": "s/HTML/Html",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e73185_0bcb3f68",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T00:39:10Z",
+      "side": 1,
+      "message": "nit: Should this be something like FinishGoToIndex? Can\u0027t really think about good name and also not sure if my proposal is better than current name.",
+      "range": {
+        "startLine": 190,
+        "startChar": 15,
+        "endLine": 190,
+        "endChar": 28
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53d7805_47a7daed",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T00:39:10Z",
+      "side": 1,
+      "message": "Optional nit: Do you want to create local variable for GetPendingItem() to improve performance? Not sure if it\u0027s important or not...",
+      "range": {
+        "startLine": 163,
+        "startChar": 6,
+        "endLine": 163,
+        "endChar": 20
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9a0c31_86e7840a",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T00:39:10Z",
+      "side": 1,
+      "message": "This does not look like a trivial method. Please add comment.",
+      "range": {
+        "startLine": 2198,
+        "startChar": 30,
+        "endLine": 2198,
+        "endChar": 56
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31705033_56e2a1bf",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T00:39:10Z",
+      "side": 1,
+      "message": "Would it be useful to write a test in crw_web_controller_unittest for this method? In the future we will be able to merge |updateHTML5HistoryState| into Navigationmanager, so maybe testing is not super important here.",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 31
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
