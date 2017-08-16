@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88464a7f_de0a8798",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-16T18:34:59Z",
+      "side": 1,
+      "message": "Is this accidentally included?",
+      "revId": "4f157bee06e065ed2abceaca8352c448e48a3114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004662ff_214ed9da",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-16T18:34:59Z",
+      "side": 1,
+      "message": "Is this accidentally included?",
+      "revId": "4f157bee06e065ed2abceaca8352c448e48a3114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
