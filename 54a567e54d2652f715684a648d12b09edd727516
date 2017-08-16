@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4afb0173_f736e767",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-16T00:22:12Z",
+      "side": 0,
+      "message": "Minor nit: don\u0027t remove this newline.",
+      "revId": "54a567e54d2652f715684a648d12b09edd727516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
