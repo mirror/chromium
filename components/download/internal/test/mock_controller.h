@@ -32,6 +32,7 @@ class MockController : public Controller {
   MOCK_METHOD2(OnStartScheduledTask,
                void(DownloadTaskType, const TaskFinishedCallback&));
   MOCK_METHOD1(OnStopScheduledTask, bool(DownloadTaskType task_type));
+  MOCK_METHOD1(GetOrigin, url::Origin(const std::string&));
 
   void TriggerInitCompleted();
 
