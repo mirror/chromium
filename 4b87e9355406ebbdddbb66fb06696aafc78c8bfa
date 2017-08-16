@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1a2a1ab_1526b040",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-08-16T22:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddda2704_99e8ee7b",
+      "range": {
+        "startLine": 276,
+        "startChar": 19,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "4b87e9355406ebbdddbb66fb06696aafc78c8bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c26b441_f57d3aef",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "4b87e9355406ebbdddbb66fb06696aafc78c8bfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd4deb9_4c56b6e9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-08-16T22:02:55Z",
+      "side": 1,
+      "message": "PrintingController will take ownership of the |fileDescriptor|, so callFinishOnUiThread will clean the new FileDescriptor inside PrintingController. For |tempFile|, I think I still need to delete that no matter failure or success. So using a bigger try block.\n\nDone",
+      "parentUuid": "9c26b441_f57d3aef",
+      "range": {
+        "startLine": 292,
+        "startChar": 10,
+        "endLine": 292,
+        "endChar": 17
+      },
+      "revId": "4b87e9355406ebbdddbb66fb06696aafc78c8bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
