@@ -48,6 +48,9 @@ class DiskMountManagerImpl : public DiskMountManager {
     cros_disks_client_->SetFormatCompletedHandler(
         base::Bind(&DiskMountManagerImpl::OnFormatCompleted,
                    weak_ptr_factory_.GetWeakPtr()));
+    cros_disks_client_->SetRenameCompletedHandler(
+        base::Bind(&DiskMountManagerImpl::OnRenameCompleted,
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 
   ~DiskMountManagerImpl() override {
@@ -155,6 +158,35 @@ class DiskMountManagerImpl : public DiskMountManager {
                 base::Bind(&DiskMountManagerImpl::OnUnmountPathForFormat,
                            weak_ptr_factory_.GetWeakPtr(),
                            device_path));
+  }
+
+  void RenameMountedDevice(const std::string& mount_path,
+                           const std::string& volume_name) override {
+    MountPointMap::const_iterator mount_point = mount_points_.find(mount_path);
+    if (mount_point == mount_points_.end()) {
+      LOG(ERROR) << "Mount point with path \"" << mount_path << "\" not found.";
+      OnRenameCompleted(RENAME_ERROR_UNKNOWN, mount_path);
+      return;
+    }
+
+    std::string device_path = mount_point->second.source_path;
+    DiskMap::const_iterator disk = disks_.find(device_path);
+    if (disk == disks_.end()) {
+      LOG(ERROR) << "Device with path \"" << device_path << "\" not found.";
+      OnRenameCompleted(RENAME_ERROR_UNKNOWN, device_path);
+      return;
+    }
+    if (disk->second->is_read_only()) {
+      LOG(ERROR) << "Mount point with path \"" << mount_path
+                 << "\" is read-only.";
+      OnRenameCompleted(RENAME_ERROR_DEVICE_NOT_ALLOWED, mount_path);
+      return;
+    }
+
+    UnmountPath(
+        disk->second->mount_path(), UNMOUNT_OPTIONS_NONE,
+        base::Bind(&DiskMountManagerImpl::OnUnmountPathForRename,
+                   weak_ptr_factory_.GetWeakPtr(), device_path, volume_name));
   }
 
   // DiskMountManager override.
@@ -283,6 +315,9 @@ class DiskMountManagerImpl : public DiskMountManager {
   }
 
  private:
+  //
+  std::map<std::string, std::string> pendingRenameChanges;
+
   struct UnmountDeviceRecursivelyCallbackData {
     UnmountDeviceRecursivelyCallbackData(
         const UnmountDeviceRecursivelyCallbackType& in_callback,
@@ -501,6 +536,57 @@ class DiskMountManagerImpl : public DiskMountManager {
     NotifyFormatStatusUpdate(FORMAT_COMPLETED, error_code, device_path);
   }
 
+  void OnUnmountPathForRename(const std::string& device_path,
+                              const std::string& volume_name,
+                              MountError error_code) {
+    if (error_code == MOUNT_ERROR_NONE &&
+        disks_.find(device_path) != disks_.end()) {
+      RenameUnmountedDevice(device_path, volume_name);
+    } else {
+      OnRenameCompleted(RENAME_ERROR_UNKNOWN, device_path);
+    }
+  }
+
+  // Start device renaming
+  void RenameUnmountedDevice(const std::string& device_path,
+                             const std::string& volume_name) {
+    DiskMap::const_iterator disk = disks_.find(device_path);
+    DCHECK(disk != disks_.end() && disk->second->mount_path().empty());
+
+    pendingRenameChanges[device_path] = volume_name;
+    cros_disks_client_->Rename(
+        device_path, volume_name,
+        base::Bind(&DiskMountManagerImpl::OnRenameStarted,
+                   weak_ptr_factory_.GetWeakPtr(), device_path),
+        base::Bind(&DiskMountManagerImpl::OnRenameCompleted,
+                   weak_ptr_factory_.GetWeakPtr(), RENAME_ERROR_UNKNOWN,
+                   device_path));
+  }
+
+  // Callback for Rename.
+  void OnRenameStarted(const std::string& device_path) {
+    NotifyRenameStatusUpdate(RENAME_STARTED, RENAME_ERROR_NONE, device_path);
+  }
+
+  // Callback to handle RenameCompleted signal and Rename method call failure.
+  void OnRenameCompleted(RenameError error_code,
+                         const std::string& device_path) {
+    DiskMap::iterator iter = disks_.find(device_path);
+    auto pendingChange = pendingRenameChanges.find(device_path);
+    // disk might have been removed by now?
+    if (iter != disks_.end()) {
+      Disk* disk = iter->second.get();
+      DCHECK(disk);
+
+      if (pendingChange != pendingRenameChanges.end()) {
+        disk->set_device_label(pendingChange->second);
+        pendingRenameChanges.erase(pendingChange);
+      }
+    }
+
+    NotifyRenameStatusUpdate(RENAME_COMPLETED, error_code, device_path);
+  }
+
   // Callback for GetDeviceProperties.
   void OnGetDeviceProperties(const DiskInfo& disk_info) {
     // TODO(zelidrag): Find a better way to filter these out before we
@@ -512,8 +598,10 @@ class DiskMountManagerImpl : public DiskMountManager {
     LOG(WARNING) << "Found disk " << disk_info.device_path();
     // Delete previous disk info for this path:
     bool is_new = true;
+    std::string base_mount_path = std::string();
     DiskMap::iterator iter = disks_.find(disk_info.device_path());
     if (iter != disks_.end()) {
+      base_mount_path = iter->second->base_mount_path();
       disks_.erase(iter);
       is_new = false;
     }
@@ -525,27 +613,17 @@ class DiskMountManagerImpl : public DiskMountManager {
     auto access_mode = access_modes_.find(disk_info.device_path());
     bool write_disabled_by_policy = access_mode != access_modes_.end()
         && access_mode->second == chromeos::MOUNT_ACCESS_MODE_READ_ONLY;
-    Disk* disk = new Disk(disk_info.device_path(),
-                          disk_info.mount_path(),
-                          write_disabled_by_policy,
-                          disk_info.system_path(),
-                          disk_info.file_path(),
-                          disk_info.label(),
-                          disk_info.drive_label(),
-                          disk_info.vendor_id(),
-                          disk_info.vendor_name(),
-                          disk_info.product_id(),
-                          disk_info.product_name(),
-                          disk_info.uuid(),
-                          FindSystemPathPrefix(disk_info.system_path()),
-                          disk_info.device_type(),
-                          disk_info.total_size_in_bytes(),
-                          disk_info.is_drive(),
-                          disk_info.is_read_only(),
-                          disk_info.has_media(),
-                          disk_info.on_boot_device(),
-                          disk_info.on_removable_device(),
-                          disk_info.is_hidden());
+    Disk* disk = new Disk(
+        disk_info.device_path(), disk_info.mount_path(),
+        write_disabled_by_policy, disk_info.system_path(),
+        disk_info.file_path(), disk_info.label(), disk_info.drive_label(),
+        disk_info.vendor_id(), disk_info.vendor_name(), disk_info.product_id(),
+        disk_info.product_name(), disk_info.uuid(),
+        FindSystemPathPrefix(disk_info.system_path()), disk_info.device_type(),
+        disk_info.total_size_in_bytes(), disk_info.is_drive(),
+        disk_info.is_read_only(), disk_info.has_media(),
+        disk_info.on_boot_device(), disk_info.on_removable_device(),
+        disk_info.is_hidden(), disk_info.file_system_type(), base_mount_path);
     disks_.insert(
         std::make_pair(disk_info.device_path(), base::WrapUnique(disk)));
     NotifyDiskStatusUpdate(is_new ? DISK_ADDED : DISK_CHANGED, disk);
@@ -682,6 +760,13 @@ class DiskMountManagerImpl : public DiskMountManager {
       observer.OnFormatEvent(event, error_code, device_path);
   }
 
+  void NotifyRenameStatusUpdate(RenameEvent event,
+                                RenameError error_code,
+                                const std::string& device_path) {
+    for (auto& observer : observers_)
+      observer.OnRenameEvent(event, error_code, device_path);
+  }
+
   // Finds system path prefix from |system_path|.
   const std::string& FindSystemPathPrefix(const std::string& system_path) {
     if (system_path.empty())
@@ -746,7 +831,9 @@ DiskMountManager::Disk::Disk(const std::string& device_path,
                              bool has_media,
                              bool on_boot_device,
                              bool on_removable_device,
-                             bool is_hidden)
+                             bool is_hidden,
+                             const std::string& file_system_type,
+                             const std::string& base_mount_path)
     : device_path_(device_path),
       mount_path_(mount_path),
       write_disabled_by_policy_(write_disabled_by_policy),
@@ -767,7 +854,9 @@ DiskMountManager::Disk::Disk(const std::string& device_path,
       has_media_(has_media),
       on_boot_device_(on_boot_device),
       on_removable_device_(on_removable_device),
-      is_hidden_(is_hidden) {}
+      is_hidden_(is_hidden),
+      file_system_type_(file_system_type),
+      base_mount_path_(base_mount_path) {}
 
 DiskMountManager::Disk::Disk(const Disk& other) = default;
 
