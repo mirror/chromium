@@ -21,11 +21,6 @@ namespace tether {
 
 namespace {
 
-// Minimum RSSI value to use for discovery. The -90 value was determined
-// empirically and is borrowed from
-// |proximity_auth::BluetoothLowEnergyConnectionFinder|.
-const int kMinDiscoveryRSSI = -90;
-
 // Valid service data must include at least 4 bytes: 2 bytes associated with the
 // scanning device (used as a scan filter) and 2 bytes which identify the
 // advertising device to the scanning device.
@@ -179,11 +174,10 @@ void BleScanner::StartDiscoverySession() {
   DCHECK(adapter_);
   is_initializing_discovery_session_ = true;
 
-  // Discover only low energy (LE) devices with strong enough signal.
+  // Discover only low energy (LE) devices.
   std::unique_ptr<device::BluetoothDiscoveryFilter> filter =
       base::MakeUnique<device::BluetoothDiscoveryFilter>(
           device::BLUETOOTH_TRANSPORT_LE);
-  filter->SetRSSI(kMinDiscoveryRSSI);
 
   adapter_->StartDiscoverySessionWithFilter(
       std::move(filter), base::Bind(&BleScanner::OnDiscoverySessionStarted,
@@ -251,6 +245,10 @@ void BleScanner::CheckForMatchingScanFilters(
   // on this account, ignore it.
   if (!identified_device)
     return;
+
+  PA_LOG(INFO) << "Received advertisement. "
+               << "Address: " << bluetooth_device->GetAddress() << ", "
+               << "ID: " << identified_device->GetTruncatedDeviceIdForLogs();
 
   for (auto& observer : observer_list_) {
     observer.OnReceivedAdvertisementFromDevice(bluetooth_device->GetAddress(),

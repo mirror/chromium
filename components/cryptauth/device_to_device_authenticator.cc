@@ -24,7 +24,7 @@ namespace {
 // The time to wait in seconds for the remote device to send its
 // [Responder Auth] message. If we do not get the message in this time, then
 // authentication will fail.
-const int kResponderAuthTimeoutSeconds = 5;
+const int kResponderAuthTimeoutSeconds = 10;
 
 }  // namespace
 
