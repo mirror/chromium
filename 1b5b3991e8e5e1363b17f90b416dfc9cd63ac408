@@ -70,6 +70,24 @@
       "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d13599_2146b8bd",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-16T23:36:27Z",
+      "side": 1,
+      "message": "My recommendation here is:\n\nBuild the string with the HTML you want, like this:\n\nstd::string html \u003d base::StringPrintf(R\"(\u003cbody style\u003d\"margin:0;\"\u003e\u003cobject data\u003d\"%s\"  type\u003d\"application/pdf\" style\u003d\"width: 100%; height: 100%;\"\u003e\u003c/object\u003e\u003c/body\u003e)\", navigation_handle()-\u003eGetURL().spec().c_str());\n\n(in the above context, I believe injecting .spec() is safe thanks to URL canonicalization escaping the double-quote characters)\n\nThen build the data URL from that:\n\nGURL data_url \u003d GURL(\"data:text/html,\" + net::EscapePath(html));",
+      "parentUuid": "d9513df8_a43eb5c9",
+      "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
