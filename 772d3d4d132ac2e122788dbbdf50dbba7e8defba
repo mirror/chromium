@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10dac7d5_256fcde8",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:40:10Z",
+      "side": 1,
+      "message": "I just copy pasted from the last of these function to make testcases pass.\n\nIf you see in my testcase, we test for output from external_delegate, so i want to update it with empty suggestions.\n\nDont know much about history manager cancelling pending query. Roger/Jared, Any ideas ?",
+      "parentUuid": "22ff5a4a_e609520d",
+      "range": {
+        "startLine": 616,
+        "startChar": 6,
+        "endLine": 617,
+        "endChar": 71
+      },
+      "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8af022da_f4020b22",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aea008e1_9650eda3",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8af022da_f4020b22",
+      "range": {
+        "startLine": 2088,
+        "startChar": 34,
+        "endLine": 2088,
+        "endChar": 42
+      },
+      "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a31292a7_9cb484a4",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fe4f77_4849e7bd",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a31292a7_9cb484a4",
+      "range": {
+        "startLine": 2109,
+        "startChar": 2,
+        "endLine": 2109,
+        "endChar": 51
+      },
+      "revId": "772d3d4d132ac2e122788dbbdf50dbba7e8defba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

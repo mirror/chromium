@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a8903b98_479b258b",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:40:10Z",
+      "side": 1,
+      "message": "sg (Discussed offline too).",
+      "parentUuid": "6046422b_636551a0",
+      "range": {
+        "startLine": 613,
+        "startChar": 8,
+        "endLine": 613,
+        "endChar": 28
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02b7797_7e411488",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 3
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "Good call--but I don\u0027t think that\u0027s how it works.  When a form is submitted, it\u0027s this code that automatically rejects Upstreaming if the same server card already exists:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/personal_data_manager.cc?l\u003d1664\u0026rcl\u003de99ddc1455117eba392cc9cd354a8f49fe3d6838\nSo it shouldn\u0027t be a problem, but it\u0027s still a good idea to test!",
       "parentUuid": "767715d4_a5634bc2",
+      "range": {
+        "startLine": 615,
+        "startChar": 5,
+        "endLine": 615,
+        "endChar": 6
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec876f74_3f21d002",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T00:40:10Z",
+      "side": 1,
+      "message": "I will test in e2e test (Start my browser, play with flows and etc). I dont think we can add any unit test here. Right ?",
+      "parentUuid": "b606b91f_39220611",
       "range": {
         "startLine": 615,
         "startChar": 5,
