@@ -117,6 +117,30 @@
       "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a767102_38a3c035",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-16T00:17:56Z",
+      "side": 1,
+      "message": "Since compute takes |region| as arguments, doing the work in constructor implies passing |region| as parameter to constructor, and have no default constructor. However, having a default constructor in BinaryDataHistogram is required for the following:\nstd::vector\u003cBinaryDaraHistogram\u003e bou(n);\nElements are then \u0027initialized\u0027 by calling compute() on them. This happens in unittests and elsewhere. \nAn alternative is to have constructor take |region|, and use push_back along with reserve() instead of relying on default constructor.",
+      "parentUuid": "39e95d35_bba82ca1",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
