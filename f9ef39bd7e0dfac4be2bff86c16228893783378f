@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd258595_f4d886fb",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-16T17:28:25Z",
+      "side": 1,
+      "message": "Use the new Feature API.\nhttp://shortn/_G1hdvaH9S4",
+      "range": {
+        "startLine": 186,
+        "startChar": 32,
+        "endLine": 186,
+        "endChar": 33
+      },
+      "revId": "f9ef39bd7e0dfac4be2bff86c16228893783378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725b8f57_551b934d",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-16T17:28:25Z",
+      "side": 1,
+      "message": "nit: Use functions for the feature API.",
+      "range": {
+        "startLine": 191,
+        "startChar": 9,
+        "endLine": 191,
+        "endChar": 27
+      },
+      "revId": "f9ef39bd7e0dfac4be2bff86c16228893783378f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
