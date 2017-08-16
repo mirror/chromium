@@ -179,9 +179,19 @@ std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial() {
       ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
 }
 
+bool IsAMPRedirectionPreviewEnabled() {
+  return base::FeatureList::IsEnabled(features::kAMPRedirection);
+}
+
+int AMPRedirectionPreviewsVersion() {
+  return 0;
+}
+
 }  // namespace params
 
 std::string GetStringNameForType(PreviewsType type) {
+  // The returned string is used to record histograms for the new preview type.
+  // Also add the string to Previews.Types histogram suffix in histograms.xml.
   switch (type) {
     case PreviewsType::OFFLINE:
       return "Offline";
@@ -189,6 +199,8 @@ std::string GetStringNameForType(PreviewsType type) {
       return "LoFi";
     case PreviewsType::LITE_PAGE:
       return "LitePage";
+    case PreviewsType::AMP_REDIRECTION:
+      return "AMPRedirection";
     case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;
