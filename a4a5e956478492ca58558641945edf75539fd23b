@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "ed2b0687_836bc962",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T20:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea5cecf_65eae2e6",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 53
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b84c8119_19582a7f",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T20:39:04Z",
+      "side": 1,
+      "message": "Going to go with capitalize both, no period. Will change everything to that.",
+      "parentUuid": "03f1a6a8_534744a4",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ba5d21_ea91d093",
         "filename": "tools/perf/benchmarks/memory.py",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-16T19:36:28Z",
       "side": 1,
       "message": "Why provide the bug? It seems like providing a bug for permanent disables like this, where the benchmark never should have been enabled in that benchmark in the first place, isn\u0027t too useful. Bugs seem a lot more useful for temporary disables than permanent.",
+      "range": {
+        "startLine": 215,
+        "startChar": 47,
+        "endLine": 215,
+        "endChar": 53
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb226a2_51d355f8",
+        "filename": "tools/perf/benchmarks/memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T20:39:04Z",
+      "side": 1,
+      "message": "I added it because it adds context to why it must have tabs. The bug is closed, and I dont have any strong feelings about having it here.",
+      "parentUuid": "e3ba5d21_ea91d093",
       "range": {
         "startLine": 215,
         "startChar": 47,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b17b604d_3f5e8a41",
+        "filename": "tools/perf/benchmarks/oortonline.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T20:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d5d974f_38ce7ddf",
+      "range": {
+        "startLine": 56,
+        "startChar": 46,
+        "endLine": 56,
+        "endChar": 53
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a62df8e_9696c30b",
         "filename": "tools/perf/benchmarks/startup.py",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-16T19:36:28Z",
       "side": 1,
       "message": "Assuming that you\u0027re intending to enable this benchmark on desktop?",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 12
+      },
+      "revId": "a4a5e956478492ca58558641945edf75539fd23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8d143b_b2491360",
+        "filename": "tools/perf/benchmarks/startup.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-16T20:39:04Z",
+      "side": 1,
+      "message": "Nope. I dont know why I did this actually.... probably by mistake. I have a CL earlier specifically saying this shouldn\u0027t be enabled on android. Even if htere weren\u0027t the case, this CL wouldn\u0027t be the place for re-enabling this.\n\nThanks for catching this.",
+      "parentUuid": "2a62df8e_9696c30b",
       "range": {
         "startLine": 116,
         "startChar": 8,
