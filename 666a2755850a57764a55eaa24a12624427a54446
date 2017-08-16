@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77479756_e812c1db",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-16T20:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d432725_260360f6",
+      "revId": "666a2755850a57764a55eaa24a12624427a54446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663c1dee_dee9b334",
         "filename": "ui/app_list/views/app_list_main_view.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T19:54:01Z",
       "side": 1,
       "message": "This is probably not necessary though.",
+      "revId": "666a2755850a57764a55eaa24a12624427a54446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74aa36b3_51f6b46f",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-16T20:47:08Z",
+      "side": 1,
+      "message": "I found it is needed for updating the LayerDelegate::OnPaintLayer(). Should i cache |app_list_y_position_in_screen_|, and if no update, early return?",
+      "parentUuid": "663c1dee_dee9b334",
       "revId": "666a2755850a57764a55eaa24a12624427a54446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
