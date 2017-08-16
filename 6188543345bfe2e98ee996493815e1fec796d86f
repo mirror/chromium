@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d390237f_3af3df6e",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-16T18:21:08Z",
+      "side": 1,
+      "message": "This function is added here:\nhttps://chromium-review.googlesource.com/c/602671",
+      "revId": "6188543345bfe2e98ee996493815e1fec796d86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
