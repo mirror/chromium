@@ -131,31 +131,31 @@ inline bool IsArchitectureArm() {
 
 // If a BPF policy is engaged for |process_type|, run a few sanity checks.
 void RunSandboxSanityChecks(const std::string& process_type) {
-  if (process_type == switches::kRendererProcess ||
-      process_type == switches::kGpuProcess ||
-      process_type == switches::kPpapiPluginProcess) {
-    int syscall_ret;
-    errno = 0;
+  //   if (process_type == switches::kRendererProcess ||
+  //       process_type == switches::kGpuProcess ||
+  //       process_type == switches::kPpapiPluginProcess) {
+  //     int syscall_ret;
+  //     errno = 0;
 
-    // Without the sandbox, this would EBADF.
-    syscall_ret = fchmod(-1, 07777);
-    CHECK_EQ(-1, syscall_ret);
-    CHECK_EQ(EPERM, errno);
+  //     // Without the sandbox, this would EBADF.
+  //     syscall_ret = fchmod(-1, 07777);
+  //     CHECK_EQ(-1, syscall_ret);
+  //     CHECK_EQ(EPERM, errno);
 
-    // Run most of the sanity checks only in DEBUG mode to avoid a perf.
-    // impact.
-#if !defined(NDEBUG)
-    // open() must be restricted.
-    syscall_ret = open("/etc/passwd", O_RDONLY);
-    CHECK_EQ(-1, syscall_ret);
-    CHECK_EQ(SandboxBPFBasePolicy::GetFSDeniedErrno(), errno);
+  //     // Run most of the sanity checks only in DEBUG mode to avoid a perf.
+  //     // impact.
+  // #if !defined(NDEBUG)
+  //     // open() must be restricted.
+  //     syscall_ret = open("/etc/passwd", O_RDONLY);
+  //     CHECK_EQ(-1, syscall_ret);
+  //     CHECK_EQ(SandboxBPFBasePolicy::GetFSDeniedErrno(), errno);
 
-    // We should never allow the creation of netlink sockets.
-    syscall_ret = socket(AF_NETLINK, SOCK_DGRAM, 0);
-    CHECK_EQ(-1, syscall_ret);
-    CHECK_EQ(EPERM, errno);
-#endif  // !defined(NDEBUG)
-  }
+  //     // We should never allow the creation of netlink sockets.
+  //     syscall_ret = socket(AF_NETLINK, SOCK_DGRAM, 0);
+  //     CHECK_EQ(-1, syscall_ret);
+  //     CHECK_EQ(EPERM, errno);
+  // #endif  // !defined(NDEBUG)
+  //   }
 }
 
 std::unique_ptr<SandboxBPFBasePolicy> GetGpuProcessSandbox() {
