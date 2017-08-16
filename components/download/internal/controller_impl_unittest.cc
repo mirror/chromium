@@ -18,6 +18,7 @@
 #include "components/download/internal/client_set.h"
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
+#include "components/download/internal/entry_utils.h"
 #include "components/download/internal/file_monitor.h"
 #include "components/download/internal/model_impl.h"
 #include "components/download/internal/scheduler/scheduler.h"
@@ -393,11 +394,13 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitWithExistingDownload) {
       test::BuildEntry(DownloadClient::INVALID, base::GenerateGUID());
 
   std::vector<Entry> entries = {entry1, entry2, entry3};
-  std::vector<std::string> expected_guids = {entry1.guid, entry2.guid};
+  std::vector<DownloadMetaData> expected_downloads = {
+      util::BuildDownloadMetaData(&entry1),
+      util::BuildDownloadMetaData(&entry2)};
 
   EXPECT_CALL(*client_,
-              OnServiceInitialized(
-                  false, testing::UnorderedElementsAreArray(expected_guids)));
+              OnServiceInitialized(false, testing::UnorderedElementsAreArray(
+                                              expected_downloads)));
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
   EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
@@ -889,18 +892,25 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadSucceeded) {
 
   DriverEntry driver_entry;
   driver_entry.guid = entry.guid;
-  driver_entry.bytes_downloaded = 1024;
-  driver_entry.completion_time = base::Time::Now();
-  driver_entry.current_file_path = base::FilePath::FromUTF8Unsafe("123");
+  driver_entry.bytes_downloaded = 1024u;
+  base::Time now = base::Time::Now();
+  driver_entry.completion_time = now;
+  base::FilePath file_path = base::FilePath::FromUTF8Unsafe("123");
+  driver_entry.current_file_path = file_path;
 
   long start_time = 0;
   EXPECT_CALL(*task_scheduler_,
               ScheduleTask(DownloadTaskType::CLEANUP_TASK, _, _, _, _))
       .WillOnce(SaveArg<3>(&start_time));
   driver_->NotifyDownloadSucceeded(driver_entry);
-  EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry.guid)->state);
+  Entry* updated_entry = model_->Get(entry.guid);
+  DCHECK(updated_entry);
+  EXPECT_EQ(Entry::State::COMPLETE, updated_entry->state);
+  EXPECT_EQ(1024u, updated_entry->bytes_downloaded);
+  EXPECT_EQ(file_path, updated_entry->target_file_path);
+  EXPECT_EQ(now, updated_entry->completion_time);
   EXPECT_LE(driver_entry.completion_time + config_->file_keep_alive_time,
-            base::Time::Now() + base::TimeDelta::FromSeconds(start_time));
+            now + base::TimeDelta::FromSeconds(start_time));
 
   task_runner_->RunUntilIdle();
 }
