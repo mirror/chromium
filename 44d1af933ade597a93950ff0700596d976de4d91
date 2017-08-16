@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50f82f1_94a253dc",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T20:58:33Z",
+      "side": 1,
+      "message": "Why does stopping voice interaction flag it as being enabled?",
+      "revId": "44d1af933ade597a93950ff0700596d976de4d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d47d03f_d4599d71",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T20:58:33Z",
+      "side": 1,
+      "message": "This won\u0027t work under mash (you won\u0027t be able to access ash::Shell from the browser process).\n\nI think a better way to handle this feature is to observe the preference from inside of ash. This would establish the right pattern going forward. To do this:\n\n* Move the voice interaction prefs into ash/public/cpp/ash_pref_names.cc\n* Have whatever code needs to observe the prefs use SessionObserver::OnActiveUserPrefServiceChanged() to detect when the pref is available to read for a user session\n\nSee for example ShelfController and LogoutButtonTray.\n\nOne wrinkle is that OnActiveUserPrefServiceChanged() used to live in ShellObserver, and I think it moved to SessionObserver after the branch point. So this CL might need to be tweaked when it gets backported.",
+      "revId": "44d1af933ade597a93950ff0700596d976de4d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59d4af0_e95b20b6",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-16T20:58:33Z",
+      "side": 1,
+      "message": "It seems like you\u0027re using the state \"STOPPED\" to mean \"ENABLED\". It seems to conflate two concepts, enabled vs. disabled and running vs. stopped.\n\nShould there be 2 variables for this? (One for enabled/disabled and one for a state machine?) Or maybe \"stopped\" should just be called \"enabled\"?",
+      "revId": "44d1af933ade597a93950ff0700596d976de4d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
