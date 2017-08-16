@@ -62,6 +62,10 @@
 // Tell location bar has taken focus.
 - (void)locationBarBecomesFirstResponder;
 
+@optional
+// Sets the selector of a what's new promo.
+- (void)setPromoSelector:(SEL)promoSelector;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_NTP_GOOGLE_LANDING_CONSUMER_H_

@@ -10,6 +10,8 @@
 #import "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h"
 #include "ios/public/provider/chrome/browser/images/whats_new_icon.h"
 
+@protocol BrowserCommands;
+
 @protocol WhatsNewHeaderViewDelegate<NSObject>
 
 - (void)onPromoLabelTapped;
@@ -20,11 +22,24 @@
 
 @property(nonatomic, weak) id<WhatsNewHeaderViewDelegate> delegate;
 
+// Designated initializer with |dispatcher| to handle promo taps.
+- (instancetype)initWithDispatcher:(id<BrowserCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+
+- (instancetype)init NS_UNAVAILABLE;
+
 // Sets the text for the attributed label.
 - (void)setText:(NSString*)text;
 
 // Sets the icon of the view.
 - (void)setIcon:(WhatsNewIcon)icon;
+
+// Sets the selector for tapping the promo label.
+- (void)setSelector:(SEL)selector;
 
 // Sets the value to use for the left and right margin.
 - (void)setSideMargin:(CGFloat)sideMargin forWidth:(CGFloat)width;

@@ -654,8 +654,6 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 - (void)showAllBookmarks;
 // Shows a panel within the New Tab Page.
 - (void)showNTPPanel:(NewTabPage::PanelIdentifier)panel;
-// Shows the "rate this app" dialog.
-- (void)showRateThisAppDialog;
 // Dismisses the "rate this app" dialog.
 - (void)dismissRateThisAppDialog;
 // Whether the given tab's URL is an application specific URL.
@@ -4395,9 +4393,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
       break;
     case IDC_SHOW_SECURITY_HELP:
       [self showSecurityHelpPage];
-      break;
-    case IDC_RATE_THIS_APP:
-      [self showRateThisAppDialog];
       break;
     default:
       // Unknown commands get sent up the responder chain.

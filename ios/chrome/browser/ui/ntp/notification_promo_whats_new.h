@@ -47,6 +47,7 @@ class NotificationPromoWhatsNew {
   const GURL& url() { return url_; }
   bool IsChromeCommand() const;
   int command_id() { return command_id_; }
+  SEL selector() { return selector_; }
 
  private:
   // Initialize the state and validity from the low-level notification_promo_.
@@ -93,6 +94,9 @@ class NotificationPromoWhatsNew {
 
   // If promo type is 'chrome_command'.
   int command_id_;
+
+  // For promos that use dispatcher selectors.
+  SEL selector_;
 
   // Metric name to append
   std::string metric_name_;
