@@ -142,6 +142,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6136305_91dbe445",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T15:43:55Z",
+      "side": 1,
+      "message": "We should move this format to a place where it\u0027s easy to access by all code that needs to be aware of it. Can it be in a \"#define\" or static function of minigbm?",
+      "parentUuid": "2bbf12a8_7aa2604e",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
