@@ -102,6 +102,18 @@ void GetRecentDocumentsOnUIThread(const std::string& authority,
   runner->GetRecentDocuments(authority, root_id, callback);
 }
 
+void GetRootsOnUIThread(const GetRootsCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto* runner = GetArcFileSystemOperationRunner();
+  if (!runner) {
+    DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
+                << "File system operations are dropped.";
+    callback.Run(base::nullopt);
+    return;
+  }
+  runner->GetRoots(callback);
+}
+
 void AddWatcherOnUIThread(const std::string& authority,
                           const std::string& document_id,
                           const WatcherCallback& watcher_callback,
@@ -233,6 +245,17 @@ void GetRecentDocumentsOnIOThread(const std::string& authority,
           &GetRecentDocumentsOnUIThread, authority, root_id,
           base::Bind(
               &PostToIOThread<base::Optional<std::vector<mojom::DocumentPtr>>>,
+              callback)));
+}
+
+void GetRootsOnIOThread(const GetRootsCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &GetRootsOnUIThread,
+          base::Bind(
+              &PostToIOThread<base::Optional<std::vector<mojom::RootPtr>>>,
               callback)));
 }
 

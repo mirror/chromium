@@ -51,4 +51,8 @@ ArcDocumentsProviderRoot* ArcDocumentsProviderRootMap::ParseAndLookup(
   return iter->second.get();
 }
 
+void ArcDocumentsProviderRootMap::Refresh(
+    const ArcDocumentsProviderRootMap::RefreshCallback& callback) {
+}
+
 }  // namespace arc

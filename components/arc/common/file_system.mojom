@@ -2,9 +2,57 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 6
+// Next MinVersion: 7
 
 module arc.mojom;
+
+// Represents one of roots in Android DocumentsProvider
+// See Android docs of DocumentsContract.Root for details.
+struct Root {
+  // Flag indicating that at least one directory under this root supports
+  // creating content.
+  const int64 kSupportsCreate = 1;
+
+  // Flag indicating that this root offers content that is strictly local on
+  // the device. That is, no network requests are made for the content.
+  const int64 kLocalOnly = 2;
+
+  // Flag indicating that this root can be queried to provide recently modified
+  // documents.
+  const int64 kSupportsRecents = 4;
+
+  // Flag indicating that this root supports search.
+  const int64 kSupportsSearch = 8;
+
+  // Flag indicating that this root supports testing parent child relationships.
+  const int64 kSupportsIsChild = 16;
+
+  // Flag indicating that this root can be ejected.
+  const int64 kSupportsEject = 32;
+
+  // Represents the id of this root.
+  // See Android docs of DocumentsContract.Root.COLUMN_ROOT_ID for details.
+  string id;
+
+  // Represents the title of this root, which will be shown to a user.
+  // See Android docs of DocumentsContract.Root.COLUMN_TITLE for details.
+  string title;
+
+  // Represents the title of this root, which may be shown to a user.
+  // See Android docs of DocumentsContract.Root.SUMMARY for details.
+  string summary;
+
+  // Icon for this root. Encoded in base64.
+  string icon;
+
+  // Represents the features of this root.
+  // See Android docs of DocumentsContract.Root.COLUMN_FLAGS for details.
+  int64 flags;
+
+  // Represents the document id of this root.
+  // See Android docs of DocumentsContract.Root.COLUMN_DOCUMENT_ID for details.
+  string document_id;
+};
 
 // Represents a document in Android DocumentsProvider.
 // See Android docs of DocumentsContract.Document for details.
@@ -57,7 +105,7 @@ interface FileSystemHost {
   [MinVersion=3] OnDocumentChanged@0(int64 watcher_id, ChangeType type);
 };
 
-// Next method ID: 10
+// Next method ID: 11
 interface FileSystemInstance {
   // Notes about Android Documents Provider:
   //
@@ -123,6 +171,10 @@ interface FileSystemInstance {
   // empty) list of documents is returned. Otherwise, null is returned.
   [MinVersion=5] GetRecentDocuments@9(string authority, string root_id) =>
       (array<Document>? documents);
+
+  // Queries the all roots provided by all Documents Provider.
+  // If such a root does not exist, null is returned.
+  [MinVersion=6] GetRoots@10() => (array<Root>? roots);
 
   // Establishes full-duplex communication with the host.
   [MinVersion=3] Init@5(FileSystemHost host_ptr);
