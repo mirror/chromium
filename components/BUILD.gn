@@ -293,6 +293,7 @@ test("components_unittests") {
   if (is_chromeos) {
     deps += [
       "//components/arc:unit_tests",
+      "//components/multidevice/service:multidevice_service_unittest",
       "//components/ownership:unit_tests",
       "//components/pairing:unit_tests",
       "//components/sync_wifi:unit_tests",
@@ -426,6 +427,7 @@ if (!is_ios) {
       "//components/dom_distiller/content/browser",
       "//components/dom_distiller/core",
       "//components/dom_distiller/core:test_support",
+      "//components/multidevice/service:service",
       "//components/offline_pages/content/renovations",
       "//components/offline_pages/core/renovations",
       "//components/password_manager/content/browser",
