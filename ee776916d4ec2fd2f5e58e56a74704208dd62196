@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "877b59e9_322a32f1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "Well, justify-self also has \u0027auto\u0027 as default value, but in this case align-self/align-items are the properties we are testing, hence I think it\u0027s clearer to set it explicitly. I wouldn\u0027t like to get false errors in case the default value eventually changes.",
+      "parentUuid": "0b7d9c23_e2b9a0f3",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dca79b6_c4ada0d6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-16T09:20:05Z",
       "side": 1,
       "message": "I don\u0027t think we need this line for `testharness.js` tests.\nAlso there\u0027s a typo \"passes\".",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243a83f0_24885eed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "umm, really ? I might be wrong, but I think it was you who suggested to add this kind of messages, even on testharness tests. In any case, I\u0027m fine removing them for this patch.",
+      "parentUuid": "3dca79b6_c4ada0d6",
       "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b0b787e4_0a053ba2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "The \u0027evaluate\u0027 function calls checkLayout internally, hence any data-expected-* attribute is checked out.",
+      "parentUuid": "84f3c837_bae82666",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be8e2bba_f9e50599",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-004.html",
         "patchSetId": 4
@@ -84,6 +138,24 @@
       "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d362dddd_599f3a7a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-004.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be8e2bba_f9e50599",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "cbf91b61_c04cd3b9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-004.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a968cb1_7e37ce15",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2248904f_a4ff0738",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-019.html",
         "patchSetId": 4
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "fe87921e_07681e84",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-019.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2248904f_a4ff0738",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d33bf16_43703f3c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/100x100-green.png",
         "patchSetId": 4
@@ -132,6 +240,24 @@
       "writtenOn": "2017-08-16T09:20:05Z",
       "side": 1,
       "message": "There\u0027s a file like this at \"grid-items/support/100x100-green.png\".\nNot sure why it\u0027s not in a more generic folder, maybe we should just move it, if that\u0027s ok from the WPT point of view.\nMaybe we can do a PR with this movement on WPT\u0027s GitHub to check feedback.",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415137e3_bd087d52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/100x100-green.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "Well, we can do it later. I think it\u0027s indeed a good idea.",
+      "parentUuid": "2d33bf16_43703f3c",
       "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "024aeb32_90a1b4a0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "like, evaluateStyleChange ? \nI ran out of ideas for the \u0027phase\u0027 attribute, though. As far as I know we need different selectors each time we call checkLayout, so I considered phase was descriptive enough.",
+      "parentUuid": "04ce6d8a_c1d93394",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb2805a5_3e09e2c9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
         "patchSetId": 4
@@ -166,6 +310,24 @@
       "writtenOn": "2017-08-16T09:20:05Z",
       "side": 1,
       "message": "After this, the element still keeps the new class passed in \"phase\".\nShouldn\u0027t we reset it?\nAfter calling \"evalute(\"before\")\" and \"evaluate(\"after\")\" the item will have both classes \"before\" and \"after\".\n\nI\u0027d avoid adding this extra class completely. You could just receive the item\u0027s selector (e.g. \"#item\") and pass it to \"checkLayout()\".",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d9deb3_2540dcce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-16T18:10:03Z",
+      "side": 1,
+      "message": "As I commented before, I think we need different selectors for  multiple calls to checkLayout, hence I\u0027m not sure this #item selector would work. Additionally, I don\u0027t see any problem with adding 2 classes. It doesn\u0027t worth to clear the previous class, IMO",
+      "parentUuid": "eb2805a5_3e09e2c9",
       "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
