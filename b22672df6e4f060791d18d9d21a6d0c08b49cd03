@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0663670c_305c6856",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T00:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a439e1fd_4aec2ea6",
+      "revId": "b22672df6e4f060791d18d9d21a6d0c08b49cd03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7808823_0a108ec8",
         "filename": "ui/accessibility/ax_enums.idl",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-11T05:15:15Z",
       "side": 1,
       "message": "Rather than Android only, what about giving this one a\nmore specific name, like indeterminate_scroll_area or\nsomething like that to indicate that it scrolls but\nwe don\u0027t necessarily have a clear sense of how far along\nit is.",
+      "revId": "b22672df6e4f060791d18d9d21a6d0c08b49cd03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb95dd6_116f7544",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-16T00:03:34Z",
+      "side": 1,
+      "message": "Let\u0027s rename when we get a better sense and keep it as it behaves now, Android-only.",
+      "parentUuid": "a7808823_0a108ec8",
       "revId": "b22672df6e4f060791d18d9d21a6d0c08b49cd03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
