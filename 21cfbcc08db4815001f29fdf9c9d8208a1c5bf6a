@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f2d5f5_f29449a6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "Consider changing these boolean arguments to be named constants for clarity at the call sites.",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0516b559_05521d5b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "This boolean argument is confusing. Since it\u0027s only used in the return value, I suggest leaving that logic to the callers.\n\nAlso, we don\u0027t abbreviate words in blink (https://google.github.io/styleguide/cppguide.html#General_Naming_Rules)",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea30117_ddc593c6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "Should it really be a reference to a pointer? That seems confusing. Consider just using a pointer here and doing\n\n*value \u003d ConsumeBackgroundSize(...)",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f3b0cd_dfb5d3c1",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "This function really needs a descriptive name, rather than naming it by when it is called. However see my overall comments on the way this CL is splitting CSSShorthandPropertyAPIWebKitMask and CSSShorthandPropertyAPIBackground.",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faccd67_7597a669",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "I think all these pointer and pointer-pointer arguments are overly confusing, please rethink the structure of this function.",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a51cfe_f39c8fd8",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "Likewise, we don\u0027t abbreviate words in blink (https://google.github.io/styleguide/cppguide.html#General_Naming_Rules)",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d8ae0f_4deb4a3a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "The suffix \"Property\" seem unnecessary.",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfa631c_30d7f5fb",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIBackground.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T02:31:22Z",
+      "side": 1,
+      "message": "This changed from DCHECK_LE to DCHECK_EQ, is that intentional? Why this change?",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
