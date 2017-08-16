@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "400f9f47_0d0ce93b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:34:01Z",
+      "side": 1,
+      "message": "mojom::ServiceWorkerContainer",
+      "range": {
+        "startLine": 884,
+        "startChar": 22,
+        "endLine": 884,
+        "endChar": 30
+      },
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a26073_c00f6ea8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:34:01Z",
+      "side": 1,
+      "message": "maybe rewrite this as \"|container_| is the Mojo endpoint to the renderer-side  ServiceWorkerContainer that |this| is a ServiceWorkerContainerHost for.\"",
+      "range": {
+        "startLine": 452,
+        "startChar": 53,
+        "endLine": 452,
+        "endChar": 66
+      },
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fde6be11_10d2c687",
         "filename": "content/common/service_worker/service_worker.mojom",
         "patchSetId": 4
@@ -13,6 +59,74 @@
       "writtenOn": "2017-08-16T03:25:39Z",
       "side": 1,
       "message": "Should this be also renamed to ContainerHostInfo ?",
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44ca3e6_018c4382",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:34:01Z",
+      "side": 1,
+      "message": "It\u0027s just a TODO but these days the function names should be capitalized, and I expect them to have more complex callbacks, so you can remove the \"\u003d\u003e ()\" parts. Could add GetControllerServiceWorker() also.",
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e421f8e0_854de8ec",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:34:01Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mind just putting the comment from my doc like this:\n\n\"Roughly corresponds to the web-exposed ServiceWorkerContainer interface (i.e., navigator.serviceWorker). Actually, the plan is for this interface to be used for anything that could access a ServiceWorkerRegistration or ServiceWorker object. For example, ServiceWorkerGlobalScope needs to be connected to this, since it has self.registration, even though we don’t implement navigator.serviceWorker for Worker yet. But eventually anything that can touch these objects should be a ServiceWorkerContainer, so it’s OK to use this name.\"",
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f56bbf_0aa2f7f6",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:34:01Z",
+      "side": 1,
+      "message": "can remove 23-24",
+      "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9644b2b2_110b15e5",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T03:34:01Z",
+      "side": 1,
+      "message": "Using these functions might elucidate the plan for this interface:\n// SetController();\n// ServiceWorkerStateChanged();\n// ServiceWorkerRegistrationUpdateFound()\n// PostMessage();",
       "revId": "24c35cd95e2fef69a53c25a8e60a5e559c1cbb88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
