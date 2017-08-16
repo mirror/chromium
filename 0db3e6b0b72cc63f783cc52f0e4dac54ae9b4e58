@@ -46,6 +46,30 @@
       "revId": "0db3e6b0b72cc63f783cc52f0e4dac54ae9b4e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210269f2_e0233dc4",
+        "filename": "components/search_engines/template_url_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T18:08:12Z",
+      "side": 1,
+      "message": "Maybe the author liked the copy constructor very much :)\nI don\u0027t mind if you change. Otherwise, we\u0027ll be copy-pasting a strange code forever.\n\nAnyway, it\u0027s a non blocking/non obligatory comment.",
+      "parentUuid": "c80f3e8d_c4ed9d71",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "0db3e6b0b72cc63f783cc52f0e4dac54ae9b4e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
