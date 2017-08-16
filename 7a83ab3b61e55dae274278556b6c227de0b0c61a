@@ -75,6 +75,23 @@
       "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b43df7f_9decee09",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-16T20:18:18Z",
+      "side": 1,
+      "message": "add a histogram tester and validate that you get the UMA Logging you expect.\n\nYour test should flow something like:\n\n1. Make sure there is CC data to be offered.\n2. for ablation_enabled in {Yes, NO}\n    3. Trigger suggestions\n        -\u003e expect num_suggestions \u003d\u003d (ablation_enabled ? 0 : N)\n    4. Simulate a submit\n    5. Validate that you get the expected UMA Metrics\n        -\u003e verify data logged in Autofill.FormEvents.CreditCard.{AppropriateLabelHere}",
+      "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
