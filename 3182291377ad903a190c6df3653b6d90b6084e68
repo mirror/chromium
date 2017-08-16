@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7d9d449_359c1b2f",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T23:32:39Z",
+      "side": 1,
+      "message": "I think this should be up in the deps at line 60.",
+      "range": {
+        "startLine": 296,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 70
+      },
+      "revId": "3182291377ad903a190c6df3653b6d90b6084e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5cbf5d_8e8455b5",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T23:32:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be necessary. You\u0027re not writing a browser test.",
+      "range": {
+        "startLine": 430,
+        "startChar": 0,
+        "endLine": 430,
+        "endChar": 49
+      },
+      "revId": "3182291377ad903a190c6df3653b6d90b6084e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2914fe_452dd6f8",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-16T23:32:39Z",
+      "side": 1,
+      "message": "You need this dep.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "3182291377ad903a190c6df3653b6d90b6084e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
