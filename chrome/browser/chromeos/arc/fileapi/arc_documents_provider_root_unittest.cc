@@ -234,6 +234,34 @@ TEST_F(ArcDocumentsProviderRootTest, GetFileInfoDups) {
   run_loop.Run();
 }
 
+TEST_F(ArcDocumentsProviderRootTest, GetFileInfoCached) {
+  {
+    base::RunLoop run_loop;
+    root_->GetFileInfo(
+        base::FilePath(FILE_PATH_LITERAL("dir/photo.jpg")),
+        base::Bind([](base::RunLoop* run_loop, base::File::Error error,
+                      const base::File::Info& info) { run_loop->Quit(); },
+                   &run_loop));
+    run_loop.Run();
+  }
+
+  int last_count = fake_file_system_.GetGetChildDocumentsCount();
+
+  {
+    base::RunLoop run_loop;
+    root_->GetFileInfo(
+        base::FilePath(FILE_PATH_LITERAL("dir/photo.jpg")),
+        base::Bind([](base::RunLoop* run_loop, base::File::Error error,
+                      const base::File::Info& info) { run_loop->Quit(); },
+                   &run_loop));
+    run_loop.Run();
+  }
+
+  // GetFileInfo() against the same file shall not issue a new
+  // GetChildDocuments() call.
+  EXPECT_EQ(last_count, fake_file_system_.GetGetChildDocumentsCount());
+}
+
 TEST_F(ArcDocumentsProviderRootTest, ReadDirectory) {
   base::RunLoop run_loop;
   root_->ReadDirectory(
@@ -314,6 +342,36 @@ TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryDups) {
   run_loop.Run();
 }
 
+TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryCached) {
+  {
+    base::RunLoop run_loop;
+    root_->ReadDirectory(
+        base::FilePath(FILE_PATH_LITERAL("dir")),
+        base::Bind(
+            [](base::RunLoop* run_loop, base::File::Error error,
+               const EntryList& file_list, bool has_more) { run_loop->Quit(); },
+            &run_loop));
+    run_loop.Run();
+  }
+
+  int last_count = fake_file_system_.GetGetChildDocumentsCount();
+
+  {
+    base::RunLoop run_loop;
+    root_->ReadDirectory(
+        base::FilePath(FILE_PATH_LITERAL("dir")),
+        base::Bind(
+            [](base::RunLoop* run_loop, base::File::Error error,
+               const EntryList& file_list, bool has_more) { run_loop->Quit(); },
+            &run_loop));
+    run_loop.Run();
+  }
+
+  // ReadDirectory() against the same directory shall issue one new
+  // GetChildDocuments() call.
+  EXPECT_EQ(last_count + 1, fake_file_system_.GetGetChildDocumentsCount());
+}
+
 TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryExtra) {
   base::RunLoop run_loop;
   root_->ReadDirectoryExtra(
@@ -333,6 +391,40 @@ TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryExtra) {
           },
           &run_loop));
   run_loop.Run();
+}
+
+TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryExtraCached) {
+  {
+    base::RunLoop run_loop;
+    root_->ReadDirectoryExtra(
+        base::FilePath(FILE_PATH_LITERAL("dir")),
+        base::BindOnce(
+            [](base::RunLoop* run_loop, base::File::Error error,
+               std::vector<ArcDocumentsProviderRoot::FileInfo> files) {
+              run_loop->Quit();
+            },
+            &run_loop));
+    run_loop.Run();
+  }
+
+  int last_count = fake_file_system_.GetGetChildDocumentsCount();
+
+  {
+    base::RunLoop run_loop;
+    root_->ReadDirectoryExtra(
+        base::FilePath(FILE_PATH_LITERAL("dir")),
+        base::BindOnce(
+            [](base::RunLoop* run_loop, base::File::Error error,
+               std::vector<ArcDocumentsProviderRoot::FileInfo> files) {
+              run_loop->Quit();
+            },
+            &run_loop));
+    run_loop.Run();
+  }
+
+  // ReadDirectoryExtra() against the same directory shall issue one new
+  // GetChildDocuments() call.
+  EXPECT_EQ(last_count + 1, fake_file_system_.GetGetChildDocumentsCount());
 }
 
 TEST_F(ArcDocumentsProviderRootTest, WatchChanged) {
