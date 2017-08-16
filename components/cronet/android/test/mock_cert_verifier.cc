@@ -87,8 +87,4 @@ static jlong CreateMockCertVerifier(
   return reinterpret_cast<jlong>(mock_cert_verifier);
 }
 
-bool RegisterMockCertVerifier(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace cronet

@@ -140,8 +140,4 @@ ScopedJavaLocalRef<jstring> GetMockUrlForHangingRead(
   return base::android::ConvertUTF8ToJavaString(jenv, url.spec());
 }
 
-bool RegisterMockUrlRequestJobFactory(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace cronet

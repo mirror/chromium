@@ -59,8 +59,4 @@ static void WriteToHostCache(JNIEnv* env,
                  base::android::ConvertJavaStringToUTF8(env, jaddress)));
 }
 
-bool RegisterExperimentalOptionsTest(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace cronet
