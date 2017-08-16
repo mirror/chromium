@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8928cde5_685422b7",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 1,
+      "message": "nit: Please add |static|",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429df70e_19e54f03",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 1,
+      "message": "nit: Please add |static|",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165d6e05_25f7df0d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 1,
+      "message": "It seems we can make loop body simpler:\n\nfor (const Node\u0026 node : selection.Nodes()) {\n  ... check whether layout object should be painted as selection ...\n  if (!start_layout_object) {\n    DCHECK(!end_layout_object);\n    start_layout_object \u003d end_layout_object \u003d layout_object;\n    continue;\n  }\n  end_layout_object-\u003eSetSelectionStateIfNeeded(kInside);\n  InsertLayoutObjectAndAncestorBlocks(\u0026invalidation_set, end_layout_object);\n  end_layout_object \u003d layout_object;\n}",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2170eb65_0d7d4140",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 1,
+      "message": "It seems we don\u0027t need to use |previous_layout_object|. It is used only\nin then-clause.",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b41e01_37e4a5a3",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 1,
+      "message": "When |!start_layout_object|, |end_layout_object| should be null.\n\nif (!start_layout_object) {\n  DCHECK(!end_layout_object);\n  return;\n}",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac22fac_efb6641f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 1,
+      "message": "Could you add yet another test for simple line wrap, |^bar\u003cbr\u003e||?",
+      "revId": "bb8a670736e6c05380c2f01c94f37f4c0bf7ec89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

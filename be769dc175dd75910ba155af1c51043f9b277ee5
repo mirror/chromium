@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aafae5cd_a25e546c",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/editing/execCommand/5481523-expected.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 0,
+      "message": "Optional: This test is no need to use pixel test. Could you convert this test\nto use assert_selection()?",
+      "revId": "be769dc175dd75910ba155af1c51043f9b277ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f81c017_e83d1911",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/editing/selection/range-between-block-and-inline-expected.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 0,
+      "message": "Note: This is selection paint test, see comment 1 of [1].\n\n[1] https://bugs.webkit.org/show_bug.cgi?id\u003d32123",
+      "revId": "be769dc175dd75910ba155af1c51043f9b277ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b24eda_0cd65d83",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/selection/text-selection-newline-rtl-double-linebreak-expected.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-16T04:09:48Z",
+      "side": 0,
+      "message": "Note: This is paint test. The patch[1] change render_replaced.cpp\n\n[1] https://bugs.webkit.org/attachment.cgi?id\u003d5713",
+      "revId": "be769dc175dd75910ba155af1c51043f9b277ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
