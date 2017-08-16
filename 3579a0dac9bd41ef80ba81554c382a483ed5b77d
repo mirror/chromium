@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68dbd627_37d52a24",
+        "filename": "ui/keyboard/keyboard_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-16T17:13:57Z",
+      "side": 1,
+      "message": "leave the test bodyes outside of anonymous namespace, as they has to be unique in unit test binary.",
+      "revId": "3579a0dac9bd41ef80ba81554c382a483ed5b77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
