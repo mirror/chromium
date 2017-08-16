@@ -22,6 +22,30 @@
       "revId": "a7482a88d73040a616ef53294eeef75ca8b6c5a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7ef753_81c32061",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-16T01:46:52Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ef1023f5_943de0e1",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "a7482a88d73040a616ef53294eeef75ca8b6c5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
