@@ -87,6 +87,24 @@
       "revId": "d3a1a4859a103eeef6f7edcbe7deb363b348b118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc154ae_aec9d31f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/WebKitHitTestTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-16T04:00:33Z",
+      "side": 1,
+      "message": "yes, I think the reasoning for it is to try to keep any activity-interacting calls on Ui thread (where they are supposed to be?)",
+      "parentUuid": "bf0047fe_358cf3af",
+      "revId": "d3a1a4859a103eeef6f7edcbe7deb363b348b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
