@@ -16,6 +16,24 @@
       "revId": "fb16583455bf80aa0bd660e4ac5c727387ac7608",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d981872_c94aab62",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-16T12:42:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16847397_615bed88",
+      "revId": "fb16583455bf80aa0bd660e4ac5c727387ac7608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
