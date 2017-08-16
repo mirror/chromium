@@ -180,6 +180,33 @@ TEST_P(CSSParserTokenStreamTest, ConsumeIncludingWhitespace) {
   EXPECT_TRUE(stream.AtEnd());
 }
 
+TEST_P(CSSParserTokenStreamTest, BlockErrorRecoveryConsumesRestOfBlock) {
+  CSSTokenizer tokenizer("{B }1");
+  auto stream = GetStream(tokenizer, GetParam());
+
+  {
+    CSSParserTokenStream::BlockGuard guard(stream);
+    EXPECT_EQ(kIdentToken, stream.Consume().GetType());
+    EXPECT_FALSE(stream.AtEnd());
+  }  // calls destructor
+
+  EXPECT_EQ(kNumberToken, stream.Consume().GetType());
+}
+
+TEST_P(CSSParserTokenStreamTest, BlockErrorRecoveryOnSuccess) {
+  CSSTokenizer tokenizer("{B }1");
+  auto stream = GetStream(tokenizer, GetParam());
+
+  {
+    CSSParserTokenStream::BlockGuard guard(stream);
+    EXPECT_EQ(kIdentToken, stream.Consume().GetType());
+    EXPECT_EQ(kWhitespaceToken, stream.Consume().GetType());
+    EXPECT_TRUE(stream.AtEnd());
+  }  // calls destructor
+
+  EXPECT_EQ(kNumberToken, stream.Consume().GetType());
+}
+
 INSTANTIATE_TEST_CASE_P(ShouldTokenizeToEnd,
                         CSSParserTokenStreamTest,
                         ::testing::Bool());
