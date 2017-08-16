@@ -1381,16 +1381,14 @@ void BrowserProcessImpl::RestartBackgroundInstance() {
   std::unique_ptr<base::CommandLine> new_cl(
       new base::CommandLine(old_cl->GetProgram()));
 
-  std::map<std::string, base::CommandLine::StringType> switches =
+  std::multimap<std::string, base::CommandLine::StringType> switches =
       old_cl->GetSwitches();
 
   switches::RemoveSwitchesForAutostart(&switches);
 
   // Append the rest of the switches (along with their values, if any)
   // to the new command line
-  for (std::map<std::string, base::CommandLine::StringType>::const_iterator i =
-           switches.begin();
-       i != switches.end(); ++i) {
+  for (auto i = switches.begin(); i != switches.end(); ++i) {
     base::CommandLine::StringType switch_value = i->second;
       if (switch_value.length() > 0) {
         new_cl->AppendSwitchNative(i->first, i->second);

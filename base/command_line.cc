@@ -344,9 +344,7 @@ void CommandLine::AppendSwitchNative(const std::string& switch_string,
   size_t prefix_length = GetSwitchPrefixLength(combined_switch_string);
   auto insertion =
       switches_.insert(make_pair(switch_key.substr(prefix_length), value));
-  if (!insertion.second)
-    insertion.first->second = value;
-  switches_by_stringpiece_[insertion.first->first] = &(insertion.first->second);
+  switches_by_stringpiece_[insertion->first] = &(insertion->second);
   // Preserve existing switch prefixes in |argv_|; only append one if necessary.
   if (prefix_length == 0)
     combined_switch_string = kSwitchPrefixes[0] + combined_switch_string;

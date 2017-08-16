@@ -440,21 +440,23 @@ TEST_F(FlagsStateTest, CompareSwitchesToCurrentCommandLine) {
 }
 
 TEST_F(FlagsStateTest, RemoveFlagSwitches) {
-  std::map<std::string, base::CommandLine::StringType> switch_list;
-  switch_list[kSwitch1] = base::CommandLine::StringType();
-  switch_list[switches::kFlagSwitchesBegin] = base::CommandLine::StringType();
-  switch_list[switches::kFlagSwitchesEnd] = base::CommandLine::StringType();
-  switch_list["foo"] = base::CommandLine::StringType();
+  std::multimap<std::string, base::CommandLine::StringType> switch_list;
+  switch_list.insert(make_pair(kSwitch1, base::CommandLine::StringType()));
+  switch_list.insert(
+      make_pair(switches::kFlagSwitchesBegin, base::CommandLine::StringType()));
+  switch_list.insert(
+      make_pair(switches::kFlagSwitchesEnd, base::CommandLine::StringType()));
+  switch_list.insert(make_pair("foo", base::CommandLine::StringType()));
 
   flags_state_->SetFeatureEntryEnabled(&flags_storage_, kFlags1, true);
 
   // This shouldn't do anything before ConvertFlagsToSwitches() wasn't called.
   flags_state_->RemoveFlagsSwitches(&switch_list);
   ASSERT_EQ(4u, switch_list.size());
-  EXPECT_TRUE(base::ContainsKey(switch_list, kSwitch1));
-  EXPECT_TRUE(base::ContainsKey(switch_list, switches::kFlagSwitchesBegin));
-  EXPECT_TRUE(base::ContainsKey(switch_list, switches::kFlagSwitchesEnd));
-  EXPECT_TRUE(base::ContainsKey(switch_list, "foo"));
+  EXPECT_EQ(1u, switch_list.count(kSwitch1));
+  EXPECT_EQ(1u, switch_list.count(switches::kFlagSwitchesBegin));
+  EXPECT_EQ(1u, switch_list.count(switches::kFlagSwitchesEnd));
+  EXPECT_EQ(1u, switch_list.count("foo"));
 
   // Call ConvertFlagsToSwitches(), then RemoveFlagsSwitches() again.
   base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
@@ -515,33 +517,34 @@ TEST_F(FlagsStateTest, RemoveFlagSwitches_Features) {
     flags_state_->ConvertFlagsToSwitches(&flags_storage_, &command_line,
                                          kAddSentinels, kEnableFeatures,
                                          kDisableFeatures);
+
     auto switch_list = command_line.GetSwitches();
     EXPECT_EQ(cases[i].expected_enable_features != nullptr,
-              base::ContainsKey(switch_list, kEnableFeatures));
+              switch_list.count(kEnableFeatures) > 0);
     if (cases[i].expected_enable_features)
       EXPECT_EQ(CreateSwitch(cases[i].expected_enable_features),
-                switch_list[kEnableFeatures]);
+                base::LastMultimapValue(switch_list, kEnableFeatures)->second);
 
     EXPECT_EQ(cases[i].expected_disable_features != nullptr,
-              base::ContainsKey(switch_list, kDisableFeatures));
+              switch_list.count(kDisableFeatures) > 0);
     if (cases[i].expected_disable_features)
       EXPECT_EQ(CreateSwitch(cases[i].expected_disable_features),
-                switch_list[kDisableFeatures]);
+                base::LastMultimapValue(switch_list, kDisableFeatures)->second);
 
     // RemoveFlagsSwitches() should result in the original values for these
     // switches.
     switch_list = command_line.GetSwitches();
     flags_state_->RemoveFlagsSwitches(&switch_list);
-    EXPECT_EQ(cases[i].existing_enable_features != nullptr,
-              base::ContainsKey(switch_list, kEnableFeatures));
+    EXPECT_EQ(cases[i].existing_enable_features ? 1u : 0u,
+              switch_list.count(kEnableFeatures));
     if (cases[i].existing_enable_features)
       EXPECT_EQ(CreateSwitch(cases[i].existing_enable_features),
-                switch_list[kEnableFeatures]);
-    EXPECT_EQ(cases[i].existing_disable_features != nullptr,
-              base::ContainsKey(switch_list, kEnableFeatures));
+                switch_list.find(kEnableFeatures)->second);
+    EXPECT_EQ(cases[i].existing_disable_features ? 1u : 0u,
+              switch_list.count(kEnableFeatures));
     if (cases[i].existing_disable_features)
       EXPECT_EQ(CreateSwitch(cases[i].existing_disable_features),
-                switch_list[kDisableFeatures]);
+                switch_list.find(kDisableFeatures)->second);
   }
 }
 

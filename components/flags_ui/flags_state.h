@@ -85,7 +85,7 @@ class FlagsState {
                               const std::string& internal_name,
                               bool enable);
   void RemoveFlagsSwitches(
-      std::map<std::string, base::CommandLine::StringType>* switch_list);
+      std::multimap<std::string, base::CommandLine::StringType>* switch_list);
   void ResetAllFlags(FlagsStorage* flags_storage);
   void Reset();
 

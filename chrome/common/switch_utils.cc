@@ -36,7 +36,7 @@ const char* const kSwitchesToRemoveOnAutorestart[] = {
 }  // namespace
 
 void RemoveSwitchesForAutostart(
-    std::map<std::string, base::CommandLine::StringType>* switch_list) {
+    std::multimap<std::string, base::CommandLine::StringType>* switch_list) {
   for (size_t i = 0; i < arraysize(kSwitchesToRemoveOnAutorestart); ++i)
     switch_list->erase(kSwitchesToRemoveOnAutorestart[i]);
 
