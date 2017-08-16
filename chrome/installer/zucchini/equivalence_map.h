@@ -86,6 +86,10 @@ class EquivalenceMap {
   const_iterator begin() const { return candidates_.begin(); }
   const_iterator end() const { return candidates_.end(); }
 
+  // Returns a vector containing equivalences sorted by
+  // |Equivalence::src_offset|.
+  std::vector<Equivalence> MakeForwardEquivalences() const;
+
  private:
   // Discovers equivalence candidates between |old_image| and |new_image| and
   // stores them in the object. Note that resulting candidates are not sorted
