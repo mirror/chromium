@@ -189,6 +189,30 @@
       "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ec0e0f_2c194c1a",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-16T16:25:42Z",
+      "side": 1,
+      "message": "okay that makes sense, I did not realize you would be creating vectors of this, for some reason I could not grok that from your reply yesterday :) lgtm",
+      "parentUuid": "6ce001ed_885bb561",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
