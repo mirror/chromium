@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35042687_cc7f1a2f",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:37:12Z",
+      "side": 1,
+      "message": "We use it in the case you can paint for example directly a \"red\" underline.\nYou\u0027d use something like:\nImeTextSpan(0, 5, SK_ColorRED, StyleableMarker::Thickness::kThin, SK_ColorTRANSPARENT)\n\nBoth \"marker.IsTextColor()\" and \"marker.IsNone()\" will be false, but you still want to use the \"marker.UnderlineColor()\" (the red color).",
+      "parentUuid": "3b87a5af_704b0088",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "905647e3_04e36445",
         "filename": "ui/base/ime/BUILD.gn",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T16:43:23Z",
       "side": 1,
       "message": "Is this legit?",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770d1622_4908d53e",
+        "filename": "ui/base/ime/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-16T09:37:12Z",
+      "side": 1,
+      "message": "I need to use the new enum in \"ui/base/ime/ime_text_span.h\".\nI added this line due to the:\n#include \"third_party/WebKit/public/web/WebImeTextSpanThickness.h\"\n\nMaybe this is wrong, but I don\u0027t know how to do it better, so any guidance on this will be really appreciated.",
+      "parentUuid": "905647e3_04e36445",
       "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
