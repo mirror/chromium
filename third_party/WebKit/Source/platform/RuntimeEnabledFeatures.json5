@@ -588,6 +588,10 @@
       status: "stable",
     },
     {
+      name: "LongTaskV2",
+      status: "test",
+    },
+    {
       name: "MediaCapabilities",
       status: "test",
     },
