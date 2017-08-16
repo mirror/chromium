@@ -24,7 +24,7 @@ namespace base {
 namespace {
 
 class MessageLoopForIoPosixTest : public testing::Test {
- protected:
+ public:
   MessageLoopForIoPosixTest() {}
 
   // testing::Test interface.
@@ -45,6 +45,7 @@ class MessageLoopForIoPosixTest : public testing::Test {
     EXPECT_EQ(1, HANDLE_EINTR(write(write_fd_.get(), &c, 1)));
   }
 
+ protected:
   ScopedFD read_fd_;
   ScopedFD write_fd_;
 
@@ -335,6 +336,61 @@ TEST_F(MessageLoopForIoPosixTest, StopAndRestartFromHandler) {
   // run_loop2
   TriggerReadEvent();
   run_loop2.Run();
+}
+
+// Verify that the pump properly handles a delayed task after an IO event.
+TEST_F(MessageLoopForIoPosixTest, IoEventThenTimer) {
+  MessageLoopForIO message_loop;
+  MessageLoopForIO::FileDescriptorWatcher watcher(FROM_HERE);
+
+  RunLoop timer_run_loop;
+  message_loop.task_runner()->PostDelayedTask(
+      FROM_HERE, timer_run_loop.QuitClosure(),
+      base::TimeDelta::FromMilliseconds(1));
+
+  RunLoop watcher_run_loop;
+  CallClosureHandler handler(watcher_run_loop.QuitClosure(), OnceClosure());
+
+  // Create a non-persistent watcher.
+  ASSERT_TRUE(MessageLoopForIO::current()->WatchFileDescriptor(
+      read_fd_.get(), /* persistent= */ false, MessageLoopForIO::WATCH_READ,
+      &watcher, &handler));
+
+  TriggerReadEvent();
+
+  // Normally the IO event will be received before the delayed task is
+  // executed, so this run loop will first handle the IO event and then quit on
+  // the timer.
+  timer_run_loop.Run();
+
+  // Run watcher_run_loop in case the IO event wasn't received before the
+  // delayed task.
+  watcher_run_loop.Run();
+}
+
+// Verify that the pipe can handle an IO event after a delayed task.
+TEST_F(MessageLoopForIoPosixTest, TimerThenIoEvent) {
+  MessageLoopForIO message_loop;
+  MessageLoopForIO::FileDescriptorWatcher watcher(FROM_HERE);
+
+  // Trigger read event from a delayed task.
+  message_loop.task_runner()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&MessageLoopForIoPosixTest::TriggerReadEvent,
+                 base::Unretained(this)),
+      base::TimeDelta::FromMilliseconds(1));
+
+  RunLoop watcher_run_loop;
+  CallClosureHandler handler(watcher_run_loop.QuitClosure(), OnceClosure());
+
+  // Create a non-persistent watcher.
+  ASSERT_TRUE(MessageLoopForIO::current()->WatchFileDescriptor(
+      read_fd_.get(), /* persistent= */ false, MessageLoopForIO::WATCH_READ,
+      &watcher, &handler));
+
+  // Run watcher_run_loop in case the IO event wasn't received before the timer
+  // expired.
+  watcher_run_loop.Run();
 }
 
 }  // namespace
