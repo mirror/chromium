@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84fa24df_b9f29de6",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T20:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a338c7c_13a95c1e",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 27
+      },
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90c79d8_664a7193",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5366426_053cdb84",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T20:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c90c79d8_664a7193",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4aa8833_5d6ea2d9",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T20:44:54Z",
+      "side": 1,
+      "message": "Ya, just tested in local, it returns \"android\" if no default browser.\nThanks for mentioning this.",
+      "parentUuid": "b733cee5_172fe64f",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 50
+      },
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
