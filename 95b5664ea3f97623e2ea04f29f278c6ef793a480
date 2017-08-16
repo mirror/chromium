@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62a9f5c1_4bfe388b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-16T05:30:29Z",
+      "side": 1,
+      "message": "If you want to see how efficient this algorithm is, one way is to add a conditional breakpoint at this line with the following as the condition:\n\nconsole.log(100 - guard, \u0027steps\u0027)\n\nHere\u0027s a sample distribution of step counts for black on white:\n0 steps (i.e. the first approximation was close enough): 14\n1 step: 24\n2 steps: 12\n4 steps: 1",
+      "range": {
+        "startLine": 360,
+        "startChar": 8,
+        "endLine": 360,
+        "endChar": 43
+      },
+      "revId": "95b5664ea3f97623e2ea04f29f278c6ef793a480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58214e22_e0adbb17",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-16T05:30:29Z",
+      "side": 1,
+      "message": "This was always meant to be updated here, but somehow got dropped off the initial(!) CL.",
+      "range": {
+        "startLine": 402,
+        "startChar": 6,
+        "endLine": 402,
+        "endChar": 11
+      },
+      "revId": "95b5664ea3f97623e2ea04f29f278c6ef793a480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528308ed_296c2d96",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-16T05:30:29Z",
+      "side": 1,
+      "message": "Made these toFixed() since it doesn\u0027t affect the appearance and makes it more readable and replicable for testing.",
+      "range": {
+        "startLine": 405,
+        "startChar": 35,
+        "endLine": 405,
+        "endChar": 42
+      },
+      "revId": "95b5664ea3f97623e2ea04f29f278c6ef793a480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
