@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c63e6d20_b3174f2f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-16T02:12:15Z",
+      "side": 1,
+      "message": "Ok yeah, the original patch had Index, but it also had another thing called Offset. Index is the index of the token in the tokens list, whereas Offset is the index of the token in the string. Both were size_t\u0027s, so I wanted to make sure you don\u0027t accidentally mix them.\n\nWe also don\u0027t want people performing arithmetic on the iterator (which kinda makes Iterator not really an iterator, more like a \"marker\" or \"checkpoint\"). I couldn\u0027t think of a better name.\n\nP.S. if all goes well, we can remove Iterator :)",
+      "parentUuid": "f31a09a5_30e79eab",
+      "revId": "4dfb8e7a534cdad0349d73e1cec23adca3e20e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a989426b_0c08a47a",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4dfb8e7a534cdad0349d73e1cec23adca3e20e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec66eb1_9430e8eb",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-16T02:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a989426b_0c08a47a",
+      "revId": "4dfb8e7a534cdad0349d73e1cec23adca3e20e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
