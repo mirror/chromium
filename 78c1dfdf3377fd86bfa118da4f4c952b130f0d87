@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bd4dbdd_0b2c0941",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T20:39:23Z",
+      "side": 1,
+      "message": "The MessagePumpFuchsia::Run() method will DoDelayedWork() *before* waiting on events, so if more than 1ms elapses before we reach here then the mx_object_wait_one() will see the I/O event, but not the timed event, I think.\n\nCould we instead have the handler post the delayed task in response to the readable I/O event, so that Run() will see the I/O packet, maybe a USER packet triggered by ScheduleWork (depending on the precise timing), and only then see the timeout?\n\nDoes this test actually fail if you run it without your fix?",
+      "revId": "78c1dfdf3377fd86bfa118da4f4c952b130f0d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
