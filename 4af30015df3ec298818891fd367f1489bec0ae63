@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85da5683_8e87511e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4940,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-16T23:25:01Z",
+      "side": 1,
+      "message": "Will enable VsyncAlignedInputEvents together with other |RenderWidgetHostViewAuraOverscrollTest| tests.",
+      "revId": "4af30015df3ec298818891fd367f1489bec0ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
