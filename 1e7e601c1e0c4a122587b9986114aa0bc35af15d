@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67aa7e9a_f2bd7e7e",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T18:12:02Z",
+      "side": 1,
+      "message": "incline comments /* initialTouchMode */, /* launchActivity */",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "1e7e601c1e0c4a122587b9986114aa0bc35af15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
