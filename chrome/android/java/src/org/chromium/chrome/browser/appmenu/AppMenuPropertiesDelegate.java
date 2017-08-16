@@ -162,7 +162,9 @@ public class AppMenuPropertiesDelegate {
             allBookmarksMenuItem.setTitle(mActivity.getString(R.string.menu_bookmarks));
 
             // Don't allow "chrome://" pages to be shared.
-            menu.findItem(R.id.share_row_menu_id).setVisible(!isChromeScheme);
+            // Don't allow interstitials to be shared.
+            menu.findItem(R.id.share_row_menu_id)
+                    .setVisible(!isChromeScheme && !currentTab.isShowingInterstitialPage());
 
             ShareHelper.configureDirectShareMenuItem(
                     mActivity, menu.findItem(R.id.direct_share_menu_id));
