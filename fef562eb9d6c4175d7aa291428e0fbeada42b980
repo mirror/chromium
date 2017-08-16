@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b0111e2_05697d44",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1163395
+      },
+      "writtenOn": "2017-08-16T02:12:42Z",
+      "side": 1,
+      "message": "How about changing this like the following with removing DidSkipWaiting?\nReturning void value seems odd.\n\n\u003d\u003d\n\nif (running_status() \u003d\u003d EmbeddedWorkerStatus::STARTING ||\n    running_status() \u003d\u003d EmbeddedWorkerStatus::RUNNING) {\n  embedded_worker_-\u003eSendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));\n}\n\nif (status_ !\u003d INSTALLED || !context)\n  return;",
+      "range": {
+        "startLine": 1326,
+        "startChar": 0,
+        "endLine": 1329,
+        "endChar": 31
+      },
+      "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11df6db1_6733974a",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1163395
+      },
+      "writtenOn": "2017-08-16T02:12:42Z",
+      "side": 1,
+      "message": "Is it safe for calling ActivateWaitingVersionWhenReady() more than twice?\nIf it\u0027s not, how about keeping the previous state of |skip_waiting_| like |previous_skip_waiting| and checking if it is false?\n\nAh, or, just returning at the top also seems good. For example, WDYT about the following code?\n\u003d\u003d\n\nvoid ServiceWorkerVersion::OnSkipWaiting(int request_id) {\n  if (running_status() \u003d\u003d EmbeddedWorkerStatus::STARTING ||\n      running_status() \u003d\u003d EmbeddedWorkerStatus::RUNNING) {\n    embedded_worker_-\u003eSendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));\n  }\n  if (skip_waiting_ || status_ !\u003d INSTALLED || !context_)\n    return;\n\n  skip_waiting_ \u003d true;\n  DCHECK(skip_waiting_time_.is_null());  // Do you think this is correct?\n  ...\n}",
+      "range": {
+        "startLine": 1339,
+        "startChar": 2,
+        "endLine": 1339,
+        "endChar": 48
+      },
+      "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
