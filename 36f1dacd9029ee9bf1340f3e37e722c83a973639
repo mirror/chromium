@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b5ea923_c8d36f0e",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-16T05:36:01Z",
+      "side": 1,
+      "message": "I copied this from the build bot, but I guess using build.py might be  better since that way we don\u0027t hardcode that path name. Done.",
+      "parentUuid": "591f510c_20239c11",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "36f1dacd9029ee9bf1340f3e37e722c83a973639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dae321b_033deba2",
         "filename": "tools/fuchsia/local-sdk.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T05:23:31Z",
       "side": 1,
       "message": "This can be Run(\u0027script/makesdk.go\u0027,...).\nmakesdk.go has exec bit and a shebang (kinda)",
+      "range": {
+        "startLine": 51,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 65
+      },
+      "revId": "36f1dacd9029ee9bf1340f3e37e722c83a973639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2cc151_be47283a",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-16T05:36:01Z",
+      "side": 1,
+      "message": "I tried that at first and I got an exec error that I didn\u0027t understand. Does this mean anything to you? :)\n\nRun: scripts/makesdk.go -output /tmp/tmpZGvvbj/fuchsia-sdk.tgz .\nTraceback (most recent call last):\n  File \"./tools/fuchsia/local-sdk.py\", line 71, in \u003cmodule\u003e\n    sys.exit(main(sys.argv[1:]))\n  File \"./tools/fuchsia/local-sdk.py\", line 51, in main\n    Run(\u0027scripts/makesdk.go\u0027, \u0027-output\u0027, sdk_tar, \u0027.\u0027)\n  File \"./tools/fuchsia/local-sdk.py\", line 22, in Run\n    subprocess.check_call(args)\n  File \"/usr/lib/python2.7/subprocess.py\", line 536, in check_call\n    retcode \u003d call(*popenargs, **kwargs)\n  File \"/usr/lib/python2.7/subprocess.py\", line 523, in call\n    return Popen(*popenargs, **kwargs).wait()\n  File \"/usr/lib/python2.7/subprocess.py\", line 711, in __init__\n    errread, errwrite)\n  File \"/usr/lib/python2.7/subprocess.py\", line 1343, in _execute_child\n    raise child_exception\nOSError: [Errno 8] Exec format error",
+      "parentUuid": "4dae321b_033deba2",
       "range": {
         "startLine": 51,
         "startChar": 1,
