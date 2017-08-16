@@ -14,6 +14,7 @@
 #include "base/strings/string_util.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/extensions/extension_test_util.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "crypto/sha2.h"
 #include "net/base/url_util.h"
@@ -155,18 +156,15 @@ void FakeCWS::OverrideGalleryCommandlineSwitches() {
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
 
-  command_line->AppendSwitchASCII(
-      ::switches::kAppsGalleryURL,
-      web_store_url_.Resolve("/chromeos/app_mode/webstore").spec());
-
   std::string downloads_path = std::string(kCrxDownloadPath).append("%s.crx");
   GURL downloads_url = web_store_url_.Resolve(downloads_path);
   command_line->AppendSwitchASCII(::switches::kAppsGalleryDownloadURL,
                                   downloads_url.spec());
 
-  GURL update_url = web_store_url_.Resolve(update_check_end_point_);
-  command_line->AppendSwitchASCII(::switches::kAppsGalleryUpdateURL,
-                                  update_url.spec());
+  extension_test_util::SetGalleryURL(
+      web_store_url_.Resolve("/chromeos/app_mode/webstore"));
+  extension_test_util::SetGalleryUpdateURL(
+      web_store_url_.Resolve(update_check_end_point_));
 }
 
 bool FakeCWS::GetUpdateCheckContent(const std::vector<std::string>& ids,
