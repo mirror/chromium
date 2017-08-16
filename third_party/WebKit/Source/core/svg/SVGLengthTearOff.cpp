@@ -46,6 +46,7 @@ inline bool IsValidLengthUnit(CSSPrimitiveValue::UnitType unit) {
          unit == CSSPrimitiveValue::UnitType::kPixels ||
          unit == CSSPrimitiveValue::UnitType::kCentimeters ||
          unit == CSSPrimitiveValue::UnitType::kMillimeters ||
+         unit == CSSPrimitiveValue::UnitType::kQuarterMillimeters ||
          unit == CSSPrimitiveValue::UnitType::kInches ||
          unit == CSSPrimitiveValue::UnitType::kPoints ||
          unit == CSSPrimitiveValue::UnitType::kPicas;
