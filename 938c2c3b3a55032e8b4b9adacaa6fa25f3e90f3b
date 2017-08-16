@@ -141,6 +141,30 @@
       "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46116695_4f10eb1e",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T04:44:01Z",
+      "side": 1,
+      "message": "Sorry for being unclear; I have the caller code in mind, so understandably my comments are cryptic!  Sending you link to the caller code via chat.",
+      "parentUuid": "0a767102_38a3c035",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
