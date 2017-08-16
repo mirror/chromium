@@ -96,6 +96,26 @@ class CanvasCapturePeerConnection(WebrtcPage):
       action_runner.Wait(10)
 
 
+class VideoCodecConstraints(WebrtcPage):
+  """Why: Sets up a video codec to a peer connection."""
+
+  def __init__(self, page_set, video_codec, tags):
+    super(VideoCodecConstraints, self).__init__(
+        url='file://webrtc_cases/codec_constraints.html',
+        name='codec_constraints_%s' % video_codec.lower(),
+        page_set=page_set, tags=tags)
+    self.video_codec = video_codec
+
+  def RunPageInteractions(self, action_runner):
+    with action_runner.CreateInteraction('Action_Codec_Constraints',
+                                         repeatable=False):
+      action_runner.ClickElement('input[id="%s"]' % self.video_codec)
+      action_runner.ClickElement('button[id="startButton"]')
+      action_runner.ClickElement('button[id="callButton"]')
+      action_runner.Wait(20)
+      action_runner.ClickElement('button[id="hangupButton"]')
+
+
 class MultiplePeerConnections(WebrtcPage):
   """Why: Sets up several peer connections in the same page."""
 
@@ -149,3 +169,6 @@ class WebrtcPageSet(story.StorySet):
     self.AddStory(AudioCall(self, 'G772', tags=['audio']))
     self.AddStory(AudioCall(self, 'PCMU', tags=['audio']))
     self.AddStory(AudioCall(self, 'ISAC/1600', tags=['audio']))
+    self.AddStory(VideoCodecConstraints(self, 'H264', tags=['videoConstraints']))
+    self.AddStory(VideoCodecConstraints(self, 'VP8', tags=['videoConstraints']))
+    self.AddStory(VideoCodecConstraints(self, 'VP9', tags=['videoConstraints']))
