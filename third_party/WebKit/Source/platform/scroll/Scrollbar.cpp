@@ -567,14 +567,10 @@ bool Scrollbar::IsWindowActive() const {
 IntPoint Scrollbar::ConvertFromRootFrame(
     const IntPoint& point_in_root_frame) const {
   DCHECK(scrollable_area_);
-  if (scrollable_area_) {
-    IntPoint parent_point =
-        scrollable_area_->ConvertFromRootFrame(point_in_root_frame);
-    return scrollable_area_->ConvertFromParentViewToScrollbar(*this,
-                                                              parent_point);
-  }
-
-  return point_in_root_frame;
+  IntPoint parent_point =
+      scrollable_area_->ConvertFromRootFrame(point_in_root_frame);
+  return scrollable_area_->ConvertFromParentViewToScrollbar(*this,
+                                                            parent_point);
 }
 
 IntPoint Scrollbar::ConvertFromRootFrameToParentView(
@@ -595,7 +591,8 @@ IntPoint Scrollbar::ConvertFromParentView(const IntPoint& parent_point) const {
 }
 
 float Scrollbar::ScrollableAreaCurrentPos() const {
-  DCHECK(scrollable_area_);
+  if (!scrollable_area_)
+    return 0;
 
   if (orientation_ == kHorizontalScrollbar) {
     return scrollable_area_->GetScrollOffset().Width() -
@@ -607,7 +604,8 @@ float Scrollbar::ScrollableAreaCurrentPos() const {
 }
 
 float Scrollbar::ScrollableAreaTargetPos() const {
-  DCHECK(scrollable_area_);
+  if (!scrollable_area_)
+    return 0;
 
   if (orientation_ == kHorizontalScrollbar) {
     return scrollable_area_->GetScrollAnimator().DesiredTargetOffset().Width() -
