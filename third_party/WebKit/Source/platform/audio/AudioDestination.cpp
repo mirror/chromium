@@ -110,9 +110,6 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
   TRACE_EVENT1("webaudio", "AudioDestination::Render",
                "callback_buffer_size", number_of_frames);
 
-  // This method is called by AudioDeviceThread.
-  DCHECK(!IsRenderingThread());
-
   CHECK_EQ(destination_data.size(), number_of_output_channels_);
   CHECK_EQ(number_of_frames, callback_buffer_size_);
 
@@ -129,27 +126,28 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
 
   size_t frames_to_render = fifo_->Pull(output_bus_.Get(), number_of_frames);
 
-  // TODO(hongchan): this check might be redundant, so consider removing later.
-  if (frames_to_render != 0 && GetRenderingThread()) {
-    GetRenderingThread()->GetWebTaskRunner()->PostTask(
+  // Use the single thread rendering model unless AudioWorklet is enabled.
+  if (!RuntimeEnabledFeatures::AudioWorkletEnabled()) {
+    RequestRender(number_of_frames, frames_to_render, delay,
+                  delay_timestamp, prior_frames_skipped);
+  } else {
+    DCHECK(worklet_backing_thread_);
+    worklet_backing_thread_->GetWebTaskRunner()->PostTask(
         BLINK_FROM_HERE,
-        CrossThreadBind(&AudioDestination::RequestRenderOnWebThread,
+        CrossThreadBind(&AudioDestination::RequestRender,
                         CrossThreadUnretained(this), number_of_frames,
                         frames_to_render, delay, delay_timestamp,
                         prior_frames_skipped));
   }
 }
 
-void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
-                                                size_t frames_to_render,
-                                                double delay,
-                                                double delay_timestamp,
-                                                size_t prior_frames_skipped) {
-  TRACE_EVENT1("webaudio", "AudioDestination::RequestRenderOnWebThread",
+void AudioDestination::RequestRender(size_t frames_requested,
+                                     size_t frames_to_render,
+                                     double delay,
+                                     double delay_timestamp,
+                                     size_t prior_frames_skipped) {
+  TRACE_EVENT1("webaudio", "AudioDestination::RequestRender",
                "frames_to_render", frames_to_render);
-
-  // This method is called by WebThread.
-  DCHECK(IsRenderingThread());
 
   frames_elapsed_ -= std::min(frames_elapsed_, prior_frames_skipped);
   AudioIOPosition output_position;
@@ -190,8 +188,6 @@ void AudioDestination::Start() {
   // Start the "audio device" after the rendering thread is ready.
   if (web_audio_device_ && !is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Start");
-    rendering_thread_ =
-        Platform::Current()->CreateThread("WebAudio Rendering Thread");
     web_audio_device_->Start();
     is_playing_ = true;
   }
@@ -218,7 +214,7 @@ void AudioDestination::Stop() {
   if (web_audio_device_ && is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Stop");
     web_audio_device_->Stop();
-    ClearRenderingThread();
+    ClearWorkletThread();
     is_playing_ = false;
   }
 }
@@ -273,23 +269,9 @@ bool AudioDestination::CheckBufferSize() {
   return is_buffer_size_valid;
 }
 
-bool AudioDestination::IsRenderingThread() {
-  return GetRenderingThread()->IsCurrentThread();
-}
-
-WebThread* AudioDestination::GetRenderingThread() {
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled()) {
-    DCHECK(!rendering_thread_ && worklet_backing_thread_);
-    return worklet_backing_thread_;
-  }
-
-  DCHECK(rendering_thread_ && !worklet_backing_thread_);
-  return rendering_thread_.get();
-}
-
-void AudioDestination::ClearRenderingThread() {
-  rendering_thread_.reset();
-  worklet_backing_thread_ = nullptr;
+void AudioDestination::ClearWorkletThread() {
+  if (RuntimeEnabledFeatures::AudioWorkletEnabled())
+    worklet_backing_thread_ = nullptr;
 }
 
 }  // namespace blink
