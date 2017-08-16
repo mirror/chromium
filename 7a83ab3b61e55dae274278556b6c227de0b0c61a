@@ -39,6 +39,24 @@
       "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df4a6f9_d9f92bbb",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-16T18:37:44Z",
+      "side": 1,
+      "message": "Reg. Logging and counterfactual there are two ways we can do here.\n\n1) Log just credit card suggestions available (I assume it is already logged in UMA. right?). In Finch, based on experiment setup (Control, Ablation Experiment, Non Affected), I could slice the metrics. I need to make sure though that \"Log just credit card suggestions available\" is logged before I ablate. \n\n2) Do Counterfactual logging that is just \"credit card suggestions available log only\" (We do this in Ads to keep logs clean and not depending on experiments). Does Finch allow comparison between two different UMA metrics ? \n\nWill chat with you offline (or jared) on how to compare two experiment arms with metrics here. My logging can depend on that.",
+      "parentUuid": "e6523312_3d75af75",
+      "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
