@@ -33,6 +33,9 @@ enum UmaThreatSubType {
   UMA_THREAT_SUB_TYPE_SOCIAL_ENGINEERING_ADS = 4,
   UMA_THREAT_SUB_TYPE_SOCIAL_ENGINEERING_LANDING = 5,
   UMA_THREAT_SUB_TYPE_PHISHING = 6,
+  UMA_THREAT_SUB_TYPE_BETTER_ADS = 7,
+  UMA_THREAT_SUB_TYPE_ABUSIVE_ADS = 8,
+  UMA_THREAT_SUB_TYPE_ALL_ADS = 9,
   UMA_THREAT_SUB_TYPE_MAX_VALUE
 };
 
@@ -53,13 +56,14 @@ void ReportUmaThreatSubType(SBThreatType threat_type,
 ThreatPatternType ParseThreatSubType(
     const base::DictionaryValue* match,
     SBThreatType threat_type) {
-  if (threat_type == SB_THREAT_TYPE_SUBRESOURCE_FILTER ||
-      threat_type == SB_THREAT_TYPE_URL_UNWANTED) {
+  if (threat_type == SB_THREAT_TYPE_URL_UNWANTED) {
     return ThreatPatternType::NONE;
   }
 
   std::string pattern_key;
-  if (threat_type == SB_THREAT_TYPE_URL_MALWARE) {
+  if (threat_type == SB_THREAT_TYPE_SUBRESOURCE_FILTER) {
+    pattern_key = "sf_pattern_type";
+  } else if (threat_type == SB_THREAT_TYPE_URL_MALWARE) {
     pattern_key = "pha_pattern_type";
   } else {
     DCHECK(threat_type == SB_THREAT_TYPE_URL_PHISHING);
@@ -72,7 +76,21 @@ ThreatPatternType ParseThreatSubType(
     return ThreatPatternType::NONE;
   }
 
-  if (threat_type == SB_THREAT_TYPE_URL_MALWARE) {
+  if (threat_type == SB_THREAT_TYPE_SUBRESOURCE_FILTER) {
+    if (pattern_type == "BETTER_ADS") {
+      ReportUmaThreatSubType(threat_type, UMA_THREAT_SUB_TYPE_BETTER_ADS);
+      return ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS;
+    } else if (pattern_type == "ABUSIVE_ADS") {
+      ReportUmaThreatSubType(threat_type, UMA_THREAT_SUB_TYPE_ABUSIVE_ADS);
+      return ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS;
+    } else if (pattern_type == "ALL_ADS") {
+      ReportUmaThreatSubType(threat_type, UMA_THREAT_SUB_TYPE_ALL_ADS);
+      return ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS;
+    } else {
+      ReportUmaThreatSubType(threat_type, UMA_THREAT_SUB_TYPE_UNKNOWN);
+      return ThreatPatternType::NONE;
+    }
+  } else if (threat_type == SB_THREAT_TYPE_URL_MALWARE) {
     if (pattern_type == "LANDING") {
       ReportUmaThreatSubType(
           threat_type, UMA_THREAT_SUB_TYPE_POTENTIALLY_HALMFUL_APP_LANDING);
@@ -114,6 +132,18 @@ std::string ParseUserPopulation(const base::DictionaryValue* match) {
     return std::string();
   else
     return population_id;
+}
+
+bool ParseExperimental(const base::DictionaryValue* match) {
+  bool experimental = false;
+  match->GetBoolean("experimental", &experimental);
+  return experimental;
+}
+
+bool ParseWarning(const base::DictionaryValue* match) {
+  bool warning = false;
+  match->GetBoolean("warning", &warning);
+  return warning;
 }
 
 // Returns the severity level for a given SafeBrowsing list. The lowest value is
@@ -212,6 +242,8 @@ UmaRemoteCallResult ParseJsonFromGMSCore(const std::string& metadata_str,
   metadata->threat_pattern_type =
       ParseThreatSubType(worst_match, *worst_sb_threat_type);
   metadata->population_id = ParseUserPopulation(worst_match);
+  metadata->experimental = ParseExperimental(worst_match);
+  metadata->warning = ParseWarning(worst_match);
 
   return UMA_STATUS_MATCH;  // success
 }
