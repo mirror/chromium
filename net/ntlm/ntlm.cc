@@ -6,14 +6,126 @@
 
 #include <string.h>
 
+// TODO(zentaro): The net package doesn't like this include.
+#include "base/i18n/case_conversion.h"
 #include "base/logging.h"
 #include "base/md5.h"
 #include "net/ntlm/des.h"
 #include "net/ntlm/md4.h"
 #include "net/ntlm/ntlm_buffer_writer.h"
+#include "third_party/boringssl/src/include/openssl/hmac.h"
 
 namespace net {
 namespace ntlm {
+
+namespace {
+
+// Takes the parsed target info in |av_pairs| and performs the following
+// actions.
+//
+// 1) If a |TargetInfoAvId::kTimestamp| AvPair exists, |server_timestamp|
+//    is set to the payload.
+// 2) If |is_mic_enabled| is true, existing flags AvPair will have the
+//    |TargetInfoAvFlags::kMicPresent| bit set. If an existing flags AvPair
+//    does not already exist, a new one is added with the value of
+//    |TargetInfoAvFlags::kMicPresent|.
+// 3) If |is_epa_enabled| is true, two new AvPair entries will be added to
+//    |av_pairs|. The first will be of type |TargetInfoAvId::kChannelBindings|
+//    and contains MD5(|channel_bindings|) as the payload. The second will be
+//    of type |TargetInfoAvId::kTargetName| and contains |spn| as a little
+//    endian UTF16 string.
+// 4) Sets |target_info_len| to the size of |av_pairs| when serialized into
+//    a payload.
+void UpdateTargetInfoAvPairs(bool is_mic_enabled,
+                             bool is_epa_enabled,
+                             const std::string& channel_bindings,
+                             const std::string& spn,
+                             std::vector<AvPair>* av_pairs,
+                             uint64_t* server_timestamp,
+                             size_t* target_info_len) {
+  // Do a pass to update flags and calculate current length and
+  // pull out the server timestamp if it is there.
+  *server_timestamp = UINT64_MAX;
+  *target_info_len = 0;
+
+  bool need_flags_added = is_mic_enabled;
+  for (AvPair& pair : *av_pairs) {
+    *target_info_len += pair.avlen + kAvPairHeaderLen;
+    if (pair.avid == TargetInfoAvId::kFlags) {
+      if (is_mic_enabled) {
+        pair.flags = pair.flags | TargetInfoAvFlags::kMicPresent;
+      }
+
+      need_flags_added = false;
+    } else if (pair.avid == TargetInfoAvId::kTimestamp) {
+      *server_timestamp = pair.timestamp;
+    } else if (pair.avid == TargetInfoAvId::kEol) {
+      // The terminator should already have been removed from the end of the
+      // list, and the parser should not have allowed it to be within the
+      // list.
+      NOTREACHED();
+    }
+  }
+
+  if (need_flags_added) {
+    DCHECK(is_mic_enabled);
+    AvPair flags_pair(TargetInfoAvId::kFlags, sizeof(uint32_t));
+    flags_pair.flags = TargetInfoAvFlags::kMicPresent;
+
+    av_pairs->push_back(flags_pair);
+    *target_info_len += kAvPairHeaderLen + flags_pair.avlen;
+  }
+
+  if (is_epa_enabled) {
+    // Hash the channel bindings.
+    base::MD5Digest channel_bindings_hash;
+    GenerateChannelBindingHashV2(channel_bindings, &channel_bindings_hash);
+
+    // Convert the SPN to little endian unicode.
+    NtlmBufferWriter spn_writer(spn.length() * 2);
+    bool spn_writer_result =
+        spn_writer.WriteUtf8AsUtf16String(spn) && spn_writer.IsEndOfBuffer();
+    DCHECK(spn_writer_result);
+
+    av_pairs->push_back(
+        AvPair(TargetInfoAvId::kChannelBindings,
+               Buffer(channel_bindings_hash.a, kChannelBindingsHashLen)));
+    av_pairs->push_back(AvPair(TargetInfoAvId::kTargetName, spn_writer.Pass()));
+    *target_info_len +=
+        (2 * kAvPairHeaderLen) + kChannelBindingsHashLen + (spn.length() * 2);
+  }
+
+  // Add extra space for the terminator at the end.
+  *target_info_len += kAvPairHeaderLen;
+}
+
+Buffer WriteUpdatedTargetInfo(const std::vector<AvPair>& av_pairs,
+                              size_t updated_target_info_len) {
+  bool result = true;
+  NtlmBufferWriter writer(updated_target_info_len);
+  for (const AvPair& pair : av_pairs) {
+    result = writer.WriteAvPairHeader(pair.avid, pair.avlen);
+    DCHECK(result);
+
+    if (pair.avid == TargetInfoAvId::kFlags) {
+      // Flags are treated specially because during the update it may
+      // have had the kMicPresent flag added.
+      DCHECK_EQ(sizeof(uint32_t), pair.avlen);
+      result = writer.WriteUInt32(static_cast<uint32_t>(pair.flags));
+    } else {
+      DCHECK_EQ(pair.avlen, pair.buffer.size());
+      result = writer.WriteBytes(pair.buffer);
+    }
+
+    DCHECK(result);
+  }
+
+  result = writer.WriteAvPairTerminator() && writer.IsEndOfBuffer();
+  DCHECK(result);
+  return writer.Pass();
+}
+
+}  // namespace
 
 void GenerateNtlmHashV1(const base::string16& password, uint8_t* hash) {
   size_t length = password.length() * 2;
@@ -119,6 +231,115 @@ void GenerateResponsesV1WithSessionSecurity(const base::string16& password,
   GenerateLMResponseV1WithSessionSecurity(client_challenge, lm_response);
   GenerateNtlmResponseV1WithSessionSecurity(password, server_challenge,
                                             client_challenge, ntlm_response);
+}
+
+void GenerateNtlmHashV2(const base::string16& domain,
+                        const base::string16& username,
+                        const base::string16& password,
+                        uint8_t* v2_hash) {
+  // NOTE: According to [MS-NLMP] Section 3.3.2 only the username and not the
+  // domain is uppercased.
+  base::string16 upper_username = base::i18n::ToUpper(username);
+
+  uint8_t v1_hash[kNtlmHashLen];
+  GenerateNtlmHashV1(password, v1_hash);
+
+  bssl::ScopedHMAC_CTX ctx;
+  HMAC_Init_ex(ctx.get(), v1_hash, kNtlmHashLen, EVP_md5(), NULL);
+  DCHECK_EQ(kNtlmHashLen, HMAC_size(ctx.get()));
+  HMAC_Update(ctx.get(),
+              reinterpret_cast<const uint8_t*>(upper_username.data()),
+              upper_username.length() * 2);
+  HMAC_Update(ctx.get(), reinterpret_cast<const uint8_t*>(domain.data()),
+              domain.length() * 2);
+  HMAC_Final(ctx.get(), v2_hash, nullptr);
+}
+
+Buffer GenerateProofInputV2(uint64_t timestamp,
+                            const uint8_t* client_challenge) {
+  NtlmBufferWriter writer(kProofInputLenV2);
+  bool result = writer.WriteUInt16(kProofInputVersionV2) &&
+                writer.WriteZeros(6) && writer.WriteUInt64(timestamp) &&
+                writer.WriteBytes(client_challenge, kChallengeLen) &&
+                writer.WriteZeros(4) && writer.IsEndOfBuffer();
+
+  DCHECK(result);
+  return writer.Pass();
+}
+
+void GenerateNtlmProofV2(const uint8_t* v2_hash,
+                         const uint8_t* server_challenge,
+                         const Buffer& v2_proof_input,
+                         const Buffer& target_info,
+                         uint8_t* v2_proof) {
+  DCHECK_EQ(kProofInputLenV2, v2_proof_input.size());
+
+  bssl::ScopedHMAC_CTX ctx;
+  HMAC_Init_ex(ctx.get(), v2_hash, kNtlmHashLen, EVP_md5(), NULL);
+  DCHECK_EQ(kNtlmProofLenV2, HMAC_size(ctx.get()));
+  HMAC_Update(ctx.get(), server_challenge, kChallengeLen);
+  HMAC_Update(ctx.get(), v2_proof_input.data(), v2_proof_input.size());
+  HMAC_Update(ctx.get(), target_info.data(), target_info.size());
+  const uint32_t zero = 0;
+  HMAC_Update(ctx.get(), reinterpret_cast<const uint8_t*>(&zero),
+              sizeof(uint32_t));
+  HMAC_Final(ctx.get(), v2_proof, nullptr);
+}
+
+void GenerateSessionBaseKeyV2(const uint8_t* v2_hash,
+                              const uint8_t* v2_proof,
+                              uint8_t* session_key) {
+  bssl::ScopedHMAC_CTX ctx;
+  HMAC_Init_ex(ctx.get(), v2_hash, kNtlmHashLen, EVP_md5(), NULL);
+  DCHECK_EQ(kSessionKeyLenV2, HMAC_size(ctx.get()));
+  HMAC_Update(ctx.get(), v2_proof, kNtlmProofLenV2);
+  HMAC_Final(ctx.get(), session_key, nullptr);
+}
+
+void GenerateChannelBindingHashV2(const std::string& channel_bindings,
+                                  base::MD5Digest* channel_bindings_hash) {
+  NtlmBufferWriter writer(kEpaUnhashedStructHeaderLen);
+  bool result = writer.WriteZeros(16) &&
+                writer.WriteUInt32(channel_bindings.length()) &&
+                writer.IsEndOfBuffer();
+  DCHECK(result);
+
+  base::MD5Context ctx;
+  base::MD5Init(&ctx);
+  base::MD5Update(&ctx, base::StringPiece(reinterpret_cast<const char*>(
+                                              writer.GetBuffer().data()),
+                                          writer.GetBuffer().size()));
+  base::MD5Update(&ctx, channel_bindings);
+  base::MD5Final(channel_bindings_hash, &ctx);
+}
+
+void GenerateMicV2(const uint8_t* session_key,
+                   const Buffer& negotiate_msg,
+                   const Buffer& challenge_msg,
+                   const Buffer& authenticate_msg,
+                   uint8_t* mic) {
+  bssl::ScopedHMAC_CTX ctx;
+  HMAC_Init_ex(ctx.get(), session_key, kNtlmHashLen, EVP_md5(), NULL);
+  DCHECK_EQ(kMicLenV2, HMAC_size(ctx.get()));
+  HMAC_Update(ctx.get(), negotiate_msg.data(), negotiate_msg.size());
+  HMAC_Update(ctx.get(), challenge_msg.data(), challenge_msg.size());
+  HMAC_Update(ctx.get(), authenticate_msg.data(), authenticate_msg.size());
+  HMAC_Final(ctx.get(), mic, nullptr);
+}
+
+NET_EXPORT_PRIVATE Buffer
+GenerateUpdatedTargetInfo(bool is_mic_enabled,
+                          bool is_epa_enabled,
+                          const std::string& channel_bindings,
+                          const std::string& spn,
+                          const std::vector<AvPair>& av_pairs,
+                          uint64_t* server_timestamp) {
+  size_t updated_target_info_len = 0;
+  std::vector<AvPair> updated_av_pairs(av_pairs);
+  UpdateTargetInfoAvPairs(is_mic_enabled, is_epa_enabled, channel_bindings, spn,
+                          &updated_av_pairs, server_timestamp,
+                          &updated_target_info_len);
+  return WriteUpdatedTargetInfo(updated_av_pairs, updated_target_info_len);
 }
 
 }  // namespace ntlm
