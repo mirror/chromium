@@ -22,6 +22,30 @@
       "revId": "bb9348a9d2e41c39a273d7c32c4cdb1bc39463f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7198b101_4d429240",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-16T10:28:46Z",
+      "side": 1,
+      "message": "yeah this sucks :(\nI think even if mojo doesn\u0027t need \u003doperator I will still need someway to set this.\nWhen deserializing (mojo -\u003e base)  mojo makes an empty pmd (out \u003d ProcessMemoryDump())\nthen expects you to set fields on it. \n\nHere\u0027s an example I found:\n\ncode: https://cs.chromium.org/chromium/src/components/viz/common/surfaces/surface_id.h?type\u003dcs\u0026q\u003dfriend++struct_traits\u0026sq\u003dpackage:chromium\u0026l\u003d73\n\nstruct trait code: https://cs.chromium.org/chromium/src/cc/ipc/surface_id_struct_traits.h?q\u003df:surface_id_struct_traits\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d28\n\nSo in the big CL I tried making ProcessMemoryDump a friend of memory_instrumentation_struct_traits.h like the example above but that seemed super ugly (not to mention the first instance in base...) so I thought an explicit setter might be better.\n\nFor now I have removed the setter and later when it comes to actually writing the struct_traits maybe a better way will present itself (let me know if you have any thoughts).",
+      "parentUuid": "7c5d2b2d_34b2a479",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 221,
+        "endChar": 16
+      },
+      "revId": "bb9348a9d2e41c39a273d7c32c4cdb1bc39463f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
