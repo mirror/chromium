@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "8bc9dab1_67310dd2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-16T13:04:09Z",
+      "side": 1,
+      "message": "there is another delegate created here, if we can\u0027t reuse the test method added below, might as well just inline it? It\u0027s not saving that much stuff... mostly hiding Java ugliness. Maybe wrap in a method to pass a lambda?",
+      "range": {
+        "startLine": 214,
+        "startChar": 35,
+        "endLine": 214,
+        "endChar": 59
+      },
+      "revId": "26448deaa07635d1573de94837dd938ec7ba6906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b885a06c_7d1244d7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
         "patchSetId": 9
@@ -93,6 +116,29 @@
       "revId": "26448deaa07635d1573de94837dd938ec7ba6906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be58faba_ae8a31a6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-16T13:04:09Z",
+      "side": 1,
+      "message": "That returns real objects, not mocks... So call it make createDummyPrintAttributes or something like that? https://martinfowler.com/articles/mocksArentStubs.html",
+      "range": {
+        "startLine": 318,
+        "startChar": 28,
+        "endLine": 318,
+        "endChar": 47
+      },
+      "revId": "26448deaa07635d1573de94837dd938ec7ba6906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

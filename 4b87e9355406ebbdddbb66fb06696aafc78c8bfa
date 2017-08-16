@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddda2704_99e8ee7b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-16T13:04:09Z",
+      "side": 1,
+      "message": "nit: assertFalse and don\u0027t negate isInitialized()?",
+      "range": {
+        "startLine": 276,
+        "startChar": 19,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "4b87e9355406ebbdddbb66fb06696aafc78c8bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c26b441_f57d3aef",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-16T13:04:09Z",
+      "side": 1,
+      "message": "why wrap only this bit? if there is a failure above the file will still be open right? so either the test finishing (whether failure or success) cleans up properly just by shutting down the instrumentation, in that case you don\u0027t need cleanup, or if it doesnt then it should be in the class shutdown or a bigger try block.",
+      "range": {
+        "startLine": 292,
+        "startChar": 10,
+        "endLine": 292,
+        "endChar": 17
+      },
+      "revId": "4b87e9355406ebbdddbb66fb06696aafc78c8bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
