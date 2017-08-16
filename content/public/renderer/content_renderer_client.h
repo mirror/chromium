@@ -326,6 +326,7 @@ class CONTENT_EXPORT ContentRendererClient {
   // Currently only called when the context menu is for an image.
   virtual void AddImageContextMenuProperties(
       const blink::WebURLResponse& response,
+      bool is_placeholder_image,
       std::map<std::string, std::string>* properties) {}
 
   // Notifies that a document element has been inserted in the frame's document.
