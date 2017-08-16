@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62ff4655_0d8d8e99",
+        "filename": "services/ui/common/switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-16T21:47:03Z",
+      "side": 1,
+      "message": "Changed to kUseVizHitTest and use-viz-hit-test.",
+      "parentUuid": "231a84a6_cf2ef4d3",
+      "revId": "e5eafc9d0f3e23edffc6c7b4ea6677e47a175c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68e06ffc_aee044ea",
         "filename": "services/ui/ws/BUILD.gn",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T04:36:08Z",
       "side": 1,
       "message": "I believe we no longer have this target. So I guess you will need to move viz/hist in here. But, why do we need this in public_deps?",
+      "revId": "e5eafc9d0f3e23edffc6c7b4ea6677e47a175c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcf07aa_c10dbdf8",
+        "filename": "services/ui/ws/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-16T21:47:03Z",
+      "side": 1,
+      "message": "Yea, moved viz/host here. Because I need to use it (HTQ now, or HFSM later if that HFSM-CL lands first) in tests?",
+      "parentUuid": "68e06ffc_aee044ea",
       "revId": "e5eafc9d0f3e23edffc6c7b4ea6677e47a175c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

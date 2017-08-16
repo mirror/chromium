@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a2f02c5a_25a44cd5",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-16T21:47:03Z",
+      "side": 1,
+      "message": "After separating these two flags, this now works. Tests should be testing all four configs now.",
+      "parentUuid": "4f7f6524_38c25427",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92bce2c3_e9651086",
         "filename": "services/ui/ws/event_targeter.cc",
         "patchSetId": 1
