@@ -97,13 +97,15 @@ public class PasswordEntryEditor extends Fragment {
                 mKeyguardManager =
                         (KeyguardManager) getActivity().getApplicationContext().getSystemService(
                                 Context.KEYGUARD_SERVICE);
-                View passwordTitleView =
-                        mView.findViewById(R.id.password_entry_editor_password_title);
-                TextView passwordTitleTextView =
-                        (TextView) passwordTitleView.findViewById(R.id.password_entry_title);
-                passwordTitleTextView.setText(R.string.password_entry_editor_password);
-                hidePassword();
-                hookupPasswordButtons();
+                if (isReauthenticationAvailable()) {
+                    View passwordTitleView =
+                            mView.findViewById(R.id.password_entry_editor_password_title);
+                    TextView passwordTitleTextView =
+                            (TextView) passwordTitleView.findViewById(R.id.password_entry_title);
+                    passwordTitleTextView.setText(R.string.password_entry_editor_password);
+                    hidePassword();
+                    hookupPasswordButtons();
+                }
             }
 
         } else {
@@ -122,8 +124,7 @@ public class PasswordEntryEditor extends Fragment {
     }
 
     public boolean shouldDisplayInteractivePasswordEntryEditor() {
-        return ChromeFeatureList.isEnabled(VIEW_PASSWORDS)
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        return ChromeFeatureList.isEnabled(VIEW_PASSWORDS);
     }
 
     @Override
@@ -144,6 +145,10 @@ public class PasswordEntryEditor extends Fragment {
         return SavePasswordsPreferences.getLastReauthTimeMillis() != 0
                 && System.currentTimeMillis() - SavePasswordsPreferences.getLastReauthTimeMillis()
                 < VALID_REAUTHENTICATION_TIME_INTERVAL_MILLIS;
+    }
+
+    private boolean isReauthenticationAvailable() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     @Override
