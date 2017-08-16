@@ -69,6 +69,24 @@
       "revId": "666a2755850a57764a55eaa24a12624427a54446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fb89b8_7a4ac91f",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-16T20:51:31Z",
+      "side": 1,
+      "message": "Okay. Let\u0027s keep it then.",
+      "parentUuid": "74aa36b3_51f6b46f",
+      "revId": "666a2755850a57764a55eaa24a12624427a54446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
