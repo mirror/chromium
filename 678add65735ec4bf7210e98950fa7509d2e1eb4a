@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "434856e7_1fce00ad",
+        "filename": "net/url_request/url_request_file_dir_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T16:42:33Z",
+      "side": 1,
+      "message": "I will check when I get to a Windows box.",
+      "parentUuid": "097ecaaa_2bc4e2d1",
+      "range": {
+        "startLine": 116,
+        "startChar": 51,
+        "endLine": 116,
+        "endChar": 56
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e588073_d44ee3a2",
         "filename": "net/url_request/url_request_file_dir_job.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0757844e_8b2dd1b4",
+        "filename": "net/url_request/url_request_file_dir_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T16:42:33Z",
+      "side": 1,
+      "message": "The FilePathTest.StripTrailingSeparators unit test has c:\\\\ -\u003e c:\\\\, but c:\\\\\\ -\u003e c:\\, which is a bit wonky, so I\u0027ll see if there is a better alternative to StripTrailingSeparators() and get back to you.",
+      "parentUuid": "8e588073_d44ee3a2",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "389b63d7_32012607",
         "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-16T16:33:20Z",
       "side": 1,
       "message": "\"data\" seems a little too general.  listing_body?  response_body?",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a37dc3_2f255348",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T16:42:33Z",
+      "side": 1,
+      "message": "The tests refer to it as \"data\" or \"data_received\" so I was just propagating it along. Will change to response_body.",
+      "parentUuid": "389b63d7_32012607",
       "range": {
         "startLine": 46,
         "startChar": 52,
