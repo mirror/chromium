@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8ff01b3a_726cc25f",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-16T07:41:57Z",
+      "side": 1,
+      "message": "Binding can take a pointer to the impl and the request together at its constructor like \nbinding_(this, std::move(request)).",
+      "range": {
+        "startLine": 19,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 73
+      },
+      "revId": "4aa417ce07b0e5f510eaefe6e418a25eb528cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a960451e_78a8fa0b",
         "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
         "patchSetId": 3
@@ -58,6 +81,29 @@
         "startChar": 22,
         "endLine": 17,
         "endChar": 26
+      },
+      "revId": "4aa417ce07b0e5f510eaefe6e418a25eb528cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7704e71_cdd6e658",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-16T07:41:57Z",
+      "side": 1,
+      "message": "binding_(this, std::move(request))",
+      "range": {
+        "startLine": 19,
+        "startChar": 54,
+        "endLine": 19,
+        "endChar": 68
       },
       "revId": "4aa417ce07b0e5f510eaefe6e418a25eb528cae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
