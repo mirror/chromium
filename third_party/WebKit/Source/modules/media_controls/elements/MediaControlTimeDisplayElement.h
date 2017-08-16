@@ -21,6 +21,8 @@ class MediaControlTimeDisplayElement : public MediaControlDivElement {
  protected:
   MediaControlTimeDisplayElement(MediaControlsImpl&, MediaControlElementType);
 
+  virtual String FormatTime() const;
+
  private:
   double current_value_ = 0;
 };
