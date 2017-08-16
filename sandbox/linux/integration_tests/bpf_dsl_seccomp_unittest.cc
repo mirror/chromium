@@ -180,6 +180,11 @@ class WhitelistGetpidPolicy : public Policy {
     switch (sysno) {
       case __NR_getpid:
       case __NR_exit_group:
+      // ubsan_vptr checker needs mmap, munmap, pipe, write.
+      case __NR_mmap:
+      case __NR_munmap:
+      case __NR_pipe:
+      case __NR_write:
         return Allow();
       default:
         return Error(ENOMEM);
@@ -423,6 +428,10 @@ class SyntheticPolicy : public Policy {
       // write() is needed for BPF_ASSERT() to report a useful error message.
       return Allow();
     }
+    if (sysno == __NR_mmap || sysno == __NR_munmap || sysno == __NR_pipe) {
+      // ubsan_vptr checker needs mmap, munmap, pipe, write.
+      return Allow();
+    }
     return Error(SysnoToRandomErrno(sysno));
   }
 
@@ -441,6 +450,11 @@ BPF_TEST_C(SandboxBPF, SyntheticPolicy, SyntheticPolicy) {
        ++syscall_number) {
     if (syscall_number == __NR_exit_group || syscall_number == __NR_write) {
       // exit_group() is special
+      continue;
+    }
+    if (syscall_number == __NR_mmap || syscall_number == __NR_munmap ||
+        syscall_number == __NR_pipe) {
+      // ubsan_vptr checker needs mmap, munmap, pipe, write.
       continue;
     }
     errno = 0;
@@ -2225,6 +2239,10 @@ class UnsafeTrapWithCondPolicy : public Policy {
       case __NR_close:
       case __NR_exit_group:
       case __NR_write:
+      // ubsan_vptr checker needs mmap, munmap, pipe, write.
+      case __NR_mmap:
+      case __NR_munmap:
+      case __NR_pipe:
         return Allow();
       case __NR_getppid:
         return UnsafeTrap(NoOpHandler, NULL);
