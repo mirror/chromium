@@ -509,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "bbf8c8e8_1d11a540",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T20:26:37Z",
+      "side": 1,
+      "message": "This is a using. I cannot get it to work. Let\u0027s skip that for now.",
+      "parentUuid": "a10a9a74_8d732153",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e459be95_06093d26",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
         "patchSetId": 3
@@ -615,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "7b546893_7763edfe",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T20:26:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb99b557_8bdd7f39",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "592eac4b_bbe7faf8",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 3
@@ -680,6 +716,24 @@
       "side": 1,
       "message": "This one still needs addressing in MultipleArchivesToDownload.",
       "parentUuid": "5e662492_a01f544b",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a563c76_4d6c1453",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-16T20:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31553de9_7c8bc258",
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
