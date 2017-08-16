@@ -23,7 +23,6 @@ namespace examples {
 
 namespace {
 
-class ChildPanel;
 }
 
 class VIEWS_EXAMPLES_EXPORT BoxLayoutExample : public ExampleBase,
