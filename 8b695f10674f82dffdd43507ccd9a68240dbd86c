@@ -52,6 +52,42 @@
       "revId": "8b695f10674f82dffdd43507ccd9a68240dbd86c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9560e3e4_1dc497cc",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-16T13:27:39Z",
+      "side": 1,
+      "message": "Filed bug 755727 and linked to it from the TODOs to replace uses. Maybe I misunderstood; did it need to be linked here additionally?",
+      "parentUuid": "af23386f_c9b2a67a",
+      "revId": "8b695f10674f82dffdd43507ccd9a68240dbd86c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab8aadf_f14e0381",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-16T13:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eef0a8e_0053ae6d",
+      "revId": "8b695f10674f82dffdd43507ccd9a68240dbd86c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
