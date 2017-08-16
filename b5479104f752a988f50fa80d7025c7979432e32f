@@ -22,6 +22,30 @@
       "revId": "b5479104f752a988f50fa80d7025c7979432e32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0058e642_77d715d0",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T16:46:04Z",
+      "side": 1,
+      "message": "I\u0027ve deleted it. I have another CL under review that addresses this comment. So it\u0027ll either get resolved, or will stand as-is.",
+      "parentUuid": "8084e35a_2bfe5cb1",
+      "range": {
+        "startLine": 81,
+        "startChar": 49,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "b5479104f752a988f50fa80d7025c7979432e32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
