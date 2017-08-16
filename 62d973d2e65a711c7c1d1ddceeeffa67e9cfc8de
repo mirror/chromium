@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43250c40_87964b72",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T15:34:31Z",
+      "side": 1,
+      "message": "We remove the frequency actually calling RemoveConfiguration() from Sensor and we have a test checking this, pls see https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js?l\u003d93",
+      "parentUuid": "313af4c8_53ab0da3",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 72
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14484a14_177f7501",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T21:17:01Z",
       "side": 1,
       "message": "Make this a DCHECK since failure here indicates a bug.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56806693_059e1e58",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-16T15:34:31Z",
+      "side": 1,
+      "message": "it can happen if Sensor.stop() is called right after Sensor.start() and AddConfiguration() failed on browser side. In this case renderer is not yet aware of AddConfiguration() failure (so Sensor state is still \u0027activating\u0027) and RemoveConfiguration() will expectedly fail too.",
+      "parentUuid": "14484a14_177f7501",
       "range": {
         "startLine": 85,
         "startChar": 0,
