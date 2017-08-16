@@ -41,6 +41,26 @@ class MirroringScreenPositionClient
   explicit MirroringScreenPositionClient(MirrorWindowController* controller)
       : controller_(controller) {}
 
+  void ConvertFloatPointToScreen(const aura::Window* window,
+                                 gfx::PointF* point) override {
+    const aura::Window* root = window->GetRootWindow();
+    aura::Window::ConvertFloatPointToTarget(window, root, point);
+    const display::Display& display =
+        controller_->GetDisplayForRootWindow(root);
+    const gfx::Point display_origin = display.bounds().origin();
+    point->Offset(display_origin.x(), display_origin.y());
+  }
+
+  void ConvertFloatPointFromScreen(const aura::Window* window,
+                                   gfx::PointF* point) override {
+    const aura::Window* root = window->GetRootWindow();
+    const display::Display& display =
+        controller_->GetDisplayForRootWindow(root);
+    const gfx::Point display_origin = display.bounds().origin();
+    point->Offset(-display_origin.x(), -display_origin.y());
+    aura::Window::ConvertFloatPointToTarget(root, window, point);
+  }
+
   void ConvertPointToScreen(const aura::Window* window,
                             gfx::Point* point) override {
     const aura::Window* root = window->GetRootWindow();
