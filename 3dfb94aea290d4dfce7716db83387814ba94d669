@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a21172d_429a06ca",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/body-background-image-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T03:51:02Z",
+      "side": 0,
+      "message": "The body doesn\u0027t extend up to 0,0 so I think this is correct. Most of the other invalidation diffs look similar. iframe-inside-squashed-layer and friends appears to be due to not having a background thus not needing to invalidate.",
+      "revId": "3dfb94aea290d4dfce7716db83387814ba94d669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

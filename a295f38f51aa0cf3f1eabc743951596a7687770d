@@ -16,6 +16,24 @@
       "revId": "a295f38f51aa0cf3f1eabc743951596a7687770d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68077e1_78c99bd3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-16T03:51:02Z",
+      "side": 1,
+      "message": "Can you expand on this a bit more? What\u0027s the alternative that causes svg diffs? I\u0027m wondering if what your proposing is the better approach and we\u0027re just over-invalidating svg when the zoom factor changes.",
+      "parentUuid": "5403b651_175e3aaa",
+      "revId": "a295f38f51aa0cf3f1eabc743951596a7687770d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
