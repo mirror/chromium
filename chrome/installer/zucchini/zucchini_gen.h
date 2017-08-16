@@ -7,15 +7,22 @@
 
 #include <vector>
 
+#include "base/optional.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/image_utils.h"
 #include "chrome/installer/zucchini/zucchini.h"
 
 namespace zucchini {
 
+class Disassembler;
 class EquivalenceMap;
 class ImageIndex;
 class PatchElementWriter;
+
+// Creates an ImageIndex from |image| and initializes it with references from
+// |disasm|. Returns nullopt on error.
+base::Optional<ImageIndex> MakeImageIndex(ConstBufferView image,
+                                          Disassembler* disasm);
 
 // Projects targets in |old_targets| to a list of new targets using
 // |equivalences|. Targets that cannot be projected have offset assigned as
@@ -48,12 +55,31 @@ bool GenerateRawDelta(ConstBufferView old_image,
                       const ImageIndex& new_image_index,
                       PatchElementWriter* patch_writer);
 
+// Writes reference delta between references from |old_index| and from
+// |new_index| to |patch_writer|.
+bool GenerateReferencesDelta(const ImageIndex& old_index,
+                             const ImageIndex& new_index,
+                             const EquivalenceMap& equivalence_map,
+                             PatchElementWriter* patch_writer);
+
+// Writes |extra_targets| associated with |pool_tag| to |patch_writer|.
+bool GenerateExtraTargets(const std::vector<offset_t>& extra_targets,
+                          PoolTag pool_tag,
+                          PatchElementWriter* patch_writer);
+
 // Generates raw patch element data between |old_image| and |new_image|, and
 // writes them to |patch_writer|. |old_sa| is the suffix array for |old_image|.
 bool GenerateRawElement(const std::vector<offset_t>& old_sa,
                         ConstBufferView old_image,
                         ConstBufferView new_image,
                         PatchElementWriter* patch_writer);
+
+// Generates patch element of type |exe_type| from |old_image| to |new_image|,
+// and writes it to |patch_writer|.
+bool GenerateExecutableElement(ExecutableType exe_type,
+                               ConstBufferView old_image,
+                               ConstBufferView new_image,
+                               PatchElementWriter* patch_writer);
 
 }  // namespace zucchini
 
