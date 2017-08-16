@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768cccae_ba47272b",
+        "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T22:40:13Z",
+      "side": 1,
+      "message": "should probably be 0, 9",
+      "revId": "ba2da199c3e179a6df5778ed4d99b906e15fde66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c559ff3a_5cc85edc",
+        "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-rtl-flow-with-markers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T22:40:13Z",
+      "side": 1,
+      "message": "For consistency, I think this should actually highlight from 0 to 9",
+      "revId": "ba2da199c3e179a6df5778ed4d99b906e15fde66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b96dc15_e740c64a",
+        "filename": "third_party/WebKit/LayoutTests/editing/ellipsis-ltr-text-in-rtl-flow-with-markers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-16T22:40:13Z",
+      "side": 1,
+      "message": "This should probably be from 7 to 16",
+      "revId": "ba2da199c3e179a6df5778ed4d99b906e15fde66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
