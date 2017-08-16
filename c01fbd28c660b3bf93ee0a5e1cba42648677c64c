@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bae5503_639a6191",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "nit: let\u0027s just do\nLoadExtension(test_data_dir_.AppendASCII(\"context_menus/item_visibility/\"));",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a705ef34_66fb8693",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "nit: int top_level_index()",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76c5ed0_9503c8c7",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "nit: TestRenderViewContextMenu* menu()",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae6db2f_b8059423",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "nit: no need for extensions:: prefix (here and elsewhere)",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ddf7be_0528f935",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "This actually strikes me as interesting.  Why do we want the extension name to be visible when there\u0027s no content?",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a49af3b_90d94009",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "Hmm... is this test needed?  Looks like update() was tested in HideTopLevelItem, and the rest of this test is covered by existing cases as well.  Is there something else we\u0027re testing here?",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6667848_4889f2a3",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "nit: add a comment explaining why we check visible()",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1ead06_bb5bd5de",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-16T22:56:05Z",
+      "side": 1,
+      "message": "nit: just inline the item.visible() call here.",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
