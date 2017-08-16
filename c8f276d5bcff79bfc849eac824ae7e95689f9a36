@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1370ce30_22dd8219",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T21:52:26Z",
+      "side": 1,
+      "message": "nit: for tiny fwd-decl namespaces (e.g. \u003c 6) we usually forgo the empty padding lines and the closing comment (i.e. when less text is actually more readable than following the generic rule)",
+      "revId": "c8f276d5bcff79bfc849eac824ae7e95689f9a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599d3bbb_71856769",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T21:52:26Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(ScopedBlockingCall);",
+      "revId": "c8f276d5bcff79bfc849eac824ae7e95689f9a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bb5d58_dd106a3a",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T21:52:26Z",
+      "side": 1,
+      "message": "virtual class needs an explicit virtual destructor:\n\nvirtual ~BlockingObserver() \u003d default;",
+      "revId": "c8f276d5bcff79bfc849eac824ae7e95689f9a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
