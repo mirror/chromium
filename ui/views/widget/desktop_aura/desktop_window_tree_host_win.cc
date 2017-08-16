@@ -292,7 +292,7 @@ gfx::Rect DesktopWindowTreeHostWin::GetWorkAreaBoundsInScreen() const {
 }
 
 void DesktopWindowTreeHostWin::SetShape(
-    std::unique_ptr<SkRegion> native_region) {
+    std::unique_ptr<Widget::ShapeRects> native_region) {
   if (!native_region) {
     message_handler_->SetRegion(nullptr);
     return;
@@ -300,26 +300,27 @@ void DesktopWindowTreeHostWin::SetShape(
 
   // TODO(wez): This would be a lot simpler if we were passed an SkPath.
   // See crbug.com/410593.
-  SkRegion* shape = native_region.get();
-  SkRegion device_region;
+  SkRegion shape;
   const float scale = display::win::ScreenWin::GetScaleFactorForHWND(GetHWND());
   if (scale > 1.0) {
-    shape = &device_region;
-    std::vector<SkIRect> rects;
-    for (SkRegion::Iterator it(*native_region); !it.done(); it.next()) {
-      const SkIRect& rect = it.rect();
+    std::vector<SkIRect> sk_rects;
+    for (const gfx::Rect& rect : *native_region) {
+      const SkIRect sk_rect = gfx::RectToSkIRect(rect);
       SkRect scaled_rect =
-          SkRect::MakeLTRB(rect.left() * scale, rect.top() * scale,
-                           rect.right() * scale, rect.bottom() * scale);
+          SkRect::MakeLTRB(sk_rect.left() * scale, sk_rect.top() * scale,
+                           sk_rect.right() * scale, sk_rect.bottom() * scale);
       SkIRect rounded_scaled_rect;
       scaled_rect.roundOut(&rounded_scaled_rect);
       rects.push_back(rounded_scaled_rect);
     }
-    if (!rects.empty())
-      device_region.setRects(&rects[0], rects.size());
+    if (!sk_rects.empty())
+      shape.setRects(&sk_rects[0], sk_rects.size());
+  } else {
+    for (const gfx::Rect& rect : *native_region)
+      shape.op(gfx::RectToSkIRect(rect), SkRegion::kUnion_Op);
   }
 
-  message_handler_->SetRegion(gfx::CreateHRGNFromSkRegion(*shape));
+  message_handler_->SetRegion(gfx::CreateHRGNFromSkRegion(shape));
 }
 
 void DesktopWindowTreeHostWin::Activate() {
