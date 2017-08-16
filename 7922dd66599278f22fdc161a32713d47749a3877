@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a704bc04_64b92e2c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-16T08:29:56Z",
+      "side": 1,
+      "message": "nit: I think parentheses aren\u0027t needed here.",
+      "range": {
+        "startLine": 293,
+        "startChar": 5,
+        "endLine": 293,
+        "endChar": 6
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24e80e6_097fab02",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-16T08:29:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 759,
+        "startChar": 5,
+        "endLine": 759,
+        "endChar": 60
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
