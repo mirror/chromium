@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c5b537e_0f187ba6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-invalid-status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T09:45:46Z",
+      "side": 1,
+      "message": "let\u0027s do this conversion to an integer at L3 and",
+      "revId": "443667f3199537c88cb2cbb852aa56a1a8b200d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c3cbc0_01f0beec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-invalid-status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-16T09:45:46Z",
+      "side": 1,
+      "message": "the value should be obtained from the \"Access-Control-Request-Headers\" in the request.\n\nactually, this test doesn\u0027t need this part and therefore it\u0027s passing even with this, I think.\n\nmaybe you can use some more simpler helper for this test case. could you try looking for?",
+      "revId": "443667f3199537c88cb2cbb852aa56a1a8b200d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
