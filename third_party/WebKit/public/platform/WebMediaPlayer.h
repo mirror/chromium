@@ -281,7 +281,8 @@ class WebMediaPlayer {
   // texture. https://crbug.com/639174
   virtual bool GetLastUploadedFrameInfo(unsigned* width,
                                         unsigned* height,
-                                        double* timestamp) {
+                                        double* timestamp,
+                                        bool* wasSkipped) {
     return false;
   }
 

@@ -55,6 +55,9 @@ class WebGLTexture final : public WebGLSharedPlatform3DObject {
   double lastUploadedVideoTimestamp() const {
     return last_uploaded_video_timestamp_;
   }
+  bool lastUploadedVideoFrameWasSkipped() const {
+    return last_uploaded_video_frame_was_skipped_;
+  }
 
  private:
   explicit WebGLTexture(WebGLRenderingContextBase*);
@@ -70,6 +73,8 @@ class WebGLTexture final : public WebGLSharedPlatform3DObject {
   unsigned last_uploaded_video_width_ = 0;
   unsigned last_uploaded_video_height_ = 0;
   double last_uploaded_video_timestamp_ = 0.0;
+
+  bool last_uploaded_video_frame_was_skipped_ = false;
 };
 
 }  // namespace blink
