@@ -7,6 +7,7 @@
 #include "ash/ash_switches.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/mru_window_tracker.h"
@@ -45,6 +46,7 @@ TabletModeWindowManager::~TabletModeWindowManager() {
   for (aura::Window* window : added_windows_)
     window->RemoveObserver(this);
   added_windows_.clear();
+  Shell::Get()->session_controller()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
   EnableBackdropBehindTopWindowOnEachDisplay(false);
@@ -95,6 +97,27 @@ void TabletModeWindowManager::OnSplitViewModeEnded() {
       wm::GetWindowState(pair.first)->OnWMEvent(&event);
     }
   }
+}
+
+void TabletModeWindowManager::OnLockStateChanged(bool locked) {
+  if (!manager_started_in_lock_screen_ || locked)
+    return;
+
+  // Remove any tracked windows.
+  // TODO(sammiequon): Investigate whether this is necessary. The number of
+  // tracked windows may always be zero if tablet mode was started in the lock
+  // screen.
+  for (aura::Window* window : added_windows_)
+    window->RemoveObserver(this);
+  added_windows_.clear();
+  RemoveWindowCreationObservers();
+  RestoreAllWindows();
+
+  MaximizeAllWindows();
+
+  // If the lock screen is entered and exited again, this does not need to be
+  // run again.
+  manager_started_in_lock_screen_ = false;
 }
 
 void TabletModeWindowManager::OnWindowDestroying(aura::Window* window) {
@@ -199,7 +222,9 @@ void TabletModeWindowManager::SetIgnoreWmEventsForExit() {
   }
 }
 
-TabletModeWindowManager::TabletModeWindowManager() {
+TabletModeWindowManager::TabletModeWindowManager()
+    : manager_started_in_lock_screen_(
+          Shell::Get()->session_controller()->IsScreenLocked()) {
   // The overview mode needs to be ended before the tablet mode is started. To
   // guarantee the proper order, it will be turned off from here.
   CancelOverview();
@@ -209,6 +234,7 @@ TabletModeWindowManager::TabletModeWindowManager() {
   EnableBackdropBehindTopWindowOnEachDisplay(true);
   display::Screen::GetScreen()->AddObserver(this);
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->session_controller()->AddObserver(this);
   event_handler_ = ShellPort::Get()->CreateTabletModeEventHandler();
 }
 

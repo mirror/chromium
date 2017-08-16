@@ -11,6 +11,7 @@
 #include <unordered_set>
 
 #include "ash/ash_export.h"
+#include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "ash/wm/window_state.h"
 #include "base/macros.h"
@@ -37,7 +38,8 @@ class TabletModeEventHandler;
 // original state.
 class ASH_EXPORT TabletModeWindowManager : public aura::WindowObserver,
                                            public display::DisplayObserver,
-                                           public ShellObserver {
+                                           public ShellObserver,
+                                           public SessionObserver {
  public:
   // This should only be deleted by the creator (ash::Shell).
   ~TabletModeWindowManager() override;
@@ -54,12 +56,15 @@ class ASH_EXPORT TabletModeWindowManager : public aura::WindowObserver,
   // Called from a window state object when it gets destroyed.
   void WindowStateDestroyed(aura::Window* window);
 
-  // ShellObserver overrides:
+  // ShellObserver:
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
   void OnSplitViewModeEnded() override;
 
-  // Overridden from WindowObserver:
+  // SessionObserver:
+  void OnLockStateChanged(bool locked) override;
+
+  // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
   void OnWindowPropertyChanged(aura::Window* window,
@@ -70,7 +75,7 @@ class ASH_EXPORT TabletModeWindowManager : public aura::WindowObserver,
                              const gfx::Rect& new_bounds) override;
   void OnWindowVisibilityChanged(aura::Window* window, bool visible) override;
 
-  // display::DisplayObserver overrides:
+  // display::DisplayObserver:
   void OnDisplayAdded(const display::Display& display) override;
   void OnDisplayRemoved(const display::Display& display) override;
   void OnDisplayMetricsChanged(const display::Display& display,
@@ -135,6 +140,12 @@ class ASH_EXPORT TabletModeWindowManager : public aura::WindowObserver,
 
   // Windows added to the container, but not yet shown.
   std::unordered_set<aura::Window*> added_windows_;
+
+  // Flag indicating whether the tablet mode window manager was started while in
+  // the lock screen. On the lock screen the mru tracker returns no windows, so
+  // when leaving the lock screen for the first after switching to tablet mode,
+  // check this flag and track the windows as needed.
+  bool manager_started_in_lock_screen_ = false;
 
   std::unique_ptr<wm::TabletModeEventHandler> event_handler_;
 
