@@ -483,6 +483,30 @@ AutomationNodeImpl.prototype = {
     this.performAction_('resumeMedia');
   },
 
+  scrollBackward: function(opt_callback) {
+    this.performAction_('scrollBackward', {}, opt_callback);
+  },
+
+  scrollForward: function(opt_callback) {
+    this.performAction_('scrollForward', {}, opt_callback);
+  },
+
+  scrollUp: function(opt_callback) {
+    this.performAction_('scrollUp', {}, opt_callback);
+  },
+
+  scrollDown: function(opt_callback) {
+    this.performAction_('scrollDown', {}, opt_callback);
+  },
+
+  scrollLeft: function(opt_callback) {
+    this.performAction_('scrollLeft', {}, opt_callback);
+  },
+
+  scrollRight: function(opt_callback) {
+    this.performAction_('scrollRight', {}, opt_callback);
+  },
+
   setSelection: function(startIndex, endIndex) {
     if (this.role == 'textField' || this.role == 'textBox') {
       this.performAction_('setSelection',
@@ -661,7 +685,7 @@ AutomationNodeImpl.prototype = {
     }
   },
 
-  performAction_: function(actionType, opt_args) {
+  performAction_: function(actionType, opt_args, opt_callback) {
     if (!this.rootImpl)
       return;
 
@@ -676,10 +700,15 @@ AutomationNodeImpl.prototype = {
       throw new Error(actionType + ' requires {"desktop": true} or' +
           ' {"interact": true} in the "automation" manifest key.');
     }
+    var requestID = -1;
+    if (opt_callback) {
+      requestID = this.rootImpl.addActionResultCallback(opt_callback);
+    }
 
     automationInternal.performAction({ treeID: this.rootImpl.treeID,
                                        automationNodeID: this.id,
-                                       actionType: actionType },
+                                       actionType: actionType,
+                                       requestID: requestID},
                                      opt_args || {});
   },
 
@@ -789,10 +818,12 @@ var stringAttributes = [
     'value'];
 
 var boolAttributes = [
+    'busy',
     'containerLiveAtomic',
     'containerLiveBusy',
     'liveAtomic',
-    'busy'];
+    'scrollable'
+];
 
 var intAttributes = [
     'backgroundColor',
@@ -975,6 +1006,7 @@ function AutomationRootNodeImpl(treeID) {
   $Function.call(AutomationNodeImpl, this, this);
   this.treeID = treeID;
   this.axNodeDataCache_ = {__proto__: null};
+  this.actionRequestIDToCallback_ = {__proto__: null};
 }
 
 utils.defineProperty(AutomationRootNodeImpl, 'idToAutomationRootNode_',
@@ -1023,6 +1055,10 @@ AutomationRootNodeImpl.prototype = {
    * @private
    */
   axNodeDataCache_: null,
+
+  actionRequestCounter_: 0,
+
+  actionRequestIDToCallback_: null,
 
   get id() {
     var result = GetRootID(this.treeID);
@@ -1146,6 +1182,18 @@ AutomationRootNodeImpl.prototype = {
     return true;
   },
 
+  addActionResultCallback: function(callback) {
+    this.actionRequestIDToCallback_[++this.actionRequestCounter_] = callback;
+    return this.actionRequestCounter_;
+  },
+
+  onActionResult: function(requestID, result) {
+    if (requestID in this.actionRequestIDToCallback_) {
+      this.actionRequestIDToCallback_[requestID](result);
+      delete this.actionRequestIDToCallback_[requestID];
+    }
+  },
+
   toString: function() {
     function toStringInternal(nodeImpl, indent) {
       if (!nodeImpl)
@@ -1180,6 +1228,12 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
     'matches',
     'performCustomAction',
     'resumeMedia',
+    'scrollBackward',
+    'scrollForward',
+    'scrollUp',
+    'scrollDown',
+    'scrollLeft',
+    'scrollRight',
     'setSelection',
     'setSequentialFocusNavigationStartingPoint',
     'showContextMenu',
