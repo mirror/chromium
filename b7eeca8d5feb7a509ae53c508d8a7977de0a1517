@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7b1efa0_ae47a498",
+        "filename": "content/browser/appcache/appcache_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "Not needed anymore. Removed",
+      "parentUuid": "9e9041ce_6737477e",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98827aec_9ce84d68",
         "filename": "content/browser/appcache/appcache_request.h",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "c1ef25dc_c8c1c131",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "The subresource_load_info pointer is set by the AppCacheSubresourceURLFactory when it receives load requests from the renderer. I added a comment here.",
+      "parentUuid": "c2252456_6967259e",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94f09d65_136b5e60",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-15T21:25:07Z",
       "side": 1,
       "message": "is this local used?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0497a1a7_1e91a4b9",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "stale change. not needed anymore.",
+      "parentUuid": "94f09d65_136b5e60",
       "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "a34cca2b_4cd7ce2e",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "Reworded the comment",
+      "parentUuid": "dc5f5531_f1b2f0ad",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29b5e326_d60708c5",
         "filename": "content/browser/appcache/appcache_storage.cc",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2017-08-15T21:25:07Z",
       "side": 1,
       "message": "what changed to require this?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9348e0_9e079769",
+        "filename": "content/browser/appcache/appcache_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "Removed this code. We don\u0027t try and load the appcache response in the URLLoader job if we are in tests mode.",
+      "parentUuid": "29b5e326_d60708c5",
       "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,47 @@
     },
     {
       "key": {
+        "uuid": "66d945aa_5aa03933",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "Yes. Replaced with a call to the AppCacheRequestHandler::IsRunningInTests() function.",
+      "parentUuid": "a91193e0_bb3fa856",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ccb76e_dc8e983b",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "Changed to use the static getter IsRunningInTests().",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 9
+      },
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "755282d9_ef5a1c0f",
         "filename": "content/browser/appcache/appcache_url_loader_job.cc",
         "patchSetId": 2
@@ -132,6 +263,24 @@
       "writtenOn": "2017-08-15T21:25:07Z",
       "side": 1,
       "message": "is this also for unittests?",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610c47a5_de76f39b",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-16T20:57:14Z",
+      "side": 1,
+      "message": "Yes. Added two functions which are invoked by the AppCacheRequestHandlerTest to indicate that\nwe are in test mode, and a getter to query the same.",
+      "parentUuid": "755282d9_ef5a1c0f",
       "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
