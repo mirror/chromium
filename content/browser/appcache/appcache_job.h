@@ -118,6 +118,10 @@ class CONTENT_EXPORT AppCacheJob : public base::SupportsWeakPtr<AppCacheJob> {
   // AppCaches loaded via the URLRequest mechanism.
   virtual AppCacheURLLoaderJob* AsURLLoaderJob();
 
+  void set_delivery_type(DeliveryType delivery_type) {
+    delivery_type_ = delivery_type;
+  }
+
  protected:
   AppCacheJob();
 

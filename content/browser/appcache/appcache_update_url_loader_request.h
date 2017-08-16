@@ -9,8 +9,10 @@
 #include <stdint.h>
 #include <memory>
 
+#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "content/browser/appcache/appcache_update_request_base.h"
+#include "content/common/content_export.h"
 #include "content/common/net_adapters.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/url_loader.mojom.h"
@@ -31,9 +33,9 @@ struct ResourceResponseHead;
 // URLLoaderClient subclass for the UpdateRequestBase class. Provides
 // functionality to update the AppCache using functionality provided by the
 // network URL loader.
-class AppCacheUpdateJob::UpdateURLLoaderRequest
-    : public AppCacheUpdateJob::UpdateRequestBase,
-      public mojom::URLLoaderClient {
+class CONTENT_EXPORT AppCacheUpdateJob::UpdateURLLoaderRequest
+    : public NON_EXPORTED_BASE(AppCacheUpdateJob::UpdateRequestBase),
+      public NON_EXPORTED_BASE(mojom::URLLoaderClient) {
  public:
   ~UpdateURLLoaderRequest() override;
 
@@ -83,7 +85,13 @@ class AppCacheUpdateJob::UpdateURLLoaderRequest
   // a pending read.
   void MaybeStartReading();
 
+  // Invoked by tests. This enables them to register a mock URLLoaderFactory
+  // which can serve test content.
+  static void SetLoaderFactoryForTesting(
+      mojom::URLLoaderFactory* loader_factory);
+
   friend class AppCacheUpdateJob::UpdateRequestBase;
+  friend class AppCacheUpdateJobTest;
 
   URLFetcher* fetcher_;
   // Used to retrieve the network URLLoader interface to issue network
