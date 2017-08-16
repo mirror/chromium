@@ -918,36 +918,36 @@ TEST_F(WindowTreeClientTest, NewWindow) {
 TEST_F(WindowTreeClientTest, AddWindowWithNoChange) {
   // Create the embed point now so that the ids line up.
   ASSERT_TRUE(wt_client1()->NewWindow(1));
-  Id window_1_2 = wt_client1()->NewWindow(2);
-  Id window_1_3 = wt_client1()->NewWindow(3);
-  ASSERT_TRUE(window_1_2);
-  ASSERT_TRUE(window_1_3);
+  Id window_1_21 = wt_client1()->NewWindow(21);
+  Id window_1_31 = wt_client1()->NewWindow(31);
+  ASSERT_TRUE(window_1_21);
+  ASSERT_TRUE(window_1_31);
 
   ASSERT_NO_FATAL_FAILURE(EstablishSecondClient(false));
 
   // Make 3 a child of 2.
-  ASSERT_TRUE(wt_client1()->AddWindow(window_1_2, window_1_3));
+  ASSERT_TRUE(wt_client1()->AddWindow(window_1_21, window_1_31));
 
   // Try again, this should fail.
-  EXPECT_FALSE(wt_client1()->AddWindow(window_1_2, window_1_3));
+  EXPECT_FALSE(wt_client1()->AddWindow(window_1_21, window_1_31));
 }
 
 // Verifies AddWindow fails when window is already in position.
 TEST_F(WindowTreeClientTest, AddAncestorFails) {
   // Create the embed point now so that the ids line up.
   ASSERT_TRUE(wt_client1()->NewWindow(1));
-  Id window_1_2 = wt_client1()->NewWindow(2);
-  Id window_1_3 = wt_client1()->NewWindow(3);
-  ASSERT_TRUE(window_1_2);
-  ASSERT_TRUE(window_1_3);
+  Id window_1_21 = wt_client1()->NewWindow(21);
+  Id window_1_31 = wt_client1()->NewWindow(31);
+  ASSERT_TRUE(window_1_21);
+  ASSERT_TRUE(window_1_31);
 
   ASSERT_NO_FATAL_FAILURE(EstablishSecondClient(false));
 
   // Make 3 a child of 2.
-  ASSERT_TRUE(wt_client1()->AddWindow(window_1_2, window_1_3));
+  ASSERT_TRUE(wt_client1()->AddWindow(window_1_21, window_1_31));
 
   // Try to make 2 a child of 3, this should fail since 2 is an ancestor of 3.
-  EXPECT_FALSE(wt_client1()->AddWindow(window_1_3, window_1_2));
+  EXPECT_FALSE(wt_client1()->AddWindow(window_1_31, window_1_21));
 }
 
 // Verifies adding to root sends right notifications.
@@ -956,15 +956,15 @@ TEST_F(WindowTreeClientTest, AddToRoot) {
   Id window_1_1 = wt_client1()->NewWindow(1);
   ASSERT_TRUE(window_1_1);
   Id window_1_21 = wt_client1()->NewWindow(21);
-  Id window_1_3 = wt_client1()->NewWindow(3);
+  Id window_1_31 = wt_client1()->NewWindow(31);
   ASSERT_TRUE(window_1_21);
-  ASSERT_TRUE(window_1_3);
+  ASSERT_TRUE(window_1_31);
 
   ASSERT_NO_FATAL_FAILURE(EstablishSecondClient(false));
   changes2()->clear();
 
   // Make 3 a child of 21.
-  ASSERT_TRUE(wt_client1()->AddWindow(window_1_21, window_1_3));
+  ASSERT_TRUE(wt_client1()->AddWindow(window_1_21, window_1_31));
 
   // Make 21 a child of 1.
   ASSERT_TRUE(wt_client1()->AddWindow(window_1_1, window_1_21));
