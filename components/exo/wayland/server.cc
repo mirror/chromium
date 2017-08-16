@@ -75,6 +75,7 @@
 #include "components/exo/touch_stylus_delegate.h"
 #include "components/exo/wm_helper.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/base/class_property.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/ui_features.h"
@@ -2206,6 +2207,17 @@ void remote_surface_move(wl_client* client, wl_resource* resource) {
   GetUserDataAs<ShellSurface>(resource)->Move();
 }
 
+void remote_surface_set_window_type(wl_client* client,
+                                    wl_resource* resource,
+                                    uint32_t type) {
+  if (type == ZCR_REMOTE_SURFACE_V1_WINDOW_TYPE_SYSTEM_UI) {
+    auto* widget = GetUserDataAs<ShellSurface>(resource)->GetWidget();
+    if (widget)
+      widget->GetNativeWindow()->SetProperty(
+          aura::client::kSkipWindowSelectorKey, true);
+  }
+}
+
 const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_destroy,
     remote_surface_set_app_id,
@@ -2231,7 +2243,8 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_unset_always_on_top,
     remote_surface_ack_configure,
     remote_surface_move,
-    remote_surface_set_orientation};
+    remote_surface_set_orientation,
+    remote_surface_set_window_type};
 
 ////////////////////////////////////////////////////////////////////////////////
 // notification_surface_interface:
@@ -2584,7 +2597,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 6;
+const uint32_t remote_shell_version = 7;
 
 void bind_remote_shell(wl_client* client,
                        void* data,
