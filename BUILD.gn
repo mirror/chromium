@@ -373,6 +373,7 @@ group("gn_all") {
     deps += [
       "//chromeos:chromeos_unittests",
       "//chromeos/components:chromeos_components_unittests",
+      "//components/multidevice/service/cpp:multidevice_service_unittest",
       "//components/session_manager/core",
       "//ui/app_list:app_list_unittests",
       "//ui/app_list/presenter:app_list_presenter_unittests",
