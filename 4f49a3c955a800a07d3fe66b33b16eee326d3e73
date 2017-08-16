@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "294fc63a_b0b00c08",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-08-16T17:46:07Z",
+      "side": 1,
+      "message": "I guess we\u0027ll have to keep the \u0027revert\u0027 logic around when we remove this.",
+      "revId": "4f49a3c955a800a07d3fe66b33b16eee326d3e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
