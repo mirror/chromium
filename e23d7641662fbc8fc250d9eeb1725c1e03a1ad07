@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "40c382be_336336ce",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-16T22:20:08Z",
+      "side": 1,
+      "message": "Can we start an email thread with relevant folks to figure this out?\nAt the very least we can add DCHECKs or scary looking warning comments in the metrics code somewhere?\nhttps://cs.chromium.org/chromium/src/components/variations/android/java/src/org/chromium/components/variations/firstrun/VariationsSeedFetcher.java?type\u003dcs\u0026q\u003df:java$+variations.*fetcher\u0026sq\u003dpackage:chromium\u0026l\u003d35\n\nand\n\nhttps://cs.chromium.org/chromium/src/components/variations/variations_url_constants.cc?rcl\u003ddd659e97384a17f6ef98642cd2ec3dd877524605\u0026l\u003d10",
+      "parentUuid": "ee8d9550_18b456d2",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a3b69a3_ab9e951c",
         "filename": "components/previews/core/previews_amp_converter.cc",
         "patchSetId": 5
