@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "050f99ee_a1a95ab2",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T23:32:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2d1ae83_25fc864e",
+      "range": {
+        "startLine": 482,
+        "startChar": 7,
+        "endLine": 482,
+        "endChar": 33
+      },
+      "revId": "8999e20802d7cb822db61ea60f3250b12b1a8cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496fbb36_5dbaaa25",
         "filename": "ash/system/palette/tools/metalayer_mode.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8999e20802d7cb822db61ea60f3250b12b1a8cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84626847_c509a6da",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-16T23:32:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "496fbb36_5dbaaa25",
+      "range": {
+        "startLine": 120,
+        "startChar": 63,
+        "endLine": 120,
+        "endChar": 72
+      },
+      "revId": "8999e20802d7cb822db61ea60f3250b12b1a8cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
