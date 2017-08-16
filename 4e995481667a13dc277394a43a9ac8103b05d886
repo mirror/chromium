@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "628ef1e8_d2b2abd5",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T18:26:52Z",
+      "side": 1,
+      "message": "Can you instead have a method which takes in an array of \"browser package names\" to install and a \"string which denotes the default browser package name\" and have the single-arg version of mockInstallBrowser() call the two-arg version?\n\nmockInstallBrowsers(String[] browserPackageNames, String defaultBrowser) {\n}",
+      "revId": "4e995481667a13dc277394a43a9ac8103b05d886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
