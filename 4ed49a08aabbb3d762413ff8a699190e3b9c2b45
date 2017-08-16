@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f7136b3_c7139174",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "Nit: Wrap commit message to 72 chars.",
+      "range": {
+        "startLine": 9,
+        "startChar": 77,
+        "endLine": 9,
+        "endChar": 88
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d448ae_850b1588",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "Do not include links to corp resources in commit messages. The commit log is part of the public record.\n\nPlease attach a screenshot to the bug https://crbug.com/737806 and link to that comment here.",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 90
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07319444_8b4ddbd4",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 9
@@ -18,6 +64,139 @@
         "startChar": 10,
         "endLine": 95,
         "endChar": 13
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b68da92_285f5637",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "Yes. This has been disabled on non-ChromeOS for some time. |hotwordInfo_.allowed| will always be false on non-ChromeOS so you can just delete this entire \u003cif\u003e block.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/search/hotword_service.cc\n\n|hotwordInfo_.allowed| is controlled by HotwordService::IsHotwordAllowed which returns false if ENABLE_HOTWORDING is undefined, which it has been for a long time on non-ChromeOS, and as of today (https://crrev.com/c/494653), it\u0027s disabled on ChromeOS too.",
+      "parentUuid": "07319444_8b4ddbd4",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75aeef2b_590e643d",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "Has this gone through UI review / been reviewed by the Settings team? You are adding a new piece of UI to the top-level Settings page so I think it should.\n\nThis looks fairly out-of-place (just a piece of text indented). I would\u0027ve thought it would be styled differently (with a warning triangle, grey text, etc).",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 41
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71dbabc3_e088b387",
+        "filename": "chrome/browser/search/hotword_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "It looks like this is going to be set permanently, right? This isn\u0027t just going to display once, but always for users that had hotwording enabled, until this message is removed in a future version. Correct?\n\nIf so, I\u0027m not sure we need a new pref for this. Why not simply keep the AlwaysOn/SometimesOn settings set to the user\u0027s previous preference, and display the message conditional on that, rather than introducing a new pref?",
+      "range": {
+        "startLine": 416,
+        "startChar": 37,
+        "endLine": 416,
+        "endChar": 70
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fe05b0_626362a3",
+        "filename": "chrome/browser/search/hotword_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "As above, this feature does not exist at all on non-ChromeOS, so this test can be deleted.",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 348,
+        "endChar": 25
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ed9e5c_6a6c13ae",
+        "filename": "chrome/browser/search/hotword_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "This #if is not needed, since the disable logic should not be OS-dependent.",
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9a089f_f77cfa68",
+        "filename": "chrome/test/data/webui/settings/search_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-16T04:06:57Z",
+      "side": 1,
+      "message": "Delete this block. As above, hotwording is not a thing on non-ChromeOS.",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 22
       },
       "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
