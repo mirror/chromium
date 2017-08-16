@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a36c7d4_09c75b90",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-16T20:03:39Z",
+      "side": 1,
+      "message": "Is this the same?\n\nif (symbol_level \u003d\u003d 0 || (current_cpu \u003d\u003d \"x86\" \u0026\u0026 is_component_build)) {\n  ldflags \u003d default\n} else {\n  ldflags \u003d off\n}\n\nMaybe a bit easier to read? (But if I\u0027m wrong then, uh, lgtm but that\u0027s not worth much, in that case.)",
+      "revId": "b46b516639530a02fed6ec44ba26dffdc07c69e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
