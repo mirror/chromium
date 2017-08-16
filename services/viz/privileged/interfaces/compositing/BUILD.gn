@@ -4,7 +4,7 @@
 
 import("//mojo/public/tools/bindings/mojom.gni")
 
-mojom("interfaces") {
+mojom("compositing") {
   sources = [
     "frame_sink_manager.mojom",
     "renderer_settings.mojom",
@@ -17,24 +17,5 @@ mojom("interfaces") {
     "//services/viz/public/interfaces/compositing",
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
-  ]
-}
-
-source_set("tests") {
-  testonly = true
-
-  sources = [
-    "struct_traits_unittest.cc",
-  ]
-
-  deps = [
-    ":interfaces",
-    "//base/test:test_support",
-    "//components/viz/common:common",
-    "//media/capture/mojo:capture_types",
-    "//services/service_manager/public/cpp",
-    "//services/service_manager/public/cpp:service_test_support",
-    "//testing/gtest",
-    "//ui/gfx:test_support",
   ]
 }
