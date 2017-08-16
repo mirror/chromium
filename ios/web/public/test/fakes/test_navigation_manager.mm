@@ -14,7 +14,8 @@ TestNavigationManager::TestNavigationManager()
     : items_index_(-1),
       pending_item_(nullptr),
       last_committed_item_(nullptr),
-      visible_item_(nullptr) {}
+      visible_item_(nullptr),
+      has_loaded_url_(false) {}
 
 TestNavigationManager::~TestNavigationManager() {}
 
@@ -63,7 +64,7 @@ void TestNavigationManager::DiscardNonCommittedItems() {
 
 void TestNavigationManager::LoadURLWithParams(
     const NavigationManager::WebLoadParams& params) {
-  NOTREACHED();
+  has_loaded_url_ = true;
 }
 
 void TestNavigationManager::AddTransientURLRewriter(
@@ -113,12 +114,10 @@ bool TestNavigationManager::RemoveItemAtIndex(int index) {
 }
 
 bool TestNavigationManager::CanGoBack() const {
-  NOTREACHED();
   return false;
 }
 
 bool TestNavigationManager::CanGoForward() const {
-  NOTREACHED();
   return false;
 }
 
@@ -172,6 +171,10 @@ void TestNavigationManager::AddItem(const GURL& url,
   items_.back()->SetTransitionType(transition);
   items_.back()->SetURL(url);
   SetLastCommittedItemIndex(GetItemCount() - 1);
+}
+
+bool TestNavigationManager::GetHasLoadedUrl() {
+  return has_loaded_url_;
 }
 
 }  // namespace web
