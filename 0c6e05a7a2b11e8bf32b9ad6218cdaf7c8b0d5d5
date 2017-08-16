@@ -123,6 +123,24 @@
       "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2a0dcf_b16ead7d",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-16T01:52:38Z",
+      "side": 1,
+      "message": "Thanks Shimazu. Please help to review patchset #2.\n\nI verified with following steps, the output is correct: \"install\"-\u003e\"skipWaiting resolved\"-\u003e\"activate\".\n1. Register a service worker with an empty script\n2. Wait for that worker to become active\n3. Register a service worker with the following script:\n....\n\nHowever, using you sample, the SW is always \u0027installing\u0027 state, and the out is only: \"install\"-\u003e\"skipWaiting resolved\". It has the same result without my patch (current upstream code base).",
+      "parentUuid": "7e53d2ef_8cbf0183",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
