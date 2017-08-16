@@ -22,6 +22,30 @@
       "revId": "b8e90b623d45c0588550935f29dc2c0e080798aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f41127_f534a9e1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T00:06:07Z",
+      "side": 0,
+      "message": "It\u0027s already clean.\n\nClass introduced here:\nhttps://codereview.chromium.org/72863002\n\nWhat seems to be the last instance removed here:\nhttps://codereview.chromium.org/1164763004",
+      "parentUuid": "d7651fe2_2f1c6dae",
+      "range": {
+        "startLine": 195,
+        "startChar": 41,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "b8e90b623d45c0588550935f29dc2c0e080798aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b31424a8_dc368167",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/network/network-filters.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T00:06:07Z",
+      "side": 1,
+      "message": "Whoops, done.",
+      "parentUuid": "0579f5db_35727b12",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "b0e927e866b46ff289699b8c23044717638927fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cceb4fc6_813bffc3",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d7d59f3b_1f2c8ae6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T00:06:07Z",
+      "side": 1,
+      "message": "structure: done.\n\nregex w/ named keys: In my opinion, it makes a lot of sense for some keys (domain:/foo.*/, mimeType:/text\\/.*/, setCookieValue:/ab+/), but not others (is:from-cache, larger-than:200m, priority:High).  I think it makes sense to have a future CL to add this support via something like key descriptors, so that we don\u0027t have to alter network filters in this CL:\n[{name: \u0027domain\u0027, supportsRegex: true}, {name: \u0027larger-than\u0027, supportsRegex: false}]",
+      "parentUuid": "cceb4fc6_813bffc3",
+      "revId": "b0e927e866b46ff289699b8c23044717638927fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b87a9c94_7592fa9f",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-15T20:42:44Z",
       "side": 1,
       "message": "Perhaps, more elaborate example will help even more? Also, I\u0027d make title \"Filter\" and remove \"Filter\" from placeholder.",
+      "revId": "b0e927e866b46ff289699b8c23044717638927fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f68b4f_8134db80",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-16T00:06:07Z",
+      "side": 1,
+      "message": "Sounds good.  Input field isn\u0027t that wide, how about placeholder:\n\u0027e.g. /item\\d\\/id/ foo:bar\u0027",
+      "parentUuid": "b87a9c94_7592fa9f",
       "revId": "b0e927e866b46ff289699b8c23044717638927fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
