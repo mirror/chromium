@@ -1569,4 +1569,108 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
   }
 }
 
+// Check that iframe with embedded credentials are blocked.
+// Not working with PlzNavigate: See https://crbug.com/755892.
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       BlockCredentialedSubresources) {
+  // It doesn't work with PlzNavigate yet.
+  // See https://crbug.com/755892.
+  if (IsBrowserSideNavigationEnabled())
+    return;
+
+  const struct {
+    GURL main_url;
+    GURL iframe_url;
+    bool blocked;
+  } kTestCases[] = {
+      // Normal case with no credential in neither of the urls.
+      {GURL("http://a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://a.com/title1.html"), false},
+
+      // Username in the iframe, but nothing in the main frame.
+      {GURL("http://a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://user@a.com/title1.html"), true},
+
+      // Username and password in the iframe, but nothing in the main frame.
+      {GURL("http://a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://user:pass@a.com/title1.html"), true},
+
+      // Username and password in the main frame, but none in the iframe.
+      {GURL("http://user:pass@a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://a.com/title1.html"), false},
+
+      // Same username in both frames
+      // For mkwst: I thought it should not be blocked. What do you think?
+      //            Isn't https://chromium-review.googlesource.com/c/530308
+      //            supposed to allow it?
+      {GURL("http://user@a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://user@a.com/title1.html"), true},
+
+      // Same username and password in both frames.
+      // For mkwst: I thought it should not be blocked. What do you think?
+      //            Isn't https://chromium-review.googlesource.com/c/530308
+      //            supposed to allow it?
+      {GURL("http://user:pass@a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://user:pass@a.com/title1.html"), true},
+
+      //// Different username.
+      {GURL("http://user@a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://wrong@a.com/title1.html"), true},
+
+      //// Different password.
+      {GURL("http://user:pass@a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://user:wrong@a.com/title1.html"), true},
+
+      //// Different username, same password.
+      {GURL("http://user:pass@a.com/frame_tree/page_with_one_frame.html"),
+       GURL("http://wrong:pass@a.com/title1.html"), true},
+  };
+  for (const auto test_case : kTestCases) {
+    // Modify the URLs to use the port of the embedded test server.
+    GURL::Replacements set_port;
+    set_port.SetPortStr(std::to_string(embedded_test_server()->port()).c_str());
+    // set_port.SetHostStr(embedded_test_server()->base_url().host());
+    GURL main_url(test_case.main_url.ReplaceComponents(set_port));
+    GURL iframe_url_final(test_case.iframe_url.ReplaceComponents(set_port));
+    GURL iframe_url_with_redirect = GURL(embedded_test_server()->GetURL(
+        "/server-redirect?" + iframe_url_final.spec()));
+
+    ASSERT_TRUE(NavigateToURL(shell(), main_url));
+
+    // Blocking the request must work, even after a redirect.
+    for (bool redirect : {false, true}) {
+      SCOPED_TRACE(::testing::Message()
+                   << std::endl
+                   << "- main_url = " << main_url << std::endl
+                   << "- iframe_url_final  = " << iframe_url_final << std::endl
+                   << "- redirect = " << redirect << std::endl);
+      const GURL& iframe_url =
+          redirect ? iframe_url_with_redirect : iframe_url_final;
+      NavigationHandleObserver subframe_observer(shell()->web_contents(),
+                                                 iframe_url);
+      TestNavigationThrottleInstaller installer(
+          shell()->web_contents(), NavigationThrottle::PROCEED,
+          NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+      NavigateIframeToURL(shell()->web_contents(), "child0", iframe_url);
+
+      EXPECT_EQ(!test_case.blocked || redirect, installer.will_start_called());
+      EXPECT_EQ(redirect, installer.will_redirect_called());
+      EXPECT_EQ(!test_case.blocked, installer.will_process_called());
+
+      EXPECT_EQ(!test_case.blocked, subframe_observer.has_committed());
+      EXPECT_EQ(test_case.blocked,
+                subframe_observer.last_committed_url().is_empty());
+      FrameTreeNode* root =
+          static_cast<WebContentsImpl*>(shell()->web_contents())
+              ->GetFrameTree()
+              ->root();
+      ASSERT_EQ(1u, root->child_count());
+      if (test_case.blocked)
+        EXPECT_NE(iframe_url_final, root->child_at(0u)->current_url());
+      else
+        EXPECT_EQ(iframe_url_final, root->child_at(0u)->current_url());
+    }
+  }
+}
 }  // namespace content
