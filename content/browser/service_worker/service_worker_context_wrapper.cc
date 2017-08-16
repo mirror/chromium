@@ -892,6 +892,7 @@ void ServiceWorkerContextWrapper::ShutdownOnIO() {
 bool ServiceWorkerContextWrapper::StartingExternalRequest(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  printf("StartExternalRequest\n");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ServiceWorkerVersion* version =
       context()->GetLiveVersion(service_worker_version_id);
@@ -903,6 +904,7 @@ bool ServiceWorkerContextWrapper::StartingExternalRequest(
 bool ServiceWorkerContextWrapper::FinishedExternalRequest(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  printf("FinishedExternalRequest\n");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ServiceWorkerVersion* version =
       context()->GetLiveVersion(service_worker_version_id);
