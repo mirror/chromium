@@ -23,6 +23,7 @@ enum PropertyType {
   kAudible,
   kCPUUsage,
   kExpectedTaskQueueingDuration,
+  kLongTaskIdle,
   kNetworkIdle,
   kVisible,
   kURL,
