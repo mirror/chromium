@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "097ecaaa_2bc4e2d1",
+        "filename": "net/url_request/url_request_file_dir_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T16:33:20Z",
+      "side": 1,
+      "message": "Does this work on Windows with both network shares and drive letters?\n\n\u0027The path isn\u0027t \"/\"\u0027 isn\u0027t exactly accurate on Windows.",
+      "range": {
+        "startLine": 116,
+        "startChar": 51,
+        "endLine": 116,
+        "endChar": 56
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e588073_d44ee3a2",
+        "filename": "net/url_request/url_request_file_dir_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T16:33:20Z",
+      "side": 1,
+      "message": "I think the intention is that StripTrailingSeparators shouldn\u0027t remove the trailing slash on directories.  Is this guaranteed to be the case?  It\u0027s not a documented behavior.\n\nI think this also needs a comment.  It\u0027s not at all obvious what\u0027s going on here.",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389b63d7_32012607",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T16:33:20Z",
+      "side": 1,
+      "message": "\"data\" seems a little too general.  listing_body?  response_body?",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198362d4_f8d0a774",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T16:33:20Z",
+      "side": 1,
+      "message": "I think it\u0027s worth a comment that nothing should have one of these.",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
