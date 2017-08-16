@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d42748c_8710c64e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:00:32Z",
+      "side": 1,
+      "message": "This histogram maxes out at 3 minutes.  Are you sure we\u0027re talking on the order of minutes here, not milliseconds or seconds?  The default _TIMES histograms maxes out at 10 seconds, so if you think at most 1% of your users will exceed that, then that\u0027s a better choice.  Or you can use a custom times histogram.",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 28
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26417b05_d2773c78",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:00:32Z",
+      "side": 1,
+      "message": "Why does this need to be public?",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025a10fc_a4071925",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:00:32Z",
+      "side": 1,
+      "message": "Why does this need to be public?",
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd825d0_c6f3cc89",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23254,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:00:32Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\nditto below\n\nE.g., is there a particular user action that causes this or it run periodically?  Under what conditions?",
+      "range": {
+        "startLine": 23254,
+        "startChar": 62,
+        "endLine": 23254,
+        "endChar": 0
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
