@@ -127,12 +127,11 @@ void TrayBubbleView::Delegate::OnMouseEnteredView() {}
 
 void TrayBubbleView::Delegate::OnMouseExitedView() {}
 
-void TrayBubbleView::Delegate::RegisterAccelerators(
-    const std::vector<ui::Accelerator>& accelerators,
-    TrayBubbleView* tray_bubble_view) {}
+void TrayBubbleView::Delegate::RegisterPreTargetHandler(
+    EventHandler* event_handler) {}
 
-void TrayBubbleView::Delegate::UnregisterAllAccelerators(
-    TrayBubbleView* tray_bubble_view) {}
+void TrayBubbleView::Delegate::UnregisterPreTargetHandler(
+    EventHandler* event_handler) {}
 
 base::string16 TrayBubbleView::Delegate::GetAccessibleNameForBubble() {
   return base::string16();
@@ -150,6 +149,36 @@ void TrayBubbleView::Delegate::ProcessGestureEventForBubble(
 TrayBubbleView::InitParams::InitParams() = default;
 
 TrayBubbleView::InitParams::InitParams(const InitParams& other) = default;
+
+TrayBubbleView::ActivationEventHandler::ActivationEventHandler(
+    TrayBubbleView* tray_bubble_view)
+    : tray_bubble_view_(tray_bubble_view) {}
+
+TrayBubbleView::ActivationEventHandler::~ActivationEventHandler() {}
+
+void TrayBubbleView::ActivationEventHandler::OnKeyEvent(ui::KeyEvent* event) {
+  bool is_key_released = event->type() == ui::ET_KEY_RELEASED;
+
+  if (event->key_code() == ui::VKEY_ESCAPE && event->flags() == ui::EF_NONE) {
+    event->SetHandled();
+
+    if (is_key_released)
+      tray_bubble_view_->CloseBubbleView();
+
+    return;
+  }
+
+  if (event->key_code() == ui::VKEY_TAB) {
+    event->SetHandled();
+
+    if (is_key_released) {
+      tray_bubble_view_->ActivateAndStartNavigation(
+          event->IsShiftDown() /* reverse */);
+    }
+
+    return;
+  }
+}
 
 TrayBubbleView::TrayBubbleView(const InitParams& init_params)
     : BubbleDialogDelegateView(init_params.anchor_view,
@@ -189,7 +218,7 @@ TrayBubbleView::TrayBubbleView(const InitParams& init_params)
 TrayBubbleView::~TrayBubbleView() {
   mouse_watcher_.reset();
   if (delegate_) {
-    delegate_->UnregisterAllAccelerators(this);
+    delegate_->UnregisterPreTargetHandler(activation_handler_.get());
 
     // Inform host items (models) that their views are being destroyed.
     delegate_->BubbleViewDestroyed();
@@ -208,16 +237,12 @@ void TrayBubbleView::InitializeAndShowBubble() {
   UpdateBubble();
 
   ++g_current_tray_bubble_showing_count_;
-
   // If TrayBubbleView cannot be activated, register accelerators to capture key
   // events for activating the view or closing it. TrayBubbleView expects that
   // those accelerators are registered at the global level.
   if (delegate_ && !CanActivate()) {
-    delegate_->RegisterAccelerators(
-        {ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE),
-         ui::Accelerator(ui::VKEY_TAB, ui::EF_NONE),
-         ui::Accelerator(ui::VKEY_TAB, ui::EF_SHIFT_DOWN)},
-        this);
+    activation_handler_.reset(new ActivationEventHandler(this));
+    delegate_->RegisterPreTargetHandler(activation_handler_.get());
   }
 }
 
@@ -259,7 +284,7 @@ gfx::Insets TrayBubbleView::GetBorderInsets() const {
 
 void TrayBubbleView::ResetDelegate() {
   if (delegate_)
-    delegate_->UnregisterAllAccelerators(this);
+    delegate_->UnregisterPreTargetHandler(activation_handler_.get());
 
   delegate_ = nullptr;
 }
@@ -281,6 +306,11 @@ void TrayBubbleView::OnBeforeBubbleWidgetInit(Widget::InitParams* params,
 }
 
 void TrayBubbleView::OnWidgetClosing(Widget* widget) {
+  // Unregister all accelerators as we no longer need to watch accelerators if
+  // the widget is closing.
+  if (delegate_)
+    delegate_->UnregisterPreTargetHandler(activation_handler_.get());
+
   BubbleDialogDelegateView::OnWidgetClosing(widget);
   --g_current_tray_bubble_showing_count_;
   DCHECK_GE(g_current_tray_bubble_showing_count_, 0);
@@ -387,26 +417,6 @@ void TrayBubbleView::MouseMovedOutOfHost() {
   mouse_watcher_->Stop();
 }
 
-bool TrayBubbleView::AcceleratorPressed(const ui::Accelerator& accelerator) {
-  if (accelerator == ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE)) {
-    CloseBubbleView();
-    return true;
-  }
-
-  if (accelerator == ui::Accelerator(ui::VKEY_TAB, ui::EF_NONE) ||
-      accelerator == ui::Accelerator(ui::VKEY_TAB, ui::EF_SHIFT_DOWN)) {
-    ui::KeyEvent key_event(
-        accelerator.key_state() == ui::Accelerator::KeyState::PRESSED
-            ? ui::EventType::ET_KEY_PRESSED
-            : ui::EventType::ET_KEY_RELEASED,
-        accelerator.key_code(), accelerator.modifiers());
-    ActivateAndStartNavigation(key_event);
-    return true;
-  }
-
-  return false;
-}
-
 void TrayBubbleView::ChildPreferredSizeChanged(View* child) {
   SizeToContents();
 }
@@ -423,20 +433,20 @@ void TrayBubbleView::CloseBubbleView() {
   if (!delegate_)
     return;
 
-  delegate_->UnregisterAllAccelerators(this);
+  delegate_->UnregisterPreTargetHandler(activation_handler_.get());
   delegate_->HideBubble(this);
 }
 
-void TrayBubbleView::ActivateAndStartNavigation(const ui::KeyEvent& key_event) {
+void TrayBubbleView::ActivateAndStartNavigation(bool reverse) {
   // No need to explicitly activate the widget. FocusManager will activate it if
   // necessary.
   set_can_activate(true);
-
-  if (!GetWidget()->GetFocusManager()->OnKeyEvent(key_event) && delegate_) {
+  GetWidget()->GetFocusManager()->AdvanceFocus(reverse);
+  if (delegate_) {
     // No need to handle accelerators by TrayBubbleView after focus has moved to
     // the widget. The focused view will handle focus traversal.
     // FocusManager::OnKeyEvent returns false when it consumes a key event.
-    delegate_->UnregisterAllAccelerators(this);
+    delegate_->UnregisterPreTargetHandler(activation_handler_.get());
   }
 }
 
