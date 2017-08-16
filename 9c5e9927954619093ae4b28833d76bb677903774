@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f24b1c50_a219e70b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2992,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T20:36:08Z",
+      "side": 1,
+      "message": "if (base::FeatureList::IsEnabled(features::kGenericSensor \u0026\u0026\n    permission_manager) {",
+      "range": {
+        "startLine": 2990,
+        "startChar": 0,
+        "endLine": 2992,
+        "endChar": 29
+      },
+      "revId": "9c5e9927954619093ae4b28833d76bb677903774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7ccbd1_bbfb6351",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T20:36:08Z",
+      "side": 1,
+      "message": "Please add a class-level comment describing what this class is used for.",
+      "revId": "9c5e9927954619093ae4b28833d76bb677903774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
