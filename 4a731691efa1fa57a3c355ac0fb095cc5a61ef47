@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc2d88c_0ec90a5e",
+        "filename": "chrome_elf/chrome_elf_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-16T20:25:21Z",
+      "side": 1,
+      "message": "it\u0027s a bit odd to me that this returns true if |ret| was false.",
+      "revId": "4a731691efa1fa57a3c355ac0fb095cc5a61ef47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
