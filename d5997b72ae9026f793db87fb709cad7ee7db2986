@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12869651_ac45cd7b",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-16T09:00:40Z",
+      "side": 1,
+      "message": "Why did you add this blank line?",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53edfae_13da4e29",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-16T09:00:40Z",
+      "side": 1,
+      "message": "This is not an overriding function so please make it separate from the section.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2840b866_40572596",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-16T09:00:40Z",
+      "side": 1,
+      "message": "Can we have two reporting policies in this function rather than having one more policy value in SecurityViolationReportingPolicy?",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
