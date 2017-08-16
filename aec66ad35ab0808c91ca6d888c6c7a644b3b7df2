@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d66a5e_258d9a5a",
+        "filename": "components/sync/protocol/extension_specifics.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T19:08:59Z",
+      "side": 1,
+      "message": "Please get a local owner for this change. I\u0027m not sure if this file is also mirrored in google3.",
+      "revId": "aec66ad35ab0808c91ca6d888c6c7a644b3b7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
