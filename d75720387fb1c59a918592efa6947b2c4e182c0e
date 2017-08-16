@@ -22,6 +22,30 @@
       "revId": "d75720387fb1c59a918592efa6947b2c4e182c0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6354c083_800d2e27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-16T10:32:40Z",
+      "side": 1,
+      "message": "The linter didn\u0027t recognize TileView.Style as an enum and thought not all cases were handled and it was possible there was no return value. I wouldn\u0027t want to return -1 or something like that. I think this is a reasonable alternative.",
+      "parentUuid": "515aed60_77ea46c5",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 18
+      },
+      "revId": "d75720387fb1c59a918592efa6947b2c4e182c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
