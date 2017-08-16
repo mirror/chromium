@@ -31,17 +31,33 @@
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
+namespace base {
+
 namespace {
 
 // On POSIX |mmap| uses a nearby address if the hint address is blocked.
 const bool kHintIsAdvisory = true;
 std::atomic<int32_t> s_allocPageErrorCode{0};
 
-}  // namespace
+int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
+  switch (page_accessibility) {
+    case PageReadWrite:
+      return PROT_READ | PROT_WRITE;
+    case PageReadWriteExec:
+      return PROT_READ | PROT_WRITE | PROT_EXEC;
+    default:
+      NOTREACHED();
+    // Fall through.
+    case PageInaccessible:
+      return PROT_NONE;
+  }
+}
 
 #elif defined(OS_WIN)
 
 #include <windows.h>
+
+namespace base {
 
 namespace {
 
@@ -49,23 +65,29 @@ namespace {
 const bool kHintIsAdvisory = false;
 std::atomic<int32_t> s_allocPageErrorCode{ERROR_SUCCESS};
 
-}  // namespace
+int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
+  switch (page_accessibility) {
+    case PageReadWrite:
+      return PAGE_READWRITE;
+    case PageReadWriteExec:
+      return PAGE_EXECUTE_READWRITE;
+    default:
+      NOTREACHED();
+    // Fall through.
+    case PageInaccessible:
+      return PAGE_NOACCESS;
+  }
+}
 
 #else
 #error Unknown OS
 #endif  // defined(OS_POSIX)
-
-namespace base {
-
-namespace {
 
 // We may reserve / release address space on different threads.
 subtle::SpinLock s_reserveLock;
 // We only support a single block of reserved address space.
 void* s_reservation_address = nullptr;
 size_t s_reservation_size = 0;
-
-}  // namespace
 
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
@@ -80,8 +102,7 @@ static void* SystemAllocPages(
   // Retry failed allocations once after calling ReleaseReservation().
   bool have_retried = false;
 #if defined(OS_WIN)
-  DWORD access_flag =
-      page_accessibility == PageAccessible ? PAGE_READWRITE : PAGE_NOACCESS;
+  DWORD access_flag = GetAccessFlags(page_accessibility);
   while (true) {
     ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
     if (ret)
@@ -102,9 +123,7 @@ static void* SystemAllocPages(
 #else
   int fd = -1;
 #endif
-  int access_flag = page_accessibility == PageAccessible
-                        ? (PROT_READ | PROT_WRITE)
-                        : PROT_NONE;
+  int access_flag = GetAccessFlags(page_accessibility);
   while (true) {
     ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, fd, 0);
     if (ret != MAP_FAILED)
@@ -120,6 +139,8 @@ static void* SystemAllocPages(
 #endif
   return ret;
 }
+
+}  // namespace
 
 // Trims base to given length and alignment. Windows returns null on failure and
 // frees base.
