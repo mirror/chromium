@@ -319,6 +319,29 @@
     ]
   },
 
+  "NativePrintersV2": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "NativePrintersV2": {
+        "url": "https://example.com/policyfile",
+        "hash": "deadbeefdeadbeefdeadbeef"
+      }
+    }
+  },
+
+  "NativePrintersV2Policy": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "NativePrintersV2Policy": {
+        "whitelist": [],
+        "blacklist": ["id4", "id7", "id10"]
+      }
+    },
+    "pref_mappings": [
+      { "pref": "native_printing.recommended_printers_policy" }
+    ]
+  },
+
   "SafeBrowsingEnabled": {
     "os": ["win", "linux", "mac", "chromeos"],
     "can_be_recommended": true,

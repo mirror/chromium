@@ -1280,6 +1280,14 @@ const char kPrintingDevices[] = "printing.devices";
 // List of printers configured by policy.
 const char kRecommendedNativePrinters[] =
     "native_printing.recommended_printers";
+
+// External resource containing all printer configurations for an enterprise.
+const char kRecommendedNativePrintersFile[] =
+    "native_printing.recommended_printers_file";
+
+// Whitelist/blacklist of printers from the printers file.
+const char kRecommendedNativePrintersPolicy[] =
+    "native_printing.recommended_printers_policy";
 #endif  // OS_CHROMEOS
 
 // An integer pref specifying the fallback behavior for sites outside of content
