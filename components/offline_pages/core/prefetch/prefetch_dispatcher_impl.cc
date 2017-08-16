@@ -28,6 +28,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
+#include "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "components/offline_pages/core/task.h"
 #include "url/gurl.h"
@@ -99,6 +100,9 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 }
 
 void PrefetchDispatcherImpl::QueueReconcileTasks() {
+  task_queue_.AddTask(base::MakeUnique<SentGetOperationCleanupTask>(
+      service_->GetPrefetchStore()));
+
   // TODO(dimich): add Reconcile tasks here.
 }
 

@@ -120,6 +120,8 @@ enum class PrefetchItemErrorCode {
   // Got a failure result from GetOperation or GeneratePageBundle that a
   // server-side limit on the page was exceeded.
   ARCHIVING_LIMIT_EXCEEDED,
+  // Exceeding maximum retries for get operation request.
+  GET_OPERATION_MAX_ATTEMPTS_REACHED,
 };
 
 // Callback invoked upon completion of a prefetch request.
