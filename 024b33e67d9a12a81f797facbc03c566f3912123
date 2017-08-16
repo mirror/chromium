@@ -140,6 +140,24 @@
       "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4007c870_9eef57ff",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-16T21:12:25Z",
+      "side": 1,
+      "message": "\u003e Oh, I see. So num_handles is the total number of handles that the whole message contains, not the number of handles associated with an individual OS-level message fragment.\n\u003e \n\u003e However, I thought that this only gets called once the entire Mojo-level message has been received, even if it has been split across multiple underlying OS-level messages (see OnReadComplete(), which early-exits returning true if there isn\u0027t enough data available to process the message, yet).\n\nIt gets called once all the *data* is received for a message, i.e. once we have a valid header which says \"N bytes\" and we have at least N bytes of data buffered. If you were to send a tiny message with 10000 handles attached, we still might end up sending multiple OS-level messages to get all the handles there, with the extra handle messages having 0 bytes of data.\n\n\u003e \n\u003e If you look at the OnMxHandleSignalled implementation below, I\u0027m accumulating all the handles from received messages into a vector to attached to the resulting Message (though I\u0027ve explicitly DCHECK\u0027d against \u003e64 handles per-message in the WriteNoLock implementation..).\n\nRight, unless I\u0027m misinterpreting, this is exactly the same thing ChannelPosix does.\n\nWe treat input as a queue of incoming bytes and a queue of incoming handles. Once we have a valid message header, we wait until we have enough bytes *and* enough handles to constitute the full message as specified by that header, at which point we dispatch exactly that number of bytes and handles to the layer above.\n\nAnd in fact there is no constraint that requires unix domain sockets to adhere to message boundaries in either direction (i.e. they can be fragmented or coalesced freely), so it is in fact valid for the incoming handle queue size to exceed the current message\u0027s num_handles.",
+      "parentUuid": "1395f81c_1fc8266b",
+      "revId": "024b33e67d9a12a81f797facbc03c566f3912123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
