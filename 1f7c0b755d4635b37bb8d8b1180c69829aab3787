@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07b672fd_e2219036",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4256,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Not quite sure where the right place for that test would be, but I added a (browser) test which should do the job in site_per_process_browsertest.cc.",
+      "parentUuid": "d3e1763a_6b46afc5",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78ea28b0_ed270709",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T19:41:32Z",
       "side": 1,
       "message": "why not std::queue?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd7a3ac_1610fe73",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4261,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Changed to using std::queue instead.",
+      "parentUuid": "78ea28b0_ed270709",
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "031ab013_64287622",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4268,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Thanks for pointing this out!\n\nI discussed this with Lucas offline and initially we were worried that calling render_frame_host-GetView()-\u003eHide()/Show() might causes issues if frame is speculative. The issue we were concerned about was that maybe the call to Show/Hide (which will lead to calling SetVisibilityForChildViews on current_frame_host() for the node associated with the speculative frame) might make the frame tree of a nested OOPIF incorrectly hidden.\n\nHowever, I just noticed that |frame_connector_| for the view of the speculative frame is nullptr until we call CommitPending(). That being said, there should not be a risk of propagating the visibility down the frame tree through the speculative frame.\n\nI also added some comments that RenderFrameHostImpl::SetVisibitilityForChildViews should not be called on a speculative or pending frame.",
+      "parentUuid": "fa808228_0c3ad420",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4790798_08e23c26",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3ca301de_2237f1db",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4790798_08e23c26",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a19dca4_36ff37bb",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea69f202_edd73943",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a19dca4_36ff37bb",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "e610fd7e_59addac7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Yes, good point and I see the confusion. We basically look for frames under this frame which are local roots and there are no local roots in the path between them and this frame in the frame tree. I think expressing this in terms of RWHVs is simpler if we can first officially coin a term for RWHV tree (if not done already) and then something like ForEachChildView() should be articulate enough.",
+      "parentUuid": "a2a5359b_4f966cab",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "598043af_870e7183",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 14
@@ -132,6 +240,24 @@
       "writtenOn": "2017-08-11T19:41:32Z",
       "side": 1,
       "message": "nit: there\u0027s only one nested cross-origin frame in the test, so should \"all other RWHs\" just be \"the RWH\"?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4969578_f6d99e6f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7329,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I think it might be better to actually have a bunch of nested frames so I modified the test to properly reflect the comment.",
+      "parentUuid": "598043af_870e7183",
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "329be050_fa79cf9d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "According to the definition of GetRenderWidgetHostViewsInTree() we only return \"GetRenderWidgetHostView()\" for an interstitial page. In such a case line 1501 should be sufficient.\n\nAs for line 1508 I am wondering if we can have OOPIFs on interstitial pages (if not then it will be fine since there won\u0027t be any local roots). If we do then I need to avoid calling 1508 when ShowingInterstitialPage() \u003d\u003d true. But then I am wondering again why would we not want to update visibility of an OOPIF even though it is (theoretically) in an interstitial page.",
+      "parentUuid": "a776c229_24d78f88",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e722ab_bf79bf63",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 14
@@ -166,6 +310,24 @@
       "writtenOn": "2017-08-11T19:41:32Z",
       "side": 1,
       "message": "Would it make sense to have SetVisibilityForChildFrames on RenderFrameHostImpl, which we can call on the appropriate RFH from both WCI::WasShown/WasHidden and from CPFP, to avoid duplicating the code from CPFP here?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5151271c_ace9e653",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5988,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "I like the idea. It should be easier to follow this way.\n\nNow that being said (and done), the only usages of ForEachImmediateLocalRoot will be in RenderFrameHostImpl and the test I added now to verify its correctness. I am wondering if the method should stay public. For a while (until addressing 754726) it can serve as a placeholder for traversing the RWHV tree. On the other hand we have not introduced any usage for it yet except for the visibility. WDYT? (also if we make the method private we might as well drop the unit-test-like browser test for it).",
+      "parentUuid": "23e722ab_bf79bf63",
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

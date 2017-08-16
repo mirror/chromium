@@ -159,6 +159,24 @@
       "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5535c2d5_d82a5c6b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-16T17:04:23Z",
+      "side": 1,
+      "message": "Thanks for the feedback. If our concern was the nested OOPIFs only perhaps RWHVCF::ForEachImmediateChildView() or something could have worked given that RWHVCF lives in frame_host/. Perhaps something to reconsider later in a follow up patch.",
+      "parentUuid": "a6dc4a7e_ddc34004",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
