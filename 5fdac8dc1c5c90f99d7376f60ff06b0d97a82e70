@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "992073cb_34e3e719",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-16T13:13:17Z",
+      "side": 1,
+      "message": "Sylvain showed me how to mock out a Tab with a TestWebState, so this is now back to taking just one argument (and does not use LegacyTabHelper).",
+      "parentUuid": "ff113c26_4dcc5cfe",
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43ab7c3_aa9e73fe",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
         "patchSetId": 2
@@ -93,6 +111,30 @@
       "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ff3ae9_174855ca",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-16T13:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43ab7c3_aa9e73fe",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "6769d5f5_6952dfc5",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-16T13:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418780c0_6bc8745a",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1d0124_1bcf2f7a",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
         "patchSetId": 2
@@ -142,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "6909d93b_1a4ebb99",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-16T13:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1d0124_1bcf2f7a",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f57b7b_fc3d8e20",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
         "patchSetId": 2
@@ -153,6 +243,30 @@
       "writtenOn": "2017-08-15T17:25:58Z",
       "side": 1,
       "message": "nit: /*web_state\u003d*/nullptr",
+      "range": {
+        "startLine": 78,
+        "startChar": 54,
+        "endLine": 78,
+        "endChar": 61
+      },
+      "revId": "5fdac8dc1c5c90f99d7376f60ff06b0d97a82e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d22413_c29661bf",
+        "filename": "ios/chrome/browser/ui/activity_services/share_to_data_builder_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-16T13:13:17Z",
+      "side": 1,
+      "message": "No longer applicable \u003d)",
+      "parentUuid": "43f57b7b_fc3d8e20",
       "range": {
         "startLine": 78,
         "startChar": 54,
