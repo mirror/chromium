@@ -42,6 +42,7 @@ cr.define('cr.ui', function() {
      * Initializes the menu button.
      */
     decorate: function() {
+      this.ownerDocument.addEventListener('touchstart', this);
       this.addEventListener('mousedown', this);
       this.addEventListener('keydown', this);
       this.addEventListener('dblclick', this);
@@ -97,6 +98,7 @@ cr.define('cr.ui', function() {
         return;
 
       switch (e.type) {
+        case 'touchstart':
         case 'mousedown':
           if (e.currentTarget == this.ownerDocument) {
             if (e.target instanceof Node && !this.contains(e.target) &&
@@ -108,8 +110,8 @@ cr.define('cr.ui', function() {
           } else {
             if (this.isMenuShown()) {
               this.hideMenu();
-            } else if (e.button == 0) {  // Only show the menu when using left
-                                         // mouse button.
+            } else if (e.type == 'mousedown' && e.button == 0) {
+              // Only show the menu when using left mouse button.
               this.showMenu(false, {x: e.screenX, y: e.screenY});
 
               // Prevent the button from stealing focus on mousedown.
