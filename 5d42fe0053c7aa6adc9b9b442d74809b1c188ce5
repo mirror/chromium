@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "68042812_1aae8c8c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-16T11:25:31Z",
+      "side": 1,
+      "message": "Yes, assert_array_equals was the important bit.",
+      "parentUuid": "25b66381_0b6e7c7c",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65fdbe76_bf33a63d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
         "patchSetId": 4
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Removed. I had just copypasted from the old test :)\nI don\u0027t know why undefined was there. Maybe clone() had an optional parameter in the past.",
       "parentUuid": "7abf6def_cb4bff2c",
+      "range": {
+        "startLine": 18,
+        "startChar": 22,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e893a088_be735388",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-16T11:25:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7eeeca6_6a32e25a",
       "range": {
         "startLine": 18,
         "startChar": 22,
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "I\u0027m not 100% sure that firing the mute/unmute after disabling the track is mandated by the spec. It is certainly not forbidden, but I couldn\u0027t find any part of the spec that says the mute event MUST or SHOULD be fired upon assigning true to the enabled field.\nSo, I think it\u0027s better to keep this as a Blink-only test for now.",
       "parentUuid": "e747c225_d9b32e6a",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2538b83b_2d3c30ef",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-16T11:25:31Z",
+      "side": 1,
+      "message": "OK, best not to upstream things that might not be per spec. Can you file a spec issue to clarify what should happen here, to unblock upstreaming this?",
+      "parentUuid": "8f5e01c2_6c97e4a6",
       "range": {
         "startLine": 25,
         "startChar": 10,
