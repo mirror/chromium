@@ -18,6 +18,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/condition_variable.h"
+#include "base/task_scheduler/can_schedule_sequence_observer.h"
 #include "base/task_scheduler/priority_queue.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/scheduler_worker.h"
@@ -44,7 +45,8 @@ class TaskTracker;
 // at any time but will not run until after Start() is called.
 //
 // This class is thread-safe.
-class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
+class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool,
+                                            public CanScheduleSequenceObserver {
  public:
   // Constructs a pool without workers.
   //
@@ -139,6 +141,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // SchedulerWorker on success, nullptr otherwise. Cannot be called before
   // Start(). Must be called under the protection of |lock_|.
   SchedulerWorker* CreateRegisterAndStartSchedulerWorker();
+
+  // CanScheduleSequenceObserver:
+  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override;
 
   const std::string name_;
   const ThreadPriority priority_hint_;
