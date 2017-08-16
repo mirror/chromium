@@ -106,6 +106,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec22222_394a8693",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-16T14:43:35Z",
+      "side": 1,
+      "message": "Can we just tell chrome what format to use with a command line flag that can be set differently depending on the board instead of trying formats until we succeed? It\u0027s hard to understand if something is wrong or working as expected when we try and fail something at runtime until success..",
+      "parentUuid": "1ec33a76_31993285",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
