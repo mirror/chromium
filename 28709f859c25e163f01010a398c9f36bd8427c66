@@ -22,6 +22,30 @@
       "revId": "28709f859c25e163f01010a398c9f36bd8427c66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db56aaeb_acc8de45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-16T04:16:12Z",
+      "side": 1,
+      "message": "Yes, the flow you described is almost correct, except that the test sets CustomTabsIntent.setAlwaysUseBrowserUI which forces it to open in CTA. https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java?rcl\u003d8a0d2d4af840fbd861d6e4444346c90c67dede13\u0026l\u003d158\n\nSee ChromeLauncherActivity#isCustomTabIntent in this patch that guards against using CCT if that flag is set.",
+      "parentUuid": "42340fe8_60781aa5",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 78
+      },
+      "revId": "28709f859c25e163f01010a398c9f36bd8427c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
