@@ -28,4 +28,25 @@
         android:paddingTop="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="48dp" />
+     <LinearLayout
+        android:id="@+id/read_only_text"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:layout_marginStart="48dp"
+        android:visibility="gone" >
+         <TextView
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black_alpha_87" />
+         <TextView
+            android:id="@+id/origin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black_alpha_38" />
+      </LinearLayout>
 </FrameLayout>
