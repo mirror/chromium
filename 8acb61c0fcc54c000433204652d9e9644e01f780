@@ -172,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "e6c776d4_b4063106",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T04:32:25Z",
+      "side": 1,
+      "message": "\u003e I understand the rationale. \n\u003e \n\u003e However, I would like to argue that I am not really changing the semantics. An action that would have previously triggered this histogram would still do so after this change. The new histogram (\"*.Shortcut\") would record actions that belong to a completely new type of actions, the first of which has been introduced only yesterday (https://chromium-review.googlesource.com/c/602784).\n\u003e \n\u003e If you do not find that convincing, I will be happy to rename/obsolete.\n\nOkay, that\u0027s fine.  (This is convincing only because there\u0027s such a small time gap between changelists.)",
+      "parentUuid": "e9ea9c76_6d251f7c",
+      "range": {
+        "startLine": 372,
+        "startChar": 31,
+        "endLine": 372,
+        "endChar": 54
+      },
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2187975_10f4ff01",
         "filename": "ash/system/palette/palette_tray.h",
         "patchSetId": 1
@@ -251,6 +275,30 @@
       "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d63aa4_cb2117d7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2617,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T04:32:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d898efd3_320d6154",
+      "range": {
+        "startLine": 2617,
+        "startChar": 44,
+        "endLine": 2617,
+        "endChar": 0
+      },
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
