@@ -29,6 +29,10 @@ void EmptyClient::OnDownloadFailed(const std::string& guid,
 void EmptyClient::OnDownloadSucceeded(const std::string& guid,
                                       const base::FilePath& path,
                                       uint64_t size) {}
+bool EmptyClient::CanServiceRemoveDownloadedFile(const std::string& guid,
+                                                 bool force_delete) {
+  return true;
+}
 
 }  // namespace test
 }  // namespace download
