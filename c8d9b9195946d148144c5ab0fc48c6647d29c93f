@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58543c95_c079d3b0",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-16T19:26:24Z",
+      "side": 1,
+      "message": "These OFFLINE_REASON... codes are used in remoting_apk here:\nhttps://cs.chromium.org/chromium/src/remoting/android/java/src/org/chromium/chromoting/HostInfo.java?l\u003d82\u0026rcl\u003d5839b44293dd74cdacc82464d886fc6d9d77fc4d\nbut they are dynamically looked up, which is probably why Lint complains.",
+      "range": {
+        "startLine": 1060,
+        "startChar": 21,
+        "endLine": 1060,
+        "endChar": 61
+      },
+      "revId": "c8d9b9195946d148144c5ab0fc48c6647d29c93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
