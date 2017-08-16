@@ -34,6 +34,24 @@
       "revId": "78c1dfdf3377fd86bfa118da4f4c952b130f0d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9540eb9_0c0f6422",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-16T21:34:34Z",
+      "side": 1,
+      "message": "OK; so long as the test fails-safe (passes if QEMU ends up being super slow) then that\u0027s probably the best we can do.\n\nThe other change we could consider is explicitly setting the packet type to some invalid value, and then DCHECK that it is set to either USER or the I/O packet type when we are about to process it.",
+      "parentUuid": "49fb9a78_af1a5745",
+      "revId": "78c1dfdf3377fd86bfa118da4f4c952b130f0d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
