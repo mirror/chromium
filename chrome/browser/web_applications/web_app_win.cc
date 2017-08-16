@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
@@ -429,6 +430,10 @@ bool CheckAndSaveIcon(const base::FilePath& icon_file,
     return false;
 
   if (refresh_shell_icon_cache) {
+    // TODO(chengx): Remove this log after crbug/449569 is fixed.
+    VLOG(0) << "Desktop refresh requested from:\n"
+            << base::debug::StackTrace().ToString();
+
     // Refresh shell's icon cache. This call is quite disruptive as user would
     // see explorer rebuilding the icon cache. It would be great that we find
     // a better way to achieve this.

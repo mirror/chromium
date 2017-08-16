@@ -17,6 +17,7 @@
 
 #include "base/base_paths.h"
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
@@ -959,6 +960,10 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
     UninstallFirewallRules(browser_dist, chrome_exe);
 
     RemoveBlacklistState();
+
+    // TODO(chengx): Remove this log after crbug/449569 is fixed.
+    VLOG(0) << "Desktop refresh requested from:\n"
+            << base::debug::StackTrace().ToString();
 
     // Notify the shell that associations have changed since Chrome was likely
     // unregistered.
