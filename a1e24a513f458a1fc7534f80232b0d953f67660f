@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99e77d09_c6c08f0b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-command-copy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-16T00:30:53Z",
+      "side": 1,
+      "message": "Fixed - I unescaped the apostrophe character which lets my script auto delete it.",
+      "parentUuid": "445c818e_7ee8f003",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c31b597_c6c90039",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-object-with-getter.js",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a55ee779_5b04aa29",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-object-with-getter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-16T00:30:53Z",
+      "side": 1,
+      "message": "Nope - I made an error in my script which caused all the semicolon bugs.",
+      "parentUuid": "2c31b597_c6c90039",
+      "range": {
+        "startLine": 12,
+        "startChar": 96,
+        "endLine": 12,
+        "endChar": 98
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e0d612a_10460720",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-message-format.js",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-15T21:47:24Z",
       "side": 1,
       "message": "Just curious, how did the script know to remove the content from inside this \u003cp\u003e tag?  Or was this a manual change?",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800892b8_d6fa9a84",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-message-format.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-16T00:30:53Z",
+      "side": 1,
+      "message": "There\u0027s a heuristic where it tries to remove any plain \u003cp\u003e or \u003cdiv\u003e tag that has the prologue addResult message. In this case, it\u0027s leaving this p tag because it has an id attribute.",
+      "parentUuid": "8e0d612a_10460720",
       "range": {
         "startLine": 11,
         "startChar": 3,
@@ -114,6 +186,30 @@
       "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f665e27d_bbca7a74",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-time.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-16T00:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273b195b_92383c45",
+      "range": {
+        "startLine": 11,
+        "startChar": 44,
+        "endLine": 11,
+        "endChar": 46
+      },
+      "revId": "a1e24a513f458a1fc7534f80232b0d953f67660f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

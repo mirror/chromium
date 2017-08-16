@@ -22,6 +22,30 @@
       "revId": "bc18672beabe5693f6927a74aa54a90b32ebff0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6fac20_4631fe48",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-trim-long-urls.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-16T00:30:53Z",
+      "side": 0,
+      "message": "thanks. fixed the indentation.",
+      "parentUuid": "3d5385cd_b5fb1fb5",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "bc18672beabe5693f6927a74aa54a90b32ebff0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
