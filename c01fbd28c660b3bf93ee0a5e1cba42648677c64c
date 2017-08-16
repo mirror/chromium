@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e8e362d_92b7dbb6",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 0,
+      "message": "Why are you removing this?",
+      "range": {
+        "startLine": 647,
+        "startChar": 3,
+        "endLine": 647,
+        "endChar": 19
+      },
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b905625f_475f7bc0",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 1,
+      "message": "There isn\u0027t consensus on using \u0027test\u0027 for code like this, and in views we generally don\u0027t. So, please remove it here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "0ba5bed1ccaafc8dc429f4c9480f9ecc6021308a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6815c783_3c75b9e0",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 1,
+      "message": "You should be able to expose AddEmptyMenus() as public in this class and have the implementation call MenuItemView::AddEmptyMenus().",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "0ba5bed1ccaafc8dc429f4c9480f9ecc6021308a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098eb084_28bb8b5d",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 1,
+      "message": "This should be an assert, otherwise the next line might crash.",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "0ba5bed1ccaafc8dc429f4c9480f9ecc6021308a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c67d19_7992e48e",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 1,
+      "message": "You sure assert the class name of child_at(0) is MenuItemView::kViewClassName. Same comment below.",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "0ba5bed1ccaafc8dc429f4c9480f9ecc6021308a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f16f33_c6cb2a16",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 1,
+      "message": "Similar comment about assert.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 11
+      },
+      "revId": "0ba5bed1ccaafc8dc429f4c9480f9ecc6021308a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011e3a0f_1d60482a",
+        "filename": "ui/views/controls/menu/submenu_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-16T22:27:43Z",
+      "side": 1,
+      "message": "You never change this. Instead remove the local and have line 70 return false.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 35
+      },
+      "revId": "0ba5bed1ccaafc8dc429f4c9480f9ecc6021308a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
