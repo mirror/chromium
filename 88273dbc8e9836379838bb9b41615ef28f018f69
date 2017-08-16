@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8480aa79_68affe54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T00:26:19Z",
+      "side": 1,
+      "message": "I don\u0027t think that disabling |mInput| is necessary anymore since |mInput| is kept hidden till it can be enabled.",
+      "revId": "88273dbc8e9836379838bb9b41615ef28f018f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b893c2_78881fad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T00:26:19Z",
+      "side": 1,
+      "message": "Can |mInput| and |mReadOnlyLayout| start out as View.GONE, with the visibility specified in add_to_homescreen_dialog.xml\n\nI suspect that you decided to set |mInput| and |mReadOnlyLayout| to View.INVISIBLE to avoid resizing the dialog when the dialog is shown for WebAPK-able pages. However, with the views set to VIEW.INVISIBLE the dialog is resized when it shown for non-WebAPK- able pages.",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "88273dbc8e9836379838bb9b41615ef28f018f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8863daf_b21f910e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T00:26:19Z",
+      "side": 1,
+      "message": "Can you check mInput.getVisibility() instead of checking mIsTitleEditable",
+      "revId": "88273dbc8e9836379838bb9b41615ef28f018f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196a24bc_3895912d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-16T00:26:19Z",
+      "side": 1,
+      "message": "Can you set the text color via android:textColor in add_to_homescreen_dialog.xml?",
+      "range": {
+        "startLine": 167,
+        "startChar": 45,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "88273dbc8e9836379838bb9b41615ef28f018f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
