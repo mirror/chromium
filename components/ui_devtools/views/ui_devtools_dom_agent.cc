@@ -5,6 +5,7 @@
 #include "components/ui_devtools/views/ui_devtools_dom_agent.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "components/ui_devtools/devtools_server.h"
 #include "components/ui_devtools/views/ui_devtools_overlay_agent.h"
 #include "components/ui_devtools/views/ui_element.h"
@@ -17,6 +18,7 @@
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -101,6 +103,7 @@ std::unique_ptr<DOM::Node> BuildDomNodeFromUIElement(UIElement* root) {
 }  // namespace
 
 UIDevToolsDOMAgent::UIDevToolsDOMAgent() : is_building_tree_(false) {
+  show_size_on_canvas_ = false;
   aura::Env::GetInstance()->AddObserver(this);
 }
 
@@ -192,7 +195,9 @@ UIElement* UIDevToolsDOMAgent::GetElementFromNodeId(int node_id) {
   return node_id_to_ui_element_[node_id];
 }
 
-ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(int node_id) {
+ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(
+    int node_id,
+    bool show_size) {
   if (!layer_for_highlighting_) {
     layer_for_highlighting_.reset(new ui::Layer(ui::LayerType::LAYER_TEXTURED));
     layer_for_highlighting_->set_name("HighlightingLayer");
@@ -207,6 +212,7 @@ ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(int node_id) {
   if (!window_and_bounds.first)
     return ui_devtools::protocol::Response::Error("No node found with that id");
 
+  show_size_on_canvas_ = show_size;
   UpdateHighlight(window_and_bounds);
 
   if (!layer_for_highlighting_->visible())
@@ -256,27 +262,48 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
   constexpr SkScalar intervals[] = {1.f, 1.f};
   flags.setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
 
+  // Draw ui element bounds.
+  canvas_->DrawRect(rect_f, SK_ColorBLUE);
+  rect_f.Inset(-1, -1);
+
   // Top horizontal dotted line from left to right.
   canvas_->DrawLine(gfx::PointF(0.0f, rect_f.y()),
                     gfx::PointF(screen_bounds.right(), rect_f.y()), flags);
 
   // Bottom horizontal dotted line from left to right.
-  canvas_->DrawLine(gfx::PointF(0.0f, rect_f.bottom() + 0.5f),
-                    gfx::PointF(screen_bounds.right(), rect_f.bottom() + 0.5f),
-                    flags);
+  canvas_->DrawLine(gfx::PointF(0.0f, rect_f.bottom()),
+                    gfx::PointF(screen_bounds.right(), rect_f.bottom()), flags);
 
   // Left vertical dotted line from top to bottom.
-  canvas_->DrawLine(gfx::PointF(rect_f.x() - 0.5f, 0.0f),
-                    gfx::PointF(rect_f.x() - 0.5f, screen_bounds.bottom()),
-                    flags);
+  canvas_->DrawLine(gfx::PointF(rect_f.x(), 0.0f),
+                    gfx::PointF(rect_f.x(), screen_bounds.bottom()), flags);
 
   // Right vertical dotted line from top to bottom.
-  canvas_->DrawLine(gfx::PointF(rect_f.right() + 0.5f, 0.0f),
-                    gfx::PointF(rect_f.right() + 0.5f, screen_bounds.bottom()),
-                    flags);
+  canvas_->DrawLine(gfx::PointF(rect_f.right(), 0.0f),
+                    gfx::PointF(rect_f.right(), screen_bounds.bottom()), flags);
 
-  // Draw ui element bounds.
-  canvas_->DrawRect(rect_f, SK_ColorBLUE);
+  if (show_size_on_canvas_) {
+    const int kTextHeight = 12;
+    const int kCharacterPerPixel = 5;
+    const int kTextWidth =
+        kCharacterPerPixel *
+        static_cast<int>(hovered_element_bounds_.size().ToString().length());
+
+    base::string16 utf16_text =
+        base::UTF8ToUTF16(hovered_element_bounds_.size().ToString());
+    ResourceBundle* rb = &ResourceBundle::GetSharedInstance();
+    gfx::FontList base_font = rb->GetFontList(ResourceBundle::BaseFont)
+                                  .DeriveWithHeightUpperBound(kTextHeight);
+    gfx::Point text_top_left_point(hovered_element_bounds_.x() + 1,
+                                   hovered_element_bounds_.height() / 2 -
+                                       kTextHeight / 2 +
+                                       hovered_element_bounds_.y());
+    canvas_->FillRect(
+        gfx::Rect(text_top_left_point, gfx::Size(kTextWidth, kTextHeight)),
+        SK_ColorWHITE, SkBlendMode::kColor);
+    canvas_->DrawStringRect(utf16_text, base_font, SK_ColorRED,
+                            hovered_element_bounds_);
+  }
 }
 
 void UIDevToolsDOMAgent::OnHostInitialized(aura::WindowTreeHost* host) {
