@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3630a459_5a0aabb1",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-16T13:42:24Z",
+      "side": 1,
+      "message": "The alternative would be to store the fingerprint param in an actual variable, but IMO this bug proves that StringPiece is too dangerous for general usage without a good reason.",
+      "range": {
+        "startLine": 203,
+        "startChar": 34,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "23b671fdfbb1736a6e7aca947edff39d1bc4a948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
