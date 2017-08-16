@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ef1ad02_bfbb5a91",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "is this guaranteed not to be null?",
+      "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624f9d71_c5ad6a29",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "We haven\u0027t been using sub-namespaces in //components/offline_pages so I\u0027d prefer this just be in offline_pages.",
+      "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3208ce89_d0f1e45c",
         "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
         "patchSetId": 2

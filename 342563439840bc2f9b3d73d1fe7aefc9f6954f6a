@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79b3e1f7_94fecb76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "nit: remove blanks at EOL",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57320a46_6544a870",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "This might be clearer as getEncodedOriginApp... wdyt?",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e49fda8_f00b462a",
+        "filename": "chrome/browser/android/offline_pages/downloads/resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "why separate this?  Should probably call ::Get right before using it.",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8239617b_1d272271",
+        "filename": "components/offline_pages/core/downloads/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "why static_library and not source_set?",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b9c3c4_448f0036",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeUnique unless constructor is private",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c68f79c_4767ea1f",
+        "filename": "content/browser/download/download_request_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-16T16:38:19Z",
+      "side": 1,
+      "message": "if this file is truly android-only, it should be in an android-specific directory.\n\nOtherwise, we should put this in an OFFLINE_PAGES_ENABLED ifdef",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
