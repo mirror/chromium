@@ -22,6 +22,30 @@
       "revId": "93a2da880a0c0c4a9db64003b20225e42ae41eec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5054f442_47753368",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-16T20:20:28Z",
+      "side": 1,
+      "message": "I don\u0027t know why we even have this lever.\n\nIncident reporting is no longer enabled through field trials.\n\nFurthermore, fieldtrial_testing_config.json is never used for Google Chrome builds. \nChromium builds have IncidentReportingEnableUpload disabled by default anyways, so the \"Enabled\" experiment is exactly the same as the \"Default\" experiment.\n\nI\u0027ll just remove the whole SafeBrowsingIncidentReportingService section.",
+      "parentUuid": "c70e9afd_a2b2d43c",
+      "range": {
+        "startLine": 2566,
+        "startChar": 21,
+        "endLine": 2568,
+        "endChar": 55
+      },
+      "revId": "93a2da880a0c0c4a9db64003b20225e42ae41eec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
