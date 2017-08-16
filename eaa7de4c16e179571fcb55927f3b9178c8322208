@@ -46,6 +46,30 @@
       "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "175edd44_50bc64fe",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-16T06:03:57Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m still really confused. |diskFileSystemType| does not exist in chrome/common/extensions/api/file_manager_private.idl, so how can it possibly be used?\n\nIn other words, where does the value of |volumeMetadata.diskFileSystemType| come from? \"diskFileSystemType\" and \"disk_file_system_type\" don\u0027t exist in Code Search and are only used in this CL in the context of VolumeInfo from ui/file_manager/externs/volume_info.js, which is an entirely different type.",
+      "parentUuid": "fec69424_c8afd883",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
