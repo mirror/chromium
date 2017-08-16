@@ -86,6 +86,8 @@ class InlineTextBoxPainter {
     unsigned start;
     unsigned end;
   };
+  // For markers that shouldn't draw over a truncation ellipsis (i.e., not
+  // text match markers, which do draw over said ellipsis)
   MarkerOffsets MarkerPaintStartAndEnd(const DocumentMarker&);
 
   bool ShouldPaintTextBox(const PaintInfo&);
