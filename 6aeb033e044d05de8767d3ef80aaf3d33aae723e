@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "c9bc2085_410dd7ea",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T17:55:34Z",
+      "side": 1,
+      "message": "Okay, sounds good  I\u0027ll add a ClearBlockingObserverForTesting() function. I wasn\u0027t familiar with that usage.",
+      "parentUuid": "8883bd96_0a847193",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2536f4a0_40bde212",
         "filename": "base/threading/scoped_blocking_call.cc",
         "patchSetId": 11
@@ -212,6 +236,30 @@
       "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6701ec2_7734574b",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-16T17:55:34Z",
+      "side": 1,
+      "message": "Ahh - I didn\u0027t think of that case. Sounds good.",
+      "parentUuid": "cd98a6af_96fe5090",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
