@@ -146,6 +146,10 @@ void FakeFileSystemInstance::TriggerWatchers(
   }
 }
 
+int FakeFileSystemInstance::GetGetChildDocumentsCount() const {
+  return get_child_documents_count_;
+}
+
 void FakeFileSystemInstance::AddWatcher(const std::string& authority,
                                         const std::string& document_id,
                                         const AddWatcherCallback& callback) {
@@ -238,6 +242,7 @@ void FakeFileSystemInstance::GetChildDocuments(
     const std::string& parent_document_id,
     const GetChildDocumentsCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  ++get_child_documents_count_;
   auto child_iter =
       child_documents_.find(DocumentKey(authority, parent_document_id));
   if (child_iter == child_documents_.end()) {
