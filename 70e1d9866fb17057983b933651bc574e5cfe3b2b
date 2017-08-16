@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e9c6eb_0de75b9c",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-16T21:27:11Z",
+      "side": 1,
+      "message": "arraysize(SymbolMap::Entry::name)",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 55
+      },
+      "revId": "70e1d9866fb17057983b933651bc574e5cfe3b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
