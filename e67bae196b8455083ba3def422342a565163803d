@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "701268c2_a6d67265",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-16T19:58:48Z",
+      "side": 1,
+      "message": "While this include wouldn\u0027t be stopped by DEPS rules, this is singularly the only place outside of //c/b/ui/v/chrome_browser_main_extra_parts_views_linux.cc (which is initialization code) where the libgtk3ui is hard depended on by chrome code. I\u0027d prefer if you exposed this through the general views::LinuxUI interface instead.",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "e67bae196b8455083ba3def422342a565163803d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
