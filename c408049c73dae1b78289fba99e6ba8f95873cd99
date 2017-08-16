@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54ff400e_a4fa5a43",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-16T19:17:14Z",
+      "side": 1,
+      "message": "It is better to keep consistent with other meta-data that use a variable and the values in set in these json files. I am not sure whether our server can handle a pre-defined value here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 95,
+        "endLine": 42,
+        "endChar": 100
+      },
+      "revId": "c408049c73dae1b78289fba99e6ba8f95873cd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f240e264_ca6da88f",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-16T19:17:14Z",
+      "side": 1,
+      "message": "Nits: you could just use fake and simple URLs instead of real urls.",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 58
+      },
+      "revId": "c408049c73dae1b78289fba99e6ba8f95873cd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcc5d10_257763f6",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-16T19:17:14Z",
+      "side": 1,
+      "message": "Nit: it would be better if the name is self-explanatory: \"com.android.chrome\" -\u003e \"browser.support.webapks\".",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 54
+      },
+      "revId": "c408049c73dae1b78289fba99e6ba8f95873cd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3efef98_953f1a7b",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-16T19:17:14Z",
+      "side": 1,
+      "message": "How about appendStartUrl(String orginalUrl, String startUrl)?",
+      "revId": "c408049c73dae1b78289fba99e6ba8f95873cd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
