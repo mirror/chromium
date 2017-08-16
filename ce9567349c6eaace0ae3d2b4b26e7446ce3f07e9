@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ead7ae89_8f316dcd",
+        "filename": "chrome/browser/sync_file_system/drive_backend/metadata_database_index_on_disk_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T18:25:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a6db5e45_fb680660",
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f99d5ccb_cd4d145b",
         "filename": "components/leveldb/leveldb_database_impl.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f3c2c11f_e6fb89cb",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T18:25:29Z",
+      "side": 1,
+      "message": "The cache was still used LevelDBServiceImpl::OpenWithOptions, but now that https://chromium-review.googlesource.com/c/599014 has landed this can be done.",
+      "parentUuid": "f99d5ccb_cd4d145b",
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef46fb3f_ba432611",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-15T20:44:08Z",
       "side": 1,
       "message": "Not totally inclined with the fact that we create global dumps for all the databases.\nthe global dump is required only for the mojo case where the mojo service can \"exist in any process\". For this case the old version of suballocation just works fine.\nWe do not really require global dump for session storage and indexeddb and others.",
+      "range": {
+        "startLine": 1255,
+        "startChar": 17,
+        "endLine": 1255,
+        "endChar": 48
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5ee3a4_ab47111d",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T18:25:29Z",
+      "side": 1,
+      "message": "This code will only execute if the database is opened with a non-null global_dump_id right? This is just the code that was in LevelDBDatabaseImpl::OnMemoryDump(), but moved here.",
+      "parentUuid": "ef46fb3f_ba432611",
       "range": {
         "startLine": 1255,
         "startChar": 17,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3b827b40_e7e1f96e",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T18:25:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure I completely follow. I\u0027ll answer your over-arching \"why do this CL\" question, and if you\u0027re still OK with doing this CL then I\u0027ll circle back and get a better understanding of your objection here.",
+      "parentUuid": "bce96a86_77a6987b",
+      "range": {
+        "startLine": 1297,
+        "startChar": 0,
+        "endLine": 1301,
+        "endChar": 1
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e94b5aae_378022dc",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 1
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3b104eb2_566320c1",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T18:25:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e94b5aae_378022dc",
+      "range": {
+        "startLine": 265,
+        "startChar": 65,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c8e59d5_ec02801c",
         "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
         "patchSetId": 1
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-15T20:44:08Z",
       "side": 1,
       "message": "Maybe a test to check if the global dump is created with the size.",
+      "range": {
+        "startLine": 254,
+        "startChar": 21,
+        "endLine": 254,
+        "endChar": 62
+      },
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccb20b9_2cbfdddf",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-16T18:25:29Z",
+      "side": 1,
+      "message": "Will do if you agree with the need for this CL.",
+      "parentUuid": "2c8e59d5_ec02801c",
       "range": {
         "startLine": 254,
         "startChar": 21,
