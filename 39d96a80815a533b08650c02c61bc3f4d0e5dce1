@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4134d89c_cabb7290",
+        "filename": "tools/perf/page_sets/update_webrtc_cases",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1167909
+      },
+      "writtenOn": "2017-08-16T14:38:41Z",
+      "side": 1,
+      "message": "Can you delete this too?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 53
+      },
+      "revId": "39d96a80815a533b08650c02c61bc3f4d0e5dce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
