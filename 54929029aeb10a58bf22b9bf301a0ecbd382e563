@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "6c9f383f_67ec32e2",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:59:15Z",
+      "side": 1,
+      "message": "i believe the theory was that whenever it reached the last message in the queue, it would then give idle work a chance to run. I really feel like there was some aspect of this that was deliberate. There were a few changes over the years to subtle aspects of this based on some profiling  (i.e. for fairness between native/java -  I think at one point, every tick of java loop would flush native as opposed to just running one task). There was some desire to do this during startup since it was heavily dependent on numerous native tasks so the overhead of relying on java loop and messages coming in between was slowing down native init - I think. Anyway, my point was that it was at times intentionally wrong. :/\n\nWhat have you here seems principled and correct though :)\nI would be much happier if torne@ approved this as well since I don\u0027t know webview and its consideration (Bo does but he technically doesn\u0027t own base/android - maybe he should?)",
+      "parentUuid": "ac0f7fc1_2c4ec7e8",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f98bc83_c2818cba",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 3
