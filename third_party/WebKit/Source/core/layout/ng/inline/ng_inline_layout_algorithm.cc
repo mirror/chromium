@@ -57,8 +57,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
     // in visual order.
     : NGLayoutAlgorithm(inline_node, space, TextDirection::kLtr, break_token),
       is_horizontal_writing_mode_(
-          blink::IsHorizontalWritingMode(space->WritingMode())),
-      space_builder_(space) {
+          blink::IsHorizontalWritingMode(space->WritingMode())) {
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
 
   if (!is_horizontal_writing_mode_)
