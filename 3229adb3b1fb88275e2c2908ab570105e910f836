@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1829bf1_ea1b7fb5",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-16T19:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f239f00a_1e12b4aa",
+      "revId": "3229adb3b1fb88275e2c2908ab570105e910f836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f12353c2_57a76fb0",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "3229adb3b1fb88275e2c2908ab570105e910f836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e653d1_4cdb1619",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-16T19:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12353c2_57a76fb0",
+      "revId": "3229adb3b1fb88275e2c2908ab570105e910f836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
