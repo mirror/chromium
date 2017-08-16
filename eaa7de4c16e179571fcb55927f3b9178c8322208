@@ -22,6 +22,30 @@
       "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec69424_c8afd883",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-16T01:04:33Z",
+      "side": 1,
+      "message": "It is used in https://chromium-review.googlesource.com/c/604611/9/ui/file_manager/file_manager/background/js/volume_manager_util.js; line 163",
+      "parentUuid": "f637727f_92e8d5b6",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

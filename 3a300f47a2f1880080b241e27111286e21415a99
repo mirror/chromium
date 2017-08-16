@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dbb8b131_8d70fa6b",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-16T01:04:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f34861b4_6d6047ee",
+      "range": {
+        "startLine": 443,
+        "startChar": 71,
+        "endLine": 446,
+        "endChar": 26
+      },
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5e22b4d_08604aec",
         "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
         "patchSetId": 6
