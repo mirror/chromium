@@ -465,7 +465,9 @@ public class ChildProcessLauncherHelper {
             @ChildProcessImportance int importance) {
         assert LauncherThread.runningOnLauncherThread();
         assert mLauncher.getPid() == pid;
-        getBindingManager().setPriority(pid, foreground, boostForPendingViews);
+        if (mCreationParams == null || !mCreationParams.getIgnoreVisibilityForImportance()) {
+            getBindingManager().setPriority(pid, foreground, boostForPendingViews);
+        }
 
         if (mImportance == importance) return;
         ChildProcessConnection connection = mLauncher.getConnection();
