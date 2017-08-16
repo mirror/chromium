@@ -22,6 +22,30 @@
       "revId": "0c5967303e7c14130840b06b1347e0494543a455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bba6ae_47f1ca7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-16T06:09:33Z",
+      "side": 1,
+      "message": "The other things which call Next are not members of TaskQueue, which is the context in which this statement was intended. If I were to document (in the code) which functions/methods update is_active_, I would mention it in the documentation of TaskQueue::Next and TaskQueue::PauseCurrent, but not e.g. IntallableManager::WorkOnTask, so it didn\u0027t seem to be something I should mention in the commit message either (I\u0027m not actually going to document it for TaskQueue::Next or TaskQueue::PauseCurrent, because it seems like overkill). The commit message was intended to implicitly contrast Next and PauseCurrent with other methods of TaskQueue which don\u0027t yet update is_active_ (e.g. TaskQueue::Reset).  I\u0027ll update those other methods in other CLs.",
+      "parentUuid": "a3df993a_33cef645",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "0c5967303e7c14130840b06b1347e0494543a455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
