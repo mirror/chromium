@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591f510c_20239c11",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-16T05:23:31Z",
+      "side": 1,
+      "message": "I think the canonical way to build it is to run \"package/gn/build.py --release\". That\u0027s what the old SDK update instructions suggested. But build.py just runs ninja, so there is no difference right now.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "36f1dacd9029ee9bf1340f3e37e722c83a973639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dae321b_033deba2",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-16T05:23:31Z",
+      "side": 1,
+      "message": "This can be Run(\u0027script/makesdk.go\u0027,...).\nmakesdk.go has exec bit and a shebang (kinda)",
+      "range": {
+        "startLine": 51,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 65
+      },
+      "revId": "36f1dacd9029ee9bf1340f3e37e722c83a973639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
