@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75402e46_b9ad1f99",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-16T23:04:38Z",
+      "side": 0,
+      "message": "I think it was specifically intended for these tests which do test an important behaviour of MessageLoop. Feel free to rename to HasHighResolutionTasksForTesting() but we can\u0027t get rid of it IMO.",
+      "revId": "64851d6549e974416f48bf85a95621076393ae16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
