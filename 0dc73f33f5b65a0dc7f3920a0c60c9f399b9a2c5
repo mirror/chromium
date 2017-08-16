@@ -478,6 +478,24 @@
     },
     {
       "key": {
+        "uuid": "601d2d2e_cd05e3af",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-16T06:26:13Z",
+      "side": 1,
+      "message": "As per offline discussion with hidehiko@, hirono@ and kinaba@, we agreed that, for foreseeable future where only single user is supported in ARC, we will continue to use this function. However we definitely want to remove this function once we\u0027re ready to support multi-user ARC. So I left the comments mentioning it.",
+      "parentUuid": "2efcbd24_22f943c7",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccf6460c_b1a1774b",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 3
