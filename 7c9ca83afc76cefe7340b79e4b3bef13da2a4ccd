@@ -1,0 +1,288 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46bf729a_44b8503a",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "For the consistency, you should restore the proxy delegate on the previous instance.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bc2bc3_4fcd5f7d",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "So this is nullable, which means that it could be that in chrome embedder, devtools installs its delegate before chrome installs its delegate.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676a38fc_7450dae8",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "Let\u0027s try making proxy delegate always there.\n\nIn fact, DownloadManager::SetDelegate is only used for testing. How about we assign delegate_ in download_manager_impl_ constructor via taking it from the context instead of doing it here: https://cs.chromium.org/chromium/src/content/browser/browser_context.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d210\n\nIn this case, we can assume that when devtools override comes in play, we already have an underlying embedder delegate. This would simplify your code below a great deal. We can rename DownloadManager::SetDelegate into DownloadManager::SetDelegateForTesting to make sure it is not abused.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c674ca20_2f903428",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "You\u0027ll be able to DCHECK(proxy_download_delegate_)",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e13d3c8_69201a46",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "download_helper will then be here for sure, so this branch won\u0027t be needed",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd4779b_9890e08d",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "You could expose GenerateDefaultFilename on the download_manager and reuse it between this and the shell. Copy-paste is fine as well though.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d35e6a_e4fffaab",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "I would say it should be false in case you have the helper instance per this item.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f202df_06218490",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "style: \"// DownloadManagerDelegate overrides\" comment above the following ones, no empty lines between overriden methods.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 71
+      },
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbce6e66_c6248b56",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "We are not refcounted, stray?",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441f4c54_5215af01",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "Singleton should not have a weakptr factory.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b41d02b_b182f39f",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "style: drop {}",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b041da42_b81e224a",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "is \"\" a good default?",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3137ed8d_92a6e6d4",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "Encapsulate these calls into a single\n\ndownload_delegate-\u003eTakeOver(download_manager);\n\nIt knows what to do to the manager.",
+      "range": {
+        "startLine": 663,
+        "startChar": 2,
+        "endLine": 665,
+        "endChar": 51
+      },
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dacecc3_b6002cae",
+        "filename": "content/browser/devtools/protocol/page_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "stray?",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a34291_9a694b93",
+        "filename": "content/shell/browser/shell_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "stray?",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6fec75_38527957",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 18
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T21:41:19Z",
+      "side": 1,
+      "message": "Juts a side note, would be more hermetic if we could return it as a stream instead of writing to file.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
