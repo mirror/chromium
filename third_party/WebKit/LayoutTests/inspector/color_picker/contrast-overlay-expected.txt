@@ -1,0 +1,3 @@
+Tests that the contrast line algorithm doesn't go into an infinite loop with a known bad foreground/background color combination.
+Contrast ratio line completed.
+
