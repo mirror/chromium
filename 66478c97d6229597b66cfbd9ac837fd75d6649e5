@@ -16,6 +16,24 @@
       "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4d068d_8c4b69bb",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T14:16:40Z",
+      "side": 1,
+      "message": "did_work was previously used to detect if we did any work - and if we didn\u0027t do any work to call DoIdleWork. You can look at the windows MessagePumpForUI::DoRunLoop to understand what this code was attempting to do, but note that windows has a for loop around this code which ensures that eventually no work will be done and DoIdleWork will be called. For Android here there is no for loop, so in order to trigger idle work we would have had to receive a message for some reason and not done any work because of it, which frequently lead to missing idle periods.\n\nWith this CL, did_work is no longer used to detect idle periods, in SystemMessageHandler.java we now add an IdleHandler to the Android message queue itself which informs us whenever it does idle, and we use that to call DoIdleWork.",
+      "parentUuid": "331eee3d_9601fa12",
+      "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
