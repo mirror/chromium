@@ -51,16 +51,14 @@ class Callback<R(Args...), copy_mode, repeat_mode>
   }
 
   template <typename OtherCallback,
-            typename = typename std::enable_if<
-                internal::IsCallbackConvertible<OtherCallback, Callback>::value
-            >::type>
+            typename = std::enable_if_t<
+                internal::IsCallbackConvertible<OtherCallback, Callback>()>>
   Callback(OtherCallback other)
       : internal::CallbackBase<copy_mode>(std::move(other)) {}
 
   template <typename OtherCallback,
-            typename = typename std::enable_if<
-                internal::IsCallbackConvertible<OtherCallback, Callback>::value
-            >::type>
+            typename = std::enable_if_t<
+                internal::IsCallbackConvertible<OtherCallback, Callback>()>>
   Callback& operator=(OtherCallback other) {
     static_cast<internal::CallbackBase<copy_mode>&>(*this) = std::move(other);
     return *this;
