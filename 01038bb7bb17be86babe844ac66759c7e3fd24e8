@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d1a272_c6ceea5d",
+        "filename": "ios/chrome/browser/ssl/ios_captive_portal_blocking_page.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "Do you want to document delegate ownership?",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e36a5a_8733241f",
+        "filename": "ios/chrome/browser/ssl/ios_captive_portal_blocking_page.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "weak?",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 41
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85411a4e_0437945f",
+        "filename": "ios/chrome/browser/ssl/ios_captive_portal_blocking_page_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "nit: Should this be just |connectWithLandingURL|?",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7fd97d_4a003125",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 5057,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "nit: linebreak after this",
+      "range": {
+        "startLine": 5057,
+        "startChar": 15,
+        "endLine": 5057,
+        "endChar": 53
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b547f1_7e6fa540",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "Comments?",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a12fabf_defd073c",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "Linebreak after this include",
+      "range": {
+        "startLine": 5,
+        "startChar": 81,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd8ffb9_57c6dfaf",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "readonly?",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6114a763_262485c5",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "Is this comment accurate?",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0495114c_3ce7c40e",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "Would it be better to have delegate as a property? It would definitely improve the formatting.",
+      "range": {
+        "startLine": 23,
+        "startChar": 23,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b3242a_44f67842",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "nit: @optional ?",
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742b2877_dbea5f04",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-16T16:00:47Z",
+      "side": 1,
+      "message": "How about |captivePortalLoginViewControllerDidFinish|? It should be up to the delegate to decide if UI should be dismissed, not up to UI.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
