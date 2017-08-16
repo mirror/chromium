@@ -226,7 +226,8 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     captive_portal_interstitial_shown_ = true;
   }
 
-  void ShowMITMSoftwareInterstitial() override {
+  void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
+                                    const bool is_enterprise_managed) override {
     mitm_software_interstitial_shown_ = true;
   }
 
@@ -455,12 +456,12 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
     chrome_browser_ssl::MITMSoftware* filter1 =
         config_proto->add_mitm_software();
     filter1->set_name("Outdated Antivirus");
-    filter1->set_regex("Outdated Antivirus");
+    filter1->set_issuer_common_name("Outdated Antivirus");
 
     chrome_browser_ssl::MITMSoftware* filter2 =
         config_proto->add_mitm_software();
     filter2->set_name("Misconfigured Firewall");
-    filter2->set_regex("Misconfigured Firewall_[A-Z0-9]+");
+    filter2->set_issuer_common_name("Misconfigured Firewall_[A-Z0-9]+");
     SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
   }
 
