@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40ca4166_e74d924b",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Maybe s/RenderFrameHosts/host objects/?  (RFPHs aren\u0027t really RenderFrameHosts.)",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf9e3a3_658366f8",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Abstract what?",
+      "range": {
+        "startLine": 44,
+        "startChar": 62,
+        "endLine": 44,
+        "endChar": 70
+      },
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb21c58_db966439",
+        "filename": "content/browser/renderer_host/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Can you make this a TODO referencing the BrowserPlugin removal bug?",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f03cb69_25b34856",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Please add a class-level comment, to help guide people who might consider adding methods to this class later for whether it belongs or not.\n\nI actually wonder whether the great comment in cross_process_frame_connector.h belongs here instead, but maybe that\u0027s tricky because of all the references to RFHs and RFPHs which aren\u0027t a concept here.  I think it\u0027s worth having some kind of description of how this class abstracts away the frame details while allowing communication across views in different processes, though.  (That\u0027s especially true for how we would document methods like SetView below.)",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ab5663_31898e69",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Style nit: All virtual methods must be CamelCase.",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d822150_999e1386",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Let\u0027s try to document all of these, since they have to be implemented by a different layer.  (Blank line between each as well.)",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d825b77_d0567d3b",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-16T01:35:26Z",
+      "side": 1,
+      "message": "Hmm, this is odd to me.  I don\u0027t think delegate classes would normally have fields of their own.  Is it possible to move it to CPFC, or is there a reason it belongs here?  (If the latter, let\u0027s document why.)",
+      "revId": "eed8caacadafd695c367be299bb2e4a483674c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
