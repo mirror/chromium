@@ -140,6 +140,7 @@ class Surface : public ui::PropertyHandler {
   };
   void CommitSurfaceHierarchy(
       const gfx::Point& origin,
+      float device_scale_factor,
       FrameType frame_type,
       LayerTreeFrameSinkHolder* frame_sink_holder,
       cc::CompositorFrame* frame,
@@ -261,6 +262,7 @@ class Surface : public ui::PropertyHandler {
   // Puts the current surface into a draw quad, and appends the draw quads into
   // the |frame|.
   void AppendContentsToFrame(const gfx::Point& origin,
+                             float device_scale_factor,
                              FrameType frame_type,
                              cc::CompositorFrame* frame);
 
