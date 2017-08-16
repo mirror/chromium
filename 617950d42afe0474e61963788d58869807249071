@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "309208d5_d955296d",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:25:09Z",
+      "side": 1,
+      "message": "Note that WindowTreeHost::Create() takes the bounds in physical-pixels (as opposed to DIP). It\u0027s not clear to be whether |bounds| is in pixels or in DIP. So I wanted to draw attention to this to make sure this is doing the right thing.",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a436cd_6faa772b",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:25:09Z",
+      "side": 1,
+      "message": "My only concern is that the views implementation may assume things to be of certain types (e.g. always expect a WindowTreeHost to be a DesktopWindowTreeHost, etc.), even if not right now, in some unfortunate future change. So I would encourage you to split out the relevant parts of DesktopScreenX11/DesktopScreenWin out of views, and into //ui/display/[x11|win], so we don\u0027t have to worry about this. (please file a crbug and a TODO here referencing that)",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf697b8a_3d5010e0",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T05:25:09Z",
+      "side": 1,
+      "message": "Sidenote: this mutates |root_window_controllers_|, which you are iterating over. I notice that you increment the iterator just before this call, but this is somewhat subtle. Maybe rearrange some of the functions a little to not have to do this.",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
