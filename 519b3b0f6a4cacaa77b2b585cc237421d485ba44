@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ec4812d_626b7a2b",
+        "filename": "sql/connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-16T00:51:28Z",
+      "side": 1,
+      "message": "Can you please add a comment explaining why base::flat_map is OK to use? Here is a template for the explanation.\n\nThe SQL query cache currently has ~300 items. Reasoning:\n1) There are 321 references of SQL_FROM_HERE - git grep SQL_FROM_HERE | wc -l\n2) There are 303 call invocations for Connection::GetCachedStatement - git grep GetCachedStatement | wc -l\nAlso, code search\u0027s cross-reference says there are 303 invocations of GetCachedStatement \n- https://cs.chromium.org/chromium/src/sql/connection.cc?q\u003dConnection::GetCachedStatement\u0026l\u003d1477\n\nflat_map is O(N) for insertions and O(logN) with a very good constant for lookups (please correct me if I got this wrong). The query cache can grow to at most 300 items and never shrinks, so there are at most ~300 insertions throughout the whole lifetime of a Chrome browser process. This suggests that a flat_map would be a good fit.",
+      "revId": "519b3b0f6a4cacaa77b2b585cc237421d485ba44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
