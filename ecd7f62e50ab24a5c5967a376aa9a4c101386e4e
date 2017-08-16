@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c59333a8_65588c3d",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:21:53Z",
+      "side": 1,
+      "message": "nit: add a comment for this block (in keeping with other blocks). Something like:\n// If there\u0027s only one browser installed that supports webapks, just use it.",
+      "revId": "ecd7f62e50ab24a5c5967a376aa9a4c101386e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da72773_6645d95a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-16T00:21:53Z",
+      "side": 1,
+      "message": "I thought in person we talked about making this more strict. in particular:\n- if you have a host browser in the metadata and it doesn\u0027t match.\n- i also think we shouldn\u0027t auto-select it if you have a default browser specified that doesn\u0027t match. (cause you expect everything web to go through that browser, no?)\n\n(if you agree, please also include tests for this)",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 35
+      },
+      "revId": "ecd7f62e50ab24a5c5967a376aa9a4c101386e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
