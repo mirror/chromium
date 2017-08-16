@@ -39,6 +39,8 @@ class CommonPaletteTool : public PaletteTool, public ash::ViewClickListener {
   // Creates a default view implementation to be returned by CreateView.
   views::View* CreateDefaultView(const base::string16& name);
 
+  HoverHighlightView* highlight_view() const { return highlight_view_; }
+
  private:
   HoverHighlightView* highlight_view_ = nullptr;
 
