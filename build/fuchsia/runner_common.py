@@ -149,6 +149,24 @@ def ReadRuntimeDeps(deps_path, output_directory):
 
 def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
                 device, dry_run):
+  """Builds a fuchsia bootfs image.
+
+  Args:
+    output_directory: The build output directory.
+    runtime_deps: A list of 2-tuples containing:
+      - a bootfs path (target)
+      - a host file path (source)
+    bin_name: The file path of the binary to run.
+    child_args: Command-line arguments that should be passed to the binary.
+    device: Whether the bootfs will run on a physical device.
+    dry_run: Whether to print the requisite commands without running them.
+  Returns:
+    On success, a 2-tuple containing:
+      - the path to the .bootfs file
+      - a dict mapping between bootfs paths (targets) and host file paths
+        (sources)
+    On failure, None.
+  """
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
@@ -291,7 +309,45 @@ def _ParallelSymbolizeBacktrace(backtrace, file_mapping):
   return symbolized
 
 
-def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
+def NetCp(src, dest, dry_run):
+  """Uses netcp to copy from |src| to |dest|.
+
+  Either path may start with ":" to indicate a path on fuchsia.
+
+  Args:
+    src: Source file path.
+    dest: Destination file path.
+    dry_run: Whether to print the netcp command without running it.
+  """
+  try:
+    # Run netaddr first to ensure that we can find fuchsia.
+    # netcp will hang in netboot_discover if we can't.
+    _RunAndCheck(
+        dry_run,
+        [os.path.join(SDK_ROOT, 'tools', 'netaddr'), '--fuchsia'])
+    _RunAndCheck(
+        dry_run,
+        [os.path.join(SDK_ROOT, 'tools', 'netcp'), src, dest])
+  except subprocess.CalledProcessError as e:
+    print 'Failed to pull %s from fuchsia to %s: %s' % (src, dest, str(e))
+
+
+def RunFuchsia(bootfs_and_manifest, use_device, dry_run,
+               test_launcher_summary_filename=None):
+  """Runs the supplied fuchsia bootfs image.
+
+  Args:
+    bootfs_and_manifest: A 2-tuple containing:
+      - the path to the bootfs image
+      - a dict mapping between bootfs paths (targets) and host file paths
+        (sources)
+    use_device: Whether to run the image on a physical device.
+    dry_run: Whether to print the requisite commands without running them.
+    test_launcher_summary_filename: An optional host path to which summary JSON
+      output should be written.
+  Returns:
+    0 on success, a nonzero integer otherwise.
+  """
   bootfs, bootfs_manifest = bootfs_and_manifest
   kernel_path = os.path.join(SDK_ROOT, 'kernel', 'magenta.bin')
 
@@ -332,6 +388,16 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
   else:
     qemu_command += ['-cpu', 'Haswell,+smap,-check']
 
+  if test_launcher_summary_filename:
+    # Set up local-only network to allow the host to retrieve the result JSON
+    # from the guest. Assumes the existence of a tun/tap interface named
+    # qemu. See https://goo.gl/SEqaXV for directions on setting up such an
+    # interface.
+    qemu_command += [
+        '-netdev', 'type=tap,ifname=qemu,script=no,downscript=no,id=net1',
+        '-device', 'e1000,netdev=net1,mac=52:54:00:63:5e:7a',
+    ]
+
   if dry_run:
     print 'Run:', ' '.join(qemu_command)
     return 0
@@ -362,6 +428,8 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
   # pc_offset: memory offset within the executable.
   backtrace_entries = []
 
+  summary_json_re = re.compile(r'Saved summary as JSON to ([^ ]+)')
+
   success = False
   while True:
     line = qemu_popen.stdout.readline().strip()
@@ -376,6 +444,16 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       print line
       continue
     guest_line = line[matched.end():]
+
+    # If the caller wants the summary JSON and the line specifies the
+    # guest-side path of that file, fetch it to the host.
+    if test_launcher_summary_filename:
+      matched = summary_json_re.search(line)
+      if matched:
+        print line
+        NetCp(':%s' % matched.group(1), test_launcher_summary_filename,
+              dry_run)
+        continue
 
     # Look for the back-trace prefix, otherwise just print the line.
     matched = backtrace_prefix.match(guest_line)
