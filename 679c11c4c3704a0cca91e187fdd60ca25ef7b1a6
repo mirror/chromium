@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b132ba_7a1ee612",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-16T01:06:23Z",
+      "side": 1,
+      "message": "It is recalc style, not layout.",
+      "revId": "679c11c4c3704a0cca91e187fdd60ca25ef7b1a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
