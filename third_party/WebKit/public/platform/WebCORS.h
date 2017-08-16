@@ -124,6 +124,10 @@ CheckExternalPreflight(const HTTPHeaderMap&);
 BLINK_PLATFORM_EXPORT WebURLRequest
 CreateAccessControlPreflightRequest(const WebURLRequest&);
 
+// TODO(hintzed) Think of something better
+BLINK_PLATFORM_EXPORT WebString
+CreateAccessControlRequestHeadersHeader(const HTTPHeaderMap&);
+
 // TODO(tyoshino): Using platform/loader/fetch/ResourceLoaderOptions violates
 // the DEPS rule. This will be fixed soon by making HandleRedirect() not
 // depending on ResourceLoaderOptions.
@@ -163,6 +167,21 @@ BLINK_PLATFORM_EXPORT void ExtractCorsExposedHeaderNamesList(
 
 BLINK_PLATFORM_EXPORT bool IsOnAccessControlResponseHeaderWhitelist(
     const WebString&);
+
+BLINK_PLATFORM_EXPORT WebString ListOfCORSEnabledURLSchemes();
+
+BLINK_PLATFORM_EXPORT bool IsCORSSafelistedMethod(const WebString&);
+
+BLINK_PLATFORM_EXPORT bool IsForbiddenHeaderName(const WebString&);
+
+BLINK_PLATFORM_EXPORT bool IsCORSSafelistedHeader(const WebString&,
+                                                  const WebString&);
+
+BLINK_PLATFORM_EXPORT bool ContainsOnlyCORSSafelistedOrForbiddenHeaders(
+    const HTTPHeaderMap&);
+
+BLINK_PLATFORM_EXPORT bool ShouldTreatCredentialsModeAsInclude(
+    WebURLRequest::FetchCredentialsMode);
 
 }  // namespace WebCORS
 

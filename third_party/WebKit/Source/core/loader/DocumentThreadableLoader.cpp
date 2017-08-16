@@ -45,7 +45,6 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/ThreadableLoaderClient.h"
 #include "core/loader/ThreadableLoadingContext.h"
-#include "core/loader/private/CrossOriginPreflightResultCache.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
@@ -65,6 +64,7 @@
 #include "platform/wtf/WeakPtr.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCORS.h"
+#include "public/platform/WebCORSPreflightResultCache.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURLRequest.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
@@ -178,6 +178,7 @@ DocumentThreadableLoader::DocumentThreadableLoader(
       loading_context_(&loading_context),
       options_(options),
       resource_loader_options_(resource_loader_options),
+      out_of_blink_cors_(RuntimeEnabledFeatures::OutOfBlinkCORSEnabled()),
       cors_flag_(false),
       suborigin_force_credentials_(false),
       security_origin_(resource_loader_options_.security_origin),
@@ -234,8 +235,9 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
 
   // The CORS flag variable is not yet used at the step in the spec that
   // corresponds to this line, but divert |cors_flag_| here for convenience.
-  if (cors_flag_ && request.GetFetchRequestMode() ==
-                        WebURLRequest::kFetchRequestModeSameOrigin) {
+  if (!out_of_blink_cors_ && cors_flag_ &&
+      request.GetFetchRequestMode() ==
+          WebURLRequest::kFetchRequestModeSameOrigin) {
     probe::documentThreadableLoaderFailedToStartLoadingForClient(GetDocument(),
                                                                  client_);
     ThreadableLoaderClient* client = client_;
@@ -257,6 +259,23 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
   // cross-origin, we cancel the old request create a new one, and copy these
   // headers.
   request_headers_ = request.HttpHeaderFields();
+
+  // Just load the request if CORS is handled out of blink.
+  // Need the cors_flag and request_headers_ to be set whilst redirects aren't
+  // handled in the CORSURLLoader.
+  if (out_of_blink_cors_) {
+    cors_redirect_limit_ = kMaxCORSRedirects;
+    ResourceRequest new_request(request);
+
+    // TODO(hintzed): Doing this is probably wrong, but I can't figure out
+    // what the "right" way would be - any advice would be appreciated!
+    new_request.SetCORSPreflightReferrer(SecurityPolicy::GenerateReferrer(
+        GetDocument()->GetReferrerPolicy(), request.Url(),
+        GetDocument()->OutgoingReferrer()));
+
+    LoadRequest(new_request, resource_loader_options_);
+    return;
+  }
 
   // DocumentThreadableLoader is used by all javascript initiated fetch, so we
   // use this chance to record non-GET fetch script requests. However, this is
@@ -351,6 +370,8 @@ void DocumentThreadableLoader::PrepareCrossOriginRequest(
 void DocumentThreadableLoader::LoadPreflightRequest(
     const ResourceRequest& actual_request,
     const ResourceLoaderOptions& actual_options) {
+  DCHECK(!out_of_blink_cors_);
+
   WebURLRequest web_url_request = WebCORS::CreateAccessControlPreflightRequest(
       WrappedResourceRequest(actual_request));
 
@@ -379,40 +400,45 @@ void DocumentThreadableLoader::LoadPreflightRequest(
 
 void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
     const ResourceRequest& request) {
-  DCHECK(IsCORSEnabledRequestMode(request.GetFetchRequestMode()) ||
+  DCHECK(out_of_blink_cors_ ||
+         IsCORSEnabledRequestMode(request.GetFetchRequestMode()) ||
          request.IsExternalRequest());
   DCHECK(client_);
   DCHECK(!GetResource());
 
-  // Cross-origin requests are only allowed certain registered schemes. We would
-  // catch this when checking response headers later, but there is no reason to
-  // send a request, preflighted or not, that's guaranteed to be denied.
-  if (!SchemeRegistry::ShouldTreatURLSchemeAsCORSEnabled(
-          request.Url().Protocol())) {
-    probe::documentThreadableLoaderFailedToStartLoadingForClient(GetDocument(),
-                                                                 client_);
-    DispatchDidFailAccessControlCheck(
-        ResourceError::CancelledDueToAccessCheckError(
-            request.Url(), ResourceRequestBlockedReason::kOther,
-            "Cross origin requests are only supported for protocol schemes: " +
-                SchemeRegistry::ListOfCORSEnabledURLSchemes() + "."));
-    return;
-  }
+  if (!out_of_blink_cors_) {
+    // Cross-origin requests are only allowed certain registered schemes. We
+    // would catch this when checking response headers later, but there is no
+    // reason to send a request, preflighted or not, that's guaranteed to be
+    // denied.
+    if (!SchemeRegistry::ShouldTreatURLSchemeAsCORSEnabled(
+            request.Url().Protocol())) {
+      probe::documentThreadableLoaderFailedToStartLoadingForClient(
+          GetDocument(), client_);
+      DispatchDidFailAccessControlCheck(
+          ResourceError::CancelledDueToAccessCheckError(
+              request.Url(), ResourceRequestBlockedReason::kOther,
+              "Cross origin requests are only supported for protocol "
+              "schemes: " +
+                  SchemeRegistry::ListOfCORSEnabledURLSchemes() + "."));
+      return;
+    }
 
-  // Non-secure origins may not make "external requests":
-  // https://wicg.github.io/cors-rfc1918/#integration-fetch
-  String error_message;
-  if (!loading_context_->GetExecutionContext()->IsSecureContext(
-          error_message) &&
-      request.IsExternalRequest()) {
-    DispatchDidFailAccessControlCheck(
-        ResourceError::CancelledDueToAccessCheckError(
-            request.Url(), ResourceRequestBlockedReason::kOrigin,
-            "Requests to internal network resources are not allowed "
-            "from non-secure contexts (see https://goo.gl/Y0ZkNV). "
-            "This is an experimental restriction which is part of "
-            "'https://mikewest.github.io/cors-rfc1918/'."));
-    return;
+    // Non-secure origins may not make "external requests":
+    // https://wicg.github.io/cors-rfc1918/#integration-fetch
+    String error_message;
+    if (!loading_context_->GetExecutionContext()->IsSecureContext(
+            error_message) &&
+        request.IsExternalRequest()) {
+      DispatchDidFailAccessControlCheck(
+          ResourceError::CancelledDueToAccessCheckError(
+              request.Url(), ResourceRequestBlockedReason::kOrigin,
+              "Requests to internal network resources are not allowed "
+              "from non-secure contexts (see https://goo.gl/Y0ZkNV). "
+              "This is an experimental restriction which is part of "
+              "'https://mikewest.github.io/cors-rfc1918/'."));
+      return;
+    }
   }
 
   ResourceRequest cross_origin_request(request);
@@ -420,61 +446,64 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
 
   cross_origin_request.RemoveUserAndPassFromURL();
 
-  // Enforce the CORS preflight for checking the Access-Control-Allow-External
-  // header. The CORS preflight cache doesn't help for this purpose.
-  if (request.IsExternalRequest()) {
-    LoadPreflightRequest(cross_origin_request, cross_origin_options);
-    return;
-  }
-
-  if (request.GetFetchRequestMode() !=
-      WebURLRequest::kFetchRequestModeCORSWithForcedPreflight) {
-    if (options_.preflight_policy == kPreventPreflight) {
-      PrepareCrossOriginRequest(cross_origin_request);
-      LoadRequest(cross_origin_request, cross_origin_options);
+  if (!out_of_blink_cors_) {
+    // Enforce the CORS preflight for checking the Access-Control-Allow-External
+    // header. The CORS preflight cache doesn't help for this purpose.
+    if (request.IsExternalRequest()) {
+      LoadPreflightRequest(cross_origin_request, cross_origin_options);
       return;
     }
 
-    DCHECK_EQ(options_.preflight_policy, kConsiderPreflight);
+    if (request.GetFetchRequestMode() !=
+        WebURLRequest::kFetchRequestModeCORSWithForcedPreflight) {
+      if (options_.preflight_policy == kPreventPreflight) {
+        PrepareCrossOriginRequest(cross_origin_request);
+        LoadRequest(cross_origin_request, cross_origin_options);
+        return;
+      }
 
-    // We use ContainsOnlyCORSSafelistedOrForbiddenHeaders() here since
-    // |request| may have been modified in the process of loading (not from
-    // the user's input). For example, referrer. We need to accept them. For
-    // security, we must reject forbidden headers/methods at the point we
-    // accept user's input. Not here.
-    if (FetchUtils::IsCORSSafelistedMethod(request.HttpMethod()) &&
-        FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(
-            request.HttpHeaderFields())) {
-      PrepareCrossOriginRequest(cross_origin_request);
-      LoadRequest(cross_origin_request, cross_origin_options);
+      DCHECK_EQ(options_.preflight_policy, kConsiderPreflight);
+
+      // We use ContainsOnlyCORSSafelistedOrForbiddenHeaders() here since
+      // |request| may have been modified in the process of loading (not from
+      // the user's input). For example, referrer. We need to accept them. For
+      // security, we must reject forbidden headers/methods at the point we
+      // accept user's input. Not here.
+      if (FetchUtils::IsCORSSafelistedMethod(request.HttpMethod()) &&
+          FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(
+              request.HttpHeaderFields())) {
+        PrepareCrossOriginRequest(cross_origin_request);
+        LoadRequest(cross_origin_request, cross_origin_options);
+        return;
+      }
+    }
+
+    // Now, we need to check that the request passes the CORS preflight either
+    // by issuing a CORS preflight or based on an entry in the CORS preflight
+    // cache.
+
+    bool should_ignore_preflight_cache = false;
+    if (!IsMainThread()) {
+      // TODO(horo): Currently we don't support the CORS preflight cache on
+      // worker thread when off-main-thread-fetch is enabled. See
+      // https://crbug.com/443374.
+      should_ignore_preflight_cache = true;
+    } else {
+      // Prevent use of the CORS preflight cache when instructed by the DevTools
+      // not to use caches.
+      probe::shouldForceCORSPreflight(GetDocument(),
+                                      &should_ignore_preflight_cache);
+    }
+
+    if (should_ignore_preflight_cache ||
+        !WebCORSPreflightResultCache::Shared().CanSkipPreflight(
+            GetSecurityOrigin()->ToString(), cross_origin_request.Url(),
+            cross_origin_request.GetFetchCredentialsMode(),
+            cross_origin_request.HttpMethod(),
+            cross_origin_request.HttpHeaderFields())) {
+      LoadPreflightRequest(cross_origin_request, cross_origin_options);
       return;
     }
-  }
-
-  // Now, we need to check that the request passes the CORS preflight either by
-  // issuing a CORS preflight or based on an entry in the CORS preflight cache.
-
-  bool should_ignore_preflight_cache = false;
-  if (!IsMainThread()) {
-    // TODO(horo): Currently we don't support the CORS preflight cache on worker
-    // thread when off-main-thread-fetch is enabled. See
-    // https://crbug.com/443374.
-    should_ignore_preflight_cache = true;
-  } else {
-    // Prevent use of the CORS preflight cache when instructed by the DevTools
-    // not to use caches.
-    probe::shouldForceCORSPreflight(GetDocument(),
-                                    &should_ignore_preflight_cache);
-  }
-
-  if (should_ignore_preflight_cache ||
-      !CrossOriginPreflightResultCache::Shared().CanSkipPreflight(
-          GetSecurityOrigin()->ToString(), cross_origin_request.Url(),
-          cross_origin_request.GetFetchCredentialsMode(),
-          cross_origin_request.HttpMethod(),
-          cross_origin_request.HttpHeaderFields())) {
-    LoadPreflightRequest(cross_origin_request, cross_origin_options);
-    return;
   }
 
   // We don't want any requests that could involve a CORS preflight to get
@@ -629,45 +658,46 @@ bool DocumentThreadableLoader::RedirectReceived(
         redirect_response, resource);
   }
 
-  WebCORS::RedirectStatus redirect_status =
-      WebCORS::CheckRedirectLocation(new_url);
-  if (redirect_status != WebCORS::RedirectStatus::kRedirectSuccess) {
-    StringBuilder builder;
-    builder.Append("Redirect from '");
-    builder.Append(original_url.GetString());
-    builder.Append("' has been blocked by CORS policy: ");
-    builder.Append(WebCORS::RedirectErrorString(redirect_status, new_url));
-    DispatchDidFailAccessControlCheck(
-        ResourceError::CancelledDueToAccessCheckError(
-            original_url, ResourceRequestBlockedReason::kOther,
-            builder.ToString()));
-    return false;
-  }
-
-  if (cors_flag_) {
-    // The redirect response must pass the access control check if the CORS
-    // flag is set.
-    WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
-        redirect_response.Url(), redirect_response.HttpStatusCode(),
-        redirect_response.HttpHeaderFields(),
-        new_request.GetFetchCredentialsMode(),
-        WebSecurityOrigin(GetSecurityOrigin()));
-    if (cors_status != WebCORS::AccessStatus::kAccessAllowed) {
+  // Skip CORS handling in blink of handled out of blink.
+  if (!out_of_blink_cors_) {
+    WebCORS::RedirectStatus redirect_status =
+        WebCORS::CheckRedirectLocation(new_url);
+    if (redirect_status != WebCORS::RedirectStatus::kRedirectSuccess) {
       StringBuilder builder;
       builder.Append("Redirect from '");
       builder.Append(original_url.GetString());
-      builder.Append("' to '");
-      builder.Append(new_url.GetString());
       builder.Append("' has been blocked by CORS policy: ");
-      builder.Append(WebCORS::AccessControlErrorString(
-          cors_status, redirect_response.HttpStatusCode(),
-          redirect_response.HttpHeaderFields(),
-          WebSecurityOrigin(GetSecurityOrigin()), request_context_));
+      builder.Append(WebCORS::RedirectErrorString(redirect_status, new_url));
       DispatchDidFailAccessControlCheck(
           ResourceError::CancelledDueToAccessCheckError(
               original_url, ResourceRequestBlockedReason::kOther,
               builder.ToString()));
       return false;
+    }
+
+    if (cors_flag_) {
+      // The redirect response must pass the access control check if the CORS
+      // flag is set.
+      WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
+          redirect_response.Url(), redirect_response.HttpStatusCode(),
+          redirect_response.HttpHeaderFields(),
+          new_request.GetFetchCredentialsMode(),
+          WebSecurityOrigin(GetSecurityOrigin()));
+      if (cors_status != WebCORS::AccessStatus::kAccessAllowed) {
+        StringBuilder builder;
+        builder.Append("Redirect from '");
+        builder.Append(original_url.GetString());
+        builder.Append("' has been blocked by CORS policy: ");
+        builder.Append(WebCORS::AccessControlErrorString(
+            cors_status, redirect_response.HttpStatusCode(),
+            redirect_response.HttpHeaderFields(),
+            WebSecurityOrigin(GetSecurityOrigin()), request_context_));
+        DispatchDidFailAccessControlCheck(
+            ResourceError::CancelledDueToAccessCheckError(
+                original_url, ResourceRequestBlockedReason::kOther,
+                builder.ToString()));
+        return false;
+      }
     }
   }
 
@@ -679,7 +709,8 @@ bool DocumentThreadableLoader::RedirectReceived(
 
   // If
   // - CORS flag is set, and
-  // - the origin of the redirect target URL is not same origin with the origin
+  // - the origin of the redirect target URL is not same origin with the
+  // origin
   //   of the current request's URL
   // set the source origin to a unique opaque origin.
   //
@@ -704,20 +735,27 @@ bool DocumentThreadableLoader::RedirectReceived(
 
   ResourceRequest cross_origin_request(new_request);
 
-  // Remove any headers that may have been added by the network layer that cause
-  // access control to fail.
+  // Remove any headers that may have been added by the network layer that
+  // cause access control to fail.
   cross_origin_request.ClearHTTPReferrer();
   cross_origin_request.ClearHTTPOrigin();
   cross_origin_request.ClearHTTPUserAgent();
+
   // Add any request headers which we previously saved from the
   // original request.
   for (const auto& header : request_headers_)
     cross_origin_request.SetHTTPHeaderField(header.key, header.value);
+
+  // TODO(hintzed): To communicate the unique origin after redirects to
+  // CORSURLLoader. Might not be necessary once we figured out how to
+  // implement CORS redirects properly with CORSURLLoader.
+  if (out_of_blink_cors_)
+    cross_origin_request.SetRequestorOrigin(security_origin_);
+
   MakeCrossOriginAccessRequest(cross_origin_request);
 
   return false;
 }
-
 void DocumentThreadableLoader::RedirectBlocked() {
   checker_.RedirectBlocked();
 
@@ -779,7 +817,7 @@ void DocumentThreadableLoader::ResponseReceived(
 
 void DocumentThreadableLoader::HandlePreflightResponse(
     const ResourceResponse& response) {
-  String access_control_error_description;
+  DCHECK(!out_of_blink_cors_);
 
   WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
       response.Url(), response.HttpStatusCode(), response.HttpHeaderFields(),
@@ -820,10 +858,14 @@ void DocumentThreadableLoader::HandlePreflightResponse(
     }
   }
 
-  std::unique_ptr<CrossOriginPreflightResultCacheItem> preflight_result =
-      WTF::WrapUnique(new CrossOriginPreflightResultCacheItem(
-          actual_request_.GetFetchCredentialsMode()));
-  if (!preflight_result->Parse(response, access_control_error_description) ||
+  WebString access_control_error_description;
+  std::unique_ptr<WebCORSPreflightResultCacheItem> preflight_result =
+
+      WebCORSPreflightResultCacheItem::Create(
+          actual_request_.GetFetchCredentialsMode(),
+          response.HttpHeaderFields(), access_control_error_description);
+
+  if (!preflight_result ||
       !preflight_result->AllowsCrossOriginMethod(
           actual_request_.HttpMethod(), access_control_error_description) ||
       !preflight_result->AllowsCrossOriginHeaders(
@@ -836,7 +878,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
   if (IsMainThread()) {
     // TODO(horo): Currently we don't support the CORS preflight cache on worker
     // thread when off-main-thread-fetch is enabled. https://crbug.com/443374
-    CrossOriginPreflightResultCache::Shared().AppendEntry(
+    WebCORSPreflightResultCache::Shared().AppendEntry(
         GetSecurityOrigin()->ToString(), actual_request_.Url(),
         std::move(preflight_result));
   }
@@ -889,7 +931,8 @@ void DocumentThreadableLoader::HandleResponse(
     // We dispatch a CORS failure for the case.
     // TODO(yhirano): This is probably not spec conformant. Fix it after
     // https://github.com/w3c/preload/issues/100 is addressed.
-    if (request_mode != WebURLRequest::kFetchRequestModeNoCORS &&
+    if (!out_of_blink_cors_ &&
+        request_mode != WebURLRequest::kFetchRequestModeNoCORS &&
         response.ResponseTypeViaServiceWorker() ==
             network::mojom::FetchResponseType::kOpaque) {
       StringBuilder builder;
@@ -923,7 +966,8 @@ void DocumentThreadableLoader::HandleResponse(
              fallback_request_for_service_worker_.Url()));
   fallback_request_for_service_worker_ = ResourceRequest();
 
-  if (IsCORSEnabledRequestMode(request_mode) && cors_flag_) {
+  if (!out_of_blink_cors_ && IsCORSEnabledRequestMode(request_mode) &&
+      cors_flag_) {
     WebCORS::AccessStatus cors_status = WebCORS::CheckAccess(
         response.Url(), response.HttpStatusCode(), response.HttpHeaderFields(),
         credentials_mode, WebSecurityOrigin(GetSecurityOrigin()));
@@ -1051,6 +1095,8 @@ void DocumentThreadableLoader::LoadActualRequest() {
 void DocumentThreadableLoader::HandlePreflightFailure(
     const KURL& url,
     const String& error_description) {
+  DCHECK(!out_of_blink_cors_);
+
   // Prevent handleSuccessfulFinish() from bypassing access check.
   actual_request_ = ResourceRequest();
 
@@ -1228,7 +1274,7 @@ void DocumentThreadableLoader::LoadRequest(
       // mode is in use. See the following issues:
       // - https://github.com/whatwg/fetch/issues/130
       // - https://github.com/whatwg/fetch/issues/169
-      allow_stored_credentials = !cors_flag_ || suborigin_force_credentials_;
+      allow_stored_credentials = (!cors_flag_) || suborigin_force_credentials_;
       break;
     case WebURLRequest::kFetchCredentialsModeInclude:
     case WebURLRequest::kFetchCredentialsModePassword:

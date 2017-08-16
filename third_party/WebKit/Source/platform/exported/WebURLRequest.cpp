@@ -418,6 +418,16 @@ bool WebURLRequest::IsExternalRequest() const {
   return resource_request_->IsExternalRequest();
 }
 
+WebURL WebURLRequest::GetCORSPreflightReferrer() const {
+  return KURL(kParsedURLString,
+              resource_request_->GetCORSPreflightReferrer().referrer);
+}
+
+WebReferrerPolicy WebURLRequest::GetCORSPreflightReferrerPolicy() const {
+  return static_cast<WebReferrerPolicy>(
+      resource_request_->GetCORSPreflightReferrer().referrer_policy);
+}
+
 WebURLRequest::LoadingIPCType WebURLRequest::GetLoadingIPCType() const {
   return resource_request_->GetLoadingIPCType();
 }
