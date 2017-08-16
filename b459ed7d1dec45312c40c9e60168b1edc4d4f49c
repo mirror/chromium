@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54c4a71d_0dee91c2",
+        "filename": "chrome/renderer/resources/extensions/certificate_provider_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-16T18:52:08Z",
+      "side": 1,
+      "message": "nit: Should this be $Function.bind? (Here and elsewhere.)",
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8794483a_92fb5115",
+        "filename": "chrome/renderer/resources/extensions/desktop_capture_custom_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-16T18:52:08Z",
+      "side": 1,
+      "message": "$Function.bind? (Here and elsewhere)",
+      "revId": "b459ed7d1dec45312c40c9e60168b1edc4d4f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
