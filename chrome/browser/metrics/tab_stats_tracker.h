@@ -11,6 +11,8 @@
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 
+class PrefService;
+
 namespace metrics {
 
 // Class for tracking and recording the tabs and browser windows usage.
@@ -21,23 +23,26 @@ class TabStatsTracker : public TabStripModelObserver,
                         public chrome::BrowserListObserver,
                         public base::PowerObserver {
  public:
-  // Creates the |TabStatsTracker| instance and initializes the
-  // observers that notify it.
-  static void Initialize();
+  class TabsStatsDataStore;
+
+  // Creates the |TabStatsTracker| instance and initializes the observers that
+  // notify it.
+  static void Initialize(PrefService* pref_service);
 
   // Returns the |TabStatsTracker| instance.
   static TabStatsTracker* GetInstance();
 
   // Accessors.
-  size_t total_tab_count() const { return total_tabs_count_; }
-  size_t browser_count() const { return browser_count_; }
+  TabsStatsDataStore* tab_stats_data_store() {
+    return tab_stats_data_store_.get();
+  }
 
  protected:
   // The UmaStatsReportingDelegate is responsible for delivering statistics
   // reported by the TabStatsTracker via UMA.
   class UmaStatsReportingDelegate;
 
-  TabStatsTracker();
+  TabStatsTracker(PrefService* pref_service);
   ~TabStatsTracker() override;
 
   // chrome::BrowserListObserver:
@@ -56,14 +61,11 @@ class TabStatsTracker : public TabStripModelObserver,
   // base::PowerObserver:
   void OnResume() override;
 
-  // The total number of tabs opened across all the browsers.
-  size_t total_tabs_count_;
-
-  // The total number of browsers opened.
-  size_t browser_count_;
-
   // The delegate that reports the events.
   std::unique_ptr<UmaStatsReportingDelegate> reporting_delegate_;
+
+  // The tab stats.
+  std::unique_ptr<TabsStatsDataStore> tab_stats_data_store_;
 
  private:
   SEQUENCE_CHECKER(sequence_checker_);
@@ -71,7 +73,7 @@ class TabStatsTracker : public TabStripModelObserver,
   DISALLOW_COPY_AND_ASSIGN(TabStatsTracker);
 };
 
-// The reporting delegate, which reports metrics via UMA.
+// The reporting delegate interface, which reports metrics via UMA.
 class TabStatsTracker::UmaStatsReportingDelegate {
  public:
   // The name of the histogram that records the number of tabs total at resume
@@ -86,6 +88,55 @@ class TabStatsTracker::UmaStatsReportingDelegate {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(UmaStatsReportingDelegate);
+};
+
+class TabStatsTracker::TabsStatsDataStore {
+ public:
+  // Houses all of the statistics gathered by the TabStatsTracker.
+  struct TabStats {
+    // Constructor, initializes everything to zero.
+    TabStats();
+
+    // The total number of tabs opened across all the browsers.
+    size_t total_tab_count;
+
+    // The maximum total number of tabs that has been opened across all the
+    // browsers at the same time.
+    size_t total_tab_count_max;
+
+    // The maximum total number of tabs that has been opened at the same time in
+    // a single browser.
+    size_t max_tab_per_window;
+
+    // The total number of browsers opened.
+    size_t browser_count;
+
+    // The maximum total number of browsers opened at the same time.
+    size_t browser_count_max;
+  };
+
+  TabsStatsDataStore(PrefService* pref_service) : pref_service_(pref_service) {
+  }
+  ~TabsStatsDataStore() {
+    ::memset(reinterpret_cast<uint8_t*>(&tab_stats_), 0, sizeof(TabStats));
+  }
+
+  void UpdateTotalTabCountMaxIfNeeded();
+  void UpdateMaxTabsPerWindowIfNeeded(size_t value);
+  void UpdateBrowserCountMaxIfNeeded();
+
+  void UpdatePrefs();
+
+  TabStats& tab_stats() { return tab_stats_; }
+
+ protected:
+  TabStats tab_stats_;
+
+  // A weak pointer to the PrefService used to read and write the statistics.
+  PrefService* pref_service_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TabsStatsDataStore);
 };
 
 }  // namespace metrics
