@@ -97,10 +97,6 @@ class CORE_EXPORT DocumentMarkerController final
                                  bool);
   bool HasMarkers(Node* node) const { return markers_.Contains(node); }
 
-  // Returns a marker of one of the specified types that includes the specified
-  // Position in its interior (not at an endpoint), if one exists.
-  DocumentMarker* MarkerAtPosition(const Position&,
-                                   DocumentMarker::MarkerTypes);
   // Looks for a marker in the specified node of the specified type whose
   // interior has non-empty overlap with the range [start_offset, end_offset].
   // If the range is collapsed, this looks for a marker containing the offset of
