@@ -31,7 +31,7 @@
 
   async function deleteCookie(cookie) {
     testRunner.log('Deleting Cookie');
-    await dp.Network.deleteCookie(cookie);
+    await dp.Network.deleteCookies(cookie);
     await logCookies();
   }
 
@@ -45,8 +45,9 @@
     var data = (await dp.Network.getAllCookies()).result;
     var promises = [];
     for (var cookie of data.cookies) {
-      var url = 'http://' + cookie.domain + '/' + cookie.path;
-      promises.push(dp.Network.deleteCookie({url, cookieName: cookie.name}));
+      var url = (cookie.secure ? 'https://' : 'http://') + cookie.domain + cookie.path;
+      promises.push(dp.Network.deleteCookies({url, name:cookie.name}));
+      promises.push(dp.Network.deleteCookies({name:cookie.name, domain:cookie.domain, path:cookie.path}));
     }
     await Promise.all(promises);
   }
@@ -69,7 +70,7 @@
     },
 
     async function simpleCookieDelete() {
-      await deleteCookie({url: 'http://127.0.0.1', cookieName: 'foo'});
+      await deleteCookie({url: 'http://127.0.0.1', name: 'foo'});
     },
 
     deleteAllCookies,
@@ -137,13 +138,39 @@
     deleteAllCookies,
 
     async function setCookiesBasic() {
-      await setCookies([{name: 'foo1', value: 'bar1', domain: '127.0.0.1', path: '/', },
-                        {name: 'foo2', value: 'bar2', domain: '127.0.0.1', path: '/', httpOnly: true },
-                        {name: 'foo3', value: 'bar3', domain: '127.0.0.1', path: '/', secure: true },
-                        {name: 'foo4', value: 'bar4', domain: '127.0.0.1', path: '/', sameSite: 'Lax' },
-                        {name: 'foo5', value: 'bar5', domain: '127.0.0.1', path: '/' },
-                        {name: 'foo6', value: 'bar6', domain: '.chromium.org', path: '/path', expires: Date.now() + 1000 },
-                        {name: 'foo7', value: 'bar7', url: 'https://www.chromium.org/foo', expires: Date.now() + 1000 }]);
+      await setCookies([{name: 'cookie1', value: 'session', domain: 'localhost', path: '/', },
+                        {name: 'cookie2', value: 'httpOnly', domain: 'localhost', path: '/', httpOnly: true },
+                        {name: 'cookie3', value: 'secure', domain: 'localhost', path: '/', secure: true },
+                        {name: 'cookie4', value: 'lax', domain: 'localhost', path: '/', sameSite: 'Lax' },
+                        {name: 'cookie5', value: 'expires', domain: 'localhost', path: '/', expires: Date.now() + 1000 },
+                        {name: 'cookie6', value: '.domain', domain: '.chromium.org', path: '/path' },
+                        {name: 'cookie7', value: 'domain', domain: 'chromium.org', path: '/path' },
+                        {name: 'cookie8', value: 'url-based', url: 'https://www.chromium.org/foo' }]);
+    },
+
+    deleteAllCookies,
+
+    async function deleteCookieByURL() {
+      await setCookies([{name: 'cookie1', value: '.domain', domain: '.chromium.org', path: '/path' },
+                        {name: 'cookie2', value: '.domain', domain: '.chromium.org', path: '/path', expires: Date.now() + 1000 }]);
+      await deleteCookie({url: 'http://www.chromium.org/path', name: 'cookie1'});
+    },
+
+    deleteAllCookies,
+
+    async function deleteCookieByDomain() {
+      await setCookies([{name: 'cookie1', value: '.domain', domain: '.chromium.org', path: '/path' },
+                        {name: 'cookie2', value: '.domain', domain: '.chromium.org', path: '/path', expires: Date.now() + 1000 }]);
+      await deleteCookie({name: 'cookie1', domain: '.chromium.org'});
+      await deleteCookie({name: 'cookie2', domain: '.chromium.org'});
+    },
+
+    deleteAllCookies,
+
+    async function deleteCookieByDomainAndPath() {
+      await setCookies([{name: 'cookie1', value: '.domain', domain: '.chromium.org', path: '/path' }]);
+      await deleteCookie({name: 'cookie1', domain: '.chromium.org', path: '/foo'});
+      await deleteCookie({name: 'cookie1', domain: '.chromium.org', path: '/path'});
     },
 
     deleteAllCookies,
