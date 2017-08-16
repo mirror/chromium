@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d70d91d6_9b89385c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T22:42:59Z",
+      "side": 1,
+      "message": "source",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "5ce070c44e7dd4c3b85e8fcbfd38b0c780729ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e5d06ff_c817c022",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 1
@@ -31,6 +54,47 @@
       "side": 1,
       "message": "I actually did have it split (copied the pdf frame portion over), and it turns out that the pdfs are actually a node; i.e. node.IsNull() returns false, and GetPlugin(frame) returns nullptr. I could remove the plugin portion, but it seemed to make sense to also not resize plugins... what do you think?",
       "parentUuid": "3e5d06ff_c817c022",
+      "revId": "5ce070c44e7dd4c3b85e8fcbfd38b0c780729ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1f1c7e_ed2af449",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T22:42:59Z",
+      "side": 1,
+      "message": "I tested this too, and it\u0027s weird because all the plugins are nodes, and I can\u0027t get anything to print as a plugin. This may be due to PDF becoming Out Of Process. So in the end it works out.",
+      "parentUuid": "26cf7606_51bfa920",
+      "revId": "5ce070c44e7dd4c3b85e8fcbfd38b0c780729ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd99cd2_9c1f60e1",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-16T22:42:59Z",
+      "side": 1,
+      "message": "This can be Flash as well.",
+      "range": {
+        "startLine": 918,
+        "startChar": 20,
+        "endLine": 918,
+        "endChar": 24
+      },
       "revId": "5ce070c44e7dd4c3b85e8fcbfd38b0c780729ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
