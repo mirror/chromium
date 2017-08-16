@@ -195,12 +195,11 @@ TEST(NtlmTest, GenerateSessionBaseKeyWithClientTimestampV2SpecTests) {
 }
 
 TEST(NtlmTest, GenerateChannelBindingHashV2SpecTests) {
-  base::MD5Digest v2_channel_binding_hash;
-  GenerateChannelBindingHashV2(test::kChannelBindings,
-                               &v2_channel_binding_hash);
+  uint8_t v2_channel_binding_hash[kChannelBindingsHashLen];
+  GenerateChannelBindingHashV2(test::kChannelBindings, v2_channel_binding_hash);
 
   ASSERT_EQ(0, memcmp(test::kExpectedChannelBindingHashV2,
-                      v2_channel_binding_hash.a, kChannelBindingsHashLen));
+                      v2_channel_binding_hash, kChannelBindingsHashLen));
 }
 
 TEST(NtlmTest, GenerateMicV2Simple) {
