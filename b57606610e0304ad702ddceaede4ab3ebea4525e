@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a94e934f_2cf539e3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/ed25519-broken-signature.js.headers",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done.\n\nNo README, but I extended the existing tool to print the requires signatures, so now these are generated the same as all the other hashes.",
+      "parentUuid": "1303fdf3_44b15bc6",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "877f9481_f5b9343b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/ed25519-multi-signature.js.headers",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T08:20:23Z",
       "side": 1,
       "message": "I think it\u0027s probably better to make this comma-separated (which is what would happen if the server sent multiple `Integrity` headers). That is:\n\n```\nIntegrity: 1\nIntegrity: 2\nIntegrity: 3\n```\n\nIs collapsed into:\n\n```\nIntegrity: 1, 2, 3\n```",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2620b6_e914152c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/ed25519-multi-signature.js.headers",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done. Also added test cases.",
+      "parentUuid": "877f9481_f5b9343b",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c531d145_cb501c32",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/sriharness.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76dfd76e_795b0301",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ec3523_a2db2fe5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21828cc_41ef80db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ec3523_a2db2fe5",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "9955ce38_d11924e3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e203923_5cae3e00",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa9a0bb_3ed29298",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
         "patchSetId": 1
@@ -118,6 +208,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7a6907_79b0cfbf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa9a0bb_3ed29298",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "714ee02c_06abcd65",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5b4d5c_e8c3d180",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c4c67e0_9454bf7d",
         "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
         "patchSetId": 1
@@ -172,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "0d99b523_efa91d47",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c4c67e0_9454bf7d",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c14604bd_119cab50",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -183,6 +327,24 @@
       "writtenOn": "2017-08-10T08:20:23Z",
       "side": 1,
       "message": "I think you\u0027ll need to add this to //Source/platform/loader/DEPS.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808bd02b_1ab39b1d",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done.\n\n(I\u0027m not sure if I understand this, though. checkdeps.py passes with and without the additional DEPS line.)",
+      "parentUuid": "c14604bd_119cab50",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "62b7ff4a_036989af",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Not done. I don\u0027t think a \u0027spec this\u0027 TODO makes much sense here...",
+      "parentUuid": "c5880026_cc3158ff",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6fc4138_88b4ce27",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -251,6 +431,24 @@
       "writtenOn": "2017-08-10T08:20:23Z",
       "side": 1,
       "message": "I wonder if we should add an explicit `kWeakestAlgorithm` or something to `IntegrityAlgorithm` in order to explain this bit.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29645984_2db67a0a",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Naah.\n\nIf this is important to you, I\u0027ll try to find a way to initialize this with a const_expr std::min(... all the algos ...), which is really what we want here.",
+      "parentUuid": "8b2bcd0e_f7d9e7fb",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +489,24 @@
     },
     {
       "key": {
+        "uuid": "c26cd009_18e039f3",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e83031d_d59fcbba",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab46326_00129865",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -305,6 +521,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff4a7f1_29c73b7a",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab46326_00129865",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +559,24 @@
     },
     {
       "key": {
+        "uuid": "5b287a7a_74bd4fd1",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247ea5c7_f034898c",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2fc8841_f82c17bb",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -336,6 +588,24 @@
       "writtenOn": "2017-08-10T08:20:23Z",
       "side": 1,
       "message": "It looks like they return 0 for failure. Could we just say `if (ED25591_verify(...))`?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7921d169_0abed486",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Well, we could. But the header docs expressedly say that 1 means success, and makes no statement about any other non-zero values, so I\u0027d prefer not to.",
+      "parentUuid": "d2fc8841_f82c17bb",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -356,6 +626,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f44598_58bff716",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Ack (No idea why, but that\u0027s what current code + tests do.)",
+      "parentUuid": "88c1d62a_2cb53a1d",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +681,24 @@
     },
     {
       "key": {
+        "uuid": "abf2b681_7af9601b",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done. (obsolete)",
+      "parentUuid": "5e4477c5_7ce06cb5",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1141481b_8286585c",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
         "patchSetId": 1
@@ -407,6 +713,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8b9d76_2640a85c",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1141481b_8286585c",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +751,24 @@
     },
     {
       "key": {
+        "uuid": "9025d07e_a8de9ef6",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51595626_a8d9bbc6",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8896280_433a2ab0",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
         "patchSetId": 1
@@ -438,6 +780,24 @@
       "writtenOn": "2017-08-10T08:20:23Z",
       "side": 1,
       "message": "Is there a bug you can link to here? It seems like this isn\u0027t how we want to leave things.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59e790e_b0d0f20e",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "This indeed shouldn\u0027t be checked in. This is currently being changed in another CL, and I assume that one will land before this one, and hence I\u0027ll have to change this anyhow.\n\nSo, leaving this for now; knowing this will block this CL.",
+      "parentUuid": "a8896280_433a2ab0",
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -461,6 +821,24 @@
     },
     {
       "key": {
+        "uuid": "8e89b64f_0b1cdfc5",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "(same issue as above)",
+      "parentUuid": "4e25eccc_a0d2d240",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3071490c_c3b9ec8b",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrityTest.cpp",
         "patchSetId": 1
@@ -475,6 +853,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df0de87_1120f01c",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrityTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3071490c_c3b9ec8b",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +891,24 @@
     },
     {
       "key": {
+        "uuid": "6843e37d_f780b868",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35e7fa2_5ebf2aba",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95df4dde_12041386",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
         "patchSetId": 1
@@ -512,6 +926,24 @@
     },
     {
       "key": {
+        "uuid": "477fefe1_80a767e2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95df4dde_12041386",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "170f614f_54336934",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
         "patchSetId": 1
@@ -526,6 +958,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e61932_7fa498ae",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-16T12:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "170f614f_54336934",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
