@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de6be6f_39180108",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:23:05Z",
+      "side": 1,
+      "message": "I think we should make this an actual error, so that if someone tries to submit a bad expiry date, it will fail the build. (When this is run as part of build.)\n\nPlease make it an error and add a test for it.",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "70dd87db727d1463bb9735f07f325de3227098d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a512f4e_40b14cb0",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:23:05Z",
+      "side": 1,
+      "message": "I think this has sufficient number of params that they should be documented formally.",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "70dd87db727d1463bb9735f07f325de3227098d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4e2eba_a70e1557",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:23:05Z",
+      "side": 1,
+      "message": "More descriptive name - like ExpiredHistogramsTest",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "70dd87db727d1463bb9735f07f325de3227098d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870ebdcb_450074e2",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:23:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we generally use a _ separator for test names.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "70dd87db727d1463bb9735f07f325de3227098d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94282cf9_e36cb944",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-16T18:23:05Z",
+      "side": 1,
+      "message": "Instead of checking each line in content, suggest having it all as one string and then checking that it matches exactly. You can define the constant expected string at the top of the file to make the test code itself more readable.",
+      "range": {
+        "startLine": 60,
+        "startChar": 46,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "70dd87db727d1463bb9735f07f325de3227098d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
