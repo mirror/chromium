@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "578ff63c_1dc9e397",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "ea970211_6eddc7e5",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e13f71a_da8d8ffb",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303c5174_1defc4c4",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e13f71a_da8d8ffb",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43ee0c60_fb77216d",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "349c1c5f_7b4b823b",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93e04f33_a5c0e4ef",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce70509_19c9c252",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e04f33_a5c0e4ef",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7e12fa18_97a12950",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "Switched to DLOG",
+      "parentUuid": "1435a49a_4b01163c",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae9e6f0_74b258f3",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-15T14:16:54Z",
       "side": 1,
       "message": "is LOG(ERROR) safe here or should we DLOG? See comment above.",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166e39b3_7c6ed911",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "Switched to DLOG",
+      "parentUuid": "fae9e6f0_74b258f3",
       "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f6afb3de_6864e52e",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "SetDropData is invoked from DragDropController in Chrome. DragDropController must complete drag operation before sending next drop data, so it\u0027s a programming error if this DCHECK failed.\n\nThe API which enables clients to start drag and drop is DataDevice#StartDrag, which has not been implemented yet.",
+      "parentUuid": "bcb85109_af78cde9",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abaf50f8_c3102434",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-15T14:16:54Z",
       "side": 1,
       "message": "is there a good reason to not use flat_set/map anymore?",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f43a36e_66d4094b",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-16T03:56:59Z",
+      "side": 1,
+      "message": "No, I overlooked flat_map. Changed.",
+      "parentUuid": "abaf50f8_c3102434",
       "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
