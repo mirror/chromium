@@ -109,11 +109,11 @@ class WebMouseEvent : public WebInputEvent, public WebPointerProperties {
 #endif
 
   void SetPositionInWidget(float x, float y) {
-    position_in_widget_ = WebFloatPoint(floor(x), floor(y));
+    position_in_widget_ = WebFloatPoint(x, y);
   }
 
   void SetPositionInScreen(float x, float y) {
-    position_in_screen_ = WebFloatPoint(floor(x), floor(y));
+    position_in_screen_ = WebFloatPoint(x, y);
   }
 
  protected:
