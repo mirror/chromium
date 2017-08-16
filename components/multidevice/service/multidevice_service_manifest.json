@@ -1,0 +1,14 @@
+{
+  "name": "multidevice",
+  "display_name": "MultiDevice Service",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "device_sync": [ "multidevice::mojom::DeviceSync" ]
+       },
+       "requires": {
+         "service_manager": [ "service_manager:all_users" ]
+       }
+     }
+  }
+}
