@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f31a09a5_30e79eab",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T01:49:58Z",
+      "side": 1,
+      "message": "Is this necessary? I think it\u0027d be cleaner to add an Index() method instead.",
+      "revId": "4dfb8e7a534cdad0349d73e1cec23adca3e20e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a989426b_0c08a47a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-16T01:49:58Z",
+      "side": 1,
+      "message": "Does CSSTokenizer not have a Size() method? Should we add one to make this more tidy?",
+      "revId": "4dfb8e7a534cdad0349d73e1cec23adca3e20e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
