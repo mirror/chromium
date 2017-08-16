@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c70e9afd_a2b2d43c",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-16T19:19:38Z",
+      "side": 1,
+      "message": "I feel this naming convention is extremely dubious. Maybe the experiment should be named Disabled?",
+      "range": {
+        "startLine": 2566,
+        "startChar": 21,
+        "endLine": 2568,
+        "endChar": 55
+      },
+      "revId": "93a2da880a0c0c4a9db64003b20225e42ae41eec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
