@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a43e7541_24c8ba29",
+        "filename": "content/browser/frame_host/render_frame_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-16T15:40:49Z",
+      "side": 1,
+      "message": "The race condition is that the task below deschedules this thread and runs on the IO thread. the task releases its refcount on this object after it runs, which then becomes 0 (since the owning ref count in RenderProcessHost hasn\u0027t processed yet). The constructor then returns and the object is deleted.\n\nSometimes we fix this with an explicit Initialize method that the caller calls. But in this case, since this is temporary I figured I\u0027d add something local that\u0027ll be removed later.",
+      "parentUuid": "6094518b_2085eea0",
+      "range": {
+        "startLine": 228,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "c66f4ade6bd98d9dc7f65c903f44289bfaaa2b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "982b90d6_8da24abb",
         "filename": "content/browser/frame_host/render_frame_message_filter.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T00:25:57Z",
       "side": 1,
       "message": "I had thought mojo pointers are bound to their thread/process context on first use--I take it that they\u0027re bound on construction and can be un- and re- bound by PassInterface + Bind?  (I.e. just confirming that we can\u0027t do this work directly in the constructor.)",
+      "range": {
+        "startLine": 243,
+        "startChar": 33,
+        "endLine": 243,
+        "endChar": 47
+      },
+      "revId": "c66f4ade6bd98d9dc7f65c903f44289bfaaa2b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4c6604_85303fe7",
+        "filename": "content/browser/frame_host/render_frame_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-16T15:40:49Z",
+      "side": 1,
+      "message": "Yep, they\u0027re bound either on construction or when Bind is called. In both cases, this has to be called on the thread they\u0027re used (i.e. can\u0027t pass in the mojo pipe on the constructor on the UI thread, and then use the pointer on the IO thread)",
+      "parentUuid": "982b90d6_8da24abb",
       "range": {
         "startLine": 243,
         "startChar": 33,
