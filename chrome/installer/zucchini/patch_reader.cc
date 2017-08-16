@@ -233,10 +233,7 @@ bool PatchElementReader::Initialize(BufferSource* source) {
       return false;
     }
 
-    if (pool_tag_value >= extra_targets_.size())
-      extra_targets_.resize(pool_tag_value + 1);
-
-    if (!extra_targets_[pool_tag_value].Initialize(source))
+    if (!extra_targets_[PoolTag(pool_tag_value)].Initialize(source))
       return false;
   }
   return true;
@@ -293,7 +290,6 @@ bool EnsemblePatchReader::Initialize(BufferSource* source) {
     }
   }
 
-  elements_.reserve(element_count);
   offset_t current_dst_offset = 0;
   for (uint32_t i = 0; i < element_count; ++i) {
     PatchElementReader element_patch;
