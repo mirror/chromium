@@ -4,9 +4,11 @@
 
 #include "chrome/browser/task_manager/providers/fallback_task_provider.h"
 
+#include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/process.h"
 #include "base/stl_util.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/task_manager/providers/render_process_host_task_provider.h"
 #include "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.h"
 #include "content/public/browser/browser_thread.h"
@@ -33,13 +35,12 @@ Task* GetTaskByPidFromVector(base::ProcessId process_id,
 FallbackTaskProvider::FallbackTaskProvider(
     std::unique_ptr<TaskProvider> primary_subprovider,
     std::unique_ptr<TaskProvider> secondary_subprovider)
-    : sources_{base::MakeUnique<SubproviderSource>(
-                   this,
-                   std::move(primary_subprovider)),
-               base::MakeUnique<SubproviderSource>(
-                   this,
-                   std::move(secondary_subprovider))},
-      weak_ptr_factory_(this) {
+    : sources_{
+          base::MakeUnique<SubproviderSource>(this,
+                                              std::move(primary_subprovider)),
+          base::MakeUnique<SubproviderSource>(
+              this,
+              std::move(secondary_subprovider))} {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
@@ -77,6 +78,23 @@ void FallbackTaskProvider::StopUpdating() {
   }
 
   shown_tasks_.clear();
+  pending_shown_tasks_.clear();
+}
+
+void FallbackTaskProvider::ShowTaskLater(Task* task) {
+  pending_shown_tasks_.erase(task);
+  auto it = pending_shown_tasks_.emplace(task, this).first;
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&FallbackTaskProvider::ShowPendingTask,
+                 it->second.GetWeakPtr(), task),
+      base::TimeDelta::FromMilliseconds(500));
+}
+
+void FallbackTaskProvider::ShowPendingTask(Task* task) {
+  pending_shown_tasks_.erase(task);
+  ShowTask(task);
 }
 
 void FallbackTaskProvider::ShowTask(Task* task) {
@@ -85,8 +103,12 @@ void FallbackTaskProvider::ShowTask(Task* task) {
 }
 
 void FallbackTaskProvider::HideTask(Task* task) {
-  base::Erase(shown_tasks_, task);
-  NotifyObserverTaskRemoved(task);
+  auto it = std::remove(shown_tasks_.begin(), shown_tasks_.end(), task);
+  pending_shown_tasks_.erase(task);
+  if (it != shown_tasks_.end()) {
+    shown_tasks_.erase(it, shown_tasks_.end());
+    NotifyObserverTaskRemoved(task);
+  }
 }
 
 void FallbackTaskProvider::OnTaskAddedBySource(Task* task,
@@ -102,12 +124,15 @@ void FallbackTaskProvider::OnTaskAddedBySource(Task* task,
 
   // If we get a primary task that has a secondary task that is both known and
   // shown we then hide the secondary task and then show the primary task.
-  ShowTask(task);
+
   if (source == primary_source()) {
+    ShowTask(task);
     for (Task* secondary_task : *secondary_source()->tasks()) {
       if (task->process_id() == secondary_task->process_id())
         HideTask(secondary_task);
     }
+  } else {
+    ShowTaskLater(task);
   }
 }
 
@@ -122,13 +147,13 @@ void FallbackTaskProvider::OnTaskRemovedBySource(Task* task,
         GetTaskByPidFromVector(task->process_id(), primary_source()->tasks());
     if (!primary_task) {
       for (Task* secondary_task : *secondary_source()->tasks()) {
-        if (task->process_id() == secondary_task->process_id())
-          ShowTask(secondary_task);
+        if (task->process_id() == secondary_task->process_id()) {
+          ShowTaskLater(secondary_task);
+        }
       }
     }
   }
-  if (base::ContainsValue(shown_tasks_, task))
-    HideTask(task);
+  HideTask(task);
 }
 
 void FallbackTaskProvider::OnTaskUnresponsive(Task* task) {
