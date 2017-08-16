@@ -576,6 +576,12 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   if (IsInPageLinkTarget())
     return false;
 
+  if (GetNode()->parentElement() &&
+      GetNode()->parentElement()->ShadowPseudoId() ==
+          AtomicString("-webkit-input-placeholder")) {
+    return true;
+  }
+
   if (layout_object_->IsText()) {
     // Static text beneath MenuItems and MenuButtons are just reported along
     // with the menu item, so it's ignored on an individual level.
