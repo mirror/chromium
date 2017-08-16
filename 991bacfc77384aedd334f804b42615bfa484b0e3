@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18edfb75_9764861d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:35:56Z",
+      "side": 1,
+      "message": "Do we need to explicitly start this particular service from code?  For the resume case you\u0027re saying?  I\u0027m updating the download resumption here (https://chromium-review.googlesource.com/c/611413/).  Maybe I could start the intent from that class?  Can you add a TODO for me?",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 86
+      },
+      "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e95787b_1830f982",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:35:56Z",
+      "side": 1,
+      "message": "Can you add a comment saying these are actions that don\u0027t require a particular delegate?",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 25
+      },
+      "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b67577_08a5ffd1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-16T18:35:56Z",
+      "side": 1,
+      "message": "Yeah I think we might need the foreground service to do something if it gets destroyed/restarted after shutdown.",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "991bacfc77384aedd334f804b42615bfa484b0e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
