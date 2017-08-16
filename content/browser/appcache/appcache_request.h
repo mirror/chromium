@@ -12,6 +12,8 @@
 #include "url/gurl.h"
 
 namespace net {
+class NetworkDelegate;
+;
 class URLRequest;
 }
 
@@ -26,6 +28,12 @@ struct ResourceRequest;
 class CONTENT_EXPORT AppCacheRequest {
  public:
   virtual ~AppCacheRequest();
+
+  // Starts the request.
+  virtual void Start() = 0;
+
+  // Cancels the request.
+  virtual void Cancel() = 0;
 
   // The URL for this request.
   virtual const GURL& GetURL() const = 0;
@@ -67,6 +75,9 @@ class CONTENT_EXPORT AppCacheRequest {
   // Returns the underlying AppCacheURLLoaderRequest if any. This only applies
   // to AppCache requests loaded via the URLLoader mechanism.
   virtual AppCacheURLLoaderRequest* AsURLLoaderRequest();
+
+  // Returns a pointer to the network delegate if any.
+  virtual net::NetworkDelegate* GetDelegate() = 0;
 
  protected:
   friend class AppCacheRequestHandler;

@@ -25,6 +25,12 @@
 
 namespace content {
 
+namespace {
+
+bool g_running_in_tests = false;
+
+}  // namespace
+
 AppCacheRequestHandler::AppCacheRequestHandler(
     AppCacheHost* host,
     ResourceType resource_type,
@@ -168,7 +174,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
   }
 
   // We don't fallback for responses that we delivered.
-  if (job_.get() && !base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (job_.get()) {
     DCHECK(!job_->IsDeliveringNetworkResponse());
     return NULL;
   }
@@ -351,8 +357,12 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::CreateJob(
       base::Bind(&AppCacheRequestHandler::OnPrepareToRestart,
                  base::Unretained(this)));
   job_ = job->GetWeakPtr();
+  // The subresource_load_info_ pointer is set by the
+  // AppCacheSubresourceURLFactory when it receives subresource load requests
+  // from the renderer. It is null for tests.
   if (!is_main_resource() &&
-      base::FeatureList::IsEnabled(features::kNetworkService)) {
+      base::FeatureList::IsEnabled(features::kNetworkService) &&
+      !IsRunningInTests()) {
     AppCacheURLLoaderJob* loader_job = job_->AsURLLoaderJob();
 
     loader_job->SetSubresourceLoadInfo(
@@ -372,6 +382,7 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::MaybeCreateJobForFallback(
   // In network service land, the job initiates a fallback request. We reuse
   // the existing job to deliver the fallback response.
   DCHECK(job_.get());
+  job_->set_delivery_type(AppCacheJob::AWAITING_DELIVERY_ORDERS);
   return std::unique_ptr<AppCacheJob>(job_.get());
 }
 
@@ -626,6 +637,16 @@ bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
     return true;
   }
   return false;
+}
+
+// static
+void AppCacheRequestHandler::SetRunningInTests(bool in_tests) {
+  g_running_in_tests = in_tests;
+}
+
+// static
+bool AppCacheRequestHandler::IsRunningInTests() {
+  return g_running_in_tests;
 }
 
 }  // namespace content
