@@ -1,0 +1,185 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+group("simple") {
+  deps = [
+    ":simple_benchmark",
+    ":simple_mojo_exe",
+  ]
+}
+
+# A simple executable that statically links the Mojo EDK and C++ bindings
+# for the simple.mojom.Math interface and uses it to add two integers.
+# This is only used to measure the code size of the final binary
+# (around 545 KiB on 32-bit Android, and 1.1 MiB on x86_64 Linux)
+# to assess the cost of the Mojo dependency.
+#
+executable("simple_mojo_exe") {
+  sources = [
+    "simple_mojo_main.cc",
+  ]
+  deps = [
+    "public/interfaces",
+    "//base",
+    "//mojo/common",
+    "//mojo/edk/system",
+    "//mojo/public/cpp/system",
+  ]
+}
+
+# A very small program that loads various shared libraries that all implement
+# the same C++ based API (see simple_api.h) in different ways and benchmark
+# their performance. All libraries have a named like simple_api_<something>.
+executable("simple_benchmark") {
+  sources = [
+    "simple_api.h",
+    "simple_benchmark.cc",
+  ]
+  deps = [
+    ":simple_api_callback",
+    ":simple_api_direct",
+    ":simple_api_mojo_async",
+    ":simple_api_mojo_sync",
+    ":simple_api_std_function",
+    "//base",
+  ]
+}
+
+# A config shared by all shared libraries loaded by the benchmark.
+config("simple_api_dll_config") {
+  defines = [ "SIMPLE_API_IMPLEMENTATION" ]
+  if (is_debug) {
+    defines += [ "DEBUG=1" ]
+  }
+}
+
+# A config used on Android to export the createXXX() symbols from the
+# benchmarked shared libraries (see simple_api.h).
+config("export_createXXX_symbols_only") {
+  if (!is_debug) {
+    ldflags = [ "-Wl,--version-script=" +
+                rebase_path("android_only_createXXX_symbols.lst") ]
+  }
+}
+
+# A template for benchmarked shared libraries that implement the simple_api.h
+# interface. The following parameters are supported:
+#
+#   sources: At least one source file.
+#   deps, public_deps: Additionnal dependencies.
+#   defines: Additionnal defines.
+#
+template("simple_api_library") {
+  shared_library(target_name) {
+    forward_variables_from(invoker, [ "*" ])
+    assert(defined(invoker.sources), "Need at least one source file")
+    sources = invoker.sources
+    sources += [ "simple_api.h" ]
+    if (defined(invoker.configs)) {
+      configs += invoker.configs
+    }
+    configs += [ ":simple_api_dll_config" ]
+
+    if (is_android) {
+      # On Android, the default build rules will remove all exported symbols
+      # from shared libraries except the JNI-related ones. Remvoe the
+      # corresponding configuration, and add a custom linker script to only
+      # expose thecreateXXX() symbols. This gets rid of a ton of libc++
+      # exported symbols that don't need to be visible, and reduces the
+      # overall size of all libraries.
+      configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+      configs += [ ":export_createXXX_symbols_only" ]
+    }
+
+    if (is_linux) {
+      if (!defined(invoker.public_deps)) {
+        public_deps = []
+      } else {
+        public_deps = invoker.public_deps
+      }
+      public_deps += [ "//buildtools/third_party/libc++" ]
+    }
+    if (defined(invoker.deps)) {
+      deps = invoker.deps
+    }
+    if (defined(invoker.defines)) {
+      defines = invoker.defines
+    }
+  }
+}
+
+# A simple_api library that implements each interface through direct
+# sub-classing.
+simple_api_library("simple_api_direct") {
+  sources = [
+    "simple_api_direct.cc",
+  ]
+}
+
+# A simple_api library that implements each interface through a dedicated
+# base::Callback<> instance, invoking its Run() method at runtime.
+#
+# Note that this shared library as its own copy of //base statically linked
+# into it. Which is independent from the one linked into simple_benchmark
+# itself.
+simple_api_library("simple_api_callback") {
+  sources = [
+    "simple_api_callback.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+# A simple_api library that implements each interface through a dedicated
+# std::function<> callback. It invokes its operator() method at runtime.
+# Only depends on the C++ library (statically linked into it).
+simple_api_library("simple_api_std_function") {
+  sources = [
+    "simple_api_std_function.cc",
+  ]
+}
+
+# A simple_api library that implements each interface through an
+# asynchronous Mojo C++ binding.
+#
+# Note that this shared library as its own copy of //base statically linked
+# into it. Which is independent from the one linked into simple_benchmark
+# itself.
+#
+# It also links its own copy of Mojo support code.
+simple_api_library("simple_api_mojo_async") {
+  sources = [
+    "simple_api_mojo.cc",
+  ]
+  deps = [
+    "public/interfaces",
+    "//base",
+    "//mojo/common",
+    "//mojo/edk/system",
+    "//mojo/public/cpp/system",
+  ]
+}
+
+# A simple_api library that implements each interface through an
+# synchronous Mojo C++ binding.
+#
+# Note that this shared library as its own copy of //base statically linked
+# into it. Which is independent from the one linked into simple_benchmark
+# itself.
+#
+# It also links its own copy of Mojo support code.
+simple_api_library("simple_api_mojo_sync") {
+  sources = [
+    "simple_api_mojo.cc",
+  ]
+  defines = [ "USE_MOJO_SYNC_METHOD" ]
+  deps = [
+    "public/interfaces",
+    "//base",
+    "//mojo/common",
+    "//mojo/edk/system",
+    "//mojo/public/cpp/system",
+  ]
+}

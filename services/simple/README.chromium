@@ -1,0 +1,134 @@
+Introduction:
+=============
+
+This directory contains sources to experiment with Mojo *in-process* call
+performance. The idea is to compare it to various other methods of calling
+entry points in shared libraries.
+
+At the moment, this provides the following:
+
+- A tiny executable (simple_mojo_exe) that tries to initialize Mojo and use
+  it to implement a trivial interface to add two 32-bit integers and return
+  their sum using a Mojom interface, and the corresponding C++ bindings.
+
+  This is only used to ensure that things work correctly, and to measure
+  the size of the final standalone executable (which statically links
+  the C++ library, base and Mojo all together).
+
+- A small benchmark program (simple_benchmark) that loads several shared
+  libraries that all implement the same trivial interfaces (see simple_api.h)
+  in different ways. Then measure the time it takes to perform the following
+  actions:
+
+  * load / unload the library (which includes running C++ initializers and
+    finalizers, respectively).
+
+  * create / destroy the abstract C++ interface derived classes at runtime
+    (which may trigger lazy initialization in //base or //mojo not measured
+    in library load/unload times).
+
+  * the performance of trivial synchronous calls. One (Math::Add is used to
+    add two 32-bit integers and return their sum), the other (Echo::Ping)
+    takes an std::string as input and returns it as the result.
+
+  Note that each library links its own version of the C++ library, and if
+  necessary //base and //mojo. And each one of them is loaded/unloaded
+  several times in a row at runtime.
+
+You can build the programs with:
+
+  ninja -C out/Release services/simple
+
+
+Code size measurements:
+=======================
+
+The simple_mojo_exe gives a good idea of the amount of code required to
+implement a single trivial Mojo interface. As such, its size mostly reflects
+the cost of linking Mojo into an executable or shared library:
+
+  arm32 Android:  545 KiB
+  x86_64 Linux:   1.1 MiB
+
+The simple_benchmark program only links to //base (to use base/time.h and
+base/logging.h classes), and has the following sizes:
+
+  arm32 Android:  206 KiB
+  x86_64 Linux:   714 KiB
+
+The simple_api libraries have various dependencies, listed along their sizes
+after calling "strip --strip-unneeded" on them:
+
+                               arm32 Android     x86_64 Linux
+  libsimple_api_direct             122 KiB         451 KiB      (C++)
+  libsimple_api_std_function       122 KiB         455 KiB      (C++)
+  libsimple_api_callback           202 KiB         531 KiB      (C++, base)
+  libsimple_api_mojo_async         548 KiB         1.2 MiB      (C++, base, mojo)
+  libsimple_api_mojo_sync          548 KiB         1.2 MiB      (C++, base, mojo)
+
+From this, we can conclude the following code sizes for the dependencies:
+
+                               arm32 Android     x86_64 Linux
+  C++ library                      122 KiB         451 KiB
+  base library                      80 KiB          80 KiB
+  mojo library                     346 KiB         697 KiB
+
+  base + mojo libraries            426 KiB         777 KiB
+
+Benchmark results:
+==================
+
+* Low-end Android device using a quad-core MediaTek MT6737M chipset.
+
+Run this with:
+
+  adb root           # Only required for adb shell stop/start to work.
+  adb shell stop     # Stop the Android framework
+
+  adb push out/Release/simple_benchmark out/Release/libsimple_api_*.so /data/local/tmp/
+  adb shell 'LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/simple_benchmark'
+
+  adb shell start    # If you want to restart the Android framework.
+
+times in us     :       load (us) |  math int (ns) | math call (ns) |  echo int (ns) | echo call (ns) |    unload (us)
+direct          :           683.6 |        27720.0 |           11.3 |         5260.0 |         1283.0 |          135.6
+std_function    :           690.3 |        28320.0 |           54.3 |         5520.0 |         1307.3 |          174.7
+callback        :           886.4 |        40870.0 |           52.3 |         7350.0 |         1406.2 |          147.4
+mojo_async      :          1796.9 |      1374200.0 |       124671.7 |       374400.0 |       131799.8 |          703.3
+mojo_sync       :          1705.6 |      1386300.0 |       125895.5 |       379200.0 |       131902.4 |       385719.0
+
+* Linux x86_64 2.9 GHz Xeon (E5-2690)
+
+Set cpu governor to "powersave" to get stable results for
+worst-case performance, then:
+
+  LD_LIBRARY_PATH=out/Linux out/Linux/simple_benchmark
+
+times in us     :       load (us) |  math int (ns) | math call (ns) |  echo int (ns) | echo call (ns) |    unload (us)
+direct          :            87.7 |          360.0 |            2.6 |          230.0 |           66.7 |           15.8
+std_function    :            77.0 |          460.0 |            6.9 |          200.0 |           62.6 |           14.3
+callback        :           645.3 |          370.0 |            5.8 |          200.0 |           49.5 |           20.3
+mojo_async      :          3388.8 |       389000.0 |         8690.6 |        40000.0 |         8691.8 |          594.0
+mojo_sync       :          5041.5 |       362600.0 |        10459.0 |        46600.0 |        10874.8 |        49888.1
+
+We can conclude from these numbers that the performance of in-process Mojo
+class is exceptionally bad compared to direct function calls:
+
+  - On Android, x11,000 slower (!!) for a trivial function that only takes two
+    integer parameters, and return another integer.
+
+    On Linux, it is "only" x3,300 times slower, which is still abysmall.
+
+  - The Ping() method passes a std::string as input and output, involving
+    copies and possibly heap allocation. There Mojo gets slightly better by
+    being "only" x100 times slower on Android, and x163 slower on Linux.
+
+  - On Linux, the Mojo-generated synchronous method wrappers are actually
+    x1.20 to x1.25 slower than calling the async methods and waiting
+    explicitly for an answer. This is surprising, especially since the
+    difference in still several orders of magnitude larger than a direct
+    function call.
+
+  - Keep in mind that this probably constitutes the best-case number for Mojo
+    performance, since during the benchmark, _nothing_ _else_ happens on the
+    IPC or main threads.
