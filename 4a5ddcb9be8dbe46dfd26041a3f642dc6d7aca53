@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5dda84_02ccfcea",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:59:44Z",
+      "side": 1,
+      "message": "If |rect_mouse| is empty, should we reset it to child-\u003ebounds() first?",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23199ac_a312cdf3",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:59:44Z",
+      "side": 1,
+      "message": "All windows have layers. Do we need the null check here? (and below)",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d5174d_6ca04daa",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:59:44Z",
+      "side": 1,
+      "message": "|rect_mouse| and |rect_touch| should never be null (as documented in header). So we don\u0027t need these null-checks here.",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ccd5c0_7f9d11f8",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-16T04:59:44Z",
+      "side": 1,
+      "message": "I think the rects returned from this are expected to be in |target|\u0027s coordinate space, right? Please document. (because in GetHitTestRects, I believe we expect the returned rects to be in |target|\u0027s parent\u0027s coordinate space, which we should also document)",
+      "revId": "4a5ddcb9be8dbe46dfd26041a3f642dc6d7aca53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
