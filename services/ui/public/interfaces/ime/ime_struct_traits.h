@@ -97,7 +97,9 @@ struct StructTraits<ui::mojom::ImeTextSpanDataView, ui::ImeTextSpan> {
   static uint32_t underline_color(const ui::ImeTextSpan& c) {
     return c.underline_color;
   }
-  static uint32_t thick(const ui::ImeTextSpan& c) { return c.thick; }
+  static blink::WebImeTextSpanThickness thickness(const ui::ImeTextSpan& i) {
+    return i.thickness;
+  }
   static uint32_t background_color(const ui::ImeTextSpan& c) {
     return c.background_color;
   }
@@ -114,6 +116,15 @@ template <>
 struct EnumTraits<ui::mojom::TextInputType, ui::TextInputType> {
   static ui::mojom::TextInputType ToMojom(ui::TextInputType text_input_type);
   static bool FromMojom(ui::mojom::TextInputType input, ui::TextInputType* out);
+};
+
+template <>
+struct EnumTraits<ui::mojom::ImeTextSpanThickness,
+                  blink::WebImeTextSpanThickness> {
+  static ui::mojom::ImeTextSpanThickness ToMojom(
+      blink::WebImeTextSpanThickness thickness);
+  static bool FromMojom(ui::mojom::ImeTextSpanThickness input,
+                        blink::WebImeTextSpanThickness* out);
 };
 
 }  // namespace mojo

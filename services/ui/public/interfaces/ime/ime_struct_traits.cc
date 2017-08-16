@@ -48,7 +48,17 @@ bool StructTraits<ui::mojom::ImeTextSpanDataView, ui::ImeTextSpan>::Read(
   out->start_offset = data.start_offset();
   out->end_offset = data.end_offset();
   out->underline_color = data.underline_color();
-  out->thick = data.thick();
+  switch (data.thickness()) {
+    case ui::mojom::ImeTextSpanThickness::kNone:
+      out->thickness = blink::kWebImeTextSpanThicknessNone;
+      break;
+    case ui::mojom::ImeTextSpanThickness::kThin:
+      out->thickness = blink::kWebImeTextSpanThicknessThin;
+      break;
+    case ui::mojom::ImeTextSpanThickness::kThick:
+      out->thickness = blink::kWebImeTextSpanThicknessThick;
+      break;
+  }
   out->background_color = data.background_color();
   return true;
 }
@@ -244,6 +254,41 @@ bool EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::FromMojom(
       return true;
     case ui::mojom::TextInputType::kDateTimeField:
       *out = ui::TEXT_INPUT_TYPE_DATE_TIME_FIELD;
+      return true;
+  }
+  return false;
+}
+
+// static
+ui::mojom::ImeTextSpanThickness
+EnumTraits<ui::mojom::ImeTextSpanThickness, blink::WebImeTextSpanThickness>::
+    ToMojom(blink::WebImeTextSpanThickness thickness) {
+  switch (thickness) {
+    case blink::kWebImeTextSpanThicknessNone:
+      return ui::mojom::ImeTextSpanThickness::kNone;
+    case blink::kWebImeTextSpanThicknessThin:
+      return ui::mojom::ImeTextSpanThickness::kThin;
+    case blink::kWebImeTextSpanThicknessThick:
+      return ui::mojom::ImeTextSpanThickness::kThick;
+  }
+  NOTREACHED();
+  return ui::mojom::ImeTextSpanThickness::kNone;
+}
+
+// static
+bool EnumTraits<ui::mojom::ImeTextSpanThickness,
+                blink::WebImeTextSpanThickness>::
+    FromMojom(ui::mojom::ImeTextSpanThickness input,
+              blink::WebImeTextSpanThickness* out) {
+  switch (input) {
+    case ui::mojom::ImeTextSpanThickness::kNone:
+      *out = blink::kWebImeTextSpanThicknessNone;
+      return true;
+    case ui::mojom::ImeTextSpanThickness::kThin:
+      *out = blink::kWebImeTextSpanThicknessThin;
+      return true;
+    case ui::mojom::ImeTextSpanThickness::kThick:
+      *out = blink::kWebImeTextSpanThicknessThick;
       return true;
   }
   return false;

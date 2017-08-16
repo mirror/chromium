@@ -289,15 +289,18 @@ void ExtractUnderlines(NSAttributedString* string,
                               longestEffectiveRange:&range
                                             inRange:NSMakeRange(i, length - i)];
     if (NSNumber *style = [attrs objectForKey:NSUnderlineStyleAttributeName]) {
-      blink::WebColor color = SK_ColorBLACK;
+      blink::WebColor color = SK_ColorTRANSPARENT;
       if (NSColor *colorAttr =
           [attrs objectForKey:NSUnderlineColorAttributeName]) {
         color = WebColorFromNSColor(
             [colorAttr colorUsingColorSpaceName:NSDeviceRGBColorSpace]);
       }
+      blink::WebImeTextSpanThickness thickness =
+          [style intValue] > 1 ? blink::kWebImeTextSpanThicknessThick
+                               : blink::kWebImeTextSpanThicknessThin;
       ime_text_spans->push_back(
-          ui::ImeTextSpan(range.location, NSMaxRange(range), color,
-                          [style intValue] > 1, SK_ColorTRANSPARENT));
+          ui::ImeTextSpan(range.location, NSMaxRange(range), color, thickness,
+                          SK_ColorTRANSPARENT));
     }
     i = range.location + range.length;
   }
@@ -3355,9 +3358,10 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
   if (isAttributedString) {
     ExtractUnderlines(string, &ime_text_spans_);
   } else {
-    // Use a thin black underline by default.
-    ime_text_spans_.push_back(
-        ui::ImeTextSpan(0, length, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+    // Use a thin black underline with the text color by default.
+    ime_text_spans_.push_back(ui::ImeTextSpan(
+        0, length, SK_ColorTRANSPARENT, blink::kWebImeTextSpanThicknessThin,
+        SK_ColorTRANSPARENT));
   }
 
   // If we are handling a key down event, then SetComposition() will be

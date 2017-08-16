@@ -13,13 +13,16 @@ namespace ui {
 
 TEST(CompositionTextTest, CopyTest) {
   const base::string16 kSampleText = base::UTF8ToUTF16("Sample Text");
-  const ImeTextSpan kSampleUnderline1(10, 20, SK_ColorBLACK, false,
+  const ImeTextSpan kSampleUnderline1(10, 20, SK_ColorBLACK,
+                                      blink::kWebImeTextSpanThicknessThin,
                                       SK_ColorTRANSPARENT);
 
-  const ImeTextSpan kSampleUnderline2(11, 21, SK_ColorBLACK, true,
+  const ImeTextSpan kSampleUnderline2(11, 21, SK_ColorBLACK,
+                                      blink::kWebImeTextSpanThicknessThick,
                                       SK_ColorTRANSPARENT);
 
-  const ImeTextSpan kSampleUnderline3(12, 22, SK_ColorRED, false,
+  const ImeTextSpan kSampleUnderline3(12, 22, SK_ColorRED,
+                                      blink::kWebImeTextSpanThicknessThin,
                                       SK_ColorTRANSPARENT);
 
   // Make CompositionText
@@ -42,7 +45,8 @@ TEST(CompositionTextTest, CopyTest) {
               text2.ime_text_spans[i].end_offset);
     EXPECT_EQ(text.ime_text_spans[i].underline_color,
               text2.ime_text_spans[i].underline_color);
-    EXPECT_EQ(text.ime_text_spans[i].thick, text2.ime_text_spans[i].thick);
+    EXPECT_EQ(text.ime_text_spans[i].thickness,
+              text2.ime_text_spans[i].thickness);
     EXPECT_EQ(text.ime_text_spans[i].background_color,
               text2.ime_text_spans[i].background_color);
   }

@@ -74,14 +74,15 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
           pango_attr_iterator_get(iter, PANGO_ATTR_UNDERLINE);
 
       if (background_attr || underline_attr) {
-        // Use a black thin underline by default.
-        ImeTextSpan ime_text_span(char16_offsets[start], char16_offsets[end],
-                                  SK_ColorBLACK, false, SK_ColorTRANSPARENT);
+        // Use a thin underline with the text color by default.
+        ImeTextSpan ime_text_span(
+            char16_offsets[start], char16_offsets[end], SK_ColorTRANSPARENT,
+            blink::kWebImeTextSpanThicknessThin, SK_ColorTRANSPARENT);
 
         // Always use thick underline for a range with background color, which
         // is usually the selection range.
         if (background_attr) {
-          ime_text_span.thick = true;
+          ime_text_span.thickness = blink::kWebImeTextSpanThicknessThick;
           // If the cursor is at start or end of this underline, then we treat
           // it as the selection range as well, but make sure to set the cursor
           // position to the selection end.
@@ -96,7 +97,7 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
         if (underline_attr) {
           int type = reinterpret_cast<PangoAttrInt*>(underline_attr)->value;
           if (type == PANGO_UNDERLINE_DOUBLE)
-            ime_text_span.thick = true;
+            ime_text_span.thickness = blink::kWebImeTextSpanThicknessThick;
           else if (type == PANGO_UNDERLINE_ERROR)
             ime_text_span.underline_color = SK_ColorRED;
         }
@@ -106,10 +107,11 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
     pango_attr_iterator_destroy(iter);
   }
 
-  // Use a black thin underline by default.
+  // Use a thin underline with the text color by default.
   if (composition->ime_text_spans.empty()) {
     composition->ime_text_spans.push_back(
-        ImeTextSpan(0, length, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+        ImeTextSpan(0, length, SK_ColorTRANSPARENT,
+                    blink::kWebImeTextSpanThicknessThin, SK_ColorTRANSPARENT));
   }
 }
 

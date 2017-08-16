@@ -9,6 +9,7 @@
 
 #include <vector>
 
+#include "third_party/WebKit/public/web/WebImeTextSpanThickness.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace ui {
@@ -20,22 +21,29 @@ struct ImeTextSpan {
       : start_offset(0),
         end_offset(0),
         underline_color(SK_ColorTRANSPARENT),
-        thick(false),
+        thickness(blink::kWebImeTextSpanThicknessThin),
         background_color(SK_ColorTRANSPARENT) {}
 
   // TODO(huangs): remove this constructor.
-  ImeTextSpan(uint32_t s, uint32_t e, SkColor uc, bool t)
+  ImeTextSpan(uint32_t s,
+              uint32_t e,
+              SkColor uc,
+              blink::WebImeTextSpanThickness t)
       : start_offset(s),
         end_offset(e),
         underline_color(uc),
-        thick(t),
+        thickness(t),
         background_color(SK_ColorTRANSPARENT) {}
 
-  ImeTextSpan(uint32_t s, uint32_t e, SkColor uc, bool t, SkColor bc)
+  ImeTextSpan(uint32_t s,
+              uint32_t e,
+              SkColor uc,
+              blink::WebImeTextSpanThickness t,
+              SkColor bc)
       : start_offset(s),
         end_offset(e),
         underline_color(uc),
-        thick(t),
+        thickness(t),
         background_color(bc) {}
 
   bool operator<(const ImeTextSpan& rhs) const {
@@ -47,7 +55,7 @@ struct ImeTextSpan {
     return (this->start_offset == rhs.start_offset) &&
            (this->end_offset == rhs.end_offset) &&
            (this->underline_color == rhs.underline_color) &&
-           (this->thick == rhs.thick) &&
+           (this->thickness == rhs.thickness) &&
            (this->background_color == rhs.background_color);
   }
 
@@ -56,7 +64,7 @@ struct ImeTextSpan {
   uint32_t start_offset;
   uint32_t end_offset;
   SkColor underline_color;
-  bool thick;
+  blink::WebImeTextSpanThickness thickness;
   SkColor background_color;
 };
 
