@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f41a9dad_dc161dd1",
+        "filename": "net/http/http_auth_handler_ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "I didn\u0027t initially use base::Clock/Time since I didn\u0027t know about it. :) Actually the epoch for DefaultClock is the windows epoch, so it\u0027s less complicated than your example.\n\nI assume you were both looking at using base::Time rather than time() but also to abstract the clock by using a base::Clock* rather than a function pointer.\n\nI\u0027ve made the former change for now. Note that the calculation is a little more obtuse due to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d634507 . Which means that we\u0027d still need an additional helper wrapper function for both the consumer and the test. Plus the clock needs to be set/unset via ScopedProcHandler. It also needs to be destroyed which means the scoped handler needs to either delete it or have a unique_ptr, which then makes constructor/destructor into a \"complex\" one, meaning it has to move to the .cc. And then the simple nested class mechanism for inline replacement is more complicated.\n\nIt seems like extra complexity with no real gain especially since it\u0027s a private part of the implementation anyway unless you feel strongly about it.",
+      "parentUuid": "da45a31a_23d6d3fd",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35f207b2_e9094e35",
         "filename": "net/http/http_auth_handler_ntlm_portable.cc",
         "patchSetId": 8
@@ -67,6 +85,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248d676f_3dceba16",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7632c91f_87a40fe9",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "80d07f28_6edc1290",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a024d0_7a8d523e",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36c44be9_61022ffe",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -206,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "f83f4b6b_fe3761ad",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c44be9_61022ffe",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aee798d_d91d8b20",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -220,6 +292,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b168d4c_2333fd8d",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aee798d_d91d8b20",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "ec1ce143_726ff9fc",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3f548c1_05c54119",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dda4923_2d603f75",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -271,6 +379,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9d2ab3_d22cbec0",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dda4923_2d603f75",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "1c8e5930_254f9432",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a69f452e_74768413",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64994a4f_f7c96d2d",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -305,6 +449,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef569415_f26eb824",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64994a4f_f7c96d2d",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +504,24 @@
     },
     {
       "key": {
+        "uuid": "85b948b7_6728ee0d",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "I\u0027m going to make a separate CL for this. I also noticed I can do the same to the duplicate md4 and des implementations we have too. WIP is here. https://chromium-review.googlesource.com/c/616801",
+      "parentUuid": "77ea377f_67e5c4fa",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd6ef031_50f7685c",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -356,6 +536,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5624229d_c2aaca00",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6ef031_50f7685c",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -563,6 +761,24 @@
     },
     {
       "key": {
+        "uuid": "b65caff8_efc21a8e",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Updated comment for state on failure. Not sure if general convention is to force .clear() or assert. But I added a comment and DCHECK\u0027d that the vector is empty on entry.",
+      "parentUuid": "f8c61eb5_d88b1a6f",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3472e63b_f426274b",
         "filename": "net/ntlm/ntlm_buffer_reader.h",
         "patchSetId": 8
@@ -574,6 +790,24 @@
       "writtenOn": "2017-08-14T22:44:37Z",
       "side": 1,
       "message": "ditto re: results on error \u0026 success (e.g. does it .clear() on success)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf8ae92_5cc67604",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "3472e63b_f426274b",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -631,6 +865,24 @@
     },
     {
       "key": {
+        "uuid": "9c4b981d_9f7c7c5c",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Yes to was supposed to check if it is non empty.",
+      "parentUuid": "0804d8e3_07ece14c",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94334a75_9f1e9fee",
         "filename": "net/ntlm/ntlm_client.cc",
         "patchSetId": 8
@@ -645,6 +897,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cc7288_8aee3131",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94334a75_9f1e9fee",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -665,6 +935,24 @@
     },
     {
       "key": {
+        "uuid": "4f2b526e_fc69b2b6",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a413aef_45a9d2d8",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f7bf75_9ff8b731",
         "filename": "net/ntlm/ntlm_client.cc",
         "patchSetId": 8
@@ -679,6 +967,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96bd0ba_9c778095",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f7bf75_9ff8b731",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -713,6 +1019,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efe128b_0541eed6",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-16T13:50:48Z",
+      "side": 1,
+      "message": "Done. When I first fixed this I didn\u0027t notice the use of buffer.size(). My tests failed - but do we have any static analysis that could catch such a bug? More general Q - does Chrome do any explicit static analysis outside what the compiler can do? If so where/when does it run.",
+      "parentUuid": "ac5433a3_e2a1b1d0",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
