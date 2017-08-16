@@ -23,10 +23,13 @@
 #include "ui/native_theme/native_theme_features.h"
 
 using blink::WebRuntimeFeatures;
+using base::CommandLine;
 
 namespace content {
 
-static void SetRuntimeFeatureDefaultsForPlatform() {
+namespace {
+
+void SetRuntimeFeatureDefaultsForPlatform() {
 #if defined(OS_ANDROID)
   // Android does not have support for PagePopup
   WebRuntimeFeatures::EnablePagePopup(false);
@@ -87,8 +90,24 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
 #endif
 }
 
+const CommandLine::CharType kFeatureSwitchPrefix[] = FILE_PATH_LITERAL("--");
+
+std::vector<std::string> FeaturesFromSwitch(
+    const CommandLine& command_line,
+    const char* switch_name) {
+  CommandLine::StringType switch_str = CommandLine::StringType(switch_name);
+  std::vector<std::string> features;
+  for (const auto& arg : command_line.argv()) {
+    if (arg.compare(0, 2, kFeatureSwitchPrefix) == 0)
+      printf("%s\n", arg.c_str());
+  }
+  return features;
+}
+
+}  // namespace
+
 void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
-    const base::CommandLine& command_line) {
+    const CommandLine& command_line) {
   bool enableExperimentalWebPlatformFeatures = command_line.HasSwitch(
       switches::kEnableExperimentalWebPlatformFeatures);
   if (enableExperimentalWebPlatformFeatures)
@@ -414,11 +433,14 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   if (command_line.HasSwitch(switches::kEnableBlinkFeatures)) {
+    FeaturesFromSwitch(command_line, switches::kEnableBlinkFeatures);
     std::vector<std::string> enabled_features = base::SplitString(
         command_line.GetSwitchValueASCII(switches::kEnableBlinkFeatures),
         ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-    for (const std::string& feature : enabled_features)
+    for (const std::string& feature : enabled_features) {
+      printf("enable %s\n", feature.c_str());
       WebRuntimeFeatures::EnableFeatureFromString(feature, true);
+    }
   }
   if (command_line.HasSwitch(switches::kDisableBlinkFeatures)) {
     std::vector<std::string> disabled_features = base::SplitString(
