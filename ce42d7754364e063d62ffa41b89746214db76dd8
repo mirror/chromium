@@ -22,6 +22,52 @@
       "revId": "ce42d7754364e063d62ffa41b89746214db76dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dca4723_a269674d",
+        "filename": "chrome/browser/push_messaging/push_messaging_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T15:10:42Z",
+      "side": 1,
+      "message": "Nit: seems this override could be removed now.",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 15
+      },
+      "revId": "ce42d7754364e063d62ffa41b89746214db76dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b29f509_fc4638cd",
+        "filename": "chrome/browser/push_messaging/push_messaging_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-16T15:10:42Z",
+      "side": 1,
+      "message": "Nit: notification_tester_ or notification_service_tester_ seem clearer (it\u0027s not obvious what a display service is in a push messaging test).",
+      "range": {
+        "startLine": 319,
+        "startChar": 52,
+        "endLine": 319,
+        "endChar": 75
+      },
+      "revId": "ce42d7754364e063d62ffa41b89746214db76dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
