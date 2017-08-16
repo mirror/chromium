@@ -12,5 +12,9 @@ namespace switches {
 // when launched with this flag.
 const char kUseTestConfig[] = "use-test-config";
 
+// WindowServer uses the viz hit-test logic (HitTestAggregator and HitTestQuery)
+// if this switch is turned on.
+const char kUseVizHitTest[] = "use-viz-hit-test";
+
 }  // namespace switches
 }  // namespace ui
