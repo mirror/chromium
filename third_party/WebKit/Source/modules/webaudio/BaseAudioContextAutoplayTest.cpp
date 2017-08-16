@@ -69,7 +69,7 @@ class MockWebAudioDeviceForBaseAudioContext : public WebAudioDevice {
   int frames_per_buffer_;
 };
 
-class BaseAudioContextTestPlatform : public TestingPlatformSupport {
+class BaseAudioContextAutoplayTestPlatform : public TestingPlatformSupport {
  public:
   std::unique_ptr<WebAudioDevice> CreateAudioDevice(
       unsigned number_of_input_channels,
@@ -83,7 +83,6 @@ class BaseAudioContextTestPlatform : public TestingPlatformSupport {
   }
 
   std::unique_ptr<WebThread> CreateThread(const char* name) override {
-    // return WTF::WrapUnique(old_platform_->CurrentThread());
     return old_platform_->CreateThread(name);
   }
 
@@ -110,6 +109,7 @@ class BaseAudioContextAutoplayTest
     ChildDocument().GetSettings()->SetAutoplayPolicy(GetParam());
 
     histogram_tester_ = WTF::MakeUnique<HistogramTester>();
+
     AudioWorkletThread::CreateSharedBackingThreadForTest();
   }
 
@@ -157,7 +157,7 @@ class BaseAudioContextAutoplayTest
   Persistent<DummyFrameOwner> dummy_frame_owner_;
   Persistent<LocalFrame> child_frame_;
   std::unique_ptr<HistogramTester> histogram_tester_;
-  ScopedTestingPlatformSupport<BaseAudioContextTestPlatform> platform_;
+  ScopedTestingPlatformSupport<BaseAudioContextAutoplayTestPlatform> platform_;
 };
 
 // Creates an AudioContext without a gesture inside a x-origin child frame.
