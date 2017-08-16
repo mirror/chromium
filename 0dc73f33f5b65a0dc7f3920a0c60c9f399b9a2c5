@@ -460,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "2efcbd24_22f943c7",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-16T03:21:24Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with file system API layer, but your argument makes little sense. ExternalMountPoints surely takes BrowserContext, but it\u0027s the only one -- none of drive::FileSystemBackendDelegate, chromeos::file_system_provider::BackendDelegate, chromeos::MTPFileSystemBackendDelegate take BrowserContext, and instead they embed profile key hash in file paths and look up a profile by enumerating all profiles. So my assumption is that BackendDelegates should be written to accept any profile, and instead per-profile access control is done by ExternalMountPoint (that\u0027s why it is the only one taking BrowserContext IMO).\n\nLet\u0027s discuss offline later.",
+      "parentUuid": "704e422b_595d5c5d",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccf6460c_b1a1774b",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 3
