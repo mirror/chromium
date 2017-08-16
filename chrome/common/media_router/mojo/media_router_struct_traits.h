@@ -341,6 +341,41 @@ struct StructTraits<media_router::mojom::MediaSinkDataView,
 // MediaRoute
 
 template <>
+struct EnumTraits<media_router::mojom::RouteControllerType,
+                  media_router::RouteControllerType> {
+  static media_router::mojom::RouteControllerType ToMojom(
+      media_router::RouteControllerType controller_type) {
+    switch (controller_type) {
+      case media_router::RouteControllerType::NONE:
+        return media_router::mojom::RouteControllerType::NONE;
+      case media_router::RouteControllerType::GENERIC:
+        return media_router::mojom::RouteControllerType::GENERIC;
+      case media_router::RouteControllerType::HANGOUTS:
+        return media_router::mojom::RouteControllerType::HANGOUTS;
+    }
+    NOTREACHED() << "Unknown controller type "
+                 << static_cast<int>(controller_type);
+    return media_router::mojom::RouteControllerType::NONE;
+  }
+
+  static bool FromMojom(media_router::mojom::RouteControllerType input,
+                        media_router::RouteControllerType* output) {
+    switch (input) {
+      case media_router::mojom::RouteControllerType::NONE:
+        *output = media_router::RouteControllerType::NONE;
+        return true;
+      case media_router::mojom::RouteControllerType::GENERIC:
+        *output = media_router::RouteControllerType::GENERIC;
+        return true;
+      case media_router::mojom::RouteControllerType::HANGOUTS:
+        *output = media_router::RouteControllerType::HANGOUTS;
+        return true;
+    }
+    return false;
+  }
+};
+
+template <>
 struct StructTraits<media_router::mojom::MediaRouteDataView,
                     media_router::MediaRoute> {
   static bool Read(media_router::mojom::MediaRouteDataView data,
@@ -383,6 +418,11 @@ struct StructTraits<media_router::mojom::MediaRouteDataView,
   static bool supports_media_route_controller(
       const media_router::MediaRoute& route) {
     return route.supports_media_route_controller();
+  }
+
+  static media_router::RouteControllerType controller_type(
+      const media_router::MediaRoute& route) {
+    return route.controller_type();
   }
 
   static bool for_display(const media_router::MediaRoute& route) {

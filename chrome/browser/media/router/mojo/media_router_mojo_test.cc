@@ -71,7 +71,8 @@ MockEventPageTracker::MockEventPageTracker() {}
 
 MockEventPageTracker::~MockEventPageTracker() {}
 
-MockMediaController::MockMediaController() : binding_(this) {}
+MockMediaController::MockMediaController()
+    : binding_(this), hangouts_binding_(this) {}
 
 MockMediaController::~MockMediaController() {}
 
@@ -95,10 +96,8 @@ void MockMediaController::CloseBinding() {
 
 MockMediaRouteController::MockMediaRouteController(
     const MediaRoute::Id& route_id,
-    mojom::MediaControllerPtr mojo_media_controller,
     MediaRouter* media_router)
     : MediaRouteController(route_id,
-                           std::move(mojo_media_controller),
                            media_router) {}
 
 MockMediaRouteController::~MockMediaRouteController() {}

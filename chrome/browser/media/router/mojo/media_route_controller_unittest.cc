@@ -30,14 +30,11 @@ class MediaRouteControllerTest : public ::testing::Test {
   ~MediaRouteControllerTest() override {}
 
   void SetUp() override {
-    mojom::MediaControllerPtr media_controller_ptr;
-    mojom::MediaControllerRequest media_controller_request =
-        mojo::MakeRequest(&media_controller_ptr);
-    mock_media_controller_.Bind(std::move(media_controller_request));
+    auto controller =
+        base::MakeRefCounted<MediaRouteController>(kRouteId, &router_);
+    mock_media_controller_.Bind(controller->PassControllerRequest());
 
-    observer_ = base::MakeUnique<MockMediaRouteControllerObserver>(
-        base::MakeRefCounted<MediaRouteController>(
-            kRouteId, std::move(media_controller_ptr), &router_));
+    observer_ = base::MakeUnique<MockMediaRouteControllerObserver>(controller);
   }
 
   scoped_refptr<MediaRouteController> GetController() const {

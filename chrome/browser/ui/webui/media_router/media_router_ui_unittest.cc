@@ -160,10 +160,8 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
 
   scoped_refptr<MockMediaRouteController> CreateMediaRouteController(
       const MediaRoute::Id& route_id) {
-    mojom::MediaControllerPtr mojo_media_controller;
-    mojo::MakeRequest(&mojo_media_controller);
-    return scoped_refptr<MockMediaRouteController>(new MockMediaRouteController(
-        route_id, std::move(mojo_media_controller), &mock_router_));
+    return scoped_refptr<MockMediaRouteController>(
+        new MockMediaRouteController(route_id, &mock_router_));
   }
 
   // Notifies MediaRouterUI that a route details view has been opened. Expects

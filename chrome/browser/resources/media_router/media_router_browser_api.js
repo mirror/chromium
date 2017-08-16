@@ -299,6 +299,13 @@ cr.define('media_router.browserApi', function() {
     chrome.send('setCurrentMediaVolume', [{volume: volume}]);
   }
 
+  /**
+   * @param {boolean} localPresent
+   */
+  function setHangoutsLocalPresent(localPresent) {
+    chrome.send('hangouts.setLocalPresent', [localPresent]);
+  }
+
   return {
     acknowledgeFirstRunFlow: acknowledgeFirstRunFlow,
     actOnIssue: actOnIssue,
@@ -331,5 +338,6 @@ cr.define('media_router.browserApi', function() {
     selectLocalMediaFile: selectLocalMediaFile,
     setCurrentMediaMute: setCurrentMediaMute,
     setCurrentMediaVolume: setCurrentMediaVolume,
+    setHangoutsLocalPresent: setHangoutsLocalPresent
   };
 });
