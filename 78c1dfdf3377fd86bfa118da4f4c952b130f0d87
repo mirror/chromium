@@ -16,6 +16,24 @@
       "revId": "78c1dfdf3377fd86bfa118da4f4c952b130f0d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fb9a78_af1a5745",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-16T21:26:53Z",
+      "side": 1,
+      "message": "\u003e The MessagePumpFuchsia::Run() method will DoDelayedWork() *before* waiting on events, so if more than 1ms elapses before we reach here then the mx_object_wait_one() will see the I/O event, but not the timed event, I think.\n\nGood point. Tried running it under qemu without KVM and 1ms is not enough. Increased the delay to 10ms.\n\n\u003e \n\u003e Could we instead have the handler post the delayed task in response to the readable I/O event, so that Run() will see the I/O packet, maybe a USER packet triggered by ScheduleWork (depending on the precise timing), and only then see the timeout?\n\nTried this approach. The bug doesn\u0027t reproduce that way. Post[Delayed]Task() call ScheduleWork() internally. ScheduleWork() queues a TYPE_USER packet on the port, so then the packet inside the loop in Run() becomes MX_PKT_TYPE_USER.\n\nIn other words the bug reproduces only when we have a timer scheduled after an IO event and there is no Post[Delayed]Task() call between the IO event and the timer.\n\n\u003e \n\u003e Does this test actually fail if you run it without your fix?\n\nYes. With increased delayed it fails in KVM-less qemu.",
+      "parentUuid": "0bd4dbdd_0b2c0941",
+      "revId": "78c1dfdf3377fd86bfa118da4f4c952b130f0d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
