@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbcbbd98_94c075b0",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T10:11:24Z",
+      "side": 1,
+      "message": "this is never run by chrome, so you don\u0027t need this one.",
+      "revId": "0bd8eb609cbf40849e76148a371274904f6091b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fef101_12a64c97",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T10:11:24Z",
+      "side": 1,
+      "message": "maybe you can rule this one out. it\u0027s only hit on Win8 and only when chrome is being made the user\u0027s default browser or default protocol handler after showing the system picker. so if the bug is that icons are flickering out of the blue, it isn\u0027t because of this.",
+      "revId": "0bd8eb609cbf40849e76148a371274904f6091b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb374d53_d524b47c",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-16T10:11:24Z",
+      "side": 1,
+      "message": "this will only ever be hit on win7",
+      "revId": "0bd8eb609cbf40849e76148a371274904f6091b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
