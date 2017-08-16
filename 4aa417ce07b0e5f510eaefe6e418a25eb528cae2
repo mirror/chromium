@@ -151,6 +151,23 @@
     },
     {
       "key": {
+        "uuid": "8d919935_947ac0c2",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-16T08:03:24Z",
+      "side": 1,
+      "message": "nit: no need of \u0027explicit\u0027",
+      "revId": "4aa417ce07b0e5f510eaefe6e418a25eb528cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60fda12e_73b39f7f",
         "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
         "patchSetId": 3
