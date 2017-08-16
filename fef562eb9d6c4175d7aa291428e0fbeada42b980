@@ -93,6 +93,30 @@
       "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59e119a_8c633666",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-16T06:04:42Z",
+      "side": 1,
+      "message": "1) Yea, sounds like you\u0027re right.\n\n2) Can you elaborate on this? It seems weird if a test relies on not calling SendMessage() since SendMessage() just does the check anyway. I\u0027d prefer to remove the code and fix the test if some test relied on it.\n\n3) Probably it\u0027s not right then.",
+      "parentUuid": "9ce2c638_413a64cd",
+      "range": {
+        "startLine": 1339,
+        "startChar": 2,
+        "endLine": 1339,
+        "endChar": 48
+      },
+      "revId": "fef562eb9d6c4175d7aa291428e0fbeada42b980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
