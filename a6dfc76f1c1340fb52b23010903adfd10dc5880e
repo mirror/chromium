@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "1f5ae88d_b622a081",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-16T17:56:12Z",
+      "side": 1,
+      "message": "Oystein, I know what you mean :) You mean we should only care about title/favicon change when the page is finished loading, right? I think we can check one of the following methods:\n\n1. DidStopLoading\n2. DocumentOnLoadCompletedInMainFrame, which use the OnLoad event\n3. DocumentLoadedInFrame, which will be called when dom content load end event is fired\n4. DidFinishLoad, which combines 1 and 2.\n\nWDYT?",
+      "parentUuid": "73d6a7d9_046dfca4",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de62ff30_f92af8ce",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
