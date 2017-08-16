@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cade6d6_b928cbb0",
+        "filename": "components/multidevice/service/cpp/multidevice_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-16T01:34:15Z",
+      "side": 1,
+      "message": "I think I\u0027m doing something wrong here -- I\u0027m expecting DeviceSync to call OnEnrollmentFinished of DeviceSyncObserverImpl imp, but it isn\u0027t",
+      "revId": "f495791b39d0b6fc589f4cf221f97f218eb8d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
