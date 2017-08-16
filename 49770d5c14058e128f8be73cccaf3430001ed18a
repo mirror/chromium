@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "25fe93f4_acd23506",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-16T17:24:46Z",
+      "side": 1,
+      "message": "You might be able to suppress findbugs issues somehow, but you won\u0027t be able to land as-is.",
+      "parentUuid": "bbce9d53_58c18721",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cf64f2a_7d1820d7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
         "patchSetId": 2
