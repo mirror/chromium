@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d023fc63_f915722a",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_browsertest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-16T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ad896e_95d224e9",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35ee5133_26f3ff0a",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T18:25:19Z",
       "side": 1,
       "message": "Also, given that this test does touch scrolling, I\u0027m curious as to why enabling wheel scroll latching would affect this test. I\u0027m wondering if somewhere touch scroll gestures are accidentally going through a wheel latching code path when it\u0027s enabled.",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a46d9d_646730a1",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-16T14:32:59Z",
+      "side": 1,
+      "message": "It is confusing but that\u0027s not how enabling wheel scroll latching causes this test to fail.\n\nI changed scrollbubbling to bubble based on GSB\u0027s ack, and bubble the rest of the scrolling events in current scrolling sequence if GSB is bubbled. This change is behind wheel scroll latching flag since otherwise it wouldn\u0027t work for wheel scrolling.\n\nNow when delta hints for GSB are zero, GSB will always be consumed. Which means when the latching flag is on, it would never get bubbled to the parent. But when latching is disabled bubbling will still happen since it works for every single GSU with unconsumed deltas.",
+      "parentUuid": "35ee5133_26f3ff0a",
       "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "60cdfe85_13a560b3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-16T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ad97e7_b3d2aa4e",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32c221ed_5bc5ff51",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bf02a510_b6fc95be",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-16T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32c221ed_5bc5ff51",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d6459ae_a3b695ba",
         "filename": "content/browser/site_per_process_mac_browsertest.mm",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a8a2ef_18a2db33",
+        "filename": "content/browser/site_per_process_mac_browsertest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-16T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d6459ae_a3b695ba",
+      "revId": "351a7467e35a45de02f4a99af5f16bef11dac3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
