@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dddc0f2_56625123",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T21:31:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this does what you think it does.\n\nHow about:\n\n  assert bitmap \u003d\u003d null || Math.min(bitmap.getWidth(), bitmap.getHeight()) \u003c\u003d requestedIconSizePx;\n\n? :-)",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f575ff_284acf13",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T21:31:05Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 145,
+        "startChar": 42,
+        "endLine": 145,
+        "endChar": 44
+      },
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a61220_c00e68de",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T21:31:05Z",
+      "side": 1,
+      "message": "If you pass it in as a JavaParamRef, this little part should be unnecessary,",
+      "range": {
+        "startLine": 185,
+        "startChar": 14,
+        "endLine": 185,
+        "endChar": 41
+      },
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eceb34e_7c48c083",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T21:31:05Z",
+      "side": 1,
+      "message": "Could these be JavaParamRefs?\n\n  const base::android::JavaParamRef\u003cjstring\u003e\u0026 jcontent_id,\n  const base::android::JavaParamRef\u003cjstring\u003e\u0026 jfile_path,\n  ...",
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

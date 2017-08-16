@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "653e7cd2_d9b38c9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-16T21:31:05Z",
+      "side": 1,
+      "message": "If that\u0027s the case, maybe add a short comment to describe that to the next reader? :-)",
+      "parentUuid": "9698ecd5_ab807d03",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "d2c8cedb3ab23e0fe147dd2824f8c18b21a8b9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db9523c_9f2c7b9e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
         "patchSetId": 23
