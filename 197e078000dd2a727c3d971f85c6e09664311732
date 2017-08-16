@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c4170da4_9848934e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T01:32:27Z",
+      "side": 1,
+      "message": "This method doesn\u0027t seem very useful. Its single call could be replaced directly by `{guid, item.second}`.",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f444a7de_402e730c",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -31,6 +54,29 @@
       "side": 1,
       "message": "That should be done in the reconciler, since nothing should get into RECEIVED_BUNDLE with too many attempts.",
       "parentUuid": "f444a7de_402e730c",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb00fb2_416bad89",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T01:32:27Z",
+      "side": 1,
+      "message": "Note to all: We need to discuss when the freshness date should be updated. It\u0027s not as simple as resetting it here. Let\u0027s discuss tomorrow.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 13
+      },
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +128,29 @@
       "writtenOn": "2017-08-15T23:47:06Z",
       "side": 1,
       "message": "nit: blank line after }",
+      "revId": "197e078000dd2a727c3d971f85c6e09664311732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1219b44_d48510b9",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-16T01:32:27Z",
+      "side": 1,
+      "message": "nit: for entries that already received the bundle information.",
+      "range": {
+        "startLine": 20,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 23
+      },
       "revId": "197e078000dd2a727c3d971f85c6e09664311732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
