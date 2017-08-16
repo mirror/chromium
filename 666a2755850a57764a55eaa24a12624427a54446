@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d432725_260360f6",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-16T19:54:01Z",
+      "side": 1,
+      "message": "flags.setShader(nullptr) to clear the shader above before this?",
+      "revId": "666a2755850a57764a55eaa24a12624427a54446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663c1dee_dee9b334",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-16T19:54:01Z",
+      "side": 1,
+      "message": "This is probably not necessary though.",
+      "revId": "666a2755850a57764a55eaa24a12624427a54446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
