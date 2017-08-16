@@ -37,6 +37,7 @@
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/test/test_windows.h"
 #include "ui/aura/window.h"
+#include "ui/base/accelerators/accelerator_manager.h"
 #include "ui/base/ime/chromeos/fake_ime_keyboard.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
@@ -347,7 +348,8 @@ TEST_F(AcceleratorControllerTest, Register) {
   const ui::Accelerator accelerator_d(ui::VKEY_D, ui::EF_NONE);
 
   GetController()->Register(
-      {accelerator_a, accelerator_b, accelerator_c, accelerator_d}, &target);
+      {accelerator_a, accelerator_b, accelerator_c, accelerator_d},
+      ui::AcceleratorManager::kNormalPriority, &target);
 
   // The registered accelerators are processed.
   EXPECT_TRUE(ProcessInController(accelerator_a));
@@ -360,9 +362,11 @@ TEST_F(AcceleratorControllerTest, Register) {
 TEST_F(AcceleratorControllerTest, RegisterMultipleTarget) {
   const ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_NONE);
   TestTarget target1;
-  GetController()->Register({accelerator_a}, &target1);
+  GetController()->Register({accelerator_a},
+                            ui::AcceleratorManager::kNormalPriority, &target1);
   TestTarget target2;
-  GetController()->Register({accelerator_a}, &target2);
+  GetController()->Register({accelerator_a},
+                            ui::AcceleratorManager::kNormalPriority, &target2);
 
   // If multiple targets are registered with the same accelerator, the target
   // registered later processes the accelerator.
@@ -375,7 +379,8 @@ TEST_F(AcceleratorControllerTest, Unregister) {
   const ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_NONE);
   const ui::Accelerator accelerator_b(ui::VKEY_B, ui::EF_NONE);
   TestTarget target;
-  GetController()->Register({accelerator_a, accelerator_b}, &target);
+  GetController()->Register({accelerator_a, accelerator_b},
+                            ui::AcceleratorManager::kNormalPriority, &target);
 
   // Unregistering a different accelerator does not affect the other
   // accelerator.
@@ -394,10 +399,12 @@ TEST_F(AcceleratorControllerTest, UnregisterAll) {
   const ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_NONE);
   const ui::Accelerator accelerator_b(ui::VKEY_B, ui::EF_NONE);
   TestTarget target1;
-  GetController()->Register({accelerator_a, accelerator_b}, &target1);
+  GetController()->Register({accelerator_a, accelerator_b},
+                            ui::AcceleratorManager::kNormalPriority, &target1);
   const ui::Accelerator accelerator_c(ui::VKEY_C, ui::EF_NONE);
   TestTarget target2;
-  GetController()->Register({accelerator_c}, &target2);
+  GetController()->Register({accelerator_c},
+                            ui::AcceleratorManager::kNormalPriority, &target2);
   GetController()->UnregisterAll(&target1);
 
   // All the accelerators registered for |target1| are no longer processed.
@@ -413,7 +420,8 @@ TEST_F(AcceleratorControllerTest, UnregisterAll) {
 TEST_F(AcceleratorControllerTest, Process) {
   const ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_NONE);
   TestTarget target1;
-  GetController()->Register({accelerator_a}, &target1);
+  GetController()->Register({accelerator_a},
+                            ui::AcceleratorManager::kNormalPriority, &target1);
 
   // The registered accelerator is processed.
   EXPECT_TRUE(ProcessInController(accelerator_a));
@@ -428,7 +436,8 @@ TEST_F(AcceleratorControllerTest, IsRegistered) {
   const ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_NONE);
   const ui::Accelerator accelerator_shift_a(ui::VKEY_A, ui::EF_SHIFT_DOWN);
   TestTarget target;
-  GetController()->Register({accelerator_a}, &target);
+  GetController()->Register({accelerator_a},
+                            ui::AcceleratorManager::kNormalPriority, &target);
   EXPECT_TRUE(GetController()->IsRegistered(accelerator_a));
   EXPECT_FALSE(GetController()->IsRegistered(accelerator_shift_a));
   GetController()->UnregisterAll(&target);
@@ -544,10 +553,12 @@ TEST_F(AcceleratorControllerTest, RotateScreen) {
 TEST_F(AcceleratorControllerTest, AutoRepeat) {
   ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_CONTROL_DOWN);
   TestTarget target_a;
-  GetController()->Register({accelerator_a}, &target_a);
+  GetController()->Register({accelerator_a},
+                            ui::AcceleratorManager::kNormalPriority, &target_a);
   ui::Accelerator accelerator_b(ui::VKEY_B, ui::EF_CONTROL_DOWN);
   TestTarget target_b;
-  GetController()->Register({accelerator_b}, &target_b);
+  GetController()->Register({accelerator_b},
+                            ui::AcceleratorManager::kNormalPriority, &target_b);
 
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.PressKey(ui::VKEY_A, ui::EF_CONTROL_DOWN);
@@ -639,7 +650,8 @@ TEST_F(AcceleratorControllerTest, ProcessOnce) {
   DisableIME();
   ui::Accelerator accelerator_a(ui::VKEY_A, ui::EF_NONE);
   TestTarget target;
-  GetController()->Register({accelerator_a}, &target);
+  GetController()->Register({accelerator_a},
+                            ui::AcceleratorManager::kNormalPriority, &target);
 
   // The accelerator is processed only once.
   ui::EventSink* sink = Shell::GetPrimaryRootWindow()->GetHost()->event_sink();

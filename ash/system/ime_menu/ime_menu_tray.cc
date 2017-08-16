@@ -26,6 +26,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/session_manager/session_manager_types.h"
+#include "ui/base/accelerators/accelerator_manager.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/ime_bridge.h"
 #include "ui/base/ime/text_input_client.h"
@@ -505,16 +506,12 @@ void ImeMenuTray::OnMouseEnteredView() {}
 
 void ImeMenuTray::OnMouseExitedView() {}
 
-void ImeMenuTray::RegisterAccelerators(
-    const std::vector<ui::Accelerator>& accelerators,
-    views::TrayBubbleView* tray_bubble_view) {
-  Shell::Get()->accelerator_controller()->Register(accelerators,
-                                                   tray_bubble_view);
+void ImeMenuTray::RegisterPreTargetHandler(ui::EventHandler* event_handler) {
+  Shell::Get()->AddPreTargetHandler(event_handler);
 }
 
-void ImeMenuTray::UnregisterAllAccelerators(
-    views::TrayBubbleView* tray_bubble_view) {
-  Shell::Get()->accelerator_controller()->UnregisterAll(tray_bubble_view);
+void ImeMenuTray::UnregisterPreTargetHandler(ui::EventHandler* event_handler) {
+  Shell::Get()->RemovePreTargetHandler(event_handler);
 }
 
 base::string16 ImeMenuTray::GetAccessibleNameForBubble() {
