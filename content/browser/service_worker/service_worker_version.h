@@ -197,7 +197,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Registers status change callback. (This is for one-off observation,
   // the consumer needs to re-register if it wants to continue observing
   // status changes)
-  void RegisterStatusChangeCallback(const base::Closure& callback);
+  void RegisterStatusChangeCallback(base::OnceClosure callback);
 
   // Starts an embedded worker for this version.
   // This returns OK (success) if the worker is already running.
@@ -719,7 +719,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   std::unique_ptr<EmbeddedWorkerInstance> embedded_worker_;
   std::vector<StatusCallback> start_callbacks_;
   std::vector<StatusCallback> stop_callbacks_;
-  std::vector<base::Closure> status_change_callbacks_;
+  std::vector<base::OnceClosure> status_change_callbacks_;
 
   // Holds in-flight requests, including requests due to outstanding push,
   // fetch, sync, etc. events.
