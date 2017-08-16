@@ -31,6 +31,8 @@
 #include "ui/events/test/event_generator.h"
 #include "ui/views/controls/textfield/textfield.h"
 
+#include <iostream>
+
 namespace ash {
 namespace {
 
@@ -750,12 +752,15 @@ TEST_F(AppListPresenterDelegateTest,
       GetPrimaryShelf()->shelf_layout_manager();
   EXPECT_EQ(shelf_layout_manager->GetShelfBackgroundType(),
             SHELF_BACKGROUND_DEFAULT);
-  app_list_presenter_impl()->Dismiss();
 
+  app_list_presenter_impl()->Dismiss();
+  std::cout << "after dismiss" << std::endl;
   // Set the alignment to the side and show the app list. The background
   // should show.
   GetPrimaryShelf()->SetAlignment(ShelfAlignment::SHELF_ALIGNMENT_LEFT);
+  std::cout << "SetAlignment" << std::endl;
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  std::cout << "Show 2" << std::endl;
   EXPECT_TRUE(app_list::features::IsFullscreenAppListEnabled());
   EXPECT_FALSE(GetPrimaryShelf()->IsHorizontalAlignment());
   EXPECT_EQ(GetPrimaryShelf()->shelf_layout_manager()->GetShelfBackgroundType(),
