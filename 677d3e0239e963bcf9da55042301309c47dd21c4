@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20e4bfe8_42a340e8",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-16T10:35:36Z",
+      "side": 1,
+      "message": "Actually it will be. The point of doing this is so that we don\u0027t have to pass in Mojo ptrs / requests to EPRM. This is because 1) as mentioned before, the MRC C++ object could be destroyed by the time the queued request to CreateMediaRouteController executes, and IMO the better way to check for this case is to look up the route_controllers_ map, 2) for Hangouts controller we will have to pass in yet another mojo pointer into EPRM which isn\u0027t desirable. Looking at your patch again, it seems the queued CreateMediaRouteController requests are still bound with Mojo object. Let me know if you have other ideas in mind.",
+      "parentUuid": "39bf285c_18b8472d",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab2f805_f2d20753",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bf8d6153_0bd0e688",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-16T10:35:36Z",
+      "side": 1,
+      "message": "Yeah if we end up with desktop subclasses of the controllers then we would override GetRouteController() or factor out overridable methods to create controller instances.",
+      "parentUuid": "aab2f805_f2d20753",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "804be69c_4809d1c6",
         "filename": "chrome/common/media_router/media_route.h",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b87925_6e784f27",
+        "filename": "chrome/common/media_router/media_route.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-16T10:35:36Z",
+      "side": 1,
+      "message": "It does not have to necessarily since we use struct traits to do the mapping.",
+      "parentUuid": "804be69c_4809d1c6",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "0f7fdebb_d19e73d2",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-16T10:35:36Z",
+      "side": 1,
+      "message": "Replaced the first Hangouts with session.",
+      "parentUuid": "396a3de3_9cb92242",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136163a8_1a0aa10d",
         "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
         "patchSetId": 10
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "79b36ea7_338b28d1",
+        "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-16T10:35:36Z",
+      "side": 1,
+      "message": "Apparently not, but then again I am not sure if this gets compiled at all. At least it doesn\u0027t complain when the test is run.",
+      "parentUuid": "136163a8_1a0aa10d",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328cd521_fb753f1c",
         "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
         "patchSetId": 10
@@ -107,6 +203,24 @@
       "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fcbaaf_9f213ede",
+        "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-16T10:35:36Z",
+      "side": 1,
+      "message": "From my testing it seems we need to actually set it to a different object in order for the Polymer observer function to be invoked.",
+      "parentUuid": "328cd521_fb753f1c",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
