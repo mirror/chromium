@@ -1,0 +1,296 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc47122_d5ceebda",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "I was thinking that high level comments can be something like:\n\n// For each equivalence, for each covered |dst_ref| and the matching |src_ref|, emit the delta between the respective target labels. Note: By construction, reference locations (with |ref_width|) lies either completely inside an equivalence or completely outside. We perform \"straddle checks\" throughout to verify this assertion.",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb5c88e_962dd6e2",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "Now that you don\u0027t need to compare iterator |candidate|, you can use temp var.\n  const Equivalence equiv \u003d candidate.eq;  // Copy.\n(I\u0027m also fine if you call it |eq| or even |e|).\n\nAlso fix comments.",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306fe45d_c233ec53",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "More precisely,\n  dst_ref-\u003elocation + ref_width \u003c\u003d equiv.dst_offset",
+      "range": {
+        "startLine": 182,
+        "startChar": 13,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc4af5a_d2460dc2",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "Optional:\n // Straddle check.\n DCHECK_GE(dst_ref-\u003elocation, equiv.dst_offset);\n DCHECK_LE(dst_ref-\u003elocation + ref_width, equiv.dst_end());",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2e4858_0ab8aba0",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "To ensure you\u0027re always inside |equiv|:\n    dst_ref-\u003elocation + ref_width \u003c\u003d equiv.dst_end()\n\nThen the straddle check below can be moved outside of the loop.",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd688eb_a6f84d8b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "NIT: Alternatively you can compare relative offsets:\n  DCHECK_EQ(src_ref-\u003elocation - eq.src_offset,\n            dst_ref-\u003elocation - eq.dst_offset);",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 36
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1380d508_a48aba6e",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "Can move straddle check outside the loop...",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c68d9d5_e2fb77b7",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t need these temp variables?",
+      "range": {
+        "startLine": 204,
+        "startChar": 17,
+        "endLine": 204,
+        "endChar": 27
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f085fb0_e1896542",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "... new straddle check.\n  if (dst_ref \u003d\u003d dst_refs.end())\n    break;  // Done.\n\n  // Straddle check.\n  DCHECK_GE(dst_ref-\u003elocation, equiv.dst_end());",
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249ec56d_8ead1e95",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "Optional: Can omit {}",
+      "range": {
+        "startLine": 221,
+        "startChar": 40,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6524f0_154ce654",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "NIT: Period at end?",
+      "range": {
+        "startLine": 256,
+        "startChar": 48,
+        "endLine": 256,
+        "endChar": 50
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0938168e_75a19031",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "See comment on line 300.",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed384b8_0c0ab67a",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "The reuse of |equivalences| and |old_sa| shows that this function is too long, and should be split.",
+      "range": {
+        "startLine": 276,
+        "startChar": 17,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6218f8af_f3819530",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-16T18:35:30Z",
+      "side": 1,
+      "message": "This is a bit confusing: Superficially |old_view| didn\u0027t change from the last call to MakeSuffixArray.  Of course, it\u0027s still different since the underlying |old_image_index| changed. Seeing that EncodedView just acts as a wrapper, maybe it should be made into a local variable somehow? Suggestion: Make namespace {} helper\n\n  std::vector\u003coffset_t\u003e MakeSuffixArrayFromImageIndex(const ImageIndex\u0026 image_index) {\n    EncodedView view(image_index.value());\n    return MakeSuffixArray\u003cInducedSuffixSort\u003e(view, view.Cardinality());\n  }\n\nAnd then call this?",
+      "range": {
+        "startLine": 300,
+        "startChar": 46,
+        "endLine": 300,
+        "endChar": 54
+      },
+      "revId": "389c2e7349c8954845c6d31cdb736bb693ccda16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
