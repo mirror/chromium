@@ -22,6 +22,30 @@
       "revId": "511e9498fe8e8217c51d3983291fef6ae5aaafe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ce459f_fdd595b3",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-16T03:13:45Z",
+      "side": 1,
+      "message": "sigh. you\u0027re right. Thanks for catching it, but it looks like you already fixed it and removed this line altogether?",
+      "parentUuid": "32adb9f8_25bb8fe0",
+      "range": {
+        "startLine": 293,
+        "startChar": 17,
+        "endLine": 293,
+        "endChar": 40
+      },
+      "revId": "511e9498fe8e8217c51d3983291fef6ae5aaafe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
