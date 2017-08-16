@@ -246,7 +246,7 @@ Canvas2DLayerBridge::~Canvas2DLayerBridge() {
 
 void Canvas2DLayerBridge::Init() {
   Clear();
-  if (CheckSurfaceValid())
+  if (acceleration_mode_ != kDisableAcceleration && CheckSurfaceValid())
     FlushInternal();
 }
 
