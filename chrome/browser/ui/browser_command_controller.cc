@@ -56,6 +56,7 @@
 #include "mash/public/interfaces/launchable.mojom.h"
 #include "printing/features/features.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "ui/events/event_switches.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
 #if defined(OS_MACOSX)
@@ -646,7 +647,11 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
     case IDC_WINDOW_PIN_TAB:
       PinTab(browser_);
       break;
-
+#if !defined(NDEBUG)
+    case IDC_EVENT_RECORDER_TOOL:
+      TurnOnPlatformEventRecorder();
+      break;
+#endif
     default:
       LOG(WARNING) << "Received Unimplemented Command: " << id;
       break;
@@ -802,6 +807,12 @@ void BrowserCommandController::InitCommandState() {
                                         !profile()->IsOffTheRecord());
   command_updater_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA,
                                         !guest_session);
+#if !defined(NDEBUG)
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kEventRecorderTool))
+    command_updater_.UpdateCommandEnabled(IDC_EVENT_RECORDER_TOOL, true);
+#endif
+
 #if defined(OS_CHROMEOS)
   command_updater_.UpdateCommandEnabled(IDC_TAKE_SCREENSHOT, true);
   command_updater_.UpdateCommandEnabled(IDC_TOUCH_HUD_PROJECTION_TOGGLE, true);

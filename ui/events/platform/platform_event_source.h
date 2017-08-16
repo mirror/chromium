@@ -22,6 +22,7 @@ namespace ui {
 class PlatformEventDispatcher;
 class PlatformEventObserver;
 class ScopedEventDispatcher;
+class PlatformEventRecorder;
 
 namespace test {
 class PlatformEventSourceTestAPI;
@@ -45,6 +46,8 @@ class EVENTS_EXPORT PlatformEventSource {
   // removed from the dispatcher list during an event is being dispatched,
   // without affecting the dispatch of the event to other existing dispatchers.
   void RemovePlatformEventDispatcher(PlatformEventDispatcher* dispatcher);
+
+  void TurnOnPlatformEventRecorder();
 
   // Installs a PlatformEventDispatcher that receives all the events. The
   // dispatcher can process the event, or request that the default dispatchers
@@ -102,6 +105,8 @@ class EVENTS_EXPORT PlatformEventSource {
   bool overridden_dispatcher_restored_;
 
   base::ObserverList<PlatformEventObserver> observers_;
+
+  std::unique_ptr<PlatformEventRecorder> recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformEventSource);
 };

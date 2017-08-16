@@ -24,6 +24,10 @@ EVENTS_BASE_EXPORT extern const char kTouchCalibration[];
 EVENTS_BASE_EXPORT extern const char kEdgeTouchFiltering[];
 #endif
 
+#if !defined(NDEBUG)
+EVENTS_BASE_EXPORT extern const char kEventRecorderTool[];
+#endif
+
 }  // namespace switches
 
 #endif  // UI_EVENTS_EVENTS_SWITCHES_H_

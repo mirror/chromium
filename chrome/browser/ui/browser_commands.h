@@ -14,6 +14,7 @@
 #include "content/public/common/page_zoom.h"
 #include "printing/features/features.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/events/platform/platform_event_source.h"
 
 class Browser;
 class CommandObserver;
@@ -144,6 +145,7 @@ bool IsRequestingTabletSite(Browser* browser);
 void ToggleRequestTabletSite(Browser* browser);
 void ToggleFullscreenMode(Browser* browser);
 void ClearCache(Browser* browser);
+void TurnOnPlatformEventRecorder();
 bool IsDebuggerAttachedToCurrentTab(Browser* browser);
 
 // Opens a view-source tab for a given web contents.

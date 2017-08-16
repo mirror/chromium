@@ -89,6 +89,10 @@
 #include "rlz/features/features.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
+#if defined(NDEBUG)
+#include "ui/events/platform/platform_event_source.h"
+#endif
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/api/commands/command_service.h"
 #include "chrome/browser/extensions/api/extension_action/extension_action_api.h"
@@ -153,6 +157,7 @@ using content::NavigationEntry;
 using content::OpenURLParams;
 using content::Referrer;
 using content::WebContents;
+using ui::PlatformEventSource;
 
 namespace chrome {
 namespace {
@@ -1201,6 +1206,10 @@ void ClearCache(Browser* browser) {
                   content::BrowsingDataRemover::DATA_TYPE_CACHE,
                   content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
   // BrowsingDataRemover takes care of deleting itself when done.
+}
+
+void TurnOnPlatformEventRecorder() {
+  ui::PlatformEventSource::GetInstance()->TurnOnPlatformEventRecorder();
 }
 
 bool IsDebuggerAttachedToCurrentTab(Browser* browser) {
