@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1d02fcd9_3710480d",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T23:43:27Z",
+      "side": 1,
+      "message": "I think you\u0027re right but I don\u0027t see a test that calls setStartShouldFail(true) and then asserts that both addConfiguration() and removeConfiguration() are both called.",
+      "parentUuid": "43250c40_87964b72",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 72
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14484a14_177f7501",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "it can happen if Sensor.stop() is called right after Sensor.start() and AddConfiguration() failed on browser side. In this case renderer is not yet aware of AddConfiguration() failure (so Sensor state is still \u0027activating\u0027) and RemoveConfiguration() will expectedly fail too.",
       "parentUuid": "14484a14_177f7501",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9d5be7_47b38ce7",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-16T23:43:27Z",
+      "side": 1,
+      "message": "Seems like we should just remove the return value then since it isn\u0027t actionable.",
+      "parentUuid": "56806693_059e1e58",
       "range": {
         "startLine": 85,
         "startChar": 0,
