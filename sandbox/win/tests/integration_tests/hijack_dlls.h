@@ -17,8 +17,9 @@ constexpr wchar_t g_hijack_shim_dll_file[] =
 // This particular mutex is related to the use of the hijack dlls.
 constexpr wchar_t g_hijack_dlls_mutex[] = L"ChromeTestHijackDllsMutex";
 
-// Function definition for hijack shim dll.
-int CheckHijackResult(bool expect_system);
+// Hijack shim dll exported API defines for dynamic lookup.
+typedef int (*CheckHijackResultFunction)(bool expect_system);
+constexpr char g_hijack_shim_func[] = "CheckHijackResult";
 
 }  // namespace hijack_dlls
 
