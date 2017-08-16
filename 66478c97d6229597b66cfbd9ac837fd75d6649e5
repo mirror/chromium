@@ -34,6 +34,23 @@
       "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b967a7_9397636d",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-16T17:50:23Z",
+      "side": 1,
+      "message": "Yaron\u0027s question about whether webview cares about this lead me to look a bit more into this change. And uhh... it somewhere between inconclusive and this is probably ok :p\n\nLooking at message_loop, DoIdleWork is basically processing *non-nested* tasks, when they get deferred due to being posted in a nested RunLoop.\n\nI did *not* look at how IdleHandler is triggered by looper in relation to java delayed tasks, because it\u0027s just so darn complicated.\n\nPutting this in IdleHandler means native deferred tasks can be starved indefinitely as long as the java looper is busy with any non-delayed work, and native delayed tasks, which is ok since that matches message_pump_default behavior (afaict). Depending on how looper is implemented, it probably is delayed until all delayed java delayed tasks as well.\n\nGiven nested run loop is rare (in production), posting non-nested task is rare, and they could already get starved by message_pump_default, this change probably ok.",
+      "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
