@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "01db42a8_7d88abb8",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-16T19:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7033e603_4f0fe5a7",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b95e22f1_142d425c",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -835,6 +859,24 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd614dda_9c08ac4e",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-16T19:55:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eff4a51d_45dcc751",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
