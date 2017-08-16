@@ -4,9 +4,13 @@
 
 package org.chromium.chrome.browser.photo_picker;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 
+import org.chromium.base.ActivityState;
+import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.ui.PhotoPickerListener;
@@ -18,8 +22,14 @@ import java.util.List;
  * &lt;input type=file accept=image &gt; form element.
  */
 public class PhotoPickerDialog extends AlertDialog {
+    // Our context.
+    private Context mContext;
+
     // The category we're showing photos for.
     private PickerCategoryView mCategoryView;
+
+    // Whether the wait for an external intent launch is over.
+    private boolean mDoneWaitingForExternalIntent;
 
     /**
      * The PhotoPickerDialog constructor.
@@ -32,6 +42,7 @@ public class PhotoPickerDialog extends AlertDialog {
     public PhotoPickerDialog(Context context, PhotoPickerListener listener,
             boolean multiSelectionAllowed, List<String> mimeTypes) {
         super(context, R.style.FullscreenWhite);
+        mContext = context;
 
         // Initialize the main content view.
         mCategoryView = new PickerCategoryView(context);
@@ -41,8 +52,21 @@ public class PhotoPickerDialog extends AlertDialog {
 
     @Override
     public void dismiss() {
-        super.dismiss();
-        mCategoryView.onDialogDismissed();
+        if (!mCategoryView.externalIntentSelected() || mDoneWaitingForExternalIntent) {
+            super.dismiss();
+            mCategoryView.onDialogDismissed();
+        } else {
+            ApplicationStatus.registerStateListenerForActivity(new ActivityStateListener() {
+                @Override
+                public void onActivityStateChange(Activity activity, int newState) {
+                    if (newState == ActivityState.STOPPED || newState == ActivityState.DESTROYED) {
+                        mDoneWaitingForExternalIntent = true;
+                        ApplicationStatus.unregisterActivityStateListener(this);
+                        dismiss();
+                    }
+                }
+            }, (Activity) mContext);
+        }
     }
 
     @VisibleForTesting
