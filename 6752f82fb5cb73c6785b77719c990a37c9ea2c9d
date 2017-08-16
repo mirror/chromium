@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "679f7564_694b04d5",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:34:39Z",
+      "side": 1,
+      "message": "Flung?",
+      "range": {
+        "startLine": 1150,
+        "startChar": 24,
+        "endLine": 1150,
+        "endChar": 31
+      },
+      "revId": "6752f82fb5cb73c6785b77719c990a37c9ea2c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58fc094_fdaa2cfc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:34:39Z",
+      "side": 1,
+      "message": "minor revisions for conciseness:\nThe source used to switch pages in the app list\u0027s app grid.  Logged when the page switch succeeds.\n\n(replaces the current description)",
+      "range": {
+        "startLine": 1650,
+        "startChar": 0,
+        "endLine": 1652,
+        "endChar": 20
+      },
+      "revId": "6752f82fb5cb73c6785b77719c990a37c9ea2c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25c5064_645f295b",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-16T23:34:39Z",
+      "side": 1,
+      "message": "Lots of these values aren\u0027t used / implemented in this changelist.  Are those omissions intentional?",
+      "range": {
+        "startLine": 147,
+        "startChar": 32,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "6752f82fb5cb73c6785b77719c990a37c9ea2c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
