@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d05aa5_693960db",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-16T22:09:26Z",
+      "side": 1,
+      "message": "I just put it here in advance since this should be a release blocker according to Jon.",
+      "range": {
+        "startLine": 710,
+        "startChar": 0,
+        "endLine": 710,
+        "endChar": 60
+      },
+      "revId": "c1890e16e66532289373544e6352ad41c856c2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
