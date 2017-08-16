@@ -5,5 +5,5 @@ include_rules = [
   "+components/viz/service/surfaces",
   "+gpu/ipc/common",
   "+mojo/public/cpp/bindings",
-  "+services/viz/compositing/privileged/interfaces",
+  "+services/viz/privileged/interfaces/compositing",
 ]
