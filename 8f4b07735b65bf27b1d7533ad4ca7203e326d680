@@ -82,6 +82,29 @@
     },
     {
       "key": {
+        "uuid": "770fff13_f16284cf",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-16T14:57:56Z",
+      "side": 1,
+      "message": "As an aside, I dislike seeing the results of ::GetModuleHandle passed to ::GetProcAddress without an intervening NULL check. NULL has a specific, well-defined meaning to ::GetProcAddress, and you don\u0027t intend that behavior here.",
+      "range": {
+        "startLine": 177,
+        "startChar": 23,
+        "endLine": 177,
+        "endChar": 53
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59e28116_0ac9181e",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -213,6 +236,52 @@
       "writtenOn": "2017-08-16T08:23:21Z",
       "side": 1,
       "message": "you can avoid the second lookup by hinting the insert with the position:\n  auto it \u003d module_watcher-\u003epending_events_-\u003efind(module_event);\n  if (it !\u003d module_watcher-\u003epending_events_-\u003eend()) {\n    auto hint \u003d module_watcher-\u003epending_events_-\u003eerase(it);\n    module_watcher-\u003epending_events_-\u003einsert(hint, module_event);\n  } else {\n    module_watcher-\u003epending_events_-\u003einsert(module_event);\n  }",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45693742_128cae5e",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-16T14:57:56Z",
+      "side": 1,
+      "message": "Here you\u0027re under the loader\u0027s lock, AND your own g_module_watcher_lock. It really would be better if it\u0027s at all possible to decouple by posting here.",
+      "range": {
+        "startLine": 309,
+        "startChar": 20,
+        "endLine": 309,
+        "endChar": 29
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22f0f1d_0d00be3c",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-16T14:57:56Z",
+      "side": 1,
+      "message": "I question the assertion that the loader lock isn\u0027t held here. If it\u0027s not held, then certainly something of its moral equivalence IS held. Also, under the implementation in this CL, at least one other lock MAY be held. Is it not viable to de-serialize this at source by posting update notifications to a sequence?\nNote that also this callback would be called from enumeration, in which case the loader\u0027s lock isn\u0027t held.",
+      "range": {
+        "startLine": 52,
+        "startChar": 58,
+        "endLine": 52,
+        "endChar": 61
+      },
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
