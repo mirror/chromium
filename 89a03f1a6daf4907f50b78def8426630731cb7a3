@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "5022ee3f_ae56b46c",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "I\u0027ve renamed OnBodyComplete to OnBodyPipeClosed, but kept the implementation, as that\u0027s what it already does.  We always wait on both pipes (Unless we received on error or unexpected event from the URLLoaderClientPipe).",
+      "parentUuid": "f321ffce_36715359",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c46c42a_2fcc9a52",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -404,6 +428,30 @@
     },
     {
       "key": {
+        "uuid": "f7f748e4_ab37eeea",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep the invariant that we can search for calls to DownloadToStringCrashAndDie if we want to locate places that may be allocating too much memory.",
+      "parentUuid": "d2cfea42_6ce41d23",
+      "range": {
+        "startLine": 158,
+        "startChar": 25,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316e5336_a754f21f",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -472,6 +520,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97af7bc5_99c1c3b5",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "This code will run in network consumer processes.  Mostly in the browser, but it will likely end up in Blink eventually as well.  Also note that it may not just be used to talk to the network process - it could, for instance, but used by \u003ca download\u003e to talk to a ServiceWorker (No idea if we\u0027ll do that, mostly because hooking up the mime sniffed download case may get hairy, but it\u0027s a possibility).\n\nComments added (To all three ERR_UNEXPECTED locations).",
+      "parentUuid": "4a235b71_00b5b721",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -664,6 +736,30 @@
     },
     {
       "key": {
+        "uuid": "eb96fda8_bee052ca",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "Added comment (to start of method)",
+      "parentUuid": "8000eef8_51f1c16e",
+      "range": {
+        "startLine": 280,
+        "startChar": 28,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a02af9_9b6b5d4d",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -735,6 +831,30 @@
     },
     {
       "key": {
+        "uuid": "3c5e04a3_4efad891",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "It seems easy to get them confused.  I\u0027ve merged them, and added a done_ bool to DCHECK on instead.",
+      "parentUuid": "53a8f71c_e6e413b0",
+      "range": {
+        "startLine": 295,
+        "startChar": 12,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf6dced_bf2b4d41",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -803,6 +923,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a6e2fd_d4fcaef7",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "d53dd7de_b7822d3c",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 19
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1205,6 +1349,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "636cca00_3e4de2dc",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T18:07:30Z",
+      "side": 1,
+      "message": "I think this is a good idea.  But maybe put it off until we have both file downloads and user-provided callbacks?  Then we can make more comprehensive examples, integrating them a bit better.",
+      "parentUuid": "b49040fb_c3b3b2f4",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
