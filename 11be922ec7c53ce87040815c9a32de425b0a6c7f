@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb86fc27_9e262c3a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T19:04:58Z",
+      "side": 1,
+      "message": "Please add yourself as the owner here (or pick an appropriate owner).",
+      "revId": "11be922ec7c53ce87040815c9a32de425b0a6c7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af11ea2_0b703364",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-16T19:04:58Z",
+      "side": 1,
+      "message": "This should have a description too...",
+      "revId": "11be922ec7c53ce87040815c9a32de425b0a6c7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
