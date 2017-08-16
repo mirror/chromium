@@ -46,6 +46,30 @@
       "revId": "8edb86efa3153616cb5b7a20751042a3639f0a81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015368ba_403000f3",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-16T04:26:32Z",
+      "side": 1,
+      "message": "FYI: in C++11 and later, nested class can access to any members of the enclosing class,\nand that\u0027s why it is necessary to declare InstanceObserver here as it accesses MaybeSendInitialPowerChange().\n\ncf) http://en.cppreference.com/w/cpp/language/nested_types",
+      "parentUuid": "27656f52_065c7387",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "8edb86efa3153616cb5b7a20751042a3639f0a81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
