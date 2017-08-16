@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f044fe_fe6e8184",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-08-16T15:02:36Z",
+      "side": 1,
+      "message": "Thinking of tablet mode: Usually the shelf is entirely opaque when an app is running. Looking at the mocks (and this 0) it sounds like as if we are planning to show the shelf in this mode as see through - which might look not that great. Is that really what we want?",
+      "range": {
+        "startLine": 249,
+        "startChar": 33,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "099e6f4e63dc03d9966fb8a328a62a65a52d226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
