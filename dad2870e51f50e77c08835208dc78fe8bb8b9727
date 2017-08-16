@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf231108_0e7620fc",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "used?\nAlso the header seems to be C++ instead of Objective-C (use include)",
+      "range": {
+        "startLine": 8,
+        "startChar": 34,
+        "endLine": 8,
+        "endChar": 43
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df498e88_8b5f599c",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "no namespace outside of the password_manager component",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9de2c52_8469d937",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "It\u0027s called a command. Clarify that it\u0027s form JS to browser.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28cfad1_c4e7f11f",
         "filename": "ios/chrome/browser/passwords/credential_manager.h",
         "patchSetId": 3
@@ -19,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "a284a8c4_816e29fc",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "Agree. The consumers of this class aren\u0027t supposed to call CredentialManagerImpl methods directly.\nCredentialManagerImpl should be a private member.",
+      "parentUuid": "a28cfad1_c4e7f11f",
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27370da8_c3ca8138",
         "filename": "ios/chrome/browser/passwords/credential_manager.h",
         "patchSetId": 3
@@ -30,6 +117,29 @@
       "writtenOn": "2017-08-16T16:16:37Z",
       "side": 1,
       "message": "explicit is only needed for constructor with one argument",
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b0178c_1220f4df",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "You forgot the destructor.",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 28
+      },
       "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +192,53 @@
     },
     {
       "key": {
+        "uuid": "720df016_9b24e9ab",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "It should. I guess it was exposed for testing. We have FRIEND_TEST_ALL_PREFIXES for that use case.",
+      "parentUuid": "092cb1ee_1dcd1a69",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9482cc5f_182c5f77",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "A comment for each method.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 49
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a2d0f98_0eb50ee4",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 3
@@ -98,6 +255,259 @@
         "startChar": 29,
         "endLine": 3,
         "endChar": 0
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ba07d4_0e3583a5",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of landing code behind a comment. It\u0027s strange to review it now because we don\u0027t even know if it compiles. I\u0027d recommend to keep it in the next branch.",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc9f7db_51dddc85",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "I assume that you handle this case in JS, right? Otherwise the promise is never resolved.",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27f54a9_9aeda516",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "Seems like this block isn\u0027t needed.",
+      "range": {
+        "startLine": 77,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77ef0d4_21db66a5",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "const base::ListValue* list \u003d nullptr;",
+      "range": {
+        "startLine": 107,
+        "startChar": 25,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9cf624_9e79e659",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "That can easily leave |lst| untouched.",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 14
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac14702e_c5bf4897",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "That can also fail. We should not trust the input. Also it\u0027s something to check in the integration/unit tests that Chrome handles any trash correctly.",
+      "range": {
+        "startLine": 111,
+        "startChar": 9,
+        "endLine": 111,
+        "endChar": 18
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12b67d0_f8fd2f00",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "Check that the Impl class handles properly incorrect URLs",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 25
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6777d983_41d85b0e",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "It\u0027s C++ class, we use include",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 7
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed6077a_0ac656f4",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5463a2a4_867926d8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "High level comment about the whole file. Assuming you are gonna write an integration test for this class, we don\u0027t need clients, password store etc. here. I\u0027d just test here that all the parsing is correct. I\u0027m not sure you can keep calling HandleScriptCommand here once you implement all the missing functionality (secure state checks and JSCredentialManager).\nThe only command that you fully test in this file is store(). I\u0027d move it to the integration test.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b017353_a72ded7e",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "constructor first",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 36
       },
       "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -220,6 +630,30 @@
     },
     {
       "key": {
+        "uuid": "6dabb700_6b7ce3b9",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "store_ is refcounted. I recommend MakeRefCounted\u003c\u003e here",
+      "parentUuid": "741bf628_14f38926",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "172f27c6_581e52bb",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 3
@@ -236,6 +670,98 @@
         "startChar": 24,
         "endLine": 153,
         "endChar": 28
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bde698a_198848da",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "This block is copy/pasted too many times, write a function.",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 177,
+        "endChar": 16
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7390b7c8_0c86e5dc",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "That only makes sense for store(). Update the test name and the comment",
+      "range": {
+        "startLine": 195,
+        "startChar": 29,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b794b2_c43c5ebd",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "You could just check pending_credential() here instead of doing everything below. I don\u0027t see an expectation on PromptUserToSavePasswordPtr",
+      "range": {
+        "startLine": 234,
+        "startChar": 11,
+        "endLine": 234,
+        "endChar": 26
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b6fd15_2f1c7172",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-16T21:39:10Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 269,
+        "startChar": 11,
+        "endLine": 269,
+        "endChar": 26
       },
       "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
