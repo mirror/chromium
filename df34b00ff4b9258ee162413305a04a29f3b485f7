@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "66f7f5c2_fc088dbf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-16T12:35:38Z",
+      "side": 1,
+      "message": "I would like to have the spinner + more be a single item, that can handle its state itself. We have mocks that use a similar element in for non modern too in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d663376#c20, so that would overall be a nice thing to have implemented in a clean way.\n\nAlso this is used only for calculateBottomSpacing, so never in the bottom sheet or anywhere we do pull to load more right? Just assert at the top that the feature is not enabled then?",
+      "parentUuid": "336650b4_d5284cf7",
+      "range": {
+        "startLine": 254,
+        "startChar": 35,
+        "endLine": 254,
+        "endChar": 37
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7899bef_7e4628b9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
         "patchSetId": 2
@@ -53,6 +77,30 @@
       "writtenOn": "2017-08-16T11:57:46Z",
       "side": 1,
       "message": "This is incredibly ugly - I\u0027d prefer to wire the ScrollToLoadListener directly to the Articles Section.",
+      "range": {
+        "startLine": 217,
+        "startChar": 38,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "df34b00ff4b9258ee162413305a04a29f3b485f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc6b122_987c74e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-16T12:35:38Z",
+      "side": 1,
+      "message": "IIRC after Bernhard\u0027s CL you don\u0027t dismiss the section anymore and the button is always visible, so no special handling would be needed for tapping the button.",
+      "parentUuid": "f7899bef_7e4628b9",
       "range": {
         "startLine": 217,
         "startChar": 38,
