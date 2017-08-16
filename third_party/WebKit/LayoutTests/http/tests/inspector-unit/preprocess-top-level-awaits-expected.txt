@@ -1,4 +1,4 @@
-CONSOLE ERROR: line 497: Walk order not defined for ArrayPattern
+CONSOLE ERROR: line 502: Walk order not defined for ArrayPattern
 This tests preprocessTopLevelAwaitExpressions.
 --------------
 0
