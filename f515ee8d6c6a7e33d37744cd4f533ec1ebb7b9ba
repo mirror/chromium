@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca8a911_5c7055fe",
+        "filename": "media/capture/video/chromeos/local_gpu_memory_buffer_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-16T22:35:51Z",
+      "side": 1,
+      "message": "Please avoid abbreviations. Does \"bo\" stand for byte_order?\n\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules",
+      "revId": "f515ee8d6c6a7e33d37744cd4f533ec1ebb7b9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cacbfa_d532b2f8",
+        "filename": "media/capture/video/chromeos/stream_buffer_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-16T22:35:51Z",
+      "side": 1,
+      "message": "typo: relying",
+      "revId": "f515ee8d6c6a7e33d37744cd4f533ec1ebb7b9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5babc0_b4c8a22c",
+        "filename": "media/capture/video/chromeos/video_capture_device_factory_chromeos.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-16T22:35:51Z",
+      "side": 1,
+      "message": "Why not inject a gpu::GpuMemoryBufferManager* into the constructor of each class that depends on it instead of making every such class take a dependency on the global state exposed via this static method?",
+      "revId": "f515ee8d6c6a7e33d37744cd4f533ec1ebb7b9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
