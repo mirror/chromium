@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51cbb562_b0f2a594",
+        "filename": "components/policy/core/browser/configuration_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T17:02:22Z",
+      "side": 1,
+      "message": "Done. The CheckListEntry methods actually do the same on the entry level.",
+      "parentUuid": "113e0ef7_be91ed40",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 3
+      },
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0548d98e_a3a56ac8",
         "filename": "components/policy/core/browser/configuration_policy_handler.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fde8d905_9511f3b5",
+        "filename": "components/policy/core/browser/configuration_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T17:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0548d98e_a3a56ac8",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f70ad788_a94ea16f",
         "filename": "components/policy/core/browser/configuration_policy_handler.cc",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "1de0d4da_bcd315db",
+        "filename": "components/policy/core/browser/configuration_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T17:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f70ad788_a94ea16f",
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52456870_4abd27f5",
         "filename": "components/policy/core/browser/configuration_policy_handler.h",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-16T15:53:28Z",
       "side": 1,
       "message": "That\u0027s unused, can we remove this argument and the corresponding member?\nThis also removes the constraint of supporting only a single pref with a single instance of this class - which is just a limitation that doesn\u0027t help to simplify anything.",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 41
+      },
+      "revId": "bb5374eae5794ac4f997b6fc8ef0dcd034cb4e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401156f0_a001e9bf",
+        "filename": "components/policy/core/browser/configuration_policy_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-16T17:02:22Z",
+      "side": 1,
+      "message": "Done. For a new user, it might conceptually simplify how to think of the handler, naming that it maps a single policy to a single pref. But you\u0027re right, it\u0027s an artificial limitation.",
+      "parentUuid": "52456870_4abd27f5",
       "range": {
         "startLine": 111,
         "startChar": 20,
