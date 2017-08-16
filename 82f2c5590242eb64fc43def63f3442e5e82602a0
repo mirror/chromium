@@ -69,6 +69,24 @@
       "revId": "82f2c5590242eb64fc43def63f3442e5e82602a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66136fc_7fb26d09",
+        "filename": "gpu/command_buffer/client/shared_memory_limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-16T22:52:32Z",
+      "side": 1,
+      "message": "Ok, for transfer buffers I\u0027ll keep the maximum the same for now, and just change the start value.",
+      "parentUuid": "547cc5b4_6c691343",
+      "revId": "82f2c5590242eb64fc43def63f3442e5e82602a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
