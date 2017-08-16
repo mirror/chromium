@@ -80526,6 +80526,65 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.BackgroundTabOpen.CompressedPagesPerSecond"
+    units="pages/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of pages compressed per second when loading background tabs. This
+    is recorded at the end of background tab loading session as an average over
+    the entire period, which is defined as the period of time when background
+    tabs are being loaded. This does not include session restore period. Only
+    recorded on macOS.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.DecompressedPagesPerSecond"
+    units="pages/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of pages decompressed per second when loading background tabs.
+    This is recorded at the end of background tab loading session as an average
+    over the entire period, which is defined as the period of time when
+    background tabs are being loaded. This does not include session restore
+    period. Only recorded on macOS.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.SwapInPerSecond" units="swaps/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of swap-ins per second when loading background tabs. This is
+    recorded at the end of background tab loading session as an average over the
+    entire period, which is defined as the period of time when background tabs
+    are being loaded. This does not include session restore period. Only
+    recorded on macOS.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.SwapOutPerSecond" units="swaps/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of swap-outs per second when loading background tabs. This is
+    recorded at the end of background tab loading session as an average over the
+    entire period, which is defined as the period of time when background tabs
+    are being loaded. This does not include session restore period. Only
+    recorded on macOS.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.SwitchToTab"
+    enum="TabLoadingState">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The loading state of a tab at the time the user switches to it when the
+    browser is loading background tabs. The metric is only recorded when a tab
+    is switched to from another tab within the same tabstrip. As a result, the
+    case when switching between different windows is not included, either
+    between two tabs in different browser windows, or when switching to a
+    different application and switching back to the browser.
+  </summary>
+</histogram>
+
 <histogram name="TabManager.Discarding.DiscardCount" units="Discards">
   <owner>georgesak@chromium.org</owner>
   <summary>

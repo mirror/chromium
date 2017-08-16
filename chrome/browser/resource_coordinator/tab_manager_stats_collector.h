@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 #include "chrome/browser/sessions/session_restore_observer.h"
 
@@ -24,9 +25,25 @@ namespace resource_coordinator {
 class TabManager;
 
 // TabManagerStatsCollector records UMAs on behalf of TabManager for tab and
-// system-related events and properties during session restore.
+// system-related events and properties during session restore or background tab
+// opening session.
 class TabManagerStatsCollector : public SessionRestoreObserver {
  public:
+  enum SessionType {
+    kSessionRestore,
+    // BackgroundTabOpen session is the duration from the time when the browser
+    // starts to open background tabs until the time when browser has finished
+    // loading those tabs. During the BackgroundTabOpen session, some background
+    // tabs could become foreground due to user action, but that would not
+    // affect the session end time point. For example, a browser has tab1 in
+    // foreground, and starts to open tab2 and tab3 in background. The session
+    // will end after tab2 and tab3 finishes loading, even if tab2 and tab3 are
+    // brought to foreground before they are loaded. BackgroundTabOpen session
+    // excludes the background tabs being controlled by SessionRestore, so that
+    // those two activities are clearly separated.
+    kBackgroundTabOpen
+  };
+
   explicit TabManagerStatsCollector(TabManager* tab_manager);
   ~TabManagerStatsCollector();
 
@@ -38,23 +55,39 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   void OnSessionRestoreStartedLoadingTabs() override;
   void OnSessionRestoreFinishedLoadingTabs() override;
 
-  // The following record UMA histograms for system swap metrics during session
-  // restore.
-  void OnSessionRestoreSwapInCount(uint64_t count, base::TimeDelta interval);
-  void OnSessionRestoreSwapOutCount(uint64_t count, base::TimeDelta interval);
-  void OnSessionRestoreDecompressedPageCount(uint64_t count,
-                                             base::TimeDelta interval);
-  void OnSessionRestoreCompressedPageCount(uint64_t count,
-                                           base::TimeDelta interval);
-  void OnSessionRestoreUpdateMetricsFailed();
+  // The following two functions defines the start and end of a background tab
+  // opening session.
+  void OnBackgroundTabOpenSessionStarted();
+  void OnBackgroundTabOpenSessionEnded();
+
+  // The following record UMA histograms for system swap metrics.
+  void OnSwapInCount(SessionType type,
+                     uint64_t count,
+                     base::TimeDelta interval);
+  void OnSwapOutCount(SessionType type,
+                      uint64_t count,
+                      base::TimeDelta interval);
+  void OnDecompressedPageCount(SessionType type,
+                               uint64_t count,
+                               base::TimeDelta interval);
+  void OnCompressedPageCount(SessionType type,
+                             uint64_t count,
+                             base::TimeDelta interval);
+  void OnUpdateMetricsFailed(SessionType type);
 
  private:
-  class SessionRestoreSwapMetricsDelegate;
+  class SwapMetricsDelegate;
+
+  std::string GetEventName(SessionType type) const;
 
   TabManager* tab_manager_;
+  bool is_session_restore_loading_tabs_;
+  bool is_in_background_tab_open_session_;
+
   std::unique_ptr<content::SwapMetricsDriver>
       session_restore_swap_metrics_driver_;
-  bool is_session_restore_loading_tabs_;
+  std::unique_ptr<content::SwapMetricsDriver>
+      background_tab_open_swap_metrics_driver_;
 };
 
 }  // namespace resource_coordinator
