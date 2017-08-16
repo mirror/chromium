@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6df469c9_2bdf0699",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-16T15:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd450184_f10f2b3d",
+      "revId": "7535604be5001ebf72e5535b892ee8db7a11ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4f097b_973efcdb",
         "filename": "ui/gfx/icc_profile.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-15T18:34:09Z",
       "side": 1,
       "message": "Document functions. (here and below)",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "7535604be5001ebf72e5535b892ee8db7a11ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12081ae_a6beb2c4",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-16T15:23:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ed4f097b_973efcdb",
       "range": {
         "startLine": 44,
         "startChar": 7,
