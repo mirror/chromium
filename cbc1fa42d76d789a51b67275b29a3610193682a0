@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "965e403b_ed7fa803",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-16T05:45:36Z",
+      "side": 1,
+      "message": "Is it writing to packet when mx_port_wait() returns MX_ERR_TIMED_OUT? Or are we just processing garbage in that case?\n\nMX_PKT_TYPE_SIGNAL_ONE is 1u so I guess if we had been initializing packet to {}, we\u0027d just be waking up on TIMED_OUT, doing delegate work, and then waiting again right?",
+      "range": {
+        "startLine": 237,
+        "startChar": 45,
+        "endLine": 237,
+        "endChar": 51
+      },
+      "revId": "cbc1fa42d76d789a51b67275b29a3610193682a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
