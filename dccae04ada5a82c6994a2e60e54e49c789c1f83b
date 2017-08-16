@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc1f635a_33092cae",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T22:34:12Z",
+      "side": 1,
+      "message": "It\u0027s slightly different. In this test we only have one browser supports WebAPK. This test is to ensure we don\u0027t fall into selecting that browser, if browser is specified in Manifest (We may change the behavior later, but currently this is the behavior we want).\n\nin testReturnsNullIfHostBrowserSpecifiedInManifestIsUninstalled(), we have two browsers supporting WebAPK.\n\nAdded comment to make it more clear.",
+      "parentUuid": "d2734af7_8b5aee91",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f25833_89b39b03",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "18ae3e4f_cb2d308d",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T22:34:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f25833_89b39b03",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e6772f_dd6a204a",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6b47c2_35c636ba",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T22:34:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e6772f_dd6a204a",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "ab586b33_bbece794",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T22:34:12Z",
+      "side": 1,
+      "message": "This is intentional to distinguish with testReturnsOtherBrowserIfDefaultBrowserNotSupportingWebApk, as commented in testReturnsNullIfHostBrowserInManifestNotFoundAndAnotherBrowserSupportingWebApk(),",
+      "parentUuid": "853de4f2_8b775e4a",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b733cee5_172fe64f",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -220,6 +292,30 @@
       "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54148e47_bc4579a7",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-16T22:34:12Z",
+      "side": 1,
+      "message": "Thanks for the additional info! I will stick with \"android\" as it\u0027s the most common case in real word (chrome is pre-installed, and you can\u0027t uninstall chrome without rooting the device).",
+      "parentUuid": "92bfa9e6_49cf5e2b",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 50
+      },
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
