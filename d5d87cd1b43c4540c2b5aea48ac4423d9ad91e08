@@ -39,6 +39,48 @@
       "revId": "d5d87cd1b43c4540c2b5aea48ac4423d9ad91e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0233a2_9b175529",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-16T15:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b801b2_c2aaa19e",
+      "revId": "d5d87cd1b43c4540c2b5aea48ac4423d9ad91e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d7054af_a3b698c2",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-16T15:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17e425b_744e406a",
+      "range": {
+        "startLine": 24,
+        "startChar": 66,
+        "endLine": 24,
+        "endChar": 79
+      },
+      "revId": "d5d87cd1b43c4540c2b5aea48ac4423d9ad91e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
