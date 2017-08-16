@@ -1,6 +1,6 @@
 {
   "name": "gpu driver bug list",
-  "version": "10.25",
+  "version": "10.26",
   "entries": [
     {
       "id": 1,
@@ -384,6 +384,22 @@
       "gl_renderer": "ANGLE.*",
       "features": [
         "texsubimage_faster_than_teximage"
+      ]
+    },
+    {
+      "id": 52,
+      "cr_bugs": [449116, 471200, 612474, 682075, 756178],
+      "description": "ES3 MSAA was observed problematic on some Adreno 4xx (see crbug.com/471200#c9)",
+      "os": {
+        "type": "android",
+        "version": {
+          "op": "<",
+          "value": "6.0"
+        }
+      },
+      "gl_renderer": "Adreno \\(TM\\) 4.*",
+      "features": [
+        "disable_chromium_framebuffer_multisample"
       ]
     },
     {
