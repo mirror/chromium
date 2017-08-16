@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8c483d40_bf3d3a3b",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-16T20:35:29Z",
+      "side": 1,
+      "message": "It\u0027s actually the destruction of the factory on the IO thread, after we\u0027ve dereferenced the weak ptr on the UI thread that I would have expected to DCHECK.\n\nAbout tests:  If you\u0027re significantly or completely rewriting a class (As opposed to minor refactors), I generally feel like you should ensure there\u0027s sufficient testing of it.  If I owned this code, I\u0027d block this CL until the issue was understood.",
+      "parentUuid": "96b2033e_c0fd1465",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
