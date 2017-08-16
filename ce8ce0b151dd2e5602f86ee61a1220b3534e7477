@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e4c3bbb_3dc404da",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T17:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0666546f_ee8c1f10",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51339343_2081584b",
         "filename": "base/test/launcher/test_launcher.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cef9a07_41d63e52",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T17:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51339343_2081584b",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af10349_a5d1e9a9",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-16T17:42:24Z",
+      "side": 1,
+      "message": "(forget to mark as resolved)",
+      "parentUuid": "421b5327_17ad1697",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
