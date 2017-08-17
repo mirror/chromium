@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "035d58c8_6ead9983",
+        "filename": "chrome/android/java/res/layout/new_tab_page_progress_indicator.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T08:10:39Z",
+      "side": 1,
+      "message": "This file will get deleted.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 12
+      },
+      "revId": "0a65f37294684a954e4a678036751490123caf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f3dedb_f91dcec5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T08:10:39Z",
+      "side": 1,
+      "message": "mEnabled is used to signal when the button has been pressed but the loading hasn\u0027t completed yet.\n\nIf ActionItem sets its state to \"loading\" when a button has been pressed then we shouldn\u0027t need that, but at the moment after being pressed the ActionItem may set its state to loading (if we get to line 92). Unfortunately the presence of the VIEW_ALL Action and the alternate branch of the if statement (which apparently we don\u0027t show the progress spinner for) means I can\u0027t quite simplify that.\n\nI think it would be great if for all actions of the ActionButton we go to \"loading\" and display the spinner.",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "0a65f37294684a954e4a678036751490123caf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b135919_f424e0cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T08:10:39Z",
+      "side": 1,
+      "message": "See above for my comments on getting rid of setEnabled.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 50
+      },
+      "revId": "0a65f37294684a954e4a678036751490123caf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462c398a_56f2fd45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T08:10:39Z",
+      "side": 1,
+      "message": "This should be showDelayed, it was only show for dev purposes. This means that if the new suggestions load quickly, the More button will briefly disappear then suggestions will appear.",
+      "range": {
+        "startLine": 173,
+        "startChar": 26,
+        "endLine": 173,
+        "endChar": 30
+      },
+      "revId": "0a65f37294684a954e4a678036751490123caf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e8d771_0e0d8036",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T08:10:39Z",
+      "side": 1,
+      "message": "I\u0027ll add this line back in.",
+      "range": {
+        "startLine": 500,
+        "startChar": 49,
+        "endLine": 500,
+        "endChar": 66
+      },
+      "revId": "0a65f37294684a954e4a678036751490123caf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
