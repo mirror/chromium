@@ -259,6 +259,7 @@ source_set("eg_tests") {
     "//ios/web/public/test",
     "//ios/web/public/test/http_server",
     "//testing/gtest",
+    "//third_party/libaddressinput:strings_grit",
     "//url",
   ]
   libs = [
