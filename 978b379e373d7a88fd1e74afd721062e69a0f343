@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0f9fca0_b6aa7e1c",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T05:06:49Z",
+      "side": 1,
+      "message": "Guard with ENABLE_PLUGINS, same guard when clear media licenses.",
+      "parentUuid": "7d145edb_185bad74",
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1cba5c5_78cb9619",
         "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6d0ea093_a95f84a1",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T05:06:49Z",
+      "side": 1,
+      "message": "Is this because no class saves |origins|?",
+      "parentUuid": "f1cba5c5_78cb9619",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38f1de72_199bc8fe",
         "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-17T03:11:26Z",
       "side": 1,
       "message": "This is not used on Android either.\n\nIdeally, the platform-specific code would probably be separated into another class or abstraction.",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f2094d_61881599",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T05:06:49Z",
+      "side": 1,
+      "message": "Separate logic of Android from desktop browser. MediaLicensesCounter becomes virtual/abstract. MediaLicensesCounterPlugin/Android are concrete impls.",
+      "parentUuid": "38f1de72_199bc8fe",
       "range": {
         "startLine": 63,
         "startChar": 6,
@@ -123,6 +189,30 @@
       "writtenOn": "2017-08-17T03:11:26Z",
       "side": 1,
       "message": "This function name does not match the comment. The need for a comment is perhaps a sign that the name is insufficient. You could add \"WithMediaLicenses,\" but is it really all origins contained in the storage?",
+      "range": {
+        "startLine": 38,
+        "startChar": 24,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7143a9_fab22e37",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T05:06:49Z",
+      "side": 1,
+      "message": "This should be all origins in the storage dict. If the origin doesn\u0027t have any licenses, MediaDrm still have a cert on the device, which can be deleted. I\u0027ll update the comment.",
+      "parentUuid": "e87d7e76_4793dfc1",
       "range": {
         "startLine": 38,
         "startChar": 24,
