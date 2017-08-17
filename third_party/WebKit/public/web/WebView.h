@@ -111,6 +111,7 @@ class WebView : protected WebWidget {
   using WebWidget::BackgroundColor;
   using WebWidget::GetPagePopup;
   using WebWidget::UpdateBrowserControlsState;
+  using WebWidget::DidCommitCompositorFrame;
 
   // Initialization ------------------------------------------------------
 

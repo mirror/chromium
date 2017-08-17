@@ -486,6 +486,8 @@ class CORE_EXPORT WebViewImpl final
 
   void RequestDecode(const PaintImage&, WTF::Function<void(bool)> callback);
 
+  void DidCommitCompositorFrame() override;
+
  private:
   void SetPageScaleFactorAndLocation(float, const FloatPoint&);
   void PropagateZoomFactorToLocalFrameRoots(Frame*, float);

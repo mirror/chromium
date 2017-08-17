@@ -129,6 +129,8 @@ PerformanceEntryVector PerformanceBase::getEntries() {
   if (first_contentful_paint_timing_)
     entries.push_back(first_contentful_paint_timing_);
 
+  entries.AppendVector(element_timing_buffer_);
+
   std::sort(entries.begin(), entries.end(),
             PerformanceEntry::StartTimeCompareLessThan);
   return entries;
@@ -172,6 +174,9 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
         entries.push_back(first_paint_timing_);
       if (first_contentful_paint_timing_)
         entries.push_back(first_contentful_paint_timing_);
+      break;
+    case PerformanceEntry::kElementTiming:
+      entries.AppendVector(element_timing_buffer_);
       break;
     // Unsupported for LongTask, TaskAttribution.
     // Per the spec, these entries can only be accessed via
@@ -227,6 +232,13 @@ PerformanceEntryVector PerformanceBase::getEntriesByName(
       entries.AppendVector(user_timing_->GetMarks(name));
     if (entry_type.IsNull() || type == PerformanceEntry::kMeasure)
       entries.AppendVector(user_timing_->GetMeasures(name));
+  }
+
+  if (entry_type.IsNull() || type == PerformanceEntry::kElementTiming) {
+    for (const auto& element_timing : element_timing_buffer_) {
+      if (element_timing->name() == name)
+        entries.push_back(element_timing);
+    }
   }
 
   std::sort(entries.begin(), entries.end(),
@@ -383,6 +395,17 @@ void PerformanceBase::AddPaintTiming(PerformancePaintTiming::PaintType type,
     first_paint_timing_ = entry;
   else if (type == PerformancePaintTiming::PaintType::kFirstContentfulPaint)
     first_contentful_paint_timing_ = entry;
+  NotifyObserversOfEntry(*entry);
+}
+
+void PerformanceBase::AddElementTiming(const String& name, double start_time) {
+  if (!RuntimeEnabledFeatures::PerformanceElementTimingEnabled())
+    return;
+
+  PerformanceEntry* entry = new PerformanceElementTiming(
+      name, MonotonicTimeToDOMHighResTimeStamp(start_time));
+  // TODO(shaseley): Do we need to bound the number of entries?
+  element_timing_buffer_.push_back(entry);
   NotifyObserversOfEntry(*entry);
 }
 
@@ -558,6 +581,7 @@ DEFINE_TRACE(PerformanceBase) {
   visitor->Trace(observers_);
   visitor->Trace(active_observers_);
   visitor->Trace(suspended_observers_);
+  visitor->Trace(element_timing_buffer_);
   EventTargetWithInlineData::Trace(visitor);
 }
 

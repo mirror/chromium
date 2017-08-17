@@ -65,6 +65,7 @@
 #include "core/page/PointerLockController.h"
 #include "core/page/ValidationMessageClient.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
+#include "core/timing/TextElementTiming.h"
 #include "platform/KeyboardCodes.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/animation/CompositorAnimationHost.h"
@@ -1200,6 +1201,14 @@ LocalFrame* WebFrameWidgetImpl::FocusedLocalFrameAvailableForIme() const {
   if (!ime_accept_events_)
     return nullptr;
   return FocusedLocalFrameInWidget();
+}
+
+void WebFrameWidgetImpl::DidCommitCompositorFrame() {
+  if (!local_root_)
+    return;
+  Document* document = local_root_->GetFrame()->GetDocument();
+  if (document)
+    TextElementTiming::From(*document).DidCommitCompositorFrame();
 }
 
 }  // namespace blink
