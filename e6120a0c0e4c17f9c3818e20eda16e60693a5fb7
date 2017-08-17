@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef6d5061_5fc91d52",
+        "filename": "media/capture/video/chromeos/camera_buffer_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-17T04:05:24Z",
+      "side": 1,
+      "message": "s/ChromiumFormat/ChromiumPixelFormat/",
+      "revId": "e6120a0c0e4c17f9c3818e20eda16e60693a5fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9afd24_1c81a63f",
+        "filename": "media/capture/video/chromeos/pixel_format_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-17T04:05:24Z",
+      "side": 1,
+      "message": "Document what\u0027s this for.",
+      "revId": "e6120a0c0e4c17f9c3818e20eda16e60693a5fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efdd1d5_a3063a78",
+        "filename": "media/capture/video/chromeos/stream_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-17T04:05:24Z",
+      "side": 1,
+      "message": "BufferType::SHM can be removed in the future and GRALLOC can be renamed to DMABUF.",
+      "revId": "e6120a0c0e4c17f9c3818e20eda16e60693a5fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
