@@ -468,7 +468,7 @@ void EncryptionMigrationScreenHandler::UpdateUIState(UIState state) {
 }
 
 void EncryptionMigrationScreenHandler::CheckAvailableStorage() {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&base::SysInfo::AmountOfFreeDiskSpace,
                  base::FilePath(kCheckStoragePath)),

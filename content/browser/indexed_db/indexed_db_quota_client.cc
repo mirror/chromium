@@ -84,8 +84,8 @@ void IndexedDBQuotaClient::GetOriginUsage(const GURL& origin_url,
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      indexed_db_context_->TaskRunner(), FROM_HERE,
+  indexed_db_context_->TaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&GetOriginUsageOnIndexedDBThread,
                  base::RetainedRef(indexed_db_context_), origin_url),
       callback);
@@ -142,8 +142,8 @@ void IndexedDBQuotaClient::DeleteOriginData(const GURL& origin,
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      indexed_db_context_->TaskRunner(), FROM_HERE,
+  indexed_db_context_->TaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&DeleteOriginDataOnIndexedDBThread,
                  base::RetainedRef(indexed_db_context_), origin),
       callback);

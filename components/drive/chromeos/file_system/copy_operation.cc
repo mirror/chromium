@@ -309,15 +309,16 @@ void CopyOperation::Copy(const base::FilePath& src_file_path,
   std::vector<std::string>* updated_local_ids = new std::vector<std::string>;
   bool* directory_changed = new bool(false);
   bool* should_copy_on_server = new bool(false);
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&TryToCopyLocally, metadata_, cache_, params,
-                 updated_local_ids, directory_changed, should_copy_on_server),
-      base::Bind(&CopyOperation::CopyAfterTryToCopyLocally,
-                 weak_ptr_factory_.GetWeakPtr(), base::Owned(params),
-                 base::Owned(updated_local_ids), base::Owned(directory_changed),
-                 base::Owned(should_copy_on_server)));
+      base::BindOnce(&TryToCopyLocally, metadata_, cache_, params,
+                     updated_local_ids, directory_changed,
+                     should_copy_on_server),
+      base::BindOnce(&CopyOperation::CopyAfterTryToCopyLocally,
+                     weak_ptr_factory_.GetWeakPtr(), base::Owned(params),
+                     base::Owned(updated_local_ids),
+                     base::Owned(directory_changed),
+                     base::Owned(should_copy_on_server)));
 }
 
 void CopyOperation::CopyAfterTryToCopyLocally(
@@ -372,17 +373,14 @@ void CopyOperation::CopyAfterParentSync(const CopyParams& params,
   }
 
   ResourceEntry* parent = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::ResourceMetadata::GetResourceEntryById,
-                 base::Unretained(metadata_),
-                 params.parent_entry.local_id(),
-                 parent),
-      base::Bind(&CopyOperation::CopyAfterGetParentResourceId,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 params,
-                 base::Owned(parent)));
+      base::BindOnce(&internal::ResourceMetadata::GetResourceEntryById,
+                     base::Unretained(metadata_),
+                     params.parent_entry.local_id(), parent),
+      base::BindOnce(&CopyOperation::CopyAfterGetParentResourceId,
+                     weak_ptr_factory_.GetWeakPtr(), params,
+                     base::Owned(parent)));
 }
 
 void CopyOperation::CopyAfterGetParentResourceId(const CopyParams& params,
@@ -422,18 +420,15 @@ void CopyOperation::TransferFileFromLocalToRemote(
 
   std::string* gdoc_resource_id = new std::string;
   ResourceEntry* parent_entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(
-          &PrepareTransferFileFromLocalToRemote,
-          metadata_, local_src_path, remote_dest_path,
-          gdoc_resource_id, parent_entry),
-      base::Bind(
-          &CopyOperation::TransferFileFromLocalToRemoteAfterPrepare,
-          weak_ptr_factory_.GetWeakPtr(),
-          local_src_path, remote_dest_path, callback,
-          base::Owned(gdoc_resource_id), base::Owned(parent_entry)));
+      base::BindOnce(&PrepareTransferFileFromLocalToRemote, metadata_,
+                     local_src_path, remote_dest_path, gdoc_resource_id,
+                     parent_entry),
+      base::BindOnce(&CopyOperation::TransferFileFromLocalToRemoteAfterPrepare,
+                     weak_ptr_factory_.GetWeakPtr(), local_src_path,
+                     remote_dest_path, callback, base::Owned(gdoc_resource_id),
+                     base::Owned(parent_entry)));
 }
 
 void CopyOperation::TransferFileFromLocalToRemoteAfterPrepare(
@@ -469,12 +464,11 @@ void CopyOperation::TransferFileFromLocalToRemoteAfterPrepare(
   // This is uploading a JSON file representing a hosted document.
   TransferJsonGdocParams* params = new TransferJsonGdocParams(
       callback, canonicalized_resource_id, *parent_entry, new_title);
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&LocalWorkForTransferJsonGdocFile, metadata_, params),
-      base::Bind(&CopyOperation::TransferJsonGdocFileAfterLocalWork,
-                 weak_ptr_factory_.GetWeakPtr(), base::Owned(params)));
+      base::BindOnce(&LocalWorkForTransferJsonGdocFile, metadata_, params),
+      base::BindOnce(&CopyOperation::TransferJsonGdocFileAfterLocalWork,
+                     weak_ptr_factory_.GetWeakPtr(), base::Owned(params)));
 }
 
 void CopyOperation::TransferJsonGdocFileAfterLocalWork(
@@ -566,19 +560,13 @@ void CopyOperation::UpdateAfterServerSideOperation(
   // The copy on the server side is completed successfully. Update the local
   // metadata.
   base::FilePath* file_path = new base::FilePath;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateLocalStateForServerSideOperation,
-                 metadata_,
-                 base::Passed(&entry),
-                 resource_entry,
-                 file_path),
-      base::Bind(&CopyOperation::UpdateAfterLocalStateUpdate,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(file_path),
-                 base::Owned(resource_entry)));
+      base::BindOnce(&UpdateLocalStateForServerSideOperation, metadata_,
+                     base::Passed(&entry), resource_entry, file_path),
+      base::BindOnce(&CopyOperation::UpdateAfterLocalStateUpdate,
+                     weak_ptr_factory_.GetWeakPtr(), callback,
+                     base::Owned(file_path), base::Owned(resource_entry)));
 }
 
 void CopyOperation::UpdateAfterLocalStateUpdate(
@@ -629,23 +617,14 @@ void CopyOperation::ScheduleTransferRegularFileAfterCreate(
 
   std::string* local_id = new std::string;
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateLocalStateForScheduleTransfer,
-                 metadata_,
-                 cache_,
-                 local_src_path,
-                 remote_dest_path,
-                 entry,
-                 local_id),
-      base::Bind(
+      base::BindOnce(&UpdateLocalStateForScheduleTransfer, metadata_, cache_,
+                     local_src_path, remote_dest_path, entry, local_id),
+      base::BindOnce(
           &CopyOperation::ScheduleTransferRegularFileAfterUpdateLocalState,
-          weak_ptr_factory_.GetWeakPtr(),
-          callback,
-          remote_dest_path,
-          base::Owned(entry),
-          base::Owned(local_id)));
+          weak_ptr_factory_.GetWeakPtr(), callback, remote_dest_path,
+          base::Owned(entry), base::Owned(local_id)));
 }
 
 void CopyOperation::ScheduleTransferRegularFileAfterUpdateLocalState(

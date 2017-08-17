@@ -1188,12 +1188,12 @@ void QuotaManager::LazyInitialize() {
         this, &QuotaManager::ReportHistogram);
   }
 
-  base::PostTaskAndReplyWithResult(
-      db_runner_.get(), FROM_HERE,
-      base::Bind(&QuotaDatabase::IsOriginDatabaseBootstrapped,
-                 base::Unretained(database_.get())),
-      base::Bind(&QuotaManager::FinishLazyInitialize,
-                 weak_factory_.GetWeakPtr()));
+  db_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&QuotaDatabase::IsOriginDatabaseBootstrapped,
+                     base::Unretained(database_.get())),
+      base::BindOnce(&QuotaManager::FinishLazyInitialize,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void QuotaManager::FinishLazyInitialize(bool is_database_bootstrapped) {
@@ -1640,12 +1640,12 @@ void QuotaManager::GetStorageCapacity(const StorageCapacityCallback& callback) {
                    weak_factory_.GetWeakPtr()));
     return;
   }
-  base::PostTaskAndReplyWithResult(
-      db_runner_.get(), FROM_HERE,
-      base::Bind(&QuotaManager::CallGetVolumeInfo, get_volume_info_fn_,
-                 profile_path_),
-      base::Bind(&QuotaManager::DidGetStorageCapacity,
-                 weak_factory_.GetWeakPtr()));
+  db_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&QuotaManager::CallGetVolumeInfo, get_volume_info_fn_,
+                     profile_path_),
+      base::BindOnce(&QuotaManager::DidGetStorageCapacity,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void QuotaManager::ContinueIncognitoGetStorageCapacity(
@@ -1683,9 +1683,8 @@ void QuotaManager::PostTaskAndReplyWithResultForDBThread(
   // Deleting manager will post another task to DB sequence to delete
   // |database_|, therefore we can be sure that database_ is alive when this
   // task runs.
-  base::PostTaskAndReplyWithResult(
-      db_runner_.get(), from_here,
-      base::Bind(std::move(task), base::Unretained(database_.get())),
+  db_runner_->PostTaskAndReply(
+      from_here, base::Bind(std::move(task), base::Unretained(database_.get())),
       std::move(reply));
 }
 

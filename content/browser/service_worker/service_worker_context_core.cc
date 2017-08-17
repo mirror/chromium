@@ -388,7 +388,7 @@ void ServiceWorkerContextCore::HasMainFrameProviderHost(
     provider_host_iterator.Advance();
   }
 
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
       base::Bind(&FrameListContainsMainFrameOnUI,
                  base::Passed(std::move(render_frames))),

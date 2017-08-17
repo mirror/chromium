@@ -1400,7 +1400,7 @@ void PrintPreviewHandler::SelectFile(const base::FilePath& default_filename,
   // Handle the no prompting case. Like the dialog prompt, this function
   // returns and eventually FileSelected() gets called.
   if (!prompt_user) {
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(&GetUniquePath, path.Append(default_filename)),
         base::Bind(&PrintPreviewHandler::OnGotUniqueFileName,

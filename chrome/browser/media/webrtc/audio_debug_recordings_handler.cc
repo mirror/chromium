@@ -71,7 +71,7 @@ void AudioDebugRecordingsHandler::StartAudioDebugRecordings(
     const RecordingErrorCallback& error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&GetLogDirectoryAndEnsureExists, profile_),
       base::Bind(&AudioDebugRecordingsHandler::DoStartAudioDebugRecordings,
@@ -84,7 +84,7 @@ void AudioDebugRecordingsHandler::StopAudioDebugRecordings(
     const RecordingErrorCallback& error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   const bool is_manual_stop = true;
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&GetLogDirectoryAndEnsureExists, profile_),
       base::Bind(&AudioDebugRecordingsHandler::DoStopAudioDebugRecordings, this,

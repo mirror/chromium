@@ -969,7 +969,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
     }
     base::FilePath device_policy_path =
         owner_key_path.DirName().AppendASCII(kStubDevicePolicyFile);
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
         base::Bind(&GetFileContent, device_policy_path),
@@ -989,7 +989,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
   }
   void RetrievePolicyForUser(const cryptohome::Identification& cryptohome_id,
                              const RetrievePolicyCallback& callback) override {
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
         base::Bind(&GetFileContent,
@@ -1098,7 +1098,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
     CHECK(PathService::Get(chromeos::FILE_OWNER_KEY, &owner_key_path));
     const base::FilePath state_keys_path =
         owner_key_path.DirName().AppendASCII(kStubStateKeysFile);
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
         base::Bind(&ReadCreateStateKeysStub, state_keys_path),

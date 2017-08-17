@@ -500,11 +500,10 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     } else if (url.SchemeIs("file")) {
       auto file_contents = base::MakeUnique<std::string>();
       std::string* content_ptr = file_contents.get();
-      base::PostTaskAndReplyWithResult(
-          disk_task_runner_.get(), FROM_HERE,
-          base::Bind(&FetchFile, url, content_ptr),
-          base::Bind(&PpdProviderImpl::OnFileFetchComplete, this,
-                     base::Passed(&file_contents)));
+      disk_task_runner_->PostTaskAndReply(
+          FROM_HERE, base::BindOnce(&FetchFile, url, content_ptr),
+          base::BindOnce(&PpdProviderImpl::OnFileFetchComplete, this,
+                         base::Passed(&file_contents)));
     }
   }
 

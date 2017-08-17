@@ -67,12 +67,12 @@ DownloadWorker::~DownloadWorker() = default;
 void DownloadWorker::SendRequest(
     std::unique_ptr<DownloadUrlParameters> params) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&CreateUrlDownloader, base::Passed(&params),
-                 weak_factory_.GetWeakPtr()),
-      base::Bind(&DownloadWorker::AddUrlDownloader,
-                 weak_factory_.GetWeakPtr()));
+      base::BindOnce(&CreateUrlDownloader, base::Passed(&params),
+                     weak_factory_.GetWeakPtr()),
+      base::BindOnce(&DownloadWorker::AddUrlDownloader,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void DownloadWorker::Pause() {

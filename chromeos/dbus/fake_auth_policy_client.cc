@@ -185,7 +185,7 @@ void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
   CHECK(policy.SerializeToString(&payload));
 
   // Drop file for SessionManagerClientStubImpl to read.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
@@ -218,7 +218,7 @@ void FakeAuthPolicyClient::RefreshUserPolicy(const AccountId& account_id,
   CHECK(policy.SerializeToString(&payload));
 
   // Drop file for SessionManagerClientStubImpl to read.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

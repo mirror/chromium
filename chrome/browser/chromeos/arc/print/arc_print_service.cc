@@ -113,7 +113,7 @@ void ArcPrintService::Print(mojo::ScopedHandle pdf_data) {
 
   base::File file(scoped_platform_handle.release().handle);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::BindOnce(&SavePdf, base::Passed(&file)),
       base::BindOnce(&ArcPrintService::OpenPdf,

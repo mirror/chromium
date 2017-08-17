@@ -496,7 +496,7 @@ bool VariationsService::StoreSeed(const std::string& seed_data,
 
   RecordSuccessfulFetch();
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       client_->GetVersionForSimulationCallback(),
       base::Bind(&VariationsService::PerformSimulationWithVersion,

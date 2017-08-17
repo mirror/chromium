@@ -389,14 +389,14 @@ class BlobMemoryController::FileQuotaAllocationTask
           controller_->file_runner_.get()));
     }
     // Send file creation task to file thread.
-    base::PostTaskAndReplyWithResult(
-        controller_->file_runner_.get(), FROM_HERE,
-        base::Bind(&CreateEmptyFiles, controller_->blob_storage_dir_,
-                   disk_space_function, controller_->file_runner_,
-                   base::Passed(&file_paths)),
-        base::Bind(&FileQuotaAllocationTask::OnCreateEmptyFiles,
-                   weak_factory_.GetWeakPtr(), base::Passed(&references),
-                   allocation_size_));
+    controller_->file_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&CreateEmptyFiles, controller_->blob_storage_dir_,
+                       disk_space_function, controller_->file_runner_,
+                       base::Passed(&file_paths)),
+        base::BindOnce(&FileQuotaAllocationTask::OnCreateEmptyFiles,
+                       weak_factory_.GetWeakPtr(), base::Passed(&references),
+                       allocation_size_));
     controller_->RecordTracingCounters();
   }
   ~FileQuotaAllocationTask() override {}
@@ -662,11 +662,12 @@ void BlobMemoryController::NotifyMemoryItemsUsed(
 
 void BlobMemoryController::CalculateBlobStorageLimits() {
   if (file_runner_) {
-    PostTaskAndReplyWithResult(
-        file_runner_.get(), FROM_HERE,
-        base::Bind(&CalculateBlobStorageLimitsImpl, blob_storage_dir_, true),
-        base::Bind(&BlobMemoryController::OnStorageLimitsCalculated,
-                   weak_factory_.GetWeakPtr()));
+    file_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&CalculateBlobStorageLimitsImpl, blob_storage_dir_,
+                       true),
+        base::BindOnce(&BlobMemoryController::OnStorageLimitsCalculated,
+                       weak_factory_.GetWeakPtr()));
   } else {
     OnStorageLimitsCalculated(
         CalculateBlobStorageLimitsImpl(blob_storage_dir_, false));
@@ -873,16 +874,17 @@ void BlobMemoryController::MaybeScheduleEvictionUntilSystemHealthy(
                    weak_factory_.GetWeakPtr(), total_items_size));
 
     // Post the file writing task.
-    base::PostTaskAndReplyWithResult(
-        file_runner_.get(), FROM_HERE,
-        base::Bind(&CreateFileAndWriteItems, blob_storage_dir_,
-                   disk_space_function_, base::Passed(&page_file_path),
-                   file_runner_, base::Passed(&items_for_paging),
-                   total_items_size),
-        base::Bind(&BlobMemoryController::OnEvictionComplete,
-                   weak_factory_.GetWeakPtr(), base::Passed(&file_reference),
-                   base::Passed(&items_to_swap), total_items_size, reason,
-                   total_memory_usage));
+    file_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&CreateFileAndWriteItems, blob_storage_dir_,
+                       disk_space_function_, base::Passed(&page_file_path),
+                       file_runner_, base::Passed(&items_for_paging),
+                       total_items_size),
+        base::BindOnce(&BlobMemoryController::OnEvictionComplete,
+                       weak_factory_.GetWeakPtr(),
+                       base::Passed(&file_reference),
+                       base::Passed(&items_to_swap), total_items_size, reason,
+                       total_memory_usage));
 
     last_eviction_time_ = base::TimeTicks::Now();
   }

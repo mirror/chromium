@@ -65,12 +65,12 @@ void ThreadedSSLPrivateKey::SignDigest(
     const base::StringPiece& input,
     const SSLPrivateKey::SignCallback& callback) {
   std::vector<uint8_t>* signature = new std::vector<uint8_t>;
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::Bind(&ThreadedSSLPrivateKey::Core::SignDigest, core_, hash,
-                 input.as_string(), base::Unretained(signature)),
-      base::Bind(&DoCallback, weak_factory_.GetWeakPtr(), callback,
-                 base::Owned(signature)));
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ThreadedSSLPrivateKey::Core::SignDigest, core_, hash,
+                     input.as_string(), base::Unretained(signature)),
+      base::BindOnce(&DoCallback, weak_factory_.GetWeakPtr(), callback,
+                     base::Owned(signature)));
 }
 
 ThreadedSSLPrivateKey::~ThreadedSSLPrivateKey() {}

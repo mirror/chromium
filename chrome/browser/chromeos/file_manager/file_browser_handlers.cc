@@ -290,7 +290,7 @@ void FileBrowserHandlerExecutor::Execute(
   scoped_refptr<storage::FileSystemContext> file_system_context(
       util::GetFileSystemContextForExtensionId(profile_, extension_->id()));
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::Bind(&SetupFileAccessPermissions, file_system_context, extension_,
                  file_urls),

@@ -316,7 +316,7 @@ void BackgroundSyncManager::InitImpl(base::OnceClosure callback) {
     return;
   }
 
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&GetControllerParameters, service_worker_context_,
                      base::Passed(base::MakeUnique<BackgroundSyncParameters>(
@@ -466,7 +466,7 @@ void BackgroundSyncManager::RegisterImpl(
     return;
   }
 
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&GetBackgroundSyncPermissionOnUIThread,
                      service_worker_context_,

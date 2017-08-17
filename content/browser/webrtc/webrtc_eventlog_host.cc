@@ -136,7 +136,7 @@ bool WebRTCEventLogHost::StartEventLogForPeerConnection(
     int peer_connection_local_id) {
   if (number_active_log_files_ < kMaxNumberLogFiles) {
     ++number_active_log_files_;
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(&CreateFileForProcess, base_file_path_, render_process_id_,
                    peer_connection_local_id),

@@ -124,7 +124,7 @@ void HatsDialog::CreateAndShow(bool is_google_account) {
 
   std::unique_ptr<HatsDialog> hats_dialog(new HatsDialog);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&GetFormattedSiteContext, user_locale, kDeviceInfoStopKeyword),
       base::Bind(&HatsDialog::Show, base::Passed(&hats_dialog),

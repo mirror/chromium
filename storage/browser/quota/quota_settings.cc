@@ -123,7 +123,7 @@ base::Optional<storage::QuotaSettings> CalculateNominalDynamicSettings(
 void GetNominalDynamicSettings(const base::FilePath& partition_path,
                                bool is_incognito,
                                OptionalQuotaSettingsCallback callback) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

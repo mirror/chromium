@@ -80,9 +80,8 @@ std::string GetSessionNameSynchronously() {
 void GetSessionName(
     const scoped_refptr<base::TaskRunner>& task_runner,
     const base::Callback<void(const std::string&)>& done_callback) {
-  base::PostTaskAndReplyWithResult(task_runner.get(), FROM_HERE,
-                                   base::Bind(&GetSessionNameSynchronously),
-                                   done_callback);
+  task_runner->PostTaskAndReply(
+      FROM_HERE, base::Bind(&GetSessionNameSynchronously), done_callback);
 }
 
 std::string GetSessionNameSynchronouslyForTesting() {

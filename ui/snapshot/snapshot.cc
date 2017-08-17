@@ -38,7 +38,7 @@ void EncodeImageAndScheduleCallback(
     const base::Callback<void(scoped_refptr<base::RefCountedMemory> data)>&
         callback,
     const gfx::Image& image) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(encode_func, image), callback);
 }

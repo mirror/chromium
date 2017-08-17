@@ -340,8 +340,8 @@ void HistoryService::TopHosts(size_t num_hosts,
                               const TopHostsCallback& callback) const {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
-  PostTaskAndReplyWithResult(
-      backend_task_runner_.get(), FROM_HERE,
+  backend_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&HistoryBackend::TopHosts, history_backend_, num_hosts),
       callback);
 }
@@ -351,8 +351,8 @@ void HistoryService::GetCountsAndLastVisitForOrigins(
     const GetCountsAndLastVisitForOriginsCallback& callback) const {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
-  PostTaskAndReplyWithResult(
-      backend_task_runner_.get(), FROM_HERE,
+  backend_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&HistoryBackend::GetCountsAndLastVisitForOrigins,
                  history_backend_, origins),
       callback);
@@ -363,8 +363,8 @@ void HistoryService::HostRankIfAvailable(
     const base::Callback<void(int)>& callback) const {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
-  PostTaskAndReplyWithResult(
-      backend_task_runner_.get(), FROM_HERE,
+  backend_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&HistoryBackend::HostRankIfAvailable, history_backend_, url),
       callback);
 }
@@ -635,8 +635,8 @@ void HistoryService::SetOnDemandFavicons(const GURL& page_url,
   if (history_client_ && !history_client_->CanAddURL(page_url))
     return;
 
-  PostTaskAndReplyWithResult(
-      backend_task_runner_.get(), FROM_HERE,
+  backend_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&HistoryBackend::SetOnDemandFavicons, history_backend_,
                  page_url, icon_type, icon_url, bitmaps),
       callback);
@@ -693,7 +693,7 @@ base::CancelableTaskTracker::TaskId HistoryService::GetHistoryCount(
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  return tracker->PostTaskAndReplyWithResult(
+  return tracker->PostTaskAndReply(
       backend_task_runner_.get(), FROM_HERE,
       base::Bind(&HistoryBackend::GetHistoryCount, history_backend_, begin_time,
                  end_time),
@@ -709,17 +709,18 @@ void HistoryService::CreateDownload(
     const HistoryService::DownloadCreateCallback& callback) {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
-  PostTaskAndReplyWithResult(backend_task_runner_.get(), FROM_HERE,
-                             base::Bind(&HistoryBackend::CreateDownload,
-                                        history_backend_, create_info),
-                             callback);
+  backend_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::Bind(&HistoryBackend::CreateDownload, history_backend_,
+                 create_info),
+      callback);
 }
 
 void HistoryService::GetNextDownloadId(const DownloadIdCallback& callback) {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
-  PostTaskAndReplyWithResult(
-      backend_task_runner_.get(), FROM_HERE,
+  backend_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&HistoryBackend::GetNextDownloadId, history_backend_),
       callback);
 }

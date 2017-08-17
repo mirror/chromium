@@ -166,8 +166,8 @@ std::string CachedPolicyKeyLoaderChromeOS::LoadPolicyKey(
 void CachedPolicyKeyLoaderChromeOS::TriggerLoadPolicyKey() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&CachedPolicyKeyLoaderChromeOS::LoadPolicyKey,
                      cached_policy_key_path_),
       base::BindOnce(&CachedPolicyKeyLoaderChromeOS::OnPolicyKeyLoaded,

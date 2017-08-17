@@ -72,9 +72,8 @@ void SupportedAudioVideoChecker::StartPreWriteValidation(
   DCHECK(callback_.is_null());
   callback_ = result_callback;
 
-  content::BrowserThread::PostTaskAndReplyWithResult(
-      content::BrowserThread::FILE,
-      FROM_HERE,
+  content::BrowserThread::PostTaskAndReply(
+      content::BrowserThread::FILE, FROM_HERE,
       base::Bind(&OpenOnFileThread, path_),
       base::Bind(&SupportedAudioVideoChecker::OnFileOpen,
                  weak_factory_.GetWeakPtr()));

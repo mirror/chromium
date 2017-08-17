@@ -53,15 +53,12 @@ PepperNetworkMonitorHost::PepperNetworkMonitorHost(BrowserPpapiHostImpl* host,
   host->GetRenderFrameIDsForInstance(
       instance, &render_process_id, &render_frame_id);
 
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(&CanUseNetworkMonitor,
-                 host->external_plugin(),
-                 render_process_id,
-                 render_frame_id),
-      base::Bind(&PepperNetworkMonitorHost::OnPermissionCheckResult,
-                 weak_factory_.GetWeakPtr()));
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&CanUseNetworkMonitor, host->external_plugin(),
+                     render_process_id, render_frame_id),
+      base::BindOnce(&PepperNetworkMonitorHost::OnPermissionCheckResult,
+                     weak_factory_.GetWeakPtr()));
 }
 
 PepperNetworkMonitorHost::~PepperNetworkMonitorHost() {
@@ -86,7 +83,7 @@ void PepperNetworkMonitorHost::GetAndSendNetworkList() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // Call GetNetworkList() on a thread that allows blocking IO.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&GetNetworkList),
       base::Bind(&PepperNetworkMonitorHost::SendNetworkList,

@@ -111,11 +111,11 @@ void NativeMediaFileUtil::CreatedSnapshotFileForCreateOrOpen(
     callback.Run(base::File(), base::Closure());
     return;
   }
-  base::PostTaskAndReplyWithResult(
-      media_task_runner,
+
+  media_task_runner->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(
-          &storage::NativeFileUtil::CreateOrOpen, platform_path, file_flags),
+      base::Bind(&storage::NativeFileUtil::CreateOrOpen, platform_path,
+                 file_flags),
       base::Bind(&DidOpenSnapshot, callback, file_ref));
 }
 

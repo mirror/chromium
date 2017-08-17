@@ -273,7 +273,7 @@ void TaskGroup::RefreshWindowsHandles() {
 
 #if !defined(DISABLE_NACL)
 void TaskGroup::RefreshNaClDebugStubPort(int child_process_unique_id) {
-  content::BrowserThread::PostTaskAndReplyWithResult(
+  content::BrowserThread::PostTaskAndReply(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&GetNaClDebugStubPortOnIoThread, child_process_unique_id),
       base::Bind(&TaskGroup::OnRefreshNaClDebugStubPortDone,

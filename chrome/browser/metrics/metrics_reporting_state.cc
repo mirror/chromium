@@ -96,9 +96,9 @@ void ChangeMetricsReportingStateWithReply(
     return;
   }
 #endif
-  base::PostTaskAndReplyWithResult(
-      GoogleUpdateSettings::CollectStatsConsentTaskRunner(), FROM_HERE,
-      base::Bind(&SetGoogleUpdateSettings, enabled),
+
+  GoogleUpdateSettings::CollectStatsConsentTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::Bind(&SetGoogleUpdateSettings, enabled),
       base::Bind(&SetMetricsReporting, enabled, callback_fn));
 }
 

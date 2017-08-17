@@ -310,7 +310,7 @@ void CertLoader::CacheUpdated() {
     crypto::ScopedPK11Slot system_slot =
         user_cert_cache_->nss_database()->GetSystemSlot();
     DCHECK(system_slot);
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
         base::BindOnce(&FilterSystemTokenCertificates,

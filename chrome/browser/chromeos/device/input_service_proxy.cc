@@ -132,8 +132,9 @@ void InputServiceProxy::RemoveObserver(Observer* observer) {
 
 void InputServiceProxy::GetDevices(const GetDevicesCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  base::PostTaskAndReplyWithResult(
-      GetInputServiceTaskRunner().get(), FROM_HERE,
+
+  GetInputServiceTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&InputServiceProxy::ServiceObserver::GetDevices,
                  base::Unretained(service_observer_.get())),
       callback);

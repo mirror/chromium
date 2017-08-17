@@ -215,10 +215,8 @@ void InMemoryURLIndex::PostRestoreFromCacheFileTask() {
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&URLIndexPrivateData::RestoreFromFile, path),
+  task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&URLIndexPrivateData::RestoreFromFile, path),
       base::Bind(&InMemoryURLIndex::OnCacheLoadDone, AsWeakPtr()));
 }
 
@@ -319,8 +317,8 @@ void InMemoryURLIndex::PostSaveToCacheFileTask() {
     // completion closure below.
     scoped_refptr<URLIndexPrivateData> private_data_copy =
         private_data_->Duplicate();
-    base::PostTaskAndReplyWithResult(
-        task_runner_.get(),
+
+    task_runner_->PostTaskAndReply(
         FROM_HERE,
         base::Bind(&URLIndexPrivateData::WritePrivateDataToCacheFileTask,
                    private_data_copy, path),

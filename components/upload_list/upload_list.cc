@@ -52,7 +52,7 @@ UploadList::~UploadList() = default;
 void UploadList::Load(base::OnceClosure callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
   callback_ = std::move(callback);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, LoadingTaskTraits(),
       base::Bind(&UploadList::LoadUploadList, this),
       base::Bind(&UploadList::OnLoadComplete, this));

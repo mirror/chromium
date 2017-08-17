@@ -451,12 +451,12 @@ void RulesetService::IndexAndStoreRuleset(
     const UnindexedRulesetInfo& unindexed_ruleset_info,
     const WriteRulesetCallback& success_callback) {
   DCHECK(!unindexed_ruleset_info.content_version.empty());
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&RulesetService::IndexAndWriteRuleset,
-                 indexed_ruleset_base_dir_, unindexed_ruleset_info),
-      base::Bind(&RulesetService::OnWrittenRuleset, AsWeakPtr(),
-                 success_callback));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&RulesetService::IndexAndWriteRuleset,
+                     indexed_ruleset_base_dir_, unindexed_ruleset_info),
+      base::BindOnce(&RulesetService::OnWrittenRuleset, AsWeakPtr(),
+                     success_callback));
 }
 
 void RulesetService::OnWrittenRuleset(

@@ -497,14 +497,11 @@ void URLBlacklistManager::UpdateOnIO(std::unique_ptr<base::ListValue> block,
   DCHECK(io_task_runner_->RunsTasksInCurrentSequence());
   // The URLBlacklist is built on a worker thread. Once it's ready, it is passed
   // to the URLBlacklistManager on IO.
-  base::PostTaskAndReplyWithResult(
-      background_task_runner_.get(),
+  background_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&BuildBlacklist,
-                 base::Passed(&block),
-                 base::Passed(&allow)),
-      base::Bind(&URLBlacklistManager::SetBlacklist,
-                 io_weak_ptr_factory_.GetWeakPtr()));
+      base::BindOnce(&BuildBlacklist, std::move(block), std::move(allow)),
+      base::BindOnce(&URLBlacklistManager::SetBlacklist,
+                     io_weak_ptr_factory_.GetWeakPtr()));
 }
 
 void URLBlacklistManager::SetBlacklist(

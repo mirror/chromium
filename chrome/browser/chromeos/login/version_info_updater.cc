@@ -66,7 +66,7 @@ VersionInfoUpdater::~VersionInfoUpdater() {
 
 void VersionInfoUpdater::StartUpdate(bool is_official_build) {
   if (base::SysInfo::IsRunningOnChromeOS()) {
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(&version_loader::GetVersion,
                    is_official_build ? version_loader::VERSION_SHORT_WITH_DATE

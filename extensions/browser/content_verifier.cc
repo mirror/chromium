@@ -240,7 +240,7 @@ void ContentVerifier::OnFetchComplete(
     // hashes.
     delegate_->VerifyFailed(extension_id, ContentVerifyJob::MISSING_ALL_HASHES);
   } else {
-    content::BrowserThread::PostTaskAndReplyWithResult(
+    content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::IO, FROM_HERE,
         base::Bind(&ContentVerifier::ShouldVerifyAnyPaths, this, extension_id,
                    extension->path(), hash_mismatch_unix_paths),

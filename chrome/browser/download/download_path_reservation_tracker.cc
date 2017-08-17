@@ -428,9 +428,8 @@ void DownloadPathReservationTracker::GetReservedPath(
                                 conflict_action,
                                 callback};
 
-  base::PostTaskAndReplyWithResult(
-      GetTaskRunner().get(), FROM_HERE,
-      base::BindOnce(&CreateReservation, info, reserved_path),
+  GetTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&CreateReservation, info, reserved_path),
       base::BindOnce(&RunGetReservedPathCallback, callback,
                      base::Owned(reserved_path)));
 }

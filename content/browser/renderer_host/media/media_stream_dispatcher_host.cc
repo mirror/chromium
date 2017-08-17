@@ -62,13 +62,13 @@ void MediaStreamDispatcherHost::StreamGenerated(
 
   // TODO(c.padhi): Avoid this hop between threads if possible, see
   // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnStreamGenerated,
-                 base::Unretained(this), render_frame_id, page_request_id,
-                 label, audio_devices, video_devices));
+      base::BindOnce(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
+                     render_frame_id),
+      base::BindOnce(&MediaStreamDispatcherHost::OnStreamGenerated,
+                     base::Unretained(this), render_frame_id, page_request_id,
+                     label, audio_devices, video_devices));
 }
 
 void MediaStreamDispatcherHost::StreamGenerationFailed(
@@ -87,13 +87,13 @@ void MediaStreamDispatcherHost::StreamGenerationFailed(
 
   // TODO(c.padhi): Avoid this hop between threads if possible, see
   // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnStreamGenerationFailed,
-                 base::Unretained(this), render_frame_id, page_request_id,
-                 result));
+      base::BindOnce(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
+                     render_frame_id),
+      base::BindOnce(&MediaStreamDispatcherHost::OnStreamGenerationFailed,
+                     base::Unretained(this), render_frame_id, page_request_id,
+                     result));
 }
 
 void MediaStreamDispatcherHost::DeviceStopped(int render_frame_id,
@@ -111,12 +111,12 @@ void MediaStreamDispatcherHost::DeviceStopped(int render_frame_id,
 
   // TODO(c.padhi): Avoid this hop between threads if possible, see
   // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnDeviceStopped,
-                 base::Unretained(this), render_frame_id, label, device));
+      base::BindOnce(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
+                     render_frame_id),
+      base::BindOnce(&MediaStreamDispatcherHost::OnDeviceStopped,
+                     base::Unretained(this), render_frame_id, label, device));
 }
 
 void MediaStreamDispatcherHost::DeviceOpened(
@@ -135,13 +135,13 @@ void MediaStreamDispatcherHost::DeviceOpened(
 
   // TODO(c.padhi): Avoid this hop between threads if possible, see
   // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnDeviceOpened,
-                 base::Unretained(this), render_frame_id, page_request_id,
-                 label, video_device));
+      base::BindOnce(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
+                     render_frame_id),
+      base::BindOnce(&MediaStreamDispatcherHost::OnDeviceOpened,
+                     base::Unretained(this), render_frame_id, page_request_id,
+                     label, video_device));
 }
 
 bool MediaStreamDispatcherHost::OnMessageReceived(const IPC::Message& message) {
@@ -172,12 +172,12 @@ void MediaStreamDispatcherHost::DeviceOpenFailed(int render_frame_id,
 
   // TODO(c.padhi): Avoid this hop between threads if possible, see
   // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnDeviceOpenFailed,
-                 base::Unretained(this), render_frame_id, page_request_id));
+      base::BindOnce(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
+                     render_frame_id),
+      base::BindOnce(&MediaStreamDispatcherHost::OnDeviceOpenFailed,
+                     base::Unretained(this), render_frame_id, page_request_id));
 }
 
 void MediaStreamDispatcherHost::GenerateStream(

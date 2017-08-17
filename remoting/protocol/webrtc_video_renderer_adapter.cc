@@ -176,7 +176,7 @@ void WebrtcVideoRendererAdapter::HandleFrameOnMainThread(
       video_renderer_->GetFrameConsumer()->AllocateFrame(
           webrtc::DesktopSize(frame->width(), frame->height()));
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&ConvertYuvToRgb, base::Passed(&frame),
                  base::Passed(&rgb_frame),

@@ -232,20 +232,16 @@ void DirectoryLoader::ReadDirectory(
   DCHECK(!completion_callback.is_null());
 
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::GetResourceEntryByPath,
-                 base::Unretained(resource_metadata_),
-                 directory_path,
-                 entry),
-      base::Bind(&DirectoryLoader::ReadDirectoryAfterGetEntry,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 directory_path,
-                 entries_callback,
-                 completion_callback,
-                 true,  // should_try_loading_parent
-                 base::Owned(entry)));
+      base::BindOnce(&ResourceMetadata::GetResourceEntryByPath,
+                     base::Unretained(resource_metadata_), directory_path,
+                     entry),
+      base::BindOnce(&DirectoryLoader::ReadDirectoryAfterGetEntry,
+                     weak_ptr_factory_.GetWeakPtr(), directory_path,
+                     entries_callback, completion_callback,
+                     true,  // should_try_loading_parent
+                     base::Owned(entry)));
 }
 
 void DirectoryLoader::ReadDirectoryAfterGetEntry(
@@ -316,20 +312,16 @@ void DirectoryLoader::ReadDirectoryAfterLoadParent(
   }
 
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::GetResourceEntryByPath,
-                 base::Unretained(resource_metadata_),
-                 directory_path,
-                 entry),
-      base::Bind(&DirectoryLoader::ReadDirectoryAfterGetEntry,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 directory_path,
-                 entries_callback,
-                 completion_callback,
-                 false,  // should_try_loading_parent
-                 base::Owned(entry)));
+      base::BindOnce(&ResourceMetadata::GetResourceEntryByPath,
+                     base::Unretained(resource_metadata_), directory_path,
+                     entry),
+      base::BindOnce(&DirectoryLoader::ReadDirectoryAfterGetEntry,
+                     weak_ptr_factory_.GetWeakPtr(), directory_path,
+                     entries_callback, completion_callback,
+                     false,  // should_try_loading_parent
+                     base::Owned(entry)));
 }
 
 void DirectoryLoader::ReadDirectoryAfterGetAboutResource(
@@ -350,21 +342,14 @@ void DirectoryLoader::ReadDirectoryAfterGetAboutResource(
   google_apis::AboutResource* about_resource_ptr = about_resource.get();
   ResourceEntry* entry = new ResourceEntry;
   int64_t* local_changestamp = new int64_t;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&CheckLocalState,
-                 resource_metadata_,
-                 *about_resource_ptr,
-                 local_id,
-                 entry,
-                 local_changestamp),
-      base::Bind(&DirectoryLoader::ReadDirectoryAfterCheckLocalState,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 base::Passed(&about_resource),
-                 local_id,
-                 base::Owned(entry),
-                 base::Owned(local_changestamp)));
+      base::BindOnce(&CheckLocalState, resource_metadata_, *about_resource_ptr,
+                     local_id, entry, local_changestamp),
+      base::BindOnce(&DirectoryLoader::ReadDirectoryAfterCheckLocalState,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     base::Passed(&about_resource), local_id,
+                     base::Owned(entry), base::Owned(local_changestamp)));
 }
 
 void DirectoryLoader::ReadDirectoryAfterCheckLocalState(
@@ -431,15 +416,13 @@ void DirectoryLoader::OnDirectoryLoadComplete(const std::string& local_id,
   }
 
   ResourceEntryVector* entries = new ResourceEntryVector;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::ReadDirectoryById,
-                 base::Unretained(resource_metadata_), local_id, entries),
-      base::Bind(&DirectoryLoader::OnDirectoryLoadCompleteAfterRead,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 local_id,
-                 base::Owned(entries)));
+      base::BindOnce(&ResourceMetadata::ReadDirectoryById,
+                     base::Unretained(resource_metadata_), local_id, entries),
+      base::BindOnce(&DirectoryLoader::OnDirectoryLoadCompleteAfterRead,
+                     weak_ptr_factory_.GetWeakPtr(), local_id,
+                     base::Owned(entries)));
 }
 
 void DirectoryLoader::OnDirectoryLoadCompleteAfterRead(
@@ -542,17 +525,13 @@ void DirectoryLoader::LoadDirectoryFromServerAfterLoad(
 
   // Update changestamp and get the directory path.
   base::FilePath* directory_path = new base::FilePath;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateChangestamp,
-                 resource_metadata_,
-                 directory_fetch_info,
-                 directory_path),
-      base::Bind(
+      base::BindOnce(&UpdateChangestamp, resource_metadata_,
+                     directory_fetch_info, directory_path),
+      base::BindOnce(
           &DirectoryLoader::LoadDirectoryFromServerAfterUpdateChangestamp,
-          weak_ptr_factory_.GetWeakPtr(),
-          directory_fetch_info,
+          weak_ptr_factory_.GetWeakPtr(), directory_fetch_info,
           base::Owned(directory_path)));
 }
 

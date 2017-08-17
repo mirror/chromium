@@ -397,8 +397,8 @@ void FullStreamUIPolicy::ReadFilteredData(
     const int days_ago,
     const base::Callback<void(std::unique_ptr<Action::ActionVector>)>&
         callback) {
-  base::PostTaskAndReplyWithResult(
-      GetActivityLogTaskRunner().get(), FROM_HERE,
+  GetActivityLogTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&FullStreamUIPolicy::DoReadFilteredData,
                  base::Unretained(this), extension_id, type, api_name, page_url,
                  arg_url, days_ago),

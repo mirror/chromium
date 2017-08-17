@@ -52,8 +52,8 @@ void WebRtcEventLogHandler::StartWebRtcEventLogging(
     const RecordingErrorCallback& error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  base::PostTaskAndReplyWithResult(
-      background_task_runner_.get(), FROM_HERE,
+  background_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&WebRtcEventLogHandler::GetLogDirectoryAndEnsureExists, this),
       base::Bind(&WebRtcEventLogHandler::DoStartWebRtcEventLogging, this,
                  duration, callback, error_callback));
@@ -65,8 +65,9 @@ void WebRtcEventLogHandler::StopWebRtcEventLogging(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   const bool is_manual_stop = true;
-  base::PostTaskAndReplyWithResult(
-      background_task_runner_.get(), FROM_HERE,
+
+  background_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&WebRtcEventLogHandler::GetLogDirectoryAndEnsureExists, this),
       base::Bind(&WebRtcEventLogHandler::DoStopWebRtcEventLogging, this,
                  is_manual_stop, current_rtc_event_log_id_, callback,

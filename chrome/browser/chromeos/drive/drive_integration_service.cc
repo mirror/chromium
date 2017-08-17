@@ -505,13 +505,10 @@ void DriveIntegrationService::Initialize() {
 
   state_ = INITIALIZING;
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&InitializeMetadata,
-                 cache_root_directory_,
-                 metadata_storage_.get(),
-                 cache_.get(),
+      base::Bind(&InitializeMetadata, cache_root_directory_,
+                 metadata_storage_.get(), cache_.get(),
                  resource_metadata_.get(),
                  file_manager::util::GetDownloadsFolderForProfile(profile_)),
       base::Bind(&DriveIntegrationService::InitializeAfterMetadataInitialized,

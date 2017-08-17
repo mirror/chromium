@@ -133,9 +133,8 @@ void SpellcheckHunspellDictionary::Load() {
 // Mac falls back on hunspell if its platform spellchecker isn't available.
 // However, Android does not support hunspell.
 #if !defined(OS_ANDROID)
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&InitializeDictionaryLocation, language_),
       base::Bind(
           &SpellcheckHunspellDictionary::InitializeDictionaryLocationComplete,
@@ -221,11 +220,9 @@ void SpellcheckHunspellDictionary::OnURLFetchComplete(
   }
 #endif
 
-  BrowserThread::PostTaskAndReplyWithResult<bool>(
-      BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&SaveDictionaryData,
-                 base::Passed(&data),
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&SaveDictionaryData, base::Passed(&data),
                  dictionary_file_.path),
       base::Bind(&SpellcheckHunspellDictionary::SaveDictionaryDataComplete,
                  weak_ptr_factory_.GetWeakPtr()));

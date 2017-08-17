@@ -81,11 +81,11 @@ class BASE_EXPORT CancelableTaskTracker {
                           OnceClosure reply);
 
   template <typename TaskReturnType, typename ReplyArgType>
-  TaskId PostTaskAndReplyWithResult(TaskRunner* task_runner,
-                                    const tracked_objects::Location& from_here,
-                                    OnceCallback<TaskReturnType()> task,
-                                    OnceCallback<void(ReplyArgType)> reply) {
-    TaskReturnType* result = new TaskReturnType();
+  TaskId PostTaskAndReply(TaskRunner* task_runner,
+                          const tracked_objects::Location& from_here,
+                          OnceCallback<TaskReturnType()> task,
+                          OnceCallback<void(ReplyArgType)> reply) {
+    Optional<TaskReturnType>* result = new Optional<TaskReturnType>;
     return PostTaskAndReply(
         task_runner, from_here,
         BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>,
@@ -94,20 +94,19 @@ class BASE_EXPORT CancelableTaskTracker {
                  std::move(reply), Owned(result)));
   }
 
-  // Callback version of PostTaskWithTraitsAndReplyWithResult above.
+  // RepeatingCallback version of PostTaskWithTraitsAndReply above.
   // Though RepeatingCallback is convertible to OnceCallback, we need this since
   // we can not use template deduction and object conversion at once on the
   // overload resolution.
   // TODO(tzik): Update all callers of the Callback version to use OnceCallback.
   template <typename TaskReturnType, typename ReplyArgType>
-  TaskId PostTaskAndReplyWithResult(TaskRunner* task_runner,
-                                    const tracked_objects::Location& from_here,
-                                    Callback<TaskReturnType()> task,
-                                    Callback<void(ReplyArgType)> reply) {
-    return PostTaskAndReplyWithResult(
-        task_runner, from_here,
-        static_cast<OnceCallback<TaskReturnType()>>(std::move(task)),
-        static_cast<OnceCallback<void(ReplyArgType)>>(std::move(reply)));
+  TaskId PostTaskAndReply(TaskRunner* task_runner,
+                          const tracked_objects::Location& from_here,
+                          RepeatingCallback<TaskReturnType()> task,
+                          RepeatingCallback<void(ReplyArgType)> reply) {
+    return PostTaskAndReply(task_runner, from_here,
+                            OnceCallback<TaskReturnType()>(std::move(task)),
+                            OnceCallback<void(ReplyArgType)>(std::move(reply)));
   }
 
   // Creates a tracked TaskId and an associated IsCanceledCallback. Client can

@@ -91,8 +91,9 @@ void SetPropertyOperation::SetProperty(
   DCHECK(!callback.is_null());
 
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
+
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&UpdateLocalState, metadata_, file_path, visibility, key,
                  value, entry),
       base::Bind(&SetPropertyOperation::SetPropertyAfterUpdateLocalState,

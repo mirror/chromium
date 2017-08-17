@@ -39,7 +39,7 @@ SystemNetworkGetNetworkInterfacesFunction::Run() {
       base::MayBlock(), base::TaskPriority::USER_VISIBLE,
       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
   using Self = SystemNetworkGetNetworkInterfacesFunction;
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, kTraits, base::BindOnce(&GetListOnBlockingTaskRunner),
       base::BindOnce(&Self::SendResponseOnUIThread, this));
   return RespondLater();

@@ -60,7 +60,7 @@ void RedirectChromeLogging(const base::CommandLine& command_line) {
   const base::FilePath log_path = GetSessionLogFile(command_line);
 
   // Always force a new symlink when redirecting.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::BindOnce(&SetUpSymlinkIfNeeded, log_path, true),
       base::BindOnce(&SymlinkSetUp, command_line, log_path));

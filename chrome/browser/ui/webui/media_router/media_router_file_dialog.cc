@@ -210,7 +210,7 @@ void MediaRouterFileDialog::FileSelectedWithExtraInfo(
     const ui::SelectedFileInfo& file_info,
     int index,
     void* params) {
-  cancelable_task_tracker_.PostTaskAndReplyWithResult(
+  cancelable_task_tracker_.PostTaskAndReply(
       task_runner_.get(), FROM_HERE,
       base::BindOnce(&MediaRouterFileDialog::ValidateFile,
                      base::Unretained(this), file_info),

@@ -614,8 +614,8 @@ void GCMDriverDesktop::DoValidateRegistration(
     std::unique_ptr<RegistrationInfo> registration_info,
     const std::string& registration_id,
     const ValidateRegistrationCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      io_thread_.get(), FROM_HERE,
+  io_thread_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&GCMDriverDesktop::IOWorker::ValidateRegistration,
                  base::Unretained(io_worker_.get()),
                  base::Passed(&registration_info), registration_id),

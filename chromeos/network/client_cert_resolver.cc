@@ -514,7 +514,7 @@ void ClientCertResolver::ResolveNetworks(
 
   VLOG(2) << "Start task for resolving client cert patterns.";
   resolve_task_running_ = true;
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&FindCertificateMatches, CertLoader::Get()->all_certs(),

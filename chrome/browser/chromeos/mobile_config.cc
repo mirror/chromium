@@ -333,7 +333,7 @@ MobileConfig::~MobileConfig() {
 }
 
 void MobileConfig::LoadConfig() {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::BindOnce(&ReadConfigInBackground,
                      base::FilePath(kGlobalCarrierConfigPath),

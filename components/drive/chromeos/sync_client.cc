@@ -330,14 +330,11 @@ void SyncClient::AddTask(const SyncTasks::key_type& key,
 
 void SyncClient::StartTask(const SyncTasks::key_type& key) {
   ResourceEntry* parent = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&GetParentResourceEntry, metadata_, key.second, parent),
-      base::Bind(&SyncClient::StartTaskAfterGetParentResourceEntry,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 key,
-                 base::Owned(parent)));
+      base::BindOnce(&GetParentResourceEntry, metadata_, key.second, parent),
+      base::BindOnce(&SyncClient::StartTaskAfterGetParentResourceEntry,
+                     weak_ptr_factory_.GetWeakPtr(), key, base::Owned(parent)));
 }
 
 void SyncClient::StartTaskAfterGetParentResourceEntry(
@@ -486,11 +483,10 @@ void SyncClient::OnFetchFileComplete(const std::string& local_id,
   if (error == FILE_ERROR_ABORT) {
     // If user cancels download, unpin the file so that we do not sync the file
     // again.
-    base::PostTaskAndReplyWithResult(
-        blocking_task_runner_.get(),
+    blocking_task_runner_->PostTaskAndReply(
         FROM_HERE,
-        base::Bind(&FileCache::Unpin, base::Unretained(cache_), local_id),
-        base::Bind(&util::EmptyFileOperationCallback));
+        base::BindOnce(&FileCache::Unpin, base::Unretained(cache_), local_id),
+        base::BindOnce(&util::EmptyFileOperationCallback));
   }
 }
 

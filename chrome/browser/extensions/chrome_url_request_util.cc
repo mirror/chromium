@@ -69,7 +69,7 @@ class URLRequestResourceBundleJob : public net::URLRequestSimpleJob {
                            base::SizeTToString((*data)->size()).c_str()));
 
     std::string* read_mime_type = new std::string;
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock()},
         base::Bind(&net::GetMimeTypeFromFile, filename_,
                    base::Unretained(read_mime_type)),

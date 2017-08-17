@@ -136,14 +136,12 @@ int32_t PepperFlashBrowserHost::OnGetLocalDataRestrictions(
                              plugin_url,
                              cookie_settings_);
   } else {
-    BrowserThread::PostTaskAndReplyWithResult(
-        BrowserThread::UI,
-        FROM_HERE,
+    BrowserThread::PostTaskAndReply(
+        BrowserThread::UI, FROM_HERE,
         base::Bind(&GetCookieSettings, render_process_id_),
         base::Bind(&PepperFlashBrowserHost::GetLocalDataRestrictions,
                    weak_factory_.GetWeakPtr(),
-                   context->MakeReplyMessageContext(),
-                   document_url,
+                   context->MakeReplyMessageContext(), document_url,
                    plugin_url));
   }
   return PP_OK_COMPLETIONPENDING;

@@ -377,21 +377,15 @@ base::Closure DownloadOperation::EnsureFileDownloadedByLocalId(
       new DownloadParams(initialized_callback, get_content_callback,
                          completion_callback, base::WrapUnique(entry)));
   base::Closure cancel_closure = download_params->GetCancelClosure();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&CheckPreConditionForEnsureFileDownloadedByLocalId,
-                 params,
-                 local_id,
-                 drive_file_path,
-                 cache_file_path,
-                 temp_download_file_path,
-                 entry),
+      base::Bind(&CheckPreConditionForEnsureFileDownloadedByLocalId, params,
+                 local_id, drive_file_path, cache_file_path,
+                 temp_download_file_path, entry),
       base::Bind(&DownloadOperation::EnsureFileDownloadedAfterCheckPreCondition,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 base::Passed(&download_params),
-                 context,
-                 base::Owned(drive_file_path),
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&download_params),
+                 context, base::Owned(drive_file_path),
                  base::Owned(cache_file_path),
                  base::Owned(temp_download_file_path)));
   return cancel_closure;
@@ -418,20 +412,14 @@ base::Closure DownloadOperation::EnsureFileDownloadedByPath(
       new DownloadParams(initialized_callback, get_content_callback,
                          completion_callback, base::WrapUnique(entry)));
   base::Closure cancel_closure = download_params->GetCancelClosure();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&CheckPreConditionForEnsureFileDownloadedByPath,
-                 params,
-                 file_path,
-                 cache_file_path,
-                 temp_download_file_path,
-                 entry),
+      base::Bind(&CheckPreConditionForEnsureFileDownloadedByPath, params,
+                 file_path, cache_file_path, temp_download_file_path, entry),
       base::Bind(&DownloadOperation::EnsureFileDownloadedAfterCheckPreCondition,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 base::Passed(&download_params),
-                 context,
-                 base::Owned(drive_file_path),
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&download_params),
+                 context, base::Owned(drive_file_path),
                  base::Owned(cache_file_path),
                  base::Owned(temp_download_file_path)));
   return cancel_closure;
@@ -496,8 +484,9 @@ void DownloadOperation::EnsureFileDownloadedAfterDownloadFile(
   DownloadParams* params_ptr = params.get();
   ResourceEntry* entry_after_update = new ResourceEntry;
   base::FilePath* cache_file_path = new base::FilePath;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
+
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&UpdateLocalStateForDownloadFile, metadata_, cache_,
                  params_ptr->entry(), gdata_error, downloaded_file_path,
                  entry_after_update, cache_file_path),

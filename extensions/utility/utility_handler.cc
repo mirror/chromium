@@ -81,7 +81,7 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
     // notification for the utility process channel to the browser process,
     // which could cause the utility process to terminate itself due to browser
     // process being considered unreachable.
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::TaskPriority::USER_BLOCKING, base::MayBlock(),
          base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
@@ -109,7 +109,7 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
 
     // Move unpack operation to background thread to prevent it from blocking
     // the utility process thread for extended amount of time.
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::TaskPriority::USER_BLOCKING, base::MayBlock(),
          base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},

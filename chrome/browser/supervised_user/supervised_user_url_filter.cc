@@ -475,9 +475,8 @@ void SupervisedUserURLFilter::LoadWhitelists(
     const std::vector<scoped_refptr<SupervisedUserSiteList>>& site_lists) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&LoadWhitelistsAsyncThread, site_lists),
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&LoadWhitelistsAsyncThread, site_lists),
       base::Bind(&SupervisedUserURLFilter::SetContents,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -495,9 +494,8 @@ void SupervisedUserURLFilter::SetFromPatternsForTesting(
     const std::vector<std::string>& patterns) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&CreateWhitelistFromPatternsForTesting, patterns),
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&CreateWhitelistFromPatternsForTesting, patterns),
       base::Bind(&SupervisedUserURLFilter::SetContents,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -506,8 +504,8 @@ void SupervisedUserURLFilter::SetFromSiteListsForTesting(
     const std::vector<scoped_refptr<SupervisedUserSiteList>>& site_lists) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&CreateWhitelistsFromSiteListsForTesting, site_lists),
       base::Bind(&SupervisedUserURLFilter::SetContents,
                  weak_ptr_factory_.GetWeakPtr()));

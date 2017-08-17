@@ -50,13 +50,10 @@ void AuraWindowCaptureMachine::Start(
   const media::VideoCaptureParams& params,
   const base::Callback<void(bool)> callback) {
   // Starts the capture machine asynchronously.
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI,
-      FROM_HERE,
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::UI, FROM_HERE,
       base::Bind(&AuraWindowCaptureMachine::InternalStart,
-                 base::Unretained(this),
-                 oracle_proxy,
-                 params),
+                 base::Unretained(this), oracle_proxy, params),
       callback);
 }
 

@@ -95,11 +95,11 @@ bool File::Read(void* buffer, size_t buffer_len, size_t offset,
     return false;
   }
 
-  base::PostTaskAndReplyWithResult(
-      s_worker_pool.Pointer(), FROM_HERE,
-      base::Bind(&File::DoRead, base::Unretained(this), buffer, buffer_len,
-                 offset),
-      base::Bind(&File::OnOperationComplete, this, callback));
+  s_worker_pool.Pointer()->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&File::DoRead, base::Unretained(this), buffer, buffer_len,
+                     offset),
+      base::BindOnce(&File::OnOperationComplete, this, callback));
 
   *completed = false;
   return true;
@@ -119,11 +119,11 @@ bool File::Write(const void* buffer, size_t buffer_len, size_t offset,
     return false;
   }
 
-  base::PostTaskAndReplyWithResult(
-      s_worker_pool.Pointer(), FROM_HERE,
-      base::Bind(&File::DoWrite, base::Unretained(this), buffer, buffer_len,
-                 offset),
-      base::Bind(&File::OnOperationComplete, this, callback));
+  s_worker_pool.Pointer()->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&File::DoWrite, base::Unretained(this), buffer, buffer_len,
+                     offset),
+      base::BindOnce(&File::OnOperationComplete, this, callback));
 
   *completed = false;
   return true;

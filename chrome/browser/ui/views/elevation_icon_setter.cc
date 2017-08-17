@@ -59,7 +59,7 @@ ElevationIconSetter::ElevationIconSetter(views::LabelButton* button,
                                          const base::Closure& callback)
     : button_(button),
       weak_factory_(this) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::Bind(&GetElevationIcon),
       base::Bind(&ElevationIconSetter::SetButtonIcon,

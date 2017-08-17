@@ -125,11 +125,12 @@ bool WallpaperColorCalculator::StartCalculation() {
   }
 
   image_.MakeThreadSafe();
-  if (base::PostTaskAndReplyWithResult(
-          task_runner_.get(), FROM_HERE,
-          base::Bind(&CalculateWallpaperColor, image_, color_profiles_),
-          base::Bind(&WallpaperColorCalculator::OnAsyncCalculationComplete,
-                     weak_ptr_factory_.GetWeakPtr(), base::TimeTicks::Now()))) {
+  if (task_runner_->PostTaskAndReply(
+          FROM_HERE,
+          base::BindOnce(&CalculateWallpaperColor, image_, color_profiles_),
+          base::BindOnce(&WallpaperColorCalculator::OnAsyncCalculationComplete,
+                         weak_ptr_factory_.GetWeakPtr(),
+                         base::TimeTicks::Now()))) {
     return true;
   }
 

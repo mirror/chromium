@@ -162,15 +162,11 @@ void DoesPrivateKeyExistAsync(
     callback.Run(false);
     return;
   }
-  scoped_refptr<base::TaskRunner> task_runner =
-      base::CreateTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
-  base::PostTaskAndReplyWithResult(
-      task_runner.get(),
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
-      base::Bind(&DoesPrivateKeyExistAsyncHelper, owner_key_util),
-      callback);
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::Bind(&DoesPrivateKeyExistAsyncHelper, owner_key_util), callback);
 }
 
 }  // namespace

@@ -138,7 +138,7 @@ void EncodeAndReturnImage(
     std::unique_ptr<ui::LayerTreeOwner> old_layer_owner,
     const gfx::Image& image) {
   old_layer_owner.reset();
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       base::TaskTraits{base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::Bind(

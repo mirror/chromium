@@ -199,7 +199,7 @@ void DesktopCaptureDevice::Core::AllocateAndStart(
 
   DCHECK(!wake_lock_);
   // Gets a service_manager::Connector first, then request a wake lock.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE, base::BindOnce(&GetServiceConnector),
       base::BindOnce(&DesktopCaptureDevice::Core::RequestWakeLock,
                      weak_factory_.GetWeakPtr()));

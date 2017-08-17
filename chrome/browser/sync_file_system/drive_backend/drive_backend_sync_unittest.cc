@@ -181,15 +181,13 @@ class DriveBackendSyncTest : public testing::Test,
     base::RunLoop run_loop;
     bool success = false;
     FileTracker tracker;
-    PostTaskAndReplyWithResult(
-        worker_task_runner_.get(),
+
+    worker_task_runner_->PostTaskAndReply(
         FROM_HERE,
         base::Bind(&MetadataDatabase::FindAppRootTracker,
-                   base::Unretained(metadata_database()),
-                   app_id,
-                   &tracker),
-        base::Bind(
-            &SetValueAndCallClosure<bool>, run_loop.QuitClosure(), &success));
+                   base::Unretained(metadata_database()), app_id, &tracker),
+        base::Bind(&SetValueAndCallClosure<bool>, run_loop.QuitClosure(),
+                   &success));
     run_loop.Run();
     if (!success)
       return false;
@@ -209,17 +207,14 @@ class DriveBackendSyncTest : public testing::Test,
     FileTracker tracker;
     base::FilePath result_path;
     base::FilePath normalized_path = path.NormalizePathSeparators();
-    PostTaskAndReplyWithResult(
-        worker_task_runner_.get(),
+
+    worker_task_runner_->PostTaskAndReply(
         FROM_HERE,
         base::Bind(&MetadataDatabase::FindNearestActiveAncestor,
-                   base::Unretained(metadata_database()),
-                   app_id,
-                   normalized_path,
-                   &tracker,
-                   &result_path),
-        base::Bind(
-            &SetValueAndCallClosure<bool>, run_loop.QuitClosure(), &success));
+                   base::Unretained(metadata_database()), app_id,
+                   normalized_path, &tracker, &result_path),
+        base::Bind(&SetValueAndCallClosure<bool>, run_loop.QuitClosure(),
+                   &success));
     run_loop.Run();
     EXPECT_TRUE(success);
     EXPECT_EQ(normalized_path, result_path);
@@ -375,8 +370,9 @@ class DriveBackendSyncTest : public testing::Test,
 
         base::RunLoop run_loop;
         int64_t largest_fetched_change_id = -1;
-        PostTaskAndReplyWithResult(
-            worker_task_runner_.get(), FROM_HERE,
+
+        worker_task_runner_->PostTaskAndReply(
+            FROM_HERE,
             base::Bind(&MetadataDatabase::GetLargestFetchedChangeID,
                        base::Unretained(metadata_database())),
             base::Bind(&SetValueAndCallClosure<int64_t>, run_loop.QuitClosure(),
@@ -556,13 +552,13 @@ class DriveBackendSyncTest : public testing::Test,
   size_t CountMetadata() {
     size_t count = 0;
     base::RunLoop run_loop;
-    PostTaskAndReplyWithResult(
-        worker_task_runner_.get(),
+
+    worker_task_runner_->PostTaskAndReply(
         FROM_HERE,
         base::Bind(&MetadataDatabase::CountFileMetadata,
                    base::Unretained(metadata_database())),
-        base::Bind(
-            &SetValueAndCallClosure<size_t>, run_loop.QuitClosure(), &count));
+        base::Bind(&SetValueAndCallClosure<size_t>, run_loop.QuitClosure(),
+                   &count));
     run_loop.Run();
     return count;
   }
@@ -570,13 +566,13 @@ class DriveBackendSyncTest : public testing::Test,
   size_t CountTracker() {
     size_t count = 0;
     base::RunLoop run_loop;
-    PostTaskAndReplyWithResult(
-        worker_task_runner_.get(),
+
+    worker_task_runner_->PostTaskAndReply(
         FROM_HERE,
         base::Bind(&MetadataDatabase::CountFileTracker,
                    base::Unretained(metadata_database())),
-        base::Bind(
-            &SetValueAndCallClosure<size_t>, run_loop.QuitClosure(), &count));
+        base::Bind(&SetValueAndCallClosure<size_t>, run_loop.QuitClosure(),
+                   &count));
     run_loop.Run();
     return count;
   }

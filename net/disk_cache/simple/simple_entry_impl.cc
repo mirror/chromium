@@ -1098,23 +1098,23 @@ void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
     // length zero, leaving the invalid entry in the index. On the next attempt
     // to open the entry, it will fail asynchronously (since the magic numbers
     // will not be found), and the files will actually be removed.
-    PostTaskAndReplyWithResult(
-        worker_pool_.get(), FROM_HERE,
-        base::Bind(&SimpleSynchronousEntry::TruncateEntryFiles, path_,
-                   entry_hash_),
-        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
-                   // Return to STATE_FAILURE after dooming, since no operation
-                   // can succeed on the truncated entry files.
-                   STATE_FAILURE));
+    worker_pool_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&SimpleSynchronousEntry::TruncateEntryFiles, path_,
+                       entry_hash_),
+        base::BindOnce(
+            &SimpleEntryImpl::DoomOperationComplete, this, callback,
+            // Return to STATE_FAILURE after dooming, since no operation
+            // can succeed on the truncated entry files.
+            STATE_FAILURE));
     state_ = STATE_IO_PENDING;
     return;
   }
-  PostTaskAndReplyWithResult(
-      worker_pool_.get(),
+  worker_pool_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&SimpleSynchronousEntry::DoomEntry, path_, entry_hash_),
-      base::Bind(
-          &SimpleEntryImpl::DoomOperationComplete, this, callback, state_));
+      base::BindOnce(&SimpleSynchronousEntry::DoomEntry, path_, entry_hash_),
+      base::BindOnce(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                     state_));
   state_ = STATE_IO_PENDING;
 }
 

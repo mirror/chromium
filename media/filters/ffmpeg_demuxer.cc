@@ -932,11 +932,11 @@ void FFmpegDemuxer::Initialize(DemuxerHost* host,
   format_context->max_analyze_duration = 60 * AV_TIME_BASE;
 
   // Open the AVFormatContext using our glue layer.
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&FFmpegGlue::OpenContext, base::Unretained(glue_.get())),
-      base::Bind(&FFmpegDemuxer::OnOpenContextDone, weak_factory_.GetWeakPtr(),
-                 status_cb));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&FFmpegGlue::OpenContext, base::Unretained(glue_.get())),
+      base::BindOnce(&FFmpegDemuxer::OnOpenContextDone,
+                     weak_factory_.GetWeakPtr(), status_cb));
 }
 
 void FFmpegDemuxer::AbortPendingReads() {
@@ -1050,13 +1050,15 @@ void FFmpegDemuxer::Seek(base::TimeDelta time, const PipelineStatusCB& cb) {
   DCHECK(seeking_stream);
 
   pending_seek_cb_ = cb;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&av_seek_frame, glue_->format_context(), seeking_stream->index,
-                 ConvertToTimeBase(seeking_stream->time_base, seek_time),
-                 // Always seek to a timestamp <= to the desired timestamp.
-                 AVSEEK_FLAG_BACKWARD),
-      base::Bind(&FFmpegDemuxer::OnSeekFrameDone, weak_factory_.GetWeakPtr()));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&av_seek_frame, glue_->format_context(),
+                     seeking_stream->index,
+                     ConvertToTimeBase(seeking_stream->time_base, seek_time),
+                     // Always seek to a timestamp <= to the desired timestamp.
+                     AVSEEK_FLAG_BACKWARD),
+      base::BindOnce(&FFmpegDemuxer::OnSeekFrameDone,
+                     weak_factory_.GetWeakPtr()));
 }
 
 base::Time FFmpegDemuxer::GetTimelineOffset() const {
@@ -1209,12 +1211,12 @@ void FFmpegDemuxer::OnOpenContextDone(const PipelineStatusCB& status_cb,
   }
 
   // Fully initialize AVFormatContext by parsing the stream a little.
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&avformat_find_stream_info, glue_->format_context(),
-                 static_cast<AVDictionary**>(NULL)),
-      base::Bind(&FFmpegDemuxer::OnFindStreamInfoDone,
-                 weak_factory_.GetWeakPtr(), status_cb));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&avformat_find_stream_info, glue_->format_context(),
+                     static_cast<AVDictionary**>(NULL)),
+      base::BindOnce(&FFmpegDemuxer::OnFindStreamInfoDone,
+                     weak_factory_.GetWeakPtr(), status_cb));
 }
 
 void FFmpegDemuxer::OnFindStreamInfoDone(const PipelineStatusCB& status_cb,
@@ -1764,11 +1766,11 @@ void FFmpegDemuxer::ReadFrameIfNeeded() {
   AVPacket* packet_ptr = packet.get();
 
   pending_read_ = true;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&av_read_frame, glue_->format_context(), packet_ptr),
-      base::Bind(&FFmpegDemuxer::OnReadFrameDone, weak_factory_.GetWeakPtr(),
-                 base::Passed(&packet)));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&av_read_frame, glue_->format_context(), packet_ptr),
+      base::BindOnce(&FFmpegDemuxer::OnReadFrameDone,
+                     weak_factory_.GetWeakPtr(), base::Passed(&packet)));
 }
 
 void FFmpegDemuxer::OnReadFrameDone(ScopedAVPacket packet, int result) {

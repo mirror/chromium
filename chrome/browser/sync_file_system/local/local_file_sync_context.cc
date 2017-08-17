@@ -112,8 +112,8 @@ void LocalFileSyncContext::GetFileForLocalSync(
   DCHECK(file_system_context);
   DCHECK(ui_task_runner_->RunsTasksInCurrentSequence());
 
-  base::PostTaskAndReplyWithResult(
-      file_system_context->default_file_task_runner(), FROM_HERE,
+  file_system_context->default_file_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&LocalFileSyncContext::GetNextURLsForSyncOnFileThread, this,
                  base::RetainedRef(file_system_context)),
       base::Bind(&LocalFileSyncContext::TryPrepareForLocalSync, this,
@@ -640,8 +640,9 @@ void LocalFileSyncContext::InitializeFileSystemContextOnIOThread(
     std::set<GURL>* origins_with_changes = new std::set<GURL>;
     std::unique_ptr<LocalFileChangeTracker>* tracker_ptr(
         new std::unique_ptr<LocalFileChangeTracker>);
-    base::PostTaskAndReplyWithResult(
-        file_system_context->default_file_task_runner(), FROM_HERE,
+
+    file_system_context->default_file_task_runner()->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&LocalFileSyncContext::InitializeChangeTrackerOnFileThread,
                    this, tracker_ptr, base::RetainedRef(file_system_context),
                    origins_with_changes),

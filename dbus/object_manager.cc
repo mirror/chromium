@@ -51,11 +51,9 @@ ObjectManager::ObjectManager(Bus* bus,
   // signals from the service. This is important to avoid any race conditions
   // that might cause us to miss PropertiesChanged signals once all objects are
   // initialized via GetManagedObjects.
-  base::PostTaskAndReplyWithResult(
-      bus_->GetDBusTaskRunner(),
-      FROM_HERE,
-      base::Bind(&ObjectManager::SetupMatchRuleAndFilter, this),
-      base::Bind(&ObjectManager::OnSetupMatchRuleAndFilterComplete, this));
+  bus_->GetDBusTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&ObjectManager::SetupMatchRuleAndFilter, this),
+      base::BindOnce(&ObjectManager::OnSetupMatchRuleAndFilterComplete, this));
 }
 
 ObjectManager::~ObjectManager() {

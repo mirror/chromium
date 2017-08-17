@@ -156,7 +156,7 @@ void URLRequestMockHTTPJob::OnReadComplete(net::IOBuffer* buffer, int result) {
 
 // Public virtual version.
 void URLRequestMockHTTPJob::Start() {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()}, base::Bind(&DoFileIO, file_path_),
       base::Bind(&URLRequestMockHTTPJob::SetHeadersAndStart,
                  weak_ptr_factory_.GetWeakPtr()));

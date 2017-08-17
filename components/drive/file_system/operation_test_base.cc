@@ -82,8 +82,8 @@ void OperationTestBase::SetUp() {
   metadata_storage_.reset(new internal::ResourceMetadataStorage(
       temp_dir_.GetPath(), blocking_task_runner_.get()));
   bool success = false;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadataStorage::Initialize,
                  base::Unretained(metadata_storage_.get())),
@@ -96,8 +96,8 @@ void OperationTestBase::SetUp() {
       metadata_storage_.get(), temp_dir_.GetPath(), blocking_task_runner_.get(),
       fake_free_disk_space_getter_.get()));
   success = false;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::FileCache::Initialize,
                  base::Unretained(cache_.get())),
@@ -110,8 +110,8 @@ void OperationTestBase::SetUp() {
                                                  blocking_task_runner_));
 
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::Initialize,
                  base::Unretained(metadata_.get())),
@@ -139,8 +139,9 @@ void OperationTestBase::SetUp() {
 FileError OperationTestBase::GetLocalResourceEntry(const base::FilePath& path,
                                                    ResourceEntry* entry) {
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(), FROM_HERE,
+
+  blocking_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetResourceEntryByPath,
                  base::Unretained(metadata()), path, entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
@@ -152,8 +153,9 @@ FileError OperationTestBase::GetLocalResourceEntryById(
     const std::string& local_id,
     ResourceEntry* entry) {
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(), FROM_HERE,
+
+  blocking_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetResourceEntryById,
                  base::Unretained(metadata()), local_id, entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
@@ -164,8 +166,9 @@ FileError OperationTestBase::GetLocalResourceEntryById(
 std::string OperationTestBase::GetLocalId(const base::FilePath& path) {
   std::string local_id;
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(), FROM_HERE,
+
+  blocking_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetIdByPath,
                  base::Unretained(metadata()), path, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));

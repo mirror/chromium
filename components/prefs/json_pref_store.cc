@@ -279,9 +279,9 @@ void JsonPrefStore::ReadPrefsAsync(ReadErrorDelegate* error_delegate) {
   error_delegate_.reset(error_delegate);
 
   // Weakly binds the read task so that it doesn't kick in during shutdown.
-  base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(), FROM_HERE, base::Bind(&ReadPrefsFromDisk, path_),
-      base::Bind(&JsonPrefStore::OnFileRead, AsWeakPtr()));
+  file_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&ReadPrefsFromDisk, path_),
+      base::BindOnce(&JsonPrefStore::OnFileRead, AsWeakPtr()));
 }
 
 void JsonPrefStore::CommitPendingWrite(base::OnceClosure done_callback) {

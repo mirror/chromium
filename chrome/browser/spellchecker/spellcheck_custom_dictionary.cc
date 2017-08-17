@@ -275,9 +275,8 @@ bool SpellcheckCustomDictionary::IsSyncing() {
 
 void SpellcheckCustomDictionary::Load() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&SpellcheckCustomDictionary::LoadDictionaryFile,
                  custom_dictionary_path_),
       base::Bind(&SpellcheckCustomDictionary::OnLoaded,

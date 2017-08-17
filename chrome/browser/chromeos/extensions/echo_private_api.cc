@@ -140,8 +140,8 @@ EchoPrivateGetOobeTimestampFunction::~EchoPrivateGetOobeTimestampFunction() {
 }
 
 bool EchoPrivateGetOobeTimestampFunction::RunAsync() {
-  base::PostTaskAndReplyWithResult(
-      extensions::GetExtensionFileTaskRunner().get(), FROM_HERE,
+  extensions::GetExtensionFileTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(
           &EchoPrivateGetOobeTimestampFunction::GetOobeTimestampOnFileSequence,
           this),

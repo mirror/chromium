@@ -1500,7 +1500,7 @@ void ArcAppListPrefs::InstallIcon(const std::string& app_id,
                                   ui::ScaleFactor scale_factor,
                                   const std::vector<uint8_t>& content_png) {
   const base::FilePath icon_path = GetIconPath(app_id, scale_factor);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&InstallIconFromFileThread, icon_path, content_png),
       base::Bind(&ArcAppListPrefs::OnIconInstalled,

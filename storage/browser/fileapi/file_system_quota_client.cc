@@ -113,8 +113,8 @@ void FileSystemQuotaClient::GetOriginUsage(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      file_task_runner(), FROM_HERE,
+  file_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       // It is safe to pass Unretained(quota_util) since context owns it.
       base::Bind(&FileSystemQuotaUtil::GetOriginUsageOnFileTaskRunner,
                  base::Unretained(quota_util),
@@ -170,8 +170,8 @@ void FileSystemQuotaClient::DeleteOriginData(
   FileSystemType fs_type = QuotaStorageTypeToFileSystemType(type);
   DCHECK(fs_type != kFileSystemTypeUnknown);
 
-  base::PostTaskAndReplyWithResult(
-      file_task_runner(), FROM_HERE,
+  file_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&DeleteOriginOnFileTaskRunner,
                  base::RetainedRef(file_system_context_), origin, fs_type),
       callback);

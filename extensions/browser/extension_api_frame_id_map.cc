@@ -271,7 +271,7 @@ void ExtensionApiFrameIdMap::GetFrameDataOnIO(
   // The key was seen for the first time (or the frame has been removed).
   // Hop to the UI thread to look up the extension API frame ID.
   callbacks_map_[key].callbacks.push_back(callback);
-  content::BrowserThread::PostTaskAndReplyWithResult(
+  content::BrowserThread::PostTaskAndReply(
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(&ExtensionApiFrameIdMap::LookupFrameDataOnUI,
                  base::Unretained(this), key, true /* is_from_io */),

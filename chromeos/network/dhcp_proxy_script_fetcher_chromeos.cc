@@ -50,11 +50,10 @@ int DhcpProxyScriptFetcherChromeos::Fetch(
   if (!network_handler_task_runner_.get())
     return net::ERR_PAC_NOT_IN_DHCP;
   CHECK(!callback.is_null());
-  base::PostTaskAndReplyWithResult(
-      network_handler_task_runner_.get(), FROM_HERE,
-      base::Bind(&GetPacUrlFromDefaultNetwork),
-      base::Bind(&DhcpProxyScriptFetcherChromeos::ContinueFetch,
-                 weak_ptr_factory_.GetWeakPtr(), utf16_text, callback));
+  network_handler_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&GetPacUrlFromDefaultNetwork),
+      base::BindOnce(&DhcpProxyScriptFetcherChromeos::ContinueFetch,
+                     weak_ptr_factory_.GetWeakPtr(), utf16_text, callback));
   return net::ERR_IO_PENDING;
 }
 

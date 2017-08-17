@@ -357,9 +357,8 @@ void CacheStorageManager::GetOrigins(
     return;
   }
 
-  PostTaskAndReplyWithResult(cache_task_runner_.get(), FROM_HERE,
-                             base::Bind(&ListOriginsOnTaskRunner, root_path_),
-                             callback);
+  cache_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&ListOriginsOnTaskRunner, root_path_), callback);
 }
 
 void CacheStorageManager::GetOriginsForHost(
@@ -378,9 +377,8 @@ void CacheStorageManager::GetOriginsForHost(
     return;
   }
 
-  PostTaskAndReplyWithResult(
-      cache_task_runner_.get(), FROM_HERE,
-      base::BindOnce(&ListOriginsOnTaskRunner, root_path_),
+  cache_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&ListOriginsOnTaskRunner, root_path_),
       base::BindOnce(&GetOriginsForHostDidListOrigins, host, callback));
 }
 
@@ -430,8 +428,8 @@ void CacheStorageManager::DeleteOriginDidClose(
     return;
   }
 
-  PostTaskAndReplyWithResult(
-      cache_task_runner_.get(), FROM_HERE,
+  cache_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&DeleteDir, ConstructOriginPath(root_path_, origin)),
       base::BindOnce(&DeleteOriginDidDeleteDir, callback));
 }

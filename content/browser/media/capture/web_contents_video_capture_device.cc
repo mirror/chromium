@@ -437,7 +437,7 @@ void WebContentsCaptureMachine::Start(
     const media::VideoCaptureParams& params,
     const base::Callback<void(bool)> callback) {
   // Starts the capture machine asynchronously.
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
       base::Bind(&WebContentsCaptureMachine::InternalStart,
                  base::Unretained(this), oracle_proxy, params),

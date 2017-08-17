@@ -240,7 +240,7 @@ void ActivityIconLoader::OnIconsReady(
     const OnIconsReadyCallback& cb,
     std::vector<mojom::ActivityIconPtr> icons) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  base::PostTaskAndReplyWithResult(
+  base::PostTaskAndReply(
       FROM_HERE, base::Bind(&ResizeAndEncodeIcons, base::Passed(&icons)),
       base::Bind(&ActivityIconLoader::OnIconsResized,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&cached_result),

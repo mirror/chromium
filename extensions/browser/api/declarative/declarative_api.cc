@@ -209,9 +209,9 @@ bool RulesFunction::RunAsync() {
     scoped_refptr<base::SingleThreadTaskRunner> thread_task_runner =
         content::BrowserThread::GetTaskRunnerForThread(
             rules_registry_->owner_thread());
-    base::PostTaskAndReplyWithResult(
-        thread_task_runner.get(), FROM_HERE,
-        base::Bind(&RulesFunction::RunAsyncOnCorrectThread, this),
+
+    thread_task_runner->PostTaskAndReply(
+        FROM_HERE, base::Bind(&RulesFunction::RunAsyncOnCorrectThread, this),
         base::Bind(&RulesFunction::SendResponse, this));
   }
 

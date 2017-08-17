@@ -96,9 +96,8 @@ void FinishOnOriginalThread(const DeviceIDCallback& callback,
 }  // namespace
 
 void FindPicasaDatabase(const DeviceIDCallback& callback) {
-  content::BrowserThread::PostTaskAndReplyWithResult(
-      content::BrowserThread::FILE,
-      FROM_HERE,
+  content::BrowserThread::PostTaskAndReply(
+      content::BrowserThread::FILE, FROM_HERE,
       base::Bind(&FindPicasaDatabaseOnFileThread),
       base::Bind(&FinishOnOriginalThread, callback));
 }

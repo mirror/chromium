@@ -95,28 +95,27 @@ BASE_EXPORT void PostTaskAndReply(const tracked_objects::Location& from_here,
 // Posts |task| to the TaskScheduler and posts |reply| with the return value of
 // |task| as argument on the caller's execution context (i.e. same sequence or
 // thread and same TaskTraits if applicable) when |task| completes. Calling this
-// is equivalent to calling PostTaskWithTraitsAndReplyWithResult with plain
-// TaskTraits. Can only be called when SequencedTaskRunnerHandle::IsSet().
+// is equivalent to calling PostTaskWithTraitsAndReply with plain TaskTraits.
+// Can only be called when SequencedTaskRunnerHandle::IsSet().
 template <typename TaskReturnType, typename ReplyArgType>
-void PostTaskAndReplyWithResult(const tracked_objects::Location& from_here,
-                                OnceCallback<TaskReturnType()> task,
-                                OnceCallback<void(ReplyArgType)> reply) {
-  PostTaskWithTraitsAndReplyWithResult(from_here, TaskTraits(), std::move(task),
-                                       std::move(reply));
+void PostTaskAndReply(const tracked_objects::Location& from_here,
+                      OnceCallback<TaskReturnType()> task,
+                      OnceCallback<void(ReplyArgType)> reply) {
+  PostTaskWithTraitsAndReply(from_here, TaskTraits(), std::move(task),
+                             std::move(reply));
 }
 
-// Callback version of PostTaskAndReplyWithResult above.
+// Callback version of PostTaskAndReply above.
 // Though RepeatingCallback is convertible to OnceCallback, we need this since
 // we can not use template deduction and object conversion at once on the
 // overload resolution.
 // TODO(tzik): Update all callers of the Callback version to use OnceCallback.
 template <typename TaskReturnType, typename ReplyArgType>
-void PostTaskAndReplyWithResult(const tracked_objects::Location& from_here,
-                                Callback<TaskReturnType()> task,
-                                Callback<void(ReplyArgType)> reply) {
-  PostTaskAndReplyWithResult(
-      from_here, OnceCallback<TaskReturnType()>(std::move(task)),
-      OnceCallback<void(ReplyArgType)>(std::move(reply)));
+void PostTaskAndReply(const tracked_objects::Location& from_here,
+                      Callback<TaskReturnType()> task,
+                      Callback<void(ReplyArgType)> reply) {
+  PostTaskAndReply(from_here, OnceCallback<TaskReturnType()>(std::move(task)),
+                   OnceCallback<void(ReplyArgType)>(std::move(reply)));
 }
 
 // Posts |task| with specific |traits| to the TaskScheduler.
@@ -150,12 +149,11 @@ BASE_EXPORT void PostTaskWithTraitsAndReply(
 // (i.e. same sequence or thread and same TaskTraits if applicable) when |task|
 // completes. Can only be called when SequencedTaskRunnerHandle::IsSet().
 template <typename TaskReturnType, typename ReplyArgType>
-void PostTaskWithTraitsAndReplyWithResult(
-    const tracked_objects::Location& from_here,
-    const TaskTraits& traits,
-    OnceCallback<TaskReturnType()> task,
-    OnceCallback<void(ReplyArgType)> reply) {
-  TaskReturnType* result = new TaskReturnType();
+void PostTaskWithTraitsAndReply(const tracked_objects::Location& from_here,
+                                const TaskTraits& traits,
+                                OnceCallback<TaskReturnType()> task,
+                                OnceCallback<void(ReplyArgType)> reply) {
+  Optional<TaskReturnType>* result = new Optional<TaskReturnType>;
   return PostTaskWithTraitsAndReply(
       from_here, traits,
       BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task),
@@ -164,18 +162,17 @@ void PostTaskWithTraitsAndReplyWithResult(
                std::move(reply), Owned(result)));
 }
 
-// Callback version of PostTaskWithTraitsAndReplyWithResult above.
+// RepeatingCallback version of PostTaskWithTraitsAndReply above.
 // Though RepeatingCallback is convertible to OnceCallback, we need this since
 // we can not use template deduction and object conversion at once on the
 // overload resolution.
 // TODO(tzik): Update all callers of the Callback version to use OnceCallback.
 template <typename TaskReturnType, typename ReplyArgType>
-void PostTaskWithTraitsAndReplyWithResult(
-    const tracked_objects::Location& from_here,
-    const TaskTraits& traits,
-    Callback<TaskReturnType()> task,
-    Callback<void(ReplyArgType)> reply) {
-  PostTaskWithTraitsAndReplyWithResult(
+void PostTaskWithTraitsAndReply(const tracked_objects::Location& from_here,
+                                const TaskTraits& traits,
+                                RepeatingCallback<TaskReturnType()> task,
+                                RepeatingCallback<void(ReplyArgType)> reply) {
+  PostTaskWithTraitsAndReply(
       from_here, traits, OnceCallback<TaskReturnType()>(std::move(task)),
       OnceCallback<void(ReplyArgType)>(std::move(reply)));
 }

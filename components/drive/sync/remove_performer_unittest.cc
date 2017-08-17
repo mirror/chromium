@@ -129,13 +129,11 @@ TEST_F(RemovePerformerTest, RemoveLocallyCreatedFile) {
 
   FileError error = FILE_ERROR_FAILED;
   std::string local_id;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::AddEntry,
-                 base::Unretained(metadata()),
-                 entry,
-                 &local_id),
+      base::Bind(&ResourceMetadata::AddEntry, base::Unretained(metadata()),
+                 entry, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -162,11 +160,10 @@ TEST_F(RemovePerformerTest, Remove_InsufficientPermission) {
   updated_entry.set_parent_local_id(util::kDriveTrashDirLocalId);
 
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::RefreshEntry,
-                 base::Unretained(metadata()),
+      base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
                  updated_entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();

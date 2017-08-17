@@ -336,15 +336,15 @@ void ServiceWorkerStorage::GetRegistrationsForOrigin(
 
   RegistrationList* registrations = new RegistrationList;
   std::vector<ResourceList>* resource_lists = new std::vector<ResourceList>;
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::GetRegistrationsForOrigin,
-                 base::Unretained(database_.get()), origin, registrations,
-                 resource_lists),
-      base::Bind(&ServiceWorkerStorage::DidGetRegistrationsForOrigin,
-                 weak_factory_.GetWeakPtr(), callback,
-                 base::Owned(registrations), base::Owned(resource_lists),
-                 origin));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::GetRegistrationsForOrigin,
+                     base::Unretained(database_.get()), origin, registrations,
+                     resource_lists),
+      base::BindOnce(&ServiceWorkerStorage::DidGetRegistrationsForOrigin,
+                     weak_factory_.GetWeakPtr(), callback,
+                     base::Owned(registrations), base::Owned(resource_lists),
+                     origin));
 }
 
 void ServiceWorkerStorage::GetAllRegistrationsInfos(
@@ -362,13 +362,13 @@ void ServiceWorkerStorage::GetAllRegistrationsInfos(
   DCHECK_EQ(INITIALIZED, state_);
 
   RegistrationList* registrations = new RegistrationList;
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::GetAllRegistrations,
-                 base::Unretained(database_.get()), registrations),
-      base::Bind(&ServiceWorkerStorage::DidGetAllRegistrationsInfos,
-                 weak_factory_.GetWeakPtr(), callback,
-                 base::Owned(registrations)));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::GetAllRegistrations,
+                     base::Unretained(database_.get()), registrations),
+      base::BindOnce(&ServiceWorkerStorage::DidGetAllRegistrationsInfos,
+                     weak_factory_.GetWeakPtr(), callback,
+                     base::Owned(registrations)));
 }
 
 void ServiceWorkerStorage::StoreRegistration(
@@ -441,13 +441,13 @@ void ServiceWorkerStorage::UpdateToActiveState(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::UpdateVersionToActive,
-                 base::Unretained(database_.get()), registration->id(),
-                 registration->pattern().GetOrigin()),
-      base::Bind(&ServiceWorkerStorage::DidUpdateToActiveState,
-                 weak_factory_.GetWeakPtr(), callback));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::UpdateVersionToActive,
+                     base::Unretained(database_.get()), registration->id(),
+                     registration->pattern().GetOrigin()),
+      base::BindOnce(&ServiceWorkerStorage::DidUpdateToActiveState,
+                     weak_factory_.GetWeakPtr(), callback));
 }
 
 void ServiceWorkerStorage::UpdateLastUpdateCheckTime(
@@ -477,12 +477,12 @@ void ServiceWorkerStorage::UpdateNavigationPreloadEnabled(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::UpdateNavigationPreloadEnabled,
-                 base::Unretained(database_.get()), registration_id, origin,
-                 enable),
-      base::Bind(&DidUpdateNavigationPreloadState, callback));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::UpdateNavigationPreloadEnabled,
+                     base::Unretained(database_.get()), registration_id, origin,
+                     enable),
+      base::BindOnce(&DidUpdateNavigationPreloadState, callback));
 }
 
 void ServiceWorkerStorage::UpdateNavigationPreloadHeader(
@@ -496,12 +496,12 @@ void ServiceWorkerStorage::UpdateNavigationPreloadHeader(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::UpdateNavigationPreloadHeader,
-                 base::Unretained(database_.get()), registration_id, origin,
-                 value),
-      base::Bind(&DidUpdateNavigationPreloadState, callback));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::UpdateNavigationPreloadHeader,
+                     base::Unretained(database_.get()), registration_id, origin,
+                     value),
+      base::BindOnce(&DidUpdateNavigationPreloadState, callback));
 }
 
 void ServiceWorkerStorage::DeleteRegistration(int64_t registration_id,
@@ -564,8 +564,8 @@ void ServiceWorkerStorage::StoreUncommittedResourceId(int64_t resource_id) {
   if (!has_checked_for_stale_resources_)
     DeleteStaleResources();
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&ServiceWorkerDatabase::WriteUncommittedResourceIds,
                  base::Unretained(database_.get()),
                  std::set<int64_t>(&resource_id, &resource_id + 1)),
@@ -587,12 +587,12 @@ void ServiceWorkerStorage::DoomUncommittedResources(
   if (IsDisabled())
     return;
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::PurgeUncommittedResourceIds,
-                 base::Unretained(database_.get()), resource_ids),
-      base::Bind(&ServiceWorkerStorage::DidPurgeUncommittedResourceIds,
-                 weak_factory_.GetWeakPtr(), resource_ids));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::PurgeUncommittedResourceIds,
+                     base::Unretained(database_.get()), resource_ids),
+      base::BindOnce(&ServiceWorkerStorage::DidPurgeUncommittedResourceIds,
+                     weak_factory_.GetWeakPtr(), resource_ids));
 }
 
 void ServiceWorkerStorage::StoreUserData(
@@ -621,13 +621,13 @@ void ServiceWorkerStorage::StoreUserData(
     }
   }
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::WriteUserData,
-                 base::Unretained(database_.get()), registration_id, origin,
-                 key_value_pairs),
-      base::Bind(&ServiceWorkerStorage::DidStoreUserData,
-                 weak_factory_.GetWeakPtr(), callback));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::WriteUserData,
+                     base::Unretained(database_.get()), registration_id, origin,
+                     key_value_pairs),
+      base::BindOnce(&ServiceWorkerStorage::DidStoreUserData,
+                     weak_factory_.GetWeakPtr(), callback));
 }
 
 void ServiceWorkerStorage::GetUserData(int64_t registration_id,
@@ -728,12 +728,12 @@ void ServiceWorkerStorage::ClearUserData(int64_t registration_id,
     }
   }
 
-  base::PostTaskAndReplyWithResult(
-      database_task_runner_.get(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::DeleteUserData,
-                 base::Unretained(database_.get()), registration_id, keys),
-      base::Bind(&ServiceWorkerStorage::DidDeleteUserData,
-                 weak_factory_.GetWeakPtr(), callback));
+  database_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerDatabase::DeleteUserData,
+                     base::Unretained(database_.get()), registration_id, keys),
+      base::BindOnce(&ServiceWorkerStorage::DidDeleteUserData,
+                     weak_factory_.GetWeakPtr(), callback));
 }
 
 void ServiceWorkerStorage::GetUserDataForAllRegistrations(
@@ -825,12 +825,12 @@ void ServiceWorkerStorage::DiskCacheImplDoneWithDisk() {
     StatusCallback callback;
     swap(callback, delete_and_start_over_callback_);
     // Delete the database on the database thread.
-    PostTaskAndReplyWithResult(
-        database_task_runner_.get(), FROM_HERE,
-        base::Bind(&ServiceWorkerDatabase::DestroyDatabase,
-                   base::Unretained(database_.get())),
-        base::Bind(&ServiceWorkerStorage::DidDeleteDatabase,
-                   weak_factory_.GetWeakPtr(), callback));
+    database_task_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&ServiceWorkerDatabase::DestroyDatabase,
+                       base::Unretained(database_.get())),
+        base::BindOnce(&ServiceWorkerStorage::DidDeleteDatabase,
+                       weak_factory_.GetWeakPtr(), callback));
   }
 }
 
@@ -1918,7 +1918,7 @@ void ServiceWorkerStorage::DidDeleteDatabase(
   // TODO(nhiroki): What if there is a bunch of files in the cache directory?
   // Deleting the directory could take a long time and restart could be delayed.
   // We should probably rename the directory and delete it later.
-  PostTaskWithTraitsAndReplyWithResult(
+  PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
       base::Bind(&base::DeleteFile, GetDiskCachePath(), true),
       base::Bind(&ServiceWorkerStorage::DidDeleteDiskCache,

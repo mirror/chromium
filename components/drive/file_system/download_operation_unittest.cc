@@ -193,15 +193,12 @@ TEST_F(DownloadOperationTest, EnsureFileDownloadedByPath_FromCache) {
 
   // Store something as cached version of this file.
   FileError error = FILE_ERROR_OK;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::Store,
-                 base::Unretained(cache()),
-                 GetLocalId(file_in_root),
-                 src_entry.file_specific_info().md5(),
-                 temp_file,
-                 internal::FileCache::FILE_OPERATION_COPY),
+      base::Bind(&internal::FileCache::Store, base::Unretained(cache()),
+                 GetLocalId(file_in_root), src_entry.file_specific_info().md5(),
+                 temp_file, internal::FileCache::FILE_OPERATION_COPY),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -354,15 +351,12 @@ TEST_F(DownloadOperationTest, EnsureFileDownloadedByLocalId_FromCache) {
 
   // Store something as cached version of this file.
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::Store,
-                 base::Unretained(cache()),
-                 GetLocalId(file_in_root),
-                 src_entry.file_specific_info().md5(),
-                 temp_file,
-                 internal::FileCache::FILE_OPERATION_COPY),
+      base::Bind(&internal::FileCache::Store, base::Unretained(cache()),
+                 GetLocalId(file_in_root), src_entry.file_specific_info().md5(),
+                 temp_file, internal::FileCache::FILE_OPERATION_COPY),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -401,14 +395,11 @@ TEST_F(DownloadOperationTest, EnsureFileDownloadedByPath_DirtyCache) {
 
   // Store the file as a cache, marking it to be dirty.
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::Store,
-                 base::Unretained(cache()),
-                 GetLocalId(file_in_root),
-                 std::string(),
-                 dirty_file,
+      base::Bind(&internal::FileCache::Store, base::Unretained(cache()),
+                 GetLocalId(file_in_root), std::string(), dirty_file,
                  internal::FileCache::FILE_OPERATION_COPY),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -448,13 +439,11 @@ TEST_F(DownloadOperationTest, EnsureFileDownloadedByPath_LocallyCreatedFile) {
 
   FileError error = FILE_ERROR_FAILED;
   std::string local_id;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::AddEntry,
-                 base::Unretained(metadata()),
-                 new_file,
-                 &local_id),
+                 base::Unretained(metadata()), new_file, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);

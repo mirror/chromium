@@ -78,8 +78,8 @@ void AssetLinkRetriever::OnURLFetchComplete(const net::URLFetcher* source) {
         base::CreateTaskRunnerWithTraits({base::TaskPriority::USER_BLOCKING});
     auto data = base::MakeUnique<AssetLinkData>();
     AssetLinkData* data_raw = data.get();
-    base::PostTaskAndReplyWithResult(
-        task_runner.get(), FROM_HERE,
+    task_runner->PostTaskAndReply(
+        FROM_HERE,
         base::BindOnce(&AssetLinkData::Parse, base::Unretained(data_raw),
                        std::move(response_string)),
         base::BindOnce(&AssetLinkRetriever::OnResponseParsed, this,

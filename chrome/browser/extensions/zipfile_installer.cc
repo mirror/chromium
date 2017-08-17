@@ -58,9 +58,8 @@ void ZipFileInstaller::LoadFromZipFile(const base::FilePath& zip_file) {
 
   zip_file_ = zip_file;
 
-  base::PostTaskAndReplyWithResult(
-      GetExtensionFileTaskRunner().get(), FROM_HERE,
-      base::BindOnce(&PrepareAndGetUnzipDir, zip_file),
+  GetExtensionFileTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&PrepareAndGetUnzipDir, zip_file),
       base::BindOnce(&ZipFileInstaller::Unzip, this));
 }
 

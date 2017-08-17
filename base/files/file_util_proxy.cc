@@ -71,11 +71,10 @@ bool FileUtilProxy::Touch(
     const Time& last_access_time,
     const Time& last_modified_time,
     const StatusCallback& callback) {
-  return base::PostTaskAndReplyWithResult(
-      task_runner,
+  return task_runner->PostTaskAndReply(
       FROM_HERE,
-      Bind(&TouchFile, file_path, last_access_time, last_modified_time),
-      Bind(&CallWithTranslatedParameter, callback));
+      BindOnce(&TouchFile, file_path, last_access_time, last_modified_time),
+      BindOnce(&CallWithTranslatedParameter, callback));
 }
 
 }  // namespace base

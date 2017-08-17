@@ -36,11 +36,10 @@ void RemoveEntryOnUIThread(base::SequencedTaskRunner* blocking_task_runner,
                            ResourceMetadata* metadata,
                            const std::string& local_id,
                            const FileOperationCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner,
+  blocking_task_runner->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::RemoveEntry,
-                 base::Unretained(metadata), local_id),
+      base::Bind(&ResourceMetadata::RemoveEntry, base::Unretained(metadata),
+                 local_id),
       callback);
 }
 
@@ -84,14 +83,11 @@ void RemovePerformer::Remove(const std::string& local_id,
   DCHECK(!callback.is_null());
 
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&TryToRemoveLocally, metadata_, local_id, entry),
+
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&TryToRemoveLocally, metadata_, local_id, entry),
       base::Bind(&RemovePerformer::RemoveAfterGetResourceEntry,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 context,
-                 callback,
+                 weak_ptr_factory_.GetWeakPtr(), context, callback,
                  base::Owned(entry)));
 }
 
@@ -244,8 +240,7 @@ void RemovePerformer::UnparentResourceAfterUpdateRemoteState(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&UpdateLocalStateAfterUnparent, metadata_, local_id),
       callback);

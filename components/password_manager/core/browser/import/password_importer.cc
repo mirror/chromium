@@ -49,7 +49,7 @@ void PasswordImporter::Import(const base::FilePath& path,
                               const CompletionCallback& completion) {
   // Posting with USER_VISIBLE priority, because the result of the import is
   // visible to the user in the password settings page.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::Bind(&ReadFileToString, path),
       base::Bind(&ParsePasswords, completion));

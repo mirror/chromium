@@ -67,7 +67,7 @@ void ImageSource::StartDataRequest(
 
   const base::FilePath asset_dir(FILE_PATH_LITERAL(chrome::kChromeOSAssetPath));
   const base::FilePath image_path = asset_dir.AppendASCII(path);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&base::PathExists, image_path),
       base::Bind(&ImageSource::StartDataRequestAfterPathExists,

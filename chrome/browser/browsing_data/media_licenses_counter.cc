@@ -69,8 +69,9 @@ void MediaLicensesCounter::Count() {
       make_scoped_refptr(
           content::BrowserContext::GetDefaultStoragePartition(profile_)
               ->GetFileSystemContext());
-  base::PostTaskAndReplyWithResult(
-      filesystem_context->default_file_task_runner(), FROM_HERE,
+
+  filesystem_context->default_file_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&CountOriginsOnFileTaskRunner,
                  base::RetainedRef(filesystem_context)),
       base::Bind(&MediaLicensesCounter::OnContentLicensesObtained,

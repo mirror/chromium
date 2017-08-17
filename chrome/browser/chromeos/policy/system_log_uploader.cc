@@ -111,7 +111,7 @@ void SystemLogDelegate::LoadSystemLogs(
     const LogUploadCallback& upload_callback) {
   // Run ReadFiles() in the thread that interacts with the file system and
   // return system logs to |upload_callback| on the current thread.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&ReadFiles), upload_callback);
 }

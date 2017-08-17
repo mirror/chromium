@@ -593,8 +593,9 @@ void ChromeDownloadManagerDelegate::CheckForFileExistence(
     return;
   }
 #endif
-  base::PostTaskAndReplyWithResult(
-      check_for_file_existence_task_runner_.get(), FROM_HERE,
+
+  check_for_file_existence_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&base::PathExists, download->GetTargetFilePath()),
       std::move(callback));
 }
@@ -768,8 +769,8 @@ void ChromeDownloadManagerDelegate::GetFileMimeType(
     const base::FilePath& path,
     const GetFileMimeTypeCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock()}, base::Bind(&GetMimeType, path), callback);
+  base::PostTaskWithTraitsAndReply(FROM_HERE, {base::MayBlock()},
+                                   base::Bind(&GetMimeType, path), callback);
 }
 
 #if defined(FULL_SAFE_BROWSING)

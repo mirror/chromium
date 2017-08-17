@@ -259,13 +259,13 @@ void EntryUpdatePerformer::UpdateEntry(const std::string& local_id,
 
   std::unique_ptr<LocalState> local_state(new LocalState);
   LocalState* const local_state_ptr = local_state.get();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&PrepareUpdate, metadata_, cache_, local_id, local_state_ptr),
-      base::Bind(&EntryUpdatePerformer::UpdateEntryAfterPrepare,
-                 weak_ptr_factory_.GetWeakPtr(), context, callback,
-                 base::Passed(&local_state)));
+      base::BindOnce(&PrepareUpdate, metadata_, cache_, local_id,
+                     local_state_ptr),
+      base::BindOnce(&EntryUpdatePerformer::UpdateEntryAfterPrepare,
+                     weak_ptr_factory_.GetWeakPtr(), context, callback,
+                     base::Passed(&local_state)));
 }
 
 void EntryUpdatePerformer::UpdateEntryAfterPrepare(
@@ -430,13 +430,14 @@ void EntryUpdatePerformer::UpdateEntryAfterUpdateResource(
   }
 
   FileChange* changed_files = new FileChange;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&FinishUpdate, metadata_, cache_, base::Passed(&local_state),
-                 base::Passed(&entry), changed_files),
-      base::Bind(&EntryUpdatePerformer::UpdateEntryAfterFinish,
-                 weak_ptr_factory_.GetWeakPtr(), callback,
-                 base::Owned(changed_files)));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&FinishUpdate, metadata_, cache_,
+                     base::Passed(&local_state), base::Passed(&entry),
+                     changed_files),
+      base::BindOnce(&EntryUpdatePerformer::UpdateEntryAfterFinish,
+                     weak_ptr_factory_.GetWeakPtr(), callback,
+                     base::Owned(changed_files)));
 }
 
 void EntryUpdatePerformer::UpdateEntryAfterFinish(

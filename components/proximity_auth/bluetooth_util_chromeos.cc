@@ -148,13 +148,11 @@ void SeekDeviceByAddress(const std::string& device_address,
                          const base::Closure& callback,
                          const ErrorCallback& error_callback,
                          base::TaskRunner* task_runner) {
-  base::PostTaskAndReplyWithResult(
-      task_runner,
+  task_runner->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&SeekDeviceByAddressImpl,
-                 device_address,
-                 make_scoped_refptr(task_runner)),
-      base::Bind(&OnSeekDeviceResult, callback, error_callback));
+      base::BindOnce(&SeekDeviceByAddressImpl, device_address,
+                     make_scoped_refptr(task_runner)),
+      base::BindOnce(&OnSeekDeviceResult, callback, error_callback));
 }
 
 }  // namespace bluetooth_util

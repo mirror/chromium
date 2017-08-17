@@ -133,9 +133,9 @@ class PpdCacheImpl : public PpdCache {
 
   // Public API functions.
   void Find(const std::string& key, const FindCallback& cb) override {
-    base::PostTaskAndReplyWithResult(
-        fetch_task_runner_.get(), FROM_HERE,
-        base::Bind(&FindImpl, cache_base_dir_, key), cb);
+    fetch_task_runner_->PostTaskAndReply(
+        FROM_HERE, base::BindOnce(&FindImpl, cache_base_dir_, key),
+        base::OnceCallback<void(const FindResult& result)>(cb));
   }
 
   // Store the given contents at the given key.  If cb is non-null, it will

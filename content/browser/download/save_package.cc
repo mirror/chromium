@@ -1354,13 +1354,13 @@ void SavePackage::GetSaveInfo() {
   }
   std::string mime_type = web_contents()->GetContentsMimeType();
   bool can_save_as_complete = CanSaveAsComplete(mime_type);
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
-      base::Bind(&SavePackage::CreateDirectoryOnFileThread, title_, page_url_,
-                 can_save_as_complete, mime_type, website_save_dir,
-                 download_save_dir, skip_dir_check),
-      base::Bind(&SavePackage::ContinueGetSaveInfo, this,
-                 can_save_as_complete));
+  GetDownloadTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&SavePackage::CreateDirectoryOnFileThread, title_,
+                     page_url_, can_save_as_complete, mime_type,
+                     website_save_dir, download_save_dir, skip_dir_check),
+      base::BindOnce(&SavePackage::ContinueGetSaveInfo, this,
+                     can_save_as_complete));
 }
 
 // static

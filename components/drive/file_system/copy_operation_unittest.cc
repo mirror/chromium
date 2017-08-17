@@ -304,14 +304,11 @@ TEST_F(CopyOperationTest, CopyDirtyFile) {
   std::string contents = "test content";
   EXPECT_TRUE(google_apis::test_util::WriteStringToFile(temp_file, contents));
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::Store,
-                 base::Unretained(cache()),
-                 src_entry.local_id(),
-                 std::string(),
-                 temp_file,
+      base::Bind(&internal::FileCache::Store, base::Unretained(cache()),
+                 src_entry.local_id(), std::string(), temp_file,
                  internal::FileCache::FILE_OPERATION_MOVE),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -339,13 +336,11 @@ TEST_F(CopyOperationTest, CopyDirtyFile) {
 
   // File contents should match.
   base::FilePath cache_file_path;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::GetFile,
-                 base::Unretained(cache()),
-                 dest_entry.local_id(),
-                 &cache_file_path),
+      base::Bind(&internal::FileCache::GetFile, base::Unretained(cache()),
+                 dest_entry.local_id(), &cache_file_path),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -454,8 +449,8 @@ TEST_F(CopyOperationTest, WaitForSyncComplete) {
 
   std::string directory_local_id;
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::AddEntry,
                  base::Unretained(metadata()), directory, &directory_local_id),
@@ -495,8 +490,8 @@ TEST_F(CopyOperationTest, WaitForSyncComplete) {
 
   directory.set_local_id(directory_local_id);
   directory.set_resource_id(file_resource->file_id());
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::RefreshEntry,
                  base::Unretained(metadata()), directory),

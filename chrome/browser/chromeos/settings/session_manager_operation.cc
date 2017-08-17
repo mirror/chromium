@@ -88,12 +88,10 @@ void SessionManagerOperation::ReportResult(
 
 void SessionManagerOperation::EnsurePublicKey(const base::Closure& callback) {
   if (force_key_load_ || !public_key_ || !public_key_->is_loaded()) {
-    scoped_refptr<base::TaskRunner> task_runner =
-        base::CreateTaskRunnerWithTraits(
-            {base::MayBlock(), base::TaskPriority::BACKGROUND,
-             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
-    base::PostTaskAndReplyWithResult(
-        task_runner.get(), FROM_HERE,
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
         base::Bind(&SessionManagerOperation::LoadPublicKey, owner_key_util_,
                    force_key_load_ ? nullptr : public_key_),
         base::Bind(&SessionManagerOperation::StorePublicKey,

@@ -497,13 +497,13 @@ void DownloadManagerImpl::CreateSavePackageDownloadItemWithId(
 void DownloadManagerImpl::ResumeInterruptedDownload(
     std::unique_ptr<content::DownloadUrlParameters> params,
     uint32_t id) {
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&BeginDownload, base::Passed(&params),
-                 browser_context_->GetResourceContext(), id,
-                 weak_factory_.GetWeakPtr()),
-      base::Bind(&DownloadManagerImpl::AddUrlDownloader,
-                 weak_factory_.GetWeakPtr()));
+      base::BindOnce(&BeginDownload, base::Passed(&params),
+                     browser_context_->GetResourceContext(), id,
+                     weak_factory_.GetWeakPtr()),
+      base::BindOnce(&DownloadManagerImpl::AddUrlDownloader,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void DownloadManagerImpl::SetDownloadItemFactoryForTesting(
@@ -625,13 +625,14 @@ void DownloadManagerImpl::DownloadUrl(
     DCHECK(params->prefer_cache());
     DCHECK_EQ("POST", params->method());
   }
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&BeginDownload, base::Passed(&params),
-                 browser_context_->GetResourceContext(),
-                 content::DownloadItem::kInvalidId, weak_factory_.GetWeakPtr()),
-      base::Bind(&DownloadManagerImpl::AddUrlDownloader,
-                 weak_factory_.GetWeakPtr()));
+      base::BindOnce(&BeginDownload, base::Passed(&params),
+                     browser_context_->GetResourceContext(),
+                     content::DownloadItem::kInvalidId,
+                     weak_factory_.GetWeakPtr()),
+      base::BindOnce(&DownloadManagerImpl::AddUrlDownloader,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void DownloadManagerImpl::AddObserver(Observer* observer) {

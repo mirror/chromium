@@ -86,8 +86,9 @@ void ArcContentFileSystemFileStreamReader::ReadInternal(
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK(file_);
   DCHECK(file_->IsValid());
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
+
+  task_runner_.get()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&ReadFile, file_.get(), make_scoped_refptr(buffer),
                  buffer_length),
       base::Bind(&ArcContentFileSystemFileStreamReader::OnRead,
@@ -129,9 +130,9 @@ void ArcContentFileSystemFileStreamReader::OnOpenFile(
     callback.Run(net::ERR_FAILED);
     return;
   }
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::Bind(&SeekFile, file_.get(), offset_),
+
+  task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&SeekFile, file_.get(), offset_),
       base::Bind(&ArcContentFileSystemFileStreamReader::OnSeekFile,
                  weak_ptr_factory_.GetWeakPtr(), buf, buffer_length, callback));
 }
@@ -182,8 +183,9 @@ void ArcContentFileSystemFileStreamReader::ConsumeFileContents(
   auto num_bytes_to_read = std::min(
       static_cast<int64_t>(temporary_buffer->size()), num_bytes_to_consume);
   // TODO(hashimoto): This may block the worker thread forever. crbug.com/673222
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
+
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&ReadFile, file_.get(), temporary_buffer, num_bytes_to_read),
       base::Bind(&ArcContentFileSystemFileStreamReader::OnConsumeFileContents,
                  weak_ptr_factory_.GetWeakPtr(), buf, buffer_length, callback,

@@ -51,7 +51,7 @@ ChromeDataUseAscriberService::ChromeDataUseAscriberService()
     return;
   }
 
-  content::BrowserThread::PostTaskAndReplyWithResult(
+  content::BrowserThread::PostTaskAndReply(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&InitOnIOThread, g_browser_process->io_thread()),
       base::Bind(&ChromeDataUseAscriberService::SetDataUseAscriber,

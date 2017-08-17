@@ -658,7 +658,7 @@ void MTPDeviceDelegateImplLinux::CopyFileLocal(
   DCHECK(!device_file_path.empty());
 
   // Create a temporary file for creating a copy of source file on local.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
@@ -1517,7 +1517,7 @@ void MTPDeviceDelegateImplLinux::OnGetDestFileInfoErrorToCopyFileFromLocal(
     return;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&OpenFileDescriptor, source_file_path.value().c_str(),
                  O_RDONLY),

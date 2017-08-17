@@ -151,8 +151,9 @@ void UserImageRequest::OnImageDecoded(const SkBitmap& decoded_image) {
     SkBitmap* bitmap = new SkBitmap;
     auto* image_format = new user_manager::UserImage::ImageFormat(
         user_manager::UserImage::FORMAT_UNKNOWN);
-    base::PostTaskAndReplyWithResult(
-        background_task_runner_.get(), FROM_HERE,
+
+    background_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&CropImage, decoded_image, target_size, bitmap,
                    image_format),
         base::Bind(&UserImageRequest::OnImageCropped,
@@ -241,9 +242,9 @@ void StartWithFilePath(
     int pixels_per_side,
     const LoadedCallback& loaded_cb) {
   std::string* data = new std::string;
-  base::PostTaskAndReplyWithResult(
-      background_task_runner.get(), FROM_HERE,
-      base::Bind(&base::ReadFileToString, file_path, data),
+
+  background_task_runner->PostTaskAndReply(
+      FROM_HERE, base::Bind(&base::ReadFileToString, file_path, data),
       base::Bind(&DecodeImage,
                  ImageInfo(file_path, pixels_per_side, image_codec, loaded_cb),
                  background_task_runner, base::Owned(data)));

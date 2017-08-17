@@ -72,9 +72,8 @@ TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResult) {
   int result = 0;
 
   MessageLoop message_loop;
-  PostTaskAndReplyWithResult(message_loop.task_runner().get(), FROM_HERE,
-                             Bind(&ReturnFourtyTwo),
-                             Bind(&StoreValue, &result));
+  message_loop.task_runner()->PostTaskAndReply(
+      FROM_HERE, BindOnce(&ReturnFourtyTwo), BindOnce(&StoreValue, &result));
 
   RunLoop().RunUntilIdle();
 
@@ -85,9 +84,9 @@ TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResultImplicitConvert) {
   double result = 0;
 
   MessageLoop message_loop;
-  PostTaskAndReplyWithResult(message_loop.task_runner().get(), FROM_HERE,
-                             Bind(&ReturnFourtyTwo),
-                             Bind(&StoreDoubleValue, &result));
+  message_loop.task_runner()->PostTaskAndReply(
+      FROM_HERE, BindOnce(&ReturnFourtyTwo),
+      BindOnce(&StoreDoubleValue, &result));
 
   RunLoop().RunUntilIdle();
 
@@ -99,8 +98,8 @@ TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResultPassed) {
   g_foo_free_count = 0;
 
   MessageLoop message_loop;
-  PostTaskAndReplyWithResult(message_loop.task_runner().get(), FROM_HERE,
-                             Bind(&CreateFoo), Bind(&ExpectFoo));
+  message_loop.task_runner()->PostTaskAndReply(FROM_HERE, BindOnce(&CreateFoo),
+                                               BindOnce(&ExpectFoo));
 
   RunLoop().RunUntilIdle();
 
@@ -113,8 +112,8 @@ TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResultPassedFreeProc) {
   g_foo_free_count = 0;
 
   MessageLoop message_loop;
-  PostTaskAndReplyWithResult(message_loop.task_runner().get(), FROM_HERE,
-                             Bind(&CreateScopedFoo), Bind(&ExpectScopedFoo));
+  message_loop.task_runner()->PostTaskAndReply(
+      FROM_HERE, BindOnce(&CreateScopedFoo), BindOnce(&ExpectScopedFoo));
 
   RunLoop().RunUntilIdle();
 

@@ -93,7 +93,7 @@ void MTPReadFileWorker::OnDidReadDataChunkFromDeviceFile(
   // To avoid calling |snapshot_file_details| methods and passing ownership of
   // |snapshot_file_details| in the same_line.
   SnapshotFileDetails* snapshot_file_details_ptr = snapshot_file_details.get();
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&WriteDataChunkIntoSnapshotFileOnFileThread,
                  snapshot_file_details_ptr->snapshot_file_path(), data),

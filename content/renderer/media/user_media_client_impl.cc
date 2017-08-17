@@ -615,8 +615,9 @@ void UserMediaClientImpl::SetupVideoInput() {
       GetUserMediaRequestFailed(result, failed_constraint_name);
       return;
     }
-    base::PostTaskAndReplyWithResult(
-        worker_task_runner_.get(), FROM_HERE,
+
+    worker_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&SelectSettingsVideoContentCapture,
                    current_request_info_->request().VideoConstraints(),
                    video_controls.stream_source),
@@ -650,8 +651,9 @@ void UserMediaClientImpl::SelectVideoDeviceSettings(
   capabilities.noise_reduction_capabilities = {base::Optional<bool>(),
                                                base::Optional<bool>(true),
                                                base::Optional<bool>(false)};
-  base::PostTaskAndReplyWithResult(
-      worker_task_runner_.get(), FROM_HERE,
+
+  worker_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&SelectSettingsVideoDeviceCapture, std::move(capabilities),
                  user_media_request.VideoConstraints()),
       base::Bind(&UserMediaClientImpl::FinalizeSelectVideoDeviceSettings,

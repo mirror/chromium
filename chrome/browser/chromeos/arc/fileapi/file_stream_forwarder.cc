@@ -111,8 +111,8 @@ void FileStreamForwarder::OnReadCompleted(int result) {
   remaining_size_ -= result;
   DCHECK_GE(remaining_size_, 0);
 
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(
           [](int fd, scoped_refptr<net::IOBuffer> buf, int size) {
             const bool result =

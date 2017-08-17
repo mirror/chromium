@@ -35,15 +35,12 @@ PepperNetworkProxyHost::PepperNetworkProxyHost(BrowserPpapiHostImpl* host,
   int render_process_id(0), render_frame_id(0);
   host->GetRenderFrameIDsForInstance(
       instance, &render_process_id, &render_frame_id);
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(&GetUIThreadDataOnUIThread,
-                 render_process_id,
-                 render_frame_id,
-                 host->external_plugin()),
-      base::Bind(&PepperNetworkProxyHost::DidGetUIThreadData,
-                 weak_factory_.GetWeakPtr()));
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&GetUIThreadDataOnUIThread, render_process_id,
+                     render_frame_id, host->external_plugin()),
+      base::BindOnce(&PepperNetworkProxyHost::DidGetUIThreadData,
+                     weak_factory_.GetWeakPtr()));
 }
 
 PepperNetworkProxyHost::~PepperNetworkProxyHost() {

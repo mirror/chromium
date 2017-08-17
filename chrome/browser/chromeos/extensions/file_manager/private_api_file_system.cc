@@ -571,7 +571,7 @@ bool FileManagerPrivateInternalValidatePathNameLengthFunction::RunAsync() {
     return true;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::Bind(&GetFileNameMaxLengthAsync,
                  file_system_url.path().AsUTF8Unsafe()),
@@ -702,7 +702,7 @@ void FileManagerPrivateInternalStartCopyFunction::RunAfterGetFileMetadata(
             &FileManagerPrivateInternalStartCopyFunction::RunAfterFreeDiskSpace,
             this));
   } else {
-    const bool result = BrowserThread::PostTaskAndReplyWithResult(
+    const bool result = BrowserThread::PostTaskAndReply(
         BrowserThread::IO, FROM_HERE,
         base::Bind(
             &CheckLocalDiskSpaceOnIOThread,
@@ -729,7 +729,7 @@ void FileManagerPrivateInternalStartCopyFunction::RunAfterFreeDiskSpace(
   scoped_refptr<storage::FileSystemContext> file_system_context =
       file_manager::util::GetFileSystemContextForRenderFrameHost(
           GetProfile(), render_frame_host());
-  const bool result = BrowserThread::PostTaskAndReplyWithResult(
+  const bool result = BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&StartCopyOnIOThread, GetProfile(), file_system_context,
                  source_url_, destination_url_),
@@ -1038,7 +1038,7 @@ bool FileManagerPrivateInternalGetDirectorySizeFunction::RunAsync() {
     return false;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&base::ComputeDirectorySize, root_path),
       base::Bind(&FileManagerPrivateInternalGetDirectorySizeFunction::

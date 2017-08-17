@@ -426,7 +426,7 @@ void ArcSessionImpl::OnInstanceStarted(bool instance_is_for_login_screen,
   raw_handle.needs_connection = true;
 
   mojo::edk::ScopedPlatformHandle mojo_socket_fd(raw_handle);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::Bind(&ArcSessionImpl::ConnectMojo, base::Passed(&mojo_socket_fd),
                  base::Passed(&cancel_fd)),

@@ -128,12 +128,13 @@ void VideoFramePump::OnCaptureResult(
   // Even when |frame| is nullptr we still need to post it to the encode thread
   // to make sure frames are freed in the same order they are received and
   // that we don't start capturing frame n+2 before frame n is freed.
-  base::PostTaskAndReplyWithResult(
-      encode_task_runner_.get(), FROM_HERE,
-      base::Bind(&VideoFramePump::EncodeFrame, encoder_.get(),
-                 base::Passed(&frame),
-                 base::Passed(&captured_frame_timestamps_)),
-      base::Bind(&VideoFramePump::OnFrameEncoded, weak_factory_.GetWeakPtr()));
+  encode_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&VideoFramePump::EncodeFrame, encoder_.get(),
+                     base::Passed(&frame),
+                     base::Passed(&captured_frame_timestamps_)),
+      base::BindOnce(&VideoFramePump::OnFrameEncoded,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void VideoFramePump::CaptureNextFrame() {

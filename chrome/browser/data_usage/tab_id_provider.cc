@@ -90,8 +90,9 @@ TabIdProvider::TabIdProvider(base::TaskRunner* task_runner,
   // be posted, then the destructor of |callback_runner| will pass a tab ID of
   // -1 to OnTabIdReady, so that case doesn't need to be explicitly handled
   // here.
-  base::PostTaskAndReplyWithResult(
-      task_runner, from_here, tab_id_getter,
+
+  task_runner->PostTaskAndReply(
+      from_here, tab_id_getter,
       base::Bind(&CallbackRunner::RunAll,
                  base::Owned(callback_runner.release())));
 }

@@ -119,14 +119,13 @@ void TruncateOperation::TruncateAfterEnsureFileDownloadedByPath(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&TruncateOnBlockingPool,
-                 metadata_, cache_, entry->local_id(), local_file_path, length),
-      base::Bind(
-          &TruncateOperation::TruncateAfterTruncateOnBlockingPool,
-          weak_ptr_factory_.GetWeakPtr(), entry->local_id(), callback));
+      base::BindOnce(&TruncateOnBlockingPool, metadata_, cache_,
+                     entry->local_id(), local_file_path, length),
+      base::BindOnce(&TruncateOperation::TruncateAfterTruncateOnBlockingPool,
+                     weak_ptr_factory_.GetWeakPtr(), entry->local_id(),
+                     callback));
 }
 
 void TruncateOperation::TruncateAfterTruncateOnBlockingPool(

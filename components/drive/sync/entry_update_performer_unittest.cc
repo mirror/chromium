@@ -47,13 +47,11 @@ class EntryUpdatePerformerTest : public file_system::OperationTestBase {
 
     // Store the file to cache.
     FileError error = FILE_ERROR_FAILED;
-    base::PostTaskAndReplyWithResult(
-        blocking_task_runner(),
+
+    blocking_task_runner()->PostTaskAndReply(
         FROM_HERE,
-        base::Bind(&FileCache::Store,
-                   base::Unretained(cache()),
-                   local_id, std::string(), path,
-                   FileCache::FILE_OPERATION_COPY),
+        base::Bind(&FileCache::Store, base::Unretained(cache()), local_id,
+                   std::string(), path, FileCache::FILE_OPERATION_COPY),
         google_apis::test_util::CreateCopyResultCallback(&error));
     content::RunAllBlockingPoolTasksUntilIdle();
     return error;
@@ -87,11 +85,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry) {
   src_entry.set_metadata_edit_state(ResourceEntry::DIRTY);
 
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::RefreshEntry,
-                 base::Unretained(metadata()),
+      base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
                  src_entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -144,8 +141,9 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_SetProperties) {
   entry.set_metadata_edit_state(ResourceEntry::DIRTY);
 
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(), FROM_HERE,
+
+  blocking_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
                  entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
@@ -168,8 +166,9 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_SetProperties) {
   second_property->set_value("changed");
 
   // Change the resource entry during an update.
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(), FROM_HERE,
+
+  blocking_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
                  entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
@@ -213,11 +212,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_WithNonDirtyCache) {
   src_entry->set_metadata_edit_state(ResourceEntry::DIRTY);
 
   error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::RefreshEntry,
-                 base::Unretained(metadata()),
+      base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
                  *src_entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -345,12 +343,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_ContentUpdateMd5Check) {
   // Again mark the cache file dirty.
   std::unique_ptr<base::ScopedClosureRunner> file_closer;
   error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&FileCache::OpenForWrite,
-                 base::Unretained(cache()),
-                 local_id,
+      base::Bind(&FileCache::OpenForWrite, base::Unretained(cache()), local_id,
                  &file_closer),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -390,12 +386,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_OpenedForWrite) {
   // Emulate a situation where someone is writing to the file.
   std::unique_ptr<base::ScopedClosureRunner> file_closer;
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&FileCache::OpenForWrite,
-                 base::Unretained(cache()),
-                 local_id,
+      base::Bind(&FileCache::OpenForWrite, base::Unretained(cache()), local_id,
                  &file_closer),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -447,13 +441,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_UploadNewFile) {
 
   FileError error = FILE_ERROR_FAILED;
   std::string local_id;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::AddEntry,
-                 base::Unretained(metadata()),
-                 entry,
-                 &local_id),
+                 base::Unretained(metadata()), entry, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -502,13 +493,11 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_NewFileOpendForWrite) {
 
   FileError error = FILE_ERROR_FAILED;
   std::string local_id;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::AddEntry,
-                 base::Unretained(metadata()),
-                 entry,
-                 &local_id),
+                 base::Unretained(metadata()), entry, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -519,12 +508,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_NewFileOpendForWrite) {
   // Emulate a situation where someone is writing to the file.
   std::unique_ptr<base::ScopedClosureRunner> file_closer;
   error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&FileCache::OpenForWrite,
-                 base::Unretained(cache()),
-                 local_id,
+      base::Bind(&FileCache::OpenForWrite, base::Unretained(cache()), local_id,
                  &file_closer),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -576,13 +563,11 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_CreateDirectory) {
 
   FileError error = FILE_ERROR_FAILED;
   std::string local_id;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::AddEntry,
-                 base::Unretained(metadata()),
-                 entry,
-                 &local_id),
+                 base::Unretained(metadata()), entry, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -626,11 +611,10 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry_InsufficientPermission) {
   updated_entry.set_metadata_edit_state(ResourceEntry::DIRTY);
 
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::RefreshEntry,
-                 base::Unretained(metadata()),
+      base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
                  updated_entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();

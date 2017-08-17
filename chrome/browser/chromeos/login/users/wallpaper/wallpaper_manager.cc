@@ -1044,7 +1044,7 @@ void WallpaperManager::OnDeviceWallpaperExists(const AccountId& account_id,
                                                const std::string& hash,
                                                bool exist) {
   if (exist) {
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock()},
         base::Bind(&CheckDeviceWallpaperMatchHash, GetDeviceWallpaperFilePath(),
                    hash),
@@ -1072,7 +1072,7 @@ void WallpaperManager::OnDeviceWallpaperDownloaded(const AccountId& account_id,
     return;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::Bind(&CheckDeviceWallpaperMatchHash, GetDeviceWallpaperFilePath(),
                  hash),
@@ -1368,7 +1368,7 @@ bool WallpaperManager::SetDeviceWallpaperIfApplicable(
   if (ShouldSetDeviceWallpaper(account_id, &url, &hash)) {
     // Check if the device wallpaper exists and matches the hash. If so, use it
     // directly. Otherwise download it first.
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock()},
         base::Bind(&base::PathExists, GetDeviceWallpaperFilePath()),
         base::Bind(&WallpaperManager::OnDeviceWallpaperExists,

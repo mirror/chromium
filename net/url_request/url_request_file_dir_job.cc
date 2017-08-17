@@ -39,7 +39,7 @@ URLRequestFileDirJob::URLRequestFileDirJob(URLRequest* request,
       weak_factory_(this) {}
 
 void URLRequestFileDirJob::StartAsync() {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&base::MakeAbsoluteFilePath, dir_path_),

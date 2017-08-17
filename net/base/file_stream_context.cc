@@ -86,12 +86,12 @@ void FileStream::Context::Open(const base::FilePath& path,
                                const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
-  bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(),
+  bool posted = task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(
-          &Context::OpenFileImpl, base::Unretained(this), path, open_flags),
-      base::Bind(&Context::OnOpenCompleted, base::Unretained(this), callback));
+      base::BindOnce(&Context::OpenFileImpl, base::Unretained(this), path,
+                     open_flags),
+      base::BindOnce(&Context::OnOpenCompleted, base::Unretained(this),
+                     callback));
   DCHECK(posted);
 
   last_operation_ = OPEN;
@@ -100,13 +100,11 @@ void FileStream::Context::Open(const base::FilePath& path,
 
 void FileStream::Context::Close(const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
-  bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(),
+  bool posted = task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&Context::CloseFileImpl, base::Unretained(this)),
-      base::Bind(&Context::OnAsyncCompleted,
-                 base::Unretained(this),
-                 IntToInt64(callback)));
+      base::BindOnce(&Context::CloseFileImpl, base::Unretained(this)),
+      base::BindOnce(&Context::OnAsyncCompleted, base::Unretained(this),
+                     IntToInt64(callback)));
   DCHECK(posted);
 
   last_operation_ = CLOSE;
@@ -117,10 +115,11 @@ void FileStream::Context::Seek(int64_t offset,
                                const Int64CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
-  bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::Bind(&Context::SeekFileImpl, base::Unretained(this), offset),
-      base::Bind(&Context::OnAsyncCompleted, base::Unretained(this), callback));
+  bool posted = task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&Context::SeekFileImpl, base::Unretained(this), offset),
+      base::BindOnce(&Context::OnAsyncCompleted, base::Unretained(this),
+                     callback));
   DCHECK(posted);
 
   last_operation_ = SEEK;
@@ -130,13 +129,11 @@ void FileStream::Context::Seek(int64_t offset,
 void FileStream::Context::Flush(const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
-  bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(),
+  bool posted = task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&Context::FlushFileImpl, base::Unretained(this)),
-      base::Bind(&Context::OnAsyncCompleted,
-                 base::Unretained(this),
-                 IntToInt64(callback)));
+      base::BindOnce(&Context::FlushFileImpl, base::Unretained(this)),
+      base::BindOnce(&Context::OnAsyncCompleted, base::Unretained(this),
+                     IntToInt64(callback)));
   DCHECK(posted);
 
   last_operation_ = FLUSH;
