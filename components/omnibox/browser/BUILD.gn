@@ -48,6 +48,8 @@ static_library("browser") {
     "base_search_provider.h",
     "bookmark_provider.cc",
     "bookmark_provider.h",
+    "break_iterator_adapter.cc",
+    "break_iterator_adapter.h",
     "builtin_provider.cc",
     "builtin_provider.h",
     "clipboard_url_provider.cc",
