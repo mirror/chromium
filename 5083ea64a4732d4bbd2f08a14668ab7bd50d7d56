@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0799fc_64953271",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:32:10Z",
+      "side": 1,
+      "message": "What is \u0027default mojo task runner\u0027? Looking at the code, I think it would use the task-runner for the thread this call is made on?",
+      "revId": "5083ea64a4732d4bbd2f08a14668ab7bd50d7d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6de196_f984264d",
+        "filename": "services/ui/ws/event_dispatcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:32:10Z",
+      "side": 1,
+      "message": "Why this change? Add a comment if the order is important here.",
+      "revId": "5083ea64a4732d4bbd2f08a14668ab7bd50d7d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
