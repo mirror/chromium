@@ -1,3 +1,4 @@
+
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -57,6 +58,7 @@ class DisplayOutputSurfaceOzone : public DisplayOutputSurface {
   uint32_t GetFramebufferCopyTextureFormat() override;
   bool IsDisplayedAsOverlayPlane() const override;
   unsigned GetOverlayTextureId() const override;
+  gfx::BufferFormat GetOverlayBufferFormat() const override;
 
   // DisplayOutputSurface:
   void DidReceiveSwapBuffersAck(gfx::SwapResult result) override;
