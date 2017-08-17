@@ -39,6 +39,7 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
   bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
   IntSize Size() const override;
   bool IsTextureBacked() const override { return true; }
+  bool IsPremultiplied() const;
 
   void Draw(PaintCanvas*,
             const PaintFlags&,

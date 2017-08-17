@@ -233,4 +233,9 @@ void AcceleratedStaticBitmapImage::CheckThread() {
   CHECK(thread_checker_.CalledOnValidThread());
 }
 
+bool AcceleratedStaticBitmapImage::IsPremultiplied() const {
+  return texture_holder_->GetSkImage()->alphaType() ==
+         SkAlphaType::kPremul_SkAlphaType;
+}
+
 }  // namespace blink
