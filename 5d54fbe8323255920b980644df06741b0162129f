@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37b5225_7af765d9",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "yeah, inline or expose as a friend to a test.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b2663e_3f3499a0",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "Let\u0027s make sure download path is always there in the helper?",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29f34ab_25ac075b",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "Do you know when this happens? I think we should not force anything in the automated mode. I.e. download where the protocol tells it to.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf37100b_4e07543e",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "This crashes when there is no helper attached.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb6f713_92e49529",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "What bugs me is that we are essentially implementing a default version of the delegate for content in content. To the extent of implementing one in the browser context and assuming it is always there in this code...",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e67d12_5d9ee0a4",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "You no longer need it, can be inlined into TakeOver.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa841f2_6bd2e1fb",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "Just started reviewing this, but it feels like there should be an opposite one that would release the control over the download manager for symmetry. For example, when Page.disable is called.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bc362a_e00cd675",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "friendly style nit: \".\" in the end of the comment.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

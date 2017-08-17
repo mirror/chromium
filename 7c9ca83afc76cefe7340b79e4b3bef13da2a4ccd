@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e92903bb_9ccfe6d2",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T17:25:38Z",
+      "side": 1,
+      "message": "Ah, that makes sense. Headless not having a delegate kill my proposal...",
+      "parentUuid": "04a9e70c_bea985d4",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c674ca20_2f903428",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 18
