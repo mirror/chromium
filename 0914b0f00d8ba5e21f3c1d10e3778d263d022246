@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7ec6fd_f788fe51",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwBrowserProcess.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-08-17T21:12:22Z",
+      "side": 1,
+      "message": "This comment isn\u0027t really accurate - this will also run it for regular webview on N+ (since there\u0027s no way to distinguish at this level), and we actually want that, because it\u0027s possible someone switched from monochrome to webview between 60 and 62 and we woulds till want to clean up in that case. So.. just change the comment to something like \"Only run cleanup task on N+ since the unnecessary extra files were never extracted on earlier versions\"?",
+      "revId": "0914b0f00d8ba5e21f3c1d10e3778d263d022246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
