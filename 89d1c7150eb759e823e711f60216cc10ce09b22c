@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad07c136_6452cae7",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T03:07:42Z",
+      "side": 1,
+      "message": "The C++ capture does not keep captured variables alive, unlike JS or others. so in this case, \u0027profile\u0027 will be captured as raw pointer. This is why they are disallowed in this context. It will probably work as long as \u0027profile\u0027 is always pointing to the same thing. See discussion about \"Lambda Expressions\" at https://chromium-cpp.appspot.com/\n\nI think it is easier to grab profile-\u003eGetPrefs() and store it at PrefetchService. Or create a Callback with bound unretained Prefs pointer.",
+      "revId": "89d1c7150eb759e823e711f60216cc10ce09b22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
