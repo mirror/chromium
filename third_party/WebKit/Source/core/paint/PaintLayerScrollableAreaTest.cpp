@@ -786,4 +786,27 @@ TEST_F(PaintLayerScrollableAreaTest, FloatOverflowInRtlContainer) {
   ASSERT_TRUE(scrollable_area);
   EXPECT_FALSE(scrollable_area->HasHorizontalScrollbar());
 }
+
+TEST_F(PaintLayerScrollableAreaTest, WeakMembers) {
+  using PLSA = PaintLayerScrollableArea;
+
+  ThreadState::Current()->CollectGarbage(BlinkGC::kNoHeapPointersOnStack,
+                                         BlinkGC::kGCWithoutSweep,
+                                         BlinkGC::kForcedGC);
+
+  Member<PLSA> member = PLSA::Create(*GetLayoutView().Layer());
+  LOG(INFO) << "created @ " << member.Get();
+
+  WeakMember<PLSA> weak = WeakMember<PLSA>(member.Get());
+  ASSERT_EQ(member.Get(), weak.Get());
+
+  member->Dispose();
+  member.Release();
+  ThreadState::Current()->CollectGarbage(BlinkGC::kNoHeapPointersOnStack,
+                                         BlinkGC::kGCWithoutSweep,
+                                         BlinkGC::kForcedGC);
+
+  ASSERT_EQ(nullptr, weak.Get());  // Why does this fail?
 }
+
+}  // namespace blink
