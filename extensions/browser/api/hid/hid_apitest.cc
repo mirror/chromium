@@ -146,22 +146,23 @@ class TestDevicePermissionsPrompt
 
  private:
   void OnDevicesChanged() {
-    if (prompt()->multiple()) {
-      for (size_t i = 0; i < prompt()->GetDeviceCount(); ++i) {
+    if (dismissed)
+      return;
+
+    for (size_t i = 0; i < prompt()->GetDeviceCount(); ++i) {
+      // Only choose the device whose serial number is "A".
+      if (prompt()->GetDeviceSerialNumber(i) == base::UTF8ToUTF16("A")) {
         prompt()->GrantDevicePermission(i);
-      }
-      prompt()->Dismissed();
-    } else {
-      for (size_t i = 0; i < prompt()->GetDeviceCount(); ++i) {
-        // Always choose the device whose serial number is "A".
-        if (prompt()->GetDeviceSerialNumber(i) == base::UTF8ToUTF16("A")) {
-          prompt()->GrantDevicePermission(i);
-          prompt()->Dismissed();
-          return;
-        }
+        prompt()->Dismissed();
+        dismissed = true;
+        return;
       }
     }
   }
+
+  // HidDevicePermissionsPrompt::Dismissed() shouldn't be triggered more than
+  // once.
+  bool dismissed = false;
 };
 
 class TestExtensionsAPIClient : public ShellExtensionsAPIClient {

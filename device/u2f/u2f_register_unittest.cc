@@ -44,22 +44,27 @@ class TestRegisterCallback {
   void ReceivedCallback(U2fReturnCode status_code,
                         const std::vector<uint8_t>& response) {
     response_ = std::make_pair(status_code, response);
-    closure_.Run();
+    if (is_callback_async)
+      closure_.Run();
   }
 
   std::pair<U2fReturnCode, std::vector<uint8_t>>& WaitForCallback() {
-    closure_ = run_loop_.QuitClosure();
-    run_loop_.Run();
+    if (is_callback_async) {
+      closure_ = run_loop_.QuitClosure();
+      run_loop_.Run();
+    }
     return response_;
   }
 
   const U2fRequest::ResponseCallback& callback() { return callback_; }
+  void SetCallbackAsync() { is_callback_async = true; }
 
  private:
   std::pair<U2fReturnCode, std::vector<uint8_t>> response_;
   base::Closure closure_;
   U2fRequest::ResponseCallback callback_;
   base::RunLoop run_loop_;
+  bool is_callback_async = false;
 };
 
 TEST_F(U2fRegisterTest, TestRegisterSuccess) {
@@ -71,8 +76,8 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
@@ -91,11 +96,12 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
       .Times(2)
       .WillRepeatedly(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestRegisterCallback cb;
+  cb.SetCallbackAsync();
 
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
@@ -121,9 +127,9 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);

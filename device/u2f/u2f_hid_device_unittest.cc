@@ -68,10 +68,8 @@ namespace device {
 class U2fDeviceEnumerate {
  public:
   U2fDeviceEnumerate()
-      : closure_(),
-        callback_(base::Bind(&U2fDeviceEnumerate::ReceivedCallback,
-                             base::Unretained(this))),
-        run_loop_() {}
+      : callback_(base::Bind(&U2fDeviceEnumerate::ReceivedCallback,
+                             base::Unretained(this))) {}
   ~U2fDeviceEnumerate() {}
 
   void ReceivedCallback(
@@ -83,23 +81,15 @@ class U2fDeviceEnumerate {
         u2f_devices.push_front(base::MakeUnique<U2fHidDevice>(device_info));
     }
     devices_ = std::move(u2f_devices);
-    closure_.Run();
-  }
-
-  std::list<std::unique_ptr<U2fHidDevice>>& WaitForCallback() {
-    closure_ = run_loop_.QuitClosure();
-    run_loop_.Run();
-    return devices_;
   }
 
   const HidService::GetDevicesCallback& callback() { return callback_; }
+  std::list<std::unique_ptr<U2fHidDevice>>& devices() { return devices_; }
 
  private:
   HidDeviceFilter filter_;
   std::list<std::unique_ptr<U2fHidDevice>> devices_;
-  base::Closure closure_;
   HidService::GetDevicesCallback callback_;
-  base::RunLoop run_loop_;
 };
 
 class TestVersionCallback {
@@ -179,8 +169,7 @@ TEST_F(U2fHidDeviceTest, TestHidDeviceVersion) {
   U2fDeviceEnumerate callback;
   HidService* hid_service = DeviceClient::Get()->GetHidService();
   hid_service->GetDevices(callback.callback());
-  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
-      callback.WaitForCallback();
+  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices = callback.devices();
 
   for (auto& device : u2f_devices) {
     TestVersionCallback vc;
@@ -197,8 +186,7 @@ TEST_F(U2fHidDeviceTest, TestMultipleRequests) {
   U2fDeviceEnumerate callback;
   HidService* hid_service = DeviceClient::Get()->GetHidService();
   hid_service->GetDevices(callback.callback());
-  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
-      callback.WaitForCallback();
+  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices = callback.devices();
 
   for (auto& device : u2f_devices) {
     TestVersionCallback vc;
@@ -226,8 +214,7 @@ TEST_F(U2fHidDeviceTest, TestConnectionFailure) {
   hid_service->AddDevice(device0);
   hid_service->FirstEnumerationComplete();
   hid_service->GetDevices(callback.callback());
-  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
-      callback.WaitForCallback();
+  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices = callback.devices();
 
   ASSERT_EQ(static_cast<size_t>(1), u2f_devices.size());
   auto& device = u2f_devices.front();
@@ -271,8 +258,7 @@ TEST_F(U2fHidDeviceTest, TestDeviceError) {
   hid_service->AddDevice(device0);
   hid_service->FirstEnumerationComplete();
   hid_service->GetDevices(callback.callback());
-  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
-      callback.WaitForCallback();
+  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices = callback.devices();
 
   ASSERT_EQ(static_cast<size_t>(1), u2f_devices.size());
   auto& device = u2f_devices.front();
