@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "33be10e9_b22a0e76",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T21:29:18Z",
+      "side": 1,
+      "message": "Yep, no worries.",
+      "parentUuid": "61832b99_27bc2c17",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b20448fc_666bcaa3",
         "filename": "chrome/browser/extensions/extension_util.cc",
         "patchSetId": 7
