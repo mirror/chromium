@@ -4,4 +4,13 @@
 
 #include "core/css/properties/CSSPropertyAPIWebkitMaskRepeat.h"
 
-namespace blink {}  // namespace blink
+namespace blink {
+
+const CSSValue* CSSPropertyAPIWebkitMaskRepeat::ParseSingleValue(
+    CSSParserTokenRange& range,
+    const CSSParserContext&,
+    const CSSParserLocalContext&) {
+  return nullptr;
+}
+
+}  // namespace blink
