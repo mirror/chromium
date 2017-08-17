@@ -101,6 +101,9 @@ class FakeDesktopEnvironment : public DesktopEnvironment {
   void SetCapabilities(const std::string& capabilities) override;
   uint32_t GetDesktopSessionId() const override;
 
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
+
   base::WeakPtr<FakeInputInjector> last_input_injector() {
     return last_input_injector_;
   }
@@ -138,6 +141,9 @@ class FakeDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
       base::WeakPtr<ClientSessionControl> client_session_control,
       const DesktopEnvironmentOptions& options) override;
   bool SupportsAudioCapture() const override;
+
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
 
   base::WeakPtr<FakeDesktopEnvironment> last_desktop_environment() {
     return last_desktop_environment_;

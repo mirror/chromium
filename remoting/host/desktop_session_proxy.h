@@ -19,6 +19,7 @@
 #include "ipc/ipc_listener.h"
 #include "remoting/host/audio_capturer.h"
 #include "remoting/host/desktop_environment.h"
+#include "remoting/host/ipc_process_stats_connector.h"
 #include "remoting/host/screen_resolution.h"
 #include "remoting/proto/event.pb.h"
 #include "remoting/protocol/clipboard_stub.h"
@@ -41,6 +42,12 @@ class MouseCursor;
 struct SerializedDesktopFrame;
 
 namespace remoting {
+
+namespace protocol {
+
+class AggregatedProcessResourceUsage;
+
+}  // namespace protocol
 
 class AudioPacket;
 class ClientSessionControl;
@@ -86,6 +93,9 @@ class DesktopSessionProxy
   std::unique_ptr<webrtc::MouseCursorMonitor> CreateMouseCursorMonitor();
   std::string GetCapabilities() const;
   void SetCapabilities(const std::string& capabilities);
+
+  // Mirrors ProcessStatsConnector.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent();
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -168,6 +178,10 @@ class DesktopSessionProxy
   // Handles InjectClipboardEvent request from the desktop integration process.
   void OnInjectClipboardEvent(const std::string& serialized_event);
 
+  // Handlers ReportProcessStats message from desktop session agent.
+  void OnDesktopProcessStats(
+      const protocol::AggregatedProcessResourceUsage& usage);
+
   // Sends a message to the desktop session agent. The message is silently
   // deleted if the channel is broken.
   void SendToDesktop(IPC::Message* message);
@@ -220,6 +234,8 @@ class DesktopSessionProxy
 
   // Stores the session id for the proxied desktop process.
   uint32_t desktop_session_id_ = UINT32_MAX;
+
+  IpcProcessStatsConnector process_stats_connector_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopSessionProxy);
 };

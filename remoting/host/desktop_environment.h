@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "remoting/host/desktop_environment_options.h"
+#include "remoting/host/process_stats_connector.h"
 
 namespace webrtc {
 class DesktopCapturer;
@@ -28,7 +29,7 @@ class ScreenControls;
 
 // Provides factory methods for creation of audio/video capturers and event
 // executor for a given desktop environment.
-class DesktopEnvironment {
+class DesktopEnvironment : public ProcessStatsConnector {
  public:
   virtual ~DesktopEnvironment() {}
 
@@ -54,7 +55,7 @@ class DesktopEnvironment {
 };
 
 // Used to create |DesktopEnvironment| instances.
-class DesktopEnvironmentFactory {
+class DesktopEnvironmentFactory : public ProcessStatsConnector {
  public:
   virtual ~DesktopEnvironmentFactory() {}
 

@@ -43,6 +43,9 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
   void SetCapabilities(const std::string& capabilities) override;
   uint32_t GetDesktopSessionId() const override;
 
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
+
  protected:
   friend class BasicDesktopEnvironmentFactory;
 
@@ -113,6 +116,9 @@ class BasicDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
 
   // DesktopEnvironmentFactory implementation.
   bool SupportsAudioCapture() const override;
+
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
 
  protected:
   scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner() const {

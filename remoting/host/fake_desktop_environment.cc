@@ -106,6 +106,11 @@ uint32_t FakeDesktopEnvironment::GetDesktopSessionId() const {
   return UINT32_MAX;
 }
 
+std::unique_ptr<ProcessStatsAgent>
+FakeDesktopEnvironment::StartProcessStatsAgent() {
+    return nullptr;
+}
+
 const DesktopEnvironmentOptions& FakeDesktopEnvironment::options() const {
   return options_;
 }
@@ -129,6 +134,11 @@ std::unique_ptr<DesktopEnvironment> FakeDesktopEnvironmentFactory::Create(
 
 bool FakeDesktopEnvironmentFactory::SupportsAudioCapture() const {
   return false;
+}
+
+std::unique_ptr<ProcessStatsAgent>
+FakeDesktopEnvironmentFactory::StartProcessStatsAgent() {
+    return nullptr;
 }
 
 }  // namespace remoting
