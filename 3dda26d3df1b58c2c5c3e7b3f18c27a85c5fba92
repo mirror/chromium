@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f12fc2e_f184e72c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:51:42Z",
+      "side": 1,
+      "message": "This is implementation from media::VideoDecodeAccelerator::Client, we should align |bitstream_buffer_id|",
+      "range": {
+        "startLine": 54,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 54
+      },
+      "revId": "3dda26d3df1b58c2c5c3e7b3f18c27a85c5fba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
