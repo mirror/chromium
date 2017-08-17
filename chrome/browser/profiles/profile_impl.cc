@@ -11,6 +11,8 @@
 #include <utility>
 #include <vector>
 
+#include "chrome/browser/download/download_service_factory.h"
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/command_line.h"
@@ -706,6 +708,8 @@ void ProfileImpl::DoFinalInit() {
 #endif
 
   content::URLDataSource::Add(this, new PrefsInternalsSource(this));
+
+  DownloadServiceFactory::GetInstance()->GetForBrowserContext(this);
 }
 
 base::FilePath ProfileImpl::last_selected_directory() {
