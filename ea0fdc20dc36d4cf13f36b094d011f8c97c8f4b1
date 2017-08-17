@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a06de425_409b4d6c",
+        "filename": "chrome/android/java/res/layout/suggestions_site_explore.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "True. Wrap content does not work, because view pager is weird and doesn\u0027t know how to position itself when there are tabs.\nI made a class - SitesExploreViewPager which overrides onMeasure(). There we can calculate the height of the tabLayout and the TileGridLayout under it. Summing these will give us the required size for the ViewPager.",
+      "parentUuid": "301ad7a9_caba2eeb",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba21ec78_a9f122ab",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T20:15:48Z",
       "side": 1,
       "message": "You should probably return early around here, following what we do for NTP_CONDENSED_LAYOUT and recording a new special value to say that the space distribution was skipped.",
+      "range": {
+        "startLine": 158,
+        "startChar": 30,
+        "endLine": 158,
+        "endChar": 39
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d9c770_efafbc96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "I am not sure what you mean here :/",
+      "parentUuid": "ba21ec78_a9f122ab",
       "range": {
         "startLine": 158,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8a7428bb_2336d286",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Will do in next patch set.",
+      "parentUuid": "a6c160d6_1b23dcc9",
+      "range": {
+        "startLine": 221,
+        "startChar": 29,
+        "endLine": 221,
+        "endChar": 42
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18240cc1_96f2efae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2da1202e_43c04368",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "git cl format doesn\u0027t fix these :/\nDone.",
+      "parentUuid": "18240cc1_96f2efae",
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82aac7ea_884794fd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2017-08-15T20:15:48Z",
       "side": 1,
       "message": "That whole bit could be done only once in the constructor. Probably by not resetting the adapter you have less need to track the last selected page too.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 71
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9a660b_ee25e3b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Much better, thanks!",
+      "parentUuid": "82aac7ea_884794fd",
       "range": {
         "startLine": 38,
         "startChar": 7,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5b65b2db_64fa50ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2aaae1a_45a81f77",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd17dec4_eed1a454",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "cb6a16fb_c760d720",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd17dec4_eed1a454",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6fe1cf6_ac53cc99",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-15T20:15:48Z",
       "side": 1,
       "message": "assert or throw an exception. This should not happen.",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4568b78_1c0c9373",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "I don\u0027t think this applies anymore, as we are not storing all the layouts for all categories.\nCorrect me if I\u0027m wrong.\n\nIn a case where we remove a tile and switch to a new category very quickly, we might lose the first layout before the confirmation from the backend that the tile has been removed.",
+      "parentUuid": "e6fe1cf6_ac53cc99",
       "range": {
         "startLine": 89,
         "startChar": 16,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "8c48ea27_411ad1c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Weirdness. Removed it.",
+      "parentUuid": "1b160850_17fb59f2",
+      "range": {
+        "startLine": 103,
+        "startChar": 16,
+        "endLine": 103,
+        "endChar": 42
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "090a654e_b1e854f8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -214,6 +424,30 @@
       "writtenOn": "2017-08-15T20:15:48Z",
       "side": 1,
       "message": "todo implement",
+      "range": {
+        "startLine": 109,
+        "startChar": 83,
+        "endLine": 109,
+        "endChar": 84
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66b0c35_cf659980",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Anything else here?",
+      "parentUuid": "090a654e_b1e854f8",
       "range": {
         "startLine": 109,
         "startChar": 83,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "9c676d78_4f952aa0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "uhh.. Android Studio played smart on me. Thanks!",
+      "parentUuid": "40bfb421_6e468b31",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7668d734_89c337d9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
         "patchSetId": 1
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "5028cc19_3bfd4971",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7668d734_89c337d9",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9892dd0d_2385d330",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
         "patchSetId": 1
@@ -283,6 +565,30 @@
       "writtenOn": "2017-08-15T20:15:48Z",
       "side": 1,
       "message": "the reason we leave these in the view holder class is separation of concerns: the view holder knows how to refresh data etc. And we could use private members if needed. I think they belong in SiteSectionViewHolder",
+      "range": {
+        "startLine": 134,
+        "startChar": 24,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807e263b_25ad1f4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Yes, me too. At the time though, SiteSectionViewHolder was an interface.",
+      "parentUuid": "9892dd0d_2385d330",
       "range": {
         "startLine": 134,
         "startChar": 24,
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "3e57e5b9_80d1ff62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "Because then the SiteExploreVH and TileGridVH are united by both being SiteSectionViewHolders. And in for example NewTabPageView, I can use both the NTPVH methods and the SiteSectionViewHolder methods, which removes the need for some casting, if statements and such.",
+      "parentUuid": "478c53e8_b69582ff",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bef5dd8c_b7e5517a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "18a29a5b_78888182",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "This class is gone.",
+      "parentUuid": "bef5dd8c_b7e5517a",
+      "range": {
+        "startLine": 602,
+        "startChar": 16,
+        "endLine": 602,
+        "endChar": 22
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56a80b65_5b21e580",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
@@ -352,6 +706,30 @@
       "writtenOn": "2017-08-15T20:15:48Z",
       "side": 1,
       "message": "load from a resource file: Probably components/ntp_snippets_strings.grdp",
+      "range": {
+        "startLine": 620,
+        "startChar": 28,
+        "endLine": 620,
+        "endChar": 37
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdb2339_5143b59d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T00:40:15Z",
+      "side": 1,
+      "message": "O.O",
+      "parentUuid": "56a80b65_5b21e580",
       "range": {
         "startLine": 620,
         "startChar": 28,
