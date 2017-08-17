@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "af7e9a4a_1d2c91e9",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T09:14:28Z",
+      "side": 1,
+      "message": "It\u0027s called \"ContentSettingScheme\", here:\nhttps://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?type\u003dcs\u0026q\u003dContentSettingScheme\u0026sq\u003dpackage:chromium\u0026l\u003d5894",
+      "parentUuid": "b6b9315c_c73e4be5",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d734e831_9c416967",
         "filename": "components/content_settings/core/common/content_settings_pattern_parser.cc",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I agree, just wanted to run this past someone who knows this part of the codebase to see if I\u0027m in the correct ballpark w.r.t. the intended change (and hard-coding chrome-search was faster to implement).",
       "parentUuid": "d734e831_9c416967",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862e9a2d_e42c5537",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T09:14:28Z",
+      "side": 1,
+      "message": "Well, I don\u0027t know this part of the codebase :) but it does look like the right ballpark to me. FWIW, both bauerb and markusheintz are owners, so probably best to check with one of them.",
+      "parentUuid": "a580dc90_22af7d95",
       "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
