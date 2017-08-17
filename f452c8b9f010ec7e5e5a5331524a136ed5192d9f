@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "10c9bb07_815553c8",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T15:13:18Z",
+      "side": 1,
+      "message": "Thanks for making these changes, but this change also makes me feel slightly uncomfortable, as currently all these consumers seem to be in Blink. We\u0027re shuffling things around so we\u0027ll probably need to temporarily introduce a bit of uncommon patterns, but I\u0027m still trying to figure out what transition could be smoother. Sorry for being a unclear on these, I\u0027ll try to be specific here (Takeshi, Mike-- if anything I write is not compatible with your thinking please let me know, we can also have a quick VC / chat if it works better).\n\nHere are concerns: 1) for the things in core/ and modules/ using std containers is a bit unusual (highly discouraged actually) and 2) defining multiple new WebString utilities for this transition feels slightly wasteful given that the current state is transient (and WebString is not what we\u0027ll be using forever).\n\nThe easiest, minimal change to fix the current status would be to start with adding INSIDE_BLINK in the header file, and just keep the Blink-side callsites as is. But I suppose that in the next few changes we\u0027ll also want to include these header files outside Blink too-- then we\u0027ll need to make these work there too.\n\nBelow are some patterns that feel a little more common to me, you could probably mix some of these case by case:\n\n1) just use std:: and base:: types only, without mixing them up with blink types like WebString. Consumers in Blink would need to do some type conversions when it calls CORS code but the usage would look similar to how we use, say, //base or //net code in Blink.  I think for HTTPHeader{Set,Map} we might eventually need to take this path.\n2) or, just don\u0027t expose implementation details in the header file if they are not necessarily accessed by the consumers. For example for the private members in WebCORSPreflightResultCacheItem we really don\u0027t need to expose them to the consumers. You can probably use pimpl pattern (e.g. just declare an inner class in the header file and have it with std::unique_ptr, and implement the class within the .cpp file).\n3) or, have two types of implementations via template and/or ifdef\u0027s (INSIDE_BLINK and else), one with std:: and base:: for the code outside Blink and the other with WTF:: types for the code within Blink. This\u0027d likely introduce code bloat and could make things less readable, but there might be cases this works better (not sure if it applies anything in this CL).",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5b883a_dc6fe362",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T15:13:18Z",
+      "side": 1,
+      "message": "nit: using",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9da602a_d66af9cb",
         "filename": "third_party/WebKit/public/platform/WebString.h",
         "patchSetId": 3
