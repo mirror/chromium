@@ -16,4 +16,11 @@ MediaControlRemainingTimeDisplayElement::
       AtomicString("-webkit-media-controls-time-remaining-display"));
 }
 
+String MediaControlRemainingTimeDisplayElement::FormatTime() const {
+  // New UI includes a leading "/ " before duration.
+  String time("/ ");
+  time.append(MediaControlTimeDisplayElement::FormatTime());
+  return time;
+}
+
 }  // namespace blink
