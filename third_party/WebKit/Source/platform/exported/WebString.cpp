@@ -145,6 +145,14 @@ WebString WebString::FromASCII(const std::string& s) {
   return FromLatin1(s);
 }
 
+unsigned WebString::Hash() const {
+  return private_->GetHash();
+}
+
+WebString WebString::LowerASCII() const {
+  return String(private_->LowerASCII());
+}
+
 bool WebString::Equals(const WebString& s) const {
   return Equal(private_.Get(), s.private_.Get());
 }
