@@ -26,7 +26,8 @@ class VisitedLinkSlave;
 
 namespace android_webview {
 
-class AwContentRendererClient : public content::ContentRendererClient {
+class AwContentRendererClient : public content::ContentRendererClient,
+                                public service_manager::LocalInterfaceProvider {
  public:
   AwContentRendererClient();
   ~AwContentRendererClient() override;
@@ -67,6 +68,10 @@ class AwContentRendererClient : public content::ContentRendererClient {
   bool ShouldUseMediaPlayerForURL(const GURL& url) override;
 
  private:
+  // service_manager::LocalInterfaceProvider:
+  void GetInterface(const std::string& name,
+                    mojo::ScopedMessagePipeHandle request_handle) override;
+
   // Returns |true| if we should use the SafeBrowsing mojo service. Initialises
   // |safe_browsing_| on the first call as a side-effect.
   bool UsingSafeBrowsingMojoService();
