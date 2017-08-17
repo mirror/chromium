@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8dfc22c_7d643ba0",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2510,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-17T20:20:57Z",
+      "side": 1,
+      "message": "I think the dialogs with harmony buttons are all MacViews. Am I forgetting any?",
+      "parentUuid": "c645b814_a27cb056",
+      "range": {
+        "startLine": 2510,
+        "startChar": 7,
+        "endLine": 2510,
+        "endChar": 29
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b48dc595_f573451f",
         "filename": "chrome/browser/ui/cocoa/download/download_shelf_view_cocoa.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80aeb428_96ff4c15",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-17T20:20:57Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "b48dc595_f573451f",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5be742d9_40ecd09e",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-17T20:20:57Z",
+      "side": 1,
+      "message": "This is a little different — I want to say that DownloadShelfView\u0027s implementation is available everywhere so that it can be called on the 10.9 path too. Updated the comment.",
+      "parentUuid": "eee905a3_5fa243fc",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51071f1_841b59cc",
         "filename": "chrome/browser/ui/cocoa/download/download_started_animation_mac.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6219fb8b_e551f5c4",
+        "filename": "chrome/browser/ui/cocoa/download/download_started_animation_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-17T20:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e51071f1_841b59cc",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "33e3f303_684006f8",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-17T20:20:57Z",
+      "side": 1,
+      "message": "I think static initializers are OK now… but I also think we prefer to avoid static storage, so I replaced it with a function.",
+      "parentUuid": "6923d34a_985114a5",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3204a0_988031ce",
         "filename": "ui/base/cocoa/nsview_additions.mm",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab12fcc_86995767",
+        "filename": "ui/base/cocoa/nsview_additions.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-17T20:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b3204a0_988031ce",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
