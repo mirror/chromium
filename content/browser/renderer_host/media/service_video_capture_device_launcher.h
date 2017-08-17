@@ -16,9 +16,17 @@ namespace content {
 class CONTENT_EXPORT ServiceVideoCaptureDeviceLauncher
     : public VideoCaptureDeviceLauncher {
  public:
+  // The OnceClosure |out_release_service_connection_cb| is meant to be called
+  // to indicate that the service connection is no longer needed.
+  using RequestServiceConnectionCB = base::OnceCallback<void(
+      base::OnceClosure* out_release_service_connection_cb)>;
+
+  // Runs |connect_to_service_cb| when the device is launched. Runs the
+  // |out_release_service_connection_cb| returned by |connect_to_service_cb| as
+  // soon as the connection to the service is no longer needed.
   explicit ServiceVideoCaptureDeviceLauncher(
       video_capture::mojom::DeviceFactoryPtr* device_factory,
-      base::OnceClosure destruction_cb);
+      RequestServiceConnectionCB connect_to_service_cb);
   ~ServiceVideoCaptureDeviceLauncher() override;
 
   // VideoCaptureDeviceLauncher implementation.
@@ -50,7 +58,8 @@ class CONTENT_EXPORT ServiceVideoCaptureDeviceLauncher
   void OnConnectionLostWhileWaitingForCallback();
 
   video_capture::mojom::DeviceFactoryPtr* const device_factory_;
-  base::OnceClosure destruction_cb_;
+  RequestServiceConnectionCB connect_to_service_cb_;
+  base::OnceClosure release_service_connection_cb_;
   State state_;
   base::SequenceChecker sequence_checker_;
   base::OnceClosure done_cb_;

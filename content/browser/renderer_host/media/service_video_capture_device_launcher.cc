@@ -46,8 +46,12 @@ void ConcludeLaunchDeviceWithSuccess(
 
 void ConcludeLaunchDeviceWithFailure(
     bool abort_requested,
+    base::OnceClosure release_service_connection_cb,
     VideoCaptureDeviceLauncher::Callbacks* callbacks,
     base::OnceClosure done_cb) {
+  if (release_service_connection_cb)
+    base::ResetAndReturn(&release_service_connection_cb).Run();
+
   if (abort_requested)
     callbacks->OnDeviceLaunchAborted();
   else
@@ -59,16 +63,19 @@ void ConcludeLaunchDeviceWithFailure(
 
 ServiceVideoCaptureDeviceLauncher::ServiceVideoCaptureDeviceLauncher(
     video_capture::mojom::DeviceFactoryPtr* device_factory,
-    base::OnceClosure destruction_cb)
+    base::OnceCallback<
+        void(base::OnceClosure* out_release_service_connection_cb)>
+        connect_to_service_cb)
     : device_factory_(device_factory),
-      destruction_cb_(std::move(destruction_cb)),
+      connect_to_service_cb_(std::move(connect_to_service_cb)),
       state_(State::READY_TO_LAUNCH),
       callbacks_(nullptr) {}
 
 ServiceVideoCaptureDeviceLauncher::~ServiceVideoCaptureDeviceLauncher() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(state_ == State::READY_TO_LAUNCH);
-  base::ResetAndReturn(&destruction_cb_).Run();
+  if (release_service_connection_cb_)
+    base::ResetAndReturn(&release_service_connection_cb_).Run();
 }
 
 void ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync(
@@ -88,11 +95,15 @@ void ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync(
     return;
   }
 
+  base::ResetAndReturn(&connect_to_service_cb_)
+      .Run(&release_service_connection_cb_);
   if (!device_factory_->is_bound()) {
     // This can happen when the ServiceVideoCaptureProvider owning
     // |device_factory_| loses connection to the service process and resets
     // |device_factory_|.
-    ConcludeLaunchDeviceWithFailure(false, callbacks, std::move(done_cb));
+    ConcludeLaunchDeviceWithFailure(false,
+                                    std::move(release_service_connection_cb_),
+                                    callbacks, std::move(done_cb));
     return;
   }
   video_capture::mojom::DevicePtr device;
@@ -148,8 +159,9 @@ void ServiceVideoCaptureDeviceLauncher::OnCreateDeviceCallback(
       return;
     case video_capture::mojom::DeviceAccessResultCode::ERROR_DEVICE_NOT_FOUND:
     case video_capture::mojom::DeviceAccessResultCode::NOT_INITIALIZED:
-      ConcludeLaunchDeviceWithFailure(abort_requested, callbacks,
-                                      std::move(done_cb_));
+      ConcludeLaunchDeviceWithFailure(abort_requested,
+                                      std::move(release_service_connection_cb_),
+                                      callbacks, std::move(done_cb_));
       return;
   }
 }
@@ -162,8 +174,9 @@ void ServiceVideoCaptureDeviceLauncher::
   state_ = State::READY_TO_LAUNCH;
   Callbacks* callbacks = callbacks_;
   callbacks_ = nullptr;
-  ConcludeLaunchDeviceWithFailure(abort_requested, callbacks,
-                                  std::move(done_cb_));
+  ConcludeLaunchDeviceWithFailure(abort_requested,
+                                  std::move(release_service_connection_cb_),
+                                  callbacks, std::move(done_cb_));
 }
 
 }  // namespace content
