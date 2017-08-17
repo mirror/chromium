@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdd7e24_7edebc79",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:12:08Z",
+      "side": 1,
+      "message": "I\u0027m not convinced this should DCHECK, e.g. if you put a call to this in the TearDown() of a test fixture and the test returns early for whatever reason (including early assertion), this shouldn\u0027t choke. The test just wants to make sure this is null and it\u0027s okay if this is done when sometimes unnecessary.",
+      "revId": "80a311aa4fe767b685217119dca47240f81f8d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
