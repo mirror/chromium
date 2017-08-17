@@ -7,8 +7,10 @@
 #include "base/bind.h"
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
+#include "base/time/time.h"
 #include "components/offline_pages/core/offline_time_utils.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
+#include "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
@@ -18,22 +20,43 @@ namespace offline_pages {
 
 namespace {
 
-using ItemsReadyForDownload = std::vector<std::pair<int64_t, std::string>>;
+const int kMaxConcurrentDownloads = 2;
+
+struct ItemReadyForDownload {
+  int64_t offline_id;
+  std::string archive_body_name;
+  int64_t archive_body_length;
+};
+
+using ItemsReadyForDownload = std::vector<ItemReadyForDownload>;
 
 ItemsReadyForDownload FindItemsReadyForDownload(sql::Connection* db) {
   static const char kSql[] =
-      "SELECT offline_id, archive_body_name FROM prefetch_items"
-      " WHERE state = ?";
+      "SELECT offline_id, archive_body_name, archive_body_length"
+      " FROM prefetch_items"
+      " WHERE state = ?"
+      " ORDER BY creation_time DESC";
   sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
   statement.BindInt(0, static_cast<int>(PrefetchItemState::RECEIVED_BUNDLE));
 
   ItemsReadyForDownload items_to_download;
   while (statement.Step()) {
-    items_to_download.push_back(
-        std::make_pair(statement.ColumnInt64(0), statement.ColumnString(1)));
+    items_to_download.push_back({statement.ColumnInt64(0),
+                                 statement.ColumnString(1),
+                                 statement.ColumnInt64(2)});
   }
 
   return items_to_download;
+}
+
+int CountDownloadsInProgress(sql::Connection* db) {
+  static const char kSql[] =
+      "SELECT COUNT(offline_id) FROM prefetch_items WHERE state = ?";
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+  statement.BindInt(0, static_cast<int>(PrefetchItemState::DOWNLOADING));
+  if (!statement.Step())
+    return 0;
+  return statement.ColumnInt(0);
 }
 
 bool MarkItemAsDownloading(sql::Connection* db,
@@ -67,8 +90,8 @@ SelectAndMarkItemsForDownloadSync(sql::Connection* db) {
   if (!transaction.Begin())
     return nullptr;
 
-  // TODO(fgorski): Implement daily quota algorithm and filter out the items
-  // that we want to start downloading below.
+  int64_t available_quota = PrefetchDownloaderQuota::GetAvailableQuota(db);
+  int concurrent_downloads = CountDownloadsInProgress(db);
 
   ItemsReadyForDownload ready_items = FindItemsReadyForDownload(db);
   if (ready_items.empty())
@@ -76,14 +99,27 @@ SelectAndMarkItemsForDownloadSync(sql::Connection* db) {
 
   auto items_to_download =
       base::MakeUnique<DownloadArchivesTask::ItemsToDownload>();
-  for (const auto& item : ready_items) {
+  for (const auto& ready_item : ready_items) {
+    // Concurrent downloads check.
+    if (concurrent_downloads >= kMaxConcurrentDownloads)
+      break;
+
+    // Quota check.
+    if (ready_item.archive_body_length > available_quota)
+      continue;
+
     // Explicitly not reusing the GUID from the last archive download attempt
     // here.
     std::string guid = base::GenerateGUID();
-    if (!MarkItemAsDownloading(db, item.first, guid))
+    if (!MarkItemAsDownloading(db, ready_item.offline_id, guid))
       return nullptr;
-    items_to_download->push_back({guid, item.second});
+    items_to_download->push_back({guid, ready_item.archive_body_name});
+    ++concurrent_downloads;
   }
+
+  // Write new remaining quota with date here.
+  if (!PrefetchDownloaderQuota::SetAvailableQuota(db, available_quota))
+    return nullptr;
 
   if (!transaction.Commit())
     return nullptr;
