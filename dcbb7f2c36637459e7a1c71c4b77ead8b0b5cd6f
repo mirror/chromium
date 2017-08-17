@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "13cf07be_7e531c53",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T23:18:31Z",
+      "side": 1,
+      "message": "\u003e else assert false\n\nnot done :p",
+      "parentUuid": "5915ffec_0c76c83a",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbf216a4_b2091e61",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 5
@@ -158,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "a5e5d927_64e2ca91",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T23:18:31Z",
+      "side": 1,
+      "message": "\u003e this can happen when seed is expired, and a job is pending, but in that case, we don\u0027t have valid data to send back?\n\nnot done",
+      "parentUuid": "5c54baf6_06245f85",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d5126d_b7f40813",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
         "patchSetId": 5
@@ -187,6 +223,24 @@
       "side": 1,
       "message": "Hmm, maybe the reasoning is that we\u0027ll just give up this time and try again next time an app starts and needs a WebView? I\u0027ll have to look through this more to understand",
       "parentUuid": "18d5126d_b7f40813",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a4f7d6_75ed3447",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T23:18:31Z",
+      "side": 1,
+      "message": "\u003e Hmm, maybe the reasoning is that we\u0027ll just give up this time and try again next time an app starts and needs a WebView? I\u0027ll have to look through this more to understand\n\nyeah I guess that works too. depends on how frequently we\u0027ll be stopped I guess",
+      "parentUuid": "415e9c8c_011c00de",
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

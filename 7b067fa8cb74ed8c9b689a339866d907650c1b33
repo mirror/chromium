@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a24105_229f5ad6",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T23:18:31Z",
+      "side": 1,
+      "message": "for good measure make sure this is only writable by us, so looks like\nsetWritable(false /* writable */, false /* ownerOnly */);\nsetWritable(true /* writable */, true /* ownerOnly */);\n\nMight not actually be needed due to android\u0027s default sandboxing, but shouldn\u0027t hurt",
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a3808c_157d5575",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T23:18:31Z",
+      "side": 1,
+      "message": "is it still 4 now that gzip is removed?",
+      "range": {
+        "startLine": 145,
+        "startChar": 46,
+        "endLine": 145,
+        "endChar": 47
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
