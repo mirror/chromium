@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "9f4c2e85_7b783bcd",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T19:34:31Z",
+      "side": 1,
+      "message": "It is a private ctor; and MakeRefCounted doesn\u0027t work for private ctor\u0027s. So I preferred it this way as opposed to opening the ctor up publicly.",
+      "parentUuid": "128dcd74_134faf7b",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "44672ecc1f6235baaa0d8116fb20fa5ec2e78b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c8dca5_72a91635",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T19:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1559b8cc_3665d645",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "44672ecc1f6235baaa0d8116fb20fa5ec2e78b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b7b9df_f3ba43c5",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 7
