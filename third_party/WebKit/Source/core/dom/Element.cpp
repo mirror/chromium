@@ -2422,7 +2422,7 @@ ShadowRoot* Element::GetShadowRoot() const {
   return &element_shadow->YoungestShadowRoot();
 }
 
-ShadowRoot* Element::openShadowRoot() const {
+ShadowRoot* Element::OpenShadowRoot() const {
   ShadowRoot* root = GetShadowRoot();
   if (!root)
     return nullptr;
