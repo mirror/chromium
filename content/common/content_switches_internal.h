@@ -9,6 +9,10 @@
 #include "content/common/content_export.h"
 #include "content/public/common/web_preferences.h"
 
+namespace base {
+class CommandLine;
+}
+
 namespace content {
 
 bool IsPinchToZoomEnabled();
@@ -23,6 +27,10 @@ ProgressBarCompletion GetProgressBarCompletionPolicy();
 CONTENT_EXPORT bool IsUseZoomForDSFEnabled();
 
 void WaitForDebugger(const std::string& label);
+
+std::vector<std::string> FeaturesFromSwitch(
+    const base::CommandLine& command_line,
+    const char* switch_name);
 
 } // namespace content
 
