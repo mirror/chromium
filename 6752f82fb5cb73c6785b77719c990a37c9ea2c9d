@@ -140,6 +140,30 @@
       "revId": "6752f82fb5cb73c6785b77719c990a37c9ea2c9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399eaa9a_bab61d5b",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-17T16:52:26Z",
+      "side": 1,
+      "message": "\u003e Unless I am implementing them incorrectly, all of these enums are being used in this CL.\n\nYou\u0027re right.  I didn\u0027t scroll down enough.... :-)",
+      "parentUuid": "c15c9300_6295f09c",
+      "range": {
+        "startLine": 147,
+        "startChar": 32,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "6752f82fb5cb73c6785b77719c990a37c9ea2c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f3defa2_14ee1dba",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-17T16:52:26Z",
+      "side": 1,
+      "message": "You\u0027re going to have to run git cl format before submission.",
+      "revId": "efb8fd1b60827d043fbfb4a742e5019ac3ed0aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
