@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42b89188_bb8b95e5",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-17T21:00:09Z",
+      "side": 1,
+      "message": "nit: the second parameter to static_assert is usually something telling us what went wrong not what went right e.g. imagine it being in a compiler error. So I\u0027d consider switching these round e.g. \"Optional header (32) size should be 0xE0 bytes.\"",
+      "range": {
+        "startLine": 126,
+        "startChar": 36,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "7ce7c061d40bc48a63f5cfd3f5fe45159bd9b6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
