@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "f958dec9_eef53d3c",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-17T01:50:29Z",
+      "side": 1,
+      "message": "Shall we reword this comment? TraceWrappersWithManualWriteBarrier is going to be deprecated :)",
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cc11316_31f15171",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4
@@ -65,6 +82,23 @@
         "endLine": 189,
         "endChar": 42
       },
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b264bbe_5f989aee",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-17T01:50:29Z",
+      "side": 1,
+      "message": "Remove this comment.",
       "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
