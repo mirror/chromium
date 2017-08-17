@@ -16,6 +16,24 @@
       "revId": "e2a871312b67eca554b8ef79ed9073f5c18edfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44b1296_8c2eb2cc",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-17T16:29:55Z",
+      "side": 1,
+      "message": "nice catch!",
+      "parentUuid": "d53be8c3_ed438beb",
+      "revId": "e2a871312b67eca554b8ef79ed9073f5c18edfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
