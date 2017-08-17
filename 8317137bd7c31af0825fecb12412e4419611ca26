@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b22c2394_dd81ffde",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:13:23Z",
+      "side": 1,
+      "message": "That\u0027s fair feedback, but changing the interface method name in v8::Platform seems better done in another CL.",
+      "parentUuid": "c74a5c3d_2dd4305f",
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de06e666_46be127c",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 4
