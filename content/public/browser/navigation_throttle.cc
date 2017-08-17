@@ -22,6 +22,10 @@ NavigationThrottle::WillRedirectRequest() {
   return NavigationThrottle::PROCEED;
 }
 
+NavigationThrottle::ThrottleCheckResult NavigationThrottle::WillFailRequest() {
+  return NavigationThrottle::PROCEED;
+}
+
 NavigationThrottle::ThrottleCheckResult
 NavigationThrottle::WillProcessResponse() {
   return NavigationThrottle::PROCEED;
