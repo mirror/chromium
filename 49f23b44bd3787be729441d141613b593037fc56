@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48ab24f7_2208eb40",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:37:15Z",
+      "side": 1,
+      "message": "Should we say something like \"Cannot determine background color. Please select manually to compute contrast ratio.\" ?",
+      "revId": "49f23b44bd3787be729441d141613b593037fc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
