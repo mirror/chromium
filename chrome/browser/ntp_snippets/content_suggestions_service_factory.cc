@@ -24,6 +24,7 @@
 #include "chrome/browser/language/url_language_histogram_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/suggestions/image_decoder_impl.h"
+#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
@@ -291,7 +292,11 @@ bool AreGCMPushUpdatesEnabled() {
 }
 
 std::unique_ptr<BreakingNewsGCMAppHandler>
-MakeBreakingNewsGCMAppHandlerIfEnabled(Profile* profile) {
+MakeBreakingNewsGCMAppHandlerIfEnabled(
+    Profile* profile,
+    const std::string& locale,
+    const TemplateURLService* template_url_service,
+    variations::VariationsService* variations) {
   if (!AreGCMPushUpdatesEnabled()) {
     return nullptr;
   }
@@ -321,7 +326,8 @@ MakeBreakingNewsGCMAppHandlerIfEnabled(Profile* profile) {
   }
 
   auto subscription_manager = base::MakeUnique<SubscriptionManagerImpl>(
-      request_context, pref_service, signin_manager, token_service, api_key,
+      request_context, pref_service, template_url_service, variations,
+      signin_manager, token_service, api_key, locale,
       GetPushUpdatesSubscriptionEndpoint(chrome::GetChannel()),
       GetPushUpdatesUnsubscriptionEndpoint(chrome::GetChannel()));
 
@@ -396,8 +402,10 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
 
   std::unique_ptr<BreakingNewsListener> breaking_news_raw_data_provider;
 #if defined(OS_ANDROID)
-  breaking_news_raw_data_provider =
-      MakeBreakingNewsGCMAppHandlerIfEnabled(profile);
+  breaking_news_raw_data_provider = MakeBreakingNewsGCMAppHandlerIfEnabled(
+      profile, g_browser_process->GetApplicationLocale(),
+      TemplateURLServiceFactory::GetForProfile(profile),
+      g_browser_process->variations_service());
 #endif  //  OS_ANDROID
 
   auto provider = base::MakeUnique<RemoteSuggestionsProviderImpl>(
