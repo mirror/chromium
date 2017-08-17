@@ -22,6 +22,30 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6d087b_f092ce14",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T00:09:07Z",
+      "side": 1,
+      "message": "We could set it to black, but we don\u0027t really need it since the CCT is started with an opacity animation that keeps it hidden until code in VrShellDelegate cancels that animation. We need that hack in this case anyway to avoid weird fade out of the exiting app due to disabling preview window, which makes it unnecessary to set the background. Can add it later if things changes?",
+      "parentUuid": "1d6b3a87_ca77d987",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
