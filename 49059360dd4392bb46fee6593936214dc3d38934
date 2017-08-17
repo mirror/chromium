@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13f3d067_4dd556df",
+        "filename": "ash/public/cpp/window_properties.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-17T22:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c6337d7_9670dda1",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "49059360dd4392bb46fee6593936214dc3d38934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537569d5_897599bb",
         "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
         "patchSetId": 12
