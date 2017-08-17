@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204c53af_b1bd8362",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 8739,
+      "author": {
+        "id": 1239426
+      },
+      "writtenOn": "2017-08-17T04:18:15Z",
+      "side": 1,
+      "message": "OPTIONAL is pretty important too. Admin may want to deploy policy if user manually installed a specific app, but do not want to install it automatically.",
+      "revId": "1d4de4027e3e595c460040c33062a58d225c94ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
