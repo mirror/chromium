@@ -12,6 +12,9 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
+#include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/core/common/schema.h"
@@ -58,12 +61,8 @@ class PolicyTestBase : public testing::Test {
 
   SchemaRegistry schema_registry_;
 
-  // Needed by FilePathWatcher, which is used by ConfigDirPolicyLoader and
-  // PolicyLoaderMac.
-  base::MessageLoopForIO loop_;
-#if defined(OS_POSIX)
-  base::FileDescriptorWatcher file_descriptor_watcher_;
-#endif
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PolicyTestBase);
