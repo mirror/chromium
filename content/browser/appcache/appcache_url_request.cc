@@ -4,6 +4,7 @@
 
 #include "content/browser/appcache/appcache_url_request.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
 
 namespace content {
 
