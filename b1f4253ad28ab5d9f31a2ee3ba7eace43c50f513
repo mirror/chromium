@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1838b0ab_4d3143fd",
+        "filename": "chrome/browser/extensions/content_script_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1232050
+      },
+      "writtenOn": "2017-08-17T15:07:58Z",
+      "side": 1,
+      "message": "Thank you. I wasn\u0027t aware of \"fragile\" extension id.",
+      "parentUuid": "06c04d31_3c4bdf2a",
+      "range": {
+        "startLine": 448,
+        "startChar": 32,
+        "endLine": 448,
+        "endChar": 54
+      },
+      "revId": "b1f4253ad28ab5d9f31a2ee3ba7eace43c50f513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ba245a1_9f841711",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 2
@@ -60,6 +84,24 @@
       "writtenOn": "2017-08-11T15:48:29Z",
       "side": 1,
       "message": "nit: This seems like it would be a better fit in PermissionsUpdater::InitializePermissions(), perhaps?",
+      "revId": "b1f4253ad28ab5d9f31a2ee3ba7eace43c50f513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5f623f_be40d6ff",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1232050
+      },
+      "writtenOn": "2017-08-17T15:07:58Z",
+      "side": 1,
+      "message": "I\u0027ve found just one reasonable option - make PermissionsUpdater address ExtensionManagement directly for RuntimeHostRestrictions and replace PermissionsUpdater::SetPolicyHostRestrictions+SetUsesDefaultHostRestrictions with single argumentless PermissionsUpdater::UpdatePolicyHostRestrictions(). This change will imply larger refactoring than this simple fix.\nOr did you mean smth else?",
+      "parentUuid": "1ba245a1_9f841711",
       "revId": "b1f4253ad28ab5d9f31a2ee3ba7eace43c50f513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
