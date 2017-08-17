@@ -42,8 +42,8 @@ namespace {
 
 // The following two functions are helpers used in cropImage
 static inline IntRect NormalizeRect(const IntRect& rect) {
-  return IntRect(std::min(rect.X(), rect.MaxX()),
-                 std::min(rect.Y(), rect.MaxY()),
+  return IntRect(std::max(0, std::min(rect.X(), rect.MaxX())),
+                 std::max(0, std::min(rect.Y(), rect.MaxY())),
                  std::max(rect.Width(), -rect.Width()),
                  std::max(rect.Height(), -rect.Height()));
 }
