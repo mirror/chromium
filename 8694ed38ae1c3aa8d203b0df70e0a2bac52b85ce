@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66f86467_2924b6e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T19:30:23Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call them \"special navigations\" or \"special subframe navigations\". Special url is too generic and could refer to e.g. filtering rules.",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "8694ed38ae1c3aa8d203b0df70e0a2bac52b85ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29504e53_d23ceb23",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_urls_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T19:30:23Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s unused.",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "8694ed38ae1c3aa8d203b0df70e0a2bac52b85ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf6ab1b_5be4f891",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_urls_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T19:30:23Z",
+      "side": 1,
+      "message": "#include base/string/stringprintf",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "8694ed38ae1c3aa8d203b0df70e0a2bac52b85ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1919021b_c3abb061",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_urls_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T19:30:23Z",
+      "side": 1,
+      "message": "nit: include string_piece",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 76
+      },
+      "revId": "8694ed38ae1c3aa8d203b0df70e0a2bac52b85ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6370ec59_cc03b11b",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_urls_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T19:30:23Z",
+      "side": 1,
+      "message": "nit: include url/origin",
+      "range": {
+        "startLine": 81,
+        "startChar": 47,
+        "endLine": 81,
+        "endChar": 53
+      },
+      "revId": "8694ed38ae1c3aa8d203b0df70e0a2bac52b85ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
