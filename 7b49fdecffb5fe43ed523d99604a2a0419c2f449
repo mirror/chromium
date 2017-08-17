@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "d14f44ee_e712c6fa",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-17T22:36:35Z",
+      "side": 1,
+      "message": "Ojan mentioned 5 min is coming from some other place. Is that some common value? If so, we should just use that value directly to be consistent. If not, I am fine with this.",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9508d753_206937c7",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 7
@@ -47,6 +70,52 @@
       "writtenOn": "2017-08-17T22:27:22Z",
       "side": 1,
       "message": "Do we still need this?",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2509daa8_8072e319",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-17T22:36:35Z",
+      "side": 1,
+      "message": "Some signal does not need to wait for 5 min, e.g., visibility. This is only needed for the ones that need to wait. So maybe rename this to be more specific.",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d68579_05917b8c",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-17T22:36:35Z",
+      "side": 1,
+      "message": "Now we use the wait-for-5-min approach, I don\u0027t think we need this any more, right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
       "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
