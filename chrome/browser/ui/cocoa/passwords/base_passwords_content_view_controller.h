@@ -40,6 +40,8 @@ class ManagePasswordsBubbleModel;
 // Returns the default button for the bubble.
 - (NSButton*)defaultButton;
 
+- (NSString*)touchBarIdForItem:(NSString*)item;
+
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_PASSWORDS_BASE_PASSWORDS_CONTENT_VIEW_CONTROLLER_H_
