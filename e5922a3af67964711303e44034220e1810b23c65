@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b337335_5f2ec56c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-17T11:04:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81eab042_b094cdf9",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49f52b76_a9684ea2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationUmaTracker.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e5922a3af67964711303e44034220e1810b23c65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e277a9_40f9a6ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationUmaTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-17T11:04:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f52b76_a9684ea2",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "903a303c_3bec72d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-17T11:04:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f9d6ed_cce67795",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77861a76_e915b59f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsUpdaterTest.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-12T14:44:30Z",
       "side": 1,
       "message": "Why are these tests being ran despite this annotation? (See the failing try bot..)",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466cb943_699fca44",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsUpdaterTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-17T11:04:59Z",
+      "side": 1,
+      "message": "I don\u0027t know! I\u0027ll run them again and ask an infra person if they still fail..",
+      "parentUuid": "77861a76_e915b59f",
       "revId": "e5922a3af67964711303e44034220e1810b23c65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
