@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0727bf1_66a85864",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/net/spdyproxy/DataReductionProxySettings.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-17T22:02:50Z",
+      "side": 1,
+      "message": "Add a method comment?",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3551ecd_0975cd56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-17T22:02:50Z",
+      "side": 1,
+      "message": "that -\u003e on which",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f52dd9d_495b94a9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
         "patchSetId": 7
@@ -46,6 +92,75 @@
       "revId": "b36a27711190a720769176f0320a457738a7266d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36fb0558_88f8e874",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-17T22:02:50Z",
+      "side": 1,
+      "message": "Is this always a valid time? Also, I\u0027d name this variable lastUpdateTimeMillis.",
+      "range": {
+        "startLine": 88,
+        "startChar": 67,
+        "endLine": 88,
+        "endChar": 97
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d130176c_9f2e1c3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-17T22:02:50Z",
+      "side": 1,
+      "message": "nit: I would write this as:\nlong lastTimeInChart \u003d lastUpdate + DAYS_IN_CHAR * DateUtils.DAY_IN_MILLIS;\nlong now \u003d System.currentTimeMillis();\nContextUtils.getAppSharedPreferences()\n        .edit()\n        .putLong(PREF_DATA_REDUCTION_SITE_BREAKDOWN_ALLOWED_DATE,\n                 lastTimeInChart \u003e now ? lastTimeInChart : now)\n        .apply();",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e3c0ca_9023413a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-17T22:02:50Z",
+      "side": 1,
+      "message": "Not sure this matters, but to avoid inconsistencies, I like doing:\nlong now \u003d System.currentTimeMillis();\nand using the same \u0027now\u0027 whenever you need to know what time it is.",
+      "range": {
+        "startLine": 252,
+        "startChar": 38,
+        "endLine": 252,
+        "endChar": 61
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
