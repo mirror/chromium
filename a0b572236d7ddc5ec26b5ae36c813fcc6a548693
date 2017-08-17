@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f8c750be_e60d176a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T12:34:53Z",
+      "side": 1,
+      "message": "Sorry I overlooked \"report\" disposition. Then I think having a new callback in ResourceClient (NotifyCSPViolationAsynchronously, for example?) makes sense. hiroshige@, what do you think?",
+      "parentUuid": "aa2f74e6_42a4ff7e",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed4a108d_04083ae6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 6
