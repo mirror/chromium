@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f34989_2a868640",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T03:35:19Z",
+      "side": 1,
+      "message": "I believe CTA was the only activity calling startActivityForResult, so we might be able to remove this setResult and all associated data collection we do to generate the data param.",
+      "range": {
+        "startLine": 546,
+        "startChar": 25,
+        "endLine": 546,
+        "endChar": 34
+      },
+      "revId": "501d3b8fc2938e26e0c671d124d3c5230ab80af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
