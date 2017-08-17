@@ -2086,8 +2086,7 @@ void PaintLayerScrollableArea::ScrollbarManager::SetHasHorizontalScrollbar(
     if (!h_bar_) {
       h_bar_ = CreateScrollbar(kHorizontalScrollbar);
       h_bar_is_attached_ = 1;
-      if (!h_bar_->IsCustomScrollbar())
-        ScrollableArea()->DidAddScrollbar(*h_bar_, kHorizontalScrollbar);
+      ScrollableArea()->DidAddScrollbar(*h_bar_, kHorizontalScrollbar);
     } else {
       h_bar_is_attached_ = 1;
     }
@@ -2105,8 +2104,7 @@ void PaintLayerScrollableArea::ScrollbarManager::SetHasVerticalScrollbar(
     if (!v_bar_) {
       v_bar_ = CreateScrollbar(kVerticalScrollbar);
       v_bar_is_attached_ = 1;
-      if (!v_bar_->IsCustomScrollbar())
-        ScrollableArea()->DidAddScrollbar(*v_bar_, kVerticalScrollbar);
+      ScrollableArea()->DidAddScrollbar(*v_bar_, kVerticalScrollbar);
     } else {
       v_bar_is_attached_ = 1;
     }
@@ -2160,8 +2158,7 @@ void PaintLayerScrollableArea::ScrollbarManager::DestroyScrollbar(
   else
     ScrollableArea()->rebuild_vertical_scrollbar_layer_ = true;
 
-  if (!scrollbar->IsCustomScrollbar())
-    ScrollableArea()->WillRemoveScrollbar(*scrollbar, orientation);
+  ScrollableArea()->WillRemoveScrollbar(*scrollbar, orientation);
 
   ScrollableArea()->Box().GetDocument().View()->RemoveScrollbar(scrollbar);
   scrollbar->DisconnectFromScrollableArea();
