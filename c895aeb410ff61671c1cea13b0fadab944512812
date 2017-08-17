@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "bd95d7ee_91455c1b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T15:43:55Z",
+      "side": 1,
+      "message": "Initial submissions can go through two paths:\n- BeginNavigation (the vast majority of them)\n- OpenURL (not many of them)\nSince historically, the OpenURL path was prone to losing data, I wanted to make sure that this wasn\u0027t the case for this particular piece of information. If it the case, it\u0027s probably broken without PlzNavigate, so there is nothing to do in this CL. However filing a bug would be nice, so that we can address it in the future.",
+      "parentUuid": "bb0e16c3_0c07afe2",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d096749_638022f3",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 10
