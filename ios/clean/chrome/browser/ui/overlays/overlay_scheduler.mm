@@ -21,7 +21,8 @@
 
 DEFINE_BROWSER_USER_DATA_KEY(OverlayScheduler);
 
-OverlayScheduler::OverlayScheduler(Browser* browser) : queue_manager_(nullptr) {
+OverlayScheduler::OverlayScheduler(Browser* browser)
+    : web_state_list_(&browser->web_state_list()), queue_manager_(nullptr) {
   // Create the OverlayQueueManager and add the scheduler as an observer to the
   // manager and all its queues.
   OverlayQueueManager::CreateForBrowser(browser);
@@ -154,21 +155,54 @@ void OverlayScheduler::OverlayQueueDidCancelOverlays(OverlayQueue* queue) {
 #pragma mark -
 
 void OverlayScheduler::TryToStartNextOverlay() {
-  // Early return if an overlay is already started or if there are no queued
-  // overlays to show.
-  if (overlay_queues_.empty() || IsShowingOverlay())
+  // Early return if an overlay is already started, if there are no queued
+  // overlays to show, or if the scheduler is waiting for a WebState to be shown
+  // for the frontmost OverlayQueue.
+  if (overlay_queues_.empty() || IsShowingOverlay() || visibility_observer_)
     return;
-  // Notify the observers that the next overlay is about to be shown.
   OverlayQueue* queue = overlay_queues_.front();
   web::WebState* web_state = queue->GetWebState();
+  // Create a WebStateVisibilityObserver if |web_state| needs to be activated.
+  if (web_state && web_state_list_->GetActiveWebState() != web_state) {
+    visibility_observer_ =
+        base::MakeUnique<WebStateVisibilityObserver>(web_state, this);
+  }
+  // Notify the observers that an overlay will be shown for |web_state|.  If
+  // |web_state| isn't nil, this callback is expected to update the active
+  // WebState and show its content area.
   for (auto& observer : observers_) {
     observer.OverlaySchedulerWillShowOverlay(this, web_state);
   }
-  // Start the next overlay in the first queue.
-  queue->StartNextOverlay();
+  // If |web_state| was nil or already activated, then start |queue|'s next
+  // overlay.  Otherwise, it will be started in OnWebStateShown().  The check
+  // for IsShowingOverlay() is to prevent calling StartNextOverlay() twice in
+  // the event that OnWebStateShown() was called directly from the observer
+  // callbacks above.
+  if (!visibility_observer_ && !IsShowingOverlay()) {
+    queue->StartNextOverlay();
+  }
+}
+
+void OverlayScheduler::OnWebStateShown(web::WebState* web_state) {
+  DCHECK(web_state);
+  DCHECK_EQ(overlay_queues_.front()->GetWebState(), web_state);
+  visibility_observer_ = nullptr;
+  overlay_queues_.front()->StartNextOverlay();
 }
 
 void OverlayScheduler::StopObservingQueue(OverlayQueue* queue) {
   queue->CancelOverlays();
   queue->RemoveObserver(this);
+}
+
+OverlayScheduler::WebStateVisibilityObserver::WebStateVisibilityObserver(
+    web::WebState* web_state,
+    OverlayScheduler* scheduler)
+    : web::WebStateObserver(web_state), scheduler_(scheduler) {
+  DCHECK(web_state);
+  DCHECK(scheduler);
+}
+
+void OverlayScheduler::WebStateVisibilityObserver::WasShown() {
+  scheduler_->OnWebStateShown(web_state());
 }
