@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "30d516a8_0ef4b914",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-17T20:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a512f4e_40b14cb0",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "70dd87db727d1463bb9735f07f325de3227098d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e2eba_a70e1557",
         "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
         "patchSetId": 6

@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "71f4cc23_3dd133ea",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-17T20:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b537fe9_6fbf439e",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "779c5ef5_c672acaa",
         "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
         "patchSetId": 7
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d60676cb_c6ec460a",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-17T20:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779c5ef5_c672acaa",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9d95fca_ac7b2d57",
         "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
         "patchSetId": 7
@@ -85,6 +133,24 @@
       "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be528b1a_db2d2cb3",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-17T20:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d95fca_ac7b2d57",
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +174,30 @@
       "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0627e6_3cfd3703",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-17T20:58:50Z",
+      "side": 1,
+      "message": "Yes, it is generated in hex form, I was just passing a wrong value in the test.",
+      "parentUuid": "27f384b8_4af4721e",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
