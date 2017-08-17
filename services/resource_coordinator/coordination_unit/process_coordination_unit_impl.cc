@@ -4,7 +4,9 @@
 
 #include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 
+#include "base/logging.h"
 #include "base/values.h"
+#include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
@@ -48,13 +50,43 @@ ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
 void ProcessCoordinationUnitImpl::PropagateProperty(
     mojom::PropertyType property_type,
     int64_t value) {
-  // Trigger tab coordination units to recalculate their CPU usage.
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
-             CoordinationUnitType::kWebContents)) {
-      tab_coordination_unit->RecalculateProperty(
-          mojom::PropertyType::kCPUUsage);
+  switch (property_type) {
+    // Trigger tab coordination units to recalculate their CPU usage.
+    case mojom::PropertyType::kCPUUsage: {
+      for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
+               CoordinationUnitType::kWebContents)) {
+        tab_coordination_unit->RecalculateProperty(
+            mojom::PropertyType::kCPUUsage);
+      }
+      break;
     }
+    case mojom::PropertyType::kExpectedTaskQueueingDuration: {
+      // Do not propagate if the associated frame is not the main frame.
+      for (auto* frame_cu :
+           GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+        if (!ToFrameCoordinationUnit(frame_cu)->IsMainFrame())
+          continue;
+
+        auto associated_tabs = frame_cu->GetAssociatedCoordinationUnitsOfType(
+            CoordinationUnitType::kWebContents);
+
+        size_t num_tabs_per_frame = associated_tabs.size();
+
+        // A frame should not belong to more than 1 tab.
+        DCHECK_LE(1u, num_tabs_per_frame);
+
+        // A frame CU can be associated with no tab CU before navigation ends.
+        if (num_tabs_per_frame == 0)
+          continue;
+
+        (*associated_tabs.begin())
+            ->RecalculateProperty(
+                mojom::PropertyType::kExpectedTaskQueueingDuration);
+      }
+      break;
+    }
+    default:
+      break;
   }
 }
 
