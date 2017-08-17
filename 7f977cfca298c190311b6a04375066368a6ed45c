@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80922965_86172cdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2573,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T04:24:26Z",
+      "side": 1,
+      "message": "looks like this is only done for fullscreen video and webapps.\n\nTabStateBrowserControlsVisibilityDelegate#canShowBrowserControls\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tab/TabStateBrowserControlsVisibilityDelegate.java?q\u003dTabStateBrow\u0026sq\u003dpackage:chromium\u0026l\u003d164\n\nSo I think this should be doable safely.  If we end up needing more granular control, we could add something to the visibility delegate interface that determines whether we should animate.",
+      "range": {
+        "startLine": 2573,
+        "startChar": 16,
+        "endLine": 2573,
+        "endChar": 27
+      },
+      "revId": "7f977cfca298c190311b6a04375066368a6ed45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
