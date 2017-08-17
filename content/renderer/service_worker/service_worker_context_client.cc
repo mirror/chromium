@@ -626,7 +626,16 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
   // we can observe its requests.
   pending_network_provider_ = ServiceWorkerNetworkProvider::CreateForController(
       std::move(provider_info));
-  provider_context_ = pending_network_provider_->context();
+  provider_id_ = pending_network_provider_->provider_id();
+  DCHECK_NE(provider_id_, kInvalidServiceWorkerProviderId);
+
+  pending_registration_info_ =
+      base::MakeUnique<ServiceWorkerRegistrationObjectInfo>();
+  pending_version_attrs_ = base::MakeUnique<ServiceWorkerVersionAttributes>();
+  pending_network_provider_->context()->GetRegistration(
+      pending_registration_info_.get(), pending_version_attrs_.get());
+  DCHECK_NE(pending_registration_info_->registration_id,
+            kInvalidServiceWorkerRegistrationId);
 
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker",
                                     "ServiceWorkerContextClient", this,
@@ -760,18 +769,12 @@ void ServiceWorkerContextClient::WorkerContextStarted(
   // willDestroyWorkerContext.
   context_.reset(new WorkerContextData(this));
 
-  ServiceWorkerRegistrationObjectInfo registration_info;
-  ServiceWorkerVersionAttributes version_attrs;
-  provider_context_->GetRegistration(&registration_info, &version_attrs);
-  DCHECK_NE(registration_info.registration_id,
-            kInvalidServiceWorkerRegistrationId);
-
   DCHECK(pending_dispatcher_request_.is_pending());
   DCHECK(!context_->event_dispatcher_binding.is_bound());
   context_->event_dispatcher_binding.Bind(
       std::move(pending_dispatcher_request_));
 
-  SetRegistrationInServiceWorkerGlobalScope(registration_info, version_attrs);
+  SetRegistrationInServiceWorkerGlobalScope();
 
   (*instance_host_)->OnThreadStarted(WorkerThread::GetCurrentId());
 
@@ -1214,17 +1217,25 @@ ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<ServiceWorkerFetchContextImpl>(
       script_url_, worker_url_loader_factory_provider.PassInterface(),
-      provider_context_->provider_id());
+      provider_id_);
 }
 
 std::unique_ptr<blink::WebServiceWorkerProvider>
 ServiceWorkerContextClient::CreateServiceWorkerProvider() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
-  DCHECK(provider_context_);
+  // Because in ServiceWorkerProviderContext ctor it has already registered
+  // itself into the ServiceWorkerDispatcher of main thread, we can get it by
+  // |provider_id_| here.
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
+          sender_.get(), main_thread_task_runner_.get());
+  scoped_refptr<ServiceWorkerProviderContext> provider_context(
+      dispatcher->GetProviderContext(provider_id_));
+  DCHECK(provider_context);
 
   // Blink is responsible for deleting the returned object.
-  return base::MakeUnique<WebServiceWorkerProviderImpl>(
-      sender_.get(), provider_context_.get());
+  return base::MakeUnique<WebServiceWorkerProviderImpl>(sender_.get(),
+                                                        provider_context);
 }
 
 void ServiceWorkerContextClient::PostMessageToClient(
@@ -1361,10 +1372,10 @@ void ServiceWorkerContextClient::SendWorkerStarted() {
                                   this);
 }
 
-void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
-    const ServiceWorkerRegistrationObjectInfo& info,
-    const ServiceWorkerVersionAttributes& attrs) {
+void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope() {
   DCHECK(worker_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(pending_registration_info_);
+  DCHECK(pending_version_attrs_);
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
           sender_.get(), main_thread_task_runner_.get());
@@ -1372,7 +1383,11 @@ void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
   // Register a registration and its version attributes with the dispatcher
   // living on the worker thread.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration(
-      dispatcher->GetOrCreateRegistration(info, attrs));
+      dispatcher->GetOrCreateRegistration(*pending_registration_info_,
+                                          *pending_version_attrs_));
+  pending_registration_info_.reset();
+  pending_version_attrs_.reset();
+  ;
 
   proxy_->SetRegistration(
       WebServiceWorkerRegistrationImpl::CreateHandle(registration));

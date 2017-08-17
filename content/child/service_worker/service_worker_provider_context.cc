@@ -87,7 +87,7 @@ void ServiceWorkerProviderContext::SetRegistration(
 void ServiceWorkerProviderContext::GetRegistration(
     ServiceWorkerRegistrationObjectInfo* info,
     ServiceWorkerVersionAttributes* attrs) {
-  DCHECK(!main_thread_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   ControllerState* state = controller_state_.get();
   DCHECK(state);
   DCHECK(state->registration);

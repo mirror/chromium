@@ -139,6 +139,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // (This is attached only to the document thread's ServiceWorkerDispatcher)
   void AddProviderContext(ServiceWorkerProviderContext* provider_context);
   void RemoveProviderContext(ServiceWorkerProviderContext* provider_context);
+  ServiceWorkerProviderContext* GetProviderContext(int provider_id);
 
   // Called when navigator.serviceWorker is instantiated or detached
   // for a document whose provider can be identified by |provider_id|.

@@ -67,10 +67,10 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   int provider_id() const { return provider_id_; }
 
   // For service worker execution contexts. Sets the registration for
-  // ServiceWorkerGlobalScope#registration. Unlike GetRegistration(),
-  // called on the main thread. SetRegistration() is called during
-  // the setup for service worker startup, so it is guaranteed to be called
-  // before GetRegistration().
+  // ServiceWorkerGlobalScope#registration.
+  // Called on the main thread. SetRegistration() is called right after
+  // construction of |this|, it is guaranteed to be called before
+  // GetRegistration().
   void SetRegistration(
       std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
       std::unique_ptr<ServiceWorkerHandleReference> installing,
@@ -78,7 +78,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       std::unique_ptr<ServiceWorkerHandleReference> active);
 
   // For service worker execution contexts. Used for initializing
-  // ServiceWorkerGlobalScope#registration. Called on the worker thread.
+  // ServiceWorkerGlobalScope#registration. Called on the main thread.
   void GetRegistration(ServiceWorkerRegistrationObjectInfo* info,
                        ServiceWorkerVersionAttributes* attrs);
 

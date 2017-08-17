@@ -60,7 +60,6 @@ struct PlatformNotificationData;
 struct PushEventPayload;
 struct ServiceWorkerClientInfo;
 class ServiceWorkerNetworkProvider;
-class ServiceWorkerProviderContext;
 class ThreadSafeSender;
 class EmbeddedWorkerInstanceClientImpl;
 class WebWorkerFetchContext;
@@ -260,9 +259,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
 
   void Send(IPC::Message* message);
   void SendWorkerStarted();
-  void SetRegistrationInServiceWorkerGlobalScope(
-      const ServiceWorkerRegistrationObjectInfo& info,
-      const ServiceWorkerVersionAttributes& attrs);
+  void SetRegistrationInServiceWorkerGlobalScope();
 
   // mojom::ServiceWorkerEventDispatcher
   void DispatchInstallEvent(
@@ -382,7 +379,12 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   scoped_refptr<base::TaskRunner> worker_task_runner_;
 
-  scoped_refptr<ServiceWorkerProviderContext> provider_context_;
+  int provider_id_;
+  // These values are created/filled by ctor on main thread and
+  // consumed/destroyed by WorkerContextStarted on worker thread.
+  std::unique_ptr<ServiceWorkerRegistrationObjectInfo>
+      pending_registration_info_;
+  std::unique_ptr<ServiceWorkerVersionAttributes> pending_version_attrs_;
 
   // Not owned; this object is destroyed when proxy_ becomes invalid.
   blink::WebServiceWorkerContextProxy* proxy_;

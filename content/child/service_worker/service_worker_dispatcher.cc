@@ -271,6 +271,15 @@ void ServiceWorkerDispatcher::RemoveProviderContext(
   provider_contexts_.erase(provider_context->provider_id());
 }
 
+ServiceWorkerProviderContext* ServiceWorkerDispatcher::GetProviderContext(
+    int provider_id) {
+  ProviderContextMap::iterator provider = provider_contexts_.find(provider_id);
+  if (provider != provider_contexts_.end()) {
+    return provider->second;
+  }
+  return nullptr;
+}
+
 void ServiceWorkerDispatcher::AddProviderClient(
     int provider_id,
     blink::WebServiceWorkerProviderClient* client) {
