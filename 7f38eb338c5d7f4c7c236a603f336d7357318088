@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "fdd3718a_b083bd8a",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-17T23:45:18Z",
+      "side": 1,
+      "message": "It seems to not be an SI. I can\u0027t explain why that is (I think it should be?), but the sizes tool does not mention this as an SI when I build non-component release chrome. \nhttps://paste.googleplex.com/5796505831079936\n\nAdditionally, I don\u0027t find it if I just go looking for it among the GLOBALs using nm. \n\nIf I turn out to be wrong somehow, when is this caught? Do they just revert me, or do we have a presubmit check I can run?",
+      "parentUuid": "25feddd5_3b141776",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980b19c1_0bfbc06b",
         "filename": "media/blink/video_decode_stats_reporter.h",
         "patchSetId": 16
