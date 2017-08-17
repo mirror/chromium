@@ -94,6 +94,30 @@
       "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3444a4_7f9027ad",
+        "filename": "media/device_monitors/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-08-17T00:41:41Z",
+      "side": 1,
+      "message": "Please let me know if I can help you in solving other issues.",
+      "parentUuid": "5ae1253d_39eeb5d3",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
