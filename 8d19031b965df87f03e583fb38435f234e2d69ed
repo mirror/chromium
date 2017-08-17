@@ -16,6 +16,58 @@
       "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5fc62e5_847523cb",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T08:39:47Z",
+      "side": 1,
+      "message": "Yeah, sometimes git cl format does weird things.\nIt\u0027s not applied to all of Chrome though; sometimes the owners prefer manual formatting. We\u0027ll see what the owners here think.",
+      "parentUuid": "15758f17_bd36b3a1",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ebd4e44_3f9b950c",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T08:39:47Z",
+      "side": 1,
+      "message": "If this is used for a UMA histogram, the new entry should probably also be added to the corresponding enum in enums.xml.",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d734e831_9c416967",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T08:39:47Z",
+      "side": 1,
+      "message": "Hm, it seems to me that IsNonWildcardDomainNonPortScheme should be extended to support multiple schemes, so we can use it for chrome-search in addition to chrome-extension, instead of hardcoding chrome-search everywhere. WDYT?",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
