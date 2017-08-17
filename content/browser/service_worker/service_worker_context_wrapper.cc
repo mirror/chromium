@@ -521,6 +521,7 @@ void ServiceWorkerContextWrapper::CountExternalRequestsForTest(
     const GURL& origin,
     const CountExternalRequestsCallback& callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    LOG(ERROR) << "SWCWrapper: CountExternalRequestsForTest, !IO";
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
@@ -528,6 +529,7 @@ void ServiceWorkerContextWrapper::CountExternalRequestsForTest(
             origin, callback));
     return;
   }
+  LOG(ERROR) << "SWCWrapper: CountExternalRequestsForTest, IO";
 
   std::vector<ServiceWorkerVersionInfo> live_version_info =
       GetAllLiveVersionInfo();
@@ -885,6 +887,7 @@ void ServiceWorkerContextWrapper::ShutdownOnIO() {
 bool ServiceWorkerContextWrapper::StartingExternalRequest(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  printf("StartExternalRequest\n");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ServiceWorkerVersion* version =
       context()->GetLiveVersion(service_worker_version_id);
@@ -896,6 +899,7 @@ bool ServiceWorkerContextWrapper::StartingExternalRequest(
 bool ServiceWorkerContextWrapper::FinishedExternalRequest(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  printf("FinishedExternalRequest\n");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ServiceWorkerVersion* version =
       context()->GetLiveVersion(service_worker_version_id);

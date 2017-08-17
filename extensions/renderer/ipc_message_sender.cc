@@ -45,7 +45,9 @@ class MainThreadIPCMessageSender : public IPCMessageSender {
     }
   }
 
-  void SendOnRequestResponseReceivedIPC(int request_id) override {}
+  void SendOnRequestResponseReceivedIPC(int request_id) override {
+    LOG(ERROR) << "MainThread SendOnRequestResponseReceivedIPC noop";
+  }
 
   void SendAddUnfilteredEventListenerIPC(
       ScriptContext* context,
@@ -150,6 +152,7 @@ class WorkerThreadIPCMessageSender : public IPCMessageSender {
     std::map<int, std::string>::iterator iter =
         request_id_to_guid_.find(request_id);
     DCHECK(iter != request_id_to_guid_.end());
+    LOG(ERROR) << "Send DecrementServiceWorkerActivity IPC";
     dispatcher_->Send(new ExtensionHostMsg_DecrementServiceWorkerActivity(
         service_worker_version_id_, iter->second));
     request_id_to_guid_.erase(iter);

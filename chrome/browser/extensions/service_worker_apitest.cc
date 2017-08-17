@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 
+#include "base/logging.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
@@ -718,6 +719,308 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, EventsToStoppedWorker) {
   ASSERT_EQ("chrome.tabs.onUpdated callback", result);
 }
 
+#define REPEAT_F(c, n, b) \
+IN_PROC_BROWSER_TEST_F(c, n##000) b \
+IN_PROC_BROWSER_TEST_F(c, n##001) b \
+IN_PROC_BROWSER_TEST_F(c, n##002) b \
+IN_PROC_BROWSER_TEST_F(c, n##003) b \
+IN_PROC_BROWSER_TEST_F(c, n##004) b \
+IN_PROC_BROWSER_TEST_F(c, n##005) b \
+IN_PROC_BROWSER_TEST_F(c, n##006) b \
+IN_PROC_BROWSER_TEST_F(c, n##007) b \
+IN_PROC_BROWSER_TEST_F(c, n##008) b \
+IN_PROC_BROWSER_TEST_F(c, n##009) b \
+IN_PROC_BROWSER_TEST_F(c, n##010) b \
+IN_PROC_BROWSER_TEST_F(c, n##011) b \
+IN_PROC_BROWSER_TEST_F(c, n##012) b \
+IN_PROC_BROWSER_TEST_F(c, n##013) b \
+IN_PROC_BROWSER_TEST_F(c, n##014) b \
+IN_PROC_BROWSER_TEST_F(c, n##015) b \
+IN_PROC_BROWSER_TEST_F(c, n##016) b \
+IN_PROC_BROWSER_TEST_F(c, n##017) b \
+IN_PROC_BROWSER_TEST_F(c, n##018) b \
+IN_PROC_BROWSER_TEST_F(c, n##019) b \
+IN_PROC_BROWSER_TEST_F(c, n##020) b \
+IN_PROC_BROWSER_TEST_F(c, n##021) b \
+IN_PROC_BROWSER_TEST_F(c, n##022) b \
+IN_PROC_BROWSER_TEST_F(c, n##023) b \
+IN_PROC_BROWSER_TEST_F(c, n##024) b \
+IN_PROC_BROWSER_TEST_F(c, n##025) b \
+IN_PROC_BROWSER_TEST_F(c, n##026) b \
+IN_PROC_BROWSER_TEST_F(c, n##027) b \
+IN_PROC_BROWSER_TEST_F(c, n##028) b \
+IN_PROC_BROWSER_TEST_F(c, n##029) b \
+IN_PROC_BROWSER_TEST_F(c, n##030) b \
+IN_PROC_BROWSER_TEST_F(c, n##031) b \
+IN_PROC_BROWSER_TEST_F(c, n##032) b \
+IN_PROC_BROWSER_TEST_F(c, n##033) b \
+IN_PROC_BROWSER_TEST_F(c, n##034) b \
+IN_PROC_BROWSER_TEST_F(c, n##035) b \
+IN_PROC_BROWSER_TEST_F(c, n##036) b \
+IN_PROC_BROWSER_TEST_F(c, n##037) b \
+IN_PROC_BROWSER_TEST_F(c, n##038) b \
+IN_PROC_BROWSER_TEST_F(c, n##039) b \
+IN_PROC_BROWSER_TEST_F(c, n##040) b \
+IN_PROC_BROWSER_TEST_F(c, n##041) b \
+IN_PROC_BROWSER_TEST_F(c, n##042) b \
+IN_PROC_BROWSER_TEST_F(c, n##043) b \
+IN_PROC_BROWSER_TEST_F(c, n##044) b \
+IN_PROC_BROWSER_TEST_F(c, n##045) b \
+IN_PROC_BROWSER_TEST_F(c, n##046) b \
+IN_PROC_BROWSER_TEST_F(c, n##047) b \
+IN_PROC_BROWSER_TEST_F(c, n##048) b \
+IN_PROC_BROWSER_TEST_F(c, n##049) b \
+IN_PROC_BROWSER_TEST_F(c, n##050) b \
+IN_PROC_BROWSER_TEST_F(c, n##051) b \
+IN_PROC_BROWSER_TEST_F(c, n##052) b \
+IN_PROC_BROWSER_TEST_F(c, n##053) b \
+IN_PROC_BROWSER_TEST_F(c, n##054) b \
+IN_PROC_BROWSER_TEST_F(c, n##055) b \
+IN_PROC_BROWSER_TEST_F(c, n##056) b \
+IN_PROC_BROWSER_TEST_F(c, n##057) b \
+IN_PROC_BROWSER_TEST_F(c, n##058) b \
+IN_PROC_BROWSER_TEST_F(c, n##059) b \
+IN_PROC_BROWSER_TEST_F(c, n##060) b \
+IN_PROC_BROWSER_TEST_F(c, n##061) b \
+IN_PROC_BROWSER_TEST_F(c, n##062) b \
+IN_PROC_BROWSER_TEST_F(c, n##063) b \
+IN_PROC_BROWSER_TEST_F(c, n##064) b \
+IN_PROC_BROWSER_TEST_F(c, n##065) b \
+IN_PROC_BROWSER_TEST_F(c, n##066) b \
+IN_PROC_BROWSER_TEST_F(c, n##067) b \
+IN_PROC_BROWSER_TEST_F(c, n##068) b \
+IN_PROC_BROWSER_TEST_F(c, n##069) b \
+IN_PROC_BROWSER_TEST_F(c, n##070) b \
+IN_PROC_BROWSER_TEST_F(c, n##071) b \
+IN_PROC_BROWSER_TEST_F(c, n##072) b \
+IN_PROC_BROWSER_TEST_F(c, n##073) b \
+IN_PROC_BROWSER_TEST_F(c, n##074) b \
+IN_PROC_BROWSER_TEST_F(c, n##075) b \
+IN_PROC_BROWSER_TEST_F(c, n##076) b \
+IN_PROC_BROWSER_TEST_F(c, n##077) b \
+IN_PROC_BROWSER_TEST_F(c, n##078) b \
+IN_PROC_BROWSER_TEST_F(c, n##079) b \
+IN_PROC_BROWSER_TEST_F(c, n##080) b \
+IN_PROC_BROWSER_TEST_F(c, n##081) b \
+IN_PROC_BROWSER_TEST_F(c, n##082) b \
+IN_PROC_BROWSER_TEST_F(c, n##083) b \
+IN_PROC_BROWSER_TEST_F(c, n##084) b \
+IN_PROC_BROWSER_TEST_F(c, n##085) b \
+IN_PROC_BROWSER_TEST_F(c, n##086) b \
+IN_PROC_BROWSER_TEST_F(c, n##087) b \
+IN_PROC_BROWSER_TEST_F(c, n##088) b \
+IN_PROC_BROWSER_TEST_F(c, n##089) b \
+IN_PROC_BROWSER_TEST_F(c, n##090) b \
+IN_PROC_BROWSER_TEST_F(c, n##091) b \
+IN_PROC_BROWSER_TEST_F(c, n##092) b \
+IN_PROC_BROWSER_TEST_F(c, n##093) b \
+IN_PROC_BROWSER_TEST_F(c, n##094) b \
+IN_PROC_BROWSER_TEST_F(c, n##095) b \
+IN_PROC_BROWSER_TEST_F(c, n##096) b \
+IN_PROC_BROWSER_TEST_F(c, n##097) b \
+IN_PROC_BROWSER_TEST_F(c, n##098) b \
+IN_PROC_BROWSER_TEST_F(c, n##099) b \
+IN_PROC_BROWSER_TEST_F(c, n##100) b \
+IN_PROC_BROWSER_TEST_F(c, n##101) b \
+IN_PROC_BROWSER_TEST_F(c, n##102) b \
+IN_PROC_BROWSER_TEST_F(c, n##103) b \
+IN_PROC_BROWSER_TEST_F(c, n##104) b \
+IN_PROC_BROWSER_TEST_F(c, n##105) b \
+IN_PROC_BROWSER_TEST_F(c, n##106) b \
+IN_PROC_BROWSER_TEST_F(c, n##107) b \
+IN_PROC_BROWSER_TEST_F(c, n##108) b \
+IN_PROC_BROWSER_TEST_F(c, n##109) b \
+IN_PROC_BROWSER_TEST_F(c, n##110) b \
+IN_PROC_BROWSER_TEST_F(c, n##111) b \
+IN_PROC_BROWSER_TEST_F(c, n##112) b \
+IN_PROC_BROWSER_TEST_F(c, n##113) b \
+IN_PROC_BROWSER_TEST_F(c, n##114) b \
+IN_PROC_BROWSER_TEST_F(c, n##115) b \
+IN_PROC_BROWSER_TEST_F(c, n##116) b \
+IN_PROC_BROWSER_TEST_F(c, n##117) b \
+IN_PROC_BROWSER_TEST_F(c, n##118) b \
+IN_PROC_BROWSER_TEST_F(c, n##119) b \
+IN_PROC_BROWSER_TEST_F(c, n##120) b \
+IN_PROC_BROWSER_TEST_F(c, n##121) b \
+IN_PROC_BROWSER_TEST_F(c, n##122) b \
+IN_PROC_BROWSER_TEST_F(c, n##123) b \
+IN_PROC_BROWSER_TEST_F(c, n##124) b \
+IN_PROC_BROWSER_TEST_F(c, n##125) b \
+IN_PROC_BROWSER_TEST_F(c, n##126) b \
+IN_PROC_BROWSER_TEST_F(c, n##127) b \
+IN_PROC_BROWSER_TEST_F(c, n##128) b \
+IN_PROC_BROWSER_TEST_F(c, n##129) b \
+IN_PROC_BROWSER_TEST_F(c, n##130) b \
+IN_PROC_BROWSER_TEST_F(c, n##131) b \
+IN_PROC_BROWSER_TEST_F(c, n##132) b \
+IN_PROC_BROWSER_TEST_F(c, n##133) b \
+IN_PROC_BROWSER_TEST_F(c, n##134) b \
+IN_PROC_BROWSER_TEST_F(c, n##135) b \
+IN_PROC_BROWSER_TEST_F(c, n##136) b \
+IN_PROC_BROWSER_TEST_F(c, n##137) b \
+IN_PROC_BROWSER_TEST_F(c, n##138) b \
+IN_PROC_BROWSER_TEST_F(c, n##139) b \
+IN_PROC_BROWSER_TEST_F(c, n##140) b \
+IN_PROC_BROWSER_TEST_F(c, n##141) b \
+IN_PROC_BROWSER_TEST_F(c, n##142) b \
+IN_PROC_BROWSER_TEST_F(c, n##143) b \
+IN_PROC_BROWSER_TEST_F(c, n##144) b \
+IN_PROC_BROWSER_TEST_F(c, n##145) b \
+IN_PROC_BROWSER_TEST_F(c, n##146) b \
+IN_PROC_BROWSER_TEST_F(c, n##147) b \
+IN_PROC_BROWSER_TEST_F(c, n##148) b \
+IN_PROC_BROWSER_TEST_F(c, n##149) b \
+IN_PROC_BROWSER_TEST_F(c, n##150) b \
+IN_PROC_BROWSER_TEST_F(c, n##151) b \
+IN_PROC_BROWSER_TEST_F(c, n##152) b \
+IN_PROC_BROWSER_TEST_F(c, n##153) b \
+IN_PROC_BROWSER_TEST_F(c, n##154) b \
+IN_PROC_BROWSER_TEST_F(c, n##155) b \
+IN_PROC_BROWSER_TEST_F(c, n##156) b \
+IN_PROC_BROWSER_TEST_F(c, n##157) b \
+IN_PROC_BROWSER_TEST_F(c, n##158) b \
+IN_PROC_BROWSER_TEST_F(c, n##159) b \
+IN_PROC_BROWSER_TEST_F(c, n##160) b \
+IN_PROC_BROWSER_TEST_F(c, n##161) b \
+IN_PROC_BROWSER_TEST_F(c, n##162) b \
+IN_PROC_BROWSER_TEST_F(c, n##163) b \
+IN_PROC_BROWSER_TEST_F(c, n##164) b \
+IN_PROC_BROWSER_TEST_F(c, n##165) b \
+IN_PROC_BROWSER_TEST_F(c, n##166) b \
+IN_PROC_BROWSER_TEST_F(c, n##167) b \
+IN_PROC_BROWSER_TEST_F(c, n##168) b \
+IN_PROC_BROWSER_TEST_F(c, n##169) b \
+IN_PROC_BROWSER_TEST_F(c, n##170) b \
+IN_PROC_BROWSER_TEST_F(c, n##171) b \
+IN_PROC_BROWSER_TEST_F(c, n##172) b \
+IN_PROC_BROWSER_TEST_F(c, n##173) b \
+IN_PROC_BROWSER_TEST_F(c, n##174) b \
+IN_PROC_BROWSER_TEST_F(c, n##175) b \
+IN_PROC_BROWSER_TEST_F(c, n##176) b \
+IN_PROC_BROWSER_TEST_F(c, n##177) b \
+IN_PROC_BROWSER_TEST_F(c, n##178) b \
+IN_PROC_BROWSER_TEST_F(c, n##179) b \
+IN_PROC_BROWSER_TEST_F(c, n##180) b \
+IN_PROC_BROWSER_TEST_F(c, n##181) b \
+IN_PROC_BROWSER_TEST_F(c, n##182) b \
+IN_PROC_BROWSER_TEST_F(c, n##183) b \
+IN_PROC_BROWSER_TEST_F(c, n##184) b \
+IN_PROC_BROWSER_TEST_F(c, n##185) b \
+IN_PROC_BROWSER_TEST_F(c, n##186) b \
+IN_PROC_BROWSER_TEST_F(c, n##187) b \
+IN_PROC_BROWSER_TEST_F(c, n##188) b \
+IN_PROC_BROWSER_TEST_F(c, n##189) b \
+IN_PROC_BROWSER_TEST_F(c, n##190) b \
+IN_PROC_BROWSER_TEST_F(c, n##191) b \
+IN_PROC_BROWSER_TEST_F(c, n##192) b \
+IN_PROC_BROWSER_TEST_F(c, n##193) b \
+IN_PROC_BROWSER_TEST_F(c, n##194) b \
+IN_PROC_BROWSER_TEST_F(c, n##195) b \
+IN_PROC_BROWSER_TEST_F(c, n##196) b \
+IN_PROC_BROWSER_TEST_F(c, n##197) b \
+IN_PROC_BROWSER_TEST_F(c, n##198) b \
+IN_PROC_BROWSER_TEST_F(c, n##199) b \
+IN_PROC_BROWSER_TEST_F(c, n##200) b \
+IN_PROC_BROWSER_TEST_F(c, n##201) b \
+IN_PROC_BROWSER_TEST_F(c, n##202) b \
+IN_PROC_BROWSER_TEST_F(c, n##203) b \
+IN_PROC_BROWSER_TEST_F(c, n##204) b \
+IN_PROC_BROWSER_TEST_F(c, n##205) b \
+IN_PROC_BROWSER_TEST_F(c, n##206) b \
+IN_PROC_BROWSER_TEST_F(c, n##207) b \
+IN_PROC_BROWSER_TEST_F(c, n##208) b \
+IN_PROC_BROWSER_TEST_F(c, n##209) b \
+IN_PROC_BROWSER_TEST_F(c, n##210) b \
+IN_PROC_BROWSER_TEST_F(c, n##211) b \
+IN_PROC_BROWSER_TEST_F(c, n##212) b \
+IN_PROC_BROWSER_TEST_F(c, n##213) b \
+IN_PROC_BROWSER_TEST_F(c, n##214) b \
+IN_PROC_BROWSER_TEST_F(c, n##215) b \
+IN_PROC_BROWSER_TEST_F(c, n##216) b \
+IN_PROC_BROWSER_TEST_F(c, n##217) b \
+IN_PROC_BROWSER_TEST_F(c, n##218) b \
+IN_PROC_BROWSER_TEST_F(c, n##219) b \
+IN_PROC_BROWSER_TEST_F(c, n##220) b \
+IN_PROC_BROWSER_TEST_F(c, n##221) b \
+IN_PROC_BROWSER_TEST_F(c, n##222) b \
+IN_PROC_BROWSER_TEST_F(c, n##223) b \
+IN_PROC_BROWSER_TEST_F(c, n##224) b \
+IN_PROC_BROWSER_TEST_F(c, n##225) b \
+IN_PROC_BROWSER_TEST_F(c, n##226) b \
+IN_PROC_BROWSER_TEST_F(c, n##227) b \
+IN_PROC_BROWSER_TEST_F(c, n##228) b \
+IN_PROC_BROWSER_TEST_F(c, n##229) b \
+IN_PROC_BROWSER_TEST_F(c, n##230) b \
+IN_PROC_BROWSER_TEST_F(c, n##231) b \
+IN_PROC_BROWSER_TEST_F(c, n##232) b \
+IN_PROC_BROWSER_TEST_F(c, n##233) b \
+IN_PROC_BROWSER_TEST_F(c, n##234) b \
+IN_PROC_BROWSER_TEST_F(c, n##235) b \
+IN_PROC_BROWSER_TEST_F(c, n##236) b \
+IN_PROC_BROWSER_TEST_F(c, n##237) b \
+IN_PROC_BROWSER_TEST_F(c, n##238) b \
+IN_PROC_BROWSER_TEST_F(c, n##239) b \
+IN_PROC_BROWSER_TEST_F(c, n##240) b \
+IN_PROC_BROWSER_TEST_F(c, n##241) b \
+IN_PROC_BROWSER_TEST_F(c, n##242) b \
+IN_PROC_BROWSER_TEST_F(c, n##243) b \
+IN_PROC_BROWSER_TEST_F(c, n##244) b \
+IN_PROC_BROWSER_TEST_F(c, n##245) b \
+IN_PROC_BROWSER_TEST_F(c, n##246) b \
+IN_PROC_BROWSER_TEST_F(c, n##247) b \
+IN_PROC_BROWSER_TEST_F(c, n##248) b \
+IN_PROC_BROWSER_TEST_F(c, n##249) b \
+IN_PROC_BROWSER_TEST_F(c, n##250) b \
+IN_PROC_BROWSER_TEST_F(c, n##251) b \
+IN_PROC_BROWSER_TEST_F(c, n##252) b \
+IN_PROC_BROWSER_TEST_F(c, n##253) b \
+IN_PROC_BROWSER_TEST_F(c, n##254) b \
+IN_PROC_BROWSER_TEST_F(c, n##255) b \
+IN_PROC_BROWSER_TEST_F(c, n##256) b \
+IN_PROC_BROWSER_TEST_F(c, n##257) b \
+IN_PROC_BROWSER_TEST_F(c, n##258) b \
+IN_PROC_BROWSER_TEST_F(c, n##259) b \
+IN_PROC_BROWSER_TEST_F(c, n##260) b \
+IN_PROC_BROWSER_TEST_F(c, n##261) b \
+IN_PROC_BROWSER_TEST_F(c, n##262) b \
+IN_PROC_BROWSER_TEST_F(c, n##263) b \
+IN_PROC_BROWSER_TEST_F(c, n##264) b \
+IN_PROC_BROWSER_TEST_F(c, n##265) b \
+IN_PROC_BROWSER_TEST_F(c, n##266) b \
+IN_PROC_BROWSER_TEST_F(c, n##267) b \
+IN_PROC_BROWSER_TEST_F(c, n##268) b \
+IN_PROC_BROWSER_TEST_F(c, n##269) b \
+IN_PROC_BROWSER_TEST_F(c, n##270) b \
+IN_PROC_BROWSER_TEST_F(c, n##271) b \
+IN_PROC_BROWSER_TEST_F(c, n##272) b \
+IN_PROC_BROWSER_TEST_F(c, n##273) b \
+IN_PROC_BROWSER_TEST_F(c, n##274) b \
+IN_PROC_BROWSER_TEST_F(c, n##275) b \
+IN_PROC_BROWSER_TEST_F(c, n##276) b \
+IN_PROC_BROWSER_TEST_F(c, n##277) b \
+IN_PROC_BROWSER_TEST_F(c, n##278) b \
+IN_PROC_BROWSER_TEST_F(c, n##279) b \
+IN_PROC_BROWSER_TEST_F(c, n##280) b \
+IN_PROC_BROWSER_TEST_F(c, n##281) b \
+IN_PROC_BROWSER_TEST_F(c, n##282) b \
+IN_PROC_BROWSER_TEST_F(c, n##283) b \
+IN_PROC_BROWSER_TEST_F(c, n##284) b \
+IN_PROC_BROWSER_TEST_F(c, n##285) b \
+IN_PROC_BROWSER_TEST_F(c, n##286) b \
+IN_PROC_BROWSER_TEST_F(c, n##287) b \
+IN_PROC_BROWSER_TEST_F(c, n##288) b \
+IN_PROC_BROWSER_TEST_F(c, n##289) b \
+IN_PROC_BROWSER_TEST_F(c, n##290) b \
+IN_PROC_BROWSER_TEST_F(c, n##291) b \
+IN_PROC_BROWSER_TEST_F(c, n##292) b \
+IN_PROC_BROWSER_TEST_F(c, n##293) b \
+IN_PROC_BROWSER_TEST_F(c, n##294) b \
+IN_PROC_BROWSER_TEST_F(c, n##295) b \
+IN_PROC_BROWSER_TEST_F(c, n##296) b \
+IN_PROC_BROWSER_TEST_F(c, n##297) b \
+IN_PROC_BROWSER_TEST_F(c, n##298) b \
+IN_PROC_BROWSER_TEST_F(c, n##299) b
+
 // Tests that worker ref count increments while extension API function is
 // active.
 
@@ -727,7 +1030,8 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, EventsToStoppedWorker) {
 #else
 #define MAYBE_WorkerRefCount WorkerRefCount
 #endif
-IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
+//IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, WorkerRefCount) {
+REPEAT_F(ServiceWorkerTest, WorkerRefCount, {
   // Extensions APIs from SW are only enabled on trunk.
   ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
   const Extension* extension = LoadExtensionWithFlags(
@@ -739,20 +1043,25 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
 
+  LOG(ERROR) << "1/X { WORKER STARTED";
   ExtensionTestMessageListener worker_start_listener("WORKER STARTED", false);
   worker_start_listener.set_failure_message("FAILURE");
   ASSERT_TRUE(
       content::ExecuteScript(web_contents, "window.runServiceWorker()"));
   ASSERT_TRUE(worker_start_listener.WaitUntilSatisfied());
+  LOG(ERROR) << "2/X } WORKER STARTED";
+  LOG(ERROR) << "extension->url: " << extension->url().possibly_invalid_spec();
 
   // Service worker should have no pending requests because it hasn't peformed
   // any extension API request yet.
   EXPECT_EQ(0u, GetWorkerRefCount(extension->url()));
 
+  LOG(ERROR) << "3/X { CHECK_REF_COUNT";
   ExtensionTestMessageListener worker_listener("CHECK_REF_COUNT", true);
   worker_listener.set_failure_message("FAILURE");
   ASSERT_TRUE(content::ExecuteScript(web_contents, "window.testSendMessage()"));
   ASSERT_TRUE(worker_listener.WaitUntilSatisfied());
+  LOG(ERROR) << "4/X } CHECK_REF_COUNT, sendMessage/1 in-flight";
 
   // Service worker should have exactly one pending request because
   // chrome.test.sendMessage() API call is in-flight.
@@ -760,27 +1069,33 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
 
   // Peform another extension API request while one is ongoing.
   {
+    LOG(ERROR) << "5/X { CHECK_REF_COUNT/2";
     ExtensionTestMessageListener listener("CHECK_REF_COUNT", true);
     listener.set_failure_message("FAILURE");
     ASSERT_TRUE(
         content::ExecuteScript(web_contents, "window.testSendMessage()"));
     ASSERT_TRUE(listener.WaitUntilSatisfied());
+    LOG(ERROR) << "6/X } CHECK_REF_COUNT/2, sendMessage/2 in-flight";
 
     // Service worker currently has two extension API requests in-flight.
     EXPECT_EQ(2u, GetWorkerRefCount(extension->url()));
     // Finish executing the nested chrome.test.sendMessage() first.
     listener.Reply("Hello world");
+    LOG(ERROR) << "7/X sendMessage/2 replied";
   }
 
   ExtensionTestMessageListener extension_listener("SUCCESS", false);
   extension_listener.set_failure_message("FAILURE");
   // Finish executing chrome.test.sendMessage().
   worker_listener.Reply("Hello world");
+  LOG(ERROR) << "8/X sendMessage/1 replied";
   ASSERT_TRUE(extension_listener.WaitUntilSatisfied());
+  LOG(ERROR) << "9/X SUCCESS WaitUntilSatisfied";
 
   // The ref count should drop to 0.
   EXPECT_EQ(0u, GetWorkerRefCount(extension->url()));
-}
+//}
+})
 
 // This test loads a web page that has an iframe pointing to a
 // chrome-extension:// URL. The URL is listed in the extension's

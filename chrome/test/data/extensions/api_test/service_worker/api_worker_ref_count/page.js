@@ -16,6 +16,7 @@ window.runServiceWorker = function() {
   });
 };
 
+var numWorkerReplyReceived = 0;
 window.testSendMessage = function() {
   if (worker == null) {
     chrome.test.sendMessage(FAILURE_MESSAGE);
@@ -23,8 +24,13 @@ window.testSendMessage = function() {
   }
   var channel = new MessageChannel();
   channel.port1.onmessage = function(e) {
+    console.log('****** port1.onmessage ******');
     if (e.data == 'Worker reply: Hello world') {
-      chrome.test.sendMessage('SUCCESS');
+      ++numWorkerReplyReceived;
+      if (numWorkerReplyReceived == 2) {
+        console.log('sending SUCCESS');
+        chrome.test.sendMessage('SUCCESS');
+      }
     } else {
       chrome.test.sendMessage(FAILURE_MESSAGE);
     }
