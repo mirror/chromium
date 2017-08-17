@@ -314,6 +314,11 @@ class ServiceWorkerFetchDispatcher::ResponseCallback
         response, nullptr /* body_as_stream */, std::move(body_as_blob),
         SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE, dispatch_event_time);
   }
+  void OnResponseBlob(const ServiceWorkerResponse& response,
+                      storage::mojom::BlobPtr body_as_blob,
+                      base::Time dispatch_event_time) override {
+    NOTREACHED();
+  }
   void OnResponseStream(
       const ServiceWorkerResponse& response,
       blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
