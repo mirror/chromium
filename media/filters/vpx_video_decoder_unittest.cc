@@ -14,6 +14,8 @@
 #include "media/base/test_data_util.h"
 #include "media/base/test_helpers.h"
 #include "media/base/video_frame.h"
+#include "media/ffmpeg/ffmpeg_common.h"
+#include "media/filters/in_memory_url_protocol.h"
 #include "media/filters/vpx_video_decoder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -324,6 +326,40 @@ TEST_F(VpxVideoDecoderTest, StaleFramesAreExpired) {
   // The last frame should still have a ref internal to libvpx and the frame we
   // just released isn't stale yet, so only 2 frames should remain.
   EXPECT_EQ(2u, decoder_->GetPoolSizeForTesting());
+}
+
+TEST_F(VpxVideoDecoderTest, MemoryPoolAllowsMultipleDisplay) {
+  // Initialize with dummy data, we could read it from the test clip, but it's
+  // not necessary for this test.
+  Initialize();
+
+  scoped_refptr<DecoderBuffer> data =
+      ReadTestDataFile("vp9-duplicate-frame.webm");
+  InMemoryUrlProtocol protocol(data->data(), data->data_size(), false);
+  FFmpegGlue glue(&protocol);
+  ASSERT_TRUE(glue.OpenContext());
+
+  AVPacket packet;
+  while (av_read_frame(glue.format_context(), &packet) >= 0) {
+    if (Decode(DecoderBuffer::CopyFrom(packet.data, packet.size)) !=
+        DecodeStatus::OK) {
+      break;
+    }
+  }
+
+  scoped_refptr<VideoFrame> last_frame = output_frames_.back();
+
+  // Duplicate frame is actually two before the last in this bitstream.
+  scoped_refptr<VideoFrame> dupe_frame =
+      output_frames_[output_frames_.size() - 3];
+
+  EXPECT_EQ(26u, output_frames_.size());
+  EXPECT_EQ(last_frame->data(VideoFrame::kYPlane),
+            dupe_frame->data(VideoFrame::kYPlane));
+  EXPECT_EQ(last_frame->data(VideoFrame::kUPlane),
+            dupe_frame->data(VideoFrame::kUPlane));
+  EXPECT_EQ(last_frame->data(VideoFrame::kVPlane),
+            dupe_frame->data(VideoFrame::kVPlane));
 }
 
 }  // namespace media
