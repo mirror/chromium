@@ -58,9 +58,12 @@ class SigninHeaderHelperTest : public testing::Test {
     std::unique_ptr<net::URLRequest> url_request =
         url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                            TRAFFIC_ANNOTATION_FOR_TESTS);
-    AppendOrRemoveAccountConsistentyRequestHeader(
-        url_request.get(), GURL(), account_id, sync_enabled_,
-        sync_has_auth_error_, cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+    AppendOrRemoveMirrorRequestHeader(url_request.get(), GURL(), account_id,
+                                      is_native_signin_, cookie_settings_.get(),
+                                      PROFILE_MODE_DEFAULT);
+    AppendOrRemoveDiceRequestHeader(url_request.get(), GURL(), account_id,
+                                    sync_enabled_, sync_has_auth_error_,
+                                    cookie_settings_.get());
     return url_request;
   }
 
@@ -106,6 +109,7 @@ class SigninHeaderHelperTest : public testing::Test {
 
   bool sync_enabled_ = false;
   bool sync_has_auth_error_ = false;
+  bool is_native_signin_ = false;
 
   sync_preferences::TestingPrefServiceSyncable prefs_;
   net::TestURLRequestContext url_request_context_;
@@ -136,6 +140,17 @@ TEST_F(SigninHeaderHelperTest, TestNoMirrorRequestExternalURL) {
   ScopedAccountConsistencyMirror scoped_mirror;
   CheckMirrorHeaderRequest(GURL("https://foo.com"), "0123456789", "");
   CheckMirrorCookieRequest(GURL("https://foo.com"), "0123456789", "");
+}
+
+// Tests that no Mirror header is returned when the request comes from a native
+// webview (header requests only, cookie requests still go through).
+TEST_F(SigninHeaderHelperTest, TestNoMirrorRequestNativeSignin) {
+  ScopedAccountConsistencyMirror scoped_mirror;
+  is_native_signin_ = true;
+  CheckMirrorHeaderRequest(GURL("https://google.com"), "0123456789", "");
+  CheckMirrorCookieRequest(
+      GURL("https://google.com"), "0123456789",
+      "id=0123456789:mode=0:enable_account_consistency=true");
 }
 
 // Tests that the Mirror request is returned without the GAIA Id when the target
@@ -347,9 +362,9 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderEligibleRedirectURL) {
   std::unique_ptr<net::URLRequest> url_request =
       url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
-  AppendOrRemoveAccountConsistentyRequestHeader(
-      url_request.get(), redirect_url, account_id, sync_enabled_,
-      sync_has_auth_error_, cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+  AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
+                                    is_native_signin_, cookie_settings_.get(),
+                                    PROFILE_MODE_DEFAULT);
   EXPECT_TRUE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
 }
@@ -364,9 +379,9 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderNonEligibleRedirectURL) {
   std::unique_ptr<net::URLRequest> url_request =
       url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
-  AppendOrRemoveAccountConsistentyRequestHeader(
-      url_request.get(), redirect_url, account_id, sync_enabled_,
-      sync_has_auth_error_, cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+  AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
+                                    is_native_signin_, cookie_settings_.get(),
+                                    PROFILE_MODE_DEFAULT);
   EXPECT_FALSE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
 }
@@ -384,9 +399,9 @@ TEST_F(SigninHeaderHelperTest, TestIgnoreMirrorHeaderNonEligibleURLs) {
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
   url_request->SetExtraRequestHeaderByName(kChromeConnectedHeader, fake_header,
                                            false);
-  AppendOrRemoveAccountConsistentyRequestHeader(
-      url_request.get(), redirect_url, account_id, sync_enabled_,
-      sync_has_auth_error_, cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+  AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
+                                    is_native_signin_, cookie_settings_.get(),
+                                    PROFILE_MODE_DEFAULT);
   std::string header;
   EXPECT_TRUE(url_request->extra_request_headers().GetHeader(
       kChromeConnectedHeader, &header));

@@ -156,17 +156,26 @@ std::string BuildMirrorRequestCookieIfPossible(
     const content_settings::CookieSettings* cookie_settings,
     int profile_mode_mask);
 
-// Adds account consistency header to all Gaia requests from a connected
-// profile, with the exception of requests from gaia webview.
+// Adds mirror header to all Gaia requests from a connected profile, with the
+// exception of requests from native gaia webview.
 // Removes the header in case it should not be transfered to a redirected url.
-void AppendOrRemoveAccountConsistentyRequestHeader(
+void AppendOrRemoveMirrorRequestHeader(
+    net::URLRequest* request,
+    const GURL& redirect_url,
+    const std::string& account_id,
+    bool is_native_signin,
+    const content_settings::CookieSettings* cookie_settings,
+    int profile_mode_mask);
+
+// Adds Dice header to all Gaia requests from a connected profile.
+// Removes the header in case it should not be transfered to a redirected url.
+void AppendOrRemoveDiceRequestHeader(
     net::URLRequest* request,
     const GURL& redirect_url,
     const std::string& account_id,
     bool sync_enabled,
     bool sync_has_auth_error,
-    const content_settings::CookieSettings* cookie_settings,
-    int profile_mode_mask);
+    const content_settings::CookieSettings* cookie_settings);
 
 // Returns the parameters contained in the X-Chrome-Manage-Accounts response
 // header.
