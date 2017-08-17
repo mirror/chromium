@@ -1052,6 +1052,11 @@ void SourceBuffer::NotifyParseWarning(const ParseWarning warning) {
       UseCounter::Count(
           source_->MediaElement()->GetDocument(),
           WebFeature::kMediaSourceKeyframeTimeGreaterThanDependant);
+      LOG(INFO) << "MDW - SAP TYPE 2 DETECTED WHILE SourceBuffer.appendBuffer "
+                   "PARSING, document URL is "
+                << source_->MediaElement()->GetDocument().Url().GetString()
+                << " and element's currentTime is "
+                << source_->MediaElement()->currentTime();
       break;
     case WebSourceBufferClient::kMuxedSequenceMode:
       // Report this problematic API usage to help inform follow-up work.
