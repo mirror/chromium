@@ -83,8 +83,9 @@ class ComponentsTestSuite : public base::TestSuite {
     url::AddStandardScheme("chrome-search", url::SCHEME_WITHOUT_PORT);
 
     // Not using kExtensionScheme to avoid the dependency to extensions.
-    ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
+    ContentSettingsPattern::PutNonWildcardDomainNonPortScheme(
         "chrome-extension");
+    ContentSettingsPattern::PutNonWildcardDomainNonPortScheme("chrome-search");
   }
 
   void Shutdown() override {

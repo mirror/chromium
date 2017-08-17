@@ -8,6 +8,7 @@
 #define COMPONENTS_CONTENT_SETTINGS_CORE_COMMON_CONTENT_SETTINGS_PATTERN_H_
 
 #include <memory>
+#include <set>
 #include <string>
 
 #include "base/gtest_prod_util.h"
@@ -59,8 +60,9 @@ class ContentSettingsPattern {
     DISJOINT_ORDER_PRE = 2,
   };
 
-  // This enum is used to back an UMA histogram, the order of existing values
-  // should not be changed. New values should only append before SCHEME_MAX.
+  // This enum is used to back the UMA histogram ContentSettingScheme,
+  // the order of existing values should not be changed.
+  // New values should only be appended before SCHEME_MAX.
   // Also keep it consistent with kSchemeNames in content_settings_pattern.cc.
   enum SchemeType {
     SCHEME_WILDCARD,
@@ -69,6 +71,7 @@ class ContentSettingsPattern {
     SCHEME_HTTPS,
     SCHEME_FILE,
     SCHEME_CHROMEEXTENSION,
+    SCHEME_CHROMESEARCH,
     SCHEME_MAX,
   };
 
@@ -88,7 +91,7 @@ class ContentSettingsPattern {
     // - IPv4 or IPv6
     // - hostname
     // - domain
-    // - empty string if the |is_host_wildcard flag is set.
+    // - empty string if the |is_host_wildcard| flag is set.
     std::string host;
 
     // True if the domain wildcard is set.
@@ -172,13 +175,13 @@ class ContentSettingsPattern {
       const ContentSettingsPattern& domain_pattern,
       ContentSettingsPattern* origin_pattern);
 
-  // Sets the scheme that doesn't support domain wildcard and port.
+  // Puts a scheme that doesn't support domain wildcard and port.
   // Needs to be called by the embedder before using ContentSettingsPattern.
   // |scheme| can't be NULL, and the pointed string must remain alive until the
   // app terminates.
-  static void SetNonWildcardDomainNonPortScheme(const char* scheme);
+  static void PutNonWildcardDomainNonPortScheme(const char* scheme);
 
-  // Compares |scheme| against the scheme set by the embedder.
+  // Compares |scheme| against the schemes set by the embedder.
   static bool IsNonWildcardDomainNonPortScheme(const std::string& scheme);
 
   // Constructs an empty pattern. Empty patterns are invalid patterns. Invalid

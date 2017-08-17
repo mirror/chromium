@@ -598,8 +598,10 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
   nacl::RegisterPathProvider();
 #endif
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
+  ContentSettingsPattern::PutNonWildcardDomainNonPortScheme(
       extensions::kExtensionScheme);
+  ContentSettingsPattern::PutNonWildcardDomainNonPortScheme(
+      chrome::kChromeSearchScheme);
 
 // No support for ANDROID yet as DiagnosticsController needs wchar support.
 // TODO(gspencer): That's not true anymore, or at least there are no w-string

@@ -148,7 +148,7 @@ void IOSChromeMainParts::PreMainMessageLoopRun() {
 
   // ContentSettingsPattern need to be initialized before creating the
   // ChromeBrowserState.
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
+  ContentSettingsPattern::PutNonWildcardDomainNonPortScheme(
       kDummyExtensionScheme);
 
   // Ensure ClipboadRecentContentIOS is created.
