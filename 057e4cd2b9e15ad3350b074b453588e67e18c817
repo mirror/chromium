@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a2afd57_2c2c5602",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T01:12:04Z",
+      "side": 1,
+      "message": "Thanks for suggestion, then I\u0027ll use UMA_HISTOGRAM_TIMES.",
+      "parentUuid": "6d42748c_8710c64e",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 28
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26417b05_d2773c78",
         "filename": "chrome/browser/chromeos/fileapi/recent_download_source.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "92b99704_f74bcc01",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T01:12:04Z",
+      "side": 1,
+      "message": "Because it is referenced in the unit test. I can use friends instead, but anyway this name in not something we strive to hide from others.",
+      "parentUuid": "26417b05_d2773c78",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025a10fc_a4071925",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a665c7b_719f1d27",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T01:12:04Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "025a10fc_a4071925",
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f34c61_e17342cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23254,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T01:12:04Z",
+      "side": 1,
+      "message": "Added the triggering condition.",
+      "parentUuid": "5bd825d0_c6f3cc89",
+      "range": {
+        "startLine": 23254,
+        "startChar": 62,
+        "endLine": 23254,
+        "endChar": 0
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
