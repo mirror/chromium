@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33585a2e_a106b2ff",
+        "filename": "extensions/common/extension_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T19:09:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad8a3ee_14896dfc",
+      "range": {
+        "startLine": 139,
+        "startChar": 19,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2622fd34_38e7ecb2",
         "filename": "extensions/common/extension_builder.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T18:50:20Z",
       "side": 1,
       "message": "I think we should not allow this, if consumer is building manifest with the helpers then let them specify the stuffs to be merged using those helpers as well? i.e. you call MergeManifest only when in SetManifest mode.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82bd3de_fba0688a",
+        "filename": "extensions/common/extension_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T19:09:53Z",
+      "side": 1,
+      "message": "see other comment - I think this will be useful in the limit to prevent the need for dozens of helper methods.  I think the helper methods should only be for fairly common behaviors (actions, permissions, probably a few others), but not everything (e.g., current_locale_) - but it would be nice to still be able to use this builder for the rest, even if there are a couple of custom keys.",
+      "parentUuid": "2622fd34_38e7ecb2",
       "range": {
         "startLine": 145,
         "startChar": 0,
@@ -113,6 +161,24 @@
       "side": 1,
       "message": "\u003e But then the separate class also needs to implement the common methods - SetPath(), SetLocation(), MergeManifest(), AddFlags(), and SetID().  I suppose we can have ExtensionBuilderBase(), ExtensionBuilder(), and NewExtensionBuilder(), but I\u0027m really not sure that reduces any confusion.\nI was meaning the subclass to put non manifest stuff (location/flags/id) in base and not let MergeManifest available in both (see below).\n\u003e \n\u003e Is this really so bad?  There\u0027s just one method that can\u0027t be used with the new version (SetManifest()), and it\u0027s not uncommon to have methods that, which called under the wrong circumstance, don\u0027t operate well (e.g., at(0) on an empty array).\n\nat(0) is a runtime failure vs this issue here can be statically avoided, right?\n\u003e \n\u003e I\u0027m not entirely opposed to it, but I\u0027m not fully convinced that having 2 - 3 different ExtensionBuilder classes will be less confusing than this,\nAgree it\u0027s not less confusing. Hence, I\u0027m hoping for something better :)\n\n especially since I think there is a much greater likelihood of someone using the wrong builder class\n\nI think if we don\u0027t let DictionaryValue setters in one at all, then it\u0027s not possible to mix and match the two constructs.\nThis is based on my assumption that MergeManifest is not useful in the |manifest_data_| case (see more comment in ExtensionBuilder::MergeManifest). If it *really* is, then separating class probably isn\u0027t worthwhile.\n\n than of someone trying to use both semantic building and SetManifest().\n\u003e \n\u003e WDYT?",
       "parentUuid": "b35b7ede_45a7cd9c",
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283bbc0b_3cb6b715",
+        "filename": "extensions/common/extension_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T19:09:53Z",
+      "side": 1,
+      "message": "I think MergeManifest will always be useful.  I think it\u0027d be undesirable to try and add specific methods and fields to ManifestData for *each* possible manifest feature; instead, I\u0027d rather only add the common ones, and let tests add other features as-needed using MergeManifest().  There\u0027s even an example of this in the unittests with externally_connectable.\n\nWith that in mind, does it change your opinion?",
+      "parentUuid": "7a3c2128_8425fb93",
       "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
