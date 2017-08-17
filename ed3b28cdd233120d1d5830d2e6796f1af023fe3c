@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d2c2311_63e44e9a",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-17T16:35:54Z",
+      "side": 1,
+      "message": "nit: please put this into the if block below.",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "ed3b28cdd233120d1d5830d2e6796f1af023fe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf659745_138bf9f4",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 9
