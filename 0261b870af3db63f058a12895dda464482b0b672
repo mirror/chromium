@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e031a122_83ad17fa",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "MakeUnique",
+      "range": {
+        "startLine": 353,
+        "startChar": 35,
+        "endLine": 353,
+        "endChar": 38
+      },
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ef561e_4e9cf407",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "region is a mildly confusing name here. Maybe rects, or shape as that is what you use for the member (original_window_shape_).",
+      "range": {
+        "startLine": 383,
+        "startChar": 32,
+        "endLine": 383,
+        "endChar": 38
+      },
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d71f253c_cc2c0812",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 8
@@ -13,6 +59,70 @@
       "writtenOn": "2017-08-17T16:18:50Z",
       "side": 1,
       "message": "nit: if the rect becomes empty, we could clean it up here, since it doesn\u0027t contribute anything to the region. I\u0027m not too familiar with this code to know if that\u0027s common or necessary though.\n\nAlso, a comment or two would be nice to describe what this is doing (ie basically intersecting a region with the bounds), since it took me a bit of time to understand the intent here.",
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83349d7d_9a35f1fd",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "+1 to the comment request.",
+      "parentUuid": "d71f253c_cc2c0812",
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda35b24_f135b786",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 400,
+        "startChar": 2,
+        "endLine": 400,
+        "endChar": 31
+      },
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7bc91d_077e2bfa",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "Optional: rename this (and other similar typedefs) to RectArray. I think RectArray better describes what this is, but I\u0027m ok if you prefer this.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 18
+      },
       "revId": "0261b870af3db63f058a12895dda464482b0b672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +157,75 @@
       "writtenOn": "2017-08-17T16:18:50Z",
       "side": 1,
       "message": "nit: \u003d {rect1, rect2};",
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2d79b5_69583d1e",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "This should return a const ShapeRects*",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093b5a9f_9a606a39",
+        "filename": "ui/views/mus/desktop_window_tree_host_mus.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "Rename to shape or rects, same comment applies for all code that takes a ShapeRects.",
+      "range": {
+        "startLine": 87,
+        "startChar": 52,
+        "endLine": 87,
+        "endChar": 65
+      },
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d04bca_f581f7a7",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:53:18Z",
+      "side": 1,
+      "message": "I think we should prevent this from happening. That is, Widget::SetShape() should treat an empty array as no shapes. In fact WDYT of changing the API from std::unique_ptr\u003cvector\u003cRect\u003e\u003e to just vector\u003cRect\u003e and treating empty rect as no shape?",
+      "range": {
+        "startLine": 316,
+        "startChar": 4,
+        "endLine": 316,
+        "endChar": 26
+      },
       "revId": "0261b870af3db63f058a12895dda464482b0b672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
