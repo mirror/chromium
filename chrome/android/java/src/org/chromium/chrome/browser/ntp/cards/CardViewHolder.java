@@ -327,7 +327,6 @@ public abstract class CardViewHolder
             case ItemViewType.SITE_SECTION:
             case ItemViewType.HEADER:
             case ItemViewType.SPACING:
-            case ItemViewType.PROGRESS:
             case ItemViewType.FOOTER:
             case ItemViewType.ALL_DISMISSED:
             case ItemViewType.CAROUSEL:

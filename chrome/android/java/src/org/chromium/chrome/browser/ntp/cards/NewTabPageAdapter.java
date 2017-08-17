@@ -158,9 +158,6 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             case ItemViewType.STATUS:
                 return new StatusCardViewHolder(mRecyclerView, mContextMenuManager, mUiConfig);
 
-            case ItemViewType.PROGRESS:
-                return new ProgressViewHolder(mRecyclerView);
-
             case ItemViewType.ACTION:
                 return new ActionItem.ViewHolder(
                         mRecyclerView, mContextMenuManager, mUiDelegate, mUiConfig);

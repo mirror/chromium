@@ -18,7 +18,7 @@ import java.lang.annotation.RetentionPolicy;
  * @see Adapter#getItemViewType(int)
  */
 @IntDef({ItemViewType.ABOVE_THE_FOLD, ItemViewType.SITE_SECTION, ItemViewType.HEADER,
-        ItemViewType.SNIPPET, ItemViewType.SPACING, ItemViewType.STATUS, ItemViewType.PROGRESS,
+        ItemViewType.SNIPPET, ItemViewType.SPACING, ItemViewType.STATUS,
         ItemViewType.ACTION, ItemViewType.FOOTER, ItemViewType.PROMO, ItemViewType.ALL_DISMISSED,
         ItemViewType.CAROUSEL})
 @Retention(RetentionPolicy.SOURCE)
@@ -59,14 +59,10 @@ public @interface ItemViewType {
      * @see Adapter#getItemViewType(int)
      */
     int STATUS = 6;
+
+    // TODO(peconn): Decrement the numbers.
     /**
-     * View type for a {@link ProgressItem}, the progress indicator.
-     *
-     * @see Adapter#getItemViewType(int)
-     */
-    int PROGRESS = 7;
-    /**
-     * View type for a {@link ActionItem}, an action button.
+     * View type for a {@link ActionItem}, an action button which turns into a spinner when pressed.
      *
      * @see Adapter#getItemViewType(int)
      */

@@ -7,7 +7,7 @@
      bigger one related to the peeking behaviour. This card will only have
      buttons, that have themselves some padding. We just stay within the
      material specifications. -->
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:chrome="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -15,7 +15,6 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:background="@drawable/card_single">
-
 
     <!-- Using some standard metrics (minWidth, paddings) to override the
          special ones used in ButtonCompatBorderless -->
@@ -31,4 +30,10 @@
       android:textAllCaps="true"
       android:textColor="@color/light_active_color"
       style="@style/ButtonCompatBorderless" />
-</LinearLayout>
+
+    <org.chromium.chrome.browser.ntp.cards.ProgressIndicatorView
+      android:id="@+id/snippets_progress"
+      android:layout_marginTop="40dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+</FrameLayout>
