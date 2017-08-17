@@ -163,6 +163,30 @@
     },
     {
       "key": {
+        "uuid": "decc171c_c849d934",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T13:02:36Z",
+      "side": 1,
+      "message": "Maybe blocking_task_runner_ as these tasks are special in that they may block?",
+      "parentUuid": "ebf7c899_0a32c3d4",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e41d38f_9988b1ee",
         "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
         "patchSetId": 11
@@ -174,6 +198,30 @@
       "writtenOn": "2017-08-17T09:43:12Z",
       "side": 1,
       "message": "Re priority BACKGROUND:\n\nFrom task_traits.h:\n// User won\u0027t notice if this task takes an arbitrarily long time to complete.\nBACKGROUND\n\nIs that true?\nOtherwise, we could leave this at the default USER_VISIBLE priority,",
+      "range": {
+        "startLine": 40,
+        "startChar": 49,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a75220_dddd3137",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T13:02:36Z",
+      "side": 1,
+      "message": "In https://codereview.chromium.org/2828713002/ where we had a similar discussion, fdoray@ wrote:\nThe default priority (inherited) should be used most of the time. It allows code\nto be reused in multiple contexts. \n\nThe USER_BLOCKING and USER_VISIBLE priority should be set explicitly in code\nthat is explicitly responding to a user action or updating the UI. [...]\n\nThe BACKGROUND priority should be set explicitly when you know that you are\ndoing something that the user is not waiting on. E.g. Reporting metrics, writing\ndata on disk, downloading an update.\n\nAfter offline discussion, I\u0027d prefer not to use BACKGROUND and to go either with USER_VISIBLE or no explicitly specified priority.",
+      "parentUuid": "8e41d38f_9988b1ee",
       "range": {
         "startLine": 40,
         "startChar": 49,
