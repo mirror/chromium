@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77694bdc_d4f1e0df",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T17:51:42Z",
+      "side": 1,
+      "message": "Please move this DCHECK before calling RootEditableElementOf()",
+      "revId": "5d2bf8eabf3fed59c86576b2dff8b14645ce5ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f421d01_6bb54a73",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertIncrementalTextCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T17:51:42Z",
+      "side": 1,
+      "message": "Please either add a DHECK of clean layout or update layout before this line.",
+      "revId": "5d2bf8eabf3fed59c86576b2dff8b14645ce5ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a86ca20_6fc36212",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T17:51:42Z",
+      "side": 1,
+      "message": "Please either add a DHECK of clean layout or update layout before this line.",
+      "revId": "5d2bf8eabf3fed59c86576b2dff8b14645ce5ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
