@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "438ce28f_eaa41db0",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-17T07:44:58Z",
+      "side": 1,
+      "message": "I\u0027ve added one in the latest patch :)",
+      "parentUuid": "1d02fcd9_3710480d",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 72
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14484a14_177f7501",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Seems like we should just remove the return value then since it isn\u0027t actionable.",
       "parentUuid": "56806693_059e1e58",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b23bd6_f34197e0",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-17T07:44:58Z",
+      "side": 1,
+      "message": "Agree, but I\u0027d prefer doing it in a follow up patch that will be wholly dedicated to this mojo API change.",
+      "parentUuid": "0b9d5be7_47b38ce7",
       "range": {
         "startLine": 85,
         "startChar": 0,
