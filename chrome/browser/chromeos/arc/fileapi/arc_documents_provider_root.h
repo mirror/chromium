@@ -33,8 +33,17 @@ namespace arc {
 // for those operations will be never called.
 class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
  public:
+  struct FileInfo {
+    base::FilePath::StringType name;
+    std::string document_id;
+    bool is_directory;
+  };
+
   using GetFileInfoCallback = storage::AsyncFileUtil::GetFileInfoCallback;
   using ReadDirectoryCallback = storage::AsyncFileUtil::ReadDirectoryCallback;
+  using ReadDirectoryExtraCallback =
+      base::OnceCallback<void(base::File::Error error,
+                              std::vector<FileInfo> files)>;
   using ChangeType = storage::WatcherManager::ChangeType;
   // TODO(nya): Use OnceCallback/RepeatingCallback.
   using WatcherCallback = base::Callback<void(ChangeType type)>;
@@ -55,6 +64,11 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   // AsyncFileUtil.ReadDirectory().
   void ReadDirectory(const base::FilePath& path,
                      const ReadDirectoryCallback& callback);
+
+  // Similar to ReadDirectory(), but FileInfo are returned instead of
+  // DirectoryEntry.
+  void ReadDirectoryExtra(const base::FilePath& path,
+                          ReadDirectoryExtraCallback callback);
 
   // Installs a document watcher.
   //
@@ -169,6 +183,13 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
                                    const std::string& document_id);
   void ReadDirectoryWithNameToThinDocumentMap(
       const ReadDirectoryCallback& callback,
+      base::File::Error error,
+      NameToThinDocumentMap mapping);
+
+  void ReadDirectoryExtraWithDocumentId(ReadDirectoryExtraCallback callback,
+                                        const std::string& document_id);
+  void ReadDirectoryExtraWithNameToThinDocumentMap(
+      ReadDirectoryExtraCallback callback,
       base::File::Error error,
       NameToThinDocumentMap mapping);
 

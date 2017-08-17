@@ -51,6 +51,9 @@ class RecentModel : public KeyedService {
   // cached for better performance.
   void GetRecentFiles(RecentContext context, GetRecentFilesCallback callback);
 
+  // KeyedService overrides:
+  void Shutdown() override;
+
  private:
   friend class RecentModelFactory;
 
@@ -61,7 +64,7 @@ class RecentModel : public KeyedService {
   void OnGetRecentFilesCompleted();
   void ClearCache();
 
-  const std::vector<std::unique_ptr<RecentSource>> sources_;
+  std::vector<std::unique_ptr<RecentSource>> sources_;
 
   // Cached RecentFileList.
   base::Optional<RecentFileList> cached_files_ = base::nullopt;
