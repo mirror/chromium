@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f4ffc91a_83b58fa2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4268,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-17T15:12:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "031ab013_64287622",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4790798_08e23c26",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 14
@@ -264,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "187f0c52_50735448",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7329,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-17T15:12:15Z",
+      "side": 1,
+      "message": "Ack, the added coverage here is great - thanks!",
+      "parentUuid": "e4969578_f6d99e6f",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a776c229_24d78f88",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 14
@@ -299,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "d33b2e6f_e3b9ed5a",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-17T15:12:15Z",
+      "side": 1,
+      "message": "So, looking closer, when an interstitial is active, GetRenderWidgetHostView() returns the RWHV of the interstitial in https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager.cc?sq\u003dpackage:chromium\u0026l\u003d136.  I don\u0027t think we can have OOPIFs on interstitials today, but the problem is that SetVisibilityForChildViews(true) would affect OOPIFs on the real page under the interstitial.  E.g., with a SafeBrowsing interstitial triggered by a subframe load, I think the main frame and other subframes stay active under the warning, and then this will change visibility for just the OOPIFs (but not the main frame), which seems weird.  So I\u0027d exclude line 1508.\n\nYou have a good point that if the user clicks through the warning, the OOPIFs will need to have correct visibility, but I guess this should be handled at clickthrough time, along with the main frame\u0027s visibility, for consistency.  I have no idea whether we do this correctly today :), but in any case we could explore this in a followup.",
+      "parentUuid": "329be050_fa79cf9d",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e722ab_bf79bf63",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 14
@@ -328,6 +382,24 @@
       "side": 1,
       "message": "I like the idea. It should be easier to follow this way.\n\nNow that being said (and done), the only usages of ForEachImmediateLocalRoot will be in RenderFrameHostImpl and the test I added now to verify its correctness. I am wondering if the method should stay public. For a while (until addressing 754726) it can serve as a placeholder for traversing the RWHV tree. On the other hand we have not introduced any usage for it yet except for the visibility. WDYT? (also if we make the method private we might as well drop the unit-test-like browser test for it).",
       "parentUuid": "23e722ab_bf79bf63",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c593512c_44586b44",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5988,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-17T15:12:15Z",
+      "side": 1,
+      "message": "Given that there\u0027s no public usage, and that we want to revisit it/remove it from RFHI anyway, perhaps we can keep it private and expose it publicly only if/when needed in the future?  I would keep the test you already have though, which is awesome and can be adapted to whatever API we later have for RWHV traversal.  We can still expose ForEachImmediateLocalRoot to the test with FRIEND_TEST_ALL_PREFIXES.",
+      "parentUuid": "5151271c_ace9e653",
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
