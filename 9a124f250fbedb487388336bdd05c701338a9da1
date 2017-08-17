@@ -46,6 +46,30 @@
       "revId": "9a124f250fbedb487388336bdd05c701338a9da1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507a95ff_1c8b11ae",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T04:01:21Z",
+      "side": 1,
+      "message": "Fine with fixing it there. :)",
+      "parentUuid": "3919f30d_fdb40027",
+      "range": {
+        "startLine": 599,
+        "startChar": 20,
+        "endLine": 599,
+        "endChar": 0
+      },
+      "revId": "9a124f250fbedb487388336bdd05c701338a9da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
