@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "61832b99_27bc2c17",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T20:55:13Z",
+      "side": 1,
+      "message": "Is it good if that\u0027s a separate CL? There are multiple ways to do it- just a constant bitmask, or have a new virtual method in ManagementPolicy::Provider -\u003e int GetDisableReasonsChecked(), which seems better to me.",
+      "parentUuid": "fc535726_903a49af",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b20448fc_666bcaa3",
         "filename": "chrome/browser/extensions/extension_util.cc",
         "patchSetId": 7
