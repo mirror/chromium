@@ -45,6 +45,8 @@
 #include "ui/views/shadow_border.h"
 #include "ui/views/widget/widget.h"
 
+#include "ui/compositor/scoped_layer_animation_settings.h"
+
 using wallpaper::ColorProfileType;
 
 namespace app_list {
@@ -77,6 +79,15 @@ constexpr float kOpacityEndFraction = 0.6f;
 // Color of placeholder text in zero query state.
 constexpr SkColor kZeroQuerySearchboxColor =
     SkColorSetARGBMacro(0x8A, 0x00, 0x00, 0x00);
+
+void DoCloseAnimation(base::TimeDelta duration, ui::Layer* layer) {
+  ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
+  animation.SetTransitionDuration(duration);
+  animation.SetTweenType(gfx::Tween::EASE_OUT);
+  animation.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  layer->SetOpacity(0.0f);
+}
 
 }  // namespace
 
@@ -674,6 +685,19 @@ bool SearchBoxView::IsArrowKey(const ui::KeyEvent& event) {
   return event.key_code() == ui::VKEY_UP || event.key_code() == ui::VKEY_DOWN ||
          event.key_code() == ui::VKEY_LEFT ||
          event.key_code() == ui::VKEY_RIGHT;
+}
+
+ui::Layer* SearchBoxView::GetSearchResultsPageViewLayer() {
+  ContentsView* contents_view = static_cast<ContentsView*>(contents_view_);
+  return contents_view->search_results_page_view()->layer();
+}
+
+void SearchBoxView::FadeOutOnClose(base::TimeDelta duration) {
+  DCHECK(is_fullscreen_app_list_enabled_);
+  DoCloseAnimation(duration, this->layer());
+  ContentsView* contents_view = static_cast<ContentsView*>(contents_view_);
+  DoCloseAnimation(duration,
+                   contents_view->search_results_page_view()->layer());
 }
 
 void SearchBoxView::UpdateModel() {

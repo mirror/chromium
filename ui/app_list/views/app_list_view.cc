@@ -666,12 +666,6 @@ display::Display AppListView::GetDisplayNearestView() const {
   return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
 }
 
-AppsGridView* AppListView::GetAppsGridView() const {
-  return app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view();
-}
-
 void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
                                            views::Widget* widget) const {
   if (!params->native_widget) {
@@ -978,6 +972,7 @@ void AppListView::StartAnimationForState(AppListState target_state) {
       target_state_y = display_height - kHalfAppListHeight;
       break;
     case CLOSED:
+      // The close animation is handled by the delegate.
       return;
     default:
       break;
@@ -999,6 +994,20 @@ void AppListView::StartAnimationForState(AppListState target_state) {
   animator->StopAnimating();
   animator->ScheduleAnimation(
       new ui::LayerAnimationSequence(std::move(bounds_animation_element)));
+}
+
+void AppListView::StartCloseAnimation(base::TimeDelta animation_duration) {
+  DCHECK(is_fullscreen_app_list_enabled_);
+  if (is_side_shelf_ || !is_fullscreen_app_list_enabled_)
+    return;
+
+  search_box_view()->FadeOutOnClose(animation_duration);
+  if (app_list_state_ == PEEKING) {
+    app_list_main_view()->contents_view()->start_page_view()->FadeOutOnClose(
+        animation_duration);
+  } else {
+    GetAppsGridView()->FadeOutOnClose(animation_duration);
+  }
 }
 
 void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
@@ -1049,6 +1058,12 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
 
 PaginationModel* AppListView::GetAppsPaginationModel() const {
   return GetAppsGridView()->pagination_model();
+}
+
+AppsGridView* AppListView::GetAppsGridView() const {
+  return app_list_main_view_->contents_view()
+      ->apps_container_view()
+      ->apps_grid_view();
 }
 
 void AppListView::OnSpeechRecognitionStateChanged(
