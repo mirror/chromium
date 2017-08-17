@@ -94,6 +94,30 @@
       "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6725dd97_71e40866",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-17T03:15:43Z",
+      "side": 1,
+      "message": "Currently SWProviderHost mojo connections for client context and sw context are bound on different IPC channels.\n  For client context: bound on legacy IPC channel.\n  For sw context:     bound on EmbeddedWorkerInstanceClientImpl mojo pipe, which is different with legacy IPC channel.\n\nSo for the case of client-navigate.https.html, frame.remove() causes SWNetworkProvider destruction synchronously, this leads to SWProviderHost mojo connection broken causing content::SWProviderHost destruction in browser side, the broken behavior is just like a broken notification IPC message sent to browser via the bound IPC channel, and because SWRegistration.unregister also sends UnRegister IPC via the same IPC channel, so the ordering is guaranteed and all the tests were running well before this CL.\nBut with ps#1, seems frame.remove() does not destruct SWProviderContext synchronously, so it fails for so many tests.",
+      "parentUuid": "2dbea884_aff25f8f",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
