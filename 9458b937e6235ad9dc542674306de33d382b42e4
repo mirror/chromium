@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05838f25_5271b077",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-17T13:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "796cd069_f6ddcf5c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7709be68_45e04877",
         "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ac7a6f_221e77b6",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-17T13:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7709be68_45e04877",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eaa16951_6efd713a",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-17T13:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d872ca_6a65ff04",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc666d84_334376a5",
         "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-17T13:29:41Z",
       "side": 1,
       "message": "for text color and size please use predefined styles from https://cs.chromium.org/chromium/src/ui/android/java/res/values-v17/styles.xml either through style\u003d\"\" or android:textAttributes\u003d\"\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ed93ec_5a18a1c0",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-17T13:56:09Z",
+      "side": 1,
+      "message": "but what should I do, when required values are not there?",
+      "parentUuid": "cc666d84_334376a5",
       "range": {
         "startLine": 15,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ae594089_c4449bcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-17T13:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9c0ca0_c35854ed",
+      "range": {
+        "startLine": 339,
+        "startChar": 34,
+        "endLine": 339,
+        "endChar": 42
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b58597_db539e95",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b87a51a_bd19e46d",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-17T13:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b58597_db539e95",
+      "range": {
+        "startLine": 432,
+        "startChar": 13,
+        "endLine": 432,
+        "endChar": 16
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
