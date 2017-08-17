@@ -34,6 +34,24 @@
       "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f260181b_6cbcf23f",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-17T20:13:35Z",
+      "side": 1,
+      "message": "That\u0027s right , PopupBlockerTabHelper::Observer seems to be getting notified when a pop up is actually blocked ?\nAre we planning to fix this in this CL or a future CL?",
+      "parentUuid": "1e98030f_5d7ed554",
+      "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
