@@ -282,6 +282,30 @@
       "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3625261_1ceb3658",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-17T21:23:26Z",
+      "side": 1,
+      "message": "Having a pointer sounds fine to me as it looks like it\u0027s necessary.",
+      "parentUuid": "d36828a2_6541dece",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 50
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

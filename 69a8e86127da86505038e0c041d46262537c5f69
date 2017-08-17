@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "292be477_281e4f27",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-17T21:23:26Z",
+      "side": 1,
+      "message": "Nit: Make this const.",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "69a8e86127da86505038e0c041d46262537c5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a59401_9bf77bad",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-17T21:23:26Z",
+      "side": 1,
+      "message": "Nit: Remove linebreak between the delegate declaration and the if statement.",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 6
+      },
+      "revId": "69a8e86127da86505038e0c041d46262537c5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
