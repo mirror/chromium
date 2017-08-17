@@ -641,8 +641,6 @@ void LocalFrameClientImpl::LoadURLExternally(
   DCHECK_NE(policy, NavigationPolicy::kNavigationPolicyDownload);
   if (!web_frame_->Client())
     return;
-  DCHECK(web_frame_->GetFrame()->GetDocument());
-  Fullscreen::FullyExitFullscreen(*web_frame_->GetFrame()->GetDocument());
   web_frame_->Client()->LoadURLExternally(
       WrappedResourceRequest(request), static_cast<WebNavigationPolicy>(policy),
       triggering_event_info, should_replace_current_entry);

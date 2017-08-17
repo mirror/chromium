@@ -2381,6 +2381,13 @@ void WebContentsImpl::CreateNewWindow(
   if (params.opener_suppressed) {
     // When the opener is suppressed, the original renderer cannot access the
     // new window.  As a result, we need to show and navigate the window here.
+
+    if ((params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
+         params.disposition == WindowOpenDisposition::NEW_POPUP ||
+         params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
+        IsFullscreenForCurrentTab())
+      ExitFullscreen(true);
+
     bool was_blocked = false;
     if (delegate_) {
       gfx::Rect initial_rect;
@@ -2478,6 +2485,12 @@ void WebContentsImpl::ShowCreatedWindow(int process_id,
   WebContentsImpl* popup =
       GetCreatedWindow(process_id, main_frame_widget_route_id);
   if (popup) {
+    if ((disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
+         disposition == WindowOpenDisposition::NEW_POPUP ||
+         disposition == WindowOpenDisposition::NEW_WINDOW) &&
+        IsFullscreenForCurrentTab())
+      ExitFullscreen(true);
+
     WebContentsDelegate* delegate = GetDelegate();
     popup->is_resume_pending_ = true;
     if (!delegate || delegate->ShouldResumeRequestsForCreatedWindow())
