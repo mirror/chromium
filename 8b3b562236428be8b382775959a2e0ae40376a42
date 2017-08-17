@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae5cb118_4005ca2a",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "Done. Even DISABLE_UPDATE_REQUIRED_BY_POLICY is set via ManagementPolicy::MustRemainDisabled, which returns a single disable reason at a time and I wasn\u0027t able to find a code-path which causes both the disable reasons to be added to preferences. \n\nAlso, actually the code is still not fully correct. Even if the extension which was disabled due to UserMayLoad were to pass UserMayLoad check and fail MustRemainDisabled, the disable reason will still remain DISABLE_BLOCKED_BY_POLICY. (Not sure if that can cause any tangible difference).\n\nI think it might be useful to have a bitmask kManagementPolicyDisableReasonsMask corresponding to all the disable reasons of management policy providers. Then whenever the extension passes MustRemainDisabled, we can clear out all these disable reasons. Hence we won\u0027t need to specially check minimum version here. WDYT?",
+      "parentUuid": "3b28e6fd_ef7eb09c",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b20448fc_666bcaa3",
         "filename": "chrome/browser/extensions/extension_util.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4759402_0eca700c",
+        "filename": "chrome/browser/extensions/extension_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20448fc_666bcaa3",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5b13a6ef_9cdd900d",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3da0a303_cf89829d",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d04b575_78f9c004",
         "filename": "chrome/browser/extensions/installed_loader.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "20c0378f_3cc3a8d8",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d04b575_78f9c004",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5975a2dc_d46ce668",
         "filename": "chrome/browser/extensions/installed_loader.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-16T23:37:19Z",
       "side": 1,
       "message": "Why do we no longer set |error|?",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5184e7_baa3c9ca",
+        "filename": "chrome/browser/extensions/installed_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "The earlier code only set |error| when we didn\u0027t register the extension with the ExtensionService. Now installed extensions which fail the UserMayLoad check will still be registered with the ExtensionService but in a disabled state, hence we no don\u0027t need to set error. (I am not sure if any code relies on load error notification for extensions which specifically fail the UserMayLoad check).",
+      "parentUuid": "5975a2dc_d46ce668",
       "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "73b73d57_19e94fe8",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e62889a3_ec130046",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c91a181_3fa0132f",
         "filename": "extensions/browser/management_policy.h",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddda9907_0744c240",
+        "filename": "extensions/browser/management_policy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-17T04:20:57Z",
+      "side": 1,
+      "message": "Done. Thanks for catching.",
+      "parentUuid": "6c91a181_3fa0132f",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
