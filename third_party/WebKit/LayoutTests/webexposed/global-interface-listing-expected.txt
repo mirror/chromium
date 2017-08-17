@@ -6794,6 +6794,7 @@ interface TaskAttributionTiming : PerformanceEntry
     getter containerName
     getter containerSrc
     getter containerType
+    getter scriptURL
     method constructor
 interface Text : CharacterData
     attribute @@toStringTag
