@@ -2217,17 +2217,7 @@ WebMediaPlayer::Preload HTMLMediaElement::PreloadType() const {
     return WebMediaPlayer::kPreloadAuto;
   }
 
-  // "The attribute's missing value default is user-agent defined, though the
-  // Metadata state is suggested as a compromise between reducing server load
-  // and providing an optimal user experience."
-
-  // The spec does not define an invalid value default:
-  // https://www.w3.org/Bugs/Public/show_bug.cgi?id=28950
-
-  // TODO(foolip): Try to make "metadata" the default preload state:
-  // https://crbug.com/310450
-  UseCounter::Count(GetDocument(), WebFeature::kHTMLMediaElementPreloadDefault);
-  return WebMediaPlayer::kPreloadAuto;
+  return DefaultPreloadType();
 }
 
 String HTMLMediaElement::EffectivePreload() const {

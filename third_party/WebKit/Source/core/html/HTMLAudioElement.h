@@ -42,6 +42,9 @@ class CORE_EXPORT HTMLAudioElement final : public HTMLMediaElement {
   static HTMLAudioElement* CreateForJSConstructor(Document&,
                                                   const AtomicString& src);
 
+  // HTMLMediaElement:
+  WebMediaPlayer::Preload DefaultPreloadType() const override;
+
   bool IsHTMLAudioElement() const override { return true; }
 
   // WebMediaPlayerClient implementation.
