@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 class Browser;
+@protocol BrowserCoordinatorObserver;
 
 // An object that manages a UI component via a view controller.
 // This is the public interface to this class; subclasses should also import
@@ -49,6 +50,10 @@ class Browser;
 // Stopping a non-started or stopped coordinator is a no-op in this
 // implementation.
 - (void)stop NS_REQUIRES_SUPER;
+
+// Adds and removes BrowserCoordinatorObservers for this coordinator.
+- (void)addObserver:(id<BrowserCoordinatorObserver>)observer;
+- (void)removeObserver:(id<BrowserCoordinatorObserver>)observer;
 
 @end
 
