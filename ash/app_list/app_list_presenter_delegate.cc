@@ -172,16 +172,22 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
     aura::Window* root_window) {
   DCHECK(Shell::HasInstance());
 
+  Shelf* shelf = Shelf::ForWindow(root_window);
+
   // App list needs to know the new shelf layout in order to calculate its
   // UI layout when AppListView visibility changes.
   if (is_fullscreen_app_list_enabled_) {
+    int target_y = display::Screen::GetScreen()
+                       ->GetDisplayNearestWindow(root_window)
+                       .bounds()
+                       .bottom() -
+                   shelf->GetIdealBounds().height();
+    int current_widget_position = view_->GetBoundsInScreen().y();
     return gfx::Vector2d(
-        0, IsSideShelf(root_window) ? 0 : kAnimationOffsetFullscreen);
+        0, IsSideShelf(root_window) ? 0 : target_y - current_widget_position);
   }
 
-  Shelf* shelf = Shelf::ForWindow(root_window);
   shelf->UpdateAutoHideState();
-
   switch (shelf->alignment()) {
     case SHELF_ALIGNMENT_BOTTOM:
     case SHELF_ALIGNMENT_BOTTOM_LOCKED:
