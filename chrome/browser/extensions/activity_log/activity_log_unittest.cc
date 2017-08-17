@@ -94,14 +94,6 @@ class ActivityLogTest : public ChromeRenderViewHostTestHarness {
     ASSERT_EQ(2, static_cast<int>(i->size()));
   }
 
-  void SetPolicy(bool log_arguments) {
-    ActivityLog* activity_log = ActivityLog::GetInstance(profile());
-    if (log_arguments)
-      activity_log->SetDatabasePolicy(ActivityLogPolicy::POLICY_FULLSTREAM);
-    else
-      activity_log->SetDatabasePolicy(ActivityLogPolicy::POLICY_COUNTS);
-  }
-
   bool GetDatabaseEnabled() {
     ActivityLog* activity_log = ActivityLog::GetInstance(profile());
     return activity_log->IsDatabaseEnabled();
