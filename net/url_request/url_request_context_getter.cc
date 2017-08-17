@@ -10,6 +10,8 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter_observer.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace net {
 
 void URLRequestContextGetter::AddObserver(
@@ -24,9 +26,13 @@ void URLRequestContextGetter::RemoveObserver(
   observer_list_.RemoveObserver(observer);
 }
 
-URLRequestContextGetter::URLRequestContextGetter() {}
+URLRequestContextGetter::URLRequestContextGetter() {
+  LOG(ERROR) << "Creating URLRequestContextGetter from:" << base::debug::StackTrace().ToString();
+}
 
-URLRequestContextGetter::~URLRequestContextGetter() {}
+URLRequestContextGetter::~URLRequestContextGetter() {
+  LOG(ERROR) << "Destroying URLRequestContextGetter from:" << base::debug::StackTrace().ToString();
+}
 
 void URLRequestContextGetter::OnDestruct() const {
   scoped_refptr<base::SingleThreadTaskRunner> network_task_runner =

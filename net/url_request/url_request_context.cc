@@ -26,6 +26,8 @@
 #include "net/url_request/http_user_agent_settings.h"
 #include "net/url_request/url_request.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace net {
 
 URLRequestContext::URLRequestContext()
@@ -54,12 +56,14 @@ URLRequestContext::URLRequestContext()
       check_cleartext_permitted_(false),
       name_(nullptr),
       largest_outstanding_requests_count_seen_(0) {
+  LOG(ERROR) << "Creating URLRequestContext from:" << base::debug::StackTrace().ToString();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "URLRequestContext", base::ThreadTaskRunnerHandle::Get());
 }
 
 URLRequestContext::~URLRequestContext() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  LOG(ERROR) << "Deleting URLRequestContext from:" << base::debug::StackTrace().ToString();
   AssertNoURLRequests();
   base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
       this);

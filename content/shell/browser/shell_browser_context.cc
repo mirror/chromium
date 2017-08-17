@@ -24,6 +24,8 @@
 #include "content/shell/common/shell_switches.h"
 #include "content/test/mock_background_sync_controller.h"
 
+#include "base/debug/stack_trace.h"
+
 #if defined(OS_WIN)
 #include "base/base_paths_win.h"
 #elif defined(OS_LINUX)
@@ -61,11 +63,14 @@ ShellBrowserContext::ShellBrowserContext(bool off_the_record,
       net_log_(net_log),
       guest_manager_(NULL) {
   InitWhileIOAllowed();
+  base::debug::StackTrace bt;
+  LOG(ERROR) << "Creating ShellBrowserContext from:" << bt.ToString();
   BrowserContextDependencyManager::GetInstance()->
       CreateBrowserContextServices(this);
 }
 
 ShellBrowserContext::~ShellBrowserContext() {
+  base::debug::StackTrace bt;
   BrowserContextDependencyManager::GetInstance()->
       DestroyBrowserContextServices(this);
   // Need to destruct the ResourceContext before posting tasks which may delete
@@ -77,6 +82,12 @@ ShellBrowserContext::~ShellBrowserContext() {
       BrowserThread::IO, FROM_HERE, resource_context_.release());
   }
   ShutdownStoragePartitions();
+  if (url_request_getter_) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ShellURLRequestContextGetter::NotifyContextShuttingDown,
+                       url_request_getter_));
+  }
 }
 
 void ShellBrowserContext::InitWhileIOAllowed() {

@@ -80,6 +80,8 @@
 #include "chrome/browser/offline_pages/offline_page_request_interceptor.h"
 #endif
 
+#include "base/debug/stack_trace.h"
+
 namespace {
 
 // Returns the BackendType that the disk cache should use.
@@ -408,9 +410,11 @@ ProfileImplIOData::ProfileImplIOData()
       domain_reliability_monitor_(nullptr),
       app_cache_max_size_(0),
       app_media_cache_max_size_(0) {
+  LOG(ERROR) << "Creating ProfileImplIOData from:" << base::debug::StackTrace().ToString();
 }
 
 ProfileImplIOData::~ProfileImplIOData() {
+  LOG(ERROR) << "Deleting ProfileImplIOData from:" << base::debug::StackTrace().ToString();
   if (domain_reliability_monitor_)
     domain_reliability_monitor_->Shutdown();
 

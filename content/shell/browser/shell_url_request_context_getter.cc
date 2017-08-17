@@ -39,6 +39,8 @@
 #include "net/url_request/url_request_context_builder.h"
 #include "url/url_constants.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace content {
 
 namespace {
@@ -70,12 +72,14 @@ ShellURLRequestContextGetter::ShellURLRequestContextGetter(
     net::NetLog* net_log)
     : ignore_certificate_errors_(ignore_certificate_errors),
       off_the_record_(off_the_record),
+      shut_down_(false),
       base_path_(base_path),
       io_task_runner_(std::move(io_task_runner)),
       net_log_(net_log),
       request_interceptors_(std::move(request_interceptors)) {
   // Must first be created on the UI thread.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "Creating ShellURLRequestContextGetter from:" << base::debug::StackTrace().ToString();
 
   std::swap(protocol_handlers_, *protocol_handlers);
 
@@ -86,6 +90,14 @@ ShellURLRequestContextGetter::ShellURLRequestContextGetter(
 }
 
 ShellURLRequestContextGetter::~ShellURLRequestContextGetter() {
+  LOG(ERROR) << "Deleting ShellURLRequestContextGetter from:" << base::debug::StackTrace().ToString();
+}
+
+void ShellURLRequestContextGetter::NotifyContextShuttingDown() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  shut_down_ = true;
+  url_request_context_ = nullptr;
+  URLRequestContextGetter::NotifyContextShuttingDown();
 }
 
 std::unique_ptr<net::NetworkDelegate>
@@ -112,7 +124,7 @@ ShellURLRequestContextGetter::GetProxyService() {
 net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (!url_request_context_) {
+  if (!url_request_context_ && !shut_down_) {
     const base::CommandLine& command_line =
         *base::CommandLine::ForCurrentProcess();
 
