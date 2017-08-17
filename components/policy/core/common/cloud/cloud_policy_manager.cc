@@ -11,6 +11,8 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/cloud/cloud_policy_service.h"
 #include "components/policy/core/common/policy_bundle.h"
@@ -31,11 +33,11 @@ CloudPolicyManager::CloudPolicyManager(
     const std::string& settings_entity_id,
     CloudPolicyStore* cloud_policy_store,
     const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-    const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner)
     : core_(policy_type, settings_entity_id, cloud_policy_store, task_runner),
       waiting_for_policy_refresh_(false),
-      file_task_runner_(file_task_runner),
+      blocking_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock()})),
       io_task_runner_(io_task_runner) {}
 
 CloudPolicyManager::~CloudPolicyManager() {}
@@ -135,14 +137,11 @@ void CloudPolicyManager::CreateComponentCloudPolicyService(
     return;
   }
 
-  // TODO(joaodasilva): Move the |file_task_runner_| to the blocking pool.
-  // Currently it's not possible because the ComponentCloudPolicyStore is
-  // NonThreadSafe and doesn't support getting calls from different threads.
   std::unique_ptr<ResourceCache> resource_cache(
-      new ResourceCache(policy_cache_path, file_task_runner_));
+      new ResourceCache(policy_cache_path, blocking_task_runner_));
   component_policy_service_.reset(new ComponentCloudPolicyService(
       policy_type, this, schema_registry, core(), client,
-      std::move(resource_cache), request_context, file_task_runner_,
+      std::move(resource_cache), request_context, blocking_task_runner_,
       io_task_runner_));
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 }
