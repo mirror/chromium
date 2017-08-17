@@ -244,6 +244,25 @@ void ArcFileSystemOperationRunner::GetRecentDocuments(
   file_system_instance->GetRecentDocuments(authority, root_id, callback);
 }
 
+void ArcFileSystemOperationRunner::GetRoots(
+    const GetRootsCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (should_defer_) {
+    deferred_operations_.emplace_back(base::Bind(
+        &ArcFileSystemOperationRunner::GetRoots,
+        weak_ptr_factory_.GetWeakPtr(), callback));
+    return;
+  }
+  auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service_->file_system(), GetRoots);
+  if (!file_system_instance) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(callback, base::nullopt));
+    return;
+  }
+  file_system_instance->GetRoots(callback);
+}
+
 void ArcFileSystemOperationRunner::AddWatcher(
     const std::string& authority,
     const std::string& document_id,

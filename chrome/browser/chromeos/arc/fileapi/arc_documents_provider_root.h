@@ -44,7 +44,12 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
 
   ArcDocumentsProviderRoot(ArcFileSystemOperationRunner* runner,
                            const std::string& authority,
-                           const std::string& root_document_id);
+                           const std::string& root_document_id,
+                           const std::string& id,
+                           const std::string& title,
+                           const std::string& summary,
+                           const std::string& icon,
+                           int64_t flags);
   ~ArcDocumentsProviderRoot() override;
 
   // Queries information of a file just like AsyncFileUtil.GetFileInfo().
@@ -219,8 +224,44 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   // BrowserContextKeyedServiceFactory dependency graph.
   ArcFileSystemOperationRunner* const runner_;
 
-  const std::string authority_;
-  const std::string root_document_id_;
+  // Returns if this root supports CreateFile operation.
+  inline bool SupportsCreate() const {
+    return (flags_ & arc::mojom::Root::kSupportsCreate) != 0;
+  }
+
+  // Returns if this root does not depends on external networks.
+  inline bool IsLocalOnly() const {
+    return (flags_ & arc::mojom::Root::kLocalOnly) != 0;
+  }
+
+  // Returns if this root can be queried to provide recently modified
+  // documents.
+  inline bool IsSupportsRecents() const {
+    return (flags_ & arc::mojom::Root::kSupportsRecents) != 0;
+  }
+
+  // Returns if this root supports search.
+  inline bool IsSupportsSearch() const {
+    return (flags_ & arc::mojom::Root::kSupportsSearch) != 0;
+  }
+
+  // Returns if this root supports testing parent child relationships.
+  inline bool SupportsIsChild() const {
+    return (flags_ & arc::mojom::Root::kSupportsIsChild) != 0;
+  }
+
+  // Returns if this root can be ejected.
+  inline bool SupportsEject() const {
+    return (flags_ & arc::mojom::Root::kSupportsEject) != 0;
+  }
+
+  std::string authority_;
+  std::string root_document_id_;
+  std::string id_;
+  std::string title_;
+  std::string summary_;
+  std::string icon_;
+  int64_t flags_;
 
   // Map from a file path to a watcher data.
   //

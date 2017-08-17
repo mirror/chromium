@@ -45,17 +45,25 @@ ArcDocumentsProviderRootMap::GetForArcBrowserContext() {
   return GetForBrowserContext(ArcServiceManager::Get()->browser_context());
 }
 
-ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
+ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile)
+  : profile_(profile) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(IsArcAllowedForProfile(profile));  // Already checked in the factory.
+  DCHECK(IsArcAllowedForProfile(profile_));  // Already checked in the factory.
 
   ArcFileSystemOperationRunner* runner =
       ArcFileSystemOperationRunner::GetForBrowserContext(profile);
 
+  // TODO(ryoh): remove this loop after connecting to Android.
   for (auto spec : kDocumentsProviderWhitelist) {
     map_[Key(spec.authority, spec.root_document_id)] =
-        base::MakeUnique<ArcDocumentsProviderRoot>(runner, spec.authority,
-                                                   spec.root_document_id);
+        base::MakeUnique<ArcDocumentsProviderRoot>(runner,
+                                                   spec.authority,
+                                                   spec.root_document_id,
+                                                   "",
+                                                   "",
+                                                   "",
+                                                   "",
+                                                   0);
   }
 }
 
@@ -87,6 +95,55 @@ void ArcDocumentsProviderRootMap::Shutdown() {
   // ArcDocumentsProviderRoot has a reference to another KeyedService
   // (ArcFileSystemOperationRunner), so we need to destruct them on shutdown.
   map_.clear();
+}
+
+void ArcDocumentsProviderRootMap::Refresh(
+    const ArcDocumentsProviderRootMap::RefreshCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  ArcFileSystemOperationRunner* runner =
+      ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
+  runner->GetRoots(base::Bind(
+    &ArcDocumentsProviderRootMap::RefreshInternal_,
+    base::Unretained(this),
+    callback));
+}
+
+void ArcDocumentsProviderRootMap::RefreshInternal_(
+  const ArcDocumentsProviderRootMap::RefreshCallback& callback,
+  base::Optional<std::vector<mojom::RootPtr>> rootsFromMojo) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!rootsFromMojo.has_value()) {
+    callback.Run(base::Optional<std::vector<ArcDocumentsProviderRoot*>>());
+    return;
+  }
+
+  ArcFileSystemOperationRunner* runner =
+      ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
+
+  std::vector<ArcDocumentsProviderRoot*> roots;
+  roots.reserve(rootsFromMojo->size());
+
+  for (const mojom::RootPtr& rootFromMojo : *rootsFromMojo) {
+    const std::string& authority = rootFromMojo->authority;
+    // TODO(ryoh): remove this if block after connecting to Android.
+    if (authority == "com.android.providers.media.documents") {
+      continue;
+    }
+    const std::string& document_id = rootFromMojo->document_id;
+    std::unique_ptr<ArcDocumentsProviderRoot> root(
+      base::MakeUnique<ArcDocumentsProviderRoot>(runner,
+                                                 authority,
+                                                 document_id,
+                                                 rootFromMojo->id,
+                                                 rootFromMojo->title,
+                                                 rootFromMojo->summary,
+                                                 rootFromMojo->icon,
+                                                 rootFromMojo->flags));
+    roots.push_back(root.get());
+    map_[Key(authority, document_id)] = std::move(root);
+  }
+
+  callback.Run(roots);
 }
 
 }  // namespace arc
