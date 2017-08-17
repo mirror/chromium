@@ -93,6 +93,30 @@
       "revId": "8db8fb70fbd51086c1847767bee2d3b561e843ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f408130_c26917f5",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-17T14:09:55Z",
+      "side": 1,
+      "message": "Right, so I think always recalculating is fine (and the test assumption is perhaps incorrect), but if we want to actually track whether it\u0027s changed would you be able to tell by looking at the iframe content document\u0027s effective touch action and seeing if it is correct?",
+      "parentUuid": "419afa04_b8ba2fae",
+      "range": {
+        "startLine": 167,
+        "startChar": 13,
+        "endLine": 167,
+        "endChar": 77
+      },
+      "revId": "8db8fb70fbd51086c1847767bee2d3b561e843ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
