@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7839ab46_eba31b0e",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/border-radius-hittest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "Can these become local vars?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1165caf3_ffa48c6b",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/image-with-border-radius.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "Probably don\u0027t need body tags any more, potentially same rest of change as well.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61ed667_3976897e",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/image-with-clip-path.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "Unindent to col 0 here and below",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1642cdc_6451e9e6",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/inline-with-clip-path.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "unindent here and below to col 0",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4642dc4_144a60ab",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/inner-border-radius-hittest-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "This should be PASS? All of the other text expectations were deleted in this patch, so maybe this was just accidentally not deleted?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44fad75_c6c4a52a",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/inner-border-radius-hittest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "Can these be local vars below?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dec3d59_ca6ecf58",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/paint-containment-hittest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-17T21:14:45Z",
+      "side": 1,
+      "message": "Can these be local vars below?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
