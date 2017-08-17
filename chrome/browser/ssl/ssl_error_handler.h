@@ -96,7 +96,8 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
     virtual void NavigateToSuggestedURL(const GURL& suggested_url) = 0;
     virtual bool IsErrorOverridable() const = 0;
     virtual void ShowCaptivePortalInterstitial(const GURL& landing_url) = 0;
-    virtual void ShowMITMSoftwareInterstitial() = 0;
+    virtual void ShowMITMSoftwareInterstitial(
+        const std::string& mitm_software_name) = 0;
     virtual void ShowSSLInterstitial() = 0;
     virtual void ShowBadClockInterstitial(
         const base::Time& now,
@@ -130,6 +131,8 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
   static void SetClockForTesting(base::Clock* testing_clock);
   static void SetNetworkTimeTrackerForTesting(
       network_time::NetworkTimeTracker* tracker);
+  static void SetEnterpriseManagedForTesting();
+  static bool IsEnterpriseManaged();
   static std::string GetHistogramNameForTesting();
   static void SetErrorAssistantConfig(
       std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
@@ -154,7 +157,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
 
  private:
   void ShowCaptivePortalInterstitial(const GURL& landing_url);
-  void ShowMITMSoftwareInterstitial();
+  void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name);
   void ShowSSLInterstitial();
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state);
