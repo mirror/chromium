@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3995d8e1_5630bf8a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-17T19:39:46Z",
+      "side": 1,
+      "message": "Let\u0027s add this on the MainThreadTaskQueue instead. The layering here is such that code in base/ shouldn\u0027t know much about Blink-concepts such as frames but should instead focus on the mechanics of task execution.",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fe3fda_7a6eaf88",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-17T19:39:46Z",
+      "side": 1,
+      "message": "We\u0027re not calling observer_ in the block below, are we? Do we need this change?",
+      "range": {
+        "startLine": 515,
+        "startChar": 56,
+        "endLine": 515,
+        "endChar": 65
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cba24fd_fc5603d4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-17T19:39:46Z",
+      "side": 1,
+      "message": "Is this always guaranteed to be initialized?",
+      "range": {
+        "startLine": 559,
+        "startChar": 22,
+        "endLine": 559,
+        "endChar": 27
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae0d88b_fcb3472d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-17T19:39:46Z",
+      "side": 1,
+      "message": "Please use base::Closure([] {}) instead of a null task (see https://chromium-review.googlesource.com/c/616937)",
+      "range": {
+        "startLine": 265,
+        "startChar": 36,
+        "endLine": 265,
+        "endChar": 43
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
