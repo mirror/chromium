@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5315d5a2_10e1b0cd",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-17T19:52:05Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 34
+      },
+      "revId": "dd571622633f17d6969e72ea0ae195753b80a05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde71f2b_34f3dbe1",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-17T19:52:05Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 495,
+        "startChar": 32,
+        "endLine": 495,
+        "endChar": 41
+      },
+      "revId": "dd571622633f17d6969e72ea0ae195753b80a05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
