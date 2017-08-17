@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05166929_92e8d568",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-17T07:42:13Z",
+      "side": 1,
+      "message": "Please swap these IFs. Then they will be sorted by importance in score (from highest to lowest).",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 345,
+        "endChar": 37
+      },
+      "revId": "7e15246c436a2b92ca2caf9096c3c60bb147e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4827dceb_9e9bd76c",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-17T07:42:13Z",
+      "side": 1,
+      "message": "Please update.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 68
+      },
+      "revId": "7e15246c436a2b92ca2caf9096c3c60bb147e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec789b6_861a66ba",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-17T07:42:13Z",
+      "side": 1,
+      "message": "Can we call it \"RESULT_FORM_NAME_MATCH\" to be sure what \"name\" is?",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "7e15246c436a2b92ca2caf9096c3c60bb147e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b967652_05fcbf5d",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-17T07:42:13Z",
+      "side": 1,
+      "message": "According to the code. DoesManage should return NO_MATCH. Checks of HTML/NAME/SIGNATURE bits looks strange here and in some tests below. Did you consider to change the checks? \n\nIn other words, if we check origins matching, why do we look at HTML bits?",
+      "range": {
+        "startLine": 1830,
+        "startChar": 2,
+        "endLine": 1832,
+        "endChar": 66
+      },
+      "revId": "7e15246c436a2b92ca2caf9096c3c60bb147e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039a6eaa_09f00783",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1906,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-17T07:42:13Z",
+      "side": 1,
+      "message": "Could you add 2 tests that check that FORM_NAME and SIGNATURE bits are set?",
+      "range": {
+        "startLine": 1906,
+        "startChar": 0,
+        "endLine": 1906,
+        "endChar": 1
+      },
+      "revId": "7e15246c436a2b92ca2caf9096c3c60bb147e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3452bf_5d1a42d9",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-17T07:42:13Z",
+      "side": 1,
+      "message": "Why did you change that?",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "7e15246c436a2b92ca2caf9096c3c60bb147e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
