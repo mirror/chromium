@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b1e6c76_69ce660a",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Is there a nice way in C++ to pass an object, and the name of a function of that object, and call the function (and the classes are auto-generated)?\n\nI couldn\u0027t find a neat way to write it as a function, everything I thought of either complicates the call sites or here, and very much decreases readability.",
+      "parentUuid": "82b00353_6f5f918c",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "534783b5_99a1cdd1",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c5fe4a_9b6a7398",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "534783b5_99a1cdd1",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 3
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ac173792_47622eab",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2948ab_10c91d8c",
+      "range": {
+        "startLine": 275,
+        "startChar": 9,
+        "endLine": 275,
+        "endChar": 21
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba54983e_a7ea5a11",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271a61e4_b9362e27",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba54983e_a7ea5a11",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 535,
+        "endChar": 9
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cb710472_65f817d3",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee6dc95_879fa36c",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0496a37_297a5b7c",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 10
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b245cdf4_e624c0ea",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0496a37_297a5b7c",
+      "range": {
+        "startLine": 323,
+        "startChar": 4,
+        "endLine": 323,
+        "endChar": 43
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e03b3a5f_a206fa75",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 10
@@ -160,6 +304,30 @@
       "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ad6c3c_b708ac39",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-17T06:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03b3a5f_a206fa75",
+      "range": {
+        "startLine": 689,
+        "startChar": 18,
+        "endLine": 689,
+        "endChar": 20
+      },
+      "revId": "55d49bba20f277224cad4e6af651ecd254abebab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
