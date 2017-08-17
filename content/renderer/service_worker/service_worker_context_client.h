@@ -28,6 +28,7 @@
 #include "content/public/common/service_worker_modes.h"
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
@@ -383,6 +384,8 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   scoped_refptr<base::TaskRunner> worker_task_runner_;
 
   scoped_refptr<ServiceWorkerProviderContext> provider_context_;
+
+  storage::mojom::BlobRegistryPtr blob_registry_;
 
   // Not owned; this object is destroyed when proxy_ becomes invalid.
   blink::WebServiceWorkerContextProxy* proxy_;

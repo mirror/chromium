@@ -59,6 +59,7 @@
 #include "net/http/http_response_headers.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
+#include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
@@ -622,6 +623,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
   instance_host_ =
       mojom::ThreadSafeEmbeddedWorkerInstanceHostAssociatedPtr::Create(
           std::move(instance_host), main_thread_task_runner_);
+
   // Create a content::ServiceWorkerNetworkProvider for this data source so
   // we can observe its requests.
   pending_network_provider_ = ServiceWorkerNetworkProvider::CreateForController(
@@ -810,6 +812,8 @@ void ServiceWorkerContextClient::WillDestroyWorkerContext(
   // worker_task_runner_->RunsTasksInCurrentSequence() returns false
   // (while we're still on the worker thread).
   proxy_ = NULL;
+
+  blob_registry_.reset();
 
   // Aborts all the pending events callbacks.
   AbortPendingEventCallbacks(context_->install_event_callbacks,
@@ -1018,14 +1022,27 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
       GetServiceWorkerResponseFromWebResponse(web_response));
   const mojom::ServiceWorkerFetchResponseCallbackPtr& response_callback =
       context_->fetch_response_callbacks[fetch_event_id];
+
   if (response.blob_uuid.size()) {
-    // Send the legacy IPC due to the ordering issue between respondWith and
-    // blob.
-    // TODO(shimazu): mojofy this IPC after blob starts using sync IPC for
-    // creation or is mojofied: https://crbug.com/611935.
-    Send(new ServiceWorkerHostMsg_FetchEventResponse(
-        GetRoutingID(), fetch_event_id, response,
-        base::Time::FromDoubleT(event_dispatch_time)));
+    // TODO(kinuko): Remove this hack once kMojoBlobs is enabled by default
+    // and crbug.com/755523 is resolved.
+    storage::mojom::BlobPtr blob_ptr;
+    if (response.blob) {
+      blob_ptr = response.blob->TakeBlobPtr();
+      response.blob = nullptr;
+    } else {
+      if (!blob_registry_) {
+        // TODO(kinuko): We should use per-worker InterfaceProvider instead.
+        // (crbug.com/734210)
+        blink::Platform::Current()->GetInterfaceProvider()->GetInterface(
+            MakeRequest(&blob_registry_));
+      }
+      blob_registry_->GetBlobFromUUID(MakeRequest(&blob_ptr),
+                                      response.blob_uuid);
+    }
+    response_callback->OnResponseBlob(
+        response, std::move(blob_ptr),
+        base::Time::FromDoubleT(event_dispatch_time));
   } else {
     response_callback->OnResponse(response,
                                   base::Time::FromDoubleT(event_dispatch_time));
