@@ -455,6 +455,8 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   enum WhatToMarkAllCells { kMarkDirtyOnly, kMarkDirtyAndNeedsLayout };
   void MarkAllCellsWidthsDirtyAndOrNeedsLayout(WhatToMarkAllCells);
 
+  bool IsAbsoluteColumnCollapsed(unsigned absolute_column_index);
+
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
   void SimplifiedNormalFlowLayout() override;
@@ -520,6 +522,11 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
                      SubtreeLayoutScope&,
                      LayoutUnit logical_left,
                      TableHeightChangingValue);
+
+  // If any columns are collapsed, populates given vector with how much width is
+  // collapsed in each column. If no columns are collapsed, given vector remains
+  // empty. Logical width of table is adjusted.
+  void AdjustWidthsForCollapsedColumns(Vector<int>&);
 
   // Return the logical height based on the height, min-height and max-height
   // properties from CSS. Will return 0 if auto.

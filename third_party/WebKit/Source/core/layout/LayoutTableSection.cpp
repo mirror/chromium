@@ -90,6 +90,7 @@ void CellSpan::EnsureConsistency(const unsigned maximum_span_size) {
 
 LayoutTableSection::LayoutTableSection(Element* element)
     : LayoutTableBoxComponent(element),
+      is_any_column_collapsed_(false),
       c_col_(0),
       c_row_(0),
       needs_cell_recalc_(false),
@@ -1271,6 +1272,51 @@ void LayoutTableSection::LayoutRows() {
   SetLogicalHeight(LayoutUnit(row_pos_[total_rows]));
 
   ComputeOverflowFromDescendants();
+}
+
+void LayoutTableSection::UpdateLogicalWidthForCollapsedCells(
+    const Vector<int>& col_collapsed_width) {
+  if (!RuntimeEnabledFeatures::VisibilityCollapseColumnEnabled())
+    return;
+  if (!is_any_column_collapsed_) {
+    if (!col_collapsed_width.size())
+      return;
+    is_any_column_collapsed_ = true;
+  }
+  unsigned total_rows = grid_.size();
+  for (unsigned r = 0; r < total_rows; r++) {
+    unsigned n_cols = NumCols(r);
+    for (unsigned c = 0; c < n_cols; c++) {
+      LayoutTableCell* cell = OriginatingCellAt(r, c);
+      if (!cell)
+        continue;
+      if (!col_collapsed_width.size()) {
+        cell->SetIsSpanningCollapsedColumn(false);
+        continue;
+      }
+      // TODO(joysyu): Current behavior assumes that collapsing the first column
+      // in a col-spanning cell makes the cell width zero. This is consistent
+      // with collapsing row-spanning cells, but still needs to be specified.
+      if (cell->IsFirstColumnCollapsed()) {
+        // Collapsed cells have zero width.
+        cell->SetLogicalWidth(LayoutUnit());
+      } else if (cell->ColSpan() > 1) {
+        // A column-spanning cell may be affected by collapsed columns, so its
+        // width needs to be adjusted accordingly
+        int collapsed_width = 0;
+        cell->SetIsSpanningCollapsedColumn(false);
+        unsigned end_col = cell->ColSpan() + c;
+        for (unsigned spanning = c; spanning < end_col; spanning++)
+          collapsed_width += col_collapsed_width[spanning];
+        cell->SetLogicalWidth(cell->LogicalWidth() - collapsed_width);
+        if (collapsed_width != 0)
+          cell->SetIsSpanningCollapsedColumn(true);
+        // Recompute overflow in case overflow clipping is necessary.
+        cell->ComputeOverflow(cell->ClientLogicalBottom());
+        DCHECK_GE(cell->LogicalWidth(), 0);
+      }
+    }
+  }
 }
 
 int LayoutTableSection::PaginationStrutForRow(LayoutTableRow* row,
