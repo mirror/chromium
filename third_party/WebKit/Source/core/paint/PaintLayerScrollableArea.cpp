@@ -157,6 +157,7 @@ PaintLayerScrollableArea::~PaintLayerScrollableArea() {
 #if DCHECK_IS_ON()
   DCHECK(has_been_disposed_);
 #endif
+  LOG(INFO) << "~PLSA " << this;
 }
 
 void PaintLayerScrollableArea::Dispose() {
