@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9576a6aa_75de62df",
+        "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-17T23:08:31Z",
+      "side": 0,
+      "message": "These are being removed in https://chromium-review.googlesource.com/c/571139 \n where I\u0027m moving the unfullscreening for popups to the browser process. Do not worry about removing them here either.",
+      "range": {
+        "startLine": 663,
+        "startChar": 1,
+        "endLine": 664,
+        "endChar": 74
+      },
+      "revId": "17f2e2b3a921e00006d23418e322c0c2a6bd284e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
