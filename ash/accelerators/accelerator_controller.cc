@@ -749,9 +749,9 @@ AcceleratorController::~AcceleratorController() {}
 
 void AcceleratorController::Register(
     const std::vector<ui::Accelerator>& accelerators,
+    ui::AcceleratorManager::HandlerPriority priority,
     ui::AcceleratorTarget* target) {
-  accelerator_manager_->Register(
-      accelerators, ui::AcceleratorManager::kNormalPriority, target);
+  accelerator_manager_->Register(accelerators, priority, target);
 }
 
 void AcceleratorController::Unregister(const ui::Accelerator& accelerator,
@@ -761,6 +761,11 @@ void AcceleratorController::Unregister(const ui::Accelerator& accelerator,
 
 void AcceleratorController::UnregisterAll(ui::AcceleratorTarget* target) {
   accelerator_manager_->UnregisterAll(target);
+}
+
+bool AcceleratorController::HasPriorityHandler(
+    const ui::Accelerator& accelerator) {
+  return accelerator_manager_->HasPriorityHandler(accelerator);
 }
 
 bool AcceleratorController::IsActionForAcceleratorEnabled(
@@ -928,7 +933,7 @@ void AcceleratorController::RegisterAccelerators(
     ui_accelerators.push_back(accelerator);
     accelerators_.insert(std::make_pair(accelerator, accelerators[i].action));
   }
-  Register(ui_accelerators, this);
+  Register(ui_accelerators, ui::AcceleratorManager::kNormalPriority, this);
 }
 
 void AcceleratorController::RegisterDeprecatedAccelerators() {
@@ -948,7 +953,7 @@ void AcceleratorController::RegisterDeprecatedAccelerators() {
     accelerators_[deprecated_accelerator] = accelerator_data.action;
     deprecated_accelerators_.insert(deprecated_accelerator);
   }
-  Register(ui_accelerators, this);
+  Register(ui_accelerators, ui::AcceleratorManager::kNormalPriority, this);
 }
 
 bool AcceleratorController::CanPerformAction(
