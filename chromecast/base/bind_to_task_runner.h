@@ -38,19 +38,6 @@ namespace bind_helpers {
 template <typename Sig>
 struct BindToTaskRunnerTrampoline;
 
-template <>
-struct BindToTaskRunnerTrampoline<void()> {
-  static void RunOnce(base::TaskRunner* task_runner,
-                      base::OnceClosure&& callback) {
-    task_runner->PostTask(FROM_HERE, std::move(callback));
-  }
-
-  static void RunRepeating(base::TaskRunner* task_runner,
-                           const base::RepeatingClosure& callback) {
-    task_runner->PostTask(FROM_HERE, callback);
-  }
-};
-
 template <typename... Args>
 struct BindToTaskRunnerTrampoline<void(Args...)> {
   static void RunOnce(base::TaskRunner* task_runner,
