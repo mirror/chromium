@@ -109,18 +109,19 @@ class Feature {
 
   // Returns true if the feature is available to be parsed into a new extension
   // manifest.
-  Availability IsAvailableToManifest(const std::string& extension_id,
+  Availability IsAvailableToManifest(const std::string& hashed_extension_id,
                                      Manifest::Type type,
                                      Manifest::Location location,
                                      int manifest_version) const {
-    return IsAvailableToManifest(extension_id, type, location, manifest_version,
-                                 GetCurrentPlatform());
+    return IsAvailableToManifest(hashed_extension_id, type, location,
+                                 manifest_version, GetCurrentPlatform());
   }
-  virtual Availability IsAvailableToManifest(const std::string& extension_id,
-                                             Manifest::Type type,
-                                             Manifest::Location location,
-                                             int manifest_version,
-                                             Platform platform) const = 0;
+  virtual Availability IsAvailableToManifest(
+      const std::string& hashed_extension_id,
+      Manifest::Type type,
+      Manifest::Location location,
+      int manifest_version,
+      Platform platform) const = 0;
 
   // Returns true if the feature is available to |extension|.
   Availability IsAvailableToExtension(const Extension* extension) const;
