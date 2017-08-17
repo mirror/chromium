@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2adaa7b_c98b5c24",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T15:26:31Z",
+      "side": 0,
+      "message": "Do we know why this was here in the first place and what it means if we drop it? / Could this be related to the failing tests on mac?\n\n+ if we drop it, we should also remove the include.",
+      "range": {
+        "startLine": 65,
+        "startChar": 30,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "a00842bbcbb75703c1508c462ef7423ead639da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

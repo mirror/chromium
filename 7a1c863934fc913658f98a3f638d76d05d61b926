@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5ae7a06_828574eb",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T15:26:31Z",
+      "side": 1,
+      "message": "nit: Maybe we should drop this comment as it\u0027s not only required by the refresh scheduler, but also for blocking operations such as file access.",
+      "range": {
+        "startLine": 199,
+        "startChar": 21,
+        "endLine": 199,
+        "endChar": 38
+      },
+      "revId": "7a1c863934fc913658f98a3f638d76d05d61b926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf8f1e2_254c9a55",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T15:26:31Z",
+      "side": 1,
+      "message": "nit: Can you make this const too?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "7a1c863934fc913658f98a3f638d76d05d61b926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

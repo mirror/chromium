@@ -96,6 +96,54 @@
     },
     {
       "key": {
+        "uuid": "7e08227b_a4be456e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T15:26:31Z",
+      "side": 1,
+      "message": "Oh sorry, I didn\u0027t realize this is the first (and only) part of the commit description.",
+      "parentUuid": "259602c0_177ecee7",
+      "range": {
+        "startLine": 7,
+        "startChar": 48,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef327791_ebb7281d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T15:26:31Z",
+      "side": 1,
+      "message": "Should we rename the CL to \"Migrate CloudPolicyManager to use TaskScheduler\" then?",
+      "parentUuid": "aeb676ac_3e297b47",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc6f83d5_23f976b6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
