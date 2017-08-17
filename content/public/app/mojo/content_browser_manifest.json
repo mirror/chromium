@@ -6,7 +6,8 @@
       "provides": {
         // Interfaces needed by a generic client of content browser.
         "app": [
-          "memory_instrumentation::mojom::Coordinator"
+          "memory_instrumentation::mojom::Coordinator",
+          "tracing::mojom::AgentRegistry"
         ],
         "gpu": [
           "content::mojom::FieldTrialRecorder",
@@ -55,6 +56,9 @@
         ],
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
+        ],
+        "tracing": [
+          "tracing::mojom::Coordinator"
         ]
       },
       "requires": {
@@ -64,6 +68,7 @@
         "content_browser": [
           "ash",
           "display",
+          "tracing",
           "url_keyed_metrics",
           "geolocation_config"
         ],
