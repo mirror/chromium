@@ -53,7 +53,8 @@ class CC_EXPORT CheckerImageTracker {
 
   CheckerImageTracker(ImageController* image_controller,
                       CheckerImageTrackerClient* client,
-                      bool enable_checker_imaging);
+                      bool enable_checker_imaging,
+                      size_t min_image_size_to_consider_checkering);
   ~CheckerImageTracker();
 
   // Returns true if the decode for |image| will be deferred to the image decode
@@ -155,6 +156,7 @@ class CC_EXPORT CheckerImageTracker {
   ImageController* image_controller_;
   CheckerImageTrackerClient* client_;
   const bool enable_checker_imaging_;
+  const size_t min_image_size_to_consider_checkering_;
 
   // A set of images which have been decoded and are pending invalidation for
   // raster on the checkered tiles.

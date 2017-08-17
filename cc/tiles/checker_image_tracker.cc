@@ -12,9 +12,6 @@
 
 namespace cc {
 namespace {
-// The minimum size of an image that we should consider checkering.
-size_t kMinImageSizeToCheckerBytes = 512 * 1024;
-
 // The enum for recording checker-imaging decision UMA metric. Keep this
 // consistent with the ordering in CheckerImagingDecision in enums.xml.
 // Note that this enum is used to back a UMA histogram so should be treated as
@@ -77,13 +74,14 @@ CheckerImagingDecision GetLoadDecision(const PaintImage& image) {
 }
 
 CheckerImagingDecision GetSizeDecision(const PaintImage& image,
+                                       size_t min_bytes,
                                        size_t max_bytes) {
   base::CheckedNumeric<size_t> checked_size = 4;
   checked_size *= image.width();
   checked_size *= image.height();
   size_t size = checked_size.ValueOrDefault(std::numeric_limits<size_t>::max());
 
-  if (size < kMinImageSizeToCheckerBytes)
+  if (size < min_bytes)
     return CheckerImagingDecision::kVetoedSmallerThanCheckeringSize;
   else if (size > max_bytes)
     return CheckerImagingDecision::kVetoedLargerThanCacheSize;
@@ -92,6 +90,7 @@ CheckerImagingDecision GetSizeDecision(const PaintImage& image,
 }
 
 CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
+                                                 size_t min_bytes,
                                                  size_t max_bytes) {
   CheckerImagingDecision decision = GetAnimationDecision(image);
   if (decision != CheckerImagingDecision::kCanChecker)
@@ -101,7 +100,7 @@ CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
   if (decision != CheckerImagingDecision::kCanChecker)
     return decision;
 
-  return GetSizeDecision(image, max_bytes);
+  return GetSizeDecision(image, min_bytes, max_bytes);
 }
 
 }  // namespace
@@ -114,12 +113,16 @@ CheckerImageTracker::ImageDecodeRequest::ImageDecodeRequest(
     DecodeType type)
     : paint_image(std::move(paint_image)), type(type) {}
 
-CheckerImageTracker::CheckerImageTracker(ImageController* image_controller,
-                                         CheckerImageTrackerClient* client,
-                                         bool enable_checker_imaging)
+CheckerImageTracker::CheckerImageTracker(
+    ImageController* image_controller,
+    CheckerImageTrackerClient* client,
+    bool enable_checker_imaging,
+    size_t min_image_size_to_consider_checkering)
     : image_controller_(image_controller),
       client_(client),
       enable_checker_imaging_(enable_checker_imaging),
+      min_image_size_to_consider_checkering_(
+          min_image_size_to_consider_checkering),
       weak_factory_(this) {}
 
 CheckerImageTracker::~CheckerImageTracker() = default;
@@ -288,7 +291,8 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
     // frames, checkering which would cause each video frame to flash and
     // therefore should not be checkered.
     CheckerImagingDecision decision = GetCheckerImagingDecision(
-        image, image_controller_->image_cache_max_limit_bytes());
+        image, min_image_size_to_consider_checkering_,
+        image_controller_->image_cache_max_limit_bytes());
     it->second.policy = decision == CheckerImagingDecision::kCanChecker
                             ? DecodePolicy::ASYNC
                             : DecodePolicy::SYNC;

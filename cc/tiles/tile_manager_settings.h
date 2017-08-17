@@ -12,6 +12,7 @@ namespace cc {
 struct CC_EXPORT TileManagerSettings {
   bool use_partial_raster = false;
   bool enable_checker_imaging = false;
+  size_t min_image_size_to_consider_checkering = 512 * 1024;
 };
 
 }  // namespace cc
