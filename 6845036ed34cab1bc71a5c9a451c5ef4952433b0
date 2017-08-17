@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "559e18ca_3ce37abc",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-17T18:11:43Z",
+      "side": 1,
+      "message": "can you also add test that changes fullscreen -\u003e maximized in tablet mode and it\u0027s always use immersive caption?",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49734329_eb3b3899",
         "filename": "extensions/browser/app_window/app_window.h",
         "patchSetId": 6
