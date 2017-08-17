@@ -452,6 +452,24 @@
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0111c493_80631d13",
+        "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:21:29Z",
+      "side": 1,
+      "message": "Ah, I see, I didn\u0027t read carefully enough. You\u0027re right--but since the plumbing moved, this isn\u0027t needed anymore \u003d)",
+      "parentUuid": "c8d75822_19d9c91d",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

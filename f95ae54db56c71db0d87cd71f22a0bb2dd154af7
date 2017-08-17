@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ff6ffb_06605c4c",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:21:29Z",
+      "side": 1,
+      "message": "Hmm... it\u0027s a little unusual to use the Blink interface provider from not Blink code. I guess this might be a sign that this code should eventually move into Blink \u003d)",
+      "revId": "f95ae54db56c71db0d87cd71f22a0bb2dd154af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
