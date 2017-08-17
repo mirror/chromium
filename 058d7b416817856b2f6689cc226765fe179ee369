@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "49d0ca64_119be90b",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-17T21:26:54Z",
+      "side": 1,
+      "message": "Should this be the same as the default in TileManagerSettings?",
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13de19bf_37a23c00",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 2
