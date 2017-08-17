@@ -14,9 +14,11 @@ source_set("device_monitors") {
     "system_message_window_win.h",
   ]
 
-  configs += [ "//media:media_implementation" ]
+  configs += [ "//media:subcomponent_config" ]
 
-  deps = []
+  deps = [
+    "//media/base",
+  ]
 
   if (use_udev) {
     deps += [ "//device/udev_linux" ]
@@ -24,5 +26,9 @@ source_set("device_monitors") {
       "device_monitor_udev.cc",
       "device_monitor_udev.h",
     ]
+  }
+
+  if (is_mac) {
+    libs = [ "Foundation.framework" ]
   }
 }
