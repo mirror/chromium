@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e3a5e3_c758c6e9",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T22:28:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the best way to do this. It may affect the z-order calculation below in strange ways, plus the GetLink() call on line 294 may still end up returning WEBLINK_AREA.\n\nCan we leave this method alone, and fake the result in PDFiumEngine::GetCharIndex() instead? That\u0027s the only caller.",
+      "revId": "6e376a9220cc17c9d1ac57a248015ae9c53fc079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
