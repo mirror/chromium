@@ -165,7 +165,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   bool ShouldAllowRequest(NSURLRequest* request);
   // Returns whether the navigation corresponding to |response| should be
   // allowed to continue by asking its policy deciders. Defaults to true.
-  bool ShouldAllowResponse(NSURLResponse* response);
+  bool ShouldAllowResponse(NSURLResponse* response, bool for_main_frame);
 
   // WebState:
   WebStateDelegate* GetDelegate() override;
