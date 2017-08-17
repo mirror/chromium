@@ -4881,6 +4881,34 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest, OverscrollDirectionChange) {
   EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
 }
 
+TEST_F(RenderWidgetHostViewAuraOverscrollTest,
+       CompleteOverscrollOnGestureScrollEndAck) {
+  SetUpOverscrollEnvironment();
+
+  SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
+                       blink::kWebGestureDeviceTouchscreen);
+  SendScrollBeginAckIfNeeded(INPUT_EVENT_ACK_STATE_CONSUMED);
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->completed_mode());
+  EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
+
+  // Send GSU to trigger overscroll.
+  SimulateGestureScrollUpdateEvent(300, -5, 0);
+  // Send GSE immediately before ACKing GSU.
+  SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
+                       blink::kWebGestureDeviceTouchscreen);
+
+  // Now ACK the GSU. Should see a completed overscroll.
+  SendInputEventACK(WebInputEvent::kGestureScrollUpdate,
+                    INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_delegate()->completed_mode());
+}
+
 void RenderWidgetHostViewAuraOverscrollTest::
     OverscrollDirectionChangeMouseWheel() {
   SetUpOverscrollEnvironment();
