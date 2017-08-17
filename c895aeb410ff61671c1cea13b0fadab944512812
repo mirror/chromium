@@ -84,6 +84,23 @@
       "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a761a9f0_bc953940",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T14:17:02Z",
+      "side": 1,
+      "message": "Why is the NavigateToURL step needed? Wouldn\u0027t this race/cancel the actual form submission? Just waiting for commit should be sufficient unless I\u0027m missing something subtle.",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
