@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c330ce6_e6fe71a7",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:42:21Z",
+      "side": 1,
+      "message": "Initialize in the initializer list, or in the header.",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a999b0_8fd59cc5",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:42:21Z",
+      "side": 1,
+      "message": "Use a gfx::RenderText to get the size of the text instead (this DOMAgent should own a gfx::RenderText). For example:\n\n  if (!render_text_)\n    render_text_ \u003d gfx::RenderText::CreateInstance();\n  render_text_-\u003eSetText(utf16_text);\n  gfx::Size text_size \u003d render_text_-\u003eGetStringSize();\n\nThis way, you don\u0027t need kTextHeight, kCharacterPerPixel etc.\n\nAlso, use render_text_-\u003eDraw(canvas) to actually draw the text.",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1871e4f0_6604eb15",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:42:21Z",
+      "side": 1,
+      "message": "\u003d false;",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1eb760_42a375d4",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:42:21Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2127f45_76ce01e7",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:42:21Z",
+      "side": 1,
+      "message": "Initialize here to 0",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
