@@ -52,6 +52,24 @@
       "revId": "a0985356acc3e69ccf60359e02a51694568e3288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6700ca_2de68b7e",
+        "filename": "tools/perf/benchmarks/benchmark_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-17T15:02:08Z",
+      "side": 1,
+      "message": "ALL_DESKTOP(not ALL_ANDROID) wouldn\u0027t be perfect either, since you could disable the benchmark because its failing on on desktop platforms, rather than it being a mobile benchmark.\n\nThe next 2 points are the reason I\u0027m going to disable the test.\n\nThough I do enjoy the irony that I\u0027m about to disable it using annotations since StoryExpectations aren\u0027t for unit tests.",
+      "parentUuid": "06ba9dad_a22873ec",
+      "revId": "a0985356acc3e69ccf60359e02a51694568e3288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
