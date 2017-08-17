@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0bab0e7_685aea5b",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-17T20:04:00Z",
+      "side": 1,
+      "message": "Fixed.  Also I\u0027ll see if I can add a follow-up patch that changes DEPS such that only CBMEPVL is able to include from libgtkui",
+      "parentUuid": "701268c2_a6d67265",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "e67bae196b8455083ba3def422342a565163803d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b34535bb_024a65be",
         "filename": "ui/views/window/frame_buttons.h",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "e67bae196b8455083ba3def422342a565163803d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573e9f86_020c4a05",
+        "filename": "ui/views/window/frame_buttons.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-17T20:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34535bb_024a65be",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "e67bae196b8455083ba3def422342a565163803d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
