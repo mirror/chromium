@@ -63,6 +63,9 @@ class NotificationChannelsProviderAndroid
   NotificationChannelsProviderAndroid();
   ~NotificationChannelsProviderAndroid() override;
 
+  void MigrateToChannelsIfNecessary(
+      content_settings::ObservableProvider* pref_provider);
+
   // UserModifiableProvider methods.
   std::unique_ptr<content_settings::RuleIterator> GetRuleIterator(
       ContentSettingsType content_type,

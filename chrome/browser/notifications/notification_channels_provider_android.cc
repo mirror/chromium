@@ -163,6 +163,38 @@ NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
 NotificationChannelsProviderAndroid::~NotificationChannelsProviderAndroid() =
     default;
 
+void NotificationChannelsProviderAndroid::MigrateToChannelsIfNecessary(
+    content_settings::ObservableProvider* pref_provider) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+  std::unique_ptr<content_settings::RuleIterator> it(
+      pref_provider->GetRuleIterator(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                     std::string(), false));
+  while (it->HasNext()) {
+    const content_settings::Rule& rule = it->Next();
+    url::Origin origin = url::Origin(GURL(rule.primary_pattern.ToString()));
+    DCHECK(!origin.unique());
+    const std::string origin_string = origin.Serialize();
+    std::unique_ptr<base::Value> setting_value;
+    setting_value = base::MakeUnique<base::Value>(*(rule.value));
+    ContentSetting content_setting =
+        content_settings::ValueToContentSetting(setting_value.get());
+    switch (content_setting) {
+      case CONTENT_SETTING_ALLOW:
+        CreateChannelIfRequired(origin_string,
+                                NotificationChannelStatus::ENABLED);
+        break;
+      case CONTENT_SETTING_BLOCK:
+        CreateChannelIfRequired(origin_string,
+                                NotificationChannelStatus::BLOCKED);
+        break;
+      default:
+        // We rely on notification settings being one of ALLOW/BLOCK.
+        NOTREACHED();
+        break;
+    }
+  }
+}
+
 std::unique_ptr<content_settings::RuleIterator>
 NotificationChannelsProviderAndroid::GetRuleIterator(
     ContentSettingsType content_type,

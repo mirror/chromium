@@ -23,6 +23,7 @@
 #include "components/content_settings/core/browser/content_settings_utils.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_utils.h"
+#include "components/content_settings/core/test/content_settings_mock_provider.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -506,4 +507,55 @@ TEST_F(NotificationChannelsProviderAndroidTest,
       ContentSettingsPattern(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
       std::string());
   EXPECT_EQ(last_modified, t2);
+}
+
+TEST_F(NotificationChannelsProviderAndroidTest,
+       MigrateToChannels_NoopWhenNoNotificationSettingsToMigrate) {
+  InitChannelsProvider(true /* should_use_channels */);
+  auto old_provider = base::MakeUnique<content_settings::MockProvider>();
+  old_provider->SetWebsiteSetting(
+      ContentSettingsPattern::FromString("https://blocked.com"),
+      ContentSettingsPattern::Wildcard(), CONTENT_SETTINGS_TYPE_COOKIES,
+      std::string(), new base::Value(CONTENT_SETTING_BLOCK));
+
+  channels_provider_->MigrateToChannelsIfNecessary(old_provider.get());
+  EXPECT_EQ(fake_bridge_->GetChannels().size(), 0u);
+}
+
+TEST_F(NotificationChannelsProviderAndroidTest,
+       MigrateToChannels_NoopWhenChannelsShouldNotBeUsed) {
+  InitChannelsProvider(false /* should_use_channels */);
+  auto old_provider = base::MakeUnique<content_settings::MockProvider>();
+
+  // Give the old provider some notification settings to provide.
+  old_provider->SetWebsiteSetting(
+      ContentSettingsPattern::FromString("https://blocked.com"),
+      ContentSettingsPattern::Wildcard(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+      std::string(), new base::Value(CONTENT_SETTING_BLOCK));
+  old_provider->SetWebsiteSetting(
+      ContentSettingsPattern::FromString("https://allowed.com"),
+      ContentSettingsPattern::Wildcard(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+      std::string(), new base::Value(CONTENT_SETTING_ALLOW));
+
+  channels_provider_->MigrateToChannelsIfNecessary(old_provider.get());
+  EXPECT_EQ(fake_bridge_->GetChannels().size(), 0u);
+}
+
+TEST_F(NotificationChannelsProviderAndroidTest,
+       MigrateToChannels_CreatesChannelsForProvidedSettings) {
+  InitChannelsProvider(true /* should_use_channels */);
+  auto old_provider = base::MakeUnique<content_settings::MockProvider>();
+
+  // Give the old provider some notification settings to provide.
+  old_provider->SetWebsiteSetting(
+      ContentSettingsPattern::FromString("https://blocked.com"),
+      ContentSettingsPattern::Wildcard(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+      std::string(), new base::Value(CONTENT_SETTING_BLOCK));
+  old_provider->SetWebsiteSetting(
+      ContentSettingsPattern::FromString("https://allowed.com"),
+      ContentSettingsPattern::Wildcard(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+      std::string(), new base::Value(CONTENT_SETTING_ALLOW));
+
+  channels_provider_->MigrateToChannelsIfNecessary(old_provider.get());
+  EXPECT_EQ(fake_bridge_->GetChannels().size(), 2u);
 }
