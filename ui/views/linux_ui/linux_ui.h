@@ -41,6 +41,7 @@ class Border;
 class DeviceScaleFactorObserver;
 class LabelButton;
 class LabelButtonBorder;
+class NavButtonProvider;
 class WindowButtonOrderObserver;
 
 // Adapter class with targets to render like different toolkits. Set by any
@@ -168,6 +169,11 @@ class VIEWS_EXPORT LinuxUI : public ui::LinuxInputMethodContextFactory,
   // factor.
   virtual void RemoveDeviceScaleFactorObserver(
       DeviceScaleFactorObserver* observer) = 0;
+
+  // Returns the NavButtonProvider associated with this LinuxUI, or
+  // nullptr if the underlying toolkit does not support drawing
+  // client-side navigation buttons.
+  virtual NavButtonProvider* GetNavButtonProvider() = 0;
 };
 
 }  // namespace views
