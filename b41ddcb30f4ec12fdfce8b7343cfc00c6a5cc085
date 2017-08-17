@@ -22,6 +22,30 @@
       "revId": "b41ddcb30f4ec12fdfce8b7343cfc00c6a5cc085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f85cdf_d4b92bd2",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-17T20:05:48Z",
+      "side": 1,
+      "message": "Oh, good spot! :D  Done.",
+      "parentUuid": "7200f9cb_4c1d7e5a",
+      "range": {
+        "startLine": 396,
+        "startChar": 60,
+        "endLine": 396,
+        "endChar": 74
+      },
+      "revId": "b41ddcb30f4ec12fdfce8b7343cfc00c6a5cc085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
