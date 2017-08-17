@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b7527af_cb86895b",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "This include can be removed.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d9990f_1c62f376",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "These don\u0027t seem to be required.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 84
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2fd023_3cda6f4a",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "nit: URLs",
+      "range": {
+        "startLine": 25,
+        "startChar": 25,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89dedad5_343a9bf2",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 1
@@ -13,6 +82,270 @@
       "writtenOn": "2017-08-17T20:10:35Z",
       "side": 1,
       "message": "Apparently this feature is from C++14, and under discussion, and doesn\u0027t compile on win_clang.  Adding constructor instead.",
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604c6e3f_864fbaef",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "Oh, so we are doing this! :)\nThen I it\u0027d be nice to have \"now\" be the same for all zombified entries in the same batch.",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 58
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5237bd38_62b2e5ec",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "How about consolidating this and the same code below into an operator\u003c\u003c implementation?",
+      "range": {
+        "startLine": 91,
+        "startChar": 48,
+        "endLine": 96,
+        "endChar": 73
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f775399_2805b59e",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "But in fact... Why repeating this log dump here?",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92e83e0_cc808707",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\" because of DISALLOW_COPY_AND_ASSIGN.",
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f4b2a5_8b75a2f4",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "This description is unclear to me. Determined viable?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8858ac7_7655b296",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "Add |explicit|.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a98a3fd_8f016ec9",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "Unneeded includes: bind, string_number_conversions, test_simple_task_runner, thread_task_runner_handle.",
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a410605_9621b7fb",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "How about moving and consolidating other uses of this into a new shared file like prefetch_test_utils.h/cc? An alternative is moving to TaskTestBase.",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b981d5_d2f5c2b7",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "This method is unused.",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 61
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f210858_b22d615b",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "Use CountPrefetchItems instead here and in following cases where the item count is all that matters.",
+      "range": {
+        "startLine": 72,
+        "startChar": 30,
+        "endLine": 72,
+        "endChar": 41
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177dcdd5_1f84ecdf",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "Can be replaced with and still provide same guarantees:\nEXPECT_EQ(1U, items_in_new_request_state.count(unfinished_item));",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 66
+      },
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93d7bfc_b5a61215",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T22:09:58Z",
+      "side": 1,
+      "message": "Add comment that this should be the last reconciling task to run.",
+      "range": {
+        "startLine": 111,
+        "startChar": 14,
+        "endLine": 111,
+        "endChar": 21
+      },
       "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
