@@ -16,6 +16,58 @@
       "revId": "68a3b23aee26a3ed5259321c18dd3091ae1959a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e3d235_8b245b01",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-17T20:10:08Z",
+      "side": 1,
+      "message": "Would it make sense to share a connection threshold between client previews, and instead of passing a connection type into ShouldAllowPreviewAtECT we add a cool to ShouldAllowPreviews that is |check_e_c_t|? Then we have a single connection type threshold across everything, but the server previews won\u0027t use it.\n\nI\u0027m fine with this CL landing for now, but open a bug on me (cc sclitte and bengr) to make that change.",
+      "parentUuid": "6947a503_62fb2f62",
+      "revId": "68a3b23aee26a3ed5259321c18dd3091ae1959a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3719c60_65418f0d",
+        "filename": "components/previews/core/previews_experiments.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-17T20:10:08Z",
+      "side": 1,
+      "message": "Move the definition from below up to here instead.",
+      "revId": "68a3b23aee26a3ed5259321c18dd3091ae1959a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d49376_c137e778",
+        "filename": "content/public/common/previews_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-17T20:10:08Z",
+      "side": 1,
+      "message": "Previews_state_last should be Previews_AMP_REDIRECTION now",
+      "revId": "68a3b23aee26a3ed5259321c18dd3091ae1959a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
