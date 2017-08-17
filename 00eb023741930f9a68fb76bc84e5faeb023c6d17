@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d44b3db_3ffce978",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "Maybe keep this comment generic, as this class can be used to show the context bar even at the top of the screen or bottom, with different buttons.\nHow about:\nView with 3 customizable buttons in a row.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa2c349_d20ed260",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "Can you add 1 line comments for these methods? Just to be consistent with Bookmarks code?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 59
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe7d7ab_b42b3211",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "Clear browsing bar?",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8acd637_fa466ea8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "Is this comment valid?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 61
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a1671e_6fdb5560",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "Have you tried testing this with RTL? You can easily set the simulator to RTL with English using instructions here: https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPInternational/TestingYourInternationalApp/TestingYourInternationalApp.html",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca946c2_1369e00c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "nit: #pragma mark - Private Methods\nhere and below",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc075b8_e1544749",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "How about doing the following, since we already have the button variable, and no need to get it again using getButton in the init method:\n\n[self initStyleForButton:_leadingButton];\n_leadingButton.contentHorizontalAlignment \u003d\n          UIControlContentHorizontalAlignmentLeft;\n\n- (void)initStyleForButton:(UIButton*)button {\n  [button setBackgroundColor:[UIColor whiteColor]];\n  [button setTitleColor:[[MDCPalette bluePalette] tint500]\n               forState:UIControlStateNormal];\n  [[button titleLabel]\n      setFont:[[MDCTypography fontLoader] regularFontOfSize:14]];\n  [button setTranslatesAutoresizingMaskIntoConstraints:NO];\n  button.hidden \u003d YES;\n}",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08c92e6_a3642b5f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "Same here\n[_leadingButton addTarget:delegate\n                   action:@selector(leadingButtonClicked:) \n         forControlEvents:UIControlEventTouchUpInside];",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 60
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6221a63d_0e3c4a0e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "rename to:\n- (void)setButtonVisibility:(BOOL)visible\nforButton:(ContextBarButton)button;",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 33
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117ee574_ae11807f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "centerButtonClicked?",
+      "range": {
+        "startLine": 178,
+        "startChar": 17,
+        "endLine": 178,
+        "endChar": 37
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecbf161_10300ab2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "If we make this default, ContextBarButtonStyleNone, then we don\u0027t have to set it here. Can mention this in the comment in bookmark_context_bar.",
+      "range": {
+        "startLine": 175,
+        "startChar": 36,
+        "endLine": 175,
+        "endChar": 61
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd86876_98a81881",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_protected.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "nit:Used",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc59317_e29d15c3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_protected.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "thanks for this :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cf4e428_01169ca6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_protected.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-17T07:54:25Z",
+      "side": 1,
+      "message": "nit:Used",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "00eb023741930f9a68fb76bc84e5faeb023c6d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
