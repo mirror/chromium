@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ce056fa_3d48bc68",
+        "filename": "content/browser/frame_host/frame_navigation_entry.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T15:24:09Z",
+      "side": 1,
+      "message": "To rephrase your question, I believe you\u0027re asking why http_content_type is part of ExplodedHttpBody instead of ExplodedHttpBody\u0027s ResourceRequestBody member. I don\u0027t know why it was done that way, but since as you say changing it would affect history data I\u0027m not sure what the benefit would be of changing things.",
+      "parentUuid": "5de1831a_e12d45c3",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5692e0d_5682f960",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T12:52:15Z",
       "side": 1,
       "message": "Per the comment above, I imagine we do not get the content type if the post followed the OpenURL path. If that\u0027s the case, we should probably file a bug to fix this.",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf476123_174f56b2",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T15:24:09Z",
+      "side": 1,
+      "message": "Is the OpenURL path taken for form resubmission? If you have a specific scenario please let me know.",
+      "parentUuid": "e5692e0d_5682f960",
       "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e5d2c682_095a06c6",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T15:24:09Z",
+      "side": 1,
+      "message": "I considered it; however one of these paths doesn\u0027t set a header, but instead modifies a member variable so I thought it would be confusing (and they felt like they should be together).",
+      "parentUuid": "9d096749_638022f3",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5539fda1_4a6b9ee6",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-17T12:52:15Z",
       "side": 1,
       "message": "nit: use same type of initialization for both variables.",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc28661_27a004fb",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T15:24:09Z",
+      "side": 1,
+      "message": "this is moved code, so I\u0027ll avoid changing it now",
+      "parentUuid": "5539fda1_4a6b9ee6",
       "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +170,24 @@
       "writtenOn": "2017-08-17T14:17:02Z",
       "side": 1,
       "message": "Why is the NavigateToURL step needed? Wouldn\u0027t this race/cancel the actual form submission? Just waiting for commit should be sufficient unless I\u0027m missing something subtle.",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4fd6ae_7ea3fe87",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T15:24:09Z",
+      "side": 1,
+      "message": "ditto (I want to avoid doing anything that might make this test flakey and cause this cl to be reverted). http://chromium-try-flakes.appspot.com/search?q\u003dBrowserSideNavigationBrowserTest.POSTNavigation doesn\u0027t show any flakes for this test.",
+      "parentUuid": "a761a9f0_bc953940",
       "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
