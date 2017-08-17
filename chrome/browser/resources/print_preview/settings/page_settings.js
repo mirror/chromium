@@ -198,6 +198,14 @@ cr.define('print_preview', function() {
                   '.page-settings-print-pages-div') &&
           event.relatedTarget != this.customRadio_) {
         this.allRadio_.checked = true;
+        if (!this.pageRangeTicketItem_.isValueEqual(this.customInput_.value)) {
+          // Update ticket item to match, set timeout to avoid losing focus
+          // when the preview regenerates.
+          setTimeout(
+              this.pageRangeTicketItem_.updateValue.bind(
+                  this.pageRangeTicketItem_, this.customInput_.value),
+              0);
+        }
       }
     },
 
