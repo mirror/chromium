@@ -86,7 +86,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
       TagCollectionNSCache;
 
   template <typename T>
-  T* AddCache(ContainerNode& node,
+  ALWAYS_INLINE T* AddCache(ContainerNode& node,
               CollectionType collection_type,
               const AtomicString& name) {
     DCHECK(ThreadState::Current()->IsGCForbidden());

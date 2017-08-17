@@ -117,8 +117,8 @@ void TreeOrderedMap::Remove(const AtomicString& key, Element* element) {
 }
 
 template <bool keyMatches(const AtomicString&, const Element&)>
-inline Element* TreeOrderedMap::Get(const AtomicString& key,
-                                    const TreeScope& scope) const {
+ALWAYS_INLINE Element* TreeOrderedMap::Get(const AtomicString& key,
+                                           const TreeScope& scope) const {
   DCHECK(key);
 
   MapEntry* entry = map_.at(key);

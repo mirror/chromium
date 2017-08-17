@@ -118,14 +118,6 @@ void TreeScope::ClearScopedStyleResolver() {
   scoped_style_resolver_.Clear();
 }
 
-Element* TreeScope::getElementById(const AtomicString& element_id) const {
-  if (element_id.IsEmpty())
-    return nullptr;
-  if (!elements_by_id_)
-    return nullptr;
-  return elements_by_id_->GetElementById(element_id, *this);
-}
-
 const HeapVector<Member<Element>>& TreeScope::GetAllElementsById(
     const AtomicString& element_id) const {
   DEFINE_STATIC_LOCAL(HeapVector<Member<Element>>, empty_vector,
