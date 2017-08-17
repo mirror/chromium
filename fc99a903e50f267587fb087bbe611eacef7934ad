@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75f006e6_007628fe",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-17T21:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae703b0c_1bd6a570",
+      "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61aa7729_bb5c23b7",
         "filename": "chrome/browser/extensions/extension_sync_service.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "61afd019_6d7e8460",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-17T21:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61aa7729_bb5c23b7",
+      "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e75ee73_3cbc753b",
         "filename": "chrome/browser/extensions/extension_sync_service.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-16T21:22:56Z",
       "side": 1,
       "message": ":( Yet another oddity of our sync system.\n\nIdeally, we\u0027d actually just store any enabled state, because chrome shouldn\u0027t let the user re-enable an extension for malware/security vulnerability, and this wouldn\u0027t be an issue.  Can we add a TODO to that effect, in case someone\u0027s ever brave enough to take a stab at this?",
+      "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572cbc3f_9e58a2d0",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-17T21:54:59Z",
+      "side": 1,
+      "message": "I think one issue is that there\u0027s no disable reason for extensions on the malware blacklist. \n(Comment on https://codereview.chromium.org/1296703003/diff/220001/chrome/browser/extensions/extension_sync_service.cc : \"// Blacklisted extensions are not marked as disabled in ExtensionPrefs.\")\n\nSince we compute the enabled state from the disable_reasons, we could accidentally report blacklisted extensions as enabled.",
+      "parentUuid": "7e75ee73_3cbc753b",
       "revId": "fc99a903e50f267587fb087bbe611eacef7934ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
