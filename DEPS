@@ -675,6 +675,17 @@ hooks = [
     ],
   },
   {
+    'name': 'zucchini_testdata',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/third_party/depot_tools/download_from_google_storage.py',
+                '--no_resume',
+                '--no_auth',
+                '--bucket', 'chromium-gn',
+                '-d', 'src/chrome/installer/zucchini/testdata',
+    ],
+  },
+  {
     'name': 'gn_mac',
     'pattern': '.',
     'action': [ 'python',
@@ -1187,6 +1198,7 @@ hooks_os = {
                   '-s', 'src/third_party/gvr-android-sdk/test-libraries/controller_test_api.aar.sha1',
       ],
     },
+
     # Download VR test APKs only if the environment variable is set
     {
       'name': 'vr_test_apks',
