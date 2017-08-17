@@ -16,6 +16,24 @@
       "revId": "437cd7865845f1db2dcd0d43307588cad2106a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82df5887_bf3f7702",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T06:47:51Z",
+      "side": 1,
+      "message": "I thought we don\u0027t do that: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Precede-setters-with-the-word-Set_use-bare-words-for-getters",
+      "parentUuid": "c2801ec0_22e2aa53",
+      "revId": "437cd7865845f1db2dcd0d43307588cad2106a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
