@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaba9dd9_eab4833e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "I recommend adding tests for ArcDocumentsProviderRootMap::Refresh(). I believe it is not difficult since you already have FakeArcFileSystemInstance.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48081d3_a87f7f15",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "Maybe it\u0027s better to save |runner| in the member variable instead of |profile|. Then we don\u0027t need to call GetForBrowserContext() every time.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 17
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5fc62e_c758a737",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "We can\u0027t guarantee this object is alive when this callback is invoked. Please use base::WeakPtr so that the callback is safe to call in that case.\n\nFor example, ArcDocumentsProviderRoot uses base::WeakPtrFactory, so please refer it.\nhttps://cs.chromium.org/chromium/src/base/memory/weak_ptr.h\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h?rcl\u003d59d1f58c4397b2c470852da0cca779194f2bd79a\u0026l\u003d235",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 52
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cf3905_9b6cbb11",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "This happens in a non-error case where Android does not support GetRoots() mojo call. I guess in that case we want to return the existing list instead of an empty list.",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 32
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b762420_a1e99ff9",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "|map_| should never be cleared because ArcDocumentsProviderRoot has states, e.g. watchers. If ArcDocumentsProviderRoot is deleted, Files app loses watchers it installed.\n\nPlease compare the old list and the new list, and keep instances whenever possible.",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf790c11_1f319ba6",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "Why do we skip MediaDocumentsProvider? This will drop MediaDocumentsProvider roots once Refresh() is called.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 15
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e5b8ea_fe4e565d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "Could you please use base::OnceCallback instead? We\u0027re in the process of moving from base::Callback to base::{Once,Repeating}Callback.",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10723185_30770ffa",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "QQ: With this interface, one can\u0027t obtain the list of roots without refreshing. Is it fine for your case?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b0552e_92c3ca2e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "dup?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 48
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544be8b5_c4dac924",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "We don\u0027t have a convention to use underscores in private member functions. Please name it just \"RefreshInternal\".\n\nOptional/nit: One convention for naming a callback function is On\u003cAsyncFunctionName\u003e. In this case, OnGetRoots.",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9a4908_dccceec1",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "nit: Could you move this above all other member variables? I personally prefer putting member variables initialized in the constructor first.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f82209f_914c46d4",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "typo: authority",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77125730_e4167e19",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "This explanation is the same as |title|, which I guess you did not intend.",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38620771_1989ef75",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "We can use binaries. For example, see |icon_png_data| in app.mojom.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ebdbe4_7a1ddbe3",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "QQ: Does this include system providers such as MediaDocumentsProvider?",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 62
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4480cf47_aa32b1b1",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T07:03:37Z",
+      "side": 1,
+      "message": "Do you mean the case where there is no root available? I guess it\u0027s more intuitive to return an empty list in that case.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 53
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
