@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a58046_713dfb80",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T17:38:29Z",
+      "side": 1,
+      "message": "The more I think about it, since CheckClientDownloadRequest class is ref-counted.\nIt won\u0027t be destroyed in the middle of whitelist check.  Could you remove this TODO? \n\nThanks!",
+      "revId": "b7c3ef2ee2c339e37abd51dc3ef04f1994757099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
