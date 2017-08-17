@@ -2,6 +2,190 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb243e5c_1eb4b8ba",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "tools:* last?",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1babc26_0b131561",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "I don\u0027t think you need allcaps",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d165b3_7a991eb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "so... I thought we needed to show this somehow?",
+      "range": {
+        "startLine": 121,
+        "startChar": 12,
+        "endLine": 121,
+        "endChar": 19
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6ca871_416676f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "might as well assert `position \u003e 0` ? It will throw if called an the spacer is not a child anyway",
+      "range": {
+        "startLine": 251,
+        "startChar": 15,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29b8727_3226a5e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "remark from Bernhard: If we make these checks depend on feature state, we can more easily go around and remove one of the branches when we remove the feature. Maybe we should start caching feature flag state though, and avoid JNI calls.",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 266,
+        "endChar": 27
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99191d5_f64729a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "hum not completely sure about this... maybe remove the listener when detaching the adapter instead? If we care about memory etc, we are still letting the recycler view have a reference to the adapter through this listener. But maybe we still have some anyway or don\u0027t care about that so the current code is fine?",
+      "range": {
+        "startLine": 316,
+        "startChar": 26,
+        "endLine": 316,
+        "endChar": 45
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff84789a_837bbad6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ScrollToLoadListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "I personally still don\u0027t like this reload trigger, esp because the user can\u0027t look at the current suggestions without triggering a fetch, so I don\u0027t find this doesn\u0027t go to well with go/attention-conscious-design or go/distraction. But it sounded like this would be temporary until the reverse pull to load works, so fine -_-",
+      "range": {
+        "startLine": 21,
+        "startChar": 29,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87ef5c26_179f2711",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ScrollToLoadListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "lambda or method ref?",
+      "range": {
+        "startLine": 44,
+        "startChar": 43,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07e1cf80_f481c421",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
         "patchSetId": 4
@@ -93,6 +277,29 @@
       "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4a52bc_cd773dbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T09:55:49Z",
+      "side": 1,
+      "message": "aren\u0027t set enabled and visible the same?",
+      "range": {
+        "startLine": 476,
+        "startChar": 20,
+        "endLine": 476,
+        "endChar": 30
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
