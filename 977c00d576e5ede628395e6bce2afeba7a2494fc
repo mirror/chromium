@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22f92d44_bf5dcc89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-17T00:55:54Z",
+      "side": 1,
+      "message": "Thanks :)",
+      "parentUuid": "4dddc0f2_56625123",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72f575ff_284acf13",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c902b9b_de5062b5",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-17T00:55:54Z",
+      "side": 1,
+      "message": "That\u0027s cool, thanks.",
+      "parentUuid": "72f575ff_284acf13",
+      "range": {
+        "startLine": 145,
+        "startChar": 42,
+        "endLine": 145,
+        "endChar": 44
+      },
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "09d094f7_a31fdf25",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-17T00:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a61220_c00e68de",
+      "range": {
+        "startLine": 185,
+        "startChar": 14,
+        "endLine": 185,
+        "endChar": 41
+      },
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eceb34e_7c48c083",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
         "patchSetId": 25
@@ -85,6 +157,24 @@
       "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2332375_410416fa",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-17T00:55:54Z",
+      "side": 1,
+      "message": "FilePath::FromUTF8Unsafe takes a std::string so I kept jfile_path as is, which is converted to std::string.",
+      "parentUuid": "5eceb34e_7c48c083",
+      "revId": "977c00d576e5ede628395e6bce2afeba7a2494fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
