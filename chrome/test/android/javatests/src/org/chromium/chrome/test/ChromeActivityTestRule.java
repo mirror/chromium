@@ -55,13 +55,17 @@ public class ChromeActivityTestRule<T extends ChromeActivity>
         mTestCommon = new ChromeActivityTestCommon<T>(activityClass, this);
     }
 
+    public void ruleSetUp() throws Throwable {
+        mTestCommon.setUp();
+    }
+
     @Override
     public Statement apply(final Statement base, Description description) {
         mCurrentTestName = description.getMethodName();
         final Statement superBase = super.apply(new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                mTestCommon.setUp();
+                ruleSetUp();
                 base.evaluate();
             }
         }, description);
