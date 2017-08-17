@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9310140_4f1c4be8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T21:42:01Z",
+      "side": 1,
+      "message": "Updated to make this clearer.",
+      "parentUuid": "d044b989_84d8bf9b",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0e92466_fc651b27",
         "filename": "cc/tiles/tile_manager_settings.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "26f8b2e4_5e074c6e",
+        "filename": "cc/tiles/tile_manager_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T21:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0e92466_fc651b27",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49d0ca64_119be90b",
         "filename": "cc/trees/layer_tree_settings.h",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "3e77fd05_5500fa9c",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T21:42:01Z",
+      "side": 1,
+      "message": "Woops, yes. I didn\u0027t realize because the value in TileManagerSettings was always getting overridden by this value.\n\nIts meant to be 1M by default, updated TileManagerSettings to be consistent with this value.",
+      "parentUuid": "49d0ca64_119be90b",
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13de19bf_37a23c00",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "058d7b416817856b2f6689cc226765fe179ee369",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2031769f_420808d3",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T21:42:01Z",
+      "side": 1,
+      "message": "I was trying to keep all checker-imaging settings in one place.",
+      "parentUuid": "13de19bf_37a23c00",
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
