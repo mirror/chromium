@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #import "base/test/ios/wait_util.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
+#import "ios/testing/wait_util.h"
 #import "ios/web/navigation/crw_session_controller.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
@@ -500,25 +501,6 @@ TEST_F(CRWWebControllerPageScrollStateTest, DISABLED_AtTop) {
 
   ASSERT_FALSE(web_controller().atTop);
 };
-
-// Real WKWebView is required for CRWWebControllerNavigationTest.
-typedef web::WebTestWithWebController CRWWebControllerNavigationTest;
-
-// Tests navigation between 2 URLs which differ only by fragment.
-TEST_F(CRWWebControllerNavigationTest, GoToItemWithoutDocumentChange) {
-  LoadHtml(@"<html><body></body></html>", GURL("https://chromium.test"));
-  LoadHtml(@"<html><body></body></html>", GURL("https://chromium.test#hash"));
-  NavigationManagerImpl& nav_manager =
-      web_controller().webStateImpl->GetNavigationManagerImpl();
-  CRWSessionController* session_controller = nav_manager.GetSessionController();
-  EXPECT_EQ(2U, session_controller.items.size());
-  EXPECT_EQ(session_controller.items.back().get(),
-            session_controller.currentItem);
-
-  [web_controller() goToItemAtIndex:0];
-  EXPECT_EQ(session_controller.items.front().get(),
-            session_controller.currentItem);
-}
 
 // Test fixture for testing visible security state.
 typedef web::WebTestWithWebState CRWWebStateSecurityStateTest;
