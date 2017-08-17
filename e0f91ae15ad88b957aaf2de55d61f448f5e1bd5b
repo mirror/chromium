@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9a7dcb47_c41ad299",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T20:53:46Z",
+      "side": 1,
+      "message": "We might, but what about the case where !bindings_.empty()?\nMy recommendation:\n\nCreate a new method CancelAllRequests() and invoke it from here.\nKeep the method OnConnectionError() and have it call CancelAllRequests() after the if (!bindings_.empty()) check.",
+      "parentUuid": "97df98ce_ced2c07c",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61ee5227_1968dd0f",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
         "patchSetId": 6
