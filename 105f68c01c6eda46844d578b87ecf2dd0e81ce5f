@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b98f41ca_6a6bc17b",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-17T17:16:32Z",
+      "side": 1,
+      "message": "This seems a little flaky, as it\u0027s possible for a display ICC profile to get evicted from the cache. Can we just do the histogramming on startup instead?",
+      "range": {
+        "startLine": 131,
+        "startChar": 22,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "105f68c01c6eda46844d578b87ecf2dd0e81ce5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b3a45c_7cbd5356",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-17T17:16:32Z",
+      "side": 1,
+      "message": "add DCHECK(!lock_.trylock());\n\n(same for the other \"underlock\" function above.)",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 12
+      },
+      "revId": "105f68c01c6eda46844d578b87ecf2dd0e81ce5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7c89c4_181eb5dd",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-17T17:16:32Z",
+      "side": 1,
+      "message": "for (const auto\u0026 id_entry_pair : id_to_icc_profile_mru_)   ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 7
+      },
+      "revId": "105f68c01c6eda46844d578b87ecf2dd0e81ce5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
