@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a83bdd_f57c7511",
+        "filename": "media/gpu/vt_video_decode_accelerator_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-17T00:26:22Z",
+      "side": 1,
+      "message": "can we make this an array of pairs (or a struct with two entries) instead?\nIf this grows longer, it will be hard to line them up...\n\nOr maybe a map?",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 37
+      },
+      "revId": "3ffe591334364254c017c2750dbe40d2811fe51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2f29c0_0bbe0593",
+        "filename": "media/gpu/vt_video_decode_accelerator_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-17T00:26:22Z",
+      "side": 1,
+      "message": "would it help to have some full-range videos to analyze?",
+      "range": {
+        "startLine": 360,
+        "startChar": 19,
+        "endLine": 360,
+        "endChar": 26
+      },
+      "revId": "3ffe591334364254c017c2750dbe40d2811fe51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
