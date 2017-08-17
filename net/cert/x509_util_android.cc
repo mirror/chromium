@@ -14,7 +14,7 @@ using base::android::JavaParamRef;
 namespace net {
 
 void NotifyKeyChainChanged(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
-  CertDatabase::GetInstance()->OnAndroidKeyChainChanged();
+  CertDatabase::GetInstance()->NotifyObserversCertDBChanged();
 }
 
 void RecordCertVerifyCapabilitiesHistogram(JNIEnv* env,

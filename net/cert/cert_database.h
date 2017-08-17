@@ -9,8 +9,8 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "build/build_config.h"
 #include "net/base/net_export.h"
-#include "net/cert/x509_certificate.h"
 
 namespace base {
 template <typename T> struct DefaultSingletonTraits;
@@ -71,21 +71,9 @@ class NET_EXPORT CertDatabase {
   void SetMessageLoopForKeychainEvents();
 #endif
 
-#if defined(OS_ANDROID)
-  // On Android, the system key store may be replaced with a device-specific
-  // KeyStore used for storing client certificates. When the Java side replaces
-  // the KeyStore used for client certificates, notifies the observers as if a
-  // new client certificate was added.
-  void OnAndroidKeyStoreChanged();
-
-  // On Android, the system database is used. When the system notifies the
-  // application that the certificates changed, the observers must be notified.
-  void OnAndroidKeyChainChanged();
-#endif
-
   // Synthetically injects notifications to all observers. In general, this
   // should only be called by the creator of the CertDatabase. Used to inject
-  // notifcations from other DB interfaces.
+  // notifications from other DB interfaces.
   void NotifyObserversCertDBChanged();
 
  private:
@@ -97,6 +85,8 @@ class NET_EXPORT CertDatabase {
   const scoped_refptr<base::ObserverListThreadSafe<Observer>> observer_list_;
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
+  void ReleaseNotifier();
+
   class Notifier;
   friend class Notifier;
   std::unique_ptr<Notifier> notifier_;
