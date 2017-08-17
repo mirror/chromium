@@ -16,6 +16,24 @@
       "revId": "f991b636693b48a0f3d057779348ce28212cdf2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4327f409_1a4b0d53",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-17T17:04:36Z",
+      "side": 1,
+      "message": "Good point. Right now, all the services launched by service manager use English names only, the reason, I think, is that utility processes are only used briefly and internally. If this needs to be changed in the future, we can change them all together. WDYT?",
+      "parentUuid": "dff6b7e5_a1c3c119",
+      "revId": "f991b636693b48a0f3d057779348ce28212cdf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
