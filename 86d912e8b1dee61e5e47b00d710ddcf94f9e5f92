@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8cf1998_e3265708",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T08:50:03Z",
+      "side": 1,
+      "message": "Stumbled upon this in another review -- this looks a bit confusing.\nWe pass io_task_runner_ (for generic sequenced operations) and GetTaskRunnerForThread(BrowserThread::IO) (for network operations).\n\nThe fact that io_task_runner_ !\u003d GetTaskRunnerForThread(BrowserThread::IO) was surprising.\nOTOH I can\u0027t come up with a better name either, maybe blocking_task_runner_ ?\n\n( BTW, passing BrowserThread::FILE here is going away in https://chromium-review.googlesource.com/c/612171 )",
+      "range": {
+        "startLine": 487,
+        "startChar": 45,
+        "endLine": 487,
+        "endChar": 60
+      },
+      "revId": "86d912e8b1dee61e5e47b00d710ddcf94f9e5f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
