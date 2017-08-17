@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5de1831a_e12d45c3",
+        "filename": "content/browser/frame_host/frame_navigation_entry.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T12:52:15Z",
+      "side": 1,
+      "message": "Note: I think we could have considered adding |content_type| as a member of ResoucreRequestBody? but this might affect serialization of page state on disk, so probably shouldn\u0027t be done in this CL. Mark it as a TODO?",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5692e0d_5682f960",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T12:52:15Z",
+      "side": 1,
+      "message": "Per the comment above, I imagine we do not get the content type if the post followed the OpenURL path. If that\u0027s the case, we should probably file a bug to fix this.",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d096749_638022f3",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T12:52:15Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t this be done in AddAdditionalRequestHeaders?",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5539fda1_4a6b9ee6",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T12:52:15Z",
+      "side": 1,
+      "message": "nit: use same type of initialization for both variables.",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29176b6d_b5693492",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T12:52:15Z",
+      "side": 1,
+      "message": "nit: use ExecuteScript instead of navigating to javascript URL?",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
