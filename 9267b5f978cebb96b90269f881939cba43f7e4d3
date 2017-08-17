@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed3dc3c3_92c8b2d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-17T21:57:04Z",
+      "side": 0,
+      "message": "See my comments on your other FirstRunActivityBase CL. There may be other leftovers from this assumption that there will be multiple activity instances of FRE.",
+      "range": {
+        "startLine": 377,
+        "startChar": 39,
+        "endLine": 377,
+        "endChar": 67
+      },
+      "revId": "9267b5f978cebb96b90269f881939cba43f7e4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
