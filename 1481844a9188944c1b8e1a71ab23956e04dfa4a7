@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d040d9d_41ccb88d",
+        "filename": "chrome/common/client_hints.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-17T22:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51deac5e_c8a33053",
+      "revId": "1481844a9188944c1b8e1a71ab23956e04dfa4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a8d461_a33889f7",
         "filename": "chrome/common/client_hints.mojom",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "1481844a9188944c1b8e1a71ab23956e04dfa4a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eb41c4_80a91252",
+        "filename": "chrome/common/client_hints.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-17T22:14:07Z",
+      "side": 1,
+      "message": "\u003e Please document what this is a map of (what is the key, what is the value)\nDone.\n\u003e \n\u003e From an IPC security perspective, it would be preferable to pass something more strongly typed than a Value here though, and convert it in the browser process. That way, we can be sure that the preference that\u0027s written will match the format we expect. That would mean passing enum values for the client hint types instead of just passing ints.\nDone.\n\u003e \n\u003e (Also, I would prefer to see this mapped from constants to strings in the prefs... but that\u0027s just my opinion.)\nI do not feel strongly about this but const ints require less parsing.",
+      "parentUuid": "38a8d461_a33889f7",
+      "revId": "1481844a9188944c1b8e1a71ab23956e04dfa4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
