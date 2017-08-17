@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9aff9a7_9cae525e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-17T21:12:49Z",
+      "side": 1,
+      "message": "Although wheel-scroll-factor was apparently added for the sake of a Blackberry device implementing touchpad scrolling (http://crbug.com/483231), that was in the context of them generating mousewheel events at the OS level, apparently with their own outside-app fling gesture curve, much like OS X works.  It\u0027s not clear what that value has to do with this alternate mechanism of supporting touchpad scroll.  Did you check that it has exactly the same velocity as touchpad scrolling inside system Android Views (e.g. settings page)?",
+      "revId": "64d858b900839556cf3d705567b4e39ee8efd3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
