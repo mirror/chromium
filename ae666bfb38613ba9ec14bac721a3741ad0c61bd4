@@ -34,6 +34,24 @@
       "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290c94f2_a0ac1d8a",
+        "filename": "services/resource_coordinator/resource_coordinator_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T20:42:00Z",
+      "side": 1,
+      "message": "Yeah something like that would be great; this test is basically an instantiation test and exercises the service being able to run standalone and not have any hidden dependencies.\n\nYou could also have a Flush() call or something which just invokes the callback you give it.",
+      "parentUuid": "f0d4ad64_ad3ea263",
+      "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
