@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ceb8b27_a9f2f52a",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-17T16:43:58Z",
+      "side": 1,
+      "message": "For 3. How about \"only one of the installed browsers supports WebAPKs.\"\n\nI am unsure what you mean by \"the browser we return is the only browser that can support WebAPKs.\" I think that you are referring to the return value of WebApkUtils#getHostBrowserPackageName(). If you are referring to the return value, the sentence should not be preceded by (3.). The numbers are for describing the \"Environment\" (e.g. what\u0027s installed, what\u0027s in SharedPreferences)",
+      "revId": "9d1972dda66f49a71de85601456a08d2ba603c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4ff3ce_20541a54",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-17T16:43:58Z",
+      "side": 1,
+      "message": "I don\u0027t think that we need to have a separate test cases for when:\nWebApkUtils#getDefaultBrowserPackageName() returns a browser which does not support WebAPKs\nWebApkUtils#getDefaultBrowserPackageName() returns null",
+      "revId": "9d1972dda66f49a71de85601456a08d2ba603c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
