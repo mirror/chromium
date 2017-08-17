@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab215c29_9ac15d23",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-17T17:03:26Z",
+      "side": 1,
+      "message": "Do we need:\n\n1) third_party/WebKit/public/platform/modules/background_sync\n2) third_party/WebKit/LayoutTests/http/tests/background_sync\n\nAlso, should they be in alphabetical order?",
+      "range": {
+        "startLine": 172,
+        "startChar": 39,
+        "endLine": 172,
+        "endChar": 45
+      },
+      "revId": "bd77874637be62eb1c829e17605ab2971db88385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1853ad1b_616d4b98",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-17T17:03:26Z",
+      "side": 1,
+      "message": "What about:\n\n1) third_party/WebKit/LayoutTests/http/tests/cachestorage\n2) third_party/WebKit/LayoutTests/http/tests/inspector-protocol/cachestorage\n3) third_party/WebKit/LayoutTests/external/wpt/service-workers/cache-storage\n4) third_party/WebKit/LayoutTests/http/tests/inspector/cache-storage",
+      "revId": "bd77874637be62eb1c829e17605ab2971db88385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0168ee69_5c2139d9",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-17T17:03:26Z",
+      "side": 1,
+      "message": "Same question:\n\n1) third_party/WebKit/LayoutTests/external/wpt/netinfo\n2) third_party/WebKit/LayoutTests/netinfo",
+      "revId": "bd77874637be62eb1c829e17605ab2971db88385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
