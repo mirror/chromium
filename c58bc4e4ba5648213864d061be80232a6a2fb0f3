@@ -16,6 +16,24 @@
       "revId": "c58bc4e4ba5648213864d061be80232a6a2fb0f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb739242_feb60fdd",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-17T21:28:49Z",
+      "side": 1,
+      "message": "\u003e You can also use base::ClampAdd() instead of cc::MathUtil here.\n\u003e \n\u003e Up to you, but you don\u0027t need the DEPS change for cc if you use the base version. ;)\n\nLeft as-is using cc::MathUtil.  The new cc/ include fits naturally with the other cc/ includes.  Plus, using base/numerics to clamp to a particular subset of the integer range doesn\u0027t feel natural.  At least that the impression I get from reading the docs and example code of how those are used.  This ClampToRange code is more readable.",
+      "parentUuid": "99e16ada_0c38f154",
+      "revId": "c58bc4e4ba5648213864d061be80232a6a2fb0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
