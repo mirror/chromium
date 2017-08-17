@@ -241,7 +241,7 @@ std::unique_ptr<RenderPass> CreateRenderPass() {
   std::unique_ptr<RenderPass> pass = RenderPass::Create();
   pass->SetNew(render_pass_id, output_rect, output_rect, gfx::Transform());
 
-  SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   shared_state->opacity = 1.f;
   return pass;
 }
@@ -254,7 +254,7 @@ std::unique_ptr<RenderPass> CreateRenderPassWithTransform(
   std::unique_ptr<RenderPass> pass = RenderPass::Create();
   pass->SetNew(render_pass_id, output_rect, output_rect, gfx::Transform());
 
-  SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   shared_state->opacity = 1.f;
   shared_state->quad_to_target_transform = transform;
   return pass;
@@ -274,7 +274,7 @@ viz::ResourceId CreateResource(ResourceProvider* resource_provider,
 }
 
 SolidColorDrawQuad* CreateSolidColorQuadAt(
-    const SharedQuadState* shared_quad_state,
+    const viz::SharedQuadState* shared_quad_state,
     SkColor color,
     RenderPass* render_pass,
     const gfx::Rect& rect) {
@@ -284,10 +284,11 @@ SolidColorDrawQuad* CreateSolidColorQuadAt(
   return quad;
 }
 
-TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
-                                       const SharedQuadState* shared_quad_state,
-                                       RenderPass* render_pass,
-                                       const gfx::Rect& rect) {
+TextureDrawQuad* CreateCandidateQuadAt(
+    ResourceProvider* resource_provider,
+    const viz::SharedQuadState* shared_quad_state,
+    RenderPass* render_pass,
+    const gfx::Rect& rect) {
   bool premultiplied_alpha = false;
   bool flipped = false;
   bool nearest_neighbor = false;
@@ -310,7 +311,7 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
 
 StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
     ResourceProvider* resource_provider,
-    const SharedQuadState* shared_quad_state,
+    const viz::SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Rect& rect,
     const gfx::Transform& transform) {
@@ -329,7 +330,7 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
 
 TextureDrawQuad* CreateFullscreenCandidateQuad(
     ResourceProvider* resource_provider,
-    const SharedQuadState* shared_quad_state,
+    const viz::SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
   return CreateCandidateQuadAt(resource_provider, shared_quad_state,
                                render_pass, render_pass->output_rect);
@@ -337,7 +338,7 @@ TextureDrawQuad* CreateFullscreenCandidateQuad(
 
 StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
     ResourceProvider* resource_provider,
-    const SharedQuadState* shared_quad_state,
+    const viz::SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Transform& transform) {
   return CreateCandidateVideoQuadAt(resource_provider, shared_quad_state,
@@ -347,7 +348,7 @@ StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
 
 YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
     ResourceProvider* resource_provider,
-    const SharedQuadState* shared_quad_state,
+    const viz::SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
   gfx::RectF tex_coord_rect(0, 0, 1, 1);
   gfx::Rect rect = render_pass->output_rect;
@@ -368,7 +369,7 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
 }
 
 void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
-                        const SharedQuadState* shared_quad_state,
+                        const viz::SharedQuadState* shared_quad_state,
                         RenderPass* render_pass,
                         const gfx::Rect& rect) {
   SolidColorDrawQuad* color_quad =
@@ -377,7 +378,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
 }
 
 void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
-                        const SharedQuadState* shared_quad_state,
+                        const viz::SharedQuadState* shared_quad_state,
                         RenderPass* render_pass,
                         const gfx::Rect& rect,
                         SkColor color) {
@@ -388,7 +389,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
 }
 
 void CreateFullscreenOpaqueQuad(ResourceProvider* resource_provider,
-                                const SharedQuadState* shared_quad_state,
+                                const viz::SharedQuadState* shared_quad_state,
                                 RenderPass* render_pass) {
   CreateOpaqueQuadAt(resource_provider, shared_quad_state, render_pass,
                      render_pass->output_rect);
@@ -641,7 +642,7 @@ TEST_F(FullscreenOverlayTest, RemoveFullscreenQuadFromQuadList) {
                      pass->shared_quad_state_list.back(), pass.get(),
                      kOverlayTopLeftRect);
 
-  SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   shared_state->opacity = 1.f;
   CreateFullscreenCandidateQuad(resource_provider_.get(),
                                 pass->shared_quad_state_list.back(),
@@ -1174,7 +1175,7 @@ TEST_F(SingleOverlayOnTopTest, AllowTransparentOnTop) {
       gfx::RectF(kOverlayBottomRightRect));
 
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   shared_state->opacity = 0.f;
   CreateSolidColorQuadAt(shared_state, SK_ColorBLACK, pass.get(),
                          kOverlayBottomRightRect);
@@ -1221,7 +1222,7 @@ TEST_F(SingleOverlayOnTopTest, AllowTransparentColorOnTop) {
 
 TEST_F(SingleOverlayOnTopTest, RejectOpaqueColorOnTop) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   shared_state->opacity = 0.5f;
   CreateSolidColorQuadAt(shared_state, SK_ColorBLACK, pass.get(),
                          kOverlayBottomRightRect);
@@ -1244,7 +1245,7 @@ TEST_F(SingleOverlayOnTopTest, RejectOpaqueColorOnTop) {
 
 TEST_F(SingleOverlayOnTopTest, RejectTransparentColorOnTopWithoutBlending) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   CreateSolidColorQuadAt(shared_state, SK_ColorTRANSPARENT, pass.get(),
                          kOverlayBottomRightRect)->opaque_rect =
       kOverlayBottomRightRect;
@@ -2174,7 +2175,7 @@ TEST_P(DCLayerOverlayTest, ClipRect) {
                        gfx::Rect(0, 2, 100, 100), SK_ColorWHITE);
     pass->shared_quad_state_list.back()->is_clipped = true;
     pass->shared_quad_state_list.back()->clip_rect = gfx::Rect(0, 3, 100, 100);
-    SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
+    viz::SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
     shared_state->opacity = 1.f;
     CreateFullscreenCandidateYUVVideoQuad(resource_provider_.get(),
                                           shared_state, pass.get());
