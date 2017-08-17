@@ -23,12 +23,14 @@ class DownloadService;
 
 namespace offline_pages {
 
+class PrefetchDispatcher;
 class PrefetchServiceTestTaco;
 
 // Asynchronously downloads the archive.
 class PrefetchDownloaderImpl : public PrefetchDownloader {
  public:
-  PrefetchDownloaderImpl(download::DownloadService* download_service,
+  PrefetchDownloaderImpl(PrefetchDispatcher* dispatcher,
+                         download::DownloadService* download_service,
                          version_info::Channel channel);
   ~PrefetchDownloaderImpl() override;
 
