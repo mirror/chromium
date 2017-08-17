@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bab774eb_b27b146d",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-17T13:40:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0aaf9c5_1848132e",
+      "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "226e716c_14ec7c63",
         "filename": "components/subresource_filter/content/browser/subresource_filter_observer_test_utils.h",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "* is dereferencing the base::Optional returned by GetPageActivation*",
       "parentUuid": "c9cc8065_57b90873",
+      "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbd966de_da083e0e",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-17T13:40:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60674a2b_50f33e9c",
       "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
