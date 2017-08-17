@@ -60,6 +60,8 @@ static_library("prefetch") {
     "prefetch_types.h",
     "stale_entry_finalizer_task.cc",
     "stale_entry_finalizer_task.h",
+    "store/prefetch_downloader_quota.cc",
+    "store/prefetch_downloader_quota.h",
     "store/prefetch_store.cc",
     "store/prefetch_store.h",
     "store/prefetch_store_utils.cc",

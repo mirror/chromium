@@ -66,6 +66,12 @@ class PrefetchStoreTestUtil {
   // Returns number of rows affected by last SQL statement.
   int LastCommandChangeCount();
 
+  // Sets the prefetch quota value for testing.
+  bool SetPrefetchQuota(int64_t available_quota);
+
+  // Gets the prefetch downloader quota value for testing.
+  int64_t GetPrefetchQuota();
+
   PrefetchStore* store() { return store_.get(); }
 
  private:
