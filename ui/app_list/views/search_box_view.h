@@ -150,6 +150,11 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // TODO(weidongg): move this function to utility class.
   static bool IsArrowKey(const ui::KeyEvent& event);
 
+  // Gets the SearchResultsPageView's layer.
+  ui::Layer* GetSearchResultsPageViewLayer();
+
+  void FadeOutOnClose(base::TimeDelta duration);
+
  private:
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();

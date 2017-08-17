@@ -50,6 +50,8 @@
 #include "ui/views/view_model_utils.h"
 #include "ui/views/widget/widget.h"
 
+#include "ui/compositor/scoped_layer_animation_settings.h"
+
 namespace app_list {
 
 namespace {
@@ -142,6 +144,15 @@ gfx::Insets GetTilePadding() {
 
   return gfx::Insets(-kTileTopPadding, -kTileLeftRightPadding,
                      -kTileBottomPadding, -kTileLeftRightPadding);
+}
+
+void DoAnimation(base::TimeDelta duration, ui::Layer* layer) {
+  ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
+  animation.SetTransitionDuration(duration);
+  animation.SetTweenType(gfx::Tween::EASE_OUT);
+  animation.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  layer->SetOpacity(0.0f);
 }
 
 // RowMoveAnimationDelegate is used when moving an item into a different row.
@@ -1769,6 +1780,16 @@ void AppsGridView::UpdateOpacity(int app_list_y_position_in_screen) {
                  0.f),
         1.0f);
     page_switcher_view_->layer()->SetOpacity(is_in_drag ? opacity : 1.0f);
+  }
+}
+
+void AppsGridView::FadeOutOnClose(base::TimeDelta duration) {
+  DoAnimation(duration, suggestions_container_->layer());
+  DoAnimation(duration, all_apps_indicator_->layer());
+  DoAnimation(duration, page_switcher_view_->layer());
+  for (int i = 0; i < view_model_.view_size(); ++i) {
+    AppListItemView* item_view = GetItemViewAt(i);
+    DoAnimation(duration, item_view->layer());
   }
 }
 

@@ -45,6 +45,8 @@
 #include "ui/views/shadow_border.h"
 #include "ui/views/widget/widget.h"
 
+#include "ui/compositor/scoped_layer_animation_settings.h"
+
 using wallpaper::ColorProfileType;
 
 namespace app_list {
@@ -674,6 +676,30 @@ bool SearchBoxView::IsArrowKey(const ui::KeyEvent& event) {
   return event.key_code() == ui::VKEY_UP || event.key_code() == ui::VKEY_DOWN ||
          event.key_code() == ui::VKEY_LEFT ||
          event.key_code() == ui::VKEY_RIGHT;
+}
+
+ui::Layer* SearchBoxView::GetSearchResultsPageViewLayer() {
+  ContentsView* contents_view = static_cast<ContentsView*>(contents_view_);
+  return contents_view->search_results_page_view()->layer();
+}
+
+void SearchBoxView::FadeOutOnClose(base::TimeDelta duration) {
+  ui::ScopedLayerAnimationSettings search_box_animation(
+      this->layer()->GetAnimator());
+  search_box_animation.SetTransitionDuration(duration);
+  search_box_animation.SetTweenType(gfx::Tween::EASE_OUT);
+  search_box_animation.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  this->layer()->SetOpacity(0.0f);
+
+  ContentsView* contents_view = static_cast<ContentsView*>(contents_view_);
+  ui::ScopedLayerAnimationSettings result_layer(
+      contents_view->search_results_page_view()->layer()->GetAnimator());
+  result_layer.SetTransitionDuration(duration);
+  result_layer.SetTweenType(gfx::Tween::EASE_OUT);
+  result_layer.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  contents_view->search_results_page_view()->layer()->SetOpacity(0.0f);
 }
 
 void SearchBoxView::UpdateModel() {

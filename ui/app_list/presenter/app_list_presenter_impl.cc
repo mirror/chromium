@@ -11,6 +11,9 @@
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/presenter/app_list_presenter_delegate_factory.h"
 #include "ui/app_list/views/app_list_view.h"
+#include "ui/app_list/views/contents_view.h"
+#include "ui/app_list/views/search_box_view.h"
+#include "ui/app_list/views/search_result_page_view.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
@@ -173,35 +176,38 @@ void AppListPresenterImpl::ResetView() {
 void AppListPresenterImpl::ScheduleAnimation() {
   // Stop observing previous animation.
   StopObservingImplicitAnimations();
-
   views::Widget* widget = view_->GetWidget();
+  aura::Window* root_window = widget->GetNativeView()->GetRootWindow();
   ui::Layer* layer = GetLayer(widget);
   layer->GetAnimator()->StopAnimating();
   gfx::Rect target_bounds = is_fullscreen_app_list_enabled_
                                 ? widget->GetNativeView()->bounds()
                                 : widget->GetWindowBoundsInScreen();
   ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
-  aura::Window* root_window = widget->GetNativeView()->GetRootWindow();
   const gfx::Vector2d offset =
       presenter_delegate_->GetVisibilityAnimationOffset(root_window);
-  animation.SetTransitionDuration(
+  base::TimeDelta animation_duration =
       presenter_delegate_->GetVisibilityAnimationDuration(root_window,
-                                                          is_visible_));
+                                                          is_visible_);
+  animation.SetTransitionDuration(animation_duration);
 
   if (is_fullscreen_app_list_enabled_) {
+    view_->StartCloseAnimation(animation_duration);
     target_bounds.Offset(offset);
   } else {
     if (is_visible_) {
       gfx::Rect start_bounds = gfx::Rect(target_bounds);
       start_bounds.Offset(offset);
+      start_bounds.Offset(gfx::Vector2d(0, -48));
       widget->SetBounds(start_bounds);
     } else {
       target_bounds.Offset(offset);
     }
+    layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
   }
 
   animation.AddObserver(this);
-  layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
+
   if (is_fullscreen_app_list_enabled_) {
     widget->GetNativeView()->SetBounds(target_bounds);
     return;

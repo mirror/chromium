@@ -147,6 +147,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // in progress it will be interrupted.
   void StartAnimationForState(AppListState new_state);
 
+  // Starts the close animation.
+  void StartCloseAnimation(base::TimeDelta animation_duration);
+
   // Changes the app list state depending on the current |app_list_state_| and
   // whether the search box is empty.
   void SetStateFromSearchBoxView(bool search_box_is_empty);
@@ -193,6 +196,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
     app_list_animation_duration_ms_ = app_list_animation_duration_ms;
   }
 
+  // Gets the apps grid view owned by this view.
+  AppsGridView* GetAppsGridView() const;
+
  private:
   // A widget observer that is responsible for keeping the AppListView state up
   // to date on closing.
@@ -228,9 +234,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Gets the display nearest to the parent window.
   display::Display GetDisplayNearestView() const;
-
-  // Gets the apps grid view owned by this view.
-  AppsGridView* GetAppsGridView() const;
 
   // Overridden from views::BubbleDialogDelegateView:
   void OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
