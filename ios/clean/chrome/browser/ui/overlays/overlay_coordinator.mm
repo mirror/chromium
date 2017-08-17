@@ -43,9 +43,8 @@
   DCHECK(self.queue);
   [super stop];
   [self.parentCoordinator removeChildCoordinator:self];
-  self.queue->OverlayWasStopped(self);
   // Started OverlayCoordinators are owned by their OverlayQueue, and will be
-  // dealocated as a result of OverlayWasStopped().  Do not add any more code
+  // dealocated when its consumer is stopped.  Do not add any more code
   // after this call.
 }
 

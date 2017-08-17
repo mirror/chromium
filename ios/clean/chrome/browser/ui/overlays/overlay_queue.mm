@@ -5,12 +5,64 @@
 #import "ios/clean/chrome/browser/ui/overlays/overlay_queue.h"
 
 #include "base/logging.h"
+#import "base/mac/foundation_util.h"
+#import "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_coordinator+internal.h"
 #include "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+@interface OverlayQueueBrowserCoordinatorObserver
+    : NSObject<BrowserCoordinatorObserver> {
+  // The coordinator and queue passed on initialization.
+  BrowserCoordinator* _coordinator;
+  OverlayQueue* _queue;
+}
+
+// Designated initializer for an observer that notifies |queue| of events from
+// |coordinator|.
+- (instancetype)initWithCoordinator:(BrowserCoordinator*)coordinator
+                              queue:(OverlayQueue*)queue
+    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
+
+@implementation OverlayQueueBrowserCoordinatorObserver
+
+- (instancetype)initWithCoordinator:(BrowserCoordinator*)coordinator
+                              queue:(OverlayQueue*)queue {
+  DCHECK(coordinator);
+  DCHECK(queue);
+  if ((self = [super init])) {
+    _coordinator = coordinator;
+    _queue = queue;
+    [_coordinator addObserver:self];
+  }
+  return self;
+}
+
+- (void)dealloc {
+  DCHECK(!_coordinator);
+}
+
+#pragma mark BrowserCoordinatorObserver
+
+- (void)browserCoordinatorConsumerDidStop:(BrowserCoordinator*)coordinator {
+  DCHECK_EQ(_coordinator, coordinator);
+  _queue->OverlayWasStopped(
+      base::mac::ObjCCastStrict<OverlayCoordinator>(coordinator));
+}
+
+- (void)browserCoordinatorWasDestroyed:(BrowserCoordinator*)coordinator {
+  DCHECK_EQ(_coordinator, coordinator);
+  [_coordinator removeObserver:self];
+  _coordinator = nil;
+}
+
+@end
 
 OverlayQueue::OverlayQueue()
     : overlays_([[NSMutableArray<OverlayCoordinator*> alloc] init]),
@@ -32,8 +84,10 @@ void OverlayQueue::OverlayWasStopped(OverlayCoordinator* overlay_coordinator) {
   DCHECK(overlay_coordinator);
   DCHECK_EQ(GetFirstOverlay(), overlay_coordinator);
   DCHECK(IsShowingOverlay());
+  DCHECK(coordinator_observer_);
   [overlays_ removeObjectAtIndex:0];
   showing_overlay_ = false;
+  coordinator_observer_ = nil;
   for (auto& observer : observers_) {
     observer.OverlayQueueDidStopVisibleOverlay(this);
   }
@@ -102,4 +156,8 @@ OverlayCoordinator* OverlayQueue::GetFirstOverlay() {
 
 void OverlayQueue::OverlayWasStarted() {
   showing_overlay_ = true;
+  DCHECK(!coordinator_observer_);
+  coordinator_observer_ = [[OverlayQueueBrowserCoordinatorObserver alloc]
+      initWithCoordinator:GetFirstOverlay()
+                    queue:this];
 }

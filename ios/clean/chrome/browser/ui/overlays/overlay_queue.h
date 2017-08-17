@@ -12,6 +12,7 @@
 #include "base/observer_list.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_queue_observer.h"
 
+@protocol BrowserCoordinatorObserver;
 @class OverlayCoordinator;
 namespace web {
 class WebState;
@@ -30,7 +31,7 @@ class OverlayQueue {
   // Starts the next overlay in the queue.  If GetWebState() returns non-null,
   // it is expected that its content area is visible before this is called.
   virtual void StartNextOverlay() = 0;
-  // Tells the OverlayQueue that |overlay_coordinator| was stopped.
+  // Tells the OverlayQueue that |overlay_coordinator|'s consumer was stopped.
   virtual void OverlayWasStopped(OverlayCoordinator* overlay_coordinator);
   // Removes the currently displayed overlay and adds |overlay_coordinator| to
   // the front of the queue to be displayed immediately.
@@ -66,6 +67,9 @@ class OverlayQueue {
   base::ObserverList<OverlayQueueObserver> observers_;
   // The queue of overlays that were added for this WebState.
   __strong NSMutableArray<OverlayCoordinator*>* overlays_;
+  // The observer that waits for the current overlay's consumer to be stopped
+  // before calling OverlayWasStopped().
+  __strong id<BrowserCoordinatorObserver> coordinator_observer_;
   // Whether an overlay is currently started.  If this is true, the first
   // BrowserCoordinator in |overlays_| has been started.
   bool showing_overlay_;
