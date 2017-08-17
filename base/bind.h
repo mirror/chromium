@@ -216,6 +216,16 @@ Bind(Functor&& functor, Args&&... args) {
                        std::forward<Args>(args)...);
 }
 
+OnceClosure BindOnce(OnceClosure closure) {
+  return closure;
+}
+RepeatingClosure BindRepeating(RepeatingClosure closure) {
+  return closure;
+}
+Closure Bind(Closure closure) {
+  return closure;
+}
+
 }  // namespace base
 
 #endif  // BASE_BIND_H_
