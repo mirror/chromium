@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05ebdcd9_4c52533d",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-17T18:28:20Z",
+      "side": 1,
+      "message": "Comment",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "8e47400d47b39f70577534ba17623d912dbed409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bab70bc_1aeecc1f",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-17T18:28:20Z",
+      "side": 1,
+      "message": "Add comments describing high level test flow to each of these blocks.",
+      "revId": "8e47400d47b39f70577534ba17623d912dbed409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
