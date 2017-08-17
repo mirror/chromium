@@ -16,6 +16,24 @@
       "revId": "295764da66397077e12b7fe3ab2a371c6e777aa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a419f1a0_c2cd2ec7",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T18:18:38Z",
+      "side": 1,
+      "message": "Come to think of it, I think all accessors should return by value. The caller is expected to copy them to local variable anyway, so this way it is more explicit.",
+      "parentUuid": "5a4a6ffe_0a18123c",
+      "revId": "295764da66397077e12b7fe3ab2a371c6e777aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
