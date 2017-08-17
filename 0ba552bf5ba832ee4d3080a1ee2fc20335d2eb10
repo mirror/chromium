@@ -365,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "16485094_87443eac",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-17T22:45:04Z",
+      "side": 1,
+      "message": "I used ninja\u0026goma with symbol_level \u003d 2 is_clang\u003dfalse, it doesn\u0027t change anything.\nI tried returning (-1,-1), and it stepped into CursorRendererAura::OnMouseEvent() like those events with correct coordinates.\nAnd I also tried triggering a mouseleave on chrome toolbar, it\u0027s similar to the (0,0) event, it didn\u0027t step into any OnMouseEvent override function.\nI tried returning (1, 1) it\u0027s also similar to (0,0).\nSo, I think those events with coordinates (0,0) or (1,1) were dispatched to toolbar instead of page because their coordinates are in top left corner of the browser window.\nFunction ConvertLocationToTarget() in event.h, it calculates an offset for conversion from chrome window coordinates to widget coordinates. But for events not in widget (e.g. events with coordinates (0, 0), (1, 1), and  mouseleave events from toolbar), the offset is 0 and their coordinates don\u0027t change.",
+      "parentUuid": "2232373b_a87206e5",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
