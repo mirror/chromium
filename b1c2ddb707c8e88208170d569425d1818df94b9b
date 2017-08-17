@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b192720e_c02f15ed",
+        "filename": "chrome/browser/extensions/api/web_navigation/web_navigation_api_helpers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T00:21:09Z",
+      "side": 1,
+      "message": "Is the blocked URL dependent on extension? I\u0027m surprised at that and it would be much simpler to just not even generate the events and try to dispatch them if we know an URL is on the blocked list.",
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c45fc6_5626e13f",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T00:21:09Z",
+      "side": 1,
+      "message": "Use the common framework.js:\n\n\u003cscript src\u003d\"_test_resources/api_test/webnavigation/framework.js\"\u003e\u003c/script\u003e\n\nAlso, put it ahead of the test js, otherwise it might not have all the framework bits needed.",
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc28e714_c2237ff8",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T00:21:09Z",
+      "side": 1,
+      "message": "Let\u0027s capture this in a variable in the global scope and use it instead of calling it for each event.",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adb8b73_35c33676",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T00:21:09Z",
+      "side": 1,
+      "message": "Why do we expect two navigations to the unprotectedDomain URL?",
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
