@@ -22,6 +22,30 @@
       "revId": "9793f01dc50e7f2b9b5b3338d88659f14b71af75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0368fcaf_7c23da4d",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-17T21:52:00Z",
+      "side": 0,
+      "message": "It seems the entry is sorted by name, so it is moved to L942.",
+      "parentUuid": "c6551ee1_73621d8d",
+      "range": {
+        "startLine": 852,
+        "startChar": 48,
+        "endLine": 852,
+        "endChar": 0
+      },
+      "revId": "9793f01dc50e7f2b9b5b3338d88659f14b71af75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
