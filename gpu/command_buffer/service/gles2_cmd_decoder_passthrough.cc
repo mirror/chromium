@@ -725,6 +725,50 @@ GLES2DecoderPassthroughImpl::GetTranslator(GLenum type) {
   return nullptr;
 }
 
+void GLES2DecoderPassthroughImpl::BindImage(uint32_t client_texture_id,
+                                            uint32_t texture_target,
+                                            gl::GLImage* image,
+                                            bool can_bind_to_sampler) {
+  GLenum bind_target = GLES2Util::GLFaceTargetToTextureTarget(texture_target);
+
+  auto passthrough_texture_iter =
+      resources_->texture_object_map.find(client_texture_id);
+  if (passthrough_texture_iter == resources_->texture_object_map.end()) {
+    return;
+  }
+
+  TexturePassthrough* passthrough_texture =
+      passthrough_texture_iter->second.get();
+  DCHECK(passthrough_texture != nullptr);
+  DCHECK(passthrough_texture->target() == bind_target);
+  if (can_bind_to_sampler) {
+    // Binding an image to a texture requires that the texture is currently
+    // bound.
+    GLuint current_client_texture =
+        bound_textures_[bind_target][active_texture_unit_];
+    bool bind_new_texture = current_client_texture != client_texture_id;
+    if (bind_new_texture) {
+      glBindTexture(bind_target, passthrough_texture->service_id());
+    }
+
+    if (!image->BindTexImage(texture_target)) {
+      image->CopyTexImage(texture_target);
+    }
+
+    // Re-bind the old texture
+    if (bind_new_texture) {
+      GLuint current_service_texture = 0;
+      bool texture_existed = resources_->texture_id_map.GetServiceID(
+          current_client_texture, &current_service_texture);
+      DCHECK(texture_existed);
+      glBindTexture(bind_target, current_service_texture);
+    }
+  }
+
+  // Reference the image even if it is not bound as a sampler.
+  passthrough_texture->SetLevelImage(texture_target, 0, image);
+}
+
 const char* GLES2DecoderPassthroughImpl::GetCommandName(
     unsigned int command_id) const {
   if (command_id >= kFirstGLES2Command && command_id < kNumCommands) {
