@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8f3fa2_3745a446",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-17T03:57:38Z",
+      "side": 1,
+      "message": "This may not be needed.",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd7aee9_14a2cde6",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-17T03:57:38Z",
+      "side": 1,
+      "message": "Can you include this class definition into anonymous namespace below?",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 64
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
