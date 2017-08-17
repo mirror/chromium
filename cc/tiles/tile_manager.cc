@@ -367,9 +367,11 @@ TileManager::TileManager(
       did_oom_on_last_assign_(false),
       image_controller_(origin_task_runner,
                         std::move(image_worker_task_runner)),
-      checker_image_tracker_(&image_controller_,
-                             this,
-                             tile_manager_settings_.enable_checker_imaging),
+      checker_image_tracker_(
+          &image_controller_,
+          this,
+          tile_manager_settings_.enable_checker_imaging,
+          tile_manager_settings_.min_image_size_to_consider_checkering),
       more_tiles_need_prepare_check_notifier_(
           task_runner_,
           base::Bind(&TileManager::CheckIfMoreTilesNeedToBePrepared,

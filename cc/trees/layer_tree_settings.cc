@@ -44,6 +44,8 @@ TileManagerSettings LayerTreeSettings::ToTileManagerSettings() const {
   TileManagerSettings tile_manager_settings;
   tile_manager_settings.use_partial_raster = use_partial_raster;
   tile_manager_settings.enable_checker_imaging = enable_checker_imaging;
+  tile_manager_settings.min_image_size_to_consider_checkering =
+      min_image_size_to_consider_checkering;
   return tile_manager_settings;
 }
 
