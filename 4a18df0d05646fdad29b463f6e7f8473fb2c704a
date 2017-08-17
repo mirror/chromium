@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ede315c_825625a5",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:29:32Z",
+      "side": 1,
+      "message": "When I referred to using a structure, I meant converting it when the data was read from the file so this file only dealt with the structure. It appears that these structs are only used as output parameters, which doesn\u0027t really improve things much. This would make more sense if we were going to pass these around, but I don\u0027t think we are.",
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb28e8eb_579dbfac",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:29:32Z",
+      "side": 1,
+      "message": "Is \"offline\" relevant or should it be \"stored\" or something like that?",
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c99155c_526d15fb",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:29:32Z",
+      "side": 1,
+      "message": "Describe the return value in the comment above.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 4
+      },
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7913f9_a2fc1cf8",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:29:32Z",
+      "side": 1,
+      "message": "ConvertFooToBar is more common I believe.",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 30
+      },
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
