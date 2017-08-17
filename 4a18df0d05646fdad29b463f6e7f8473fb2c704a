@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2713cbf_94c8a272",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T03:50:25Z",
+      "side": 1,
+      "message": "This class is acting as the data base and we convert the value to mojo immediately after reading data out. I think structure still helps here. But I\u0027ll think more on the whole structure of this class later. I\u0027ll keep the structure in this patch.",
+      "parentUuid": "2ede315c_825625a5",
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb28e8eb_579dbfac",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T03:29:32Z",
       "side": 1,
       "message": "Is \"offline\" relevant or should it be \"stored\" or something like that?",
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9448994b_7f00beaa",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T03:50:25Z",
+      "side": 1,
+      "message": "Offline is used for MediaDrm.KEY_TYPE_OFFLINE.",
+      "parentUuid": "cb28e8eb_579dbfac",
       "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,54 @@
       "writtenOn": "2017-08-17T03:29:32Z",
       "side": 1,
       "message": "ConvertFooToBar is more common I believe.",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 30
+      },
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae451e6_f38fd664",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T03:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c99155c_526d15fb",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 4
+      },
+      "revId": "4a18df0d05646fdad29b463f6e7f8473fb2c704a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c369051_8fdbf413",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-17T03:50:25Z",
+      "side": 1,
+      "message": "This is to keep consistence with methods in base/value_conversions.h. See value conversion of UnguessableToken.",
+      "parentUuid": "0e7913f9_a2fc1cf8",
       "range": {
         "startLine": 114,
         "startChar": 5,
