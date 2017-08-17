@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94bee39_084e5bcb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-17T00:56:31Z",
+      "side": 1,
+      "message": "This feels like a really bad idea and brittle to minor changes in image encoding logic. A pixel test felt like overkill (and still fairly brittle), just asserting the length of the body doesn\u0027t help much either. \n\nAttempting to throw the data URI into canvas and read out some pixels might be the most robust approach but wanted to gather thoughts before putting in too much additional effort.",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
