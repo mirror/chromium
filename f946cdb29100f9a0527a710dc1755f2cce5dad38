@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "090fb239_cb675038",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-17T12:46:46Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "89ea7ced_91fd27d0",
+      "revId": "f946cdb29100f9a0527a710dc1755f2cce5dad38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaaddf25_1490d90b",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f946cdb29100f9a0527a710dc1755f2cce5dad38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a5b1ea_64deb3bf",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-17T12:46:46Z",
+      "side": 1,
+      "message": "I removed this detection. \n\nIndeed, I am not aware of any way to enable the switch outside of testing.",
+      "parentUuid": "eaaddf25_1490d90b",
+      "revId": "f946cdb29100f9a0527a710dc1755f2cce5dad38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "f946cdb29100f9a0527a710dc1755f2cce5dad38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ff8d9f_7fd548b1",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-17T12:46:46Z",
+      "side": 1,
+      "message": "Done.\n\nThe function is gone.",
+      "parentUuid": "0c7e133f_5a6f7ec3",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "f946cdb29100f9a0527a710dc1755f2cce5dad38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
