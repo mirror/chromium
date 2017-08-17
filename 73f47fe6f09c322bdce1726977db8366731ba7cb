@@ -22,6 +22,30 @@
       "revId": "73f47fe6f09c322bdce1726977db8366731ba7cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33cfa1f_f01b3554",
+        "filename": "media/gpu/vt_video_decode_accelerator_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-17T19:10:10Z",
+      "side": 1,
+      "message": "Because we request kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, we are always given a 420 limited range IOSurface from the decoder, regardless of what the encoded format was -- the decoder will convert the video for us.\n\nWe used to have it as 422 mono-planar, and the decoder would always (at great expense) convert frames for us.",
+      "parentUuid": "b1806804_312e4691",
+      "range": {
+        "startLine": 375,
+        "startChar": 9,
+        "endLine": 375,
+        "endChar": 56
+      },
+      "revId": "73f47fe6f09c322bdce1726977db8366731ba7cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
