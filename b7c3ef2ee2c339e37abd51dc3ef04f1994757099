@@ -16,6 +16,75 @@
       "revId": "b7c3ef2ee2c339e37abd51dc3ef04f1994757099",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c460dce_56c26ac3",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T18:03:44Z",
+      "side": 1,
+      "message": "I know most of the functions in this file do not have comments but it\u0027d be good to change that.\n\nPlease add a comment explaining what analysis does this method attempt to do, and when it is called.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "b7c3ef2ee2c339e37abd51dc3ef04f1994757099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa623feb_7f3ca6f3",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T18:03:44Z",
+      "side": 1,
+      "message": "nit: A comment here would also be great.",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 31
+      },
+      "revId": "b7c3ef2ee2c339e37abd51dc3ef04f1994757099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918d39a2_c288025b",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T18:03:44Z",
+      "side": 1,
+      "message": "Please add a comment about when this is used.",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 54
+      },
+      "revId": "b7c3ef2ee2c339e37abd51dc3ef04f1994757099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
