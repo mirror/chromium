@@ -44,13 +44,13 @@ class BleScanner : public device::BluetoothAdapter::Observer {
       const cryptauth::RemoteDevice& remote_device);
 
   bool IsDeviceRegistered(const std::string& device_id);
+  void StartDiscoverySession();
+  void StopDiscoverySession();
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
   // device::BluetoothAdapter::Observer
-  void AdapterPoweredChanged(device::BluetoothAdapter* adapter,
-                             bool powered) override;
   void DeviceAdded(device::BluetoothAdapter* adapter,
                    device::BluetoothDevice* bluetooth_device) override;
   void DeviceChanged(device::BluetoothAdapter* adapter,
@@ -84,11 +84,9 @@ class BleScanner : public device::BluetoothAdapter::Observer {
       const cryptauth::LocalDeviceDataProvider* local_device_data_provider);
 
   void UpdateDiscoveryStatus();
-  void StartDiscoverySession();
   void OnDiscoverySessionStarted(
       std::unique_ptr<device::BluetoothDiscoverySession> discovery_session);
   void OnStartDiscoverySessionError();
-  void StopDiscoverySession();
   void HandleDeviceUpdated(device::BluetoothDevice* bluetooth_device);
   void CheckForMatchingScanFilters(device::BluetoothDevice* bluetooth_device,
                                    std::string& service_data);
@@ -102,7 +100,7 @@ class BleScanner : public device::BluetoothAdapter::Observer {
   // outlive it.
   const cryptauth::LocalDeviceDataProvider* local_device_data_provider_;
 
-  bool is_initializing_discovery_session_;
+  bool is_waiting_for_session_to_start_;
   std::unique_ptr<device::BluetoothDiscoverySession> discovery_session_;
 
   std::vector<cryptauth::RemoteDevice> registered_remote_devices_;
