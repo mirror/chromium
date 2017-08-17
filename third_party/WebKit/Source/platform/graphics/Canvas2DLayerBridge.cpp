@@ -246,7 +246,7 @@ Canvas2DLayerBridge::~Canvas2DLayerBridge() {
 
 void Canvas2DLayerBridge::Init() {
   Clear();
-  if (CheckSurfaceValid())
+  if (acceleration_mode_ != kDisableAcceleration && CheckSurfaceValid())
     FlushInternal();
 }
 
@@ -1149,6 +1149,8 @@ RefPtr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
     return nullptr;
   if (!GetOrCreateSurface(hint))
     return nullptr;
+  if (acceleration_mode_ == kDisableAcceleration)
+    return StaticBitmapImage::Create(surface_->makeImageSnapshot());
   FlushInternal();
   // A readback operation may alter the texture parameters, which may affect
   // the compositor's behavior. Therefore, we must trigger copy-on-write
