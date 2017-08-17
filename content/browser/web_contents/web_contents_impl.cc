@@ -2378,6 +2378,12 @@ void WebContentsImpl::CreateNewWindow(
     }
   }
 
+  if ((params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
+       params.disposition == WindowOpenDisposition::NEW_POPUP ||
+       params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
+      IsFullscreenForCurrentTab())
+    ExitFullscreen(true);
+
   if (params.opener_suppressed) {
     // When the opener is suppressed, the original renderer cannot access the
     // new window.  As a result, we need to show and navigate the window here.
