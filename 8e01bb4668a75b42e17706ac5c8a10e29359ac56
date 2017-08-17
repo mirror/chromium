@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcb036d6_90c54b0f",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T23:59:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f244224_c35063d2",
+      "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185182ea_73c33fac",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 31
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a399390b_3f0a5606",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T23:59:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "185182ea_73c33fac",
+      "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bff26745_592ab248",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 31
@@ -50,6 +86,24 @@
       "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f553b283_2191b494",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T23:59:44Z",
+      "side": 1,
+      "message": "Right, with PUBLIC flag this is not needed.",
+      "parentUuid": "bff26745_592ab248",
+      "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
