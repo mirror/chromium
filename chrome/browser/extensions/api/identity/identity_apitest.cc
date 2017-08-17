@@ -283,6 +283,12 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
     scope_ui_failure_ = failure;
   }
 
+  void set_scope_ui_service_error(const GoogleServiceAuthError& service_error) {
+    scope_ui_result_ = false;
+    scope_ui_failure_ = GaiaWebAuthFlow::SERVICE_AUTH_ERROR;
+    scope_ui_service_error_ = service_error;
+  }
+
   void set_scope_ui_oauth_error(const std::string& oauth_error) {
     scope_ui_result_ = false;
     scope_ui_failure_ = GaiaWebAuthFlow::OAUTH_ERROR;
@@ -342,8 +348,7 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
     if (scope_ui_result_) {
       OnGaiaFlowCompleted(kAccessToken, "3600");
     } else if (scope_ui_failure_ == GaiaWebAuthFlow::SERVICE_AUTH_ERROR) {
-      GoogleServiceAuthError error(GoogleServiceAuthError::CONNECTION_FAILED);
-      OnGaiaFlowFailure(scope_ui_failure_, error, "");
+      OnGaiaFlowFailure(scope_ui_failure_, scope_ui_service_error_, "");
     } else {
       GoogleServiceAuthError error(GoogleServiceAuthError::NONE);
       OnGaiaFlowFailure(scope_ui_failure_, error, scope_ui_oauth_error_);
@@ -369,6 +374,7 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
   bool login_ui_result_;
   bool scope_ui_result_;
   GaiaWebAuthFlow::Failure scope_ui_failure_;
+  GoogleServiceAuthError scope_ui_service_error_;
   std::string scope_ui_oauth_error_;
   bool login_ui_shown_;
   bool scope_ui_shown_;
@@ -1105,7 +1111,8 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
   scoped_refptr<FakeGetAuthTokenFunction> func(new FakeGetAuthTokenFunction());
   func->set_extension(CreateExtension(CLIENT_ID | SCOPES));
   func->set_mint_token_result(TestOAuth2MintTokenFlow::ISSUE_ADVICE_SUCCESS);
-  func->set_scope_ui_failure(GaiaWebAuthFlow::SERVICE_AUTH_ERROR);
+  func->set_scope_ui_service_error(
+      GoogleServiceAuthError(GoogleServiceAuthError::CONNECTION_FAILED));
   std::string error = utils::RunFunctionAndReturnError(
       func.get(), "[{\"interactive\": true}]", browser());
   EXPECT_TRUE(base::StartsWith(error, errors::kAuthFailure,
@@ -1145,8 +1152,7 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
   }
 }
 
-IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
-                       InteractiveApprovalSuccess) {
+IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, InteractiveApprovalSuccess) {
   SignIn("primary@example.com");
   scoped_refptr<const Extension> extension(CreateExtension(CLIENT_ID | SCOPES));
   scoped_refptr<FakeGetAuthTokenFunction> func(new FakeGetAuthTokenFunction());
@@ -1163,6 +1169,27 @@ IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
 
   EXPECT_EQ(IdentityTokenCacheValue::CACHE_STATUS_TOKEN,
             GetCachedToken(std::string()).status());
+}
+
+// Test for http://crbug.com/753014
+IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest,
+                       InteractiveSigninFailedDuringBrowserProcessShutDown) {
+  SignIn("primary@example.com");
+  scoped_refptr<FakeGetAuthTokenFunction> func(new FakeGetAuthTokenFunction());
+  func->set_extension(CreateExtension(CLIENT_ID | SCOPES));
+  func->set_mint_token_result(TestOAuth2MintTokenFlow::ISSUE_ADVICE_SUCCESS);
+  func->set_scope_ui_service_error(
+      GoogleServiceAuthError(GoogleServiceAuthError::INVALID_GAIA_CREDENTIALS));
+  func->set_login_ui_result(false);
+
+  // Closing all browsers ensures that the browser process is shutting down.
+  CloseAllBrowsers();
+
+  std::string error = utils::RunFunctionAndReturnError(
+      func.get(), "[{\"interactive\": true}]", browser());
+
+  EXPECT_TRUE(func->scope_ui_shown());
+  EXPECT_FALSE(func->login_ui_shown());
 }
 
 IN_PROC_BROWSER_TEST_F(GetAuthTokenFunctionTest, NoninteractiveQueue) {
