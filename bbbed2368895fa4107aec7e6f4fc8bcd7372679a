@@ -22,6 +22,30 @@
       "revId": "bbbed2368895fa4107aec7e6f4fc8bcd7372679a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae6e2ab_b2eaecee",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-08-17T08:33:12Z",
+      "side": 1,
+      "message": "That\u0027s right, but the main purpose of these continuous builders is to catch issues that would otherwise surface in the CQ for the CL rolling WebRTC in Chromium DEPS.\nThat\u0027s why I thought we might as well user the trybot configs (as we already do for some of the Release builders).",
+      "parentUuid": "ca1d407a_a33f20f3",
+      "range": {
+        "startLine": 436,
+        "startChar": 36,
+        "endLine": 436,
+        "endChar": 42
+      },
+      "revId": "bbbed2368895fa4107aec7e6f4fc8bcd7372679a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
