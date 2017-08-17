@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2cd891_9443ad72",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:57:13Z",
+      "side": 1,
+      "message": "It might be a good idea to move this and the next field (|menu_source_type_|) into a new context menu field struct.",
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
