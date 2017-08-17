@@ -64,6 +64,7 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/ui_events_helper.h"
+#include "content/common/content_switches_internal.h"
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/input_messages.h"
 #include "content/common/site_isolation_policy.h"
@@ -1508,9 +1509,23 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   if (touch_selection_controller_) {
     DCHECK(touch_selection_controller_client_manager_);
+    gfx::SelectionBound start(frame_metadata.selection.start);
+    gfx::SelectionBound end(frame_metadata.selection.end);
+    if (IsUseZoomForDSFEnabled()) {
+      gfx::PointF start_top(start.edge_top());
+      gfx::PointF start_bottom(start.edge_bottom());
+      gfx::PointF end_top(end.edge_top());
+      gfx::PointF end_bottom(end.edge_bottom());
+      start_top.Scale(1.f / dip_scale);
+      start_bottom.Scale(1.f / dip_scale);
+      end_top.Scale(1.f / dip_scale);
+      end_bottom.Scale(1.f / dip_scale);
+
+      start.SetEdge(start_top, start_bottom);
+      end.SetEdge(end_top, end_bottom);
+    }
     touch_selection_controller_client_manager_->UpdateClientSelectionBounds(
-        frame_metadata.selection.start, frame_metadata.selection.end, this,
-        nullptr);
+        start, end, this, nullptr);
     touch_selection_controller_client_manager_->SetPageScaleFactor(
         frame_metadata.page_scale_factor);
 
