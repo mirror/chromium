@@ -90,9 +90,9 @@ class PropertyTreeManager {
 
   int EnsureCompositorTransformNode(const TransformPaintPropertyNode*);
   int EnsureCompositorClipNode(const ClipPaintPropertyNode*);
-  // Update the layer->scroll and scroll->layer mapping. The latter is temporary
-  // until |owning_layer_id| is removed from the scroll node.
-  void UpdateLayerScrollMapping(cc::Layer*, const TransformPaintPropertyNode*);
+  // Scroll nodes are created when calling |EnsureCompositorTransformNode| for
+  // their associated scroll offset transform node.
+  int CompositorScrollNode(const ScrollPaintPropertyNode*);
 
   // This function is expected to be invoked right before emitting each layer.
   // It keeps track of the nesting of clip and effects, output a composited
@@ -127,6 +127,10 @@ class PropertyTreeManager {
   cc::EffectTree& GetEffectTree();
   cc::ScrollTree& GetScrollTree();
 
+  // Create or update the compositor scroll node. Unlike other Ensure functions,
+  // this should only be called by |UpdateScrollAndScrollTranslationNodes| which
+  // prevents creating a compositor scroll node without updating the associated
+  // compositor transform node.
   int EnsureCompositorScrollNode(const ScrollPaintPropertyNode*);
 
   // Scroll translation has special treatment in the transform and scroll trees.

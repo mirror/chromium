@@ -168,6 +168,12 @@ void BlockPainter::PaintInlineBox(const InlineBox& inline_box,
 
 void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+
+  // Scroll hit test display items are only needed for compositing. This flag is
+  // used for for printing and drag images which do not need hit testing.
+  if (paint_info.GetGlobalPaintFlags() & kGlobalPaintFlattenCompositingLayers)
+    return;
+
   // Without RootLayerScrolling, the LayoutView will not create scroll paint
   // properties and will rely on the LocalFrameView providing a scroll
   // translation property.
