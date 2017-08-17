@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "35f235aa_740b6db9",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-17T23:26:36Z",
+      "side": 1,
+      "message": "Do you mean the comment above |main_frame_has_fully_loaded_|?",
+      "parentUuid": "f8109afc_af4b1663",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c9922ae_e209bbc6",
         "filename": "chrome/browser/permissions/permission_request_manager.h",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18670eec_6dd48b29",
+        "filename": "chrome/browser/permissions/permission_request_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-17T23:26:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45f642e9_173475b0",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
