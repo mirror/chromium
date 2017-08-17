@@ -16,6 +16,24 @@
       "revId": "b9e0b514bfbb16764684e1236b3bd289e6a73fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4242267_374bc0b5",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7876,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-17T18:59:46Z",
+      "side": 0,
+      "message": "I removed this case because I thought it won\u0027t happen in the real life. I can add it back.",
+      "parentUuid": "b3521787_897e3980",
+      "revId": "b9e0b514bfbb16764684e1236b3bd289e6a73fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
