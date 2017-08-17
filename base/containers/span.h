@@ -8,8 +8,38 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <type_traits>
+#include <utility>
 
 namespace base {
+
+template <typename T>
+class Span;
+
+namespace internal {
+
+template <typename T>
+struct IsSpanImpl : std::false_type {};
+
+template <typename T>
+struct IsSpanImpl<Span<T>> : std::true_type {};
+
+template <typename T>
+using IsSpan = IsSpanImpl<std::decay_t<T>>;
+
+template <typename U, typename V>
+using IsLegalArrayConversion =
+    std::integral_constant<bool, std::is_convertible<U*, V*>::value>;
+
+template <typename C, typename T>
+using ContainerHasConvertibleData = IsLegalArrayConversion<
+    std::remove_pointer_t<decltype(std::declval<C>().data())>,
+    T>;
+template <typename C>
+using ContainerHasIntegralSize =
+    std::is_integral<decltype(std::declval<C>().size())>;
+
+}  // namespace internal
 
 // A Span represents an array of elements of type T. It consists of a pointer to
 // memory with an associated size. A Span does not own the underlying memory, so
@@ -27,17 +57,45 @@ namespace base {
 template <typename T>
 class Span {
  public:
-  using element_type = T;
+  using value_type = std::remove_const_t<T>;
   using pointer = T*;
   using reference = T&;
   using iterator = T*;
   using const_iterator = const T*;
   // TODO(dcheng): What about reverse iterators?
 
+  // Span constructors, copy, assignment, and destructor
   constexpr Span() noexcept : data_(nullptr), size_(0) {}
   constexpr Span(T* data, size_t size) noexcept : data_(data), size_(size) {}
   template <size_t N>
-  constexpr Span(T (&array)[N]) noexcept : data_(array), size_(N) {}
+  constexpr Span(T (&array)[N]) noexcept : Span(array, N) {}
+  // Conversions from any container that implements
+  template <typename C,
+            typename = std::enable_if_t<
+                !internal::IsSpan<C>::value &&
+                internal::ContainerHasConvertibleData<C, T>::value &&
+                internal::ContainerHasIntegralSize<C>::value>>
+  constexpr Span(C& container) : Span(container.data(), container.size()) {}
+  template <typename C,
+            typename = std::enable_if_t<
+                !internal::IsSpan<C>::value &&
+                internal::ContainerHasConvertibleData<C, T>::value &&
+                internal::ContainerHasIntegralSize<C>::value>>
+  constexpr Span(const C&&) = delete;
+  constexpr Span(const Span&) noexcept = default;
+  constexpr Span(Span&&) noexcept = default;
+  ~Span() noexcept = default;
+  // Conversions from spans of other types.
+  template <typename U,
+            typename =
+                std::enable_if_t<internal::IsLegalArrayConversion<U, T>::value>>
+  constexpr Span(const Span<U>& other) : Span(other.data(), other.size()) {}
+  template <typename U,
+            typename =
+                std::enable_if_t<internal::IsLegalArrayConversion<U, T>::value>>
+  constexpr Span(Span<U>&& other) : Span(other.data(), other.size()) {}
+  constexpr Span& operator=(const Span&) noexcept = default;
+  constexpr Span& operator=(Span&&) noexcept = default;
 
   // Span subviews
   constexpr Span subspan(size_t pos, size_t count) const {
@@ -88,6 +146,8 @@ template <typename T, size_t N>
 constexpr Span<T> MakeSpan(T (&array)[N]) noexcept {
   return Span<T>(array);
 }
+
+// TODO(dcheng): Figure out a nice way to write MakeSpan for containers.
 
 }  // namespace base
 
