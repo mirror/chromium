@@ -57,7 +57,8 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
                             const WebMouseEvent&,
                             int detail,
                             const String& canvas_region_id,
-                            Node* related_target);
+                            Node* related_target,
+                            unsigned event_data = 0);
 
   static MouseEvent* Create(ScriptState*,
                             const AtomicString& event_type,
@@ -173,6 +174,8 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
   double x() const { return clientX(); }
   double y() const { return clientY(); }
 
+  unsigned eventData() const { return event_data_; }
+
   bool HasPosition() const { return position_type_ == PositionType::kPosition; }
 
   WebMenuSourceType GetMenuSourceType() const { return menu_source_type_; }
@@ -192,7 +195,8 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
              const WebMouseEvent&,
              int detail,
              const String& region,
-             EventTarget* related_target);
+             EventTarget* related_target,
+             unsigned event_data = 0);
 
   MouseEvent(const AtomicString& type,
              bool can_bubble,
@@ -263,6 +267,7 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
   Member<EventTarget> related_target_;
   SyntheticEventType synthetic_event_type_;
   String region_;
+  unsigned event_data_ = 0;
 
   // Only used for contextmenu events.
   WebMenuSourceType menu_source_type_;

@@ -131,12 +131,16 @@ std::unique_ptr<ContextMenu> ContextMenuController::CreateContextMenu(
 
 void ContextMenuController::ShowContextMenu(MouseEvent* mouse_event) {
   WebMenuSourceType source_type = kMenuSourceNone;
+  unsigned context_data = 0;
   if (mouse_event) {
     DCHECK(mouse_event->type() == EventTypeNames::contextmenu);
     source_type = mouse_event->GetMenuSourceType();
+    context_data = mouse_event->eventData();
   }
 
-  if (client_->ShowContextMenu(context_menu_.get(), source_type) && mouse_event)
+  if (client_->ShowContextMenu(context_menu_.get(), source_type,
+                               context_data) &&
+      mouse_event)
     mouse_event->SetDefaultHandled();
 }
 

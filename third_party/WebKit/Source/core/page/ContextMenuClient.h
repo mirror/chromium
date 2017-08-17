@@ -43,7 +43,7 @@ class CORE_EXPORT ContextMenuClient {
   virtual ~ContextMenuClient() {}
 
   // Returns whether a Context Menu was actually shown.
-  virtual bool ShowContextMenu(const ContextMenu*, WebMenuSourceType);
+  virtual bool ShowContextMenu(const ContextMenu*, WebMenuSourceType, unsigned);
   virtual void ClearContextMenu();
 
  protected:

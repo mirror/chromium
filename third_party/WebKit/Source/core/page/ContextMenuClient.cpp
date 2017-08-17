@@ -198,7 +198,8 @@ static HTMLFormElement* CurrentForm(const FrameSelection& current_selection) {
 }
 
 bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
-                                        WebMenuSourceType source_type) {
+                                        WebMenuSourceType source_type,
+                                        unsigned context_data) {
   // Displaying the context menu in this function is a big hack as we don't
   // have context, i.e. whether this is being invoked via a script or in
   // response to user input (Mouse event WM_RBUTTONDOWN,
