@@ -16,9 +16,12 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/web_application_info.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/notification_types.h"
@@ -62,6 +65,69 @@ void ClickLinkAndWait(content::WebContents* web_contents,
 void NavigateToURLWrapper(chrome::NavigateParams* params) {
   ui_test_utils::NavigateToURL(params);
 }
+
+class FrameNavigateParamsCapturer : public content::WebContentsObserver {
+ public:
+  // Observes navigation for the specified |node|.
+  explicit FrameNavigateParamsCapturer(content::WebContents* web_contents,
+                                       int frame_tree_node_id)
+      : WebContentsObserver(web_contents),
+        frame_tree_node_id_(frame_tree_node_id),
+        navigations_remaining_(1),
+        wait_for_load_(true),
+        message_loop_runner_(new content::MessageLoopRunner) {}
+
+  void set_navigations_remaining(int count) { navigations_remaining_ = count; }
+
+  void set_wait_for_load(bool ignore) { wait_for_load_ = ignore; }
+
+  void Wait() { message_loop_runner_->Run(); }
+
+  ui::PageTransition transition() {
+    EXPECT_EQ(1U, transitions_.size());
+    return transitions_[0];
+  }
+
+  const std::vector<ui::PageTransition>& transitions() { return transitions_; }
+  const std::vector<GURL>& urls() { return urls_; }
+
+ private:
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override {
+    if (!navigation_handle->HasCommitted())
+      return;
+
+    if (navigation_handle->GetFrameTreeNodeId() != frame_tree_node_id_)
+      return;
+
+    --navigations_remaining_;
+    transitions_.push_back(navigation_handle->GetPageTransition());
+    urls_.push_back(navigation_handle->GetURL());
+    if (!navigations_remaining_ &&
+        (!web_contents()->IsLoading() || !wait_for_load_))
+      message_loop_runner_->Quit();
+  }
+
+  void DidStopLoading() override {
+    if (!navigations_remaining_)
+      message_loop_runner_->Quit();
+  }
+
+  // The id of the FrameTreeNode whose navigations to observe.
+  int frame_tree_node_id_;
+
+  // How many navigations remain to capture.
+  int navigations_remaining_;
+
+  // Whether to also wait for the load to complete.
+  bool wait_for_load_;
+
+  std::vector<ui::PageTransition> transitions_;
+  std::vector<GURL> urls_;
+
+  // The MessageLoopRunner used to spin the message loop.
+  scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
+};
 
 }  // namespace
 
@@ -222,30 +288,112 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
                           app_url, LinkTarget::SELF));
 }
 
-// Tests that navigating to a in-scope URL using the omnibox *does not*
-// open the Bookmark App.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
-                       OmniboxNavigationInScope) {
+class BookmarkAppUrlRedirectorNavigationBrowserTest
+    : public BookmarkAppUrlRedirectorBrowserTest,
+      public ::testing::WithParamInterface<ui::PageTransition> {};
+
+// Tests that a transition type, specified by GetParam(), to an in-scope URL
+// does not result in a new app window.
+IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorNavigationBrowserTest,
+                       InScopeDoNotOpenWindow) {
+  // Make sure test is generated for all transitions types.
+  ASSERT_TRUE(PageTransitionCoreTypeIs(ui::PAGE_TRANSITION_LAST_CORE,
+                                       ui::PAGE_TRANSITION_KEYWORD_GENERATED));
+
   InstallTestBookmarkApp();
 
   GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
-  chrome::NavigateParams params(browser(), in_scope_url,
-                                ui::PAGE_TRANSITION_TYPED);
+  chrome::NavigateParams params(browser(), in_scope_url, GetParam());
   TestTabActionDoesNotOpenAppWindow(in_scope_url,
                                     base::Bind(&NavigateToURLWrapper, &params));
 }
 
-// Tests that navigating to an out-of-scope URL with the same origin as the
-// installed Bookmark App *does not* open the Bookmark App.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
-                       OmniboxNavigationOutOfScope) {
+// Tests that a transition type, specified by GetParam(), to an out-of-scope URL
+// but with the same origin as an in-scope URL does not result in a new App
+// window.
+IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorNavigationBrowserTest,
+                       OutOfScopeDoNotOpenWindow) {
+  // Make sure test is generated for all transitions types.
+  ASSERT_TRUE(PageTransitionCoreTypeIs(ui::PAGE_TRANSITION_LAST_CORE,
+                                       ui::PAGE_TRANSITION_KEYWORD_GENERATED));
+
   InstallTestBookmarkApp();
 
   GURL out_of_scope_url = embedded_test_server()->GetURL(kOutOfScopeUrlPath);
-  chrome::NavigateParams params(browser(), out_of_scope_url,
-                                ui::PAGE_TRANSITION_TYPED);
+  chrome::NavigateParams params(browser(), out_of_scope_url, GetParam());
   TestTabActionDoesNotOpenAppWindow(out_of_scope_url,
                                     base::Bind(&NavigateToURLWrapper, &params));
+}
+
+INSTANTIATE_TEST_CASE_P(
+    BookmarkAppUrlRedirectorNavigationBrowserTestInstance,
+    BookmarkAppUrlRedirectorNavigationBrowserTest,
+    // Chrome should not open a new app window for a navigation with any of
+    // these types of transitions. This list does not include subframe
+    // navigations, since they require a different setup. See
+    // BookmarkAppUrlRedirectorBrowserTest.SubframeNavigation.
+    testing::Values(ui::PAGE_TRANSITION_TYPED,
+                    ui::PAGE_TRANSITION_AUTO_BOOKMARK,
+                    ui::PAGE_TRANSITION_GENERATED,
+                    ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
+                    ui::PAGE_TRANSITION_FORM_SUBMIT,
+                    ui::PAGE_TRANSITION_RELOAD,
+                    ui::PAGE_TRANSITION_KEYWORD,
+                    ui::PAGE_TRANSITION_KEYWORD_GENERATED));
+
+// Tests that navigation in subframes don't result in new windows being opened.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       SubframeNavigation) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  std::string script = base::StringPrintf(
+      "let iframe = document.createElement('iframe');"
+      "document.body.appendChild(iframe);");
+  EXPECT_TRUE(content::ExecuteScript(initial_tab, script));
+
+  // TODO(me): spell out types, also maybe abstract.
+  auto all_frames = initial_tab->GetAllFrames();
+  auto* main_frame = initial_tab->GetMainFrame();
+  ASSERT_EQ(2u, all_frames.size());
+  auto it = std::find_if(all_frames.begin(), all_frames.end(),
+                         [main_frame](content::RenderFrameHost* frame) {
+                           return main_frame != frame;
+                         });
+  ASSERT_NE(all_frames.end(), it);
+
+  {
+    // TODO(me): Figure out why AUTO_SUBFRAME is not passed to the
+    // navigation throttle and document the reason.
+    FrameNavigateParamsCapturer capturer(initial_tab,
+                                         (*it)->GetFrameTreeNodeId());
+    chrome::NavigateParams params(browser(),
+                                  embedded_test_server()->GetURL(kAppUrlPath),
+                                  ui::PAGE_TRANSITION_LINK);
+    params.frame_tree_node_id = (*it)->GetFrameTreeNodeId();
+    ui_test_utils::NavigateToURL(&params);
+    capturer.Wait();
+    ASSERT_TRUE(ui::PageTransitionCoreTypeIs(
+        capturer.transition(), ui::PAGE_TRANSITION_AUTO_SUBFRAME));
+  }
+
+  {
+    // TODO(me): Figure out why MANUAL_SUBFRAME is not passed to the
+    // navigation throttle and document the reason.
+    FrameNavigateParamsCapturer capturer(initial_tab,
+                                         (*it)->GetFrameTreeNodeId());
+    chrome::NavigateParams params(
+        browser(), embedded_test_server()->GetURL(kInScopeUrlPath),
+        ui::PAGE_TRANSITION_LINK);
+    params.frame_tree_node_id = (*it)->GetFrameTreeNodeId();
+    ui_test_utils::NavigateToURL(&params);
+    capturer.Wait();
+    ASSERT_TRUE(ui::PageTransitionCoreTypeIs(
+        capturer.transition(), ui::PAGE_TRANSITION_MANUAL_SUBFRAME));
+  }
 }
 
 // Tests that clicking a link with target="_self" to the app's app_url opens the
