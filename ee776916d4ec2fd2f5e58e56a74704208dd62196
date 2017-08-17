@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7597ce67_f33ca52a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-17T10:18:22Z",
+      "side": 1,
+      "message": "Yeah maybe it was me. But I see that most of them don\u0027t have it. So I\u0027m not sure it\u0027s really needed.\nThe UI is already clear enough if something fails, so probably it doesn\u0027t need this explanation. Additionally they\u0027ll be usually run automatically.",
+      "parentUuid": "243a83f0_24885eed",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84f3c837_bae82666",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-alignment-implies-size-change-001.html",
         "patchSetId": 4
@@ -264,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "319bfc04_d9573b22",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/100x100-green.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-17T10:18:22Z",
+      "side": 1,
+      "message": "Yep I don\u0027t mind if it\u0027s before or after this patch.",
+      "parentUuid": "415137e3_bd087d52",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04ce6d8a_c1d93394",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
         "patchSetId": 4
@@ -299,6 +335,23 @@
     },
     {
       "key": {
+        "uuid": "e3cd33c7_c940c184",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-17T10:18:22Z",
+      "side": 1,
+      "message": "This is a nit but maybe this is simpler/faster:\n  element.classList.add(phase);",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb2805a5_3e09e2c9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
         "patchSetId": 4
@@ -328,6 +381,24 @@
       "side": 1,
       "message": "As I commented before, I think we need different selectors for  multiple calls to checkLayout, hence I\u0027m not sure this #item selector would work. Additionally, I don\u0027t see any problem with adding 2 classes. It doesn\u0027t worth to clear the previous class, IMO",
       "parentUuid": "eb2805a5_3e09e2c9",
+      "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddeef0d_256d2d51",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/support/style-change.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-17T10:18:22Z",
+      "side": 1,
+      "message": "Ok, I don\u0027t like it very much but I guess it\u0027s fine if that\u0027s a requirement (avoid the double calls).\n\nFor the name, maybe \"checkLayoutForElement()\" is more explicit. As the function itself has nothing to do with a style change.\nAbout the 2nd argument maybe I\u0027d call it \"extraClass\".",
+      "parentUuid": "85d9deb3_2540dcce",
       "revId": "ee776916d4ec2fd2f5e58e56a74704208dd62196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
