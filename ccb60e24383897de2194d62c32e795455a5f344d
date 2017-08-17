@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e083906_c6c3dcdf",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-17T19:01:29Z",
+      "side": 1,
+      "message": "I don\u0027t think this change is necessary.",
+      "revId": "ccb60e24383897de2194d62c32e795455a5f344d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c05ade1_51a6df54",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-17T19:01:29Z",
+      "side": 1,
+      "message": "Can this change be undone?",
+      "range": {
+        "startLine": 280,
+        "startChar": 88,
+        "endLine": 280,
+        "endChar": 0
+      },
+      "revId": "ccb60e24383897de2194d62c32e795455a5f344d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401587c3_c00765fb",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-17T19:01:29Z",
+      "side": 1,
+      "message": "can CronetTestRule.assertContains() be statically imported?",
+      "revId": "ccb60e24383897de2194d62c32e795455a5f344d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79de1ef4_caf31bad",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/NetworkChangeNotifierTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-17T19:01:29Z",
+      "side": 1,
+      "message": "can CronetTestRule.assertContains be statically imported?",
+      "revId": "ccb60e24383897de2194d62c32e795455a5f344d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdefbcc_f97a58d1",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/QuicTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-17T19:01:29Z",
+      "side": 1,
+      "message": "can this indenting be undone?",
+      "revId": "ccb60e24383897de2194d62c32e795455a5f344d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
