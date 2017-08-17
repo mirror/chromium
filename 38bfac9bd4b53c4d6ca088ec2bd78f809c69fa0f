@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb975f7_27393454",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-17T17:45:03Z",
+      "side": 1,
+      "message": "It would probably make this code more clear to call this inherited_action to distinguish from the element_touch_action since it seems this never adds the element touch action.",
+      "range": {
+        "startLine": 377,
+        "startChar": 14,
+        "endLine": 377,
+        "endChar": 20
+      },
+      "revId": "38bfac9bd4b53c4d6ca088ec2bd78f809c69fa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d390681_86cd32b0",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-17T17:45:03Z",
+      "side": 1,
+      "message": "nit:\nif (const ComputedStyle* content_document_style \u003d content_document_element-\u003eGetComputedStyle()) {\n  TouchAction document_touch_action \u003d style-\u003eGetEffectiveTouchAction();\n  ...\n}",
+      "revId": "38bfac9bd4b53c4d6ca088ec2bd78f809c69fa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135c32cb_be6f725f",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-17T17:45:03Z",
+      "side": 1,
+      "message": "It might be worth putting this in an anonymous inline function. Something like\n\nTouchAction AdjustTouchActionForElement(TouchAction touch_action, Element* element) {\n  if (element is scroller or frame)\n    touch_action |\u003d kTouchActionPan;\n  return touch_action;\n}\n\nThen this can be shared with 422.",
+      "range": {
+        "startLine": 442,
+        "startChar": 13,
+        "endLine": 442,
+        "endChar": 75
+      },
+      "revId": "38bfac9bd4b53c4d6ca088ec2bd78f809c69fa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
