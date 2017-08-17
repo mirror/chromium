@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea04021_69fe17c4",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/Path2D.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T19:13:25Z",
+      "side": 1,
+      "message": "OK, I have changed the exposure to be \"PaintWorklet CSSTypedOM\" in other places. Now this is the place that I am not sure, do we want this?",
+      "range": {
+        "startLine": 35,
+        "startChar": 75,
+        "endLine": 35,
+        "endChar": 115
+      },
+      "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
