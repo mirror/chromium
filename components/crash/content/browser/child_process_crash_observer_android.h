@@ -6,14 +6,17 @@
 #define COMPONENTS_CRASH_CONTENT_BROWSER_CHILD_PROCESS_CRASH_OBSERVER_ANDROID_H_
 
 #include "base/files/file_path.h"
+#include "base/sequenced_task_runner.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/prefs/pref_service.h"
 
 namespace breakpad {
 
 class ChildProcessCrashObserver : public breakpad::CrashDumpObserver::Client {
  public:
   ChildProcessCrashObserver(const base::FilePath crash_dump_dir,
-                            int descriptor_id);
+                            int descriptor_id,
+                            PrefService* pref_service);
   ~ChildProcessCrashObserver() override;
 
   // breakpad::CrashDumpObserver::Client implementation:
@@ -31,7 +34,13 @@ class ChildProcessCrashObserver : public breakpad::CrashDumpObserver::Client {
   // descriptor mappings passed to the child process.
   int descriptor_id_;
 
+  PrefService* pref_service_;
+
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
+
   DISALLOW_COPY_AND_ASSIGN(ChildProcessCrashObserver);
+
+  void increaseCrashCount(bool* isIncreaseCrashCount);
 };
 
 }  // namespace breakpad

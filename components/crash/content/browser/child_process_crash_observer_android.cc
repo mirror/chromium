@@ -9,13 +9,21 @@
 #include "base/task_scheduler/post_task.h"
 #include "components/crash/content/app/breakpad_linux.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
+#include "components/metrics/metrics_pref_names.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace breakpad {
 
 ChildProcessCrashObserver::ChildProcessCrashObserver(
     const base::FilePath crash_dump_dir,
-    int descriptor_id)
-    : crash_dump_dir_(crash_dump_dir), descriptor_id_(descriptor_id) {}
+    int descriptor_id,
+    PrefService* pref_service)
+    : crash_dump_dir_(crash_dump_dir),
+      descriptor_id_(descriptor_id),
+      pref_service_(pref_service),
+      background_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {}
 
 ChildProcessCrashObserver::~ChildProcessCrashObserver() {}
 
@@ -41,12 +49,27 @@ void ChildProcessCrashObserver::OnChildExit(
   // This might be called twice for a given child process, with a
   // NOTIFICATION_RENDERER_PROCESS_TERMINATED and then with
   // NOTIFICATION_RENDERER_PROCESS_CLOSED.
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&CrashDumpManager::ProcessMinidumpFileFromChild,
-                 base::Unretained(CrashDumpManager::GetInstance()),
-                 crash_dump_dir_, child_process_id, process_type,
-                 termination_status, app_state));
+
+  bool* isIncreaseCrashCount = new bool();
+
+  background_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&CrashDumpManager::ProcessMinidumpFileFromChild,
+                     base::Unretained(CrashDumpManager::GetInstance()),
+                     crash_dump_dir_, child_process_id, process_type,
+                     termination_status, app_state, pref_service_,
+                     isIncreaseCrashCount),
+      base::BindOnce(&ChildProcessCrashObserver::increaseCrashCount,
+                     base::Unretained(this),
+                     base::Owned(isIncreaseCrashCount)));
+}
+
+void ChildProcessCrashObserver::increaseCrashCount(bool* isIncreaseCrashCount) {
+  if (!*isIncreaseCrashCount) return;
+  int value =
+      pref_service_->GetInteger(metrics::prefs::kStabilityRendererCrashCount);
+  pref_service_->SetInteger(metrics::prefs::kStabilityRendererCrashCount,
+                            value + 1);
 }
 
 }  // namespace breakpad

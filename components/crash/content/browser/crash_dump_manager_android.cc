@@ -65,8 +65,11 @@ void CrashDumpManager::ProcessMinidumpFileFromChild(
     base::ProcessHandle pid,
     content::ProcessType process_type,
     base::TerminationStatus termination_status,
-    base::android::ApplicationState app_state) {
+    base::android::ApplicationState app_state,
+    PrefService* pref_service,
+    bool* increaseCrashCount) {
   base::ThreadRestrictions::AssertIOAllowed();
+  *increaseCrashCount = false;
   base::FilePath minidump_path;
   // If the minidump for a given child process has already been
   // processed, then there is no more work to do.
@@ -108,6 +111,11 @@ void CrashDumpManager::ProcessMinidumpFileFromChild(
     }
     if (process_type == content::PROCESS_TYPE_RENDERER) {
       if (termination_status == base::TERMINATION_STATUS_OOM_PROTECTED) {
+        // There is a delay for OOM flag to be removed when app goes to
+        // background, so we can't just check for OOM_PROTECTED flag.
+        if (pref_service && (is_running || is_paused)) {
+          *increaseCrashCount = true;
+        }
         UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatus",
                                   exit_status,
                                   ExitStatus::MINIDUMP_STATUS_COUNT);
