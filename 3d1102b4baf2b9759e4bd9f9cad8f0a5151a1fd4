@@ -283,6 +283,30 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4831b4_79ba3941",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T18:19:43Z",
+      "side": 1,
+      "message": "The way I\u0027m testing is hitting the recent apps button and clicking on the CCT again. I call finishAndClose every time the activity is stopped (e.g when you hit any of the home, app, or recent apps button).\n\nAlso, I\u0027m calling finishAndClose() on CustomTabActivity not SeparateTaskCustomTabActivity, that\u0027s what keeps it in the recents. FWIW, calling finishAndRemoveTask() still shows a window in the recent apps (if you hit the recent apps button), and then when you click on the window, it just disappears.\n\nThe behavior I was going for was that coming back from recents to CCT VR should not just kill the activity, but instead start the CCT in non-VR mode (this would be a rare use case anyway).\n\nSo it looks like to have FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY set, you need to have the task still running and the activity finished and re-started from the recent apps.\n\nI tried this on a sample app activity and this seems to work:\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n        Log.e(\"ymalik\", \"launched from history: \" + launchedFromRecentApps(getIntent()));\n    }\n\n    @Override\n    protected void onStop() {\n        super.onStop();\n        finish();\n    }\n\n    static boolean launchedFromRecentApps(Intent intent) {\n        return ((intent.getFlags() \u0026 Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) !\u003d 0);\n    }",
+      "parentUuid": "39e69537_3b3dc9e6",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 55
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
