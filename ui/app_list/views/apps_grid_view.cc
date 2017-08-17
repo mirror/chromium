@@ -144,6 +144,15 @@ gfx::Insets GetTilePadding() {
                      -kTileBottomPadding, -kTileLeftRightPadding);
 }
 
+void DoCloseAnimation(base::TimeDelta duration, ui::Layer* layer) {
+  ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
+  animation.SetTransitionDuration(duration);
+  animation.SetTweenType(gfx::Tween::EASE_OUT);
+  animation.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  layer->SetOpacity(0.0f);
+}
+
 // RowMoveAnimationDelegate is used when moving an item into a different row.
 // Before running the animation, the item's layer is re-created and kept in
 // the original position, then the item is moved to just before its target
@@ -1769,6 +1778,17 @@ void AppsGridView::UpdateOpacity(int app_list_y_position_in_screen) {
                  0.f),
         1.0f);
     page_switcher_view_->layer()->SetOpacity(is_in_drag ? opacity : 1.0f);
+  }
+}
+
+void AppsGridView::FadeOutOnClose(base::TimeDelta duration) {
+  DCHECK(is_fullscreen_app_list_enabled_);
+  DoCloseAnimation(duration, suggestions_container_->layer());
+  DoCloseAnimation(duration, all_apps_indicator_->layer());
+  DoCloseAnimation(duration, page_switcher_view_->layer());
+  for (int i = 0; i < view_model_.view_size(); ++i) {
+    AppListItemView* item_view = GetItemViewAt(i);
+    DoCloseAnimation(duration, item_view->layer());
   }
 }
 

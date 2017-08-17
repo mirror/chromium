@@ -196,6 +196,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Updates the opacity of all the items in the grid during dragging.
   void UpdateOpacity(int app_list_y_position_in_screen);
 
+  // Starts the close animation.
+  void FadeOutOnClose(base::TimeDelta duration);
+
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
     return &view_model_;
