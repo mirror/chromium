@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d37865_7f50bb1a",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-17T00:22:37Z",
+      "side": 1,
+      "message": "Can you please confirm this is needed?",
+      "revId": "a4dcfb8ae4f99ba493e41c6dab9b48f44ca3a9af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baca758d_ac14abe6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/cache-storage/cache-live-update-cache-content.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-17T00:22:37Z",
+      "side": 1,
+      "message": "Unless you expect failures, we usually don\u0027t handle throws. I\u0027d suggest removing it and wrap in try { } catch if you really really expect issues.",
+      "revId": "a4dcfb8ae4f99ba493e41c6dab9b48f44ca3a9af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc7e4d1_8cda3c3b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/cache-storage/cache-live-update-cache-content.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-17T00:22:37Z",
+      "side": 1,
+      "message": "We now prefer async/await. It makes the code easier to understand and debug if we do it more like:\n\nawait InspectorTest.clearAllcaches();\n/* async? */ InspectorTest.dumpCacheTree();\nawait InspectorTest.createCache(\u0027testCache1\u0027);\n/* async? */ InspectorTest.dumpCacheTree();\n/* async? */ isMarkedDirty();\n...",
+      "revId": "a4dcfb8ae4f99ba493e41c6dab9b48f44ca3a9af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef6cc0b_ee18c1b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-17T00:22:37Z",
+      "side": 1,
+      "message": "_swCacheModel has ._caches as a Map\u003cstring, [CacheObject]\u003e ... Can we expose the ability to lookup the cache object by it\u0027s name from ServiceWorkerModel?",
+      "revId": "a4dcfb8ae4f99ba493e41c6dab9b48f44ca3a9af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
