@@ -21,10 +21,10 @@ namespace cryptauth {
 
 namespace {
 
-// The time to wait in seconds for the remote device to send its
+// The time to wait in microseconds for the remote device to send its
 // [Responder Auth] message. If we do not get the message in this time, then
 // authentication will fail.
-const int kResponderAuthTimeoutSeconds = 5;
+const int kResponderAuthTimeoutMicros = 200;
 
 }  // namespace
 
@@ -138,7 +138,7 @@ void DeviceToDeviceAuthenticator::OnHelloMessageCreated(
   // Add a timeout for receiving the [Responder Auth] message as a guard.
   timer_ = CreateTimer();
   timer_->Start(
-      FROM_HERE, base::TimeDelta::FromSeconds(kResponderAuthTimeoutSeconds),
+      FROM_HERE, base::TimeDelta::FromMicroseconds(kResponderAuthTimeoutMicros),
       base::Bind(&DeviceToDeviceAuthenticator::OnResponderAuthTimedOut,
                  weak_ptr_factory_.GetWeakPtr()));
 
