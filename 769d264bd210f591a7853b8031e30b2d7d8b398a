@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "596882af_bb73323c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "I got rid of the whole enum as Boris suggested in one of the comments. Sorry for not making it an @IntDef in the first place. I also moved the constants inside the interface. Could you please take a look at that as well and give your thoughts as to if it would be better to put them outside or inside the interface?",
+      "parentUuid": "32d1124c_7e90f7ae",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae39472_a626b1bc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a347cbe_6b39332c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ae39472_a626b1bc",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5832d193_8eb80685",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482e3920_1ebfdc3f",
+      "range": {
+        "startLine": 181,
+        "startChar": 39,
+        "endLine": 181,
+        "endChar": 56
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db9a75c_08e082df",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 16
@@ -91,6 +163,30 @@
       "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff1ab5b_41d1785a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db9a75c_08e082df",
+      "range": {
+        "startLine": 246,
+        "startChar": 43,
+        "endLine": 246,
+        "endChar": 57
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b1edba03_40d52279",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d5001c_7c541822",
+      "range": {
+        "startLine": 263,
+        "startChar": 20,
+        "endLine": 263,
+        "endChar": 41
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1584b22_a9dd3927",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 16
@@ -137,6 +257,30 @@
       "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f99186_94449999",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "There is a problem with this approach: doing so would require to modify mSections as well by adding a reference to the new mPromoHeaderSection and removing the reference to the old list. Given that this was Optional, I marked this as Resolved. Hope it is ok.",
+      "parentUuid": "a1584b22_a9dd3927",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 39
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0df26eb5_5b2bdd67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a42ec3_7e9c3531",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 61
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20892146_829497b2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 16
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "57c9324a_ddaf282f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20892146_829497b2",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 73
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb6bccdd_ab12cb55",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 16
@@ -200,6 +392,24 @@
       "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389389f5_37560c1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb6bccdd_ab12cb55",
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "dcd44423_475b6a99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12950d1b_2d641c04",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3409cd6a_598f2c04",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 16
@@ -246,6 +480,30 @@
       "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846bcb9f_92435820",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T18:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3409cd6a_598f2c04",
+      "range": {
+        "startLine": 250,
+        "startChar": 17,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
