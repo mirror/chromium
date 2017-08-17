@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92158b10_5a7d0c7b",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "std::decay_t is C++14 (and so are other *_t things you use below). I\u0027m assuming we\u0027re OK with this? (I haven\u0027t really followed the C++14 discussion closely).",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b20de8_68d743e5",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "For these and most of the below templates, can you name the template types something more descriptive? It\u0027s not clear from just reading it that U is _not_ Span\u003cFoo\u003e, but Foo itself. Either that or provide a few examples in the comments where this might be true or false",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e124cc8_14cccded",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Are there situations where containers don\u0027t have integral sizes?",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6191f66c_96e3dee2",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "nit: As I mentioned above, maybe something like\n\nC \u003d Container\nT \u003d SpanParam or something..\n\nOr just a comment saying what C and T are",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4f24d6_981f3f1b",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Why can\u0027t spans be created from arrays?",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce52e47_596e8e34",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "nit: Span\u003cT\u003e",
+      "range": {
+        "startLine": 82,
+        "startChar": 30,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bec98f6_cfe2f81b",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "nit: Span\u003cconst T\u003e",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d965f59_b1391a55",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Where\u0027s the span? :)",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1493bb54_29a2a588",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 113,
+        "startChar": 1,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866dfdb7_d84bd98c",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "This still doesn\u0027t prevent things like\n{\n  std::vector\u003cint\u003e v \u003d {...};\n  return MakeSpan(v);\n}\n\nIt feels that this would only catch a small set of problems, most of which have \"workarounds\" that would still break things",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 27
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f114f6_1257618e",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this, since it\u0027s equivalent to the copy ctor (or are you mostly implementing it as specced?)",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 44
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339bfe7f_aded9675",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Same comment as above",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 55
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9c8500_38a52a47",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Does this properly reject the overload for things like std::set or std::map",
+      "range": {
+        "startLine": 204,
+        "startChar": 31,
+        "endLine": 204,
+        "endChar": 62
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d470d87_b98fc4eb",
+        "filename": "base/containers/span_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Child or \"derived classes\" (or rename classes to Base/Derived)",
+      "range": {
+        "startLine": 22,
+        "startChar": 63,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7d0b0d_796ac55a",
+        "filename": "base/containers/span_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 23,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 55
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2d139e_610f75ca",
+        "filename": "base/containers/span_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T16:54:54Z",
+      "side": 1,
+      "message": "Can you add one for MakeSpan taking things that can\u0027t be make spannable, like std::set or std::deque",
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
