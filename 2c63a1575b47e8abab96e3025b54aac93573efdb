@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66d86528_bca2729a",
+        "filename": "gpu/command_buffer/client/shared_memory_limits.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T21:39:27Z",
+      "side": 1,
+      "message": "nit: 1\u0027s seem strange.",
+      "range": {
+        "startLine": 40,
+        "startChar": 41,
+        "endLine": 40,
+        "endChar": 42
+      },
+      "revId": "2c63a1575b47e8abab96e3025b54aac93573efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2243c74e_a17c31b7",
+        "filename": "ppapi/proxy/ppb_graphics_3d_proxy.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T21:39:27Z",
+      "side": 1,
+      "message": "These are identical to the values in shared_memory_limits.h. Could you define the constants there or do we want the flexibility to make them different?",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "2c63a1575b47e8abab96e3025b54aac93573efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
