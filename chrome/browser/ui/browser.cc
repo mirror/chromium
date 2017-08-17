@@ -1466,18 +1466,23 @@ WebContents* Browser::OpenURLFromTab(WebContents* source,
   if (params.user_gesture)
     nav_params.window_action = chrome::NavigateParams::SHOW_WINDOW;
   nav_params.user_gesture = params.user_gesture;
-
-  PopupBlockerTabHelper* popup_blocker_helper =
-      source ? PopupBlockerTabHelper::FromWebContents(source) : nullptr;
   if ((params.disposition == WindowOpenDisposition::NEW_POPUP ||
        params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
        params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
-       params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
-      popup_blocker_helper &&
-      PopupBlockerTabHelper::ConsiderForPopupBlocking(
-          source, params.user_gesture, &params)) {
-    if (popup_blocker_helper->MaybeBlockPopup(nav_params,
-                                              blink::mojom::WindowFeatures())) {
+       params.disposition == WindowOpenDisposition::NEW_WINDOW)) {
+    // A page can't spawn popups (or do anything else, either) until its load
+    // commits, so when we reach here, the popup was spawned by the
+    // NavigationController's last committed entry, not the active entry.  For
+    // example, if a page opens a popup in an onunload() handler, then the
+    // active entry is the page to be loaded as we navigate away from the
+    // unloading page.  For this reason, we can't use GetURL() to get the opener
+    // URL, because it returns the active entry.
+    content::NavigationEntry* entry =
+        source->GetController().GetLastCommittedEntry();
+    GURL opener = entry ? entry->GetVirtualURL() : GURL();
+    if (PopupBlockerTabHelper::MaybeBlockPopup(
+            source, opener, nav_params, &params,
+            blink::mojom::WindowFeatures())) {
       return nullptr;
     }
   }
