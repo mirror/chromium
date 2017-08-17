@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "bc9afdca_62220fda",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Sorry I meant this as something we should do in the future. I think what you have here is fine and your assessment of how the UMA is done is correct as well. We plan to take the most common UMA buckets and turn that into a set of enums. It just hasn\u0027t been done yet unfortunately.",
+      "parentUuid": "56d6af7e_0ed70491",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dddd598c_7c4c71a1",
         "filename": "media/blink/media_capabilities_reporter.cc",
         "patchSetId": 12
@@ -174,6 +192,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67455811_26e48791",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b7e9d1e2_2b1117ca",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "3cf7c06a_f50b7331",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8bee95f_5465ff56",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49fa322f_91c1f488",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -317,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "fda1e318_1f939550",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a81167c3_3283b563",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d54cfdd_fa7edf1b",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -352,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "92f26113_482cb73f",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a52f500_6bf41432",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d1fefd0_f4d80b74",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -384,6 +474,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61627617_2347be12",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67ea2532_569c8012",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -454,6 +562,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a215b5_91a1bb43",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e7c1b06_d330520e",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -559,6 +685,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fbaea0_89d553ea",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0633748_f4d42f46",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -690,6 +834,30 @@
     },
     {
       "key": {
+        "uuid": "6599ccb2_f21c37b6",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "1) is intentional since we assume it\u0027s a temporary condition if it was once large enough.\n2) Yes, OnMetadata fires before this.",
+      "parentUuid": "6bd0422d_67d1de24",
+      "range": {
+        "startLine": 1602,
+        "startChar": 7,
+        "endLine": 1602,
+        "endChar": 27
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef9e1873_d9741edc",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 12
@@ -701,6 +869,30 @@
       "writtenOn": "2017-08-15T01:41:15Z",
       "side": 1,
       "message": "BTW, just noticed WatchTimeReporter is not re-created for config changes. It is created for OnMetadata, but I think thats only called in the path of PipelineImpl::RenderWrapper::Start.",
+      "range": {
+        "startLine": 1658,
+        "startChar": 4,
+        "endLine": 1658,
+        "endChar": 32
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b487ed_360aeacc",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "Correct, that didn\u0027t exist when I wrote WTR; I plan to change this with the newer UKM stats.",
+      "parentUuid": "ef9e1873_d9741edc",
       "range": {
         "startLine": 1658,
         "startChar": 4,
@@ -848,6 +1040,24 @@
       "side": 1,
       "message": "I expect these values to change over the lifetime of a playback. A playback can create any number of \"records\". This is similar to how watch time reporter will finalize and start a new record upon seeking - though you don\u0027t have any new player metadata to convey alongside the seek. \n\nMuch of the complexity in MediaCapabilitiesReporter is detecting changes to these properties, especially FPS. I wouldn\u0027t want to move that out to WMPI and re-create a new reporter when things change. Perhaps the reporter could live on, but we could use a provider interface to bind it to a new remote recorder upon detecting stream changes. Is that more what they like to see? Do they call this pattern out in some doc?",
       "parentUuid": "8fb8c561_31c15f47",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4808fe_3c816572",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T01:40:28Z",
+      "side": 1,
+      "message": "As discussed offline this is fine.",
+      "parentUuid": "4a9382ab_ce6c4f51",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
