@@ -70,6 +70,30 @@
       "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbea884_aff25f8f",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T02:04:58Z",
+      "side": 1,
+      "message": "Looking specifically at client-navigate.https.html, it looks like the problem is we call frame.remove() to remove the Client and then expect ServiceWorkerRegistration.unregister() to cleanly remove the worker. But when we move the Mojo bindings, frame.remove() no longer causes the client to synchronously-(ish) be removed: the ProviderHost stays alive so the Client still exists, which means unregister() doesn\u0027t take effect.\n\nIt\u0027s possible this is a bug in the existing code... I don\u0027t know if its guaranteed that even if the Mojo binding is destroyed as SWNetworkProvider does now, the ServiceWorkerProviderHost is destructed in a \"timely\" manner. I don\u0027t know if we have the ordering guarantees we need.",
+      "parentUuid": "41f09517_86b68c24",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
