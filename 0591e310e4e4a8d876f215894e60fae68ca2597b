@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef3b930_2ab28c30",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:03:19Z",
+      "side": 0,
+      "message": "nits: please modify the comments to make it apply for is_origin_clean_. For example, if SkImage expose the origin_clean info in the future, then we should use SkImage\u0027s API.",
+      "range": {
+        "startLine": 86,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "0591e310e4e4a8d876f215894e60fae68ca2597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
