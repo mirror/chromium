@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "938dde45_ab8fe86d",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-17T21:49:20Z",
+      "side": 1,
+      "message": "That\u0027s better, done.",
+      "parentUuid": "ecb89582_c5c8136b",
+      "revId": "7245b017c089cacaa4da8e5900a0fd88d990f11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2012c442_e97d3361",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-17T21:11:12Z",
       "side": 1,
       "message": "can you rename this to TOGGLE_MESSAGE_CENTER_BUBBLE?",
+      "range": {
+        "startLine": 1010,
+        "startChar": 9,
+        "endLine": 1010,
+        "endChar": 35
+      },
+      "revId": "7245b017c089cacaa4da8e5900a0fd88d990f11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6303aa_4b0b0b71",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-17T21:49:20Z",
+      "side": 1,
+      "message": "Ah, missed this place. Thanks, done.",
+      "parentUuid": "2012c442_e97d3361",
       "range": {
         "startLine": 1010,
         "startChar": 9,
