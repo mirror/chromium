@@ -8,6 +8,7 @@
 
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "chrome/browser/interstitials/chrome_controller_client.h"
 #include "chrome/browser/interstitials/chrome_metrics_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -65,6 +66,8 @@ MITMSoftwareBlockingPage::MITMSoftwareBlockingPage(
     const GURL& request_url,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     const net::SSLInfo& ssl_info,
+    const std::string& mitm_software_name,
+    bool is_enterprise_managed,
     const base::Callback<void(content::CertificateRequestResultType)>& callback)
     : SecurityInterstitialPage(
           web_contents,
@@ -87,6 +90,8 @@ MITMSoftwareBlockingPage::MITMSoftwareBlockingPage(
           new security_interstitials::MITMSoftwareUI(request_url,
                                                      cert_error,
                                                      ssl_info,
+                                                     mitm_software_name,
+                                                     is_enterprise_managed,
                                                      controller())) {}
 
 MITMSoftwareBlockingPage::~MITMSoftwareBlockingPage() {
@@ -179,4 +184,20 @@ void MITMSoftwareBlockingPage::NotifyDenyCertificate() {
 
   base::ResetAndReturn(&callback_)
       .Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_CANCEL);
+}
+
+bool MITMSoftwareBlockingPage::IsEnterpriseManaged() {
+  bool is_enterprise_managed = false;
+
+#if defined(OS_WIN)
+  if (base::win::IsEnterpriseManaged()) {
+    is_enterprise_managed = true;
+  }
+#elif defined(OS_CHROMEOS)
+  if (g_browser_process->platform_part()->browser_policy_connector_chromeos()) {
+    is_enterprise_managed = true;
+  }
+#endif
+
+  return is_enterprise_managed;
 }
