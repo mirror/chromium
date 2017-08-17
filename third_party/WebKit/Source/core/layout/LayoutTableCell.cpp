@@ -61,6 +61,7 @@ LayoutTableCell::LayoutTableCell(Element* element)
       absolute_column_index_(kUnsetColumnIndex),
       cell_children_need_layout_(false),
       is_spanning_collapsed_row_(false),
+      is_spanning_collapsed_column_(false),
       collapsed_border_values_valid_(false),
       intrinsic_padding_before_(0),
       intrinsic_padding_after_(0) {
@@ -457,7 +458,8 @@ void LayoutTableCell::ComputeOverflow(LayoutUnit old_client_after_edge,
 }
 
 bool LayoutTableCell::ShouldClipOverflow() const {
-  return IsSpanningCollapsedRow() || LayoutBox::ShouldClipOverflow();
+  return IsSpanningCollapsedRow() || IsSpanningCollapsedColumn() ||
+         LayoutBox::ShouldClipOverflow();
 }
 
 LayoutUnit LayoutTableCell::CellBaselinePosition() const {
@@ -1097,6 +1099,14 @@ LayoutUnit LayoutTableCell::BorderAfter() const {
   return Table()->ShouldCollapseBorders()
              ? LayoutUnit(CollapsedBorderHalfAfter(false))
              : LayoutBlockFlow::BorderAfter();
+}
+
+bool LayoutTableCell::IsFirstColumnCollapsed() const {
+  if (!RuntimeEnabledFeatures::VisibilityCollapseColumnEnabled())
+    return false;
+  if (!HasSetAbsoluteColumnIndex())
+    return false;
+  return Table()->IsAbsoluteColumnCollapsed(AbsoluteColumnIndex());
 }
 
 void LayoutTableCell::Paint(const PaintInfo& paint_info,
