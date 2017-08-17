@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a479a301_d67c63b5",
+        "filename": "third_party/WebKit/LayoutTests/inspector/sources/debugger/navigator-view.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-17T18:25:20Z",
+      "side": 1,
+      "message": "This test is actually checking mock data, you have two options:\n- improve InspectorTest.addScriptUISourceCode method and make it possible to add worklet uiSourceCode,\n- introduce separate test, you can use http/tests/inspector/resource-tree/resource-tree-non-unique-url.html as example:\n   a) create a page with worklet and add it to the resources folder (non-local urls are not supported by test runner).\n   b) use function like waitForUISourceCodeAdded from navigator-view.html and wait until worklet script arrived,\n   c) use InspectorTest.dumpResourcesTree() to dump navigator view.\n\nI prefer second option, since first one looks a little over complicated.",
+      "revId": "d42eb7aa268ecec5446ea4cc0e747209aa84449c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
