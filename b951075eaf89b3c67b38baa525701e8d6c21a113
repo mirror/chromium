@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab7f282_c7b1d3c3",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "Not needed since you are passing is_enterprise_managed?",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45e0d2e_7aca176f",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "Not needed since you are passing is_enterprise_managed?",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1570b730_91ec638d",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "Is the error coming from IsInterstitialDisplayingText?",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c55940_ea4fb44d",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "nit: Add \"Returns empty string if there is no match\".",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601d090a_6b71dd10",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "Can we call g_config.Pointer()-\u003eIsEnterpriseManaged(); directly from here?",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a092c615_f95ec705",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "Not needed? Or if needed for tests, rename to IsEnterpriseManagedForTesting()?",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24587a08_bf5f5b06",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "Hmm, looks like currently we don\u0027t have a way of checking whether the delegate showed an enterprise or non-enterprise interstitial.\n\nYou could add is_enterprise_managed flag to Delegate::ShowMITMSoftwareInterstitial() and then check that the delegate indeed saw is_enterprise_managed\u003dtrue for this case. Looks like my suggestion to call IsEnterpriseManaged() from the delegate wasn\u0027t a good idea then.",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79f70e5_a596edcd",
+        "filename": "components/security_interstitials/core/mitm_software_ui.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-17T23:12:00Z",
+      "side": 1,
+      "message": "nit: Drop const from bool",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
