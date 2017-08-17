@@ -33,6 +33,15 @@ namespace arc {
 // for those operations will be never called.
 class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
  public:
+  static constexpr int64_t kSupportsCreate = arc::mojom::Root::kSupportsCreate;
+  static constexpr int64_t kLocalOnly = arc::mojom::Root::kLocalOnly;
+  static constexpr int64_t kSupportsRecents =
+      arc::mojom::Root::kSupportsRecents;
+  static constexpr int64_t kSupportsSearch = arc::mojom::Root::kSupportsSearch;
+  static constexpr int64_t kSupportsIsChild =
+      arc::mojom::Root::kSupportsIsChild;
+  static constexpr int64_t kSupportsEject = arc::mojom::Root::kSupportsEject;
+
   using GetFileInfoCallback = storage::AsyncFileUtil::GetFileInfoCallback;
   using ReadDirectoryCallback = storage::AsyncFileUtil::ReadDirectoryCallback;
   using ChangeType = storage::WatcherManager::ChangeType;
@@ -44,7 +53,12 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
 
   ArcDocumentsProviderRoot(ArcFileSystemOperationRunner* runner,
                            const std::string& authority,
-                           const std::string& root_document_id);
+                           const std::string& root_document_id,
+                           const std::string& id,
+                           const std::string& title,
+                           const std::string& summary,
+                           const std::string& icon,
+                           int64_t flags);
   ~ArcDocumentsProviderRoot() override;
 
   // Queries information of a file just like AsyncFileUtil.GetFileInfo().
@@ -219,8 +233,13 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   // BrowserContextKeyedServiceFactory dependency graph.
   ArcFileSystemOperationRunner* const runner_;
 
-  const std::string authority_;
-  const std::string root_document_id_;
+  std::string authority_;
+  std::string root_document_id_;
+  std::string id_;
+  std::string title_;
+  std::string summary_;
+  std::string icon_;
+  int64_t flags_;
 
   // Map from a file path to a watcher data.
   //
