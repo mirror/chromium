@@ -22,6 +22,30 @@
       "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d624a71c_eb8a6e78",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T15:31:18Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but isn\u0027t the web_contents_ we get a representation of the native page? So, we want the toolbar model state be based on these web contents.\n\nI actually need to pass the web_contents_ to the ChromeToolbarModelDelegate in https://chromium-review.googlesource.com/c/617947 so that the toolbar model gets the proper URL. That is the reason I keep it.",
+      "parentUuid": "d39da93e_6bb88f39",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 19
+      },
+      "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
