@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "db47a6a8_afdb3147",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T21:11:25Z",
+      "side": 1,
+      "message": "I tried that but it didn\u0027t work.",
+      "parentUuid": "e98f74d4_d72caeeb",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da69392_4bce023e",
         "filename": "ash/session/test_session_controller_client.h",
         "patchSetId": 26
@@ -560,6 +578,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd588a8f_520e0209",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T21:11:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08f8ae4c_56c6f605",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -893,6 +929,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d115b8_fc8a6c34",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T21:11:25Z",
+      "side": 1,
+      "message": "As discussed offline, this will be a TODO for M62.",
+      "parentUuid": "fc549109_058a09c5",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

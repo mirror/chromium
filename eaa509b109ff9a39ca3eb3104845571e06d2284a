@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfe320f2_798f4721",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T21:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac01578_ce4bba4b",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb065ae9_8dc0bb6a",
         "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
         "patchSetId": 29
@@ -33,6 +51,24 @@
       "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3e5e14_77472cf4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T21:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb065ae9_8dc0bb6a",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54dad9c7_5331244c",
+        "filename": "components/arc/bluetooth/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-17T21:11:25Z",
+      "side": 1,
+      "message": "After consulting with rkc@ and lhchavez@, the cleanest way to avoid ash dependency of arc is to move this arc_bluetooth_bridge to chrome/. So I\u0027ve done that in this CL.",
+      "parentUuid": "4f0e8e34_d76acadf",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
