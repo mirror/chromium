@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94789f1c_c646c0bb",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-17T21:25:09Z",
+      "side": 1,
+      "message": "Is this fine for me to put the account information in the log? It might largely improve the usefulness of this log info.",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
