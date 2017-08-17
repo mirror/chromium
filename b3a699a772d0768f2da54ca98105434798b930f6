@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b04411_6aabfc4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-17T20:27:32Z",
+      "side": 1,
+      "message": "We set this to false during requestPresent, so when is this ever going to be true here?",
+      "range": {
+        "startLine": 1068,
+        "startChar": 16,
+        "endLine": 1068,
+        "endChar": 33
+      },
+      "revId": "b3a699a772d0768f2da54ca98105434798b930f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
