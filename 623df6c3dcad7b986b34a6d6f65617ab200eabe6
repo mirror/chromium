@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89dedad5_343a9bf2",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T20:10:35Z",
+      "side": 1,
+      "message": "Apparently this feature is from C++14, and under discussion, and doesn\u0027t compile on win_clang.  Adding constructor instead.",
+      "revId": "623df6c3dcad7b986b34a6d6f65617ab200eabe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
