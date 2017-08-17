@@ -71,6 +71,7 @@ class NET_EXPORT StaleHostResolver : public net::HostResolver {
                        net::AddressList* addresses,
                        const net::NetLogWithSource& net_log) override;
   void SetDnsClientEnabled(bool enabled) override;
+  void SetDnsRefresherEnabled(bool enabled) override;
   net::HostCache* GetHostCache() override;
   std::unique_ptr<base::Value> GetDnsConfigAsValue() const override;
 

@@ -183,6 +183,9 @@ class NET_EXPORT HostResolver {
   // Enable or disable the built-in asynchronous DnsClient.
   virtual void SetDnsClientEnabled(bool enabled);
 
+  // Enable or disable the DNS refresher of the async DnsClient.
+  virtual void SetDnsRefresherEnabled(bool enabled);
+
   // Returns the HostResolverCache |this| uses, or NULL if there isn't one.
   // Used primarily to clear the cache and for getting debug information.
   virtual HostCache* GetHostCache();
