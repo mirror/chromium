@@ -64,8 +64,10 @@ PlaybackImageProvider::GetDecodedDrawImage(const PaintImage& paint_image,
                          SkSize::Make(1.f, 1.f), filter_quality));
   }
 
+  CHECK(paint_image.GetSkImage());
   DrawImage draw_image = DrawImage(paint_image, RoundOutRect(src_rect),
                                    filter_quality, matrix, target_color_space_);
+  CHECK(draw_image.image());
   return ScopedDecodedDrawImage(
       cache_->GetDecodedImageForDraw(draw_image),
       base::BindOnce(&UnrefImageFromCache, std::move(draw_image), cache_));

@@ -463,6 +463,7 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
 
 DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDraw(
     const DrawImage& draw_image) {
+  CHECK(draw_image.image());
   ImageKey key = ImageKey::FromDrawImage(draw_image, format_);
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "SoftwareImageDecodeCache::GetDecodedImageForDraw", "key",
@@ -935,6 +936,8 @@ void SoftwareImageDecodeCache::DumpImageMemoryForCache(
 ImageDecodeCacheKey ImageDecodeCacheKey::FromDrawImage(
     const DrawImage& image,
     viz::ResourceFormat format) {
+  CHECK(image.image());
+
   const SkSize& scale = image.scale();
   // If the src_rect falls outside of the image, we need to clip it since
   // otherwise we might end up with uninitialized memory in the decode process.
