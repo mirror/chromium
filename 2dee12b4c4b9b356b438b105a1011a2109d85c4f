@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bfcdc14_31574e01",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T19:15:57Z",
+      "side": 1,
+      "message": "This was on purpose, see earlier comment.\n(There\u0027s a distinction between website settings and\ncontent settings.)",
+      "parentUuid": "9f5855db_49b54cf3",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "2dee12b4c4b9b356b438b105a1011a2109d85c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6bf76a3_793fc333",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-17T07:53:30Z",
       "side": 1,
       "message": "Odd rebase?",
+      "revId": "2dee12b4c4b9b356b438b105a1011a2109d85c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e73b75_385e76bc",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 5973,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T19:15:57Z",
+      "side": 1,
+      "message": "Also on purpose, it looks like it was missed in a previous\npatch so I\u0027m just adding it.",
+      "parentUuid": "e6bf76a3_793fc333",
       "revId": "2dee12b4c4b9b356b438b105a1011a2109d85c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
