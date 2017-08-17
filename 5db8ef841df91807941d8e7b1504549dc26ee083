@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "85d5148c_28e610b4",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-17T23:34:51Z",
+      "side": 1,
+      "message": "Probably better to use has_blur_cache_ here.",
+      "parentUuid": "517f9913_a0727964",
+      "revId": "5db8ef841df91807941d8e7b1504549dc26ee083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe4f158_e43fa540",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-17T23:34:51Z",
+      "side": 1,
+      "message": "Instead of using has_blur_cache_ here directly, might be safer to check widget_-\u003eGetLayer()-\u003elayer_blur() and decides if we want to AddCacheRenderSurfaceRequest() and update |has_blur_cache_| here.",
+      "revId": "5db8ef841df91807941d8e7b1504549dc26ee083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "180c37ec_d7b33179",
         "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
         "patchSetId": 11
