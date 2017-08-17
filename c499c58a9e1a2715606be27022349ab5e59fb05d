@@ -16,6 +16,24 @@
       "revId": "c499c58a9e1a2715606be27022349ab5e59fb05d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3ec590_27dde7ad",
+        "filename": "third_party/WebKit/Source/core/events/EventListenerMap.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T16:21:05Z",
+      "side": 1,
+      "message": "We cannot do that right now. \n\nEventListenerVector is just HeapVector\u003c...\u003e. It is not an actual GC-ed object and only allocated using \"new\". We don\u0027t have a valid HeapObjectHeader for this one which the WB would assume to have.\n\nThis will fail at compile time when failing to find a match for DispatchTraceWrappers. If we would be able to compile we would fail at runtime when checking the header word.",
+      "parentUuid": "0d2a9d3a_fb985ec4",
+      "revId": "c499c58a9e1a2715606be27022349ab5e59fb05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
