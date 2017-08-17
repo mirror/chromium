@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef InspectorHighlight_h
-#define InspectorHighlight_h
+#ifndef THIRD_PARTY_WEBKIT_SOURCE_CORE_INSPECTOR_INSPECTORHIGHLIGHT_H_
+#define THIRD_PARTY_WEBKIT_SOURCE_CORE_INSPECTOR_INSPECTORHIGHLIGHT_H_
+
+#include <memory>
 
 #include "core/CoreExport.h"
 #include "core/inspector/protocol/DOM.h"
@@ -76,7 +78,7 @@ class CORE_EXPORT InspectorHighlight {
 
   std::unique_ptr<protocol::DictionaryValue> element_info_;
   std::unique_ptr<protocol::ListValue> highlight_paths_;
-  std::unique_ptr<protocol::DictionaryValue> grid_info_;
+  std::unique_ptr<protocol::ListValue> grid_info_;
   bool show_rulers_;
   bool show_extension_lines_;
   bool display_as_material_;
@@ -85,4 +87,4 @@ class CORE_EXPORT InspectorHighlight {
 
 }  // namespace blink
 
-#endif  // InspectorHighlight_h
+#endif  // THIRD_PARTY_WEBKIT_SOURCE_CORE_INSPECTOR_INSPECTORHIGHLIGHT_H_

@@ -4,6 +4,9 @@
 
 #include "core/inspector/InspectorHighlight.h"
 
+#include <memory>
+#include <utility>
+
 #include "core/dom/PseudoElement.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/geometry/DOMRect.h"
@@ -91,16 +94,16 @@ void PathBuilder::AppendPathElement(const PathElement* path_element) {
 
 class ShapePathBuilder : public PathBuilder {
  public:
-  ShapePathBuilder(LocalFrameView& view,
-                   LayoutObject& layout_object,
+  ShapePathBuilder(LocalFrameView* view,
+                   const LayoutObject& layout_object,
                    const ShapeOutsideInfo& shape_outside_info)
-      : view_(&view),
+      : view_(view),
         layout_object_(layout_object),
         shape_outside_info_(shape_outside_info) {}
 
   static std::unique_ptr<protocol::ListValue> BuildPath(
-      LocalFrameView& view,
-      LayoutObject& layout_object,
+      LocalFrameView* view,
+      const LayoutObject& layout_object,
       const ShapeOutsideInfo& shape_outside_info,
       const Path& path,
       float scale) {
@@ -119,7 +122,7 @@ class ShapePathBuilder : public PathBuilder {
 
  private:
   Member<LocalFrameView> view_;
-  LayoutObject& layout_object_;
+  const LayoutObject& layout_object_;
   const ShapeOutsideInfo& shape_outside_info_;
 };
 
@@ -148,11 +151,11 @@ Path QuadToPath(const FloatQuad& quad) {
   return quad_path;
 }
 
-void ContentsQuadToViewport(const LocalFrameView* view, FloatQuad& quad) {
-  quad.SetP1(view->ContentsToViewport(RoundedIntPoint(quad.P1())));
-  quad.SetP2(view->ContentsToViewport(RoundedIntPoint(quad.P2())));
-  quad.SetP3(view->ContentsToViewport(RoundedIntPoint(quad.P3())));
-  quad.SetP4(view->ContentsToViewport(RoundedIntPoint(quad.P4())));
+void ContentsQuadToViewport(const LocalFrameView* view, FloatQuad* quad) {
+  quad->SetP1(view->ContentsToViewport(RoundedIntPoint(quad->P1())));
+  quad->SetP2(view->ContentsToViewport(RoundedIntPoint(quad->P2())));
+  quad->SetP3(view->ContentsToViewport(RoundedIntPoint(quad->P3())));
+  quad->SetP4(view->ContentsToViewport(RoundedIntPoint(quad->P4())));
 }
 
 const ShapeOutsideInfo* ShapeOutsideInfoForNode(Node* node,
@@ -173,7 +176,7 @@ const ShapeOutsideInfo* ShapeOutsideInfoForNode(Node* node,
   LayoutRect shape_bounds =
       shape_outside_info->ComputedShapePhysicalBoundingBox();
   *bounds = layout_box->LocalToAbsoluteQuad(FloatRect(shape_bounds));
-  ContentsQuadToViewport(containing_view, *bounds);
+  ContentsQuadToViewport(containing_view, bounds);
 
   return shape_outside_info;
 }
@@ -259,8 +262,11 @@ std::unique_ptr<protocol::DictionaryValue> BuildGapAndSpans(
   return result;
 }
 
-std::unique_ptr<protocol::DictionaryValue>
-BuildGridInfo(LayoutGrid* layout_grid, FloatPoint origin, Color color) {
+std::unique_ptr<protocol::DictionaryValue> BuildGridInfo(
+    LayoutGrid* layout_grid,
+    FloatPoint origin,
+    Color color,
+    bool isPrimary) {
   std::unique_ptr<protocol::DictionaryValue> grid_info =
       protocol::DictionaryValue::create();
   grid_info->setValue(
@@ -270,6 +276,7 @@ BuildGridInfo(LayoutGrid* layout_grid, FloatPoint origin, Color color) {
       "columns", BuildGapAndSpans(origin.X(), layout_grid->GridGap(kForColumns),
                                   layout_grid->ColumnPositions()));
   grid_info->setString("color", color.Serialized());
+  grid_info->setBoolean("isPrimaryGrid", isPrimary);
   return grid_info;
 }
 
@@ -360,12 +367,12 @@ void InspectorHighlight::AppendPathsForShapeOutside(
   }
 
   AppendPath(ShapePathBuilder::BuildPath(
-                 *node->GetDocument().View(), *node->GetLayoutObject(),
+                 node->GetDocument().View(), *node->GetLayoutObject(),
                  *shape_outside_info, paths.shape, scale_),
              config.shape, Color::kTransparent);
   if (paths.margin_shape.length())
     AppendPath(ShapePathBuilder::BuildPath(
-                   *node->GetDocument().View(), *node->GetLayoutObject(),
+                   node->GetDocument().View(), *node->GetLayoutObject(),
                    *shape_outside_info, paths.margin_shape, scale_),
                config.shape_margin, Color::kTransparent);
 }
@@ -386,7 +393,7 @@ void InspectorHighlight::AppendNodeHighlight(
     LocalFrameView* containing_view = layout_object->GetFrameView();
     for (size_t i = 0; i < quads.size(); ++i) {
       if (containing_view)
-        ContentsQuadToViewport(containing_view, quads[i]);
+        ContentsQuadToViewport(containing_view, &quads[i]);
       AppendQuad(quads[i], highlight_config.content,
                  highlight_config.content_outline);
     }
@@ -402,11 +409,21 @@ void InspectorHighlight::AppendNodeHighlight(
   AppendQuad(border, highlight_config.border, Color::kTransparent, "border");
   AppendQuad(margin, highlight_config.margin, Color::kTransparent, "margin");
 
-  if (highlight_config.css_grid != Color::kTransparent &&
-      layout_object->IsLayoutGrid()) {
-    grid_info_ = BuildGridInfo(ToLayoutGrid(layout_object), content.P1(),
-                               highlight_config.css_grid);
+  if (highlight_config.css_grid == Color::kTransparent)
+    return;
+  grid_info_ = protocol::ListValue::create();
+  if (layout_object->IsLayoutGrid()) {
+    grid_info_->pushValue(BuildGridInfo(ToLayoutGrid(layout_object),
+                                        content.P1(), highlight_config.css_grid,
+                                        true));
   }
+  LayoutObject* parent = layout_object->Parent();
+  if (!parent || !parent->IsLayoutGrid())
+    return;
+  if (!BuildNodeQuads(parent->GetNode(), &content, &padding, &border, &margin))
+    return;
+  grid_info_->pushValue(BuildGridInfo(ToLayoutGrid(parent), content.P1(),
+                                      highlight_config.css_grid, false));
 }
 
 std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
@@ -419,7 +436,7 @@ std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
   if (element_info_)
     object->setValue("elementInfo", element_info_->clone());
   object->setBoolean("displayAsMaterial", display_as_material_);
-  if (grid_info_)
+  if (grid_info_ && grid_info_->size() > 0)
     object->setValue("gridInfo", grid_info_->clone());
   return object;
 }
@@ -470,13 +487,12 @@ bool InspectorHighlight::GetBoxModel(
         protocol::DOM::ShapeOutsideInfo::create()
             .setBounds(BuildArrayForQuad(bounds_quad))
             .setShape(protocol::Array<protocol::Value>::fromValue(
-                ShapePathBuilder::BuildPath(*view, *layout_object,
-                                            *shape_outside_info, paths.shape,
-                                            1.f)
+                ShapePathBuilder::BuildPath(
+                    view, *layout_object, *shape_outside_info, paths.shape, 1.f)
                     .get(),
                 &errors))
             .setMarginShape(protocol::Array<protocol::Value>::fromValue(
-                ShapePathBuilder::BuildPath(*view, *layout_object,
+                ShapePathBuilder::BuildPath(view, *layout_object,
                                             *shape_outside_info,
                                             paths.margin_shape, 1.f)
                     .get(),
@@ -560,10 +576,10 @@ bool InspectorHighlight::BuildNodeQuads(Node* node,
   *border = layout_object->LocalToAbsoluteQuad(FloatRect(border_box));
   *margin = layout_object->LocalToAbsoluteQuad(FloatRect(margin_box));
 
-  ContentsQuadToViewport(containing_view, *content);
-  ContentsQuadToViewport(containing_view, *padding);
-  ContentsQuadToViewport(containing_view, *border);
-  ContentsQuadToViewport(containing_view, *margin);
+  ContentsQuadToViewport(containing_view, content);
+  ContentsQuadToViewport(containing_view, padding);
+  ContentsQuadToViewport(containing_view, border);
+  ContentsQuadToViewport(containing_view, margin);
 
   return true;
 }
