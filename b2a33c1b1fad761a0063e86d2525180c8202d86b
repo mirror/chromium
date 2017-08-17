@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4aa47847_baee6cb9",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T00:57:37Z",
+      "side": 1,
+      "message": "I think the state machine without resetting it her is easier to understand.",
+      "parentUuid": "b011003e_04eebd73",
+      "range": {
+        "startLine": 109,
+        "startChar": 26,
+        "endLine": 109,
+        "endChar": 49
+      },
+      "revId": "b2a33c1b1fad761a0063e86d2525180c8202d86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd86fcc_361717d2",
         "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
         "patchSetId": 4
