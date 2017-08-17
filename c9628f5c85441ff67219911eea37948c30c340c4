@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991c0f26_9adb40a7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-headers-sync.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T12:24:18Z",
+      "side": 1,
+      "message": "no-custome-header.py is a bit confusing, no-custom-header-on-preflight, maybe?",
+      "revId": "c9628f5c85441ff67219911eea37948c30c340c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
