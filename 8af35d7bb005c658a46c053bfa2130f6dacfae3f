@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82f5ef01_4a7dc27e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cb7f28_87aa9255",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c260fe9_2e04b866",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba331fd_47c45e44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c260fe9_2e04b866",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a56ce4a3_a0856126",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e9b69a_0848b5ec",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740bc476_903bafd7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ba3248_43af903e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done.\n\nKeyboardInterpreter previously can only handle text and specific key combinations like CTRL+ALT+DEL.",
+      "parentUuid": "740bc476_903bafd7",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d07ec694_f5e394eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5072080_a06d36ad",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3177052_44c33adc",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895d8e02_d51237c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3177052_44c33adc",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9c16ee7c_95be90c9",
+        "filename": "remoting/client/input/keyboard_input_strategy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Removed the comments and |modifiers| param.",
+      "parentUuid": "45a62659_8596bc9f",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f17fae6_bc6f7774",
         "filename": "remoting/client/input/keyboard_interpreter.cc",
         "patchSetId": 8
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "af058a23_52c4202f",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Reverted the change. Directly send the key event queue instead.",
+      "parentUuid": "7f17fae6_bc6f7774",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cfe37de_ef5a8a24",
         "filename": "remoting/client/input/keyboard_interpreter.cc",
         "patchSetId": 8
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-16T22:11:30Z",
       "side": 1,
       "message": "Are you sure you should be pushing a DomCode here, rather than a DomKey? We use DomKey to express the *meaning* of a key, whereas DomCode is about the physical key, so it only really makes sense in the context of a PC keyboard.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b0bdf16_73b2cf23",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure... The problem is if you use DomKey it doesn\u0027t seem you can easily get back the USB keycode to be sent to the host, unless we use the US layout keyboard mapping again...",
+      "parentUuid": "2cfe37de_ef5a8a24",
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "38658cea_a7160fbf",
+        "filename": "remoting/client/input/keyboard_interpreter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54cf4b06_f754436a",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f0026f_34522cba",
         "filename": "remoting/client/input/keyboard_interpreter.h",
         "patchSetId": 8
@@ -186,6 +366,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870612de_48aa81d7",
+        "filename": "remoting/client/input/keyboard_interpreter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f0026f_34522cba",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "5e91fe49_a2cfffc8",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Done. Added comments below and used DomCode.",
+      "parentUuid": "99351096_5634244c",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6020d404_686dce19",
         "filename": "remoting/client/input/keycode_map_us.h",
         "patchSetId": 8
@@ -220,6 +436,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4de87b_d5da0abd",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Just removed them. These were copied from the old key_map_us.h so I\u0027m not sure how they were used...",
+      "parentUuid": "6020d404_686dce19",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "ab91752a_be34ac85",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Just added the mapping. Not sure whether it will be used in the future though...",
+      "parentUuid": "fd5f8dfc_a5c11e8b",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a054dc0_31ba643e",
         "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
         "patchSetId": 8
@@ -254,6 +506,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd51d24_b264c5b6",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "8a054dc0_31ba643e",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +562,23 @@
     },
     {
       "key": {
+        "uuid": "adb0b5a7_64a65c9f",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Now text events will not have modifiers attached. Text from soft keyboard with modifiers will be translated to pure key events before passing into this class.",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b87959_7ab29eb9",
         "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
         "patchSetId": 8
@@ -306,6 +593,24 @@
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00b7692_0ef713f4",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-17T02:28:54Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "66b87959_7ab29eb9",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
