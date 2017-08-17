@@ -34,6 +34,24 @@
       "revId": "f991b636693b48a0f3d057779348ce28212cdf2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd5f089_e3e7a4a4",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T19:10:24Z",
+      "side": 1,
+      "message": "If this is consistent with other Mojo services, then that sounds fine.",
+      "parentUuid": "4327f409_1a4b0d53",
+      "revId": "f991b636693b48a0f3d057779348ce28212cdf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
