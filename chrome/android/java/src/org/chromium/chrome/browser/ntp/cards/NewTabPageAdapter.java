@@ -111,7 +111,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mRoot.addChild(mSiteSection);
         }
 
-        if (SuggestionsConfig.useModern()) {
+        if (FeatureUtilities.isChromeHomeModernEnabled()) {
             mRoot.addChildren(mSigninPromo, mSections, mAllDismissed);
         } else {
             mRoot.addChildren(mSections, mSigninPromo, mAllDismissed);

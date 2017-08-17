@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import org.chromium.chrome.browser.ChromeApplication;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContentViewDelegate;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelManager;
@@ -237,8 +236,8 @@ public class LayoutManagerDocument extends LayoutManager
 
         boolean isNtp = tab.getNativePage() instanceof NewTabPage;
         boolean useModernDesign = tab.getActivity() != null
-                && tab.getActivity().getBottomSheet() != null && ChromeFeatureList.isInitialized()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
+                && tab.getActivity().getBottomSheet() != null
+                && FeatureUtilities.isChromeHomeModernEnabled();
         boolean needsUpdate = layoutTab.initFromHost(tab.getBackgroundColor(), tab.shouldStall(),
                 canUseLiveTexture, themeColor,
                 ColorUtils.getTextBoxColorForToolbarBackground(
