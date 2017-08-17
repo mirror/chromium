@@ -16,6 +16,24 @@
       "revId": "60c714a56920407ad19926d553a1bc8f98ef4335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4bc7565_f650b544",
+        "filename": "chrome/browser/ui/webui/chromeos/ui_account_tweaks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-17T01:47:21Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "ee97ded0_cc65a184",
+      "revId": "60c714a56920407ad19926d553a1bc8f98ef4335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
