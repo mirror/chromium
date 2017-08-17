@@ -22,6 +22,30 @@
       "revId": "86d912e8b1dee61e5e47b00d710ddcf94f9e5f92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0924f2ee_55de9bcf",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-17T09:02:43Z",
+      "side": 1,
+      "message": "I agree that the name is bad. I guess it was suggested because it is consistent with the API (we have a Profile::GetIOTaskRunner(), see line 815 below.\n\nMaybe could be changed to file_io_task_runner_ since it is used for file IO as opposed to network IO. The function name should probably be updated in that case.",
+      "parentUuid": "a8cf1998_e3265708",
+      "range": {
+        "startLine": 487,
+        "startChar": 45,
+        "endLine": 487,
+        "endChar": 60
+      },
+      "revId": "86d912e8b1dee61e5e47b00d710ddcf94f9e5f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
