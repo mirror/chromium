@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f00e0513_b3591490",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T07:41:05Z",
+      "side": 1,
+      "message": "This one requires a bit more careful thinking, which should not hold back landing the trivial stuff.",
+      "range": {
+        "startLine": 2650,
+        "startChar": 13,
+        "endLine": 2650,
+        "endChar": 48
+      },
+      "revId": "d408010ec29350592d481094253d99652d8594ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faa5935_ab38839f",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T07:41:05Z",
+      "side": 1,
+      "message": "Uses of sub classes (ContainerNode-\u003eNode), inline definitions and TraceTraits don\u0027t play well together. Working around that with casts (see below).\n\n(In V8 we have -inl.h files for that reason.)",
+      "range": {
+        "startLine": 979,
+        "startChar": 21,
+        "endLine": 979,
+        "endChar": 25
+      },
+      "revId": "d408010ec29350592d481094253d99652d8594ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
