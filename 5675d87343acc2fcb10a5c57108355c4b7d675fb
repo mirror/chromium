@@ -16,6 +16,24 @@
       "revId": "5675d87343acc2fcb10a5c57108355c4b7d675fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cd8dce_93a6ea28",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-17T20:49:16Z",
+      "side": 1,
+      "message": "There isn\u0027t really a legitimate failure-mode for this call besides caller error, so it seems reasonable for it to be FATAL in Debug builds, IMO.",
+      "parentUuid": "9bb4ff51_9daa8592",
+      "revId": "5675d87343acc2fcb10a5c57108355c4b7d675fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
