@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <map>
 #include <vector>
 
 #include "base/debug/stack_trace.h"
@@ -215,19 +216,17 @@ class PatchElementReader {
   const ElementMatch& element_match() const { return element_match_; }
   const Element& old_element() const { return element_match_.old_element; }
   const Element& new_element() const { return element_match_.new_element; }
-  size_t pool_count() const { return extra_targets_.size(); }
 
-  const EquivalenceSource& GetEquivalenceSource() const {
-    return equivalences_;
-  }
-  const ExtraDataSource& GetExtraDataSource() const { return extra_data_; }
-  const RawDeltaSource& GetRawDeltaSource() const { return raw_delta_; }
-  const ReferenceDeltaSource& GetReferenceDeltaSource() const {
+  EquivalenceSource GetEquivalenceSource() const { return equivalences_; }
+  ExtraDataSource GetExtraDataSource() const { return extra_data_; }
+  RawDeltaSource GetRawDeltaSource() const { return raw_delta_; }
+  ReferenceDeltaSource GetReferenceDeltaSource() const {
     return reference_delta_;
   }
-  const TargetSource& GetExtraTargetSource(PoolTag tag) const {
-    DCHECK_LT(tag.value(), extra_targets_.size());
-    return extra_targets_[tag.value()];
+  TargetSource GetExtraTargetSource(PoolTag tag) const {
+    if (extra_targets_.count(tag) == 0)
+      return {};
+    return extra_targets_.at(tag);
   }
 
  private:
@@ -236,7 +235,7 @@ class PatchElementReader {
   ExtraDataSource extra_data_;
   RawDeltaSource raw_delta_;
   ReferenceDeltaSource reference_delta_;
-  std::vector<TargetSource> extra_targets_;
+  std::map<PoolTag, TargetSource> extra_targets_;
 };
 
 // Utility to read a Zucchini ensemble patch. An ensemble patch is the
