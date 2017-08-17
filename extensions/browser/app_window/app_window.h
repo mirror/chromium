@@ -37,6 +37,10 @@ class RenderFrameHost;
 class WebContents;
 }
 
+class ChromeNativeAppWindowViewsAuraAshBrowserTest;
+FORWARD_DECLARE_TEST(ChromeNativeAppWindowViewsAuraAshBrowserTest,
+                     ImmersiveWorkFlow);
+
 namespace extensions {
 
 class AppDelegate;
@@ -385,6 +389,8 @@ class AppWindow : public content::WebContentsDelegate,
   ~AppWindow() override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(::ChromeNativeAppWindowViewsAuraAshBrowserTest,
+                           ImmersiveWorkFlow);
   // PlatformAppBrowserTest needs access to web_contents()
   friend class PlatformAppBrowserTest;
 
