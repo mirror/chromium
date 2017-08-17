@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2d8277a_d0e3da08",
+        "filename": "base/containers/span.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T10:25:03Z",
+      "side": 1,
+      "message": "TBH, I don\u0027t know that I\u0027ll implement the remaining missing ctors unless there\u0027s a use case that requires them.",
+      "revId": "8d3d44e29947d4b4929f3ebfe09cd5dbd2396223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa9e31f_a0f7421a",
+        "filename": "base/containers/span.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T10:25:03Z",
+      "side": 1,
+      "message": "Similarly, I\u0027ll add these if they prove to be useful at some point.",
+      "revId": "8d3d44e29947d4b4929f3ebfe09cd5dbd2396223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

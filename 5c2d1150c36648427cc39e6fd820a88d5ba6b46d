@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346f43cb_e29f53c9",
+        "filename": "base/containers/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T10:25:03Z",
+      "side": 1,
+      "message": "I opted to match how it\u0027s defined in the proposal for now, but I am open to making this explicit if people feel that would be more desirable.",
+      "revId": "5c2d1150c36648427cc39e6fd820a88d5ba6b46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0bc855f_c3f067d7",
+        "filename": "base/containers/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T10:25:03Z",
+      "side": 1,
+      "message": "I didn\u0027t add Span\u003cU\u003e conversions for MakeSpan since that seemed kind of silly.",
+      "revId": "5c2d1150c36648427cc39e6fd820a88d5ba6b46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
