@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2d6e04c6_a30a1c7f",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T15:55:40Z",
+      "side": 1,
+      "message": "Let me provide the thought process here as we liked the naming.\n\nWe\u0027d like to expose a name that tells the embedder when it is called but is still vague enough that we don\u0027t need another callback for every idea that is floating around. E.g. maybe it would be a good idea to drop caches when this one is called. However, we\u0027d then rather not provide a DropCaches() callback on platform. We\u0027d much rather have the embedder figure that one out.\n\nAlso, this is the only call from V8 to the embedder and the meaning is exactly what it is about: V8 is under critical memory pressure and will run OOM if nothing happens. Actually, if the embedder make more memory available with releasing the address reservation for wasm that would also be fine, V8 just doesn\u0027t care.",
+      "parentUuid": "b22c2394_dd81ffde",
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de06e666_46be127c",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 4
