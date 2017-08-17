@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31a3431b_42bc5cce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T12:20:45Z",
+      "side": 1,
+      "message": "I made some comments for this file in https://chromium-review.googlesource.com/c/616482, so let\u0027s land that CL first.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "7b9530aacd3aabcaead98361f4f3b80448348a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
