@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39485bf8_795b2041",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-17T17:13:02Z",
+      "side": 1,
+      "message": "oh right, %% :)",
+      "range": {
+        "startLine": 68,
+        "startChar": 42,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "76ab8cd24ddcb15093ddc69adb8e9d4863cae1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
