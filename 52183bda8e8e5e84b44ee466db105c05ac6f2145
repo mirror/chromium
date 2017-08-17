@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bfe5af1_01cddb09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Isn\u0027t there a bug number?",
+      "revId": "52183bda8e8e5e84b44ee466db105c05ac6f2145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf96c002_ce209131",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "52183bda8e8e5e84b44ee466db105c05ac6f2145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87281b7_b4948aad",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Why this change? Style guide disagrees:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-references-for-all-non_null-pointer-arguments",
+      "revId": "52183bda8e8e5e84b44ee466db105c05ac6f2145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5ab5b7_cac23704",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Can\u0027t there be 3 levels of grids? I am a bit confused here.",
+      "revId": "52183bda8e8e5e84b44ee466db105c05ac6f2145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5fd4d3_1b2240c0",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Why this? Is it enforced by presubmit? Style guide says to not do this:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-Filename_h-as-the-header-include-guard",
+      "revId": "52183bda8e8e5e84b44ee466db105c05ac6f2145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
