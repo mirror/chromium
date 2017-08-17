@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1c38feae_a096b752",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-17T16:01:20Z",
+      "side": 1,
+      "message": "Maybe we can chat about this offline? I still don\u0027t see the difference.",
+      "parentUuid": "bc1f635a_33092cae",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f25833_89b39b03",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -224,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "0639cc35_c7eb4fdb",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-17T16:01:20Z",
+      "side": 1,
+      "message": "I think that it is not worth testing both the case when there are multiple browsers which support WebAPKs installed and when there is just one WebAPK which is installed.\n\nI think that testing just the case where there is only one browser which supports WebAPKs installed is sufficient\n\nfor the following function:\nbool foo(bool a, bool b, bool c, bool d) {\n  if (!a) {\n    return false;\n  }\n  if (!b) {\n    return false;\n  }\n  if (c) {\n    return true;\n  }\n  if (d) {\n    return true;\n  }\n  return false;\n}\n\nI don\u0027t think that we need to test all of\n(A \u003d true, B \u003d false, C \u003d true, D \u003d true) --\u003e I think that this test case is sufficient\n(A \u003d true, B \u003d false, C \u003d true, D \u003d false)\n(A \u003d true, B \u003d false, C \u003d false, D \u003d true)\n(A \u003d true, B \u003d false, C \u003d false, D \u003d false)",
+      "parentUuid": "ab586b33_bbece794",
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b733cee5_172fe64f",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
         "patchSetId": 8
@@ -307,6 +343,30 @@
       "side": 1,
       "message": "Thanks for the additional info! I will stick with \"android\" as it\u0027s the most common case in real word (chrome is pre-installed, and you can\u0027t uninstall chrome without rooting the device).",
       "parentUuid": "92bfa9e6_49cf5e2b",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 50
+      },
+      "revId": "dccae04ada5a82c6994a2e60e54e49c789c1f83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b4532eb_821c2de5",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-17T16:01:20Z",
+      "side": 1,
+      "message": "I talked to Xi offline and Xi does not remember in which case \"Android\" is returned, but I believe her! In my testing when no browser is installed, WebApkUtils#getDefaultBrowserPackageName() returns null\n\nIt is worth noting that when no browser is installed getHostBrowserPackageNameInternal() early exits in the first if() block",
+      "parentUuid": "54148e47_bc4579a7",
       "range": {
         "startLine": 282,
         "startChar": 32,
