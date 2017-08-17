@@ -46,7 +46,6 @@ NOINLINE void ClassicPendingScript::CheckState() const {
   CHECK(!prefinalizer_called_);
   CHECK(GetElement());
   CHECK(GetResource() || !streamer_);
-  CHECK(!streamer_ || streamer_->GetResource() == GetResource());
 }
 
 void ClassicPendingScript::Prefinalize() {
@@ -143,14 +142,17 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
   // If there is no script streamer, this step completes immediately.
   AdvanceReadyState(kWaitingForStreaming);
   if (streamer_)
-    streamer_->NotifyFinished(resource);
+    streamer_->NotifyFinished();
   else
     FinishWaitingForStreaming();
 }
 
 void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
-  if (streamer_)
-    streamer_->NotifyAppendData(resource);
+  if (streamer_) {
+    streamer_->NotifyAppendData(
+        resource->GetResponse(), resource->CacheHandler(),
+        resource->ResourceBuffer(), resource->Encoding());
+  }
 }
 
 DEFINE_TRACE(ClassicPendingScript) {
