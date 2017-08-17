@@ -5,6 +5,7 @@
 #ifndef GCInfo_h
 #define GCInfo_h
 
+#include "platform/heap/GarbageCollected.h"
 #include "platform/heap/Visitor.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
