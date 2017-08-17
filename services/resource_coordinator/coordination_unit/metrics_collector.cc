@@ -31,6 +31,8 @@ const char kTabFromBackgroundedToFirstAudioStartsUMA[] =
     "TabManager.Heuristics.FromBackgroundedToFirstAudioStarts";
 const char kTabFromBackgroundedToFirstTitleUpdatedUMA[] =
     "TabManager.Heuristics.FromBackgroundedToFirstTitleUpdated";
+const char kTabFromBackgroundedToFirstNotificationShownUMA[] =
+    "TabManager.Heuristics.FromBackgroundedToFirstNotificationShown";
 
 // Gets the number of tabs that are co-resident in all of the render processes
 // associated with a |CoordinationUnitType::kWebContents| coordination unit.
@@ -134,6 +136,27 @@ void MetricsCollector::OnWebContentsPropertyChanged(
   }
 }
 
+void MetricsCollector::OnFrameEventReceived(
+    const FrameCoordinationUnitImpl* frame_cu,
+    const mojom::Event event) {
+  if (event == mojom::Event::kNotificationShown) {
+    auto* web_contents_cu = frame_cu->GetWebContentsCoordinationUnit();
+    // Only record metrics while it is backgrounded.
+    if (!web_contents_cu || web_contents_cu->IsVisible())
+      return;
+    auto now = clock_->NowTicks();
+    MetricsReportRecord& record =
+        metrics_report_record_map_[web_contents_cu->id()];
+    if (!record.first_notification_shown_after_backgrounded_reported) {
+      const WebContentsData web_contents_data =
+          web_contents_data_map_[web_contents_cu->id()];
+      HEURISTICS_HISTOGRAM(kTabFromBackgroundedToFirstNotificationShownUMA,
+                           now - web_contents_data.last_invisible_time);
+      record.first_notification_shown_after_backgrounded_reported = true;
+    }
+  }
+}
+
 void MetricsCollector::OnWebContentsEventReceived(
     const WebContentsCoordinationUnitImpl* web_contents_cu,
     const mojom::Event event) {
@@ -207,11 +230,13 @@ void MetricsCollector::ResetMetricsReportRecord(CoordinationUnitID cu_id) {
 
 MetricsCollector::MetricsReportRecord::MetricsReportRecord()
     : first_audible_after_backgrounded_reported(false),
-      first_title_updated_after_backgrounded_reported(false) {}
+      first_title_updated_after_backgrounded_reported(false),
+      first_notification_shown_after_backgrounded_reported(false) {}
 
 void MetricsCollector::MetricsReportRecord::Reset() {
   first_audible_after_backgrounded_reported = false;
   first_title_updated_after_backgrounded_reported = false;
+  first_notification_shown_after_backgrounded_reported = false;
 }
 
 }  // namespace resource_coordinator
