@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1519ec01_f8ef5d95",
+        "filename": "components/metrics/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T15:08:45Z",
+      "side": 1,
+      "message": "Please add a comment mentioning why it\u0027s a separate target.",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 33
+      },
+      "revId": "d58d61577b1e420e22cf8ed48e61c174daf6f921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dce3b60_71163518",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T15:08:45Z",
+      "side": 1,
+      "message": "I think this should be static. This way, it will only be initialized once, the first time the function is called, rather than every entry. But having it static within the function I think should still avoid the static initializer since it doesn\u0027t get initialized until function is called.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "d58d61577b1e420e22cf8ed48e61c174daf6f921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
