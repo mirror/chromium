@@ -218,9 +218,13 @@ class FetchManager::Loader final
       finished_ = true;
       if (r == WebDataConsumerHandle::kDone) {
         SubresourceIntegrity::ReportInfo report_info;
+
+        // TODO(vogelheim): crbug.com/753349, figure out how deal with
+        //                  SRI checking here.
+        String integrity_header;
         bool check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
             integrity_metadata_, buffer_.data(), buffer_.size(), url_,
-            report_info);
+            integrity_header, report_info);
         SubresourceIntegrityHelper::DoReport(*loader_->GetExecutionContext(),
                                              report_info);
         if (check_result) {
