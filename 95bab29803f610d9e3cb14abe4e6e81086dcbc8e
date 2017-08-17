@@ -22,6 +22,30 @@
       "revId": "95bab29803f610d9e3cb14abe4e6e81086dcbc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e992c6b_5e494f17",
+        "filename": "testing/buildbot/filters/fuchsia.base_unittests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-17T01:20:32Z",
+      "side": 0,
+      "message": "Pass the available tests \u003d\u003e works exactly as intended, right?",
+      "parentUuid": "8a3c18ba_7699bdf8",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "95bab29803f610d9e3cb14abe4e6e81086dcbc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
