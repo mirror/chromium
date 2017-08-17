@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f058511_cfa4195c",
+        "filename": "build/android/findbugs_filter/findbugs_exclude.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-17T19:18:19Z",
+      "side": 1,
+      "message": "I think this would cause complaint on all the UiThreadTestRule again.\nmight be good just to change to org.junit.rules.TestRule",
+      "revId": "e8f59eac56c6d7441bf6f3ec1fc38bdfbcd3b203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
