@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "3fb43617_babbd108",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-17T21:31:40Z",
+      "side": 1,
+      "message": "According to the IPP Everywhere spec, it should exist though the default value is empty.  It depends on what standard they\u0027re trying to comply with, there are situations where it might be empty but we have lots of printers without UUID data.",
+      "parentUuid": "7f5aea68_580db16b",
+      "range": {
+        "startLine": 132,
+        "startChar": 9,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a455e637_b09344d8",
         "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
         "patchSetId": 1
