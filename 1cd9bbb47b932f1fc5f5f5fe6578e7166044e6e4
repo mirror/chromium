@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a77977f6_598d5716",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/network/network-worker-fetch-parallel.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-17T08:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae776a0_9ba0e9ed",
+      "revId": "1cd9bbb47b932f1fc5f5f5fe6578e7166044e6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae2d306_be94a6be",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/network/network-worker-fetch-parallel.html",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T07:59:06Z",
       "side": 1,
       "message": "how about switching to 2 col indent style? I see that this is inherited from network-worker-fetch.html, but.",
+      "revId": "1cd9bbb47b932f1fc5f5f5fe6578e7166044e6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16801e2f_b3aea3d9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/network/network-worker-fetch-parallel.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-17T08:10:10Z",
+      "side": 1,
+      "message": "inspector directory is using 4 col indent style.\nSo I changed this file and fetch-parallel-worker.js to use 4 col indent style.",
+      "parentUuid": "cae2d306_be94a6be",
       "revId": "1cd9bbb47b932f1fc5f5f5fe6578e7166044e6e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
