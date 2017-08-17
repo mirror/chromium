@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d727e1a4_d97562bd",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T23:51:38Z",
+      "side": 1,
+      "message": "nit: this is complex enough to warrant a comment on what it does.",
+      "revId": "9d1c2c52c6d7de4c65d2d915e5cfb0484afd676a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d130e1_19bb9f54",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T23:51:38Z",
+      "side": 1,
+      "message": "nit: move ELSE to next line to mirror next statement.",
+      "revId": "9d1c2c52c6d7de4c65d2d915e5cfb0484afd676a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a334030_577ee651",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T23:51:38Z",
+      "side": 1,
+      "message": "optional: perhaps simpler with std::remove_if?",
+      "revId": "9d1c2c52c6d7de4c65d2d915e5cfb0484afd676a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637fb40f_f0adc56a",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T23:51:38Z",
+      "side": 1,
+      "message": "return transaction.Commit();",
+      "revId": "9d1c2c52c6d7de4c65d2d915e5cfb0484afd676a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddae6ac0_899bc411",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T23:51:38Z",
+      "side": 1,
+      "message": "I\u0027d say EXPECT_EQ(item, *store_item) since we expect no changes.",
+      "revId": "9d1c2c52c6d7de4c65d2d915e5cfb0484afd676a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
