@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4655316e_da7092af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ef37f2_176e756b",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd32ae71_0c0248df",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
         "patchSetId": 7
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "5104ea6c_80d4733c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Yeah, but there aren\u0027t any Android-side codes yet.\nSo the resuls of GetRoots might be null(I don\u0027t know what happens precisely).\nIn other words, media views will become unavailable without these temporal codes.\n\nI will change this comment to \"Remove this loop after implementing Android-side codes.\"",
+      "parentUuid": "314a9aaf_dab930b6",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9561a3af_de8cc25b",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 7
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "be947eab_a77bc65e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9561a3af_de8cc25b",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77be0893_77c74df8",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 7
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-17T04:47:56Z",
       "side": 1,
       "message": "style: 4 white space indent.\n\nCould you run \"git cl format\" just before uploading?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0cfc66_ba21a424",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Thank you for tell me that command.\nI have run \"git cl lint\" and fix formats by hand...",
+      "parentUuid": "77be0893_77c74df8",
       "revId": "df308770296e8e537bf64feb050985107fc58835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "a5332934_4dc5b77e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885d977c_a29aa6c4",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dda63e5a_c45e1f87",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 7
@@ -135,6 +225,24 @@
       "revId": "df308770296e8e537bf64feb050985107fc58835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e673228b_7d2bca31",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda63e5a_c45e1f87",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "00f5dae2_e94fe36f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a85bfcf7_a0d578c3",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73fad223_3e7f2746",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 7
@@ -169,6 +295,24 @@
       "revId": "df308770296e8e537bf64feb050985107fc58835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fae3cc9_71f4bbd2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73fad223_3e7f2746",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "377a1c25_2b04ccf8",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db667d4_9e7d1bc8",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba0f4c67_e25b276c",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 7
@@ -200,6 +362,24 @@
       "writtenOn": "2017-08-17T04:47:56Z",
       "side": 1,
       "message": "IIUC, whole |map_| elements should be updated?\nIn this case, older entries can be still alive?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd351dc_b222dc52",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "That\u0027s right.\nWe have to clear the map before updating.",
+      "parentUuid": "ba0f4c67_e25b276c",
       "revId": "df308770296e8e537bf64feb050985107fc58835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "0f12e4d6_a33d330f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34915ba2_d863e590",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c4acaf1_3510d9be",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 7
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "46f27047_fb1a8013",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4acaf1_3510d9be",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeb65274_8a333865",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 7
@@ -254,6 +470,24 @@
       "revId": "df308770296e8e537bf64feb050985107fc58835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3885f7fc_968951bf",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeb65274_8a333865",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -285,6 +519,24 @@
       "writtenOn": "2017-08-17T04:47:56Z",
       "side": 1,
       "message": "nit/optional: s/Bind/BindOnce/\nYou may want to do it in another CL with replacing other Bind()s, too, at once.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab695f3c_ad28b2d5",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-17T05:57:33Z",
+      "side": 1,
+      "message": "Hmm. OK, I will try.\nTo tell you the truth, I tried to make Refresh() to take CallbackOnce,\nbut it is difficult because generated mojo stub always takes Callback(not Once).",
+      "parentUuid": "08771838_01901a69",
       "revId": "df308770296e8e537bf64feb050985107fc58835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
