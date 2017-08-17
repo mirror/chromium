@@ -22,6 +22,30 @@
       "revId": "40aff765b882f4c593ee6d127d24816f74e27868",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6bfae5_ed4357c2",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T12:20:07Z",
+      "side": 1,
+      "message": "+1! I think as a general rule, don\u0027t handle raw jobject or jstring -- if you get them from JNI, use JavaParamRef, if you keep them locally, ScopedJavaLocalRef, and if they need to outlive the current stack frame, ScopedJavaGlobalRef.",
+      "parentUuid": "89fa1bb7_22214025",
+      "range": {
+        "startLine": 178,
+        "startChar": 45,
+        "endLine": 178,
+        "endChar": 60
+      },
+      "revId": "40aff765b882f4c593ee6d127d24816f74e27868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
