@@ -29,6 +29,7 @@ namespace {
 const char kFormActionUrl[] = "https://form_action.com/";
 const char kPasswordFrameUrl[] = "https://password_frame.com/";
 const char kSavedDomain[] = "saved_domain.com";
+const char kSavedDomain2[] = "saved_domain2.com";
 const char kTargetUrl[] = "http://foo.com/";
 
 }  // namespace
@@ -194,23 +195,26 @@ class PasswordProtectionServiceTest : public testing::Test {
 
     request_ = new PasswordProtectionRequest(
         nullptr, target_url, GURL(kFormActionUrl), GURL(kPasswordFrameUrl),
-        std::string(), LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE,
-        true, password_protection_service_.get(), timeout_in_ms);
+        false /* matches_sync_password */, {std::string()},
+        LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE, true,
+        password_protection_service_.get(), timeout_in_ms);
     request_->Start();
   }
 
-  void InitializeAndStartPasswordEntryRequest(const std::string& saved_domain,
-                                              bool match_whitelist,
-                                              int timeout_in_ms) {
+  void InitializeAndStartPasswordEntryRequest(
+      bool matches_sync_password,
+      const std::vector<std::string>& matching_domains,
+      bool match_whitelist,
+      int timeout_in_ms) {
     GURL target_url(kTargetUrl);
     EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url, _))
         .WillRepeatedly(
             Return(match_whitelist ? AsyncMatch::MATCH : AsyncMatch::NO_MATCH));
 
     request_ = new PasswordProtectionRequest(
-        nullptr, target_url, GURL(), GURL(), saved_domain,
-        LoginReputationClientRequest::PASSWORD_REUSE_EVENT, true,
-        password_protection_service_.get(), timeout_in_ms);
+        nullptr, target_url, GURL(), GURL(), matches_sync_password,
+        matching_domains, LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
+        true, password_protection_service_.get(), timeout_in_ms);
     request_->Start();
   }
 
@@ -712,9 +716,10 @@ TEST_F(PasswordProtectionServiceTest,
       LoginReputationClientResponse::PHISHING, 600, GURL(kTargetUrl).host());
   fetcher.SetResponseString(expected_response.SerializeAsString());
 
-  // Initiate a saved password entry request.
+  // Initiate a saved password entry request (w/ no sync password).
   InitializeAndStartPasswordEntryRequest(
-      "example.com", false /* match whitelist */, 10000 /* timeout in ms*/);
+      false /* matches_sync_password */, {"example.com"},
+      false /* match whitelist */, 10000 /* timeout in ms*/);
   request_->OnURLFetchComplete(&fetcher);
   base::RunLoop().RunUntilIdle();
   EXPECT_THAT(
@@ -726,8 +731,8 @@ TEST_F(PasswordProtectionServiceTest,
   histograms_.ExpectTotalCount(kSyncPasswordEntryRequestOutcomeHistogramName,
                                0);
 
-  // Initiate a sync password entry request.
-  InitializeAndStartPasswordEntryRequest(password_manager::kSyncPasswordDomain,
+  // Initiate a sync password entry request (w/ no saved password).
+  InitializeAndStartPasswordEntryRequest(true /* matches_sync_password */, {},
                                          false /* match whitelist */,
                                          10000 /* timeout in ms*/);
   request_->OnURLFetchComplete(&fetcher);
@@ -753,7 +758,7 @@ TEST_F(PasswordProtectionServiceTest, TestTearDownWithPendingRequests) {
       .WillRepeatedly(Return(AsyncMatch::NO_MATCH));
   password_protection_service_->StartRequest(
       nullptr, target_url, GURL("http://foo.com/submit"),
-      GURL("http://foo.com/frame"), std::string(),
+      GURL("http://foo.com/frame"), false, {},
       LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE, true);
 
   // Destroy password_protection_service_ while there is one request pending.
@@ -907,9 +912,9 @@ TEST_F(PasswordProtectionServiceTest,
   fetcher.SetResponseString(expected_response.SerializeAsString());
 
   // Initialize request triggered by chrome sync password reuse.
-  InitializeAndStartPasswordEntryRequest(
-      std::string(password_manager::kSyncPasswordDomain),
-      false /* match whitelist */, 100000 /* timeout in ms*/);
+  InitializeAndStartPasswordEntryRequest(true /* matches_sync_password */, {},
+                                         false /* match whitelist */,
+                                         100000 /* timeout in ms*/);
   base::RunLoop().RunUntilIdle();
   request_->OnURLFetchComplete(&fetcher);
   base::RunLoop().RunUntilIdle();
@@ -925,7 +930,7 @@ TEST_F(PasswordProtectionServiceTest,
   ASSERT_TRUE(actual_request->has_password_reuse_event());
   const auto& reuse_event = actual_request->password_reuse_event();
   EXPECT_TRUE(reuse_event.is_chrome_signin_password());
-  ASSERT_EQ(0, reuse_event.password_reused_original_origins_size());
+  EXPECT_EQ(0, reuse_event.domains_matching_password_size());
 }
 
 TEST_F(PasswordProtectionServiceTest,
@@ -940,9 +945,9 @@ TEST_F(PasswordProtectionServiceTest,
   fetcher.SetResponseString(expected_response.SerializeAsString());
 
   // Initialize request triggered by saved password reuse.
-  InitializeAndStartPasswordEntryRequest(std::string(kSavedDomain),
-                                         false /* match whitelist */,
-                                         100000 /* timeout in ms*/);
+  InitializeAndStartPasswordEntryRequest(
+      false /* matches_sync_password */, {kSavedDomain, kSavedDomain2},
+      false /* match whitelist */, 100000 /* timeout in ms*/);
   base::RunLoop().RunUntilIdle();
   request_->OnURLFetchComplete(&fetcher);
   base::RunLoop().RunUntilIdle();
@@ -952,8 +957,9 @@ TEST_F(PasswordProtectionServiceTest,
   ASSERT_TRUE(actual_request->has_password_reuse_event());
   const auto& reuse_event = actual_request->password_reuse_event();
   EXPECT_FALSE(reuse_event.is_chrome_signin_password());
-  ASSERT_EQ(1, reuse_event.password_reused_original_origins_size());
-  EXPECT_EQ(kSavedDomain, reuse_event.password_reused_original_origins(0));
+  ASSERT_EQ(2, reuse_event.domains_matching_password_size());
+  EXPECT_EQ(kSavedDomain, reuse_event.domains_matching_password(0));
+  EXPECT_EQ(kSavedDomain2, reuse_event.domains_matching_password(1));
 }
 
 TEST_F(PasswordProtectionServiceTest, VerifyCanSendPing) {
