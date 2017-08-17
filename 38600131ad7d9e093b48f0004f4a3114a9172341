@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed60a089_b0cf0009",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T14:47:40Z",
+      "side": 1,
+      "message": "\"// exo::FileHelper:\" comment above this",
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a24a733_5c1a1dac",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T14:47:40Z",
+      "side": 1,
+      "message": "nit: remove this blank line",
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88875c17_91689e57",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T14:47:40Z",
+      "side": 1,
+      "message": "exo is not really specific to containers. that this file handler only support arc URIs is explicit from the mime type above so I think you can just remove this comment",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 40
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2361b8_c15b6a5c",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T14:47:40Z",
+      "side": 1,
+      "message": "nit: file_helper",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1649a9ee_f557eb75",
+        "filename": "components/exo/display.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T14:47:40Z",
+      "side": 1,
+      "message": "remove explicit",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edec11f9_63552bfa",
+        "filename": "components/exo/display.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T14:47:40Z",
+      "side": 1,
+      "message": "nit: please add CreateDataDevice function instead and call that from data_device_manager_get_data_device. Similar to functions above and make sure to include a short comment above it. a really basic test in display_unittest.cc would be nice to",
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
