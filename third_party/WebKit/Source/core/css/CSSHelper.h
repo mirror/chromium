@@ -29,6 +29,7 @@ namespace blink {
 const double kMillimetersPerCentimeter = 10;
 const double kCentimetersPerInch = 2.54;
 const double kMillimetersPerInch = 25.4;
+const double kQuarterMillimetersPerInch = 6.35;
 const double kPointsPerInch = 72;
 const double kPicasPerInch = 6;
 
@@ -37,6 +38,8 @@ const double kCssPixelsPerInch = 96;
 const double kCssPixelsPerCentimeter = kCssPixelsPerInch / kCentimetersPerInch;
 const double kCssPixelsPerMillimeter =
     kCssPixelsPerCentimeter / kMillimetersPerCentimeter;
+const double kCssPixelsPerQuarterMillimeter =
+    kCssPixelsPerCentimeter / kQuarterMillimetersPerInch;
 const double kCssPixelsPerPoint = kCssPixelsPerInch / kPointsPerInch;
 const double kCssPixelsPerPica = kCssPixelsPerInch / kPicasPerInch;
 
