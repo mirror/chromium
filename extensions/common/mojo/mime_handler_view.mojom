@@ -1,0 +1,29 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module extensions.mime_handler_view;
+
+interface MimeHandlerViewManager {
+  // Asks the renderer to get the frame controller associated with
+  // |frame_controller_id| to request the resource at |resource_url|.
+  // When |routing_id| has a valid value, it is the routing ID of the
+  // RenderFrame associated with the frame controller.
+  RequestResource(int32 frame_controller_id, int32 routing_id, string resource_url);
+
+  // Notifies the embedder process the extension associated with
+  // |frame_controller_id| has loaded.
+  DocumentLoaded(int32 frame_controller_id);
+
+  // Asks the renderer to remove the frame controller. This could happen at any
+  // time during the navigation or after loading the extension.
+  RemoveFrameController(int32 frame_controller_id);
+
+  // TODO(ekaramad): Maybe we shouldn't have this. MimeHandlerViewManager should
+  // be able to leave on its own.
+  Destroy();
+};
+
+interface MimeHandlerViewManagerHost {
+  ReleaseStream(int32 id, string view_id);
+};

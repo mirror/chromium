@@ -341,6 +341,7 @@
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
 #include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
+#include "extensions/browser/mime_handler_view/mime_handler_view_extension_navigation_throttle.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
@@ -3211,6 +3212,9 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   throttles.push_back(
       base::MakeUnique<extensions::ExtensionNavigationThrottle>(handle));
+  throttles.push_back(
+      base::MakeUnique<extensions::MimeHandlerViewExtensionNavigationThrottle>(
+          handle));
 #endif
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)

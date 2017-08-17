@@ -1656,6 +1656,26 @@ GURL ChromeContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return corrected_url.ReplaceComponents(r);
 }
 
+GURL ChromeContentRendererClient::GetHandlerURLForPdfResource(const GURL& url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetHandlerURLForPdfResource(url);
+#else
+  return GURL();
+#endif
+}
+
+v8::Local<v8::Object>
+ChromeContentRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetV8ScriptableObjectForPluginFrame(
+      isolate, frame);
+#else
+  return GURL();
+#endif
+}
+
 std::unique_ptr<base::TaskScheduler::InitParams>
 ChromeContentRendererClient::GetTaskSchedulerInitParams() {
   return task_scheduler_util::
