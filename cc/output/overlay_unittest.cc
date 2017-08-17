@@ -532,6 +532,7 @@ TEST_F(FullscreenOverlayTest, AlphaFail) {
       resource_provider_.get(), pass->shared_quad_state_list.back(),
       pass.get());
   original_quad->opaque_rect = gfx::Rect(0, 0, 0, 0);
+  original_quad->needs_blending = true;
 
   // Check for potential candidates.
   OverlayCandidateList candidate_list;
