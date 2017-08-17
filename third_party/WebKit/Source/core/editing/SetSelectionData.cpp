@@ -66,4 +66,10 @@ SetSelectionData::Builder& SetSelectionData::Builder::SetSetSelectionBy(
   return *this;
 }
 
+SetSelectionData::Builder& SetSelectionData::Builder::SetClickInsideBehavior(
+    ClickInsideBehavior new_value) {
+  data_.click_inside_behavior_ = new_value;
+  return *this;
+}
+
 }  // namespace blink

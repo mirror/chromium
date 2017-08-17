@@ -222,8 +222,10 @@ bool FrameSelection::SetSelectionDeprecated(
   const bool should_show_handle = options.ShouldShowHandle();
   if (!is_changed && is_handle_visible_ == should_show_handle)
     return false;
-  if (is_changed)
+  if (is_changed) {
+    click_inside_behavior_ = options.GetClickInsideBehavior();
     selection_editor_->SetSelection(new_selection);
+  }
   is_handle_visible_ = should_show_handle;
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 

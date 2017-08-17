@@ -54,6 +54,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
 #include "public/platform/WebMenuSourceType.h"
+#include "public/web/WebContextMenuData.h"
 #include "public/web/WebSelection.h"
 
 namespace blink {
@@ -96,14 +97,15 @@ DispatchEventResult DispatchSelectStart(Node* node) {
 
 SelectionInFlatTree ExpandSelectionToRespectUserSelectAll(
     Node* target_node,
-    const SelectionInFlatTree& selection) {
-  if (selection.IsNone())
+    const SelectionInFlatTree& selection_in_flat_tree) {
+  if (selection_in_flat_tree.IsNone())
     return SelectionInFlatTree();
   Node* const root_user_select_all =
       EditingInFlatTreeStrategy::RootUserSelectAllForNode(target_node);
   if (!root_user_select_all)
-    return selection;
-  return SelectionInFlatTree::Builder(selection)
+    return selection_in_flat_tree;
+
+  return SelectionInFlatTree::Builder(selection_in_flat_tree)
       .Collapse(MostBackwardCaretPosition(
           PositionInFlatTree::BeforeNode(*root_user_select_all),
           kCanCrossEditingBoundary))
@@ -301,6 +303,29 @@ bool SelectionController::HandleSingleClick(
       mouse_down_was_single_click_in_selection_ = true;
       if (!event.Event().FromTouch())
         return false;
+
+      if (this->Selection().GetClickInsideBehavior() ==
+          ClickInsideBehavior::kSelectClosestWord) {
+        // Prevent clearing the selection in HandleMouseReleaseEvent().
+        mouse_down_was_single_click_in_selection_ = false;
+
+        SelectClosestWordFromHitTestResult(
+            event.GetHitTestResult(), AppendTrailingWhitespace::kDontAppend,
+            SelectInputEventType::kTouch);
+
+        // Rely on the fact that a change in selection will restore
+        // ClickInsideBehavior to the default value kClearSelection.
+        const bool selection_did_change =
+            this->Selection().GetClickInsideBehavior() !=
+            ClickInsideBehavior::kSelectClosestWord;
+        if (selection_did_change) {
+          frame_->GetEventHandler().ShowNonLocatedContextMenu(
+              nullptr, kMenuSourceTouch,
+              WebContextMenuData::kDontSuggestSelection);
+        }
+
+        return false;
+      }
 
       if (!this->Selection().IsHandleVisible()) {
         const bool did_select =

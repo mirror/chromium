@@ -178,6 +178,9 @@ class CORE_EXPORT FrameSelection final
   void SetUseSecureKeyboardEntryWhenActive(bool);
 
   bool IsHandleVisible() const { return is_handle_visible_; }
+  ClickInsideBehavior GetClickInsideBehavior() const {
+    return click_inside_behavior_;
+  }
 
   void UpdateSecureKeyboardEntryIfActive();
 
@@ -273,6 +276,8 @@ class CORE_EXPORT FrameSelection final
 
   bool focused_ : 1;
   bool is_handle_visible_ = false;
+  ClickInsideBehavior click_inside_behavior_ =
+      ClickInsideBehavior::kClearSelection;
 
   // Controls text granularity used to adjust the selection's extent in
   // moveRangeSelectionExtent.

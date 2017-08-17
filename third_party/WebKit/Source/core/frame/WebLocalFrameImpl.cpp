@@ -240,13 +240,31 @@ namespace blink {
 
 static int g_frame_count = 0;
 
-static HeapVector<ScriptSourceCode> CreateSourcesVector(
+namespace {
+
+HeapVector<ScriptSourceCode> CreateSourcesVector(
     const WebScriptSource* sources_in,
     unsigned num_sources) {
   HeapVector<ScriptSourceCode> sources;
   sources.Append(sources_in, num_sources);
   return sources;
 }
+
+blink::ClickInsideBehavior toBlinkInternal(
+    WebLocalFrame::ClickInsideBehavior value) {
+  switch (value) {
+    case WebLocalFrame::kClearSelection:
+      return ClickInsideBehavior::kClearSelection;
+    case WebLocalFrame::kSelectClosestWord:
+      return ClickInsideBehavior::kSelectClosestWord;
+    default:
+      NOTREACHED();
+      break;
+  }
+  return ClickInsideBehavior::kClearSelection;
+}
+
+}  // namespace
 
 // Simple class to override some of PrintContext behavior. Some of the methods
 // made virtual so that they can be overridden by ChromePluginPrintContext.
@@ -1194,7 +1212,8 @@ void WebLocalFrameImpl::SelectRange(const WebPoint& base_in_viewport,
 
 void WebLocalFrameImpl::SelectRange(
     const WebRange& web_range,
-    HandleVisibilityBehavior handle_visibility_behavior) {
+    HandleVisibilityBehavior handle_visibility_behavior,
+    ClickInsideBehavior click_inside_behavior) {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::selectRange");
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -1216,7 +1235,10 @@ void WebLocalFrameImpl::SelectRange(
           .SetAffinity(VP_DEFAULT_AFFINITY)
           .SetIsDirectional(false)
           .Build(),
-      SetSelectionData::Builder().SetShouldShowHandle(show_handles).Build());
+      SetSelectionData::Builder()
+          .SetShouldShowHandle(show_handles)
+          .SetClickInsideBehavior(toBlinkInternal(click_inside_behavior))
+          .Build());
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {
