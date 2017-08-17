@@ -935,7 +935,8 @@ void RenderThreadImpl::Init(
 #endif
 
   process_foregrounded_count_ = 0;
-  needs_to_record_first_active_paint_ = false;
+  needs_to_record_first_active_paint_after_purged_ = false;
+  was_backgrounded_time_ = base::TimeTicks::Max();
 
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 
@@ -1692,7 +1693,7 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
 
   renderer_scheduler_->SetRendererBackgrounded(backgrounded);
   if (backgrounded) {
-    needs_to_record_first_active_paint_ = false;
+    needs_to_record_first_active_paint_after_purged_ = false;
     GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
         FROM_HERE,
         base::Bind(&RenderThreadImpl::RecordMemoryUsageAfterBackgrounded,
@@ -1710,6 +1711,7 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
                    base::Unretained(this), "15min",
                    process_foregrounded_count_),
         base::TimeDelta::FromMinutes(15));
+    was_backgrounded_time_ = base::TimeTicks::Now();
   } else {
     process_foregrounded_count_++;
   }
@@ -1724,7 +1726,7 @@ void RenderThreadImpl::OnProcessPurgeAndSuspend() {
     return;
 
   base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
-  needs_to_record_first_active_paint_ = true;
+  needs_to_record_first_active_paint_after_purged_ = true;
 
   RendererMemoryMetrics memory_metrics;
   if (!GetRendererMemoryMetrics(&memory_metrics))
@@ -2529,6 +2531,15 @@ void RenderThreadImpl::OnRendererInterfaceRequest(
     mojom::RendererAssociatedRequest request) {
   DCHECK(!renderer_binding_.is_bound());
   renderer_binding_.Bind(std::move(request));
+}
+
+bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
+    int ttfap_metric_type) const {
+  if (ttfap_metric_type == RenderWidget::TTFAP_AFTER_PURGED)
+    return needs_to_record_first_active_paint_after_purged_;
+
+  base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
+  return passed.InMinutes() >= 5;
 }
 
 }  // namespace content

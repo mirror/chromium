@@ -511,9 +511,7 @@ class CONTENT_EXPORT RenderThreadImpl
   };
   bool GetRendererMemoryMetrics(RendererMemoryMetrics* memory_metrics) const;
 
-  bool NeedsToRecordFirstActivePaint() const {
-    return needs_to_record_first_active_paint_;
-  }
+  bool NeedsToRecordFirstActivePaint(int metric_type) const;
 
  protected:
   RenderThreadImpl(
@@ -793,7 +791,8 @@ class CONTENT_EXPORT RenderThreadImpl
   mojom::RenderMessageFilterAssociatedPtr render_message_filter_;
 
   RendererMemoryMetrics purge_and_suspend_memory_metrics_;
-  bool needs_to_record_first_active_paint_;
+  bool needs_to_record_first_active_paint_after_purged_;
+  base::TimeTicks was_backgrounded_time_;
   int process_foregrounded_count_;
 
   int32_t client_id_;
