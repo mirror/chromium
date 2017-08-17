@@ -19,6 +19,42 @@
     },
     {
       "key": {
+        "uuid": "be949979_36944601",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46bf729a_44b8503a",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66a8ad65_1c6cec51",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46bf729a_44b8503a",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8bc2bc3_4fcd5f7d",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 18
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04a9e70c_bea985d4",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "For headless there\u0027s no embedded delegate, so in that case we do need to keep the logic in case proxy_delegate is not set.\n\nRe SetDelegate: Wouldn\u0027t we need this to take over the manager when setting the DevtoolsDownloadManagerDelegate? afaik DownloadManagerImpl is only created once (per browser?) so getting it from the BrowserContext would not work.",
+      "parentUuid": "d8bc2bc3_4fcd5f7d",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c674ca20_2f903428",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 18
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T21:41:19Z",
       "side": 1,
       "message": "You\u0027ll be able to DCHECK(proxy_download_delegate_)",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1331f0d_d94593e9",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "The use cases are mainly for headless, where there is no delegate to substitute.",
+      "parentUuid": "c674ca20_2f903428",
       "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "29b3b329_d412f299",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Ditto here, this is the case for headless without setting DownloadBehavior, in that case we should deny by default. I\u0027ve added a comment to make this more clear.",
+      "parentUuid": "0e13d3c8_69201a46",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fd4779b_9890e08d",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 18
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d50513fc_3ac4ca2f",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Yeah there\u0027s a bit of copy/paste here which I\u0027m not a fun of. \nBut I don\u0027t see a cleaner way of sharing the code though. I could have a virtual DetermineDefaultDownloadTarget added to download_manager but I think it would be strange to add it to the download_manager public interface, since it does look like something the delegate should do.",
+      "parentUuid": "5fd4779b_9890e08d",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7d35e6a_e4fffaab",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 18
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-16T21:41:19Z",
       "side": 1,
       "message": "I would say it should be false in case you have the helper instance per this item.",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bde970c_81668466",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Good point, Done",
+      "parentUuid": "e7d35e6a_e4fffaab",
       "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +270,54 @@
     },
     {
       "key": {
+        "uuid": "e24145b2_1d7168c1",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f202df_06218490",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 71
+      },
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffd148e_0de693a6",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f202df_06218490",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 71
+      },
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbce6e66_c6248b56",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
         "patchSetId": 18
@@ -161,6 +335,42 @@
     },
     {
       "key": {
+        "uuid": "ed13cf66_a34b5c58",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbce6e66_c6248b56",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf2cb0f7_a6f916dc",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbce6e66_c6248b56",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "441f4c54_5215af01",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
         "patchSetId": 18
@@ -175,6 +385,42 @@
       "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6c6fe4_22d2ef7c",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441f4c54_5215af01",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6878dfe7_ebcfea53",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441f4c54_5215af01",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "40552bc8_fbc7e80a",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done. I\u0027ll just leave it empty",
+      "parentUuid": "b041da42_b81e224a",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3137ed8d_92a6e6d4",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 18
@@ -235,6 +499,30 @@
     },
     {
       "key": {
+        "uuid": "d6f23bb0_bf0685bc",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3137ed8d_92a6e6d4",
+      "range": {
+        "startLine": 663,
+        "startChar": 2,
+        "endLine": 665,
+        "endChar": 51
+      },
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dacecc3_b6002cae",
         "filename": "content/browser/devtools/protocol/page_handler.h",
         "patchSetId": 18
@@ -246,6 +534,24 @@
       "writtenOn": "2017-08-16T21:41:19Z",
       "side": 1,
       "message": "stray?",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef00d656_5a2a401c",
+        "filename": "content/browser/devtools/protocol/page_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "It\u0027s a lint error, should I ignore it?",
+      "parentUuid": "6dacecc3_b6002cae",
       "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -269,6 +575,24 @@
     },
     {
       "key": {
+        "uuid": "c5234d7b_bf9b755f",
+        "filename": "content/shell/browser/shell_download_manager_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "ditto, this is a lint error",
+      "parentUuid": "13a34291_9a694b93",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf6fec75_38527957",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 18
@@ -283,6 +607,24 @@
       "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a94fdd_7189a6b2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 18
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-17T07:16:18Z",
+      "side": 1,
+      "message": "Ack. I think it should be doable by extending the delegate to decide if it wants to receive the stream rather than saving to a file.",
+      "parentUuid": "bf6fec75_38527957",
+      "revId": "7c9ca83afc76cefe7340b79e4b3bef13da2a4ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
