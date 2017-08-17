@@ -105,6 +105,24 @@
       "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2976a5_aa31172f",
+        "filename": "ui/base/ime/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-17T15:41:25Z",
+      "side": 1,
+      "message": "Wow, I\u0027ve just seen you added a \"Type\" enum to ImeTextSpan, so I need to rebase my patch on top of that. Sorry for the noise of the previous version.",
+      "parentUuid": "3ea976c8_c871952f",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
