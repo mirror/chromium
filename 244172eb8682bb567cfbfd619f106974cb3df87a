@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67abf616_ea116c88",
+        "filename": "ui/events/android/motion_event_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T18:21:26Z",
+      "side": 1,
+      "message": "there\u0027s a lot more ACTION_* things in MotionEvent\n\nif this is a test-only method, maybe just put this logic in the test instead?",
+      "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93db05a_0d2b8ec6",
+        "filename": "ui/events/android/motion_event_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T18:21:26Z",
+      "side": 1,
+      "message": "document the input and return types\n\nalso static methods at top of class",
+      "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
