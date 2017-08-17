@@ -367,9 +367,11 @@ TileManager::TileManager(
       did_oom_on_last_assign_(false),
       image_controller_(origin_task_runner,
                         std::move(image_worker_task_runner)),
-      checker_image_tracker_(&image_controller_,
-                             this,
-                             tile_manager_settings_.enable_checker_imaging),
+      checker_image_tracker_(
+          &image_controller_,
+          this,
+          tile_manager_settings_.enable_checker_imaging,
+          tile_manager_settings_.only_checker_images_with_gpu_raster),
       more_tiles_need_prepare_check_notifier_(
           task_runner_,
           base::Bind(&TileManager::CheckIfMoreTilesNeedToBePrepared,
@@ -432,6 +434,7 @@ void TileManager::SetResources(ResourcePool* resource_pool,
   image_controller_.SetImageDecodeCache(image_decode_cache);
   tile_task_manager_ = TileTaskManagerImpl::Create(task_graph_runner);
   raster_buffer_provider_ = raster_buffer_provider;
+  checker_image_tracker_.set_using_gpu_rasterization(use_gpu_rasterization_);
 }
 
 void TileManager::Release(Tile* tile) {
