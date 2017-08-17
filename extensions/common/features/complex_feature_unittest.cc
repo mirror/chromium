@@ -15,8 +15,8 @@
 namespace extensions {
 
 TEST(ComplexFeatureTest, MultipleRulesWhitelist) {
-  const std::string kIdFoo("fooabbbbccccddddeeeeffffgggghhhh");
-  const std::string kIdBar("barabbbbccccddddeeeeffffgggghhhh");
+  const HashedExtensionId kIdFoo("fooabbbbccccddddeeeeffffgggghhhh");
+  const HashedExtensionId kIdBar("barabbbbccccddddeeeeffffgggghhhh");
   std::vector<Feature*> features;
 
   {
@@ -96,7 +96,7 @@ TEST(ComplexFeatureTest, Dependencies) {
   // Available to extensions because of the content_security_policy rule.
   EXPECT_EQ(
       Feature::IS_AVAILABLE,
-      feature->IsAvailableToManifest("extensionid",
+      feature->IsAvailableToManifest(HashedExtensionId(std::string(32, 'a')),
                                      Manifest::TYPE_EXTENSION,
                                      Manifest::INVALID_LOCATION,
                                      Feature::UNSPECIFIED_PLATFORM,
@@ -105,7 +105,7 @@ TEST(ComplexFeatureTest, Dependencies) {
   // Available to platform apps because of the serial rule.
   EXPECT_EQ(
       Feature::IS_AVAILABLE,
-      feature->IsAvailableToManifest("platformappid",
+      feature->IsAvailableToManifest(HashedExtensionId(std::string(32, 'b')),
                                      Manifest::TYPE_PLATFORM_APP,
                                      Manifest::INVALID_LOCATION,
                                      Feature::UNSPECIFIED_PLATFORM,
@@ -114,7 +114,7 @@ TEST(ComplexFeatureTest, Dependencies) {
   // Not available to hosted apps.
   EXPECT_EQ(
       Feature::INVALID_TYPE,
-      feature->IsAvailableToManifest("hostedappid",
+      feature->IsAvailableToManifest(HashedExtensionId(std::string(32, 'c')),
                                      Manifest::TYPE_HOSTED_APP,
                                      Manifest::INVALID_LOCATION,
                                      Feature::UNSPECIFIED_PLATFORM,
