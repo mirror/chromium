@@ -16,8 +16,6 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   DISALLOW_NEW();
 
  public:
-  NGConstraintSpaceBuilder(const NGConstraintSpace* parent_space);
-
   NGConstraintSpaceBuilder(NGWritingMode writing_mode);
 
   NGConstraintSpaceBuilder& SetAvailableSize(NGLogicalSize available_size);
@@ -59,6 +57,9 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
 
   NGConstraintSpaceBuilder& SetClearanceOffset(
       const WTF::Optional<LayoutUnit>& clearance_offset);
+
+  NGConstraintSpaceBuilder& SetExclusionSpace(
+      std::shared_ptr<NGExclusionSpace> exclusion_space);
 
   void AddBaselineRequests(const Vector<NGBaselineRequest>&);
   NGConstraintSpaceBuilder& AddBaselineRequest(const NGBaselineRequest&);
