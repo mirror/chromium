@@ -602,23 +602,11 @@ bool TabManager::IsTabRestoredInForeground(WebContents* web_contents) const {
   return GetWebContentsData(web_contents)->is_restored_in_foreground();
 }
 
-bool TabManager::IsLoadingBackgroundTabs() const {
-  if (IsSessionRestoreLoadingTabs())
+bool TabManager::IsInBackgroundTabOpeningSession() const {
+  if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
     return false;
 
-  if (!pending_navigations_.empty())
-    return true;
-
-  // Excluding session restore above leaves only background opening tabs in
-  // |loading_contents_|. As long as they still remain in background, we are
-  // still loading background tabs, even after we emptied our pending navigation
-  // list.
-  for (const content::WebContents* tab : loading_contents_) {
-    if (!tab->IsVisible())
-      return true;
-  }
-
-  return false;
+  return !(pending_navigations_.empty() && loading_contents_.empty());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -926,6 +914,21 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
   return null_contents;
 }
 
+void TabManager::PauseBackgroundTabOpening() {
+  if (IsInBackgroundTabOpeningSession())
+    tab_manager_stats_collector_->OnBackgroundTabOpeningSessionEnded();
+
+  background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+}
+
+void TabManager::ResumeBackgroundTabOpening() {
+  background_tab_loading_mode_ = BackgroundTabLoadingMode::kStaggered;
+  LoadNextBackgroundTabIfNeeded();
+
+  if (IsInBackgroundTabOpeningSession())
+    tab_manager_stats_collector_->OnBackgroundTabOpeningSessionStarted();
+}
+
 void TabManager::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
   // If Chrome is shutting down, do not do anything.
@@ -934,14 +937,13 @@ void TabManager::OnMemoryPressure(
 
   switch (memory_pressure_level) {
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
-      background_tab_loading_mode_ = BackgroundTabLoadingMode::kStaggered;
-      LoadNextBackgroundTabIfNeeded();
+      ResumeBackgroundTabOpening();
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
-      background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+      PauseBackgroundTabOpening();
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
-      background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+      PauseBackgroundTabOpening();
       LogMemoryAndDiscardTab(kUrgentShutdown);
       break;
     default:
@@ -1150,9 +1152,20 @@ std::vector<BrowserInfo> TabManager::GetBrowserInfoList() const {
 
 content::NavigationThrottle::ThrottleCheckResult
 TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
+  // Skip delaying the navigation if it is during session restore, which already
+  // controls tab loading by TabLoader. Do not populate |loading_contents_|
+  // either, which is used to determine BackgroundTabOpening session, so that
+  // the two activities are separate.
+  if (IsSessionRestoreLoadingTabs())
+    return content::NavigationThrottle::PROCEED;
+
+  if (!IsInBackgroundTabOpeningSession())
+    tab_manager_stats_collector_->OnBackgroundTabOpeningSessionStarted();
+
   content::NavigationHandle* navigation_handle = throttle->navigation_handle();
+  DCHECK(!navigation_handle->GetWebContents()->IsVisible());
   if (!base::FeatureList::IsEnabled(
-          features::kStaggeredBackgroundTabOpenExperiment) ||
+          features::kStaggeredBackgroundTabOpeningExperiment) ||
       CanLoadNextTab()) {
     loading_contents_.insert(navigation_handle->GetWebContents());
     return content::NavigationThrottle::PROCEED;
@@ -1202,14 +1215,30 @@ void TabManager::OnDidFinishNavigation(
 
 void TabManager::OnDidStopLoading(content::WebContents* contents) {
   DCHECK_EQ(TAB_IS_LOADED, GetWebContentsData(contents)->tab_loading_state());
+  bool was_in_background_tab_opening_session =
+      IsInBackgroundTabOpeningSession();
+
   loading_contents_.erase(contents);
   LoadNextBackgroundTabIfNeeded();
+
+  if (was_in_background_tab_opening_session &&
+      !IsInBackgroundTabOpeningSession()) {
+    tab_manager_stats_collector_->OnBackgroundTabOpeningSessionEnded();
+  }
 }
 
 void TabManager::OnWebContentsDestroyed(content::WebContents* contents) {
+  bool was_in_background_tab_opening_session =
+      IsInBackgroundTabOpeningSession();
+
   RemovePendingNavigationIfNeeded(contents);
   loading_contents_.erase(contents);
   LoadNextBackgroundTabIfNeeded();
+
+  if (was_in_background_tab_opening_session &&
+      !IsInBackgroundTabOpeningSession()) {
+    tab_manager_stats_collector_->OnBackgroundTabOpeningSessionEnded();
+  }
 }
 
 void TabManager::StartForceLoadTimer() {
