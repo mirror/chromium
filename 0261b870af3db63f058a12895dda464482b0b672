@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "4fac7365_4c9c65ec",
+        "filename": "cc/base/filter_operation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:55:26Z",
+      "side": 1,
+      "message": "Yep that\u0027s good, thanks!",
+      "parentUuid": "e062ffb3_4bf56a37",
+      "revId": "0261b870af3db63f058a12895dda464482b0b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b314870_4b0808f9",
         "filename": "cc/trees/layer_tree_host_pixeltest_filters.cc",
         "patchSetId": 8
