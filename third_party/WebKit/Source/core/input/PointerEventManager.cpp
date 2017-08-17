@@ -548,7 +548,7 @@ WebInputEventResult PointerEventManager::SendMousePointerEvent(
   if ((mouse_event_type == EventTypeNames::mousemove) &&
       mouse_event.GetModifiers() &
           WebInputEvent::Modifiers::kRelativeMotionEvent) {
-    return WebInputEventResult::kNotHandled;
+    return WebInputEventResult::kHandledSuppressed;
   }
 
   WebInputEventResult result =
