@@ -34,6 +34,24 @@
       "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04875c6b_3673c37b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-17T12:49:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s worth having different behaviour for audio and video. Is there something specifically that makes this behaviour worthwhile?",
+      "parentUuid": "dfa5fe75_fc4a79b4",
+      "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
