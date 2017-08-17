@@ -303,6 +303,7 @@ void ChromePasswordManagerClient::ShowManualFallbackForSaving(
   if (!CanShowBubbleOnURL(web_contents()->GetLastCommittedURL()))
     return;
 
+  LOG(ERROR) << "client: show fallback";
 #if !defined(OS_ANDROID)
   PasswordsClientUIDelegate* manage_passwords_ui_controller =
       PasswordsClientUIDelegateFromWebContents(web_contents());
