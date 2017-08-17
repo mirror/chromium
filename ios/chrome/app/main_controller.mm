@@ -378,8 +378,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     (ProceduralBlock)callback;
 // Shows the Sync encryption passphrase (part of Settings).
 - (void)showSyncEncryptionPassphrase;
-// Shows the Clear Browsing Data Settings UI (part of Settings).
-- (void)showClearBrowsingDataSettingsController;
 // Shows the tab switcher UI.
 - (void)showTabSwitcher;
 // Starts a voice search on the current BVC.
@@ -1375,7 +1373,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 - (void)showHistory {
   _historyPanelViewController = [HistoryPanelViewController
       controllerToPresentForBrowserState:_mainBrowserState
-                                  loader:self.currentBVC];
+                                  loader:self.currentBVC
+                              dispatcher:self.mainBVC.dispatcher];
   [self.currentBVC presentViewController:_historyPanelViewController
                                 animated:YES
                               completion:nil];
@@ -1410,6 +1409,30 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
             self.tabSwitcherController);
     [stackViewController dismissWithSelectedTabAnimation];
   }
+}
+
+- (void)showClearBrowsingDataSettings {
+  if (_settingsNavigationController)
+    return;
+  _settingsNavigationController = [SettingsNavigationController
+      newClearBrowsingDataController:_mainBrowserState
+                            delegate:self];
+  [[self topPresentedViewController]
+      presentViewController:_settingsNavigationController
+                   animated:YES
+                 completion:nil];
+}
+
+- (void)showAutofillSettings {
+  if (_settingsNavigationController)
+    return;
+  _settingsNavigationController =
+      [SettingsNavigationController newAutofillController:_mainBrowserState
+                                                 delegate:self];
+  [[self topPresentedViewController]
+      presentViewController:_settingsNavigationController
+                   animated:YES
+                 completion:nil];
 }
 
 #pragma mark - chromeExecuteCommand
@@ -1452,7 +1475,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     case IDC_SHOW_MAIL_COMPOSER:
       [self.currentBVC chromeExecuteCommand:sender];
       break;
-
     case IDC_CLEAR_BROWSING_DATA_IOS: {
       // Clear both the main browser state and the associated incognito
       // browser state.
@@ -1476,14 +1498,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       }
       break;
     }
-    case IDC_SHOW_CLEAR_BROWSING_DATA_SETTINGS:
-      [self showClearBrowsingDataSettingsController];
-      break;
     case IDC_SHOW_ADD_ACCOUNT:
       [self showAddAccount];
-      break;
-    case IDC_SHOW_AUTOFILL_SETTINGS:
-      [self showAutofillSettings];
       break;
     default:
       // Unknown commands get dropped with a warning.
@@ -1967,18 +1983,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                  completion:nil];
 }
 
-- (void)showAutofillSettings {
-  if (_settingsNavigationController)
-    return;
-  _settingsNavigationController =
-      [SettingsNavigationController newAutofillController:_mainBrowserState
-                                                 delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
-}
-
 - (void)showReportAnIssue {
   if (_settingsNavigationController)
     return;
@@ -1998,18 +2002,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   _settingsNavigationController = [SettingsNavigationController
       newSyncEncryptionPassphraseController:_mainBrowserState
                                    delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
-}
-
-- (void)showClearBrowsingDataSettingsController {
-  if (_settingsNavigationController)
-    return;
-  _settingsNavigationController = [SettingsNavigationController
-      newClearBrowsingDataController:_mainBrowserState
-                            delegate:self];
   [[self topPresentedViewController]
       presentViewController:_settingsNavigationController
                    animated:YES
