@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d044b989_84d8bf9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:20:00Z",
+      "side": 1,
+      "message": "what do you mean by too low?",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e92466_fc651b27",
+        "filename": "cc/tiles/tile_manager_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:20:00Z",
+      "side": 1,
+      "message": "naming bikeshed: min_image_bytes_to_checker... or something like that. Include the word \"in bytes\" somehow please.",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13de19bf_37a23c00",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:20:00Z",
+      "side": 1,
+      "message": "nit: There\u0027s already an android block below, can you move that there instead?",
+      "revId": "058d7b416817856b2f6689cc226765fe179ee369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
