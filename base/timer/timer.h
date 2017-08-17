@@ -168,11 +168,6 @@ class BASE_EXPORT Timer {
   // and |desired_run_time_| are reset to Now() + delay.
   void PostNewScheduledTask(TimeDelta delay);
 
-  // Returns the task runner on which the task should be scheduled. If the
-  // corresponding |task_runner_| field is null, the task runner for the current
-  // sequence is returned.
-  scoped_refptr<SequencedTaskRunner> GetTaskRunner();
-
   // Disable |scheduled_task_| and abandon it so that it no longer refers back
   // to this object.
   void AbandonScheduledTask();
