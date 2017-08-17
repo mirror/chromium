@@ -378,4 +378,10 @@ CrossProcessFrameConnector::GetParentRenderWidgetHostView() {
   return nullptr;
 }
 
+void CrossProcessFrameConnector::SetVisibilityForChildViews(bool visible) {
+  frame_proxy_in_parent_renderer_->frame_tree_node()
+      ->current_frame_host()
+      ->SetVisibilityForChildViews(visible);
+}
+
 }  // namespace content
