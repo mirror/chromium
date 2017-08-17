@@ -34,6 +34,24 @@
       "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67270e99_c6634e69",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T23:05:30Z",
+      "side": 1,
+      "message": "Based on Jake\u0027s reply, the spec was intended. For now, we should try to follow the spec:\n- If we couldn\u0027t activate, resolve immediately.\n- If we do activate, resolve after the worker has been promoted to .active.\n\nI think what we\u0027re failing currently is we resolve after the \u0027activate\u0027 event has been dispatched, but should be resolving before. I.e., the order should be:\n\n1. promote to active\n2. set state to \u0027activating\u0027\n3. resolve promise\n4. dispatch \u0027activate\u0027 event",
+      "parentUuid": "5ba7dfc4_1122ede3",
+      "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
