@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc2ee1e4_55ac8f5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T15:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c42faed_e1267254",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "776a4f36_55c4b280",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5013f437_6ed4c146",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T15:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "776a4f36_55c4b280",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3766262b_05385e33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T15:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f359cad3_12007ded",
+      "range": {
+        "startLine": 434,
+        "startChar": 7,
+        "endLine": 434,
+        "endChar": 31
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0acc95f7_889005cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a8b34c_2ed81023",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T15:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0acc95f7_889005cc",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 74
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "12a1e28e_1ac0da6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T15:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d19870_8a4dbd78",
+      "range": {
+        "startLine": 358,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 39
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb3d1c4b_734b5182",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c36ca6_6f97a045",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-17T15:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb3d1c4b_734b5182",
+      "range": {
+        "startLine": 808,
+        "startChar": 8,
+        "endLine": 808,
+        "endChar": 58
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
