@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c1ed140_41adb141",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "\u003d nullptr;",
+      "range": {
+        "startLine": 150,
+        "startChar": 15,
+        "endLine": 150,
+        "endChar": 27
+      },
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b427cdb3_d5f4e85d",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "...OnIO for uniformity with other methods?",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c2bd6b_b308e496",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "Perhaps, this can now just be:\nintercepted_render_frames_[std::make_pair(routing_id, process_id)] \u003d web_contents;\nintercepted_frame_tree_nodes_[frame_tree_node_id] \u003d web_contents;",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a7222c_8e491a15",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "Why this? We will lose this WebContents forever.",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd13788_22c4b39a",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "Remove this comment now?",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074161c3_26690b15",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "intercepted_page",
+      "range": {
+        "startLine": 311,
+        "startChar": 35,
+        "endLine": 311,
+        "endChar": 50
+      },
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263a7ecd_badd1256",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "Either pass web_contents+network_handler or intercepted_page. They are essentially the same thing.",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120685be_ea0fbe55",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "Can we move this block under if at line 885?",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6ba8ff_5cf08334",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "Should not change state before we are sure interception is possible.",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5325d50e_ed444ddd",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "While you are here, mind changing this to InternalError instead?",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fe3ddd_56773280",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T17:28:42Z",
+      "side": 1,
+      "message": "And this to Error(\"Interception not supported\")?",
+      "revId": "b84927ebe0f401fecc9f650166d0ed5465a2ab3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
