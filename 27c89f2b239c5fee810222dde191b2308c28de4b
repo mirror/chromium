@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "602a1cca_f6a443bb",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:17:41Z",
+      "side": 1,
+      "message": "optional: leave this code extending View and instead wrap this class in a ScrollView. That makes more sense to me given you end up adding to the child anyway.\noptional variant 2: there isn\u0027t really a need for this code to extend View or ScrollView at all.",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae113961_2d1a4264",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:17:41Z",
+      "side": 1,
+      "message": "If you\u0027re going to close the widget when cancel is clicked why don\u0027t you return true and remove this line?",
+      "range": {
+        "startLine": 578,
+        "startChar": 2,
+        "endLine": 578,
+        "endChar": 23
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34e1900_daab2b9b",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:17:41Z",
+      "side": 1,
+      "message": "Why do you need this? Also, see later comment about CHECK.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 65
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80aabf88_bed34fc9",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:17:41Z",
+      "side": 1,
+      "message": "Use ASSERT if you need to stop execution if the check fails and EXPECT if you don\u0027t need execution to stop. In this case it seems like EXPECT is what you want. Also, document where 10 comes from.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374a9e37_4cffb17b",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:17:41Z",
+      "side": 1,
+      "message": "Generally tests don\u0027t CHECK or DCHECK, use ASSERT/EXPECT. In this case you want ASSERT_TRUE so that execution stops if the assertion fails.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 41
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
