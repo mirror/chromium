@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb97e559_45960ea8",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-17T19:09:44Z",
+      "side": 1,
+      "message": "We have a check in place inside OnConnectionError() at l.162 below. We call this before OnConnectionError() to ensure CancelAllRequests() call is made at l.165 which is what we want when MSDH is destroyed.",
+      "parentUuid": "fdc71f8c_25c4449d",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad81bc6e_fb42c31c",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97df98ce_ced2c07c",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-17T19:09:44Z",
+      "side": 1,
+      "message": "Acknowledged. Given that this method only calls CancelAllRequests() and doesn\u0027t really uninitialize anything, can we rename it to CancelAllRequests() instead?",
+      "parentUuid": "ad81bc6e_fb42c31c",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
