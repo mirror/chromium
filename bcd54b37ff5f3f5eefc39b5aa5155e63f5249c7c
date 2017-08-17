@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922140c7_d198cda7",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T21:19:13Z",
+      "side": 1,
+      "message": "nit: can you file this bug in crbug.com? I\u0027m tracking all our mash refactors there.",
+      "revId": "bcd54b37ff5f3f5eefc39b5aa5155e63f5249c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
