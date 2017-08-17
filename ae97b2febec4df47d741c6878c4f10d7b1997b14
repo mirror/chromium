@@ -22,6 +22,30 @@
       "revId": "ae97b2febec4df47d741c6878c4f10d7b1997b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a98626_c2cf3e43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-17T15:08:47Z",
+      "side": 1,
+      "message": "I thought of that too, but didn\u0027t want to bring it up in the UI review deck as it\u0027s such a small issue. I\u0027ll send an email to Rachel instead.",
+      "parentUuid": "408af588_64f57efc",
+      "range": {
+        "startLine": 208,
+        "startChar": 36,
+        "endLine": 208,
+        "endChar": 48
+      },
+      "revId": "ae97b2febec4df47d741c6878c4f10d7b1997b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
