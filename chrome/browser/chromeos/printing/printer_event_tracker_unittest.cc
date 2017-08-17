@@ -26,12 +26,6 @@ class PrinterEventTrackerTest : public testing::Test {
   PrinterEventTrackerTest() = default;
   ~PrinterEventTrackerTest() override = default;
 
-  // testing::Test overrides:
-  void SetUp() override {
-    // By default, turn recording on.
-    tracker_.set_logging(true);
-  }
-
  protected:
   PrinterEventTracker tracker_;
 
@@ -59,6 +53,19 @@ TEST_F(PrinterEventTrackerTest, RecordsWhenEnabled) {
 
   auto events = GetEvents();
   EXPECT_EQ(1U, events.size());
+}
+
+TEST_F(PrinterEventTrackerTest, DefaultLoggingOff) {
+  Printer test_printer;
+  test_printer.set_make_and_model(kMakeAndModel);
+  test_printer.mutable_ppd_reference()->effective_make_and_model =
+      kEffectiveMakeAndModel;
+
+  tracker_.RecordIppPrinterInstalled(test_printer,
+                                     PrinterEventTracker::kAutomatic);
+
+  auto events = GetEvents();
+  EXPECT_TRUE(events.empty());
 }
 
 TEST_F(PrinterEventTrackerTest, DoesNotRecordWhileDisabled) {
