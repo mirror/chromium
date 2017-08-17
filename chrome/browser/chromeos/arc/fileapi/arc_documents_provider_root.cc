@@ -67,6 +67,17 @@ void ArcDocumentsProviderRoot::ReadDirectory(
                        weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
+void ArcDocumentsProviderRoot::ReadDirectoryExtra(
+    const base::FilePath& path,
+    ReadDirectoryExtraCallback callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  ResolveToDocumentId(
+      path,
+      base::Bind(&ArcDocumentsProviderRoot::ReadDirectoryExtraWithDocumentId,
+                 weak_ptr_factory_.GetWeakPtr(),
+                 base::Passed(std::move(callback))));
+}
+
 void ArcDocumentsProviderRoot::AddWatcher(
     const base::FilePath& path,
     const WatcherCallback& watcher_callback,
@@ -206,6 +217,39 @@ void ArcDocumentsProviderRoot::ReadDirectoryWithNameToThinDocumentMap(
                                             : storage::DirectoryEntry::FILE);
   }
   callback.Run(base::File::FILE_OK, entry_list, false /* has_more */);
+}
+
+void ArcDocumentsProviderRoot::ReadDirectoryExtraWithDocumentId(
+    ReadDirectoryExtraCallback callback,
+    const std::string& document_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (document_id.empty()) {
+    std::move(callback).Run(base::File::FILE_ERROR_NOT_FOUND, {});
+    return;
+  }
+  ReadDirectoryInternal(
+      document_id, base::Bind(&ArcDocumentsProviderRoot::
+                                  ReadDirectoryExtraWithNameToThinDocumentMap,
+                              weak_ptr_factory_.GetWeakPtr(),
+                              base::Passed(std::move(callback))));
+}
+
+void ArcDocumentsProviderRoot::ReadDirectoryExtraWithNameToThinDocumentMap(
+    ReadDirectoryExtraCallback callback,
+    base::File::Error error,
+    NameToThinDocumentMap mapping) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (error != base::File::FILE_OK) {
+    std::move(callback).Run(error, {});
+    return;
+  }
+
+  std::vector<FileInfo> files;
+  for (const auto& pair : mapping) {
+    files.emplace_back(FileInfo{pair.first, pair.second.document_id,
+                                pair.second.is_directory});
+  }
+  std::move(callback).Run(base::File::FILE_OK, std::move(files));
 }
 
 void ArcDocumentsProviderRoot::AddWatcherWithDocumentId(

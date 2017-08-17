@@ -314,6 +314,27 @@ TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryDups) {
   run_loop.Run();
 }
 
+TEST_F(ArcDocumentsProviderRootTest, ReadDirectoryExtra) {
+  base::RunLoop run_loop;
+  root_->ReadDirectoryExtra(
+      base::FilePath(FILE_PATH_LITERAL("dir")),
+      base::BindOnce(
+          [](base::RunLoop* run_loop, base::File::Error error,
+             std::vector<ArcDocumentsProviderRoot::FileInfo> files) {
+            EXPECT_EQ(base::File::FILE_OK, error);
+            ASSERT_EQ(2u, files.size());
+            EXPECT_EQ(FILE_PATH_LITERAL("music.bin.mp3"), files[0].name);
+            EXPECT_EQ("music-id", files[0].document_id);
+            EXPECT_FALSE(files[0].is_directory);
+            EXPECT_EQ(FILE_PATH_LITERAL("photo.jpg"), files[1].name);
+            EXPECT_EQ("photo-id", files[1].document_id);
+            EXPECT_FALSE(files[1].is_directory);
+            run_loop->Quit();
+          },
+          &run_loop));
+  run_loop.Run();
+}
+
 TEST_F(ArcDocumentsProviderRootTest, WatchChanged) {
   int num_called = 0;
   auto watcher_callback = base::Bind(
