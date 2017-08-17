@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "699b24fe_25bc2677",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T00:59:12Z",
+      "side": 1,
+      "message": "nit: This might be clearer if you did the if (IsFullscreen()) as a separate early-exit at hte top of the function",
+      "revId": "de74b044285b079c82750ee48e9c6069fb9ca50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d93b2da_02784703",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T00:59:12Z",
+      "side": 1,
+      "message": "nit: \u003d default where you can",
+      "revId": "de74b044285b079c82750ee48e9c6069fb9ca50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b853cef_3f267d59",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T00:59:12Z",
+      "side": 1,
+      "message": "What is kHideTitleBars? It should have \"tablet\" in the name somewhere if it\u0027s a tablet mode feature.",
+      "revId": "de74b044285b079c82750ee48e9c6069fb9ca50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98425f26_d3b16676",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T00:59:12Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "de74b044285b079c82750ee48e9c6069fb9ca50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1124d283_1a79762c",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T00:59:12Z",
+      "side": 1,
+      "message": "nit: \"was can\"",
+      "revId": "de74b044285b079c82750ee48e9c6069fb9ca50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630b835e_d55ba388",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T00:59:12Z",
+      "side": 1,
+      "message": "This code needs tests in the //chrome/browser layer somewhere.",
+      "revId": "de74b044285b079c82750ee48e9c6069fb9ca50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
