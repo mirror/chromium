@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c3c1c31_9c5f591c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-17T23:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a067d4df_d853e799",
+      "range": {
+        "startLine": 406,
+        "startChar": 4,
+        "endLine": 406,
+        "endChar": 82
+      },
+      "revId": "1aa513e55af054daeb6f06d0165799939c685d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a429915_1363c743",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
         "patchSetId": 1
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "Can we erase this if we aren\u0027t supporting document mode anymore?  I think this was to enable swiping between document mode activities by side swiping on the toolbar?  Maybe check and remove if possible :).",
       "parentUuid": "47b88aa2_efeb1858",
+      "range": {
+        "startLine": 706,
+        "startChar": 4,
+        "endLine": 706,
+        "endChar": 76
+      },
+      "revId": "1aa513e55af054daeb6f06d0165799939c685d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d486a1_1a9302d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-17T23:07:40Z",
+      "side": 1,
+      "message": "It is for document mode and we have a separate handler for the normal toolbar in LayoutManagerChrome (which I still think should be moved). Removed this class.",
+      "parentUuid": "dedff6a1_2e5159da",
       "range": {
         "startLine": 706,
         "startChar": 4,
