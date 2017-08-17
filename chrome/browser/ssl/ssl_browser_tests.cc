@@ -5440,7 +5440,7 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
     chrome_browser_ssl::MITMSoftware* mitm_software =
         config_proto->add_mitm_software();
     mitm_software->set_name("Matching MITM Software");
-    mitm_software->set_regex(cert_issuer);
+    mitm_software->set_issuer_common_name(cert_issuer);
     SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
   }
 
@@ -5573,7 +5573,7 @@ IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
   chrome_browser_ssl::MITMSoftware* mitm_software =
       config_proto->add_mitm_software();
   mitm_software->set_name("Non-Matching MITM Software");
-  mitm_software->set_regex("pattern-that-does-not-match-anything");
+  mitm_software->set_issuer_common_name("pattern-that-does-not-match-anything");
   SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
 
   // Navigate to an unsafe page on the server. Mock out the URL host name to
@@ -5662,6 +5662,84 @@ IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
   histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
                                SSLErrorHandler::SHOW_MITM_SOFTWARE_INTERSTITIAL,
                                0);
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest, EnterpriseManaged) {
+  // base::test::ScopedFeatureList scoped_feature_list;
+  // scoped_feature_list.InitFromCommandLine(
+  //     "MITMSoftwareInterstitial" /* enabled */, std::string() /* disabled
+  //     */);
+  // SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID);
+
+  // ASSERT_TRUE(https_server()->Start());
+
+  // // TODO(sperigo): Find a way to set the enterprise managed flag here.
+
+  // SetUpMITMSoftwareCertList();
+
+  // // Navigate to an unsafe page on the server. Mock out the URL host name to
+  // // equal the one set for HSTS.
+  // WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  // SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+  // ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
+  // content::WaitForInterstitialAttach(tab);
+  // InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  // ASSERT_EQ(MITMSoftwareBlockingPage::kTypeForTesting,
+  //           interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  // EXPECT_FALSE(interstitial_timer_observer.timer_started());
+
+  // const std::string expected_primary_paragraph =
+  //     "\"Matching MITM Software\" wasn’t installed properly on your computer
+  //     " "or network. Ask your administrator to resolve this issue.";
+  // const std::string expected_explanation =
+  //     "A root certificate for \"Matching MITM Software\" is required but "
+  //     "isn’t installed. Your network administrator should look at "
+  //     "configuration instructions for \"Matching MITM Software\" to fix this
+  //     " "problem. Applications that can cause this error includes antivirus,
+  //     " "firewall, and web-filtering or proxy software.";
+
+  // EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
+  //     interstitial_page, expected_primary_paragraph));
+  // EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
+  //     interstitial_page, expected_explanation));
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest, NotEnterpriseManaged) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(
+      "MITMSoftwareInterstitial" /* enabled */, std::string() /* disabled */);
+  SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID);
+
+  ASSERT_TRUE(https_server()->Start());
+  SetUpMITMSoftwareCertList();
+
+  // Navigate to an unsafe page on the server. Mock out the URL host name to
+  // equal the one set for HSTS.
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+  ui_test_utils::NavigateToURL(browser(), GetHSTSTestURL());
+  content::WaitForInterstitialAttach(tab);
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  ASSERT_EQ(MITMSoftwareBlockingPage::kTypeForTesting,
+            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  EXPECT_FALSE(interstitial_timer_observer.timer_started());
+
+  const std::string expected_primary_paragraph_substring_1 =
+      "Try uninstalling \"Misconfigured MITM Software\"";
+  const std::string expected_primary_paragraph_substring_2 =
+      "Try connecting to another Wi-Fi network";
+  const std::string expected_explanation =
+      "\"Misconfigured MITM Software\" isn’t configured correctly. "
+      "Uninstalling \"Misconfigured MITM Software\" usually fixes the problem. "
+      "Applications that can cause this error includes antivirus, firewall, "
+      "and web-filtering or proxy software.";
+
+  // EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
+  //     interstitial_page, expected_primary_paragraph_substring_1));
+  EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
+      interstitial_page, expected_primary_paragraph_substring_2));
+  // EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
+  //     interstitial_page, expected_explanation));
 }
 
 #else
