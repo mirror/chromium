@@ -165,6 +165,11 @@ struct ObserverTransaction {
   array<int64> scope;
 };
 
+struct DatabaseInfo {
+  mojo.common.mojom.String16 name;
+  int64 version;
+};
+
 struct ObserverChanges {
   map<int32, array<int32>> observation_index_map;
   map<int32, ObserverTransaction> transaction_map;
@@ -180,8 +185,8 @@ struct ObserverChanges {
 interface Callbacks {
   Error(int32 code, mojo.common.mojom.String16 message);
 
-  // Factory::GetDatabaseNames
-  SuccessStringList(array<mojo.common.mojom.String16> value);
+  // Factory::GetDatabaseInfo
+  SuccessStringList(array<DatabaseInfo> value);
 
   // Factory::Open / DeleteDatabase
   Blocked(int64 existing_version);
