@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d79c5403_bcc70d8f",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T19:52:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9512c263_5be12cb7",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b1b210_beabd864",
         "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7a5662ba_9d6e365e",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T19:52:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b1b210_beabd864",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23aa900b_726ca178",
         "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-11T22:35:36Z",
       "side": 1,
       "message": "I\u0027m not sure if I\u0027m following the logic entirely (so maybe some comments might be helpful), but was there supposed to be a return at the end of this if block?",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19d66c1_429fa173",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T19:52:37Z",
+      "side": 1,
+      "message": "You caught the bug! Thanks :)",
+      "parentUuid": "23aa900b_726ca178",
       "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2f0ae82a_dc6aaa97",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T19:52:37Z",
+      "side": 1,
+      "message": "Yes! Will do that now.",
+      "parentUuid": "94214d11_e57e3660",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1acaa0f_0f55173d",
         "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
         "patchSetId": 7
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "09236694_758119eb",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T19:52:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1acaa0f_0f55173d",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf48465_818bfc81",
         "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-11T22:35:36Z",
       "side": 1,
       "message": "why the {}?",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa71ea0_c0b8c820",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T19:52:37Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "daf48465_818bfc81",
       "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
