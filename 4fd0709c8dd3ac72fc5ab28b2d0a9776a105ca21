@@ -16,6 +16,24 @@
       "revId": "4fd0709c8dd3ac72fc5ab28b2d0a9776a105ca21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915c4dc6_9a351ebc",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/GeolocationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1168179
+      },
+      "writtenOn": "2017-08-17T19:25:10Z",
+      "side": 0,
+      "message": "No, because FindBugs is not working properly...",
+      "parentUuid": "91f5e5c7_cd039e5f",
+      "revId": "4fd0709c8dd3ac72fc5ab28b2d0a9776a105ca21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
