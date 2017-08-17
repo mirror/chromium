@@ -1133,7 +1133,10 @@ test("browser_tests") {
 
   if (is_win) {
     data += [ "$root_out_dir/chrome_200_percent.pak" ]
-    deps += [ "//chrome/app:chrome_dll_resources" ]
+    deps += [
+      "//chrome/app:chrome_dll_resources",
+      "//components/crash/content/app:export_thunks",
+    ]
   }
   if (is_chromeos) {
     data += [

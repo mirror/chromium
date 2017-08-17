@@ -36,6 +36,10 @@
 #include <unistd.h>
 #endif  // OS_POSIX
 
+#if defined(OS_WIN)
+#include "components/crash/content/app/export_thunks.h"
+#endif
+
 namespace crash_reporter {
 
 namespace {
@@ -240,7 +244,37 @@ bool GetUploadsEnabled() {
   return false;
 }
 
+void DumpWithoutCrashing() {
+  CRASHPAD_SIMULATE_CRASH();
+}
+
 void GetReports(std::vector<Report>* reports) {
+#if defined(OS_WIN)
+  // On Windows, the crash client may be linked into another module, which
+  // does the registration. That means the global that holds the crash
+  // report database lives in across a module boundary, where the other module
+  // implements the GetCrashReportsImpl function. Since the other module has
+  // a separate allocation domain, this awkward copying is necessary.
+  const crash_reporter::Report* reports_pointer;
+  size_t report_count;
+  GetCrashReportsImpl(&reports_pointer, &report_count);
+  reports->assign(reports_pointer, reports_pointer + report_count);
+#else
+  GetReportsImpl(reports);
+#endif
+}
+
+void RequestSingleCrashUpload(const std::string& local_id) {
+#if defined(OS_WIN)
+  // On Windows, crash reporting may be implemented in another module, which is
+  // why this can't call crash_reporter::RequestSingleCrashUpload directly.
+  RequestSingleCrashUploadImpl(local_id);
+#else
+  crash_reporter::RequestSingleCrashUploadImpl(local_id);
+#endif
+}
+
+void GetReportsImpl(std::vector<Report>* reports) {
   reports->clear();
 
   if (!g_database) {
@@ -294,16 +328,12 @@ void GetReports(std::vector<Report>* reports) {
             });
 }
 
-void RequestSingleCrashUpload(const std::string& local_id) {
+void RequestSingleCrashUploadImpl(const std::string& local_id) {
   if (!g_database)
     return;
   crashpad::UUID uuid;
   uuid.InitializeFromString(local_id);
   g_database->RequestUpload(uuid);
-}
-
-void DumpWithoutCrashing() {
-  CRASHPAD_SIMULATE_CRASH();
 }
 
 }  // namespace crash_reporter
@@ -334,12 +364,6 @@ void SetCrashKeyValueImpl(const wchar_t* key, const wchar_t* value) {
 
 void ClearCrashKeyValueImpl(const wchar_t* key) {
   crash_reporter::ClearCrashKey(base::UTF16ToUTF8(key));
-}
-
-// This helper is invoked by code in chrome.dll to request a single crash report
-// upload. See CrashUploadListCrashpad.
-void RequestSingleCrashUploadImpl(const std::string& local_id) {
-  crash_reporter::RequestSingleCrashUpload(local_id);
 }
 
 }  // extern "C"
