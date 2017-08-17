@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0aec453_40f67f3e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-17T01:47:44Z",
+      "side": 1,
+      "message": "RecentContext is movable object?",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a83fc93_d37bd3e1",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-17T01:47:44Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3b3cbc_d2eada7e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-17T01:47:44Z",
+      "side": 1,
+      "message": "std::move is needed? (maybe to let the compiler check the use of callback after this, or this pointer for Run must be r-value reference?)",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213c4cc0_9914dad1",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-17T01:47:44Z",
+      "side": 1,
+      "message": "The existing code is doing:\n\n1. file_manager::util::ConvertDrivePathToRelativeFileSystemPath\n2. Then file_system_context-\u003eCreateCrackedFileSystemURL.\n\nCan we do the same to avoid having multiple conversion logic?\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/file_manager/private_api_drive.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d176\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/file_manager/fileapi_util.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d148",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
