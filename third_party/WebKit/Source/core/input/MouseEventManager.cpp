@@ -783,8 +783,11 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
     return WebInputEventResult::kNotHandled;
 
   // We disable the drag and drop actions on pen input.
+  // Do not do Handle Drag when a fake mouse event.
   if (event.Event().pointer_type !=
           blink::WebPointerProperties::PointerType::kPen &&
+      !(event.Event().GetModifiers() &
+        WebInputEvent::Modifiers::kRelativeMotionEvent) &&
       HandleDrag(event, DragInitiator::kMouse)) {
     return WebInputEventResult::kHandledSystem;
   }
