@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a9096b_7ad50de1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T16:52:51Z",
+      "side": 1,
+      "message": "Do you need this? ScopedAllowIO isn\u0027t added by this CL",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469f0984_d307c85e",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T16:52:51Z",
+      "side": 1,
+      "message": "std::move",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9aad4a_2f0b1966",
+        "filename": "ios/chrome/browser/browser_state/off_the_record_chrome_browser_state_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T16:52:51Z",
+      "side": 1,
+      "message": "std::move",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408b2399_7edb86d2",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T16:52:51Z",
+      "side": 1,
+      "message": "Why BACKGROUND? (TaskPriority usually isn\u0027t taken into account in unittests so this likely doesn\u0027t matter but it\u0027s weird to diverge here)",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
