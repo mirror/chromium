@@ -61,7 +61,7 @@ BleScanner::BleScanner(
       adapter_(adapter),
       eid_generator_(std::move(eid_generator)),
       local_device_data_provider_(local_device_data_provider),
-      is_initializing_discovery_session_(false),
+      is_waiting_for_session_to_start_(false),
       discovery_session_(nullptr),
       weak_ptr_factory_(this) {
   adapter_->AddObserver(this);
@@ -99,7 +99,6 @@ bool BleScanner::RegisterScanFilterForDevice(
   }
 
   registered_remote_devices_.push_back(remote_device);
-  UpdateDiscoveryStatus();
 
   return true;
 }
@@ -110,7 +109,6 @@ bool BleScanner::UnregisterScanFilterForDevice(
        it != registered_remote_devices_.end(); ++it) {
     if (it->GetDeviceId() == remote_device.GetDeviceId()) {
       registered_remote_devices_.erase(it);
-      UpdateDiscoveryStatus();
       return true;
     }
   }
@@ -137,12 +135,6 @@ void BleScanner::RemoveObserver(Observer* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
-void BleScanner::AdapterPoweredChanged(device::BluetoothAdapter* adapter,
-                                       bool powered) {
-  DCHECK_EQ(adapter_.get(), adapter);
-  UpdateDiscoveryStatus();
-}
-
 void BleScanner::DeviceAdded(device::BluetoothAdapter* adapter,
                              device::BluetoothDevice* bluetooth_device) {
   DCHECK_EQ(adapter_.get(), adapter);
@@ -155,29 +147,11 @@ void BleScanner::DeviceChanged(device::BluetoothAdapter* adapter,
   HandleDeviceUpdated(bluetooth_device);
 }
 
-void BleScanner::UpdateDiscoveryStatus() {
-  if (registered_remote_devices_.empty()) {
-    StopDiscoverySession();
-    return;
-  }
-
-  if (!adapter_->IsPowered()) {
-    // If the adapter has powered off, no devices can be discovered.
-    StopDiscoverySession();
-    return;
-  }
-
-  if (is_initializing_discovery_session_) {
-    return;
-  } else if (!discovery_session_ ||
-             (discovery_session_ && !discovery_session_->IsActive())) {
-    StartDiscoverySession();
-  }
-}
-
 void BleScanner::StartDiscoverySession() {
-  DCHECK(adapter_);
-  is_initializing_discovery_session_ = true;
+  if (is_waiting_for_session_to_start_)
+    return;
+
+  is_waiting_for_session_to_start_ = true;
 
   // Discover only low energy (LE) devices with strong enough signal.
   std::unique_ptr<device::BluetoothDiscoveryFilter> filter =
@@ -194,16 +168,24 @@ void BleScanner::StartDiscoverySession() {
 
 void BleScanner::OnDiscoverySessionStarted(
     std::unique_ptr<device::BluetoothDiscoverySession> discovery_session) {
-  is_initializing_discovery_session_ = false;
+  if (!is_waiting_for_session_to_start_) {
+    // StopDiscoverySession() was called while |discovery_session| was being
+    // created.
+    return;
+  }
+
+  is_waiting_for_session_to_start_ = false;
   discovery_session_ = std::move(discovery_session);
 }
 
 void BleScanner::OnStartDiscoverySessionError() {
   PA_LOG(WARNING) << "Error starting discovery session. Initialization failed.";
-  is_initializing_discovery_session_ = false;
+  is_waiting_for_session_to_start_ = false;
 }
 
 void BleScanner::StopDiscoverySession() {
+  is_waiting_for_session_to_start_ = false;
+
   if (!discovery_session_) {
     // If there is no discovery session to stop, return early.
     return;
