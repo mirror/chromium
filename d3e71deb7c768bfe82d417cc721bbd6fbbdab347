@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7b1d94a_275aea3f",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T23:16:40Z",
+      "side": 1,
+      "message": "I copied this from the ASLR code in base. I\u0027m guessing we are aiming this at users on 32 bit OS\u0027es who don\u0027t have the option of running the 64 bit version of Chrome. +jschuh for confirmation.",
+      "parentUuid": "2255420f_b3025358",
+      "range": {
+        "startLine": 76,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "d3e71deb7c768bfe82d417cc721bbd6fbbdab347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9af3063f_50cc36cd",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T22:58:15Z",
       "side": 1,
       "message": "Does calling VirtualAlloc to allocate and commit 512 MB of inaccessible memory consume 512KB worth of page table entries, or is it much cheaper than that? Reading https://blogs.msdn.microsoft.com/oldnewthing/20160318-00/?p\u003d93181 makes me a little worried.",
+      "range": {
+        "startLine": 81,
+        "startChar": 42,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "d3e71deb7c768bfe82d417cc721bbd6fbbdab347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182409ef_dac44cbe",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T23:16:40Z",
+      "side": 1,
+      "message": "Good question. From that article, I would expect 1/2 GB to require 1 MB of memory. Of course, those numbers must be for 64 bit systems, so I\u0027m not sure how much physical memory this will consume. We did something similar for Native Client, though NaCl had the whole process to itself.\n\nhttps://cs.chromium.org/chromium/src/components/nacl/browser/nacl_process_host.cc?rcl\u003d05b564e44b5289fa86ee281eb308f7437ec3299e\u0026l\u003d170",
+      "parentUuid": "9af3063f_50cc36cd",
       "range": {
         "startLine": 81,
         "startChar": 42,
