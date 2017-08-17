@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e8a4abc_ad2a5f4f",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-17T18:57:45Z",
+      "side": 1,
+      "message": "super-nit: for consistency, no period at the end of this cell",
+      "revId": "40a534e16053c6591957e051b3c24b2eea5c0c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
