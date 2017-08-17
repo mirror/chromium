@@ -16,6 +16,24 @@
       "revId": "87c53034e1ddfe0a02f5cd7e2b7adf796d62b7e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d339057_8095ab25",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-17T16:08:41Z",
+      "side": 1,
+      "message": "I\u0027ll add it to https://chromium-review.googlesource.com/c/618992 which I was doing anyway.",
+      "parentUuid": "d5af964d_9c9147ef",
+      "revId": "87c53034e1ddfe0a02f5cd7e2b7adf796d62b7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
