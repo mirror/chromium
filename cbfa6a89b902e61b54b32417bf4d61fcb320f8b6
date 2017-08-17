@@ -48,6 +48,53 @@
     },
     {
       "key": {
+        "uuid": "eba6995f_7ffe676d",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-08-17T20:08:48Z",
+      "side": 1,
+      "message": "Do we want this wrapped in {{#include_start_url}} {{/include_start_url}} (or whatever we decide to name that variable)?",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 122
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a64e93e_2878f0a9",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-08-17T20:08:48Z",
+      "side": 1,
+      "message": "Are you sure? I thought this change was specifically for an _unbound_ use case?",
+      "parentUuid": "2b17ac05_238f9c97",
+      "range": {
+        "startLine": 42,
+        "startChar": 46,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de7334cb_bfb33a5a",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
         "patchSetId": 2
