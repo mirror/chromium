@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5925cb4a_16c4f4ef",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T22:51:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this shelf-\u003eGetIdealBounds().y() ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 16
+      },
+      "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c52bf4e_944939dc",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1786,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T22:51:14Z",
+      "side": 1,
+      "message": "Why do we need to animate opacity individually on children? Opacity are inheritable from parent. Wouldn\u0027t animating on the widget\u0027s opacity to fade out everything just work?",
+      "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
