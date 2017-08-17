@@ -40,6 +40,11 @@ class PrefetchService : public KeyedService {
   virtual PrefetchImporter* GetPrefetchImporter() = 0;
   virtual PrefetchBackgroundTaskHandler* GetPrefetchBackgroundTaskHandler() = 0;
 
+  // Returns true if all needed flags and settings allows the prefetching of
+  // offline pages to run. Note that this result can change in the course of the
+  // application lifetime.
+  virtual bool IsPrefetchingEnabled() = 0;
+
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.
   virtual SuggestedArticlesObserver* GetSuggestedArticlesObserver() = 0;

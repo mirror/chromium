@@ -16,7 +16,6 @@
 #include "components/offline_pages/core/prefetch/prefetch_downloader_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_importer.h"
-#include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
@@ -65,6 +64,7 @@ PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
   suggested_articles_observer_->GetTestingArticles();
   prefetch_background_task_handler_ =
       base::MakeUnique<StubPrefetchBackgroundTaskHandler>();
+  enabled_getter_ = base::BindRepeating([]() -> bool { return true; });
 }
 
 PrefetchServiceTestTaco::~PrefetchServiceTestTaco() = default;
@@ -125,6 +125,12 @@ void PrefetchServiceTestTaco::SetPrefetchBackgroundTaskHandler(
       std::move(prefetch_background_task_handler);
 }
 
+void PrefetchServiceTestTaco::SetEnabledBySettingsGetter(
+    PrefetchServiceImpl::EnabledBySettingsGetter enabled_getter) {
+  CHECK(!prefetch_service_);
+  enabled_getter_ = enabled_getter;
+}
+
 void PrefetchServiceTestTaco::CreatePrefetchService() {
   CHECK(metrics_collector_ && dispatcher_ && gcm_handler_ &&
         network_request_factory_ && prefetch_store_sql_ &&
@@ -135,7 +141,7 @@ void PrefetchServiceTestTaco::CreatePrefetchService() {
       std::move(gcm_handler_), std::move(network_request_factory_),
       std::move(prefetch_store_sql_), std::move(suggested_articles_observer_),
       std::move(prefetch_downloader_), std::move(prefetch_importer_),
-      std::move(prefetch_background_task_handler_));
+      std::move(prefetch_background_task_handler_), enabled_getter_);
 }
 
 std::unique_ptr<PrefetchService>
