@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "afe80803_b55fcd63",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:59:10Z",
+      "side": 1,
+      "message": "Yes - I\u0027d block it either on having a test, or figuring out why this didn\u0027t cause tests to fail.\n\nEither I\u0027m wrong about the DCHECK (In particular, I believe WeakReference::Flag::Invalidate()\u0027s DCHECK should trigger), in which case there\u0027s nothing to worry about (Though the lack of a DCHECK in the case of an unsafe usage pattern seems bad), or it could be that I\u0027m right, and there\u0027s basically no integration test that exercises this code.  I suppose another possibility is that when the WeakPtr is destroyed on the UI thread, that\u0027s the last WeakPtr, so the WeakPtrFactory is freed from being bound to vend pointers for UI thread use.  I had thought WeakPtrFactory held onto a WeakPtr itself, but I could be wrong about that.\n\nWorth noting that if I were the owner of this code, I\u0027d probably investigate that myself, rather than expecting you to do it.",
+      "parentUuid": "13a75cbc_67e8fe0b",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
