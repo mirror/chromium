@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c55102b_45b35a76",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "entry",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908c2df9_b0f78740",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "Instead of doing this, just return early if we are already sending a message.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad2ad46_22d26edb",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "You can just use:\n\ndisconnect_tethering_operation_map_.emplace(\n    device_id, std::move(disconnect_tethering_operation));",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f19fdd_a6cf8817",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "You need to remove it from the map.\n\ndisconnect_tethering_operation_map_.erase(device_id);\n\nYou should also check the return value of erase() and log an error if it is 0.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 60
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd092a65_57096928",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "This isn\u0027t quite accurate. By definition, the host is no longer active when we send this message.",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7286ef_02786b8f",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "Please mention that it supports multiple concurrent messages.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 75
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d7e0f0_1539df0d",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "Weren\u0027t you going to remove the RemoteDevice as a parameter here and fetch it within your function instead? I think that\u0027 be preferable so that both clients of this function don\u0027t have to fetch the device independently.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8a6db5_7504750f",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T03:47:36Z",
+      "side": 1,
+      "message": "nit: Only one colon.",
+      "range": {
+        "startLine": 30,
+        "startChar": 43,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "87eb6bd1a06f8e7a6159426d8bb5973732b67b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
