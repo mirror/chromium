@@ -217,12 +217,6 @@ class WebContentsObserverProxy extends WebContentsObserver {
         // Java-based WebContents) are quite different, so we explicitly avoid
         // calling it here.
         ThreadUtils.assertOnUiThread();
-        for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
-            mObserversIterator.next().destroy();
-        }
-        // All observer destroy() implementations should result in their removal
-        // from the proxy.
-        assert mObservers.isEmpty();
         mObservers.clear();
 
         if (mNativeWebContentsObserverProxy != 0) {

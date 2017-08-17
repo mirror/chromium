@@ -5511,6 +5511,10 @@ WebContentsAndroid* WebContentsImpl::GetWebContentsAndroid() {
   return web_contents_android;
 }
 
+void WebContentsImpl::ResetGlobalRef() {
+  GetWebContentsAndroid()->ResetGlobalRef();
+}
+
 void WebContentsImpl::ActivateNearestFindResult(float x,
                                                 float y) {
   GetOrCreateFindRequestManager()->ActivateNearestFindResult(x, y);
