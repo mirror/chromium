@@ -7870,21 +7870,6 @@ TEST_F(LayerTreeHostImplTest, BlendingOffWhenDrawingOpaqueLayers) {
   host_impl_->DrawLayers(&frame);
   EXPECT_TRUE(layer1->quads_appended());
   host_impl_->DidDrawAllLayers(frame);
-
-  // Layer with partially opaque contents and translucent contents culled, drawn
-  // without blending.
-  layer1->SetContentsOpaque(false);
-  layer1->SetQuadRect(gfx::Rect(5, 5, 5, 5));
-  layer1->SetQuadVisibleRect(gfx::Rect(5, 5, 2, 5));
-  layer1->SetOpaqueContentRect(gfx::Rect(5, 5, 2, 5));
-  layer1->SetExpectation(false, false, root);
-  layer1->SetUpdateRect(gfx::Rect(layer1->bounds()));
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->set_needs_update_draw_properties();
-  EXPECT_EQ(DRAW_SUCCESS, host_impl_->PrepareToDraw(&frame));
-  host_impl_->DrawLayers(&frame);
-  EXPECT_TRUE(layer1->quads_appended());
-  host_impl_->DidDrawAllLayers(frame);
 }
 
 static bool MayContainVideoBitSetOnFrameData(LayerTreeHostImpl* host_impl) {
