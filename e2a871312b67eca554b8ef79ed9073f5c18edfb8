@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d53be8c3_ed438beb",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T11:33:36Z",
+      "side": 1,
+      "message": "If this is only necessary for Xcode 9+, maybe you can put behind a check for the Xcode version:\n\n  if (xcode_version_int \u003e\u003d 900) {\n    extra_system_frameworks +\u003d [\n      \"$ios_sdk_platform_path/Developer/Library/\" +\n          \"PrivateFrameworks/XCTAutomationSupport.framework\",\n    ]\n  }",
+      "revId": "e2a871312b67eca554b8ef79ed9073f5c18edfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
