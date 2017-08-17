@@ -52,6 +52,24 @@
       "revId": "308e686692368c62d13f948486ccc15e8e28f979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d867b662_802ec822",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-17T06:18:03Z",
+      "side": 1,
+      "message": "Sorry, it seems my fault.\nIt used to be dispatcher_host_-\u003eOnProviderDestroyed(provider_id()), so I just replaced it to provider_host_.reset() probably. \nhttps://crrev.com/2653493009",
+      "parentUuid": "30669e40_916dd828",
+      "revId": "308e686692368c62d13f948486ccc15e8e28f979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
