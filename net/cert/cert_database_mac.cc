@@ -116,19 +116,15 @@ OSStatus CertDatabase::Notifier::KeychainCallback(
 
 void CertDatabase::SetMessageLoopForKeychainEvents() {
   // Shutdown will take care to delete the notifier on the right thread.
-  if (notifier_.get())
+  if (notifier_)
     notifier_.release()->Shutdown();
 
   notifier_.reset(new Notifier(this, base::MessageLoopForUI::current()));
 }
 
-CertDatabase::CertDatabase()
-    : observer_list_(new base::ObserverListThreadSafe<Observer>) {
-}
-
-CertDatabase::~CertDatabase() {
+void CertDatabase::ReleaseNotifier() {
   // Shutdown will take care to delete the notifier on the right thread.
-  if (notifier_.get())
+  if (notifier_)
     notifier_.release()->Shutdown();
 }
 
