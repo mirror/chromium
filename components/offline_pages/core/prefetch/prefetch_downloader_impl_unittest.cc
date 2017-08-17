@@ -16,6 +16,7 @@
 #include "components/download/public/service_config.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
+#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "net/base/url_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -62,12 +63,15 @@ class PrefetchDownloaderTest : public testing::Test {
 
   void SetUp() override {
     prefetch_service_taco_.reset(new PrefetchServiceTestTaco);
+    auto prefetch_dispatcher = base::MakeUnique<TestPrefetchDispatcher>();
 
     auto downloader = base::MakeUnique<PrefetchDownloaderImpl>(
-        &download_service_, kTestChannel);
+        prefetch_dispatcher.get(), &download_service_, kTestChannel);
     download_service_.SetFailedDownload(kFailedDownloadId, false);
     download_client_ = base::MakeUnique<TestDownloadClient>(downloader.get());
     download_service_.set_client(download_client_.get());
+    prefetch_service_taco_->SetPrefetchDispatcher(
+        std::move(prefetch_dispatcher));
     prefetch_service_taco_->SetPrefetchDownloader(std::move(downloader));
 
     prefetch_service_taco_->CreatePrefetchService();

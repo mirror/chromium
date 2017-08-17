@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "components/download/public/download_service.h"
+#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_server_urls.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
@@ -15,11 +16,16 @@
 namespace offline_pages {
 
 PrefetchDownloaderImpl::PrefetchDownloaderImpl(
+    PrefetchDispatcher* dispatcher,
     download::DownloadService* download_service,
     version_info::Channel channel)
     : download_service_(download_service),
       channel_(channel),
       weak_ptr_factory_(this) {
+  DCHECK(dispatcher);
+  // Unretained is allowed because dispatcher outlives |this|.
+  SetCompletedCallback(base::Bind(&PrefetchDispatcher::DownloadCompleted,
+                                  base::Unretained(dispatcher)));
   DCHECK(download_service);
   service_started_ = download_service->GetStatus() ==
                      download::DownloadService::ServiceStatus::READY;
