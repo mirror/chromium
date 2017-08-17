@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34f9a7bb_510f5b47",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T13:45:44Z",
+      "side": 1,
+      "message": "I think this will introduce a static initializer, which is not allowed in Chromium. (There should be a bot that complains about this.)\nSome options:\n- Create at first use in AddNonWildcardDomainNonPortScheme.\n- Use base/memory/singleton.h.\n- Find some other solution that doesn\u0027t rely on global variables?\n- Pass all the schemes in at once as a char**, then you can statically define an array with all of them where SetNonWildcardDomainNonPortScheme is called.",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038091b5_71dd981f",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T13:45:44Z",
+      "side": 1,
+      "message": "That\u0027s the name of the enum; it\u0027s used for multiple histograms.",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 69
+      },
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1854dc_3e0ef1d0",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T13:45:44Z",
+      "side": 1,
+      "message": "s/Put/Add/ ?",
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
