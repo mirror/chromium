@@ -466,6 +466,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
         mRenderCoordinates.reset();
         mRenderCoordinates.setDeviceScaleFactor(dipScale, windowAndroid.getContext());
+        getEventForwarder().setWheelScrollFactor(mRenderCoordinates.getWheelScrollFactor());
 
         mNativeContentViewCore = nativeInit(webContents, mViewAndroidDelegate, windowNativePointer,
                 dipScale, mRetainedJavaScriptObjects);
@@ -2161,6 +2162,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         if (windowAndroid == null || mNativeContentViewCore == 0) return;
 
         mRenderCoordinates.setDeviceScaleFactor(dipScale, getWindowAndroid().getContext());
+        getEventForwarder().setWheelScrollFactor(mRenderCoordinates.getWheelScrollFactor());
         nativeSetDIPScale(mNativeContentViewCore, dipScale);
     }
 
