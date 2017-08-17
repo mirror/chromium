@@ -538,6 +538,7 @@ void ExtensionBrowserTest::EnableExtension(const std::string& extension_id) {
 void ExtensionBrowserTest::OpenWindow(content::WebContents* contents,
                                       const GURL& url,
                                       bool newtab_process_should_equal_opener,
+                                      bool should_succeed,
                                       content::WebContents** newtab_result) {
   content::WebContentsAddedObserver tab_added_observer;
   ASSERT_TRUE(content::ExecuteScript(contents,
@@ -545,7 +546,13 @@ void ExtensionBrowserTest::OpenWindow(content::WebContents* contents,
   content::WebContents* newtab = tab_added_observer.GetWebContents();
   ASSERT_TRUE(newtab);
   WaitForLoadStop(newtab);
-  EXPECT_EQ(url, newtab->GetLastCommittedURL());
+
+  if (should_succeed) {
+    EXPECT_EQ(url, newtab->GetLastCommittedURL());
+    EXPECT_EQ(content::PAGE_TYPE_NORMAL,
+              newtab->GetController().GetLastCommittedEntry()->GetPageType());
+  }
+
   if (newtab_process_should_equal_opener) {
     EXPECT_EQ(contents->GetMainFrame()->GetSiteInstance(),
               newtab->GetMainFrame()->GetSiteInstance());
