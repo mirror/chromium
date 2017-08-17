@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68f4d8a_5f592c01",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "This is confusing API now that we have an internal counter. Please change to:\n\nLayer::AddCacheRenderSurfaceRequest();\nLayer::RemoveCacheRenderSurfaceRequest();",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee07d16_f88d16af",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "Please DCHECK_GT(render_surface_cache_requests_, 0) when removing requests.",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b47d56_62b6f21e",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "Can you avoid calling this unless the value passed to it changed?",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cbfa3c_83671da3",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "it should never be less than 0. that would be a bug",
+      "range": {
+        "startLine": 600,
+        "startChar": 5,
+        "endLine": 600,
+        "endChar": 9
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8159986_89721e4c",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be 64bit. int or maybe unsigned if we want wrap around to be predictable",
+      "range": {
+        "startLine": 601,
+        "startChar": 2,
+        "endLine": 601,
+        "endChar": 9
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1de485_f0e13c1f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "nit: remove \"Cleanup\" from the name. that\u0027s an implementation detail.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c45c0e0_96ec3e5d",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "See comments below. I think this should:\n\nif (layer_)\n  layer_-\u003eRemoveObserver(this);",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c3e8ae_b1bfaea0",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "See comments below. I think we want this here:\n\nif (layer_)\n  layer_-\u003eSetCacheRenderSurface(false);\n\nand dtor will handle removal of observer",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a4c2a4_30f9adf2",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T19:23:00Z",
+      "side": 1,
+      "message": "wouldn\u0027t this be better:\n\nlayer_-\u003eRemoveObserver(this);\nlayer_ \u003d nullptr;\n\nno need for layer_destroyed_ and if the animation is still going past layer destruction then I think we want the cc_layer too keep being cached until  it has finished, right? Ideally we\u0027d have a counter on the cc layer instead of handling that in the ui layer but I guess this is good enough.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
