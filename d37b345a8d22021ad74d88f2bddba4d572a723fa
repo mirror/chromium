@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f628dbce_43d8864a",
+        "filename": "chrome/traffic_annotation/annotations_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-17T14:51:58Z",
+      "side": 1,
+      "message": "Can we order the annotations by hash_code?\nSee URLRequestAnnotationType in tools/metrics/histograms/enums.xml\n\nlike:\n\u003cint value\u003d\"485305\" label\u003d\"data_reduction_proxy_config\" content_hash_code\u003d\"55420953\"\u003e\n\u003cint value\u003d\"727478\" label\u003d\"metrics_report_ukm\" content_hash_code\u003d\"...\"\u003e\n\nThis will make it clearer to see if there are any hash collisions and for developers to choose a string that produces a non-colliding hash. \n\nCan we add a check to make sure this file and enums.xml are in sync? Alternatively, can we only keep one copy of the mapping (preferably just tools/metrics/histograms/enums.xml)?",
+      "revId": "d37b345a8d22021ad74d88f2bddba4d572a723fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b368d4_a82ac3a1",
+        "filename": "chrome/traffic_annotation/annotations_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-17T14:51:58Z",
+      "side": 1,
+      "message": "There\u0027s a typo in the annotation.\n\nIt should be resource_dispatcher_host.",
+      "range": {
+        "startLine": 137,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "d37b345a8d22021ad74d88f2bddba4d572a723fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
