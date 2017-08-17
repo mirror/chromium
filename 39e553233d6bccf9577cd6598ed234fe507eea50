@@ -16,6 +16,24 @@
       "revId": "39e553233d6bccf9577cd6598ed234fe507eea50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc548bb_d98e12d0",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T21:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa5c89e_4fd56f7c",
+      "revId": "39e553233d6bccf9577cd6598ed234fe507eea50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
