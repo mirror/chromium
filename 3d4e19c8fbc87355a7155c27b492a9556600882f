@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6714d19d_ff155dd5",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "If kDontSuggestSelection is only used for is_smart_selection_reset then maybe give it a more specific name. kSmartSelectionReset maybe?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd8e4d9_fb5eb29d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "Why do we need to do this?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd37a46_0377c5e1",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "I think you\u0027d need to add an extra \u0026\u0026 to check if |click_inside_behavior_| changed.",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b37738_da0b8ed1",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "If setting |is_handle_visible_| doesn\u0027t need to be in the if statement then does |click_inside_behavior_| need to be inside? I think you could move it out.",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cca588b_d9749c85",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "Is there a reason why this was renamed?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9ae345_e3793245",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "This isn\u0027t done in the contextual search selection second tap (the next if statement). Maybe it also isn\u0027t necessary for this case.",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd64d0b3_847ec5ca",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "Could you use the return from the above call to |SelectClosestWordFromHitTestResult| instead?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86570467_d6c5e1cf",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "Rename this to be more descriptive.",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11590a0a_b614a519",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-17T18:51:34Z",
+      "side": 1,
+      "message": "This name isn\u0027t very descriptive. Maybe SelectionTapBehavior is better?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
