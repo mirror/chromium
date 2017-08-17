@@ -34,6 +34,24 @@
       "revId": "437cd7865845f1db2dcd0d43307588cad2106a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaad1129_73d64de1",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T06:51:47Z",
+      "side": 1,
+      "message": "But seems I should change GetProviderID() to ProviderID(), or both to Get*()... I\u0027ll go ahead and do what Style Guide says and we can change later if needed.",
+      "parentUuid": "82df5887_bf3f7702",
+      "revId": "437cd7865845f1db2dcd0d43307588cad2106a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
