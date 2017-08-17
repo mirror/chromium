@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f79a794_a08f0ff7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T21:08:07Z",
+      "side": 1,
+      "message": "\"callback binding\" is a bit unclear. I would suggest wording the comment like this:\n\nDon\u0027t reject binding to a base::Callback with no additional arguments.\n\nbase::Bind rejected binding to a base::Callback without extra bound arguments:\ndoing this is redundant and wasteful since it creates a new Callback object when\nthe original one could have been directly used.\n\nHowever, this forces templated code that uses base::Bind() to provide a\nspecialization for the no-argument case: instead, just specialize base::Bind()\nto return the original callback in this case.\n\nwhich makes it clear that this is about calling base::Bind() with Callback as the function object. (I also think it\u0027s not necessary to say base::Bind family, since I think most people will understand that this means all the bind helpers)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 65
+      },
+      "revId": "24de76f56848a752aebf170de2938249032ab816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dcb1bb_ae7a5e86",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T21:08:07Z",
+      "side": 1,
+      "message": "binding to a base::Callback",
+      "range": {
+        "startLine": 219,
+        "startChar": 21,
+        "endLine": 219,
+        "endChar": 37
+      },
+      "revId": "24de76f56848a752aebf170de2938249032ab816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
