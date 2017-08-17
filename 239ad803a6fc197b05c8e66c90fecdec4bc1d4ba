@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21382a10_f82adf31",
+        "filename": "content/browser/tracing/background_memory_tracing_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-17T22:41:18Z",
+      "side": 1,
+      "message": "um, if config was null, we wouldn\u0027t have enabled heap profiler in the first place.\nI do not understand the case of swapping out. Does this function get called twice in some cases, and second call means the first config is invalid?",
+      "parentUuid": "5efbfd48_fc92c34a",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ffef203_5addeee7",
         "filename": "content/browser/tracing/background_memory_tracing_observer.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "af56a19b_345092a9",
+        "filename": "content/browser/tracing/background_memory_tracing_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-17T22:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ffef203_5addeee7",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63137713_80ab4814",
         "filename": "content/browser/tracing/background_tracing_rule.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f323d9_c51ce8e1",
+        "filename": "content/browser/tracing/background_tracing_rule.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-17T22:41:18Z",
+      "side": 1,
+      "message": "Ouch, I was expecting this to call the copy constructor :(\nBut it actually doesn\u0027t. I do not understand what this call actually does!",
+      "parentUuid": "63137713_80ab4814",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
