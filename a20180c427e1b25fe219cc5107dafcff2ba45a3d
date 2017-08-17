@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15ab019f_b6367e4a",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-17T20:23:03Z",
+      "side": 1,
+      "message": "This looks reasonable to me, thanks.\n\nTo guarantee that we are not getting too permissive here, I think we should call |LocalFrame::CreateUserGesture| only when |reason| \u003d\u003d \"mounted\", right?  It seems to me that |reason| \u003d\u003d \"unmounted\" is clearly not a user activation; and |reason| \u003d\u003d \"navigation\" is questionable because a JS-triggered page navigation can possibly invoke |OnActivate|, right?",
+      "revId": "a20180c427e1b25fe219cc5107dafcff2ba45a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
