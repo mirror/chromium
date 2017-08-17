@@ -19,6 +19,11 @@ class AccessTokenFetcher;
 class OAuth2TokenService;
 class PrefRegistrySimple;
 class PrefService;
+class TemplateURLService;
+
+namespace variations {
+class VariationsService;
+}
 
 namespace ntp_snippets {
 
@@ -32,8 +37,11 @@ class SubscriptionManagerImpl : public SubscriptionManager {
   SubscriptionManagerImpl(
       scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
       PrefService* pref_service,
+      const TemplateURLService* template_url_service,
+      variations::VariationsService* variations_service,
       SigninManagerBase* signin_manager,
       OAuth2TokenService* access_token_service,
+      const std::string& locale,
       const std::string& api_key,
       const GURL& subscribe_url,
       const GURL& unsubscribe_url);
@@ -85,10 +93,15 @@ class SubscriptionManagerImpl : public SubscriptionManager {
 
   PrefService* pref_service_;
 
+  const TemplateURLService* const template_url_service_;
+  variations::VariationsService* const variations_service_;
+
   // Authentication for signed-in users.
   SigninManagerBase* signin_manager_;
   std::unique_ptr<SigninObserver> signin_observer_;
   OAuth2TokenService* access_token_service_;
+
+  const std::string locale_;
 
   // API key to use for non-authenticated requests.
   const std::string api_key_;
