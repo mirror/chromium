@@ -16,6 +16,24 @@
       "revId": "56a33f15c1d6b176e9a66a9511ded5f17fe65b3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b24c69_cd060c80",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-17T21:15:04Z",
+      "side": 1,
+      "message": "Discussed this offline in MD settings stand-up. I believe the consensus is that this is a flaw in iron-list that selection doesn\u0027t work properly. Ideally selection in iron-list would work correctly and no workaround would be necessary. It\u0027s a workaround for a bug, rather than a UX choice. \n\nThere are some cases where we can reasonably risk having user selection on a list.\n\nIn the next patch, I move this change into settings_shared_css.html and add an override named |risk-selection| to set chosen iron-lists to allow selection. risk-selection has been added to search engines, startup urls, and passwords lists.",
+      "parentUuid": "83084cdd_e5bb2a89",
+      "revId": "56a33f15c1d6b176e9a66a9511ded5f17fe65b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
