@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5df71dc_b1d51116",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T17:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "badd2d1d_5171987d",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "7f8034b16218a48a52b45f51b79fbafaf66fbba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f611c71d_b3e42f7d",
         "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
         "patchSetId": 34
@@ -39,6 +63,24 @@
       "revId": "7f8034b16218a48a52b45f51b79fbafaf66fbba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65185cb9_6c6785fb",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T17:43:05Z",
+      "side": 1,
+      "message": "Ack. A frame should not belong to more than 1 tab. A frame CU can be associated with no tab CU before ResourceCoordinatorWebContentsObserver::DidFinishNavigation() is called.\n\nI will put a DCHECK here.",
+      "parentUuid": "f611c71d_b3e42f7d",
+      "revId": "7f8034b16218a48a52b45f51b79fbafaf66fbba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
