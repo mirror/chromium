@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b332b6eb_73c83f57",
+        "filename": "chrome/browser/android/offline_pages/downloads/resource_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-17T08:36:29Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2342c1_41dfde6d",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-17T08:36:29Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f21b4b8_b5e4b52c",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-17T08:36:29Z",
+      "side": 1,
+      "message": "there is no remove()? how long is the data going to be attached to the urlrequest? should you do this after Get()?",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc166c8_283cc441",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-17T08:36:29Z",
+      "side": 1,
+      "message": "const std::string\u0026 request_origin()",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
