@@ -16,6 +16,47 @@
       "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2570412f_3c35870c",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:33:57Z",
+      "side": 1,
+      "message": "Isn\u0027t this implementing an interface?",
+      "parentUuid": "d5150c3f_166a56d1",
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de06e666_46be127c",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:33:57Z",
+      "side": 1,
+      "message": "Nit:: naming convention should be is_wow_64",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
