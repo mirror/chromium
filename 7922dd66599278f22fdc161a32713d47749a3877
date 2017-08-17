@@ -373,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "f39b1121_75b40ec8",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T15:41:01Z",
+      "side": 1,
+      "message": "Ok, so as we chatted offline it turns out that it still causes linker error on Windows. I tried to dig around but currently have no good idea about how to fix it, so I\u0027m reverting this part to the previous approach (i.e. with WebBlobRegistry using TLS in Blink side).\n\nI\u0027m happy to redo this in a follow-up if I/we/anyone have any better suggestions!",
+      "parentUuid": "cc6c810e_291f3f07",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25928276_59201767",
         "filename": "third_party/WebKit/Source/platform/exported/WebBlobRegistry.cpp",
         "patchSetId": 9
