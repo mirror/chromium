@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dfb9dc2_798e30b3",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-17T12:59:01Z",
+      "side": 1,
+      "message": "nit: \"The key\" instead of \"|key|\", because |key| and |value| are not identifier names that appears in this code.",
+      "revId": "cf3434896d5a4548c049b7d46dc382bf2001651a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
