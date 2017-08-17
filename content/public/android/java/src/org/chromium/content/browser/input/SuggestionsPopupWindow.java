@@ -192,7 +192,10 @@ public class SuggestionsPopupWindow
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView = (TextView) convertView;
+            TextView textView = null;
+            if (convertView instanceof TextView) {
+                textView = (TextView) convertView;
+            }
             if (textView == null) {
                 textView = (TextView) mInflater.inflate(
                         R.layout.text_edit_suggestion_item, parent, false);

@@ -21,12 +21,15 @@ _FINDBUGS_PLUGIN_PATH = os.path.join(
 
 
 def _ParseXmlResults(results_doc):
+  errors = set()
   warnings = set()
   for en in (n for n in results_doc.documentElement.childNodes
              if n.nodeType == xml.dom.Node.ELEMENT_NODE):
+    if en.tagName == 'Errors':
+      errors.update(_ParseErrors(en))
     if en.tagName == 'BugInstance':
       warnings.add(_ParseBugInstance(en))
-  return warnings
+  return errors, warnings
 
 
 def _GetMessage(node):
@@ -37,6 +40,30 @@ def _GetMessage(node):
           and c.childNodes[0].nodeType == xml.dom.Node.TEXT_NODE):
         return c.childNodes[0].data
   return None
+
+
+def _GetTextContent(node):
+  if (len(node.childNodes) == 1
+      and node.childNodes[0].nodeType == xml.dom.Node.TEXT_NODE):
+    return node.childNodes[0].data
+  return ''
+
+
+def _ParseErrors(node):
+  errors = set()
+  for error_node in (n for n in node.childNodes
+                     if n.nodeType == xml.dom.Node.ELEMENT_NODE):
+    error_text = '(unable to determine error text)'
+    if error_node.tagName == 'Error':
+      error_message_nodes = (
+          n for n in error_node.childNodes
+          if (n.nodeType == xml.dom.Node.ELEMENT_NODE
+              and n.tagName == 'ErrorMessage'))
+      text_pieces = [_GetTextContent(n) for n in error_message_nodes]
+      if text_pieces:
+        error_text = ', '.join(t for t in text_pieces if t)
+      errors.add(FindBugsError(error_node.tagName, error_text))
+  return errors
 
 
 def _ParseBugInstance(node):
@@ -57,11 +84,32 @@ def _ParseBugInstance(node):
       if c.hasAttribute('end'):
         bug.end_line = int(c.getAttribute('end'))
       msg_parts.append(_GetMessage(c))
-    elif (c.tagName == 'ShortMessage' and len(c.childNodes) == 1
-          and c.childNodes[0].nodeType == xml.dom.Node.TEXT_NODE):
-      msg_parts.append(c.childNodes[0].data)
+    elif c.tagName == 'ShortMessage':
+      msg_parts.append(_GetTextContent(c))
   bug.message = tuple(m for m in msg_parts if m)
   return bug
+
+
+class FindBugsError(object):
+  def __init__(self, error_type='', error_val=''):
+    self.error_type = error_type
+    self.error_val = error_val
+
+  def __cmp__(self, other):
+    return (cmp(self.error_type, other.error_type)
+            or cmp(self.error_val, other.error_val))
+
+  def __eq__(self, other):
+    return self.__dict__ == other.__dict__
+
+  def __hash__(self):
+    return hash((self.error_type, self.error_val))
+
+  def __ne__(self, other):
+    return not self == other
+
+  def __str__(self):
+    return '%s: %s' % (self.error_type, self.error_val)
 
 
 class FindBugsWarning(object):
@@ -149,7 +197,7 @@ def Run(exclude, classes_to_analyze, auxiliary_classes, output_file,
   for line in stderr.splitlines():
     logging.debug('  %s', line)
 
-  current_warnings_set = _ParseXmlResults(results_doc)
+  current_errors_set, current_warnings_set = _ParseXmlResults(results_doc)
 
-  return (' '.join(cmd), current_warnings_set)
+  return (' '.join(cmd), current_errors_set, current_warnings_set)
 

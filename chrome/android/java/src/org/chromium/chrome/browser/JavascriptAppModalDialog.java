@@ -148,6 +148,7 @@ public class JavascriptAppModalDialog implements DialogInterface.OnClickListener
                         @Override
                         public void onLayoutChange(View v, int left, int top, int right, int bottom,
                                 int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                            if (!(v instanceof ViewGroup)) return;
                             boolean isScrollable =
                                     v.getMeasuredHeight() - v.getPaddingTop() - v.getPaddingBottom()
                                     < ((ViewGroup) v).getChildAt(0).getMeasuredHeight();

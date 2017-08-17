@@ -88,21 +88,29 @@ def main():
     if not args.exclude:
       args.exclude = os.path.join(args.base_dir, 'findbugs_exclude.xml')
 
-  findbugs_command, findbugs_warnings = findbugs.Run(
+  findbugs_command, findbugs_errors, findbugs_warnings = findbugs.Run(
       args.exclude, args.only_analyze, args.auxclasspath,
       args.output_file, args.findbug_args, args.jar_paths)
 
-  if findbugs_warnings:
+  if findbugs_warnings or findbugs_errors:
     print
     print '*' * 80
     print 'FindBugs run via:'
     print findbugs_command
-    print
-    print 'FindBugs reported the following issues:'
-    for warning in sorted(findbugs_warnings):
-      print str(warning)
-    print '*' * 80
-    print
+    if findbugs_errors:
+      print
+      print 'FindBugs encountered the following errors:'
+      for error in sorted(findbugs_errors):
+        print str(error)
+      print '*' * 80
+      print
+    if findbugs_warnings:
+      print
+      print 'FindBugs reported the following issues:'
+      for warning in sorted(findbugs_warnings):
+        print str(warning)
+      print '*' * 80
+      print
   else:
     if args.depfile:
       deps = args.auxclasspath + args.jar_paths
@@ -110,7 +118,7 @@ def main():
     if args.stamp:
       build_utils.Touch(args.stamp)
 
-  return len(findbugs_warnings)
+  return len(findbugs_errors) + len(findbugs_warnings)
 
 
 if __name__ == '__main__':
