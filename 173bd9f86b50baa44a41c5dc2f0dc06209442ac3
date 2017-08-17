@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c98afbe_94691cb3",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "no (c) (see chromium style guide).",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa07ce11_cf0bff1e",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "Position of declarations and definitions should match. In other words GenerateEvent should be here, then GenerateMouseEvent...",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 65
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607054dd_f1d41a28",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "Can you only get one pointer down at a time? On the mouse you can press button 1 and then button 2. Is that equally true of pens?",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6262cbd5_a1b613fc",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "Document where 1024 comes from.",
+      "range": {
+        "startLine": 149,
+        "startChar": 67,
+        "endLine": 149,
+        "endChar": 71
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7598e759_ce9e3c55",
+        "filename": "ui/views/win/pen_event_processor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "Don\u0027t inline the destructor.",
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b2f4ec_d869fecf",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "IMO this is more code and more confusing than if you move the IDGenerator and PenEventProcessor into each test.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963c1914_2f9ec79a",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "Move point after the memset (it\u0027s confusing to have the two sweparated).",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbcf4b9_805b7eca",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:50:09Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(event) first. Same comment everwhere you call GenerateEvent.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
