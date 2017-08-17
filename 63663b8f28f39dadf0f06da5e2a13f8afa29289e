@@ -22,6 +22,30 @@
       "revId": "63663b8f28f39dadf0f06da5e2a13f8afa29289e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21349be0_0a6f2986",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-17T14:49:10Z",
+      "side": 1,
+      "message": "Done. Thanks for the jsfiddle, very nice of you.",
+      "parentUuid": "856b91a2_aa06111c",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 70
+      },
+      "revId": "63663b8f28f39dadf0f06da5e2a13f8afa29289e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
