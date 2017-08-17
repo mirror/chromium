@@ -198,6 +198,30 @@
       "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db6bf9e0_0512aaf8",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T21:08:48Z",
+      "side": 1,
+      "message": "Could you test that part too? e.g. actually call the function that returns histogram_map and do self.assertEqual() on it that it matches the one you have now and then do the other call.",
+      "parentUuid": "1a0627e6_3cfd3703",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
