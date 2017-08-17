@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db21039_eac45e8a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T22:34:41Z",
+      "side": 1,
+      "message": "Why not simply sort non-redundant ones and output the most recent?",
+      "revId": "34d082f7f90ac799b158df84f8f93dfea5159f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fb17ba_1a4b6c09",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T22:34:41Z",
+      "side": 1,
+      "message": "Inline this into _shouldBeRemoved.",
+      "revId": "34d082f7f90ac799b158df84f8f93dfea5159f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
