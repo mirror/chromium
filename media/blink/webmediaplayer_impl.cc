@@ -972,7 +972,9 @@ bool WebMediaPlayerImpl::DidLoadingProgress() {
 
 void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
                                const blink::WebRect& rect,
-                               cc::PaintFlags& flags) {
+                               cc::PaintFlags& flags,
+                               int already_uploaded_id,
+                               VideoFrameUploadMetadata* out_metadata) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT0("media", "WebMediaPlayerImpl:paint");
 
@@ -991,6 +993,9 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
       return;  // Unable to get/create a shared main thread context.
     if (!context_3d.gr_context)
       return;  // The context has been lost since and can't setup a GrContext.
+  }
+  if (ShouldSkipUpload(video_frame.get(), already_uploaded_id, out_metadata)) {
+    return;
   }
   skcanvas_video_renderer_.Paint(video_frame, canvas, gfx::RectF(gfx_rect),
                                  flags, pipeline_metadata_.video_rotation,
@@ -1050,7 +1055,9 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
     unsigned type,
     int level,
     bool premultiply_alpha,
-    bool flip_y) {
+    bool flip_y,
+    int already_uploaded_id,
+    VideoFrameUploadMetadata* out_metadata) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT0("media", "WebMediaPlayerImpl:copyVideoTextureToPlatformTexture");
 
@@ -1062,6 +1069,9 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
   if (!video_frame.get() || !video_frame->HasTextures()) {
     return false;
   }
+  if (ShouldSkipUpload(video_frame.get(), already_uploaded_id, out_metadata)) {
+    return true;
+  }
 
   Context3D context_3d;
   if (!context_3d_cb_.is_null())
@@ -1069,6 +1079,17 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
   return skcanvas_video_renderer_.CopyVideoFrameTexturesToGLTexture(
       context_3d, gl, video_frame.get(), target, texture, internal_format,
       format, type, level, premultiply_alpha, flip_y);
+}
+
+bool WebMediaPlayerImpl::ShouldSkipUpload(
+    VideoFrame* frame,
+    int already_uploaded_id,
+    VideoFrameUploadMetadata* out_metadata) {
+  out_metadata->frame_id = frame->unique_id();
+  out_metadata->visible_rect = frame->visible_rect();
+  out_metadata->timestamp = frame->timestamp();
+  out_metadata->skipped = out_metadata->frame_id == already_uploaded_id;
+  return out_metadata->skipped;
 }
 
 void WebMediaPlayerImpl::SetContentDecryptionModule(
