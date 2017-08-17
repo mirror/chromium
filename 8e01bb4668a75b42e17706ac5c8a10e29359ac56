@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f244224_c35063d2",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T23:35:43Z",
+      "side": 1,
+      "message": "nit: I would check active_user_pref_service_ here instead of session started. In classic ash they should be the same, but in mash the timing could be different. Ditto local_state_pref_service_ below. I would LOG(ERROR) if this function is called and both pointers are null.",
+      "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185182ea_73c33fac",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T23:35:43Z",
+      "side": 1,
+      "message": "nit: register the pref with the flag PUBLIC so chrome can read it. (See NightLightController)",
+      "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff26745_592ab248",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T23:35:43Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this (and it might cause assertion failures for a pref being registered twice). I would take it out and see if settings still works.\n\nThis might need to be RegisterForeignPref(), see //services/preferences/README.md, but NightLightController seems to get away with not marking prefs in chrome as foreign. If it works without this line, just leave it out.",
+      "revId": "8e01bb4668a75b42e17706ac5c8a10e29359ac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

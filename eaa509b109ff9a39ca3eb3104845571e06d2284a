@@ -122,6 +122,24 @@
       "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6949e1a2_6ab18882",
+        "filename": "components/arc/bluetooth/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T23:35:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54dad9c7_5331244c",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
