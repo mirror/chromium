@@ -11,7 +11,7 @@
 #include "content/child/child_thread_impl.h"
 #include "content/child/scoped_child_process_reference.h"
 #include "content/common/service_worker/embedded_worker.mojom.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/web/worker_content_settings_proxy.mojom.h"
 
 namespace blink {
@@ -19,10 +19,6 @@ namespace blink {
 class WebEmbeddedWorker;
 
 }  // namespace blink
-
-namespace service_manager {
-struct BindSourceInfo;
-}
 
 namespace content {
 
@@ -37,8 +33,7 @@ class EmbeddedWorkerInstanceClientImpl
   static void Create(
       base::TimeTicks blink_initialized_time,
       scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
-      mojom::EmbeddedWorkerInstanceClientRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      mojom::EmbeddedWorkerInstanceClientAssociatedRequest request);
 
   ~EmbeddedWorkerInstanceClientImpl() override;
 
@@ -70,7 +65,7 @@ class EmbeddedWorkerInstanceClientImpl
 
   EmbeddedWorkerInstanceClientImpl(
       scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
-      mojo::InterfaceRequest<mojom::EmbeddedWorkerInstanceClient> request);
+      mojom::EmbeddedWorkerInstanceClientAssociatedRequest request);
 
   // mojom::EmbeddedWorkerInstanceClient implementation
   void StartWorker(
@@ -95,7 +90,7 @@ class EmbeddedWorkerInstanceClientImpl
       std::unique_ptr<ServiceWorkerContextClient> context_client,
       blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy);
 
-  mojo::Binding<mojom::EmbeddedWorkerInstanceClient> binding_;
+  mojo::AssociatedBinding<mojom::EmbeddedWorkerInstanceClient> binding_;
 
   // This is valid before StartWorker is called. After that, this object
   // will be passed to ServiceWorkerContextClient.
