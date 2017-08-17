@@ -2871,4 +2871,20 @@ TEST_F(GestureProviderTest, SingleTapRepeatLengthOfOne) {
   EXPECT_EQ(1, GetMostRecentGestureEvent().details.tap_count());
 }
 
+TEST_F(GestureProviderTest, NoGestureShowOrLongPressOnStylus) {
+  const base::TimeTicks event_time = TimeTicks::Now();
+
+  MockMotionEvent event =
+      ObtainMotionEvent(event_time, MotionEvent::ACTION_DOWN);
+  event.SetToolType(0, MotionEvent::TOOL_TYPE_STYLUS);
+
+  EXPECT_TRUE(gesture_provider_->OnTouchEvent(event));
+  EXPECT_EQ(ET_GESTURE_TAP_DOWN, GetMostRecentGestureEventType());
+
+  RunTasksAndWait(GetLongPressTimeout() + GetShowPressTimeout() +
+                  kOneMicrosecond);
+  EXPECT_FALSE(HasReceivedGesture(ET_GESTURE_SHOW_PRESS));
+  EXPECT_FALSE(HasReceivedGesture(ET_GESTURE_LONG_PRESS));
+}
+
 }  // namespace ui

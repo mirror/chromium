@@ -291,12 +291,15 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
       two_finger_tap_allowed_for_gesture_ = two_finger_tap_enabled_;
       maximum_pointer_count_ = 1;
 
-      // Always start the SHOW_PRESS timer before the LONG_PRESS timer to ensure
-      // proper timeout ordering.
-      if (showpress_enabled_)
-        timeout_handler_->StartTimeout(SHOW_PRESS);
-      if (longpress_enabled_)
-        timeout_handler_->StartTimeout(LONG_PRESS);
+      // Don't allow long press/show press on stylus events.
+      if (ev.GetToolType() != MotionEvent::TOOL_TYPE_STYLUS) {
+        // Always start the SHOW_PRESS timer before the LONG_PRESS timer to
+        // ensure proper timeout ordering.
+        if (showpress_enabled_)
+          timeout_handler_->StartTimeout(SHOW_PRESS);
+        if (longpress_enabled_)
+          timeout_handler_->StartTimeout(LONG_PRESS);
+      }
       handled |= listener_->OnDown(ev);
     } break;
 
