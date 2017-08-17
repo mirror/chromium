@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8610c4c4_ca713031",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T23:39:51Z",
+      "side": 1,
+      "message": "This pokes holes in our abstractions. I would prefer if there were a test that checked that we actually did nothing, rather than checking that we have no tasks in queue.\n\nThat said, I\u0027m not sure I want to block this patch on that change which would be substantial.",
+      "revId": "6d126b037afc931d1d4927f0ba6cd849b122eedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
