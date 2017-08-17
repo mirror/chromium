@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f87dd3cc_ce34e96a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "If you intend to pass this parameter everyone, I\u0027d recommend you remove the default 0.01 in the declaration of this function.",
+      "range": {
+        "startLine": 392,
+        "startChar": 8,
+        "endLine": 392,
+        "endChar": 42
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac91993_f5eec5c1",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "We should be consistent and pass the \"kWideGamutColorCorrectionTolerance\" here.",
+      "range": {
+        "startLine": 1199,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 72
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6136402f_50176728",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "Is it safe to drop the \"swizzle\"?",
+      "range": {
+        "startLine": 1417,
+        "startChar": 8,
+        "endLine": 1417,
+        "endChar": 62
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0193c4b3_41edffdd",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "Why is this changed from 0--\u003e5?",
+      "range": {
+        "startLine": 1445,
+        "startChar": 6,
+        "endLine": 1445,
+        "endChar": 35
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2714f7e_571c1f84",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "Please comment where this function comes from.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 69
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebba381_7d1a2cba",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "Replace all ASSERT_EQ with EXPECT_EQ",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73a5a5d_c998e722",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T18:27:42Z",
+      "side": 1,
+      "message": "All the parameters in here are of int or float type, it is very hard to know what they mean. So please put the name of the variable here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
