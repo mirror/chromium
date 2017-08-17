@@ -194,8 +194,8 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
 
   bool w3c_capability = false;
   if (params.GetDictionary("capabilities.alwaysMatch", &desired_caps) &&
-      (desired_caps->GetBoolean("goog:chromeOptions.w3c", &w3c_capability) ||
-       desired_caps->GetBoolean("chromeOptions.w3c", &w3c_capability)) &&
+      (params.GetBoolean("goog:chromeOptions.w3c", &w3c_capability) ||
+       params.GetBoolean("chromeOptions.w3c", &w3c_capability)) &&
       w3c_capability) {
     session->w3c_compliant = true;
     // TODO(johnchen): Handle capabilities.firstMatch. Currently, we're just
@@ -225,9 +225,8 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
     }
   } else if (params.GetDictionary("capabilities.desiredCapabilities",
                                   &desired_caps) &&
-             (desired_caps->GetBoolean("goog:chromeOptions.w3c",
-                                       &w3c_capability) ||
-              desired_caps->GetBoolean("chromeOptions.w3c", &w3c_capability)) &&
+             (params.GetBoolean("goog:chromeOptions.w3c", &w3c_capability) ||
+              params.GetBoolean("chromeOptions.w3c", &w3c_capability)) &&
              w3c_capability) {
     // TODO(johnchen): Remove when clients stop using this.
     session->w3c_compliant = true;
