@@ -137,6 +137,13 @@ class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
                                     EditingState*);
 
   bool PerformTrivialReplace(const ReplacementFragment&, EditingState*);
+  void SetUpStyle(const VisibleSelection&);
+  void CreateInsertionPointIfNeeds(const VisibleSelection&,
+                                   const ReplacementFragment&,
+                                   EditingState*);
+  Position FindInsertionPointAndMakeDocumentReady(const VisibleSelection&,
+                                                  ReplacementFragment*,
+                                                  EditingState*);
 
   Position start_of_inserted_content_;
   Position end_of_inserted_content_;
