@@ -62,6 +62,9 @@ class APP_LIST_EXPORT StartPageView : public AppListPage {
   // the selected index in suggestions container view.
   int GetSelectedIndexForTest() const;
 
+  // Starts the close animation.
+  void FadeOutOnClose(base::TimeDelta duration);
+
   // Updates the opacity of the items in start page during dragging.
   void UpdateOpacity(float work_area_bottom, bool is_end_gesture);
 
@@ -94,9 +97,9 @@ class APP_LIST_EXPORT StartPageView : public AppListPage {
 
   views::View* instant_container_;  // Owned by views hierarchy.
   CustomLauncherPageBackgroundView*
-      custom_launcher_page_background_;     // Owned by views hierarchy.
+      custom_launcher_page_background_;  // Owned by views hierarchy.
   SuggestionsContainerView*
-      suggestions_container_;  // Owned by views hierarchy.
+      suggestions_container_;                     // Owned by views hierarchy.
   ExpandArrowView* expand_arrow_view_ = nullptr;  // Owned by views hierarchy.
 
   const bool is_fullscreen_app_list_enabled_;

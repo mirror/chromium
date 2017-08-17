@@ -31,6 +31,7 @@
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/app_list/views/tile_item_view.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/strings/grit/ui_strings.h"
@@ -58,6 +59,15 @@ constexpr int kWebViewHeight = 224;
 
 constexpr int kExpandArrowTopPadding = 29;
 constexpr int kLauncherPageBackgroundWidth = 400;
+
+void DoCloseAnimation(base::TimeDelta duration, ui::Layer* layer) {
+  ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
+  animation.SetTransitionDuration(duration);
+  animation.SetTweenType(gfx::Tween::EASE_OUT);
+  animation.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  layer->SetOpacity(0.0f);
+}
 
 }  // namespace
 
@@ -420,6 +430,12 @@ int StartPageView::GetSelectedIndexForTest() const {
     return kExpandArrowSelection;
   const int selected_index = suggestions_container_->selected_index();
   return selected_index >= 0 ? selected_index : kNoSelection;
+}
+
+void StartPageView::FadeOutOnClose(base::TimeDelta duration) {
+  DCHECK(is_fullscreen_app_list_enabled_);
+  DoCloseAnimation(duration, suggestions_container_->layer());
+  DoCloseAnimation(duration, expand_arrow_view_->layer());
 }
 
 void StartPageView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {

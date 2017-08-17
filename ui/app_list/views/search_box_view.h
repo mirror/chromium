@@ -150,6 +150,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // TODO(weidongg): move this function to utility class.
   static bool IsArrowKey(const ui::KeyEvent& event);
 
+  // Starts the close animation.
+  void FadeOutOnClose(base::TimeDelta duration);
+
  private:
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();
