@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00468164_a11b968d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T08:02:06Z",
+      "side": 1,
+      "message": "I do not think it is reasonable to have inline methods just to avoid compile errors.\nCan it be added when it is actually needed?",
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c747529b_386345e9",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T08:02:06Z",
+      "side": 1,
+      "message": "Because this does not talk to the container, I\u0027m still do not understand your intention.\nWhat will be changed when the container side implementation is done?",
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff6de80_29220df0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T08:02:06Z",
+      "side": 1,
+      "message": "nit: s/it/them/",
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
