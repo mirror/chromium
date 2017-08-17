@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54abd58_41ca9c0b",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T00:08:51Z",
+      "side": 1,
+      "message": "nit: s/offset/position/",
+      "range": {
+        "startLine": 120,
+        "startChar": 42,
+        "endLine": 120,
+        "endChar": 48
+      },
+      "revId": "4f854c911d02d8aa8f54133fc09c3d8c5cc23ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
