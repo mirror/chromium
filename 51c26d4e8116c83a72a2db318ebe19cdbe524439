@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f41b4f9d_44e15f13",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 1908,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T18:27:36Z",
+      "side": 1,
+      "message": "You may need to add a guard for GetParam() \u003d\u003d TEST_WK_BASED_NAVIGATION_MANAGER and return early because Restore() is not implemented on WKBasedNavigationManagerImpl, so the expectations below will fail.",
+      "revId": "51c26d4e8116c83a72a2db318ebe19cdbe524439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
