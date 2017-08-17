@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5da647e_688b4379",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-17T08:28:30Z",
+      "side": 1,
+      "message": "@mkwst: I thought that we wanted to let the user uses credential in the main-frame URL and to be able to resolve relative URL for the sub-resources.\n\nI think that\u0027s why in:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/FrameFetchContext.cpp?sq\u003dpackage:chromium\u0026l\u003d963 , the request is blocked if there is credential in the URL, EXCEPT if they are the same as the one of the current document (+same [scheme,host,port]).\n\nShould we really block any sub-frame with credential in the URL?",
+      "range": {
+        "startLine": 1614,
+        "startChar": 36,
+        "endLine": 1614,
+        "endChar": 42
+      },
+      "revId": "a34429763eb82fd3afe5a3041b5ab6d13a02e76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
