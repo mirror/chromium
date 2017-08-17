@@ -22,6 +22,30 @@
       "revId": "f19b1f0aab08b5cef09770fe0903f92154302c33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce757af_1f5beccd",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-17T13:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea212d54_b0591050",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "f19b1f0aab08b5cef09770fe0903f92154302c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
