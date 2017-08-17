@@ -57,6 +57,7 @@ component("ime") {
     "ime_engine_handler_interface.h",
     "ime_input_context_handler_interface.h",
     "ime_text_span.h",
+    "ime_text_span_thickness.h",
     "infolist_entry.cc",
     "infolist_entry.h",
     "input_method.h",

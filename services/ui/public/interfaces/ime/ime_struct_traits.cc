@@ -48,7 +48,17 @@ bool StructTraits<ui::mojom::ImeTextSpanDataView, ui::ImeTextSpan>::Read(
   out->start_offset = data.start_offset();
   out->end_offset = data.end_offset();
   out->underline_color = data.underline_color();
-  out->thick = data.thick();
+  switch (data.thickness()) {
+    case ui::mojom::ImeTextSpanThickness::kNone:
+      out->thickness = ui::IME_TEXT_SPAN_THICKNESS_NONE;
+      break;
+    case ui::mojom::ImeTextSpanThickness::kThin:
+      out->thickness = ui::IME_TEXT_SPAN_THICKNESS_THIN;
+      break;
+    case ui::mojom::ImeTextSpanThickness::kThick:
+      out->thickness = ui::IME_TEXT_SPAN_THICKNESS_THICK;
+      break;
+  }
   out->background_color = data.background_color();
   return true;
 }
@@ -244,6 +254,40 @@ bool EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::FromMojom(
       return true;
     case ui::mojom::TextInputType::kDateTimeField:
       *out = ui::TEXT_INPUT_TYPE_DATE_TIME_FIELD;
+      return true;
+  }
+  return false;
+}
+
+// static
+ui::mojom::ImeTextSpanThickness
+EnumTraits<ui::mojom::ImeTextSpanThickness, ui::ImeTextSpanThickness>::ToMojom(
+    ui::ImeTextSpanThickness thickness) {
+  switch (thickness) {
+    case ui::IME_TEXT_SPAN_THICKNESS_NONE:
+      return ui::mojom::ImeTextSpanThickness::kNone;
+    case ui::IME_TEXT_SPAN_THICKNESS_THIN:
+      return ui::mojom::ImeTextSpanThickness::kThin;
+    case ui::IME_TEXT_SPAN_THICKNESS_THICK:
+      return ui::mojom::ImeTextSpanThickness::kThick;
+  }
+  NOTREACHED();
+  return ui::mojom::ImeTextSpanThickness::kNone;
+}
+
+// static
+bool EnumTraits<ui::mojom::ImeTextSpanThickness, ui::ImeTextSpanThickness>::
+    FromMojom(ui::mojom::ImeTextSpanThickness input,
+              ui::ImeTextSpanThickness* out) {
+  switch (input) {
+    case ui::mojom::ImeTextSpanThickness::kNone:
+      *out = ui::IME_TEXT_SPAN_THICKNESS_NONE;
+      return true;
+    case ui::mojom::ImeTextSpanThickness::kThin:
+      *out = ui::IME_TEXT_SPAN_THICKNESS_THIN;
+      return true;
+    case ui::mojom::ImeTextSpanThickness::kThick:
+      *out = ui::IME_TEXT_SPAN_THICKNESS_THICK;
       return true;
   }
   return false;

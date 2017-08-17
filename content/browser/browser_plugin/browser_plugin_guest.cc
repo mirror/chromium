@@ -62,14 +62,25 @@ namespace content {
 
 namespace {
 
+ui::ImeTextSpanThickness ConvertToUiImeTextSpanThickness(
+    blink::WebImeTextSpanThickness thickness) {
+  // Check the thickness is in the range representable by
+  // ui::ImeTextSpanThickness.
+  DCHECK_LE(thickness, static_cast<int>(ui::IME_TEXT_SPAN_THICKNESS_MAX))
+      << "blink::WebImeTextSpanThickness and ui::ImeTextSpanThickness not "
+         "synchronized";
+  return static_cast<ui::ImeTextSpanThickness>(thickness);
+}
+
 std::vector<ui::ImeTextSpan> ConvertToUiImeTextSpan(
     const std::vector<blink::WebImeTextSpan>& ime_text_spans) {
   std::vector<ui::ImeTextSpan> ui_ime_text_spans;
   for (const auto& ime_text_span : ime_text_spans) {
-    ui_ime_text_spans.emplace_back(
-        ui::ImeTextSpan(ime_text_span.start_offset, ime_text_span.end_offset,
-                        ime_text_span.underline_color, ime_text_span.thick,
-                        ime_text_span.background_color));
+    ui_ime_text_spans.emplace_back(ui::ImeTextSpan(
+        ime_text_span.start_offset, ime_text_span.end_offset,
+        ime_text_span.underline_color,
+        ConvertToUiImeTextSpanThickness(ime_text_span.thickness),
+        ime_text_span.background_color));
   }
   return ui_ime_text_spans;
 }

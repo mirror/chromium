@@ -31,6 +31,7 @@
 #ifndef WebImeTextSpan_h
 #define WebImeTextSpan_h
 
+#include "WebImeTextSpanThickness.h"
 #include "public/platform/WebColor.h"
 
 namespace blink {
@@ -41,15 +42,19 @@ struct WebImeTextSpan {
   WebImeTextSpan()
       : start_offset(0),
         end_offset(0),
-        underline_color(0),
-        thick(false),
+        underline_color(0x00000000),
+        thickness(WebImeTextSpanThickness::kWebImeTextSpanThicknessThin),
         background_color(0) {}
 
-  WebImeTextSpan(unsigned s, unsigned e, WebColor uc, bool t, WebColor bc)
+  WebImeTextSpan(unsigned s,
+                 unsigned e,
+                 WebColor uc,
+                 WebImeTextSpanThickness t,
+                 WebColor bc)
       : start_offset(s),
         end_offset(e),
         underline_color(uc),
-        thick(t),
+        thickness(t),
         background_color(bc) {}
 
   bool operator<(const WebImeTextSpan& other) const {
@@ -63,7 +68,7 @@ struct WebImeTextSpan {
   unsigned start_offset;
   unsigned end_offset;
   WebColor underline_color;
-  bool thick;
+  WebImeTextSpanThickness thickness;
   WebColor background_color;
 };
 

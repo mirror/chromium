@@ -17,6 +17,17 @@ LegacyIPCFrameInputHandler::LegacyIPCFrameInputHandler(
 
 LegacyIPCFrameInputHandler::~LegacyIPCFrameInputHandler() {}
 
+blink::WebImeTextSpanThickness
+ConvertUiImeTextSpanThicknessToBlinkWebImeTextSpanThickness(
+    ui::ImeTextSpanThickness thickness) {
+  // Check the thickness is in the range representable by
+  // blink::WebImeTextSpanThickness.
+  DCHECK_LE(thickness, static_cast<int>(blink::kWebImeTextSpanThicknessLast))
+      << "blink::WebImeTextSpanThickness and ui::ImeTextSpanThickness not "
+         "synchronized";
+  return static_cast<blink::WebImeTextSpanThickness>(thickness);
+}
+
 void LegacyIPCFrameInputHandler::SetCompositionFromExistingText(
     int32_t start,
     int32_t end,
@@ -25,7 +36,9 @@ void LegacyIPCFrameInputHandler::SetCompositionFromExistingText(
   for (const auto& ime_text_span : ui_ime_text_spans) {
     blink::WebImeTextSpan blink_ime_text_span(
         ime_text_span.start_offset, ime_text_span.end_offset,
-        ime_text_span.underline_color, ime_text_span.thick,
+        ime_text_span.underline_color,
+        ConvertUiImeTextSpanThicknessToBlinkWebImeTextSpanThickness(
+            ime_text_span.thickness),
         ime_text_span.background_color);
     ime_text_spans.push_back(blink_ime_text_span);
   }

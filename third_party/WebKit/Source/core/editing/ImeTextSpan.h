@@ -27,6 +27,7 @@
 #define ImeTextSpan_h
 
 #include "core/CoreExport.h"
+#include "core/editing/markers/StyleableMarker.h"
 #include "platform/graphics/Color.h"
 #include "platform/wtf/Allocator.h"
 
@@ -41,7 +42,7 @@ class CORE_EXPORT ImeTextSpan {
   ImeTextSpan(unsigned start_offset,
               unsigned end_offset,
               const Color& underline_color,
-              bool thick,
+              StyleableMarker::Thickness,
               const Color& background_color);
 
   ImeTextSpan(const WebImeTextSpan&);
@@ -49,14 +50,24 @@ class CORE_EXPORT ImeTextSpan {
   unsigned StartOffset() const { return start_offset_; }
   unsigned EndOffset() const { return end_offset_; }
   const Color& UnderlineColor() const { return underline_color_; }
-  bool Thick() const { return thick_; }
+  StyleableMarker::Thickness Thickness() const { return thickness_; }
+  bool IsNone() const {
+    return thickness_ == StyleableMarker::Thickness::kNone;
+  }
+  bool IsThick() const {
+    return thickness_ == StyleableMarker::Thickness::kThick;
+  }
+  bool IsTextColor() const {
+    return thickness_ != StyleableMarker::Thickness::kNone &&
+           underline_color_ == Color::kTransparent;
+  }
   const Color& BackgroundColor() const { return background_color_; }
 
  private:
   unsigned start_offset_;
   unsigned end_offset_;
   Color underline_color_;
-  bool thick_;
+  StyleableMarker::Thickness thickness_;
   Color background_color_;
 };
 

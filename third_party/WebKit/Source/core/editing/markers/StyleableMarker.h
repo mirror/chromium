@@ -13,7 +13,7 @@ namespace blink {
 // that should be renderable with customizable formatting.
 class CORE_EXPORT StyleableMarker : public DocumentMarker {
  public:
-  enum class Thickness { kThin, kThick };
+  enum class Thickness { kNone, kThin, kThick };
 
   StyleableMarker(unsigned start_offset,
                   unsigned end_offset,
@@ -23,7 +23,9 @@ class CORE_EXPORT StyleableMarker : public DocumentMarker {
 
   // StyleableMarker-specific
   Color UnderlineColor() const;
+  bool IsNone() const;
   bool IsThick() const;
+  bool IsTextColor() const;
   Color BackgroundColor() const;
 
  private:
