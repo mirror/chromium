@@ -37,10 +37,12 @@ PreconnectManager::PreconnectManager(
     scoped_refptr<net::URLRequestContextGetter> context_getter)
     : delegate_(std::move(delegate)),
       context_getter_(std::move(context_getter)),
+      detached_info_(base::MakeUnique<PreresolveInfo>(GURL(), 0)),
       inflight_preresolves_count_(0),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(context_getter_);
+  detached_info_->detached = true;
 }
 
 PreconnectManager::~PreconnectManager() {
@@ -58,14 +60,15 @@ void PreconnectManager::Start(const GURL& url,
       url, base::MakeUnique<PreresolveInfo>(
                url, preconnect_origins.size() + preresolve_hosts.size()));
   PreresolveInfo* info = iterator_and_whether_inserted.first->second.get();
+  QueueAndLaunchJobsForInfo(preconnect_origins, preresolve_hosts, info);
+}
 
-  for (const GURL& origin : preconnect_origins)
-    queued_jobs_.emplace_back(origin, true, info);
-
-  for (const GURL& host : preresolve_hosts)
-    queued_jobs_.emplace_back(host, false, info);
-
-  TryToLaunchPreresolveJobs();
+void PreconnectManager::StartDetached(
+    const std::vector<GURL>& preconnect_origins,
+    const std::vector<GURL>& preresolve_hosts) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  QueueAndLaunchJobsForInfo(preconnect_origins, preresolve_hosts,
+                            detached_info_.get());
 }
 
 void PreconnectManager::Stop(const GURL& url) {
@@ -89,6 +92,20 @@ int PreconnectManager::PreresolveUrl(
     const GURL& url,
     const net::CompletionCallback& callback) const {
   return content::PreresolveUrl(context_getter_.get(), url, callback);
+}
+
+void PreconnectManager::QueueAndLaunchJobsForInfo(
+    const std::vector<GURL>& preconnect_origins,
+    const std::vector<GURL>& preresolve_hosts,
+    PreresolveInfo* info) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  for (const GURL& origin : preconnect_origins)
+    queued_jobs_.emplace_back(origin, true, info);
+
+  for (const GURL& host : preresolve_hosts)
+    queued_jobs_.emplace_back(host, false, info);
+
+  TryToLaunchPreresolveJobs();
 }
 
 void PreconnectManager::TryToLaunchPreresolveJobs() {
