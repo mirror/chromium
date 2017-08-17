@@ -4,18 +4,30 @@
 
 #include "base/android/library_loader/library_prefetcher.h"
 
+#include <fcntl.h>
+#include <linux/fadvise.h>
 #include <stddef.h>
 #include <sys/mman.h>
 #include <sys/resource.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
 #include <algorithm>
 #include <utility>
 #include <vector>
 
+#include "base/files/file.h"
+#include "base/files/file_path.h"
+#include "base/format_macros.h"
+#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
+#include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -25,13 +37,19 @@ namespace {
 
 // Android defines the background priority to this value since at least 2009
 // (see Process.java).
-const int kBackgroundPriority = 10;
+constexpr int kBackgroundPriority = 10;
 // Valid for all the Android architectures.
-const size_t kPageSize = 4096;
+constexpr size_t kPageSize = 4096;
+constexpr size_t kPageMask = kPageSize - 1;
 const char* kLibchromeSuffix = "libchrome.so";
 // "base.apk" is a suffix because the library may be loaded directly from the
 // APK.
 const char* kSuffixesToMatch[] = {kLibchromeSuffix, "base.apk"};
+
+// Used to speed up |CollectResidency()|, as parsing /proc/self/smaps can be
+// slow.
+base::LazyInstance<std::vector<NativeLibraryPrefetcher::AddressRange>>::Leaky
+    g_ranges;
 
 bool IsReadableAndPrivate(const base::debug::MappedMemoryRegion& region) {
   return region.permissions & base::debug::MappedMemoryRegion::READ &&
@@ -60,10 +78,9 @@ __attribute__((no_sanitize_address))
 #endif
 bool Prefetch(const std::vector<std::pair<uintptr_t, uintptr_t>>& ranges) {
   for (const auto& range : ranges) {
-    const uintptr_t page_mask = kPageSize - 1;
     // If start or end is not page-aligned, parsing went wrong. It is better to
     // exit with an error.
-    if ((range.first & page_mask) || (range.second & page_mask)) {
+    if ((range.first & kPageMask) || (range.second & kPageMask)) {
       return false;  // CHECK() is not allowed here.
     }
     unsigned char* start_ptr = reinterpret_cast<unsigned char*>(range.first);
@@ -76,6 +93,41 @@ bool Prefetch(const std::vector<std::pair<uintptr_t, uintptr_t>>& ranges) {
     }
   }
   return true;
+}
+
+// Calls fadvise(DONTNEED) on |filename|. Returns true for success.
+bool FadviseDontNeedFile(const std::string& filename) {
+  ScopedFD fd(open(filename.c_str(), O_RDONLY));
+  if (!fd.is_valid()) {
+    LOG(ERROR) << "Cannot open " << filename;
+    return false;
+  }
+
+  struct stat stat_buf;
+  int err = fstat(fd.get(), &stat_buf);
+  if (err) {
+    LOG(ERROR) << "stat() error.";
+    return false;
+  }
+
+#if defined(ARCH_CPU_ARMEL)
+  // We have to use the syscall directly as bionic doesn't export the wrapper,
+  // even though the syscall is supported on all Android versions.
+  // Arguments are flipped on ARM because 64 bit values have to start on an
+  // even register number.
+  // Also, offset is 0 here, and we "dangerously" assume that the native
+  // library is <4GB.
+  err = syscall(__NR_arm_fadvise64_64, fd.get(), POSIX_FADV_DONTNEED, 0, 0, 0,
+                static_cast<unsigned int>(stat_buf.st_size));
+
+  if (err) {
+    LOG(ERROR) << "fadvise() error.";
+    return false;
+  }
+  return true;
+#else
+  return false;
+#endif  // defined(ARCH_CPU_ARMEL)
 }
 
 }  // namespace
@@ -169,10 +221,9 @@ int NativeLibraryPrefetcher::PercentageOfResidentCode(
     const std::vector<AddressRange>& ranges) {
   size_t total_pages = 0;
   size_t resident_pages = 0;
-  const uintptr_t page_mask = kPageSize - 1;
 
   for (const auto& range : ranges) {
-    if (range.first & page_mask || range.second & page_mask)
+    if (range.first & kPageMask || range.second & kPageMask)
       return -1;
     size_t length = range.second - range.first;
     size_t pages = length / kPageSize;
@@ -194,10 +245,104 @@ int NativeLibraryPrefetcher::PercentageOfResidentCode(
 
 // static
 int NativeLibraryPrefetcher::PercentageOfResidentNativeLibraryCode() {
-  std::vector<AddressRange> ranges;
-  if (!FindRanges(&ranges))
+  if (!MaybeCollectRanges())
     return -1;
-  return PercentageOfResidentCode(ranges);
+  return PercentageOfResidentCode(g_ranges.Get());
+}
+
+// static
+bool NativeLibraryPrefetcher::MaybeCollectRanges() {
+  if (g_ranges.Get().empty()) {
+    if (!FindRanges(&g_ranges.Get())) {
+      LOG(ERROR) << "Unable to find the ranges";
+      return false;
+    }
+  }
+  return true;
+}
+
+// static
+bool NativeLibraryPrefetcher::CollectResidency(const base::FilePath& filename) {
+  TRACE_EVENT_BEGIN1("startup", "NativeLibraryPrefetcher::CollectResidency",
+                     "percentage", 0);
+
+  if (!MaybeCollectRanges())
+    return false;
+
+  base::File file(filename,
+                  base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  if (!file.IsValid()) {
+    LOG(ERROR) << "File is not valid " << filename;
+    return false;
+  }
+
+  for (const auto& range : g_ranges.Get()) {
+    if (range.first & kPageMask || range.second & kPageMask) {
+      LOG(ERROR) << "Invalid range";
+      return false;
+    }
+    size_t length = range.second - range.first;
+    size_t pages = length / kPageSize;
+    std::vector<unsigned char> is_page_resident(pages);
+    int err = mincore(reinterpret_cast<void*>(range.first), length,
+                      &is_page_resident[0]);
+    if (err) {
+      LOG(ERROR) << "mincore() failed, err = " << err;
+      return false;
+    }
+
+    // File format:
+    // [start address] 000111101111\n
+    // Where each 0 or 1 is a single page, and reflects mincore()'s result.
+    std::string start_address = base::StringPrintf("%" PRIuS " ", range.first);
+    file.WriteAtCurrentPos(start_address.c_str(), start_address.size());
+
+    std::string mincore_result(pages + 1, ' ');
+    mincore_result[mincore_result.size() - 1] = '\n';
+    for (size_t i = 0; i < pages; ++i)
+      mincore_result[i] = is_page_resident[i] ? '1' : '0';
+    file.WriteAtCurrentPos(mincore_result.c_str(), mincore_result.size());
+  }
+  int percentage = PercentageOfResidentNativeLibraryCode();
+  TRACE_EVENT_END1("startup", "NativeLibraryPrefetcher::CollectResidency",
+                   "percentage", percentage);
+  return true;
+}
+
+// static
+bool NativeLibraryPrefetcher::Purge(const std::string& path, int size_mb) {
+  TRACE_EVENT0("startup", "NativeLibraryPrefetcher::Purge");
+  const std::string library_path = path + "/libchrome.so";
+  bool ok = FadviseDontNeedFile(library_path);
+
+  if (!MaybeCollectRanges())
+    return false;
+  for (const auto& range : g_ranges.Get()) {
+    size_t length = range.second - range.first;
+    int err =
+        madvise(reinterpret_cast<void*>(range.first), length, MADV_RANDOM);
+    if (err) {
+      LOG(ERROR) << "madvise() failed, err = " << err;
+      return false;
+    }
+  }
+
+  if (size_mb == 0)
+    return true;
+
+  // Take memory, outsmart the compiler.
+  size_t sum = 0;
+  const size_t size = size_mb * 1e6;
+  {
+    TRACE_EVENT0("startup", "NativeLibraryPrefetcher::Purge::Memset");
+    void* data = malloc(size);
+    memset(data, ok ? 1 : 0, size);
+    for (size_t i = 0; i < size; ++i) {
+      sum += reinterpret_cast<unsigned char*>(data)[i];
+    }
+    free(data);
+  }
+  return sum == size;
 }
 
 }  // namespace android
