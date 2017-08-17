@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "259602c0_177ecee7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Looking through git log, some commits have a period at the end and some do not, I guess depending on the authors preference so I\u0027ll leave it as is since this is my preferred style.",
+      "parentUuid": "363943fc_097d5b64",
+      "range": {
+        "startLine": 7,
+        "startChar": 48,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aeb676ac_3e297b47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Correct, CloudPolicyManager + where ever it propagates to.",
+      "parentUuid": "5e413801_5c8bd811",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc6f83d5_23f976b6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a79a9b8_bd4ec45d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Right, thanks!",
+      "parentUuid": "cc6f83d5_23f976b6",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "28ecf238_894e8e9f",
+        "filename": "chrome/browser/policy/profile_policy_connector_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "You are right, thanks!",
+      "parentUuid": "a9e7aace_081fea5b",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54963ad3_7dc9317f",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-17T09:43:12Z",
       "side": 1,
       "message": "FYI: I\u0027ll ask on https://chromium-review.googlesource.com/575229 if this can be renamed; this is pretty confusing (io_task_runner_ vs GetTaskRunnerForThread(BrowserThread::IO)))\n(no TODO in this CL)",
+      "range": {
+        "startLine": 483,
+        "startChar": 45,
+        "endLine": 483,
+        "endChar": 60
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6effb190_1d23d86c",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54963ad3_7dc9317f",
       "range": {
         "startLine": 483,
         "startChar": 45,
@@ -137,6 +257,30 @@
       "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b9ca24_17094872",
+        "filename": "components/policy/core/common/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "IIRC yes.",
+      "parentUuid": "883eb0e0_b06894f2",
+      "range": {
+        "startLine": 262,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 29
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "5f924af7_24a8c489",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Like it, done.",
+      "parentUuid": "decc171c_c849d934",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e41d38f_9988b1ee",
         "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
         "patchSetId": 11
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "d7ebce4a_1e84b1f1",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Yup after the offline I\u0027d agree with the explicitly specified priority.",
+      "parentUuid": "56a75220_dddd3137",
+      "range": {
+        "startLine": 40,
+        "startChar": 49,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a981c2e_80077dee",
         "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
         "patchSetId": 11
@@ -254,6 +446,30 @@
       "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a803a5_399f6a7a",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "True, removed.",
+      "parentUuid": "2a981c2e_80077dee",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 9
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "73ed1b2b_03671783",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Forgot this part, thanks.",
+      "parentUuid": "01065acf_9d0618fa",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54f954a_fb8262db",
         "filename": "components/policy/core/common/cloud/cloud_policy_manager_unittest.cc",
         "patchSetId": 11
@@ -303,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "dfc7fc38_41b4a159",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54f954a_fb8262db",
+      "range": {
+        "startLine": 189,
+        "startChar": 9,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71dd1743_902b527a",
         "filename": "components/policy/core/common/cloud/user_cloud_policy_manager_unittest.cc",
         "patchSetId": 11
@@ -323,6 +587,30 @@
       "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec5d637_9a0e67d3",
+        "filename": "components/policy/core/common/cloud/user_cloud_policy_manager_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T14:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71dd1743_902b527a",
+      "range": {
+        "startLine": 61,
+        "startChar": 53,
+        "endLine": 61,
+        "endChar": 65
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
