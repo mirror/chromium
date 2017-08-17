@@ -474,10 +474,10 @@ void AppListButton::OnAppListVisibilityChanged(bool shown,
 void AppListButton::OnVoiceInteractionStatusChanged(
     ash::VoiceInteractionState state) {
   voice_interaction_state_ = state;
-  SchedulePaint();
 
   switch (state) {
     case ash::VoiceInteractionState::STOPPED:
+      voice_interaction_settings_enabled_ = true;
       break;
     case ash::VoiceInteractionState::NOT_READY:
       // If we are showing the bursting or waiting animation, no need to do
@@ -499,7 +499,11 @@ void AppListButton::OnVoiceInteractionStatusChanged(
                        base::Unretained(voice_interaction_overlay_)));
       }
       break;
+    case ash::VoiceInteractionState::DISABLED:
+      voice_interaction_settings_enabled_ = false;
+      break;
   }
+  SchedulePaint();
 }
 
 void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
@@ -578,7 +582,7 @@ void AppListButton::GenerateAndSendBackEvent(
 
 bool AppListButton::IsVoiceInteractionActive() {
   if (chromeos::switches::IsVoiceInteractionEnabled() &&
-      is_primary_user_active_) {
+      is_primary_user_active_ && voice_interaction_settings_enabled_) {
     DCHECK(voice_interaction_overlay_);
     return true;
   }
