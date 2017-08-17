@@ -16,7 +16,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content_public.common.ContentUrlConstants;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -38,12 +37,7 @@ public class AwContentsRenderTest extends AwTestBase {
     }
 
     void setBackgroundColorOnUiThread(final int c) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.setBackgroundColor(c);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.setBackgroundColor(c));
     }
 
 
@@ -80,12 +74,7 @@ public class AwContentsRenderTest extends AwTestBase {
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testPictureListener() throws Throwable {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.enableOnNewPicture(true, true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.enableOnNewPicture(true, true));
 
         int pictureCount = mContentsClient.getPictureListenerHelper().getCallCount();
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(),
@@ -105,56 +94,42 @@ public class AwContentsRenderTest extends AwTestBase {
         Bitmap visibleBitmap = null;
         Bitmap invisibleBitmap = null;
         final CountDownLatch latch = new CountDownLatch(1);
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final long requestId1 = 1;
-                mAwContents.insertVisualStateCallback(requestId1, new VisualStateCallback() {
-                    @Override
-                    public void onComplete(long id) {
-                        assertEquals(requestId1, id);
-                        latch.countDown();
-                    }
-                });
-            }
+        runTestOnUiThread(() -> {
+            final long requestId1 = 1;
+            mAwContents.insertVisualStateCallback(requestId1, new VisualStateCallback() {
+                @Override
+                public void onComplete(long id) {
+                    assertEquals(requestId1, id);
+                    latch.countDown();
+                }
+            });
         });
         assertTrue(latch.await(AwTestBase.WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS));
 
-        final int width = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mContainerView.getWidth();
-            }
-        });
-        final int height = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mContainerView.getHeight();
-            }
-        });
+        final int width = ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> mContainerView.getWidth());
+        final int height = ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> mContainerView.getHeight());
         visibleBitmap = GraphicsTestUtils.drawAwContentsOnUiThread(mAwContents, width, height);
 
         // Things that affect DOM page visibility:
         // 1. isPaused
         // 2. window's visibility, if the webview is attached to a window.
         // Note android.view.View's visibility does not affect DOM page visibility.
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mContainerView.setVisibility(View.INVISIBLE);
-                assertTrue(mAwContents.isPageVisible());
+        runTestOnUiThread(() -> {
+            mContainerView.setVisibility(View.INVISIBLE);
+            assertTrue(mAwContents.isPageVisible());
 
-                mAwContents.onPause();
-                assertFalse(mAwContents.isPageVisible());
+            mAwContents.onPause();
+            assertFalse(mAwContents.isPageVisible());
 
-                mAwContents.onResume();
-                assertTrue(mAwContents.isPageVisible());
+            mAwContents.onResume();
+            assertTrue(mAwContents.isPageVisible());
 
-                // Simulate a window visiblity change. WebView test app can't
-                // manipulate the window visibility directly.
-                mAwContents.onWindowVisibilityChanged(View.INVISIBLE);
-                assertFalse(mAwContents.isPageVisible());
-            }
+            // Simulate a window visiblity change. WebView test app can't
+            // manipulate the window visibility directly.
+            mAwContents.onWindowVisibilityChanged(View.INVISIBLE);
+            assertFalse(mAwContents.isPageVisible());
         });
 
         // VisualStateCallback#onComplete won't be called when WebView is

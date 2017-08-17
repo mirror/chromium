@@ -9,7 +9,6 @@ import android.support.test.filters.SmallTest;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.permission.AwPermissionRequest;
 import org.chromium.android_webview.test.util.CommonResources;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisableIf;
@@ -17,8 +16,6 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.net.test.util.TestWebServer;
-
-import java.util.concurrent.Callable;
 
 /**
  * Test MediaAccessPermissionRequest.
@@ -127,12 +124,7 @@ public class MediaAccessPermissionRequestTest extends AwTestBase {
 
     private void pollTitleAs(final String title, final AwContents awContents)
             throws Exception {
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return title.equals(getTitleOnUiThread(awContents));
-            }
-        });
+        pollInstrumentationThread(() -> title.equals(getTitleOnUiThread(awContents)));
     }
 
     @Feature({"AndroidWebView"})
@@ -163,13 +155,9 @@ public class MediaAccessPermissionRequestTest extends AwTestBase {
         Runtime.getRuntime().gc();
 
         // Poll with gc in each iteration to reduce flake.
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @SuppressFBWarnings("DM_GC")
-            @Override
-            public Boolean call() throws Exception {
-                Runtime.getRuntime().gc();
-                return "deny".equals(getTitleOnUiThread(awContents));
-            }
+        pollInstrumentationThread(() -> {
+            Runtime.getRuntime().gc();
+            return "deny".equals(getTitleOnUiThread(awContents));
         });
     }
 

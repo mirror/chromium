@@ -44,12 +44,7 @@ public class AwContentsClientOnScaleChangedTest extends AwTestBase {
             }
         });
         int callCount = mContentsClient.getOnScaleChangedHelper().getCallCount();
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                assertTrue(mAwContents.zoomIn());
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> assertTrue(mAwContents.zoomIn()));
         mContentsClient.getOnScaleChangedHelper().waitForCallback(callCount);
         assertTrue("Scale ratio:" + mContentsClient.getOnScaleChangedHelper().getLastScaleRatio(),
                 mContentsClient.getOnScaleChangedHelper().getLastScaleRatio() > 1);

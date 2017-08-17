@@ -344,15 +344,12 @@ public class ClientOnReceivedError2Test extends AwTestBase {
         startWebServer();
         final String url = mWebServer.setResponseWithRunnableAction(
                 "/about.html", CommonResources.ABOUT_HTML, null,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            latch.await(
-                                    WAIT_TIMEOUT_MS, java.util.concurrent.TimeUnit.MILLISECONDS);
-                        } catch (InterruptedException e) {
-                            fail("Caught InterruptedException " + e);
-                        }
+                () -> {
+                    try {
+                        latch.await(
+                                WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+                    } catch (InterruptedException e) {
+                        fail("Caught InterruptedException " + e);
                     }
                 });
         TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =

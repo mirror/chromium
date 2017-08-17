@@ -14,8 +14,6 @@ import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.net.test.util.TestWebServer;
 
-import java.util.concurrent.Callable;
-
 /**
  * Tests for the {@link android.webkit.WebView#saveState} and
  * {@link android.webkit.WebView#restoreState} APIs.
@@ -90,12 +88,8 @@ public class SaveRestoreStateTest extends AwTestBase {
 
     private NavigationHistory getNavigationHistoryOnUiThread(
             final TestVars vars) throws Throwable {
-        return runTestOnUiThreadAndGetResult(new Callable<NavigationHistory>() {
-            @Override
-            public NavigationHistory call() throws Exception {
-                return vars.navigationController.getNavigationHistory();
-            }
-        });
+        return runTestOnUiThreadAndGetResult(
+                () -> vars.navigationController.getNavigationHistory());
     }
 
     private void checkHistoryItemList(TestVars vars) throws Throwable {
@@ -115,15 +109,12 @@ public class SaveRestoreStateTest extends AwTestBase {
 
     private TestVars saveAndRestoreStateOnUiThread(final TestVars vars) throws Throwable {
         final TestVars restoredVars = createNewView();
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                Bundle bundle = new Bundle();
-                boolean result = vars.awContents.saveState(bundle);
-                assertTrue(result);
-                result = restoredVars.awContents.restoreState(bundle);
-                assertTrue(result);
-            }
+        getInstrumentation().runOnMainSync(() -> {
+            Bundle bundle = new Bundle();
+            boolean result = vars.awContents.saveState(bundle);
+            assertTrue(result);
+            result = restoredVars.awContents.restoreState(bundle);
+            assertTrue(result);
         });
         return restoredVars;
     }
@@ -133,13 +124,8 @@ public class SaveRestoreStateTest extends AwTestBase {
     public void testSaveRestoreStateWithTitle() throws Throwable {
         setServerResponseAndLoad(mVars, 1);
         final TestVars restoredVars = saveAndRestoreStateOnUiThread(mVars);
-        pollUiThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return TITLES[0].equals(restoredVars.awContents.getTitle())
-                        && TITLES[0].equals(restoredVars.contentsClient.getUpdatedTitle());
-            }
-        });
+        pollUiThread(() -> TITLES[0].equals(restoredVars.awContents.getTitle())
+                && TITLES[0].equals(restoredVars.contentsClient.getUpdatedTitle()));
     }
 
     @SmallTest
@@ -156,12 +142,8 @@ public class SaveRestoreStateTest extends AwTestBase {
         final Bundle invalidState = new Bundle();
         invalidState.putByteArray(AwContents.SAVE_RESTORE_STATE_KEY,
                                   "invalid state".getBytes());
-        boolean result = runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mVars.awContents.restoreState(invalidState);
-            }
-        });
+        boolean result = runTestOnUiThreadAndGetResult(
+                () -> mVars.awContents.restoreState(invalidState));
         assertFalse(result);
     }
 
@@ -169,12 +151,7 @@ public class SaveRestoreStateTest extends AwTestBase {
     @Feature({"AndroidWebView"})
     public void testSaveStateForNoNavigationFails() throws Throwable {
         final Bundle state = new Bundle();
-        boolean result = runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mVars.awContents.restoreState(state);
-            }
-        });
+        boolean result = runTestOnUiThreadAndGetResult(() -> mVars.awContents.restoreState(state));
         assertFalse(result);
     }
 }

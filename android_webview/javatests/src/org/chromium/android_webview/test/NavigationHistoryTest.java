@@ -15,8 +15,6 @@ import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.net.test.util.TestWebServer;
 
-import java.util.concurrent.Callable;
-
 /**
  * Navigation history tests.
  */
@@ -51,12 +49,8 @@ public class NavigationHistoryTest extends AwTestBase {
 
     private NavigationHistory getNavigationHistory(final AwContents awContents)
             throws Exception {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<NavigationHistory>() {
-            @Override
-            public NavigationHistory call() {
-                return awContents.getNavigationController().getNavigationHistory();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlocking(
+                () -> awContents.getNavigationController().getNavigationHistory());
     }
 
     private void checkHistoryItem(NavigationEntry item, String url, String originalUrl,

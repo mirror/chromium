@@ -12,8 +12,6 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.browser.WebContents;
 
-import java.util.concurrent.Callable;
-
 /**
  * Test that a page with a non-Chrome media codec can playback correctly; this
  * test is *NOT* exhaustive, but merely spot checks a single instance.
@@ -43,12 +41,7 @@ public class PlatformMediaCodecTest extends AwTestBase {
 
     private WebContents getWebContentsOnUiThread() {
         try {
-            return runTestOnUiThreadAndGetResult(new Callable<WebContents>() {
-                @Override
-                public WebContents call() throws Exception {
-                    return mContentViewCore.getWebContents();
-                }
-            });
+            return runTestOnUiThreadAndGetResult(() -> mContentViewCore.getWebContents());
         } catch (Exception e) {
             fail(e.getMessage());
             return null;

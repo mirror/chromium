@@ -17,7 +17,6 @@ import org.chromium.content.browser.input.ImeAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Tests for the WebViewClient.onUnhandledKeyEvent() method.
@@ -129,12 +128,7 @@ public class AwContentsClientOnUnhandledKeyEventTest extends AwTestBase {
     }
 
     private boolean dispatchKeyEvent(final KeyEvent event) throws Throwable {
-        return runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return mTestContainerView.dispatchKeyEvent(event);
-            }
-        });
+        return runTestOnUiThreadAndGetResult(() -> mTestContainerView.dispatchKeyEvent(event));
     }
 
     private void dispatchDownAndUpKeyEvents(final int code) throws Throwable {

@@ -12,12 +12,9 @@ import org.chromium.android_webview.AwFormDatabase;
 public class AwFormDatabaseTest extends AwTestBase {
     @SmallTest
     public void testSmoke() throws Throwable {
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AwFormDatabase.clearFormData();
-                assertFalse(AwFormDatabase.hasFormData());
-            }
+        runTestOnUiThread(() -> {
+            AwFormDatabase.clearFormData();
+            assertFalse(AwFormDatabase.hasFormData());
         });
     }
 }
