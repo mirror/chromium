@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8b39bd_50de18d8",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "Same as SessionData() comments.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a973fd_e7430bdf",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "Rather than have a default constructor, why not SessionData(const base::DictionaryValue\u0026 session_dict)? You\u0027ll need to add isValid() so you can check that it\u0027s valid, but it removes the GetDictValueAsSessionData() method below (and keeps the manipulation of this data in one place).\n\nHowever, looks like the style guide discourages this. So add a static Create() method that returns the new object (basically copy GetDictValueAsSessionData() here but return the newly created SessionData instead of bool). Then the only constructor you need is the one below.\n\nHowever, that means that SessionData has to become a class.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43c4425_bf96a919",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "Use the explicit keyword for single-argument constructors.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239de2a9_61f070d1",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "Not sure std::move() is needed on a std::string.",
+      "range": {
+        "startLine": 133,
+        "startChar": 28,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb4cfd8_085195d4",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "I would leave this as DLOG(WARNING). It\u0027s something that should never happen, unless somebody messes up the data.",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4bb5ba_7389ac8d",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "No necessarily. I would just log __func__ \u003c\u003c \": No entry for origin \" \u003c\u003c origin_string_;",
+      "range": {
+        "startLine": 448,
+        "startChar": 19,
+        "endLine": 448,
+        "endChar": 58
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939a7640_d8c0e55e",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "How about __func__ \u003c\u003c \": No sessions entry for origin \" \u003c\u003c origin_string_;",
+      "range": {
+        "startLine": 456,
+        "startChar": 31,
+        "endLine": 456,
+        "endChar": 65
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052305b2_42d6917e",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "I would think this is more of a problem than the previous log, so same priority (or switch -- not having an entry for the origin could be expected, while not having sessions would indciate a code problem, I think).",
+      "range": {
+        "startLine": 456,
+        "startChar": 10,
+        "endLine": 456,
+        "endChar": 11
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f815de1_4e7c2d9a",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "__func__ \u003c\u003c \": No session \" \u003c\u003c session_id \u003c\u003c \" for origin \" \u003c\u003c origin_string_;\n\nThis is also likely, so same priority as 447.",
+      "range": {
+        "startLine": 464,
+        "startChar": 31,
+        "endLine": 464,
+        "endChar": 65
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dff02df_59323c44",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "Not sure how often this is used. Should this be SessionData::ToMojoValue()? That way changes to SessionData will make it obvious that mojom::SessionData should change too.",
+      "range": {
+        "startLine": 476,
+        "startChar": 26,
+        "endLine": 476,
+        "endChar": 56
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f28593b_b6a7d9fa",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "DCHECK() not really needed, as it will crash with nullptr dereference anyway.",
+      "range": {
+        "startLine": 494,
+        "startChar": 2,
+        "endLine": 494,
+        "endChar": 8
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e7139c_9fb9b683",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "This is the same as lines 443-459. How about extracting it as base::DictionaryValue* GetSessionsDirectory(base::DictionaryValue* storage_dict), and then simply calling |callback| if it\u0027s null. Function would do the logging of errors.",
+      "range": {
+        "startLine": 494,
+        "startChar": 2,
+        "endLine": 511,
+        "endChar": 3
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d236e358_9d65f0c8",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-17T23:49:46Z",
+      "side": 1,
+      "message": "How about \"Returns a list of origin IDs that have no licenses remaining so that the origin can be unprovisioned.\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
