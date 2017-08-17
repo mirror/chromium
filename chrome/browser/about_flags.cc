@@ -1156,6 +1156,16 @@ const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
      arraysize(kUseDdljsonApiTest4), nullptr}};
 #endif  // OS_ANDROID
 
+#if defined(OS_ANDROID)
+const FeatureEntry::FeatureParam kThirdPartyDoodlesTest[] = {
+    {search_provider_logos::features::kThirdPartyDoodlesOverrideUrlParam,
+     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android0.json"}};
+
+const FeatureEntry::FeatureVariation kThirdPartyDoodlesVariations[] = {
+    {"(force test doodle)", kThirdPartyDoodlesTest,
+     arraysize(kThirdPartyDoodlesTest), nullptr}};
+#endif  // OS_ANDROID
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -3336,6 +3346,15 @@ const FeatureEntry kFeatureEntries[] = {
     {"pwa-minimal-ui", flag_descriptions::kPwaMinimalUiName,
      flag_descriptions::kPwaMinimalUiDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kPwaMinimalUi)},
+
+#if defined(OS_ANDROID)
+    {"third-party-doodles", flag_descriptions::kThirdPartyDoodlesName,
+     flag_descriptions::kThirdPartyDoodlesDescription, kOsAndroid,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(
+         search_provider_logos::features::kThirdPartyDoodles,
+         kThirdPartyDoodlesVariations,
+         "NTPThirdPartyDoodles")},
+#endif  // defined(OS_ANDROID)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
