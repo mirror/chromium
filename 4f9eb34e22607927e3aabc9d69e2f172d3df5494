@@ -34,6 +34,24 @@
       "revId": "4f9eb34e22607927e3aabc9d69e2f172d3df5494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207c017f_caf424bc",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3316,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-08-17T22:01:22Z",
+      "side": 1,
+      "message": "Thanks! I went ahead and changed it to match the LinuxDev CL.",
+      "parentUuid": "d015a312_5b691b52",
+      "revId": "4f9eb34e22607927e3aabc9d69e2f172d3df5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
