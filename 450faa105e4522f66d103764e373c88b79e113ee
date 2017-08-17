@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dd75a6d_df967a9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/BackgroundSyncLauncher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T17:45:57Z",
+      "side": 1,
+      "message": "nit: could now fit on line above and reduce indentation of below :)",
+      "revId": "450faa105e4522f66d103764e373c88b79e113ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddb0e57_7dbdc991",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SSLClientCertificateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T17:45:57Z",
+      "side": 1,
+      "message": "we\u0027re already on the ui thread.. this is bizarre. can you look at history if makybe the outer post to ui thread was added after this innner one (and they forgot to remove this?)",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "450faa105e4522f66d103764e373c88b79e113ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
