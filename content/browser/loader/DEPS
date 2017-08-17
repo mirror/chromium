@@ -152,6 +152,7 @@ specific_include_rules = {
     "+content/browser/loader/navigation_resource_handler.h",
     "+content/browser/loader/navigation_resource_throttle.h",
     "+content/browser/loader/navigation_url_loader_impl_core.h",
+    "+content/browser/loader/origin_manifest_resource_handler.h",
     "+content/browser/loader/redirect_to_file_resource_handler.h",
     "+content/browser/loader/upload_data_stream_builder.h",
     "+content/browser/resource_context_impl.h",

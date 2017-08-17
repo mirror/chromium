@@ -54,6 +54,7 @@
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/navigation_url_loader_impl_core.h"
 #include "content/browser/loader/null_resource_controller.h"
+#include "content/browser/loader/origin_manifest_resource_handler.h"
 #include "content/browser/loader/redirect_to_file_resource_handler.h"
 #include "content/browser/loader/resource_loader.h"
 #include "content/browser/loader/resource_message_filter.h"
@@ -1672,6 +1673,8 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
     DCHECK(!navigation_loader_core);
     DCHECK(!stream_handle);
   }
+
+  handler.reset(new OriginManifestResourceHandler(request, std::move(handler)));
 
   PluginService* plugin_service = nullptr;
 #if BUILDFLAG(ENABLE_PLUGINS)
