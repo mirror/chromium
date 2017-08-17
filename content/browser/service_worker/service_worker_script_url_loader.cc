@@ -5,6 +5,7 @@
 #include "content/browser/service_worker/service_worker_script_url_loader.h"
 
 #include <memory>
+#include "content/browser/service_worker/service_worker_cache_writer.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_provider_host.h"
 #include "content/browser/service_worker/service_worker_version.h"
@@ -27,9 +28,20 @@ ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader(
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation)
     : network_client_binding_(this),
       forwarding_client_(std::move(client)),
-      provider_host_(provider_host) {
+      provider_host_(provider_host),
+      cache_writer_(CreateCacheResponseReader(),
+                    CreateCacheResponseReader(),
+                    CreateCacheResponseWriter()) {
   mojom::URLLoaderClientPtr network_client;
   network_client_binding_.Bind(mojo::MakeRequest(&network_client));
+
+  int resource_id = context->storage()->NewResourceId();
+  // TODO(nhiroki): Handle an error case.
+  // if (resource_id == kInvalidServiceWorkerResourceId) {}
+  provider_host_->running_hosted_version()
+      ->script_cache_map()
+      ->NotifyStarteCaching(resource_request.url, resource_id);
+
   loader_factory_getter->GetNetworkFactory()->get()->CreateLoaderAndStart(
       mojo::MakeRequest(&network_loader_), routing_id, request_id, options,
       resource_request, std::move(network_client), traffic_annotation);

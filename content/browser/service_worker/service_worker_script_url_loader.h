@@ -18,6 +18,7 @@ class BlobStorageContext;
 
 namespace content {
 
+class ServiceWorkerCacheWriter;
 class ServiceWorkerContextCore;
 class ServiceWorkerProviderHost;
 class URLLoaderFactoryGetter;
@@ -70,6 +71,7 @@ class ServiceWorkerScriptURLLoader : public mojom::URLLoader,
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
   mojom::URLLoaderClientPtr forwarding_client_;
   base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
+  std::unique_ptr<ServiceWorkerCacheWriter> cache_writer_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerScriptURLLoader);
 };
