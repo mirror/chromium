@@ -6,6 +6,8 @@ package org.chromium.shape_detection;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.support.test.filters.SmallTest;
 import android.test.InstrumentationTestCase;
 
@@ -23,18 +25,21 @@ import java.util.concurrent.TimeUnit;
 public class FaceDetectionImplTest extends InstrumentationTestCase {
     private static final org.chromium.skia.mojom.Bitmap MONA_LISA_BITMAP =
             TestUtils.mojoBitmapFromFile("mona_lisa.jpg");
+    private static final org.chromium.skia.mojom.Bitmap FACE_POSE_BITMAP =
+            TestUtils.mojoBitmapFromFile("face_pose.png");
     // Different versions of Android have different implementations of FaceDetector.findFaces(), so
     // we have to use a large error threshold.
     private static final double BOUNDING_BOX_POSITION_ERROR = 10.0;
     private static final double BOUNDING_BOX_SIZE_ERROR = 5.0;
+    private static final float ACCURATE_MODE_SIZE = 2.0f;
     private static enum DetectionProviderType { ANDROID, GMS_CORE }
 
     public FaceDetectionImplTest() {}
 
-    private static FaceDetectionResult[] detect(
-            org.chromium.skia.mojom.Bitmap mojoBitmap, DetectionProviderType api) {
+    private static FaceDetectionResult[] detect(org.chromium.skia.mojom.Bitmap mojoBitmap,
+            boolean fastMode, DetectionProviderType api) {
         FaceDetectorOptions options = new FaceDetectorOptions();
-        options.fastMode = true;
+        options.fastMode = fastMode;
         options.maxDetectedFaces = 32;
         FaceDetection detector = null;
         if (api == DetectionProviderType.ANDROID) {
@@ -63,7 +68,7 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
     }
 
     private void detectSucceedsOnValidImage(DetectionProviderType api) {
-        FaceDetectionResult[] results = detect(MONA_LISA_BITMAP, api);
+        FaceDetectionResult[] results = detect(MONA_LISA_BITMAP, true, api);
         assertEquals(1, results.length);
         assertEquals(40.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
         assertEquals(40.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
@@ -79,14 +84,6 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
 
     @SmallTest
     @Feature({"ShapeDetection"})
-    public void testDetectValidImageWithGmsCore() {
-        if (TestUtils.IS_GMS_CORE_SUPPORTED) {
-            detectSucceedsOnValidImage(DetectionProviderType.GMS_CORE);
-        }
-    }
-
-    @SmallTest
-    @Feature({"ShapeDetection"})
     public void testDetectHandlesOddWidthWithAndroidAPI() throws Exception {
         // Pad the image so that the width is odd.
         Bitmap paddedBitmap = Bitmap.createBitmap(MONA_LISA_BITMAP.width + 1,
@@ -96,11 +93,99 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
         org.chromium.skia.mojom.Bitmap mojoBitmap = TestUtils.mojoBitmapFromBitmap(paddedBitmap);
         assertEquals(1, mojoBitmap.width % 2);
 
-        FaceDetectionResult[] results = detect(mojoBitmap, DetectionProviderType.ANDROID);
+        FaceDetectionResult[] results = detect(mojoBitmap, true, DetectionProviderType.ANDROID);
         assertEquals(1, results.length);
         assertEquals(40.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
         assertEquals(40.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
         assertEquals(24.0, results[0].boundingBox.x, BOUNDING_BOX_POSITION_ERROR);
         assertEquals(20.0, results[0].boundingBox.y, BOUNDING_BOX_POSITION_ERROR);
+    }
+
+    @SmallTest
+    @Feature({"ShapeDetection"})
+    public void testDetectValidImageWithGmsCore() {
+        if (TestUtils.IS_GMS_CORE_SUPPORTED) {
+            detectSucceedsOnValidImage(DetectionProviderType.GMS_CORE);
+        }
+    }
+
+    @SmallTest
+    @Feature({"ShapeDetection"})
+    public void testDetectFacesInProfileWithGmsCore() {
+        if (!TestUtils.IS_GMS_CORE_SUPPORTED) {
+            return;
+        }
+        FaceDetectionResult[] fastModeResults =
+                detect(FACE_POSE_BITMAP, true, DetectionProviderType.GMS_CORE);
+        assertEquals(4, fastModeResults.length);
+
+        FaceDetectionResult[] unorderedResults =
+                detect(FACE_POSE_BITMAP, false, DetectionProviderType.GMS_CORE);
+        FaceDetectionResult[] accurateModeResults =
+                new FaceDetectionResult[unorderedResults.length];
+        for (int i = 0; i < accurateModeResults.length; i++) {
+            accurateModeResults[i] = new FaceDetectionResult();
+        }
+        assertEquals(4, accurateModeResults.length);
+        // The results of using ACCURATE_MODE is unordered need to be sorted.
+        accurateModeResults[0].boundingBox = unorderedResults[1].boundingBox;
+        accurateModeResults[1].boundingBox = unorderedResults[2].boundingBox;
+        accurateModeResults[2].boundingBox = unorderedResults[0].boundingBox;
+        accurateModeResults[3].boundingBox = unorderedResults[3].boundingBox;
+
+        // The face bounding box of using ACCURATE_MODE is smaller than FAST_MODE
+        for (int i = 0; i < accurateModeResults.length; i++) {
+            RectF fastModeRect = new RectF();
+            RectF accurateModeRect = new RectF();
+
+            fastModeRect.set(fastModeResults[i].boundingBox.x, fastModeResults[i].boundingBox.y,
+                    fastModeResults[i].boundingBox.x + fastModeResults[i].boundingBox.width,
+                    fastModeResults[i].boundingBox.y + fastModeResults[i].boundingBox.height);
+
+            accurateModeRect.set(accurateModeResults[i].boundingBox.x + ACCURATE_MODE_SIZE,
+                    accurateModeResults[i].boundingBox.y + ACCURATE_MODE_SIZE,
+                    accurateModeResults[i].boundingBox.x + accurateModeResults[i].boundingBox.width
+                            - ACCURATE_MODE_SIZE,
+                    accurateModeResults[i].boundingBox.y + accurateModeResults[i].boundingBox.height
+                            - ACCURATE_MODE_SIZE);
+
+            assertEquals(true, fastModeRect.contains(accurateModeRect));
+        }
+    }
+
+    private void detectRotatedFace(Matrix matrix) {
+        // Get the bitmap of fourth face in face_pose.png
+        Bitmap fourthFace = Bitmap.createBitmap(
+                BitmapUtils.convertToBitmap(FACE_POSE_BITMAP), 508, 0, 182, 194);
+        int width = fourthFace.getWidth();
+        int height = fourthFace.getHeight();
+
+        Bitmap rotationBitmap = Bitmap.createBitmap(fourthFace, 0, 0, width, height, matrix, true);
+        FaceDetectionResult[] results = detect(TestUtils.mojoBitmapFromBitmap(rotationBitmap),
+                false, DetectionProviderType.GMS_CORE);
+        assertEquals(1, results.length);
+        assertEquals(197.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
+        assertEquals(246.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
+    }
+
+    @SmallTest
+    @Feature({"ShapeDetection"})
+    public void testDetectRotatedFaceWithGmsCore() {
+        if (!TestUtils.IS_GMS_CORE_SUPPORTED) {
+            return;
+        }
+        Matrix matrix = new Matrix();
+
+        // Rotate the Bitmap.
+        matrix.postRotate(15);
+        detectRotatedFace(matrix);
+
+        matrix.reset();
+        matrix.postRotate(30);
+        detectRotatedFace(matrix);
+
+        matrix.reset();
+        matrix.postRotate(40);
+        detectRotatedFace(matrix);
     }
 }
