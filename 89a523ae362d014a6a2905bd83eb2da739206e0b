@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bfa8763_bda45d48",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:29:33Z",
+      "side": 1,
+      "message": "Nit: this isn\u0027t new, but consider using base::MakeRefCounted here.",
+      "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d010198_0659d1cc",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:29:33Z",
+      "side": 1,
+      "message": "Nit: std::string(), std:::string(), std::string()",
+      "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c990bbf1_1e1277ff",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:29:33Z",
+      "side": 1,
+      "message": "I would personally prefer to see this interface method added to the mojom with the CL that actually implements it, if that\u0027s possible.",
+      "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
