@@ -87,6 +87,24 @@
       "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776af389_5c882f1c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-17T14:18:28Z",
+      "side": 1,
+      "message": "No difference, the default value is supposed to have the same meaning as missing pref. I was thinking about specifically value zero for this, which I don\u0027t find reliable. If we decide to assign to default other value then we would have to change it here.\n\nI\u0027ve simplified the code to get directly GetInteger though.",
+      "parentUuid": "fe5a5e08_12abf93b",
+      "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
