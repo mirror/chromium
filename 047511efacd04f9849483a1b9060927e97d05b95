@@ -16,6 +16,24 @@
       "revId": "047511efacd04f9849483a1b9060927e97d05b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb99479_71d31b5b",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-17T22:46:55Z",
+      "side": 0,
+      "message": "Opened: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756638",
+      "parentUuid": "57204b10_5afea14a",
+      "revId": "047511efacd04f9849483a1b9060927e97d05b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
