@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "bf9228bf_dae752df",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-17T09:04:22Z",
+      "side": 1,
+      "message": "Done.\n\nI added TODOs mentioning throwing exceptions, so nobody gets thrown off by the unusual pattern until I land CLs implementing the options.",
+      "parentUuid": "57d6abac_53e88a93",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19fe38ed_f9fc6791",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 24
@@ -424,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "f3827fac_f177a3fc",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-17T09:04:22Z",
+      "side": 1,
+      "message": "Done.\n\nI removed the handler.",
+      "parentUuid": "2a6359cc_e510285c",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c290d44_2346b8db",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
         "patchSetId": 24
@@ -567,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "21bd2055_147f4eff",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-17T09:04:22Z",
+      "side": 1,
+      "message": "Done.\n\nAdded ContextLifecycleObserver. Thank you for the advice!",
+      "parentUuid": "eeb3022f_c5faad22",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01be1bdc_f3ab95d5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
         "patchSetId": 24
@@ -652,6 +706,24 @@
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635e6a82_b45f7d0d",
+        "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-17T09:04:22Z",
+      "side": 1,
+      "message": "Done.\n\nI added the interface-level comment. The potentially conflicting interface landed as CookieManager.",
+      "parentUuid": "8f8b61d2_462ffb41",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
