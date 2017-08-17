@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8584ce3e_a139ebed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-post-success-no-content-type.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T11:52:55Z",
+      "side": 1,
+      "message": "needless empty line",
+      "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2c9665_c9f63716",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-post-success-no-content-type.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T11:52:55Z",
+      "side": 1,
+      "message": "Maybe it\u0027s good to set 400 response status here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
