@@ -16,6 +16,24 @@
       "revId": "53d086213c86b9bf83dc5e1786d47e1ec8a4c5de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33f8cfb_881927f1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3128,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-17T17:42:04Z",
+      "side": 0,
+      "message": "Yes, Android is running a bit ahead of us, as they already trim https:// and www. See below custom code.\n\nHowever, I think it would be harmless to enable the flags on Android, and eventually we can delete the below code.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/android/omnibox/autocomplete_controller_android.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d443",
+      "parentUuid": "28ee6bcf_31150d45",
+      "revId": "53d086213c86b9bf83dc5e1786d47e1ec8a4c5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
