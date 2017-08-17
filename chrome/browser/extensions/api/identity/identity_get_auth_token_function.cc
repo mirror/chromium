@@ -11,6 +11,7 @@
 
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/identity/identity_api.h"
 #include "chrome/browser/extensions/api/identity/identity_constants.h"
 #include "chrome/browser/profiles/profile.h"
@@ -266,6 +267,12 @@ void IdentityGetAuthTokenFunction::StartSigninFlow() {
   return;
 #endif
 
+  if (ExtensionsBrowserClient::Get()->IsShuttingDown()) {
+    // Avoid presenting the login dialog when the browser is shutting down.
+    SigninFailed();
+    return;
+  }
+
   // Start listening for the primary account being available and display a
   // login prompt.
   GetIdentityManager()->GetPrimaryAccountWhenAvailable(
@@ -482,6 +489,7 @@ void IdentityGetAuthTokenFunction::OnGaiaFlowFailure(
     GaiaWebAuthFlow::Failure failure,
     GoogleServiceAuthError service_error,
     const std::string& oauth_error) {
+  LOG(ERROR) << "FAILURE: " << service_error.ToString();
   CompleteMintTokenFlow();
   std::string error;
 
@@ -495,6 +503,9 @@ void IdentityGetAuthTokenFunction::OnGaiaFlowFailure(
       break;
 
     case GaiaWebAuthFlow::SERVICE_AUTH_ERROR:
+      LOG(ERROR) << "interactive_ " << interactive_;
+      LOG(ERROR) << "HasLoginToken() " << HasLoginToken();
+      LOG(ERROR) << "service_error.state()" << service_error.state();
       // If this is really an authentication error and not just a transient
       // network error, and this is an interactive request for a signed-in
       // user, then we show signin UI instead of failing.
