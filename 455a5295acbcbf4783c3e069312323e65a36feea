@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b725192a_15e74332",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-17T04:50:10Z",
+      "side": 1,
+      "message": "I\u0027m surprised this enum didn\u0027t exist before, didn\u0027t you guys make an enum for legacy parsing?",
+      "revId": "455a5295acbcbf4783c3e069312323e65a36feea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
