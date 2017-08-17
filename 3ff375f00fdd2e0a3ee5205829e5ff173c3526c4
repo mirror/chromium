@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "861dc73b_9a6499ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:09:46Z",
+      "side": 1,
+      "message": "Could you comment a bit more details? According to our offline chat, my understanding of the key here is;\n\nWhile GetFileInfo() takes a path, mojo call requires document id, so GetChildDocuments() needs to be called for each path components. Specifically, the call for the parent directory returns N elements, so one GetFileInfo() call is O(N).",
+      "revId": "3ff375f00fdd2e0a3ee5205829e5ff173c3526c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f52808_5024e032",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:09:46Z",
+      "side": 1,
+      "message": "Could you add implementation note that existing cache is invalidated just before invoking callback, not when ReadDir family operation is started. (Probably, around L435?)",
+      "revId": "3ff375f00fdd2e0a3ee5205829e5ff173c3526c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec5f407_dbc7089e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:09:46Z",
+      "side": 1,
+      "message": "Could you add test case that Cache gets stale by timeout?",
+      "revId": "3ff375f00fdd2e0a3ee5205829e5ff173c3526c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725bc129_fe8c3e4b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:09:46Z",
+      "side": 1,
+      "message": "optional: ReadDirectoryCached sounds like the data is cached, but it is not (intentionally).\nMaybe ReadDirectoryInvalidatesCache etc.?",
+      "revId": "3ff375f00fdd2e0a3ee5205829e5ff173c3526c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1862ee0_099902a7",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:09:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3ff375f00fdd2e0a3ee5205829e5ff173c3526c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69dee37_bcb45dfe",
+        "filename": "components/arc/test/fake_file_system_instance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:09:46Z",
+      "side": 1,
+      "message": "optional: practically snake_case() for simple getter?\n\nint get_child_documents_count() const { ... }",
+      "revId": "3ff375f00fdd2e0a3ee5205829e5ff173c3526c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
