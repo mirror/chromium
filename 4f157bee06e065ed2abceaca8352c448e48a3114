@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d8145b6_021461a7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-17T01:57:18Z",
+      "side": 1,
+      "message": "Here is stack trace:\n\tlogging::LogMessage::~LogMessage [0x022C57FF+79]\n\tblink::ApplyStyleCommand::DoApply [0x02FCD87A+90]\n\tblink::CompositeEditCommand::ApplyCommandToComposite [0x02FC47BD+51]\n\tblink::CompositeEditCommand::ApplyStyle [0x02FC4B59+59]\n\tblink::InsertTextCommand::DoApply [0x02FE6355+2053]\n\tblink::CompositeEditCommand::Apply [0x02FC469A+248]\n\nCompositeEditCommand::ApplyStyle() is called as:\n\n  if (EditingStyle* typing_style \u003d\n          GetDocument().GetFrame()-\u003eGetEditor().TypingStyle()) {\n    typing_style-\u003ePrepareToApplyAt(end_position,\n                                   EditingStyle::kPreserveWritingDirection);\n    if (!typing_style-\u003eIsEmpty() \u0026\u0026 !EndingSelection().IsNone()) {\n      ApplyStyle(typing_style, editing_state);\n      if (editing_state-\u003eIsAborted())\n        return;\n    }\n  }\n\n  if (EditingStyle* typing_style \u003d\n          GetDocument().GetFrame()-\u003eGetEditor().TypingStyle()) {\n    typing_style-\u003ePrepareToApplyAt(end_position,\n                                   EditingStyle::kPreserveWritingDirection);\n    if (!typing_style-\u003eIsEmpty() \u0026\u0026 !EndingSelection().IsNone()) {\n      ApplyStyle(typing_style, editing_state);\n      if (editing_state-\u003eIsAborted())\n        return;\n    }\n  }\n\nIt seems the failed test, InsertTextCommandTest.WithTypingStyle, attempt\nto insert text into OPTION element.\n\nBefore: \u003cdiv contenteditable\u003dtrue\u003e\u003coption id\u003dsample\u003e|\u003c/option\u003e\u003c/div\u003e\nexecCommand(\u0027insertText\u0027, false, \u0027x\u0027);\nAfter: \u003cdiv contenteditable\u003dtrue\u003e\u003coption id\u003dsample\u003ex|\u003c/option\u003e\u003c/div\u003e\n\nSo, EndingVisibleSelection is empty because it is in OPTION element\nwhich is distributed into UA shadow tree of OPTION.",
+      "parentUuid": "88464a7f_de0a8798",
+      "revId": "4f157bee06e065ed2abceaca8352c448e48a3114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "004662ff_214ed9da",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 2
