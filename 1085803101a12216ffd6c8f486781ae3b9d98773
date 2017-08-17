@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "45f2fc8b_c71d7d12",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T03:21:06Z",
+      "side": 1,
+      "message": "\u003e \u003e I think this is the one difference between menus and the tray. For example, tray can be opened when user presses physical volume button. Volume slider is shown. I don\u0027t think that user wants tray to capture key events (non focus related ones) while the volume slider is shown.\n\u003e \n\u003e It seems counter intuitive to me that we would some times want the tray to consume events and some times not. We should decide which we want, and stick that. IMO if the tray is visible it should get all key events.\n\nThat said, if you don\u0027t want the tray to get all events in certain situations, then don\u0027t install the event handler. So, it\u0027s easy to support both.",
+      "parentUuid": "29ab50b5_acc7c9e9",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 62
+      },
+      "revId": "1085803101a12216ffd6c8f486781ae3b9d98773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e14722d_edfb8995",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 11
