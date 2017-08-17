@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1facb986_3622ae35",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-preflight-cache.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T02:03:53Z",
+      "side": 1,
+      "message": "If you set Access-Control-Allow-Origin, it\u0027s better to set an error http status such as 400 here, to reject unexpected preflights.",
+      "revId": "b92887c90c153effaee567525dcf83f3c3272c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
