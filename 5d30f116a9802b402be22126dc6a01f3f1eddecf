@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44406829_0458f17b",
+        "filename": "chrome/browser/profiles/avatar_menu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T21:58:34Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of doing this. It means switch statements need to deal with END.",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 7
+      },
+      "revId": "5d30f116a9802b402be22126dc6a01f3f1eddecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
