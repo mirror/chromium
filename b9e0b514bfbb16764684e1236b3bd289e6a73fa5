@@ -52,6 +52,24 @@
       "revId": "b9e0b514bfbb16764684e1236b3bd289e6a73fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3532914a_5511e67f",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7876,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-17T20:24:16Z",
+      "side": 0,
+      "message": "Yes, it is possible! Sorry I mis-read the test the first time. I was thinking it\u0027s not possible for a draw quad to have a partial opaque region in a non-opaque layer or something. Sorry, I should not have deleted it.",
+      "parentUuid": "16cbc119_5100a871",
+      "revId": "b9e0b514bfbb16764684e1236b3bd289e6a73fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
