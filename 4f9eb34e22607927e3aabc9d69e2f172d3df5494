@@ -16,6 +16,24 @@
       "revId": "4f9eb34e22607927e3aabc9d69e2f172d3df5494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d015a312_5b691b52",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3316,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-17T21:29:40Z",
+      "side": 1,
+      "message": "This name should be the group name e.g. \"WasmTrapHandlerActive\", the key in the top level object is the study name.\n\nI\u0027m assuming the code just checks the FeatureApi though, in which case the group name here does not particularly matter, since tests will still be run with the feature enabled.",
+      "parentUuid": "548fb7c0_8f8c74b6",
+      "revId": "4f9eb34e22607927e3aabc9d69e2f172d3df5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
