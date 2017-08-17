@@ -22,6 +22,53 @@
       "revId": "119da1876064e8635fa3918272adfd1811d55e98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2546497e_558ca604",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-17T10:04:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa9bc746_69776210",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 52
+      },
+      "revId": "119da1876064e8635fa3918272adfd1811d55e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac134848_8d1311c7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-17T10:04:58Z",
+      "side": 1,
+      "message": "Add a comment -- \"adjust the toolbar to be all the way on or off screen\" or something.",
+      "range": {
+        "startLine": 465,
+        "startChar": 2,
+        "endLine": 465,
+        "endChar": 4
+      },
+      "revId": "119da1876064e8635fa3918272adfd1811d55e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
