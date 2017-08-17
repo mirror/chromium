@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "6b97ff36_ec6c8fdc",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:07:58Z",
+      "side": 1,
+      "message": "Well the goal of these styles is to restrict the number of colors and text styles used throughout Chrome to be globally consistent. So I\u0027d say get the closest and see if your UX-ers are fine with it? go/clankstyles for the \"official\" styles to use.",
+      "parentUuid": "c0ed93ec_5a18a1c0",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "9458b937e6235ad9dc542674306de33d382b42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b9c0ca0_c35854ed",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
         "patchSetId": 3
