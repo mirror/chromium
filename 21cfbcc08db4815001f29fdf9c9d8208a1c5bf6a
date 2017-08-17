@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50a4c398_6d689cfe",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f2d5f5_f29449a6",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0516b559_05521d5b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a1bb8f_d47f3ba5",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0516b559_05521d5b",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ce1de997_5719982a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea30117_ddc593c6",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2f3b0cd_dfb5d3c1",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac5cfdd_21880f1d",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2f3b0cd_dfb5d3c1",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "32fc03a4_5030c727",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1faccd67_7597a669",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93a51cfe_f39c8fd8",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76c41ac_2e5870b5",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a51cfe_f39c8fd8",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1a5190eb_15569ead",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d8ae0f_4deb4a3a",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfa631c_30d7f5fb",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIBackground.cpp",
         "patchSetId": 10
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-16T02:31:22Z",
       "side": 1,
       "message": "This changed from DCHECK_LE to DCHECK_EQ, is that intentional? Why this change?",
+      "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ad8f7c_b9151fe4",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIBackground.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-17T07:10:07Z",
+      "side": 1,
+      "message": "The change to EQ was intentional as we have exactly 10 longhands for background. This is no longer relevant now as we\u0027re merging -webkit-mask and background.",
+      "parentUuid": "fbfa631c_30d7f5fb",
       "revId": "21cfbcc08db4815001f29fdf9c9d8208a1c5bf6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
