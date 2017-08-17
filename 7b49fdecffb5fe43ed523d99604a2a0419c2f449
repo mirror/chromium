@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f9b1bf_0444f2a3",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T22:27:22Z",
+      "side": 1,
+      "message": "1 or 5 minutes?",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9508d753_206937c7",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T22:27:22Z",
+      "side": 1,
+      "message": "Setting a timer seems a little overkill, if it\u0027s just setting a flag. Can you just record time::Now() here in a finished_navigation_time_ and check against a TimeDelta in TitleWasSet() and DidUpdateFaviconURL()?",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663a5ffc_d5996b9c",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T22:27:22Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
