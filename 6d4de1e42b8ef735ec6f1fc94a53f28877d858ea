@@ -16,6 +16,24 @@
       "revId": "6d4de1e42b8ef735ec6f1fc94a53f28877d858ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf08e4e8_c29f4a98",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-17T04:26:16Z",
+      "side": 1,
+      "message": "I agree. I failed to notice that in https://chromium-review.googlesource.com/c/604028/4/third_party/WebKit/public/platform/WebCORS.h#10, too (I pointed out only ResourceLoaderOptions). public/DEPS allows dependencies to platform/wtf/ but it\u0027s limited to INSIDE_BLINK.\n\nI think enclosing the users of HashMap, HashSet and WTFString in this header file would just work.\n\nI marked a similar rule in\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/DEPS\nas limited to INSIDE_BLINK. I\u0027ll do the same for public/DEPS.",
+      "parentUuid": "d1da13f8_d02debc8",
+      "revId": "6d4de1e42b8ef735ec6f1fc94a53f28877d858ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
