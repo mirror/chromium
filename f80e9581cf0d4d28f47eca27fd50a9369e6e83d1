@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbfee198_0da239c2",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T13:53:02Z",
+      "side": 1,
+      "message": "I think it would make more sense to merge the two functions together, especially since the implementation of this just ends up calling the same OnRequestFailedInternal function.",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc1b906_60d82bc0",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T13:53:02Z",
+      "side": 1,
+      "message": "As explained in NavigationURLLoaderDelegate, please merge the two function. In particular, this class is meant to just ensure the proper methods are called across the IO and UI thread. I would like to avoid having it make decision about which method to call on the NavigationLoader.",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
