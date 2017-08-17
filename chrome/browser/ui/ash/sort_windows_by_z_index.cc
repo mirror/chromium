@@ -47,7 +47,6 @@ void DoSortWindowsByZIndex(std::unique_ptr<aura::WindowTracker> window_tracker,
   std::vector<aura::Window*> sorted_windows;
   for (aura::Window* root_window : ash::Shell::GetAllRootWindows())
     AppendDescendantsSortedByZIndex(root_window, windows, &sorted_windows);
-  DCHECK_EQ(windows.size(), sorted_windows.size());
   std::move(callback).Run(sorted_windows);
 }
 

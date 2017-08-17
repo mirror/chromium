@@ -37,8 +37,10 @@
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
+#include "chrome/browser/resource_coordinator/window_occlusion_tracker.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tab_contents/tab_contents_iterator.h"
@@ -49,6 +51,7 @@
 #include "chrome/common/url_constants.h"
 #include "components/metrics/system_memory_stats_recorder.h"
 #include "components/variations/variations_associated_data.h"
+#include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_handle.h"
@@ -1018,12 +1021,30 @@ void TabManager::TabClosingAt(TabStripModel* tab_strip_model,
       tab_resource_coordinator->id());
 }
 
+void TabManager::OnBrowserAdded(Browser* browser) {
+  g_browser_process->GetWindowOcclusionTracker()->AddObserver(
+      browser->window()->GetNativeWindow(), this);
+}
+
 void TabManager::OnBrowserSetLastActive(Browser* browser) {
   // Reload the active tab in |browser| if it is discarded.
   content::WebContents* contents =
       browser->tab_strip_model()->GetActiveWebContents();
   if (contents)
     ReloadWebContentsIfDiscarded(contents, GetWebContentsData(contents));
+}
+
+void TabManager::OnWindowOcclusionStateChanged(gfx::NativeWindow window,
+                                               bool is_occluded) {
+  Browser* browser = chrome::FindBrowserWithWindow(window);
+  DCHECK(browser);
+  content::WebContentsImpl* web_contents =
+      static_cast<content::WebContentsImpl*>(
+          browser->tab_strip_model()->GetActiveWebContents());
+  if (is_occluded)
+    web_contents->WasOccluded();
+  else
+    web_contents->WasUnOccluded();
 }
 
 bool TabManager::IsMediaTab(WebContents* contents) const {
