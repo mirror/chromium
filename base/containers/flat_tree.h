@@ -136,18 +136,18 @@ class flat_tree {
   template <class InputIterator>
   flat_tree(InputIterator first,
             InputIterator last,
-            FlatContainerDupes dupe_handling = KEEP_FIRST_OF_DUPES,
+            FlatContainerDupes dupe_handling,
             const key_compare& comp = key_compare());
 
   flat_tree(const flat_tree&);
   flat_tree(flat_tree&&);
 
   flat_tree(std::vector<value_type> items,
-            FlatContainerDupes dupe_handling = KEEP_FIRST_OF_DUPES,
+            FlatContainerDupes dupe_handling,
             const key_compare& comp = key_compare());
 
   flat_tree(std::initializer_list<value_type> ilist,
-            FlatContainerDupes dupe_handling = KEEP_FIRST_OF_DUPES,
+            FlatContainerDupes dupe_handling,
             const key_compare& comp = key_compare());
 
   ~flat_tree();
@@ -227,7 +227,7 @@ class flat_tree {
   template <class InputIterator>
   void insert(InputIterator first,
               InputIterator last,
-              FlatContainerDupes dupes = KEEP_FIRST_OF_DUPES);
+              FlatContainerDupes dupes);
 
   template <class... Args>
   std::pair<iterator, bool> emplace(Args&&... args);
