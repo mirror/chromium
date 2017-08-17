@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "211f122d_513dcac4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b3e1f7_94fecb76",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57320a46_6544a870",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e6772f_ccbcb552",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57320a46_6544a870",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ff403cd_8e21b146",
+        "filename": "chrome/browser/android/offline_pages/downloads/resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e49fda8_f00b462a",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8239617b_1d272271",
         "filename": "components/offline_pages/core/downloads/BUILD.gn",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9985212e_e276b0e9",
+        "filename": "components/offline_pages/core/downloads/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "did not know difference.",
+      "parentUuid": "8239617b_1d272271",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "64ef056b_f73ee796",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "constructor is private. I don\u0027t want an OfflinePageDownloadData object to be created without attaching it to a URLRequest",
+      "parentUuid": "55b9c3c4_448f0036",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c68f79c_4767ea1f",
         "filename": "content/browser/download/download_request_core.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7a9856_ded3d764",
+        "filename": "content/browser/download/download_request_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c68f79c_4767ea1f",
+      "revId": "342563439840bc2f9b3d73d1fe7aefc9f6954f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2763360f_c7ca7024",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "Added null check",
+      "parentUuid": "1ef1ad02_bfbb5a91",
+      "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "624f9d71_c5ad6a29",
         "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95754d60_42b8ac37",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-17T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "624f9d71_c5ad6a29",
+      "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
