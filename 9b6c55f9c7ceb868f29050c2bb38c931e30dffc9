@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4687ce1_dd513afd",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "I don\u0027t see what triggers \"shutdown\" here? You mean \"run until idle\"? That\u0027s a common op and I\u0027m pretty sure we have tests for this already.",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3fdde3_97088744",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "Not sure why we shouldn\u0027t just rely on regular test timeout (why is this test special?)",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593dc87c_c99cd7e0",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1883,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "s/NOTREACHED()/ADD_FAILURE()/",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e2916f_0f792035",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "FromSeconds(5)",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafa6a24_a9f33be2",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "RunLoop().RunUntilIdle() here instead of binding |run_loop| only to call QuitWhenidle()",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a79ce91_02aefa85",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "I see the benefit of this test, but the previous one is merely testing RunUntilIdle() which is thoroughly tested if not here, in run_loop_unittest.cc for sure.",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f79ef379_1a36222c",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:26:36Z",
+      "side": 1,
+      "message": "ditto on the same nits as test above",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
