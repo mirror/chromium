@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "765d42eb_dd9cfc0a",
+        "filename": "components/loader/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "I have no idea .  Copied it from other components.  My guess would be that only testonly targets can depend on testonly targets, to prevent them from being used in production.  Given link times.",
+      "parentUuid": "c03f3bb3_4ff16bd5",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a33e53b_c2b7ac23",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042fd941_5a4ded22",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a33e53b_c2b7ac23",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3b67fd24_fe70945b",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e420109_f029dcae",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "880915ba_99e3a9c6",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 21
@@ -91,6 +163,30 @@
       "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7535e705_0fc40c52",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "880915ba_99e3a9c6",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c42099d3_5d3f273a",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e912ded5_8f020d8d",
+      "range": {
+        "startLine": 109,
+        "startChar": 20,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3302b380_f32dc338",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 21
@@ -161,6 +281,30 @@
       "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633d311d_fa06cce4",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3302b380_f32dc338",
+      "range": {
+        "startLine": 253,
+        "startChar": 68,
+        "endLine": 253,
+        "endChar": 75
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "c66ae0a4_b77a9405",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47f54a1_67300dd2",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "483b02b9_fa47bca4",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 21
@@ -207,6 +375,30 @@
       "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e57776_35502bce",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Replaced with just saying it will fail with \"ERR_INSUFFICIENT_RESOURCES\".",
+      "parentUuid": "483b02b9_fa47bca4",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "62430f9b_dce9ddc4",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ae537e_5c730a1b",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c76ec17_32a47670",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 21
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "ceea4d70_f5195098",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c76ec17_32a47670",
+      "range": {
+        "startLine": 178,
+        "startChar": 32,
+        "endLine": 178,
+        "endChar": 47
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc56c35_970a2620",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 21
@@ -276,6 +516,30 @@
       "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0355dc2_9a274a64",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc56c35_970a2620",
+      "range": {
+        "startLine": 192,
+        "startChar": 50,
+        "endLine": 192,
+        "endChar": 55
+      },
+      "revId": "55d6ec7ea7f2d33d6b28c1263eac268908d94289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
