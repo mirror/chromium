@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4511b58_e963c6cb",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: no longer needed",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a39852_d914de08",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "maybe not needed?",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ab2f19_b2858905",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: no longer needed",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcea81fc_4d21be83",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: Since this is only used once, inline it.",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cee4c6b_d7264cd2",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: These separator asserts can be expects",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7d75fe_7253953d",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: Should we add a separator check?  (The separator should be present, since it\u0027s an extension submenu, right?)",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fe95c4_ea8c057d",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: c++ sytle: item3_submodel",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68614de5_62a05bf4",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: prefer\nconst std::string name \u003d base::StringPrintf(\"item%d\", i);\n\n(We don\u0027t currently allow std::to_string)",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8232f8_aa984663",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: base::StringPrintf could be useful here, too:\nCallAPI(base::StringPrintf(\"create({title: \u0027%s\u0027, id: \u0027%s\u0027});\",\n                           name.c_str(), name.c_str()));\n\nOr even combine it all into one and remove the |name| variable:\nCallAPI(base::StringPrintf(\"create({title: \u0027item%d\u0027, id: \u0027item%d\u0027});\",\n                           i, i));",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153e6822_71d9ce3b",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: expected_num_items",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1616c9_2d88a9fa",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "nit: no parens needed:\nbool prepend_separator \u003d *index \u003d\u003d 0 \u0026\u0026 menu_model_-\u003eGetItemCount();",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30716453_cd0a9e30",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:09:24Z",
+      "side": 1,
+      "message": "probably safe to say that we can replace this with M62 + 3 \u003d M65 now.",
+      "revId": "2867ed67218bc163a44be31f751f2f30b3ff353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
