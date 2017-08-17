@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "160cd475_4a244a88",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "This parameter seems redundant, since you can also get it from disasm-\u003eGetImage()?",
+      "range": {
+        "startLine": 36,
+        "startChar": 58,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a659535_37587f01",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "// Label matching (between \"old\" and \"new\") can guide EquivalenceMap construction; but EquivalenceMap induces Label matching. This apparent \"chick and egg\" problem is solved by bootstrapping a \"coarse\" EquivalenceMap using \u003cwhatever data\u003e.\n\nHmm, the word \"index\" is overloaded:\n1. \"Index\" as in \"indexing the web\", i.e., \n2. \"Index\" as in Label \u003d {offset, index}.\nIf this bugs you then add TODO to rename stuff?",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd332e65_8d1e63bf",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "Looping makes code look shorter, but now reader has to realize that for the first iteration, MakeNewTargetsFromEquivalenceMap() just returns a vector of kUnusedIndex. While this is not hugely inefficient, it\u0027s rather bizarre. I see the following options:\n\n  - More involved change (preferred): Unroll the loop again, extract common code into helper functions, add comments along the way to expand on the \"chicken and egg\" problem mentioned above, focusing on data flow \"Using A to create B\", possibly using distinct variable names with explicit dispose (e.g., |coarse_equivalences|) *or* emphasize when you overwrite an existing variable.\n  - Minimal change: Add comments similar to above, but also comment on what happens at each iteration, e.g.:\n  // First iteration:\n  // Second iteration:",
+      "range": {
+        "startLine": 249,
+        "startChar": 2,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62e2182_f62b4366",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "// If images do not match known executable formats, or if detected formats don\u0027t match, fall back to generating a raw patch.\n\nAlso, output error\n  LOG(ERROR) \u003c\u003c \"Fall back to raw mode.\";",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d587f4bf_30862981",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "Should we print warning and fall back to raw mode?  This might happen if we encounter malformed binaries.",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1458c24_f41bd0fb",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "Here\u0027s my shot at explaining this complex routine. Please adapt as you see fit:\n\n// Creates an EquivalenceMap from \"old\" image to \"new\" image, and returns the result. |*_image_index|:\n// - Provide \"old\" and \"new\" image data.\n// - Supply references, which serve as \"atomic constraints\", i.e., references in \"old\" (\"new\") must not straddle \"old\" (\"new\") ranges in each Equivalence.\n// - Mediate Label matching, which link references between \"old\" and \"new\", and guide EquivalenceMap construction.\n// |*_image_index| is assumed to hold targets as *unmarked* offsets. These are also temporarily modified during Label matching -- that\u0027s why they\u0027re passed by pointer. Meanwhile, |old_label_manager| contains labels for |old_image_index|.",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b142965_32a91928",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T09:51:47Z",
+      "side": 1,
+      "message": "Should be \u0026 ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
