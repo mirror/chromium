@@ -60,7 +60,9 @@ class DOMURL final : public GarbageCollectedFinalized<DOMURL>,
 
   CORE_EXPORT static String CreatePublicURL(ExecutionContext*,
                                             URLRegistrable*,
-                                            const String& uuid = String());
+                                            const String& uuid = String(),
+                                            const String& file_name = String());
+
   static void RevokeObjectUUID(ExecutionContext*, const String&);
 
   KURL Url() const override { return url_; }

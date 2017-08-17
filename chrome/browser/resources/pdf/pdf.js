@@ -208,6 +208,11 @@ function PDFViewer(browserApi) {
     this.toolbar_.addEventListener('print', this.print_.bind(this));
     this.toolbar_.addEventListener(
         'rotate-right', this.rotateClockwise_.bind(this));
+    this.toolbar_.addEventListener(
+        'hide-dropdowns', this.toolbar_.hideDropdowns.bind(this.toolbar_));
+    this.toolbar_.addEventListener('save-attachment', e => {
+      this.saveAttachment_(e.detail.url);
+    });
     // Must attach to mouseup on the plugin element, since it eats mousedown
     // and click events.
     this.plugin_.addEventListener(
@@ -459,6 +464,14 @@ PDFViewer.prototype = {
   },
 
   /**
+   * @private
+   * Notify the plugin to save an attachment.
+   */
+  saveAttachment_: function(url) {
+    this.plugin_.postMessage({type: 'saveAttachment', url: url});
+  },
+
+  /**
    * Fetches the page number corresponding to the given named destination from
    * the plugin.
    * @param {string} name The namedDestination to fetch page number from plugin.
@@ -644,9 +657,11 @@ PDFViewer.prototype = {
           document.title = getFilenameFromURL(this.originalUrl_);
         }
         this.bookmarks_ = message.data.bookmarks;
+        this.attachments_ = message.data.attachments;
         if (this.toolbar_) {
           this.toolbar_.docTitle = document.title;
           this.toolbar_.bookmarks = this.bookmarks;
+          this.toolbar_.attachments = this.attachments;
         }
         break;
       case 'setIsSelecting':
@@ -924,5 +939,9 @@ PDFViewer.prototype = {
    */
   get bookmarks() {
     return this.bookmarks_;
+  },
+
+  get attachments() {
+    return this.attachments_;
   }
 };

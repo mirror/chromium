@@ -2521,6 +2521,9 @@ IPC_MESSAGE_CONTROL0(PpapiHostMsg_PDF_Print)
 // Notifies the renderer to save the current PDF.
 IPC_MESSAGE_CONTROL0(PpapiHostMsg_PDF_SaveAs)
 
+// Notifies the renderer to save an attachment.
+IPC_MESSAGE_CONTROL1(PpapiHostMsg_PDF_SaveAttachmentAs, std::string /* url */)
+
 // Called by the plugin when its selection changes.
 IPC_MESSAGE_CONTROL1(PpapiHostMsg_PDF_SetSelectedText,
                      base::string16 /* selected_text */)

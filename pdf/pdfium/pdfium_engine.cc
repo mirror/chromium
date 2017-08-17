@@ -46,10 +46,12 @@
 #include "ppapi/cpp/trusted/browser_font_trusted.h"
 #include "ppapi/cpp/url_response_info.h"
 #include "ppapi/cpp/var.h"
+#include "ppapi/cpp/var_array_buffer.h"
 #include "ppapi/cpp/var_dictionary.h"
 #include "printing/pdf_transform.h"
 #include "printing/units.h"
 #include "third_party/pdfium/public/fpdf_annot.h"
+#include "third_party/pdfium/public/fpdf_attachment.h"
 #include "third_party/pdfium/public/fpdf_edit.h"
 #include "third_party/pdfium/public/fpdf_ext.h"
 #include "third_party/pdfium/public/fpdf_flatten.h"
@@ -2562,6 +2564,37 @@ pp::VarArray PDFiumEngine::GetBookmarks() {
   pp::VarDictionary dict = TraverseBookmarks(doc_, nullptr, 0);
   // The root bookmark contains no useful information.
   return pp::VarArray(dict.Get(pp::Var("children")));
+}
+
+pp::VarArray PDFiumEngine::GetAttachments() {
+  pp::VarArray array;
+  for (int i = 0; i < FPDFDoc_GetAttachmentCount(doc_); ++i) {
+    FPDF_ATTACHMENT attachment = FPDFDoc_GetAttachment(doc_, i);
+    pp::VarDictionary dict;
+
+    // Retrieve the attachment file name.
+    base::string16 title;
+    unsigned long buffer_size = FPDFAttachment_GetName(attachment, nullptr, 0);
+    if (buffer_size > 0) {
+      PDFiumAPIStringBufferSizeInBytesAdapter<base::string16>
+          api_string_adapter(&title, buffer_size, true);
+      api_string_adapter.Close(FPDFAttachment_GetName(
+          attachment, api_string_adapter.GetData(), buffer_size));
+    }
+    dict.Set(pp::Var("title"), pp::Var(base::UTF16ToUTF8(title)));
+
+    // Retrieve the attachment file data.
+    std::vector<char> buf;
+    buffer_size = FPDFAttachment_GetFile(attachment, nullptr, 0);
+    buf.resize(buffer_size);
+    FPDFAttachment_GetFile(attachment, buf.data(), buffer_size);
+    pp::VarArrayBuffer file(buffer_size);
+    memcpy(file.Map(), buf.data(), buffer_size);
+    dict.Set(pp::Var("file"), file);
+
+    array.Set(i, dict);
+  }
+  return array;
 }
 
 int PDFiumEngine::GetNamedDestinationPage(const std::string& destination) {

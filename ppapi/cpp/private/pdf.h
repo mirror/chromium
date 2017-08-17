@@ -45,6 +45,7 @@ class PDF {
                                       const Var& action);
   static void HasUnsupportedFeature(const InstanceHandle& instance);
   static void SaveAs(const InstanceHandle& instance);
+  static void SaveAttachmentAs(const InstanceHandle& instance, const Var& url);
   static void Print(const InstanceHandle& instance);
   static bool IsFeatureEnabled(const InstanceHandle& instance,
                                PP_PDFFeature feature);

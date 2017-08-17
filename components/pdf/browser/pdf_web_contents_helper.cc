@@ -165,7 +165,8 @@ void PDFWebContentsHelper::HasUnsupportedFeature() {
 void PDFWebContentsHelper::SaveUrlAs(const GURL& url,
                                      const content::Referrer& referrer) {
   client_->OnSaveURL(web_contents());
-  web_contents()->SaveFrame(url, referrer);
+  web_contents()->SaveFrameWithHeadersSkipDelegate(url, referrer,
+                                                   std::string());
 }
 
 void PDFWebContentsHelper::UpdateContentRestrictions(
