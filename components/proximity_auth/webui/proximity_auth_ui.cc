@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/grit/components_resources.h"
+#include "components/proximity_auth/webui/pollux_webui_handler.h"
 #include "components/proximity_auth/webui/proximity_auth_webui_handler.h"
 #include "components/proximity_auth/webui/url_constants.h"
 #include "content/public/browser/browser_context.h"
@@ -40,6 +41,7 @@ ProximityAuthUI::ProximityAuthUI(content::WebUI* web_ui,
   content::WebUIDataSource::Add(browser_context, source);
   web_ui->AddMessageHandler(
       base::MakeUnique<ProximityAuthWebUIHandler>(delegate));
+  web_ui->AddMessageHandler(base::MakeUnique<pollux::PolluxWebUIHandler>());
 }
 
 ProximityAuthUI::~ProximityAuthUI() {
