@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "79728b70_8db6aef9",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-17T04:42:14Z",
+      "side": 1,
+      "message": "optional comment:\n\nDo you mean ax id changes on scroll?\n\nHow about to run the command again after the scroll? (same as we are doing for pred !\u003d null case). I\u0027ve quickly tried it on my test device, and it seems working well. Android seems to leave the focus on the previously focused item. Dispatching the same action should move the focus to n+1 item (or n-1 for backward). As there can be a chance where the command is run repeatedly, we should check it here, i.e. no scroll with the re-run command.\n\nIIUC, TalkBack re-runs the action after scroll has happened with navigation.",
+      "parentUuid": "3afa30b2_ccd50de4",
+      "range": {
+        "startLine": 808,
+        "startChar": 12,
+        "endLine": 815,
+        "endChar": 13
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef74c04d_4ff22b74",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
         "patchSetId": 11
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "I don\u0027t think a race condition is possible here. This is js, so these callbacks will be called in order / will not interleave. The action result and scroll event are just messages on an event loop.\n\nThe only way for the action to be received after the scroll is if:\n- in the Android service, we call perform action on a node\n- before the call returns, we get a scroll event\n\nIs this what you\u0027re thinking?\n\nThe issue with this then is that we can\u0027t rely on the ordering of events which would be a larger issue indeed and not a ChromeVox one here. What happens if I scroll manually right before programmatically performing an action? What happens if I perform two scroll actions programmatically repeatedly?",
       "parentUuid": "ef74c04d_4ff22b74",
+      "range": {
+        "startLine": 819,
+        "startChar": 10,
+        "endLine": 820,
+        "endChar": 70
+      },
+      "revId": "8761aa285235d9c83c3a2c4f3fd7e931feb8389c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7698fb3_52ddd5dd",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-17T04:42:14Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I thought. But, as far as I confirmed, ordering of mojo IPC calls between Chrome and Android doesn\u0027t change. Also we are using single thread in ArcAccessibilityHelperService. Both performAction and events go through the ArcAccessibilityHelperService. It should be fine.",
+      "parentUuid": "d9b7c0c6_bff26c5a",
       "range": {
         "startLine": 819,
         "startChar": 10,
