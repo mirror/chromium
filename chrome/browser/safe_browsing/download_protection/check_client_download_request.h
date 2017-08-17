@@ -67,7 +67,7 @@ class CheckClientDownloadRequest
   friend class base::DeleteHelper<CheckClientDownloadRequest>;
 
   ~CheckClientDownloadRequest() override;
-
+  void AnalyzeFile();
   void OnFileFeatureExtractionDone();
   void StartExtractFileFeatures();
   void ExtractFileFeatures(const base::FilePath& file_path);
@@ -81,7 +81,9 @@ class CheckClientDownloadRequest
 #endif  // defined(OS_MACOSX)
 
   bool ShouldSampleWhitelistedDownload();
-  void CheckWhitelists();
+
+  void CheckUrlAgainstWhitelist();
+  void CheckCertificateChainAgainstWhitelist();
   void GetTabRedirects();
   void OnGotTabRedirects(const GURL& url,
                          const history::RedirectList* redirect_list);
@@ -144,6 +146,7 @@ class CheckClientDownloadRequest
   bool skipped_certificate_whitelist_;
   bool is_extended_reporting_;
   bool is_incognito_;
+  base::CancelableTaskTracker cancelable_task_tracker_;
   base::WeakPtrFactory<CheckClientDownloadRequest> weakptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CheckClientDownloadRequest);
