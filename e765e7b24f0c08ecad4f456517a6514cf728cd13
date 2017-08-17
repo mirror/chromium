@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af1b1ff_629ad0f0",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T22:26:28Z",
+      "side": 1,
+      "message": "nit: store blur/cache in a member variable to ensure that we\u0027re not requesting this without removing the request. e.g. someone else is changing the blur without us knowing.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "e765e7b24f0c08ecad4f456517a6514cf728cd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4319af5c_8f373cbf",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T22:26:28Z",
+      "side": 1,
+      "message": "cache render surface requests we have",
+      "range": {
+        "startLine": 598,
+        "startChar": 38,
+        "endLine": 598,
+        "endChar": 77
+      },
+      "revId": "e765e7b24f0c08ecad4f456517a6514cf728cd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
