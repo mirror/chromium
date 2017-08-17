@@ -170,9 +170,9 @@ class ChromePasswordProtectionServiceTest
   }
 
   void InitializeRequest(LoginReputationClientRequest::TriggerType type) {
-    request_ = new PasswordProtectionRequest(web_contents(), GURL(kPhishingURL),
-                                             GURL(), GURL(), std::string(),
-                                             type, true, service_.get(), 0);
+    request_ = new PasswordProtectionRequest(
+        web_contents(), GURL(kPhishingURL), GURL(), GURL(), false,
+        std::vector<std::string>(), type, true, service_.get(), 0);
   }
 
   void InitializeVerdict(LoginReputationClientResponse::VerdictType type) {
