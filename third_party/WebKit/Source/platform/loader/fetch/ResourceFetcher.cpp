@@ -1196,6 +1196,7 @@ void ResourceFetcher::ReloadImagesIfNotDeferred() {
 void ResourceFetcher::ClearContext() {
   scheduler_->Shutdown();
   ClearPreloads(ResourceFetcher::kClearAllPreloads);
+  requests_tracker_ = Context().IssueRequestsTracker();
   context_ = Context().Detach();
 
   if (!loaders_.IsEmpty() || !non_blocking_loaders_.IsEmpty()) {
@@ -1454,8 +1455,10 @@ void ResourceFetcher::RemoveResourceLoader(ResourceLoader* loader) {
   else
     NOTREACHED();
 
-  if (loaders_.IsEmpty() && non_blocking_loaders_.IsEmpty())
+  if (loaders_.IsEmpty() && non_blocking_loaders_.IsEmpty()) {
     self_keep_alive_.Clear();
+    requests_tracker_ = nullptr;
+  }
 }
 
 void ResourceFetcher::StopFetching() {
@@ -1690,6 +1693,7 @@ void ResourceFetcher::StopFetchingInternal(StopFetchingTarget target) {
 void ResourceFetcher::StopFetchingIncludingKeepaliveLoaders(TimerBase*) {
   StopFetchingInternal(StopFetchingTarget::kIncludingKeepaliveLoaders);
   self_keep_alive_.Clear();
+  requests_tracker_ = nullptr;
 }
 
 DEFINE_TRACE(ResourceFetcher) {

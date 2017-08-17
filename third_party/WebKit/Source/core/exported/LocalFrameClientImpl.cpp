@@ -82,6 +82,7 @@
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
+#include "public/platform/WebURLRequestsTracker.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
@@ -1051,6 +1052,11 @@ std::unique_ptr<blink::WebURLLoader> LocalFrameClientImpl::CreateURLLoader(
   WrappedResourceRequest wrapped(request);
   return web_frame_->CreateURLLoader(wrapped,
                                      task_runner->ToSingleThreadTaskRunner());
+}
+
+std::unique_ptr<WebURLRequestsTracker>
+LocalFrameClientImpl::IssueRequestsTracker() {
+  return web_frame_->Client()->IssueRequestsTracker();
 }
 
 service_manager::InterfaceProvider*

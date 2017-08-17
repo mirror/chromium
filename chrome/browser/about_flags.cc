@@ -3249,6 +3249,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableOutOfBlinkCORSDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kOutOfBlinkCORS)},
 
+    {"keep-alive-renderer-for-keep-alive-requests",
+     flag_descriptions::kKeepAliveRendererForKeepaliveRequestsName,
+     flag_descriptions::kKeepAliveRendererForKeepaliveRequestsDescription,
+     kOsAll,
+     FEATURE_VALUE_TYPE(features::kKeepAliveRendererForKeepaliveRequests)},
+
 #if defined(OS_ANDROID)
     {"use-ddljson-api", flag_descriptions::kUseDdljsonApiName,
      flag_descriptions::kUseDdljsonApiDescription, kOsAndroid,

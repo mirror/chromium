@@ -689,6 +689,7 @@ class CONTENT_EXPORT RenderFrameImpl
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
+  std::unique_ptr<blink::WebURLRequestsTracker> IssueRequestsTracker() override;
   void DraggableRegionsChanged() override;
 
   const URLLoaderFactoryContainer& GetDefaultURLLoaderFactoryContainer();

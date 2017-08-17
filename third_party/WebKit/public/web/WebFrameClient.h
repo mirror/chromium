@@ -72,6 +72,7 @@
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoader.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/WebURLRequestsTracker.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "v8/include/v8.h"
@@ -839,6 +840,13 @@ class BLINK_EXPORT WebFrameClient {
       const WebURLRequest&,
       base::SingleThreadTaskRunner*) {
     NOTREACHED();
+    return nullptr;
+  }
+
+  // Issues a tracker for resource loading. The caller should retain the tracker
+  // object until all resource loading from this frame finish.
+  // This function may return null.
+  virtual std::unique_ptr<blink::WebURLRequestsTracker> IssueRequestsTracker() {
     return nullptr;
   }
 };

@@ -1125,6 +1125,10 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     // cannot use the task runner associated with the frame.
     task_runner =
         Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
+    if (!has_requested_requests_tracker_) {
+      has_requested_requests_tracker_ = true;
+      requests_tracker_ = GetFrame()->IssueRequestsTracker();
+    }
   } else {
     task_runner = GetTaskRunner();
   }
@@ -1169,6 +1173,7 @@ FetchContext* FrameFetchContext::Detach() {
   // ComputedStyle is involved. See https://crbug.com/383860 for details.
   document_ = nullptr;
 
+  requests_tracker_ = nullptr;
   return this;
 }
 

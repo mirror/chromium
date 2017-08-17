@@ -98,6 +98,7 @@
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/WebURLRequestsTracker.h"
 
 namespace blink {
 
@@ -1080,6 +1081,10 @@ std::unique_ptr<WebURLLoader> LocalFrame::CreateURLLoader(
     const ResourceRequest& request,
     WebTaskRunner* task_runner) {
   return Client()->CreateURLLoader(request, task_runner);
+}
+
+std::unique_ptr<WebURLRequestsTracker> LocalFrame::IssueRequestsTracker() {
+  return Client()->IssueRequestsTracker();
 }
 
 WebPluginContainerImpl* LocalFrame::GetWebPluginContainer(Node* node) const {

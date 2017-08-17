@@ -56,6 +56,7 @@
 #include "public/platform/WebLoadingBehaviorFlag.h"
 #include "public/platform/WebSuddenTerminationDisablerType.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/WebURLRequestsTracker.h"
 #include "public/web/WebTriggeringEventInfo.h"
 #include "v8/include/v8.h"
 
@@ -354,6 +355,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
                                                         WebTaskRunner*) = 0;
+
+  virtual std::unique_ptr<WebURLRequestsTracker> IssueRequestsTracker() = 0;
 
   virtual void AnnotatedRegionsChanged() = 0;
 

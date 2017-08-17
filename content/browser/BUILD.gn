@@ -785,6 +785,8 @@ source_set("browser") {
     "frame_host/render_widget_host_view_child_frame.h",
     "frame_host/render_widget_host_view_guest.cc",
     "frame_host/render_widget_host_view_guest.h",
+    "frame_host/requests_tracker_impl_holder.cc",
+    "frame_host/requests_tracker_impl_holder.h",
     "geolocation/geolocation_service_impl.cc",
     "geolocation/geolocation_service_impl.h",
     "gpu/browser_gpu_channel_host_factory.cc",
