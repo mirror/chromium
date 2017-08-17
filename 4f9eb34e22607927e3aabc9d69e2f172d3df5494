@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "548fb7c0_8f8c74b6",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3316,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-08-17T17:57:52Z",
+      "side": 1,
+      "message": "I\u0027m a little unclear on what the name corresponds to. In the associated experiment CLs, we defined an experiment named \"V8WasmTrapHandler\" with an experiment named \"WasmTrapHandlerActive\" for Dev and experiments named \"WasmTrapHandler\" for Beta and Stable. I\u0027m guessing the name here should refer either to the study name or the experiment name, but it\u0027s not clear to me which one.",
+      "revId": "4f9eb34e22607927e3aabc9d69e2f172d3df5494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
