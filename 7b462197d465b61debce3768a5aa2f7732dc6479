@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7c81449_11e0f44e",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T00:42:10Z",
+      "side": 1,
+      "message": "Why don\u0027t you pass the number of native textures as a parameters instead of using kPlanesNum?",
+      "revId": "7b462197d465b61debce3768a5aa2f7732dc6479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0cddde_4d53656a",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T00:42:10Z",
+      "side": 1,
+      "message": "Isn\u0027t this creating a VideoFrame with three native textures? I thought you wanted to test the resource creation for a VideoFrame with two native textures.",
+      "revId": "7b462197d465b61debce3768a5aa2f7732dc6479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
