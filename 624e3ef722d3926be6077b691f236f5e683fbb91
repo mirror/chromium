@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfa9660_a60fe16e",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_copyable_row.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T17:44:51Z",
+      "side": 1,
+      "message": "reduce the indent of this now?",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 19
+      },
+      "revId": "624e3ef722d3926be6077b691f236f5e683fbb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefc7ac6_b663d816",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_copyable_row.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T17:44:51Z",
+      "side": 1,
+      "message": "align with other attributes below",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "624e3ef722d3926be6077b691f236f5e683fbb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
