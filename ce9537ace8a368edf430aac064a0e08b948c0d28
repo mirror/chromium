@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09f0c375_d83cdd5a",
+        "filename": "content/test/gpu/gather_swarming_json_results.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-17T17:38:08Z",
+      "side": 1,
+      "message": "Thanks, got it. If this script starts failing in the future it\u0027ll be detected and I\u0027ll update it.",
+      "parentUuid": "7faac8ce_b772ae6e",
+      "revId": "ce9537ace8a368edf430aac064a0e08b948c0d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f45f59e_97be6962",
         "filename": "content/test/gpu/gather_swarming_json_results.py",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-17T17:33:03Z",
       "side": 1,
       "message": "maybe remove the default value and add required\u003dTrue?",
+      "range": {
+        "startLine": 184,
+        "startChar": 50,
+        "endLine": 184,
+        "endChar": 54
+      },
+      "revId": "ce9537ace8a368edf430aac064a0e08b948c0d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22cf47dc_ba96ab1b",
+        "filename": "content/test/gpu/gather_swarming_json_results.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-17T17:38:08Z",
+      "side": 1,
+      "message": "Thanks, I didn\u0027t remember how to do that and was lazy...will fix in a follow-up.",
+      "parentUuid": "5f45f59e_97be6962",
       "range": {
         "startLine": 184,
         "startChar": 50,
