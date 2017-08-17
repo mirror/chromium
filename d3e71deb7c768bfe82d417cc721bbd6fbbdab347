@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2255420f_b3025358",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-17T22:58:15Z",
+      "side": 1,
+      "message": "What\u0027s the rationale for excluding a 32-bit application running on a 64-bit OS? I would expect the important thing is whether or not our process is limited to a 32-bit address space, which we should know from the bitness of the build, right?",
+      "range": {
+        "startLine": 76,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "d3e71deb7c768bfe82d417cc721bbd6fbbdab347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af3063f_50cc36cd",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-17T22:58:15Z",
+      "side": 1,
+      "message": "Does calling VirtualAlloc to allocate and commit 512 MB of inaccessible memory consume 512KB worth of page table entries, or is it much cheaper than that? Reading https://blogs.msdn.microsoft.com/oldnewthing/20160318-00/?p\u003d93181 makes me a little worried.",
+      "range": {
+        "startLine": 81,
+        "startChar": 42,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "d3e71deb7c768bfe82d417cc721bbd6fbbdab347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
