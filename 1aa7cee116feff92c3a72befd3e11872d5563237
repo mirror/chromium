@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7972f3c7_52dfa754",
+        "filename": "base/containers/span.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:03:48Z",
+      "side": 1,
+      "message": "(trying to understand) This will bind to a const container as well right?",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "1aa7cee116feff92c3a72befd3e11872d5563237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdd2b38_cee800fd",
+        "filename": "base/containers/span.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:03:48Z",
+      "side": 1,
+      "message": "This example somewhat surprises me. Somewhere in the standard it says that if the local variable is being returned then blah blah treat it as if it was an rvalue reference. Explicit Span\u003cint\u003e(v); def would compile, but I\u0027m just surprised by this.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 8
+      },
+      "revId": "1aa7cee116feff92c3a72befd3e11872d5563237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687939d1_62cf3228",
+        "filename": "base/containers/span.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T21:03:48Z",
+      "side": 1,
+      "message": "(trying to understand) const so that it\u0027s not a forwarding reference?",
+      "range": {
+        "startLine": 156,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 24
+      },
+      "revId": "1aa7cee116feff92c3a72befd3e11872d5563237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
