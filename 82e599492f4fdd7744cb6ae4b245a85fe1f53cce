@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9205a505_0b3be294",
+        "filename": "chrome/browser/ui/certificate_dialogs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T23:02:48Z",
+      "side": 1,
+      "message": "I guess this nominally platform-independent file is now no longer so. Ah well. Probably we don\u0027t care?",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593865d1_edd9ef49",
+        "filename": "chrome/browser/ui/certificate_dialogs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T23:02:48Z",
+      "side": 1,
+      "message": "This nominally platform-independent file is now no longer so. Ah well. I take it there\u0027s no reason to generalize it right now and it\u0027s simpler to make this NSS-only.",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f5b0247_4f6c07d3",
+        "filename": "chrome/common/net/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T23:02:48Z",
+      "side": 1,
+      "message": "Should this exclude the header too?",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250a32e3_78753556",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T23:02:48Z",
+      "side": 1,
+      "message": "return {}",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d238f723_1a9eb73d",
+        "filename": "net/test/cert_test_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T23:02:48Z",
+      "side": 1,
+      "message": "return nullptr should work I think. ScopedCERTCertificate appears to just be a unique_ptr.",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210ef16b_c4b39eef",
+        "filename": "net/test/cert_test_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T23:02:48Z",
+      "side": 1,
+      "message": "return {}",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
