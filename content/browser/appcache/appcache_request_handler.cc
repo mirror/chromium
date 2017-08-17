@@ -25,6 +25,12 @@
 
 namespace content {
 
+namespace {
+
+bool g_running_in_tests = false;
+
+}  // namespace
+
 AppCacheRequestHandler::AppCacheRequestHandler(
     AppCacheHost* host,
     ResourceType resource_type,
@@ -168,7 +174,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
   }
 
   // We don't fallback for responses that we delivered.
-  if (job_.get() && !base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (job_.get()) {
     DCHECK(!job_->IsDeliveringNetworkResponse());
     return NULL;
   }
@@ -253,11 +259,6 @@ AppCacheRequestHandler::InitializeForNavigationNetworkService(
   handler->network_url_loader_factory_getter_ = url_loader_factory_getter;
   handler->appcache_host_ = appcache_handle_core->host()->GetWeakPtr();
   return handler;
-}
-
-void AppCacheRequestHandler::SetSubresourceRequestLoadInfo(
-    std::unique_ptr<SubresourceLoadInfo> subresource_load_info) {
-  subresource_load_info_ = std::move(subresource_load_info);
 }
 
 void AppCacheRequestHandler::OnDestructionImminent(AppCacheHost* host) {
@@ -349,17 +350,10 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::CreateJob(
   std::unique_ptr<AppCacheJob> job = AppCacheJob::Create(
       is_main_resource(), host_, storage(), request_.get(), network_delegate,
       base::Bind(&AppCacheRequestHandler::OnPrepareToRestart,
-                 base::Unretained(this)));
+                 base::Unretained(this)),
+      std::move(subresource_load_info_),
+      network_url_loader_factory_getter_.get());
   job_ = job->GetWeakPtr();
-  if (!is_main_resource() &&
-      base::FeatureList::IsEnabled(features::kNetworkService)) {
-    AppCacheURLLoaderJob* loader_job = job_->AsURLLoaderJob();
-
-    loader_job->SetSubresourceLoadInfo(
-        std::move(subresource_load_info_),
-        network_url_loader_factory_getter_.get());
-  }
-
   return job;
 }
 
@@ -372,6 +366,7 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::MaybeCreateJobForFallback(
   // In network service land, the job initiates a fallback request. We reuse
   // the existing job to deliver the fallback response.
   DCHECK(job_.get());
+  job_->set_delivery_type(AppCacheJob::AWAITING_DELIVERY_ORDERS);
   return std::unique_ptr<AppCacheJob>(job_.get());
 }
 
@@ -626,6 +621,34 @@ bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
     return true;
   }
   return false;
+}
+
+// static
+void AppCacheRequestHandler::SetRunningInTests(bool in_tests) {
+  g_running_in_tests = in_tests;
+}
+
+// static
+bool AppCacheRequestHandler::IsRunningInTests() {
+  return g_running_in_tests;
+}
+
+AppCacheJob* AppCacheRequestHandler::MaybeCreateSubresourceLoader(
+    std::unique_ptr<SubresourceLoadInfo> subresource_load_info) {
+  DCHECK(!is_main_resource());
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+
+  subresource_load_info_ = std::move(subresource_load_info);
+
+  AppCacheJob* job = MaybeLoadResource(nullptr);
+  if (!job)
+    return nullptr;
+
+  AppCacheURLLoaderJob* loader_job = job->AsURLLoaderJob();
+  // The job takes ownership of the handler.
+  loader_job->set_request_handler(
+      std::unique_ptr<AppCacheRequestHandler>(this));
+  return job;
 }
 
 }  // namespace content

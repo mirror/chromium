@@ -106,7 +106,7 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
   // intended to be sent to the network.
   void SetSubresourceLoadInfo(
       std::unique_ptr<SubresourceLoadInfo> subresource_load_info,
-      URLLoaderFactoryGetter* default_url_loader);
+      URLLoaderFactoryGetter* loader_factory_getter);
 
   // Ownership of the |handler| is transferred to us via this call. This is
   // only for subresource requests.
@@ -125,9 +125,12 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
   // AppCacheJob::Create() creates this instance.
   friend class AppCacheJob;
 
-  AppCacheURLLoaderJob(const ResourceRequest& request,
-                       AppCacheURLLoaderRequest* appcache_request,
-                       AppCacheStorage* storage);
+  AppCacheURLLoaderJob(
+      const ResourceRequest& request,
+      AppCacheURLLoaderRequest* appcache_request,
+      AppCacheStorage* storage,
+      std::unique_ptr<SubresourceLoadInfo> subresource_load_info,
+      URLLoaderFactoryGetter* loader_factory_getter);
 
   // AppCacheStorage::Delegate methods
   void OnResponseInfoLoaded(AppCacheResponseInfo* response_info,
