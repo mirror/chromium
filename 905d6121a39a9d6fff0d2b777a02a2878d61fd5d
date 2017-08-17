@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b325f95b_18f5cefb",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T17:04:31Z",
+      "side": 1,
+      "message": "get_operation_attempts \u003c ?\n\nsince if it\u0027s 3 that means we have already tried 3 times.",
+      "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f07544_859dfc14",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-17T17:04:31Z",
+      "side": 1,
+      "message": "\u003e\u003d",
+      "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
