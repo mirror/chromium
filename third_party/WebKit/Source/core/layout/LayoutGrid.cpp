@@ -1184,7 +1184,7 @@ void LayoutGrid::ApplyStretchAlignmentToTracksIfNeeded(
   for (unsigned i = 0; i < all_tracks.size(); ++i) {
     const GridTrackSize& track_size =
         track_sizing_algorithm_.GetGridTrackSize(direction, i);
-    if (track_size.HasAutoMaxTrackBreadth())
+    if (track_size.HasAutoMaxTrackBreadth() && !track_size.IsFitContent())
       auto_sized_tracks_index.push_back(i);
   }
 
