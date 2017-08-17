@@ -25,6 +25,54 @@
     },
     {
       "key": {
+        "uuid": "6bb69271_9e81ac88",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8459447a_a79727f2",
+      "range": {
+        "startLine": 306,
+        "startChar": 19,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeb0762a_cfc670a5",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8459447a_a79727f2",
+      "range": {
+        "startLine": 306,
+        "startChar": 19,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f965f3b9_8430b801",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 9
@@ -45,6 +93,30 @@
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9a3ecc_85613a70",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Actually we just turned this to use BindOnce, so removed Passed part.",
+      "parentUuid": "f965f3b9_8430b801",
+      "range": {
+        "startLine": 262,
+        "startChar": 22,
+        "endLine": 262,
+        "endChar": 61
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "bbd4d385_4d231a3d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a704bc04_64b92e2c",
+      "range": {
+        "startLine": 293,
+        "startChar": 5,
+        "endLine": 293,
+        "endChar": 6
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c24e80e6_097fab02",
         "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
         "patchSetId": 9
@@ -94,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "08ba74b0_514cc40b",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c24e80e6_097fab02",
+      "range": {
+        "startLine": 759,
+        "startChar": 5,
+        "endLine": 759,
+        "endChar": 60
+      },
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78fd421a_54196add",
         "filename": "content/renderer/DEPS",
         "patchSetId": 9
@@ -108,6 +228,24 @@
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2450ff4b_791cc123",
+        "filename": "content/renderer/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78fd421a_54196add",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +349,24 @@
       "side": 1,
       "message": "Oh yeah... I wasn\u0027t sure about how to Get InterfaceProvider here, then I tried Platform::Current()-\u003eGetInterfaceProvider, then I got linker error by trying to instantiate blink variant of BlobRegistryPtr in content (onky on win), and added up some work around like this.  I\u0027d love to hear better alternative way!",
       "parentUuid": "31bb53d2_83dad8f8",
+      "revId": "7922dd66599278f22fdc161a32713d47749a3877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6c810e_291f3f07",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:24:52Z",
+      "side": 1,
+      "message": "Oops, never mind. It just worked if I just used the non-blink variant.",
+      "parentUuid": "0965909d_19ff1322",
       "revId": "7922dd66599278f22fdc161a32713d47749a3877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
