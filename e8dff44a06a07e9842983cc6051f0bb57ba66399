@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cd61de2_4c0be802",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T18:47:49Z",
+      "side": 1,
+      "message": "This intentionally does not match the function order in the header file. I want to cause a merge conflict if someone accidentally tries to backport SessionController prefs code from trunk.",
+      "revId": "e8dff44a06a07e9842983cc6051f0bb57ba66399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
