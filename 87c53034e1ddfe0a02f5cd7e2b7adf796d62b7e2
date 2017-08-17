@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5af964d_9c9147ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-17T16:02:05Z",
+      "side": 1,
+      "message": "We\u0027ll probably want to add this to the W3CImportExpectations blacklist with \"external/wpt/wpt\" and \"external/wpt/tools\". This could be done in a separate CL.",
+      "revId": "87c53034e1ddfe0a02f5cd7e2b7adf796d62b7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
