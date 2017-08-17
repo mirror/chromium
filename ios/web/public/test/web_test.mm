@@ -31,16 +31,6 @@ WebTest::WebTest()
 
 WebTest::~WebTest() {}
 
-void WebTest::SetUp() {
-  PlatformTest::SetUp();
-  BrowserState::GetActiveStateManager(&browser_state_)->SetActive(true);
-}
-
-void WebTest::TearDown() {
-  BrowserState::GetActiveStateManager(&browser_state_)->SetActive(false);
-  PlatformTest::TearDown();
-}
-
 TestWebClient* WebTest::GetWebClient() {
   return static_cast<TestWebClient*>(web_client_.Get());
 }
