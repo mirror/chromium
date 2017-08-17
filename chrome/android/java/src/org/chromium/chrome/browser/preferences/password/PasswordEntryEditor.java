@@ -87,12 +87,13 @@ public class PasswordEntryEditor extends Fragment {
             getActivity().setTitle(R.string.password_entry_editor_title);
             mClipboard = (ClipboardManager) getActivity().getApplicationContext().getSystemService(
                     Context.CLIPBOARD_SERVICE);
-            View urlRowsView = createSimpleCopyableRow(
-                    R.id.url_row, R.string.password_entry_editor_site_title, url);
+            View urlRowsView = createSimpleCopyableRow(R.id.url_row, R.id.url_row_title, url,
+                    R.string.password_entry_editor_site_title);
             hookupCopySiteButton(urlRowsView);
             if (!mException) {
-                View usernameView = createSimpleCopyableRow(
-                        R.id.username_row, R.string.password_entry_editor_username_title, name);
+                View usernameView =
+                        createSimpleCopyableRow(R.id.username_row, R.id.username_row_title, name,
+                                R.string.password_entry_editor_username_title);
                 hookupCopyUsernameButton(usernameView);
                 mKeyguardManager =
                         (KeyguardManager) getActivity().getApplicationContext().getSystemService(
@@ -212,6 +213,8 @@ public class PasswordEntryEditor extends Fragment {
     private void hookupCopyUsernameButton(View usernameView) {
         final ImageButton copyUsernameButton =
                 (ImageButton) usernameView.findViewById(R.id.password_entry_editor_copy);
+        copyUsernameButton.setContentDescription(
+                getActivity().getString(R.string.password_entry_editor_copy_stored_username));
         copyUsernameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,6 +232,8 @@ public class PasswordEntryEditor extends Fragment {
     private void hookupCopySiteButton(View siteView) {
         final ImageButton copySiteButton =
                 (ImageButton) siteView.findViewById(R.id.password_entry_editor_copy);
+        copySiteButton.setContentDescription(
+                getActivity().getString(R.string.password_entry_editor_copy_stored_site));
         copySiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -326,13 +331,13 @@ public class PasswordEntryEditor extends Fragment {
         });
     }
 
-    private View createSimpleCopyableRow(int rowId, int titleId, String data) {
+    private View createSimpleCopyableRow(int rowId, int rowTitleId, String data, int rowTitle) {
         View rowsView = mView.findViewById(rowId);
-        View titleView = rowsView.findViewById(R.id.password_entry_editor_row_title);
-        TextView titleTextView = (TextView) titleView.findViewById(R.id.password_entry_title);
-        titleTextView.setText(titleId);
         TextView dataView = (TextView) rowsView.findViewById(R.id.password_entry_editor_row_data);
         dataView.setText(data);
+        View titleView = mView.findViewById(rowTitleId);
+        TextView titleTextView = (TextView) titleView.findViewById(R.id.password_entry_title);
+        titleTextView.setText(rowTitle);
         return rowsView;
     }
 }
