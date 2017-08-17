@@ -40,6 +40,7 @@
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/textfield/textfield.h"
+#include "ui/views/test/platform_event_replayer.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/view_observer.h"
 #include "ui/views/widget/native_widget.h"
@@ -4759,6 +4760,13 @@ TEST_F(ViewTest, ChildViewZOrderChanged) {
     EXPECT_EQ(view->child_at(expected_order[i]), children[i]);
     EXPECT_EQ(view->child_at(expected_order[i])->layer(), layers[i]);
   }
+}
+
+TEST_F(ViewTest, ReplayToolTest) {
+  ui::PlatformEventReplayer replayer;
+  replayer.ReadInPlatformEvents(
+      "ui/views/test/recorder_files/2017_8_17_22_7_21.txt");
+  replayer.ReplayPlatformEvents();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
