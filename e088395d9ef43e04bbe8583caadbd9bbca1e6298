@@ -52,6 +52,24 @@
       "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afc09a8_411f14ac",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T20:18:09Z",
+      "side": 1,
+      "message": "Let\u0027s fix in a future CL. I have a WIP here to refactor the popups:\nhttps://chromium-review.googlesource.com/c/619546\n\nOnce that lands, the fix for this is much easier (just hoist this message into the MaybeBlockPopup function).\n\nTo clarify a bit more about why I don\u0027t like the PopupBlockerTabHelper::Observer method, I am mainly just cautious about how we\u0027ll be able to tell from the observer if it was subresource_filter\u0027s fault the popup was blocked, or some other reason (e.g. no user_gesture). We\u0027d probably need to thread a BlockReason enum through to the observers.",
+      "parentUuid": "f260181b_6cbcf23f",
+      "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
