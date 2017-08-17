@@ -50,15 +50,15 @@
             on-change="onTimeZoneAutoDetectChange_">
         </paper-toggle-button>
       </template>
-      <template is="dom-if" restamp
-          if="[[prefs.cros.flags.per_user_timezone_enabled.value]]">
-        <settings-toggle-button
-            pref="{{prefs.settings.resolve_timezone_by_geolocation}}"
-            id="timeZoneAutoDetect"
-            aria-labelledby="timezoneGeolocateToggleLabel">
-        </settings-toggle-button>
-      </template>
     </div>
+    <template is="dom-if" restamp
+        if="[[prefs.cros.flags.per_user_timezone_enabled.value]]">
+      <settings-toggle-button class="continuation"
+          pref="{{prefs.settings.resolve_timezone_by_geolocation}}"
+          id="timeZoneAutoDetect"
+          aria-labelledby="timezoneGeolocateToggleLabel">
+      </settings-toggle-button>
+    </template>
     <div class="settings-box continuation embedded">
       <template is="dom-if" restamp
           if="[[!prefs.cros.flags.per_user_timezone_enabled.value]]">
