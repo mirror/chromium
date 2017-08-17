@@ -1720,7 +1720,8 @@ PDFiumPage::Area PDFiumEngine::GetCharIndex(const pp::Point& point,
 
   *page_index = page;
   return pages_[page]->GetCharIndex(point_in_page, current_rotation_,
-                                    char_index, form_type, target);
+                                    char_index, form_type, target,
+                                    client_->IsPrintPreview());
 }
 
 bool PDFiumEngine::OnMouseDown(const pp::MouseInputEvent& event) {

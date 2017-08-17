@@ -75,7 +75,8 @@ class PDFiumPage {
                     int rotation,
                     int* char_index,
                     int* form_type,
-                    LinkTarget* target);
+                    LinkTarget* target,
+                    bool is_print_preview);
 
   // Converts a form type to its corresponding Area.
   static Area FormTypeToArea(int form_type);

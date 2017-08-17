@@ -235,7 +235,8 @@ PDFiumPage::Area PDFiumPage::GetCharIndex(const pp::Point& point,
                                           int rotation,
                                           int* char_index,
                                           int* form_type,
-                                          LinkTarget* target) {
+                                          LinkTarget* target,
+                                          bool is_print_preview) {
   if (!available_)
     return NONSELECTABLE_AREA;
   pp::Point point2 = point - rect_.point();
@@ -250,7 +251,9 @@ PDFiumPage::Area PDFiumPage::GetCharIndex(const pp::Point& point,
                                       kTolerance);
   *char_index = rv;
 
-  FPDF_LINK link = FPDFLink_GetLinkAtPoint(GetPage(), new_x, new_y);
+  FPDF_LINK link = is_print_preview
+                       ? nullptr
+                       : FPDFLink_GetLinkAtPoint(GetPage(), new_x, new_y);
   int control =
       FPDFPage_HasFormFieldAtPoint(engine_->form(), GetPage(), new_x, new_y);
 
