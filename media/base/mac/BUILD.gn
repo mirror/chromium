@@ -49,7 +49,7 @@ source_set("unit_tests") {
   libs = [ "CoreVideo.framework" ]
   configs += [ "//media:media_config" ]
   deps = [
-    "//media/base",
+    "//media/base:test_support",
     "//testing/gtest",
     "//ui/gfx:color_space",
   ]
