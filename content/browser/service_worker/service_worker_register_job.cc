@@ -74,6 +74,7 @@ ServiceWorkerRegisterJob::ServiceWorkerRegisterJob(
       job_type_(REGISTRATION_JOB),
       pattern_(options.scope),
       script_url_(script_url),
+      update_via_cache_(options.update_via_cache),
       phase_(INITIAL),
       is_promise_resolved_(false),
       should_uninstall_on_failure_(false),
@@ -90,6 +91,7 @@ ServiceWorkerRegisterJob::ServiceWorkerRegisterJob(
     : context_(context),
       job_type_(UPDATE_JOB),
       pattern_(registration->pattern()),
+      update_via_cache_(registration->update_via_cache()),
       phase_(INITIAL),
       is_promise_resolved_(false),
       should_uninstall_on_failure_(false),
@@ -251,8 +253,10 @@ void ServiceWorkerRegisterJob::ContinueWithRegistration(
   }
 
   DCHECK(existing_registration->GetNewestVersion());
-  // "If scriptURL is equal to registration.[[ScriptURL]], then:"
-  if (existing_registration->GetNewestVersion()->script_url() == script_url_) {
+  // "If scriptURL is equal to registration.[[ScriptURL]] and
+  // "update_via_cache is equal to registration.[[update_via_cache]], then:"
+  if (existing_registration->GetNewestVersion()->script_url() == script_url_ &&
+      existing_registration->update_via_cache() == update_via_cache_) {
     // "Set registration.[[Uninstalling]] to false."
     existing_registration->AbortPendingClear(base::Bind(
         &ServiceWorkerRegisterJob::ContinueWithRegistrationForSameScriptUrl,
@@ -269,9 +273,12 @@ void ServiceWorkerRegisterJob::ContinueWithRegistration(
     return;
   }
 
+  // "Invoke Set Registration algorithm with job’s scope url and
+  // job’s update via cache mode."
+  existing_registration->set_update_via_cache(update_via_cache_);
+  set_registration(existing_registration);
   // "Return the result of running the [[Update]] algorithm, or its equivalent,
   // passing registration as the argument."
-  set_registration(existing_registration);
   UpdateAndContinue();
 }
 
@@ -317,7 +324,8 @@ void ServiceWorkerRegisterJob::RegisterAndContinue() {
   }
 
   set_registration(new ServiceWorkerRegistration(
-      ServiceWorkerRegistrationOptions(pattern_), registration_id, context_));
+      ServiceWorkerRegistrationOptions(pattern_, update_via_cache_),
+      registration_id, context_));
   AddRegistrationToMatchingProviderHosts(registration());
   UpdateAndContinue();
 }
@@ -343,8 +351,9 @@ void ServiceWorkerRegisterJob::ContinueWithRegistrationForSameScriptUrl(
   }
   set_registration(existing_registration);
 
-  // "If newestWorker is not null, and scriptURL is equal to
-  // newestWorker.scriptURL, then:
+  // "If newestWorker is not null, scriptURL is equal to newestWorker.scriptURL,
+  // and job’s update via cache mode's value equals registration’s
+  // update via cache mode then:
   // Return a promise resolved with registration."
   // We resolve only if there's an active version. If there's not,
   // then there is either no version or only a waiting version from

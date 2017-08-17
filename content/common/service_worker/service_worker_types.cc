@@ -143,14 +143,23 @@ bool ServiceWorkerObjectInfo::IsValid() const {
          version_id != kInvalidServiceWorkerVersionId;
 }
 
+ServiceWorkerRegistrationOptions::ServiceWorkerRegistrationOptions()
+    : update_via_cache(blink::WebServiceWorkerUpdateViaCache::kImports) {}
+
 ServiceWorkerRegistrationOptions::ServiceWorkerRegistrationOptions(
     const GURL& scope)
-    : scope(scope) {}
+    : ServiceWorkerRegistrationOptions(
+          scope,
+          blink::WebServiceWorkerUpdateViaCache::kImports) {}
+
+ServiceWorkerRegistrationOptions::ServiceWorkerRegistrationOptions(
+    const GURL& scope,
+    blink::WebServiceWorkerUpdateViaCache update_via_cache)
+    : scope(scope), update_via_cache(update_via_cache) {}
 
 ServiceWorkerRegistrationObjectInfo::ServiceWorkerRegistrationObjectInfo()
     : handle_id(kInvalidServiceWorkerRegistrationHandleId),
-      registration_id(kInvalidServiceWorkerRegistrationId) {
-}
+      registration_id(kInvalidServiceWorkerRegistrationId) {}
 
 ServiceWorkerClientQueryOptions::ServiceWorkerClientQueryOptions()
     : client_type(blink::kWebServiceWorkerClientTypeWindow),

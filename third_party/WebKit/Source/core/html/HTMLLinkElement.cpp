@@ -46,6 +46,19 @@
 
 namespace blink {
 
+namespace {
+WebServiceWorkerUpdateViaCache ParseUpdateViaCache(const AtomicString& value) {
+  if (value == "imports")
+    return WebServiceWorkerUpdateViaCache::kImports;
+  if (value == "all")
+    return WebServiceWorkerUpdateViaCache::kAll;
+  if (value == "none")
+    return WebServiceWorkerUpdateViaCache::kNone;
+  // Default value
+  return WebServiceWorkerUpdateViaCache::kImports;
+}
+}  // namespace
+
 using namespace HTMLNames;
 
 inline HTMLLinkElement::HTMLLinkElement(Document& document,
@@ -54,6 +67,7 @@ inline HTMLLinkElement::HTMLLinkElement(Document& document,
       link_loader_(LinkLoader::Create(this)),
       sizes_(DOMTokenList::Create(*this, HTMLNames::sizesAttr)),
       rel_list_(RelList::Create(this)),
+      update_via_cache_(WebServiceWorkerUpdateViaCache::kImports),
       created_by_parser_(created_by_parser) {}
 
 HTMLLinkElement* HTMLLinkElement::Create(Document& document,
@@ -102,6 +116,9 @@ void HTMLLinkElement::ParseAttribute(
     Process();
   } else if (name == scopeAttr) {
     scope_ = value;
+    Process();
+  } else if (name == updateviacacheAttr) {
+    update_via_cache_ = ParseUpdateViaCache(value);
     Process();
   } else if (name == disabledAttr) {
     UseCounter::Count(GetDocument(), WebFeature::kHTMLLinkElementDisabled);

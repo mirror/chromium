@@ -24,6 +24,7 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerState.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerUpdateViaCache.h"
 #include "url/gurl.h"
 
 // This file is to have common definitions that are to be shared by
@@ -188,10 +189,13 @@ struct CONTENT_EXPORT ServiceWorkerObjectInfo {
 // Represents options for register():
 // https://w3c.github.io/ServiceWorker/#dictdef-registrationoptions
 struct CONTENT_EXPORT ServiceWorkerRegistrationOptions {
-  ServiceWorkerRegistrationOptions() = default;
+  ServiceWorkerRegistrationOptions();
   explicit ServiceWorkerRegistrationOptions(const GURL& scope);
+  ServiceWorkerRegistrationOptions(
+      const GURL& scope,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache);
   GURL scope;
-  // TODO(yuryu): Other values will be added as they are supported later.
+  blink::WebServiceWorkerUpdateViaCache update_via_cache;
 };
 
 struct CONTENT_EXPORT ServiceWorkerRegistrationObjectInfo {

@@ -213,6 +213,10 @@ class ServiceWorkerJobTest : public testing::Test {
       const GURL& pattern,
       const GURL& script_url,
       ServiceWorkerStatusCode expected_status = SERVICE_WORKER_OK);
+  scoped_refptr<ServiceWorkerRegistration> RunRegisterJob(
+      const GURL& script_url,
+      const ServiceWorkerRegistrationOptions& options,
+      ServiceWorkerStatusCode expected_status = SERVICE_WORKER_OK);
   void RunUnregisterJob(
       const GURL& pattern,
       ServiceWorkerStatusCode expected_status = SERVICE_WORKER_OK);
@@ -228,13 +232,13 @@ class ServiceWorkerJobTest : public testing::Test {
 };
 
 scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
-    const GURL& pattern,
     const GURL& script_url,
+    const ServiceWorkerRegistrationOptions& options,
     ServiceWorkerStatusCode expected_status) {
   scoped_refptr<ServiceWorkerRegistration> registration;
   bool called;
   job_coordinator()->Register(
-      script_url, ServiceWorkerRegistrationOptions(pattern), nullptr,
+      script_url, options, nullptr,
       SaveRegistration(expected_status, &called, &registration));
   EXPECT_TRUE(is_job_timer_running());
   EXPECT_FALSE(called);
@@ -242,6 +246,14 @@ scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
   EXPECT_TRUE(called);
   EXPECT_FALSE(is_job_timer_running());
   return registration;
+}
+
+scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
+    const GURL& pattern,
+    const GURL& script_url,
+    ServiceWorkerStatusCode expected_status) {
+  return RunRegisterJob(script_url, ServiceWorkerRegistrationOptions(pattern),
+                        expected_status);
 }
 
 void ServiceWorkerJobTest::RunUnregisterJob(
@@ -561,6 +573,56 @@ TEST_F(ServiceWorkerJobTest, RegisterDuplicateScript) {
   ASSERT_EQ(new_registration, old_registration);
 }
 
+// Make sure that when registering a duplicate pattern+script_url with a
+// different update_via_cache value, that the value is updated.
+TEST_F(ServiceWorkerJobTest, RegisterWithDifferentUpdateViaCache) {
+  // During registration, handles will be created for hosting the worker's
+  // context. KeepHandlesDispatcherHost will store the handles.
+  scoped_refptr<KeepHandlesDispatcherHost> dispatcher_host =
+      new KeepHandlesDispatcherHost(
+          helper_->mock_render_process_id(),
+          helper_->browser_context()->GetResourceContext());
+  helper_->RegisterDispatcherHost(helper_->mock_render_process_id(),
+                                  dispatcher_host);
+  dispatcher_host->Init(helper_->context_wrapper());
+
+  GURL pattern("http://www.example.com/");
+  GURL script_url("http://www.example.com/service_worker.js");
+  ServiceWorkerRegistrationOptions options(pattern);
+
+  scoped_refptr<ServiceWorkerRegistration> old_registration =
+      RunRegisterJob(script_url, options);
+
+  ASSERT_EQ(blink::WebServiceWorkerUpdateViaCache::kImports,
+            old_registration->update_via_cache());
+
+  // Ensure that the registration's handle doesn't have the reference.
+  EXPECT_EQ(1UL, dispatcher_host->registration_handles().size());
+  dispatcher_host->RemoveHandles();
+  EXPECT_EQ(0UL, dispatcher_host->registration_handles().size());
+  ASSERT_TRUE(old_registration->HasOneRef());
+
+  scoped_refptr<ServiceWorkerRegistration> old_registration_by_pattern =
+      FindRegistrationForPattern(pattern);
+
+  ASSERT_TRUE(old_registration_by_pattern.get());
+
+  options.update_via_cache = blink::WebServiceWorkerUpdateViaCache::kNone;
+  scoped_refptr<ServiceWorkerRegistration> new_registration =
+      RunRegisterJob(script_url, options);
+
+  ASSERT_EQ(old_registration, new_registration);
+  ASSERT_EQ(blink::WebServiceWorkerUpdateViaCache::kNone,
+            new_registration->update_via_cache());
+
+  ASSERT_FALSE(old_registration->HasOneRef());
+
+  scoped_refptr<ServiceWorkerRegistration> new_registration_by_pattern =
+      FindRegistrationForPattern(pattern);
+
+  ASSERT_EQ(new_registration, old_registration);
+}
+
 class FailToStartWorkerTestHelper : public EmbeddedWorkerTestHelper {
  public:
   FailToStartWorkerTestHelper() : EmbeddedWorkerTestHelper(base::FilePath()) {}
@@ -632,7 +694,10 @@ TEST_F(ServiceWorkerJobTest, ParallelRegNewScript) {
   bool registration1_called = false;
   scoped_refptr<ServiceWorkerRegistration> registration1;
   job_coordinator()->Register(
-      script_url1, ServiceWorkerRegistrationOptions(pattern), nullptr,
+      script_url1,
+      ServiceWorkerRegistrationOptions(
+          pattern, blink::WebServiceWorkerUpdateViaCache::kNone),
+      nullptr,
       SaveRegistration(SERVICE_WORKER_OK, &registration1_called,
                        &registration1));
 
@@ -640,7 +705,10 @@ TEST_F(ServiceWorkerJobTest, ParallelRegNewScript) {
   bool registration2_called = false;
   scoped_refptr<ServiceWorkerRegistration> registration2;
   job_coordinator()->Register(
-      script_url2, ServiceWorkerRegistrationOptions(pattern), nullptr,
+      script_url2,
+      ServiceWorkerRegistrationOptions(
+          pattern, blink::WebServiceWorkerUpdateViaCache::kAll),
+      nullptr,
       SaveRegistration(SERVICE_WORKER_OK, &registration2_called,
                        &registration2));
 

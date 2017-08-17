@@ -73,6 +73,7 @@ void VerifyRegistrationData(const RegistrationData& expected,
   EXPECT_EQ(expected.foreign_fetch_scopes, actual.foreign_fetch_scopes);
   EXPECT_EQ(expected.foreign_fetch_origins, actual.foreign_fetch_origins);
   EXPECT_EQ(expected.used_features, actual.used_features);
+  EXPECT_EQ(expected.update_via_cache, actual.update_via_cache);
 }
 
 void VerifyResourceRecords(const std::vector<Resource>& expected,
@@ -571,6 +572,7 @@ TEST(ServiceWorkerDatabaseTest, GetAllRegistrations) {
   data2.script = URL(origin2, "/script2.js");
   data2.version_id = 2000;
   data2.resources_total_size_bytes = 200;
+  data2.update_via_cache = blink::WebServiceWorkerUpdateViaCache::kNone;
   std::vector<Resource> resources2;
   resources2.push_back(CreateResource(2, data2.script, 200));
   ASSERT_EQ(ServiceWorkerDatabase::STATUS_OK,
@@ -798,6 +800,7 @@ TEST(ServiceWorkerDatabaseTest, Registration_Overwrite) {
   updated_data.foreign_fetch_origins.push_back(
       url::Origin(GURL("https://example.com")));
   updated_data.used_features = {109, 421, 9101};
+  updated_data.update_via_cache = blink::WebServiceWorkerUpdateViaCache::kAll;
   std::vector<Resource> resources2;
   resources2.push_back(CreateResource(3, URL(origin, "/resource3"), 12));
   resources2.push_back(CreateResource(4, URL(origin, "/resource4"), 13));
@@ -1193,6 +1196,7 @@ TEST(ServiceWorkerDatabaseTest, UserData_DataIsolation) {
   data2.script = URL(kOrigin, "/script2.js");
   data2.version_id = 201;
   data2.resources_total_size_bytes = 200;
+  data2.update_via_cache = blink::WebServiceWorkerUpdateViaCache::kImports;
   std::vector<Resource> resources2;
   resources2.push_back(CreateResource(2, data2.script, 200));
 

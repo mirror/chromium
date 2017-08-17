@@ -86,6 +86,11 @@ void WebServiceWorkerRegistrationImpl::SetActive(
     queued_tasks_.push_back(QueuedTask(ACTIVE, service_worker));
 }
 
+void WebServiceWorkerRegistrationImpl::SetRegistrationHandleReference(
+    std::unique_ptr<ServiceWorkerRegistrationHandleReference> handle_ref) {
+  handle_ref_ = std::move(handle_ref);
+}
+
 void WebServiceWorkerRegistrationImpl::OnUpdateFound() {
   if (proxy_)
     proxy_->DispatchUpdateFoundEvent();
@@ -121,6 +126,11 @@ WebServiceWorkerRegistrationImpl::Proxy() {
 
 blink::WebURL WebServiceWorkerRegistrationImpl::Scope() const {
   return handle_ref_->scope();
+}
+
+blink::WebServiceWorkerUpdateViaCache
+WebServiceWorkerRegistrationImpl::UpdateViaCache() const {
+  return handle_ref_->update_via_cache();
 }
 
 void WebServiceWorkerRegistrationImpl::Update(

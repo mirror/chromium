@@ -12,6 +12,10 @@
 #include "content/public/browser/service_worker_usage_info.h"
 #include "url/gurl.h"
 
+namespace blink {
+enum class WebServiceWorkerUpdateViaCache;
+}  // namespace blink
+
 namespace content {
 
 class ServiceWorkerContextObserver;
@@ -81,9 +85,10 @@ class ServiceWorkerContext {
   virtual void RemoveObserver(ServiceWorkerContextObserver* observer) = 0;
 
   // Equivalent to calling navigator.serviceWorker.register(script_url, {scope:
-  // pattern}) from a renderer, except that |pattern| is an absolute URL instead
-  // of relative to some current origin.  |callback| is passed true when the JS
-  // promise is fulfilled or false when the JS promise is rejected.
+  // pattern, updateViaCache: update_via_cache}) from a renderer, except that
+  // |pattern| is an absolute URL instead of relative to some current origin.
+  // |callback| is passed true when the JS promise is fulfilled or false when
+  // the JS promise is rejected.
   //
   // The registration can fail if:
   //  * |script_url| is on a different origin from |pattern|
@@ -94,9 +99,11 @@ class ServiceWorkerContext {
   //
   // This function can be called from any thread, but the callback will always
   // be called on the UI thread.
-  virtual void RegisterServiceWorker(const Scope& pattern,
-                                     const GURL& script_url,
-                                     const ResultCallback& callback) = 0;
+  virtual void RegisterServiceWorker(
+      const Scope& pattern,
+      const GURL& script_url,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache,
+      const ResultCallback& callback) = 0;
 
   // Mechanism for embedder to increment/decrement ref count of a service
   // worker.
