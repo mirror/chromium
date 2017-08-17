@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37f6a310_8422c4aa",
+        "filename": "ash/frame/custom_frame_view_ash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-17T20:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b323ff_c0f3bdf9",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "559e18ca_3ce37abc",
         "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ca301c98_c2a26b4a",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-17T20:15:42Z",
+      "side": 1,
+      "message": "There are test for immersive mode in chrome_native_app_views_aura_ash_browsertest since the app is the owner of the immersive controller.",
+      "parentUuid": "559e18ca_3ce37abc",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49734329_eb3b3899",
         "filename": "extensions/browser/app_window/app_window.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T17:10:48Z",
       "side": 1,
       "message": "Instead of this, how about just adding immersive_fullscreen_controller_for_test() to the class, like the other test getters? Code in //extensions shouldn\u0027t be referencing classes from Chrome.",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07b0d89_ddd4174d",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-17T20:15:42Z",
+      "side": 1,
+      "message": "I didn\u0027t quite do your suggestion because I need the private native app member in app window but i did remove the chrome reference.",
+      "parentUuid": "49734329_eb3b3899",
       "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
