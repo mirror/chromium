@@ -8,8 +8,48 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <type_traits>
+#include <utility>
 
 namespace base {
+
+template <typename T>
+class Span;
+
+namespace internal {
+
+template <typename T>
+struct IsSpanImpl : std::false_type {};
+
+template <typename T>
+struct IsSpanImpl<Span<T>> : std::true_type {};
+
+template <typename T>
+using IsSpan = IsSpanImpl<std::decay_t<T>>;
+
+template <typename U, typename T>
+using IsLegalSpanConversion =
+    std::integral_constant<bool, std::is_convertible<U*, T*>::value>;
+
+template <typename C, typename T>
+using ContainerHasConvertibleData = IsLegalSpanConversion<
+    std::remove_pointer_t<decltype(std::declval<C>().data())>,
+    T>;
+template <typename C>
+using ContainerHasIntegralSize =
+    std::is_integral<decltype(std::declval<C>().size())>;
+
+template <typename U, typename T>
+using EnableIfLegalSpanConversion =
+    std::enable_if_t<IsLegalSpanConversion<U, T>::value>;
+// The proposal also ZZ
+template <typename C, typename T>
+using EnableIfSpanCompatibleContainer =
+    std::enable_if_t<!internal::IsSpan<C>::value &&
+                     ContainerHasConvertibleData<C, T>::value &&
+                     ContainerHasIntegralSize<C>::value>;
+
+}  // namespace internal
 
 // A Span represents an array of elements of type T. It consists of a pointer to
 // memory with an associated size. A Span does not own the underlying memory, so
@@ -19,6 +59,17 @@ namespace base {
 // Span is somewhat analogous to StringPiece, but with arbitrary element types,
 // allowing mutation if T is non-const.
 //
+// Span differs from the C++ working group proposal in a number of ways:
+// - Span does not define the |element_type| and |index_type| type aliases.
+// - Span does not define operator().
+// - Span does not define bytes(), size_bytes(), as_bytes(), as_mutable_bytes()
+//   for working with spans as a sequence of bytes.
+// - Span has no extent template parameter.
+// - Span has no conversion constructors from std::unique_ptr or
+//   std::shared_ptr.
+// - Span has no reverse iterators.
+// - Span does not define relation operators other than == and !=.
+//
 // TODO(https://crbug.com/754077): Document differences from the working group
 // proposal: http://open-std.org/JTC1/SC22/WG21/docs/papers/2016/p0122r1.pdf.
 // TODO(https://crbug.com/754077): Implement more Span support, such as
@@ -26,18 +77,42 @@ namespace base {
 // safety since no need to manually pass in data + size)
 template <typename T>
 class Span {
+ private:
  public:
-  using element_type = T;
+  using value_type = T;
   using pointer = T*;
   using reference = T&;
   using iterator = T*;
   using const_iterator = const T*;
   // TODO(dcheng): What about reverse iterators?
 
+  // Span constructors, copy, assignment, and destructor
   constexpr Span() noexcept : data_(nullptr), size_(0) {}
   constexpr Span(T* data, size_t size) noexcept : data_(data), size_(size) {}
   template <size_t N>
-  constexpr Span(T (&array)[N]) noexcept : data_(array), size_(N) {}
+  constexpr Span(T (&array)[N]) noexcept : Span(array, N) {}
+  // Conversion from a container that provides |T* data()| and |integral_type
+  // size()|.
+  // TODO(dcheng): Should this be explicit for mutable spans?
+  template <typename C,
+            typename = internal::EnableIfSpanCompatibleContainer<C, T>>
+  constexpr Span(C& container) : Span(container.data(), container.size()) {}
+  // Disallow conversion from a container going out of scope, since the
+  // resulting span will just point to dangling memory.
+  template <typename C,
+            typename = internal::EnableIfSpanCompatibleContainer<C, T>>
+  Span(const C&&) = delete;
+  constexpr Span(const Span&) noexcept = default;
+  constexpr Span(Span&&) noexcept = default;
+  ~Span() noexcept = default;
+  // Conversions from spans of compatible types: this allows a Span<T> to be
+  // seamlessly used as a Span<const T>, but not the other way around.
+  template <typename U, typename = internal::EnableIfLegalSpanConversion<U, T>>
+  constexpr Span(const Span<U>& other) : Span(other.data(), other.size()) {}
+  template <typename U, typename = internal::EnableIfLegalSpanConversion<U, T>>
+  constexpr Span(Span<U>&& other) : Span(other.data(), other.size()) {}
+  constexpr Span& operator=(const Span&) noexcept = default;
+  constexpr Span& operator=(Span&&) noexcept = default;
 
   // Span subviews
   constexpr Span subspan(size_t pos, size_t count) const {
@@ -87,6 +162,13 @@ constexpr Span<T> MakeSpan(T* data, size_t size) noexcept {
 template <typename T, size_t N>
 constexpr Span<T> MakeSpan(T (&array)[N]) noexcept {
   return Span<T>(array);
+}
+
+template <typename C,
+          typename T = typename C::value_type,
+          typename = internal::EnableIfSpanCompatibleContainer<C, T>>
+constexpr Span<T> MakeSpan(C& container) {
+  return Span<T>(container);
 }
 
 }  // namespace base
