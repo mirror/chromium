@@ -149,8 +149,14 @@ public class MostVisitedSitesBridge
             String[] whitelistIconPaths, int[] sources) {
         // Don't notify observer if we've already been destroyed.
         if (mNativeMostVisitedSitesBridge != 0) {
-            mWrappedObserver.onSiteSuggestionsAvailable(
-                    buildSiteSuggestions(titles, urls, sections, whitelistIconPaths, sources));
+            List<SiteSuggestion> suggestions = new ArrayList<>();
+            for (int i = 1; i < 6; i++) {
+                int[] currSections = {i, i, i, i, i, i, i, i, i, i, i};
+                suggestions.addAll(buildSiteSuggestions(
+                        titles, urls, currSections, whitelistIconPaths, sources));
+            }
+
+            mWrappedObserver.onSiteSuggestionsAvailable(suggestions);
         }
     }
 

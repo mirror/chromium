@@ -38,7 +38,7 @@ public class TileGridLayout extends FrameLayout {
      * Constructor for inflating from XML.
      *
      * @param context The view context in which this item will be shown.
-     * @param attrs The attributes of the XML tag that is inflating the view.
+     * @param attrs   The attributes of the XML tag that is inflating the view.
      */
     public TileGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -156,7 +156,7 @@ public class TileGridLayout extends FrameLayout {
     /**
      * Returns a list of {@link TileView}s in the order that they should be displayed in the tile
      * grid. The {@link TileView}s in the list are the children of the {@link TileGridLayout}.
-     *
+     * <p>
      * If there is a home page tile view, it is put on the first row of the grid. If its original
      * position is on the first row, we keep that position, otherwise we put it as the last tile on
      * the first row and shift all following tiles.
