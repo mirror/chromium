@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "089f4e12_c080cc3d",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T23:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fa4aaf_42ca76e2",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "6d4f9b61bd54f762cfc32d161adcde7147cf22b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4657c6c_5920684c",
         "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T23:04:20Z",
       "side": 1,
       "message": "bool has_blur_cache \u003d blur_sigma \u003e 0.0f;\nif (has_blur_cache !\u003d has_blur_cache_) {\n  if (has_blur_cache)\n     ...\n  else\n     ...\n  has_blur_cache_ \u003d has_blur_cache;\n}",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "6d4f9b61bd54f762cfc32d161adcde7147cf22b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ac006d_16ebb19e",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T23:48:49Z",
+      "side": 1,
+      "message": "Thanks, I missed this part. Have not thought we might multiply the request.",
+      "parentUuid": "d4657c6c_5920684c",
       "range": {
         "startLine": 143,
         "startChar": 2,
