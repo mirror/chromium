@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "29b14031_406ccdaf",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-17T23:20:25Z",
+      "side": 1,
+      "message": "That is my understanding. I believe we are now promoting 64-bit Chrome for users whose machines can support it. wfh knows the full story, if you want to ask.",
+      "parentUuid": "f7b1d94a_275aea3f",
+      "range": {
+        "startLine": 76,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "d3e71deb7c768bfe82d417cc721bbd6fbbdab347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9af3063f_50cc36cd",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Good question. From that article, I would expect 1/2 GB to require 1 MB of memory. Of course, those numbers must be for 64 bit systems, so I\u0027m not sure how much physical memory this will consume. We did something similar for Native Client, though NaCl had the whole process to itself.\n\nhttps://cs.chromium.org/chromium/src/components/nacl/browser/nacl_process_host.cc?rcl\u003d05b564e44b5289fa86ee281eb308f7437ec3299e\u0026l\u003d170",
       "parentUuid": "9af3063f_50cc36cd",
+      "range": {
+        "startLine": 81,
+        "startChar": 42,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "d3e71deb7c768bfe82d417cc721bbd6fbbdab347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dbcc8c_4d3df9ed",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-17T23:20:25Z",
+      "side": 1,
+      "message": "And, only on systems \u003c 8.1. (Which I suppose the 32-bit-only systems are more likely to be.) But, given that the alternative is that WASM applications don\u0027t work at all, it seems a reasonable price to pay.",
+      "parentUuid": "182409ef_dac44cbe",
       "range": {
         "startLine": 81,
         "startChar": 42,
