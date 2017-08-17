@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da98d4dd_737d37c8",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T21:16:22Z",
+      "side": 1,
+      "message": "This was actually shockingly bad, since it meant that we\u0027d always calculate the hashed id even if the blacklist was empty.  Yuck!",
+      "revId": "4fc3cc7b879d98ff6f02bef5b67c96f593893031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
