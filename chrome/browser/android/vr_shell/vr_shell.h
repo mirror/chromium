@@ -191,6 +191,8 @@ class VrShell : device::GvrGamepadDataProvider,
   void SetWebVRSecureOrigin(bool secure_origin);
   void UpdateVSyncInterval(base::TimeTicks vsync_timebase,
                            base::TimeDelta vsync_interval);
+  void ShowAlertDialog(base::string16 txt_msg);
+  void AddButtonToAlertDialog(base::string16 txt_msg);
   void CreateVRDisplayInfo(
       const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
       uint32_t device_id);

@@ -326,6 +326,14 @@ void VrShellDelegate::OnWebContentsFocused(content::RenderWidgetHost* host) {
   OnFocusedAndActivatable(it->second);
 }
 
+void VrShellDelegate::AddAlertDialog(base::string16 txt_msg) {
+  vr_shell_->ShowAlertDialog(txt_msg);
+}
+
+void VrShellDelegate::AddButton(base::string16 txt_msg) {
+  vr_shell_->AddButtonToAlertDialog(txt_msg);
+}
+
 void VrShellDelegate::OnWebContentsLostFocus(content::RenderWidgetHost* host) {
   auto it = displays_.find(host);
   if (it == displays_.end())
