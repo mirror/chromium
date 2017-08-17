@@ -8,7 +8,6 @@
 
 #include "ash/gpu_support_stub.h"
 #include "ash/mus/accessibility_delegate_mus.h"
-#include "ash/mus/context_menu_mus.h"
 #include "ash/mus/system_tray_delegate_mus.h"
 #include "ash/mus/wallpaper_delegate_mus.h"
 #include "ash/palette_delegate.h"
@@ -101,11 +100,6 @@ std::unique_ptr<PaletteDelegate> ShellDelegateMus::CreatePaletteDelegate() {
   // TODO: http://crbug.com/647417.
   NOTIMPLEMENTED();
   return nullptr;
-}
-
-ui::MenuModel* ShellDelegateMus::CreateContextMenu(Shelf* shelf,
-                                                   const ShelfItem* item) {
-  return new ContextMenuMus(shelf);
 }
 
 GPUSupport* ShellDelegateMus::CreateGPUSupport() {
