@@ -1,0 +1,294 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3c72bf_9634e7b3",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "|dialog_message_view| is never added to the hierarchy. I think you want\n\n  views::GridLayout* layout \u003d views::GridLayout::CreatePanel(this);",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896efeaf_b6d4859c",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "the layout has 3 columns, but only the first column is used.\n\nYou probably want to set up the GridLayout similar to ConfirmBubbleViews::ConfirmBubbleViews - https://cs.chromium.org/chromium/src/chrome/browser/ui/views/confirm_bubble_views.cc?q\u003dConfirmBubbleViews\u0026sq\u003dpackage:chromium\u0026l\u003d20",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a367b9_9630b926",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "I think you can remove |button_clicked_| and just check `if (done_callback_)` instead",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efee82a4_afdb3550",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "NOTREACHED()\n\n(and return base::string16() at the end of the method). i.e. similar to how DialogDelegate::GetDialogButtonLabel() does it)",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cd1be7_74e00de1",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "Do you actually need to inherit from TabModalConfirmDialogDelegate? There isn\u0027t much in Chrome that uses it -- mostly Cocoa. I think you can drop it. (it\u0027s likely we can deprecate TabModalConfirmDialogDelegate entirely)",
+      "range": {
+        "startLine": 20,
+        "startChar": 40,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb71e2f_6765852d",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "these are actually views::DialogDelegateView overrides - the methods in TabModalConfirmDialogDelegate are non-virtual",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39caa838_6a316b03",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "Chrome\u0027s coming around to the idea that overridden methods shouldn\u0027t be \"more private\" than the parent class - this can probably move down to the data members.",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588055d2_e8672d0a",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "all the overridden methods should be listed in the same order of the parent classes (and those in the order that inheritance happens).\n\ni.e. WidgetDelegate overrides first, in the order they appear in widget_delegate.h - GetModalType,GetWindowTitle,ShouldShowCloseButton, etc.",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19b9553_90a8e452",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "blank line before",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fd54ee_0af52861",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "nit: \n  // DialogBrowserTest:",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf58903a_c6ed44d7",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5f2b29_2d0a9ddb",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "optional: Style guide allows data members in test harnesses to be protected:, in which case you can drop the accessor methods above",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e350db_01ad6471",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "nit (if you keep members in private:) blank line before this.",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8711305a_9896d096",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "perhaps `\"ShowDialog\"` -\u003e `base::string16()` so it\u0027s clear the argument really doesn\u0027t matter",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f475b9_7f88e5bf",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "These should use dialog-\u003eGetDialogClientView()-\u003eAcceptWindow() / CancelWindow() or dialog-\u003eGetWidget()-\u003eClose()\n\n(followed by base::RunLoop().RunUntilIdle())\n\notherwise, the dialog doesn\u0027t actually close until the tab that owns it is closed.",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be122960_c4b4fbf1",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T02:52:09Z",
+      "side": 1,
+      "message": "remove semicolon",
+      "range": {
+        "startLine": 195,
+        "startChar": 60,
+        "endLine": 195,
+        "endChar": 61
+      },
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
