@@ -112,7 +112,8 @@ Layer::Layer()
       delegate_(NULL),
       owner_(NULL),
       cc_layer_(NULL),
-      device_scale_factor_(1.0f) {
+      device_scale_factor_(1.0f),
+      render_surface_cache_requests_(0) {
   CreateCcLayer();
 }
 
@@ -139,7 +140,8 @@ Layer::Layer(LayerType type)
       delegate_(NULL),
       owner_(NULL),
       cc_layer_(NULL),
-      device_scale_factor_(1.0f) {
+      device_scale_factor_(1.0f),
+      render_surface_cache_requests_(0) {
   CreateCcLayer();
 }
 
@@ -665,7 +667,10 @@ void Layer::SwitchCCLayerForTest() {
 // new cc::Layer. There could be a whole subtree and the root changed, but does
 // not mean we want to treat the cache all different.
 void Layer::SetCacheRenderSurface(bool cache_render_surface) {
-  cc_layer_->SetCacheRenderSurface(cache_render_surface);
+  render_surface_cache_requests_ += cache_render_surface ? 1 : -1;
+  TRACE_COUNTER_ID1("ui", "RenderSurfaceCacheRequests", this,
+                    render_surface_cache_requests_);
+  cc_layer_->SetCacheRenderSurface(render_surface_cache_requests_ > 0);
 }
 
 void Layer::SetTextureMailbox(
@@ -1183,6 +1188,10 @@ int Layer::GetFrameNumber() const {
 float Layer::GetRefreshRate() const {
   const Compositor* compositor = GetCompositor();
   return compositor ? compositor->refresh_rate() : 60.0;
+}
+
+ui::Layer* Layer::GetLayer() {
+  return this;
 }
 
 cc::Layer* Layer::GetCcLayer() const {

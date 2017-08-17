@@ -117,6 +117,10 @@ TestLayerAnimationDelegate::GetLayerAnimatorCollection() {
   return NULL;
 }
 
+ui::Layer* TestLayerAnimationDelegate::GetLayer() {
+  return NULL;
+}
+
 cc::Layer* TestLayerAnimationDelegate::GetCcLayer() const {
   return cc_layer_.get();
 }

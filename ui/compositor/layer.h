@@ -461,6 +461,7 @@ class COMPOSITOR_EXPORT Layer
   SkColor GetColorForAnimation() const override;
   float GetTemperatureFromAnimation() const override;
   float GetDeviceScaleFactor() const override;
+  ui::Layer* GetLayer() override;
   cc::Layer* GetCcLayer() const override;
   LayerThreadedAnimationDelegate* GetThreadedAnimationDelegate() override;
   LayerAnimatorCollection* GetLayerAnimatorCollection() override;
@@ -593,6 +594,11 @@ class COMPOSITOR_EXPORT Layer
   // The size of the frame or texture in DIP, set when SetShowDelegatedContent
   // or SetTextureMailbox was called.
   gfx::Size frame_size_in_dip_;
+
+  // The counter to maintain how many times cache render surface has been set.
+  // If the value > 0, means we need to cache the render surface. If the value
+  // <= 0, means we should not cache the render surface.
+  int64_t render_surface_cache_requests_;
 
   DISALLOW_COPY_AND_ASSIGN(Layer);
 };
