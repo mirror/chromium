@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3fa1011_a838bfe3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-17T03:57:51Z",
+      "side": 1,
+      "message": "Sorry, should have noticed that. Thanks for pointing it out!",
+      "parentUuid": "8ee9a83d_3428d638",
+      "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b9f545_d139130b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5d2b2b9d_bf1d9527",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-17T03:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b9f545_d139130b",
+      "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af676422_6c5b3b06",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21fe36d_acbf6aff",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-17T03:57:51Z",
+      "side": 1,
+      "message": "Good call! I don\u0027t know why I didn\u0027t think of that. Thanks for the tip!",
+      "parentUuid": "af676422_6c5b3b06",
+      "revId": "aa67d8cc8e1b9b33f2ff8762a7ed893e38973c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
