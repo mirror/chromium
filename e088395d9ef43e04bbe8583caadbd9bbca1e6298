@@ -70,6 +70,24 @@
       "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ce9802_96c65403",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-17T20:20:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3afc09a8_411f14ac",
+      "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
