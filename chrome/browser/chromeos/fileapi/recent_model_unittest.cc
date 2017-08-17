@@ -8,6 +8,7 @@
 
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/histogram_tester.h"
 #include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "chrome/browser/chromeos/fileapi/recent_model_factory.h"
@@ -84,6 +85,14 @@ TEST_F(RecentModelTest, GetRecentFiles) {
   EXPECT_EQ("bbb.jpg", files[1].path().value());
   EXPECT_EQ("ccc.jpg", files[2].path().value());
   EXPECT_EQ("ddd.jpg", files[3].path().value());
+}
+
+TEST_F(RecentModelTest, GetRecentFiles_UmaStats) {
+  base::HistogramTester histogram_tester;
+
+  BuildModelAndGetRecentFiles({});
+
+  histogram_tester.ExpectTotalCount(RecentModel::kLoadHistogramName, 1);
 }
 
 }  // namespace

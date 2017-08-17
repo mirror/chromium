@@ -38,6 +38,8 @@ class RecentModel : public KeyedService {
   using GetRecentFilesCallback =
       base::OnceCallback<void(const RecentFileList& files)>;
 
+  static const char kLoadHistogramName[];
+
   ~RecentModel() override;
 
   // Returns an instance for the given profile.
@@ -68,6 +70,9 @@ class RecentModel : public KeyedService {
 
   // Timer to clear the cache.
   base::OneShotTimer cache_clear_timer_;
+
+  // Time when the build started.
+  base::TimeTicks build_start_time_;
 
   // While a recent file list is built, this vector contains callbacks to be
   // invoked with the new list.

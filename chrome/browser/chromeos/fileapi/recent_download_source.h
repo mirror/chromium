@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/time/time.h"
 #include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
@@ -29,6 +30,8 @@ namespace chromeos {
 // All member functions must be called on the UI thread.
 class RecentDownloadSource : public RecentSource {
  public:
+  static const char kLoadHistogramName[];
+
   explicit RecentDownloadSource(Profile* profile);
   RecentDownloadSource(Profile* profile, size_t max_num_files);
   ~RecentDownloadSource() override;
@@ -60,6 +63,8 @@ class RecentDownloadSource : public RecentSource {
   RecentContext context_;
   GetRecentFilesCallback callback_;
 
+  // Time when the build started.
+  base::TimeTicks build_start_time_;
   // Number of ReadDirectory() calls in flight.
   int inflight_readdirs_ = 0;
   // Number of GetMetadata() calls in flight.
