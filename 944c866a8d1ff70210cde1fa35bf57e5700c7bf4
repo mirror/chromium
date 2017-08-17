@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8092871b_d0605b3d",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-17T23:36:52Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "5925cb4a_16c4f4ef",
+      "range": {
+        "startLine": 180,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 16
+      },
+      "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c52bf4e_944939dc",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-17T22:51:14Z",
       "side": 1,
       "message": "Why do we need to animate opacity individually on children? Opacity are inheritable from parent. Wouldn\u0027t animating on the widget\u0027s opacity to fade out everything just work?",
+      "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296b3a20_763ed543",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1786,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-17T23:36:52Z",
+      "side": 1,
+      "message": "Unless I\u0027m just not understanding what you mean, that\u0027s what we are currently doing  \n\nhttps://cs.chromium.org/chromium/src/ui/app_list/presenter/app_list_presenter_impl.cc?q\u003dApp_list_presenter_impl.cc\u0026dr\u0026l\u003d204 \n\nand it results in the whole widget\u0027s opacity shifting. The desired effect is that the opacity of the body of the launcher stays the same while it\u0027s contents animate to 0. We use a similar effect in the \"drag up from shelf\" gesture.",
+      "parentUuid": "5c52bf4e_944939dc",
       "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
