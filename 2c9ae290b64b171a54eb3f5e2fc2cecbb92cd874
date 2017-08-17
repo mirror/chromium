@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0d44c51_57ef34c5",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert_list_infinite_loop2.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T05:26:54Z",
+      "side": 1,
+      "message": "The test purpose is to ensure that there is no infinite loop. Please emphasize that in the test description.",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 34,
+        "endChar": 64
+      },
+      "revId": "2c9ae290b64b171a54eb3f5e2fc2cecbb92cd874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
