@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43a840c2_870cc86d",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T06:06:04Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll make RecentContext movable.",
+      "parentUuid": "c0aec453_40f67f3e",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a83fc93_d37bd3e1",
         "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac66710_bf6e0707",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T06:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a83fc93_d37bd3e1",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "79b4cd53_906298d0",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T06:06:04Z",
+      "side": 1,
+      "message": "Yes, it is strictly required to call base::OnceCallback.",
+      "parentUuid": "1c3b3cbc_d2eada7e",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "213c4cc0_9914dad1",
         "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d165e0bd_6485e2d3",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T06:06:04Z",
+      "side": 1,
+      "message": "Thanks for the pointer! I\u0027ve updated the patch to use those functions.",
+      "parentUuid": "213c4cc0_9914dad1",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "eea27db5405284b1d1c72155829dca88d227ac1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
