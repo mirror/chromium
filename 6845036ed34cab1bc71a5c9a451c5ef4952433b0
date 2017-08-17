@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b323ff_c0f3bdf9",
+        "filename": "ash/frame/custom_frame_view_ash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T17:10:48Z",
+      "side": 1,
+      "message": "nit: Do you need this? CustomFrameViewAshSizeLock doesn\u0027t seem to have a forward declaration. If you need it, alphabetize.",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49734329_eb3b3899",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T17:10:48Z",
+      "side": 1,
+      "message": "Instead of this, how about just adding immersive_fullscreen_controller_for_test() to the class, like the other test getters? Code in //extensions shouldn\u0027t be referencing classes from Chrome.",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
