@@ -466,6 +466,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_tree_(frame_tree),
       frame_tree_node_(frame_tree_node),
       parent_(nullptr),
+      last_committed_navigation_id_(0),
       render_widget_host_(nullptr),
       routing_id_(routing_id),
       is_waiting_for_swapout_ack_(false),
@@ -660,6 +661,10 @@ const GURL& RenderFrameHostImpl::GetLastCommittedURL() {
 
 const url::Origin& RenderFrameHostImpl::GetLastCommittedOrigin() {
   return last_committed_origin_;
+}
+
+int64_t RenderFrameHostImpl::GetLastCommittedNavigationId() {
+  return last_committed_navigation_id_;
 }
 
 gfx::NativeView RenderFrameHostImpl::GetNativeView() {
@@ -1307,6 +1312,10 @@ void RenderFrameHostImpl::OnCreateChildFrame(
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   last_committed_origin_ = origin;
   CSPContext::SetSelf(origin);
+}
+
+void RenderFrameHostImpl::SetLastCommittedNavigationId(int64_t navigation_id) {
+  last_committed_navigation_id_ = navigation_id;
 }
 
 void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
