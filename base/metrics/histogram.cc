@@ -568,8 +568,8 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
     bad_fields |= 1 << kLoggedBucketRangesField;
   else if (logged_samples_->id() == 0)
     bad_fields |= 1 << kIdField;
-  else if (HashMetricName(histogram_name()) != logged_samples_->id())
-    bad_fields |= 1 << kHistogramNameField;
+  // else if (HashMetricName(histogram_name()) != logged_samples_->id())
+  //   bad_fields |= 1 << kHistogramNameField;
   if (flags() == 0)
     bad_fields |= 1 << kFlagsField;
 
