@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f33bb30_51c4c7de",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/JSONView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-17T01:26:15Z",
+      "side": 1,
+      "message": "Did it also look bad in the Network panel?",
+      "revId": "cdbbbbfbd206f1051df74301e8b963b201ddeee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
