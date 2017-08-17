@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "274284f2_0e0782fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-success-no-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T12:08:42Z",
+      "side": 1,
+      "message": "Can you use access-control-basic-options-not-supported.py which is proposed in https://chromium-review.googlesource.com/c/616482?",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8584ce3e_a139ebed",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-post-success-no-content-type.py",
         "patchSetId": 1
@@ -16,6 +39,24 @@
       "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20b595d_0d753ee8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-post-success-no-content-type.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T12:08:42Z",
+      "side": 1,
+      "message": "I retract this comment.",
+      "parentUuid": "8584ce3e_a139ebed",
+      "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -39,6 +80,30 @@
       "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7fe51e_465a0ddc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-post-success-no-content-type.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T12:08:42Z",
+      "side": 1,
+      "message": "I retract this comment.",
+      "parentUuid": "2e2c9665_c9f63716",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
