@@ -114,6 +114,7 @@ MimeHandlerViewContainer::MimeHandlerViewContainer(
       original_url_(original_url),
       guest_proxy_routing_id_(-1),
       guest_loaded_(false),
+      guest_created_(false),
       weak_factory_(this) {
   DCHECK(!mime_type_.empty());
   is_embedded_ = !render_frame->GetWebFrame()->GetDocument().IsPluginDocument();
@@ -193,6 +194,13 @@ void MimeHandlerViewContainer::PluginDidReceiveData(const char* data,
 
 void MimeHandlerViewContainer::DidResizeElement(const gfx::Size& new_size) {
   element_size_ = new_size;
+
+  // Don't try to resize a guest that hasn't been created yet. It is enough to
+  // initialise |element_size_| here and then we'll send that to the browser
+  // during guest creation.
+  if (!guest_created_)
+    return;
+
   render_frame()->Send(new ExtensionsGuestViewHostMsg_ResizeGuest(
       render_frame()->GetRoutingID(), element_instance_id(), new_size));
 }
@@ -269,6 +277,8 @@ void MimeHandlerViewContainer::OnCreateMimeHandlerViewGuestACK(
     int element_instance_id) {
   DCHECK_NE(this->element_instance_id(), guest_view::kInstanceIDNone);
   DCHECK_EQ(this->element_instance_id(), element_instance_id);
+
+  guest_created_ = true;
 
   if (!render_frame())
     return;
