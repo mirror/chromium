@@ -84,6 +84,24 @@
       "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ff17df_a823e025",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:47:09Z",
+      "side": 1,
+      "message": "Ah, what I wrote is not right. When you do register() with a different update-via-cache, the spec considers it a brand new registration. So we don\u0027t need to have such an IPC notifying of changes.\n\nHowever, it doesn\u0027t really look right still that we are mutating an existing WebServiceWorkerRegistrationImpl. It seems the browser should be sending us a new handle_id, not an existing one, since the use_via_cache attribute should never change (if I\u0027m reading the spec correctly).",
+      "parentUuid": "082c6d88_748f9668",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
