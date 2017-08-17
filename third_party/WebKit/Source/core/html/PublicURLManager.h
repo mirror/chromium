@@ -54,7 +54,10 @@ class PublicURLManager final
   // |uuid|. It's not the UUID generated and appended to the BlobURL, but an
   // identifier for the object to which URL(s) are generated e.g. ones
   // returned by blink::Blob::uuid().
-  String RegisterURL(ExecutionContext*, URLRegistrable*, const String& uuid);
+  String RegisterURL(ExecutionContext*,
+                     URLRegistrable*,
+                     const String& uuid,
+                     const String& file_name);
   // Revokes the given URL.
   void Revoke(const KURL&);
   // Revokes all URLs associated with |uuid|.

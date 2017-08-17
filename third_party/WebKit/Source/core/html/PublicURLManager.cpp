@@ -45,9 +45,10 @@ PublicURLManager::PublicURLManager(ExecutionContext* context)
 
 String PublicURLManager::RegisterURL(ExecutionContext* context,
                                      URLRegistrable* registrable,
-                                     const String& uuid) {
+                                     const String& uuid,
+                                     const String& file_name) {
   SecurityOrigin* origin = context->GetSecurityOrigin();
-  const KURL& url = BlobURL::CreatePublicURL(origin);
+  const KURL& url = BlobURL::CreatePublicURL(origin, file_name);
   DCHECK(!url.IsEmpty());
   const String& url_string = url.GetString();
 

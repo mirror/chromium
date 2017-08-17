@@ -45,6 +45,7 @@ class PPAPI_PROXY_EXPORT PDFResource
   void HasUnsupportedFeature() override;
   void Print() override;
   void SaveAs() override;
+  void SaveAttachmentAs(const PP_Var& url) override;
   PP_Bool IsFeatureEnabled(PP_PDFFeature feature) override;
   void SetSelectedText(const char* selected_text) override;
   void SetLinkUnderCursor(const char* url) override;

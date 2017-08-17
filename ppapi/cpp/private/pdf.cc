@@ -105,6 +105,13 @@ void PDF::SaveAs(const InstanceHandle& instance) {
 }
 
 // static
+void PDF::SaveAttachmentAs(const InstanceHandle& instance, const Var& url) {
+  if (has_interface<PPB_PDF>())
+    get_interface<PPB_PDF>()->SaveAttachmentAs(instance.pp_instance(),
+                                               url.pp_var());
+}
+
+// static
 void PDF::Print(const InstanceHandle& instance) {
   if (has_interface<PPB_PDF>())
     get_interface<PPB_PDF>()->Print(instance.pp_instance());
