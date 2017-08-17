@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d33cb96_bd943546",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T10:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aabe99a_1f41f662",
+      "revId": "5329518ba983c398193e4cab9e3b93fb8411c20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a342a717_613a8165",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5329518ba983c398193e4cab9e3b93fb8411c20a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595c53b5_faff972b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T10:39:02Z",
+      "side": 1,
+      "message": "You\u0027re right, fixed. Thank you.",
+      "parentUuid": "a342a717_613a8165",
+      "revId": "5329518ba983c398193e4cab9e3b93fb8411c20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
