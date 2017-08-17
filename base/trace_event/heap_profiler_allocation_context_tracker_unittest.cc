@@ -224,6 +224,23 @@ TEST_F(AllocationContextTrackerTest, PseudoStackMixedTrace) {
   AssertBacktraceContainsOnlyThreadName();
 }
 
+TEST_F(AllocationContextTrackerTest, BackgroundMode) {
+  StackFrame t = StackFrame::FromThreadName(kThreadName);
+  StackFrame frame_t[] = {t};
+  const char kContext[] = "context";
+
+  AllocationContextTracker::SetCaptureMode(AllocationContextTracker::CaptureMode::BACKGROUND);
+  TRACE_EVENT_BEGIN0("Testing", kCupcake);
+  AssertBacktraceEquals(frame_t);
+
+  TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION event1(kContext);
+  AllocationContext ctx;
+  ASSERT_TRUE(AllocationContextTracker::GetInstanceForCurrentThread()
+                  ->GetContextSnapshot(&ctx));
+  ASSERT_EQ(kContext, ctx.type_name);
+  AssertBacktraceEquals(frame_t);
+}
+
 TEST_F(AllocationContextTrackerTest, BacktraceTakesTop) {
   StackFrame t = StackFrame::FromThreadName(kThreadName);
   StackFrame c = StackFrame::FromTraceEventName(kCupcake);
