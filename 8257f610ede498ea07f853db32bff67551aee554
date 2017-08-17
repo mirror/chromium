@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec0c596_c81573e6",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6239,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-17T18:08:37Z",
+      "side": 1,
+      "message": "Dcheck was failing when the top_layer_elements_.back() element is a pseudo backdrop element, which can occur when added here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Element.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d3491\n\nNote that I did see some stack traces for this line as well.",
+      "revId": "8257f610ede498ea07f853db32bff67551aee554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

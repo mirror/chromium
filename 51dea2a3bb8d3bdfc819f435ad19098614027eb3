@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79ee8fd0_a66a40ff",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2593,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-17T18:08:37Z",
+      "side": 1,
+      "message": "In reality using this cached value is enough to avoid the dcheck failure but the Document.cpp fixes the root cause (or is at least closer to the root cause).",
+      "revId": "51dea2a3bb8d3bdfc819f435ad19098614027eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
