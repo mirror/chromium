@@ -935,6 +935,8 @@ void SoftwareImageDecodeCache::DumpImageMemoryForCache(
 ImageDecodeCacheKey ImageDecodeCacheKey::FromDrawImage(
     const DrawImage& image,
     viz::ResourceFormat format) {
+  CHECK(image.image());
+
   const SkSize& scale = image.scale();
   // If the src_rect falls outside of the image, we need to clip it since
   // otherwise we might end up with uninitialized memory in the decode process.
