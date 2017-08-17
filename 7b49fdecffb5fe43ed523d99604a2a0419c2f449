@@ -66,6 +66,48 @@
     },
     {
       "key": {
+        "uuid": "18196e69_8b54a4b5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T23:03:10Z",
+      "side": 1,
+      "message": "I think we should control our own time.",
+      "parentUuid": "d14f44ee_e712c6fa",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594c38c4_431bd41d",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T23:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f9b1bf_0444f2a3",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9508d753_206937c7",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 7
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "679aa796_18e8180e",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T23:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9508d753_206937c7",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663a5ffc_d5996b9c",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 7
@@ -97,6 +157,24 @@
       "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce92431a_b28292be",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T23:03:10Z",
+      "side": 1,
+      "message": "I think we still want to avoid recording the very first time favicon/title is set. Just in case the page takes a long time to load.",
+      "parentUuid": "663a5ffc_d5996b9c",
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8650d831_03871256",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T23:03:10Z",
+      "side": 1,
+      "message": "Done\n\nIt\u0027s removed",
+      "parentUuid": "2509daa8_8072e319",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d68579_05917b8c",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
         "patchSetId": 7
@@ -143,6 +245,30 @@
       "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bc33e9_afb5a3f4",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T23:03:10Z",
+      "side": 1,
+      "message": "I think we still want to avoid the very first update. It\u0027s possible that the page will set its title/favicon for the first time after 5 minutes if the loading is super slow. Just a corner case.",
+      "parentUuid": "c6d68579_05917b8c",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
