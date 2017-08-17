@@ -3306,6 +3306,21 @@
             ]
         }
     ],
+    "V8WasmTrapHandler": [
+        {
+            "platforms": [
+                "linux"
+            ],
+            "experiments": [
+                {
+                    "name": "WasmTrapHandlerActive",
+                    "enable_features": [
+                        "WebAssemblyTrapHandler"
+                    ]
+                }
+            ]
+        }
+    ],
     "VideoCaptureService": [
         {
             "platforms": [
