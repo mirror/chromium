@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0652f3fb_ac56936a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T20:49:08Z",
+      "side": 1,
+      "message": "If you add null check here you don\u0027t need a scary comment about raw pointers and lifetime in other place...",
+      "revId": "d1550fd2226bb4c1787cea92b807d31d0b5a7c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72648c85_93d355dd",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T20:49:08Z",
+      "side": 1,
+      "message": "Here.",
+      "revId": "d1550fd2226bb4c1787cea92b807d31d0b5a7c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
