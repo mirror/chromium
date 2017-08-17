@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "093dba8d_8548cebb",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T03:32:18Z",
+      "side": 1,
+      "message": "Added a new method MaybeCreateSubresourceJob(). It is not really a loader?.",
+      "parentUuid": "7c45f2b7_218950cb",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e76e0a_b531d6d7",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6507014b_0a94fc26",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T03:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e76e0a_b531d6d7",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7069ce74_e2282724",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T01:23:37Z",
       "side": 1,
       "message": "we can use \u0026delegate_ here, we\u0027ve got a MockURLRequestDelegate datamember",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7e2418_ce621495",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T03:32:18Z",
+      "side": 1,
+      "message": "This is a NetworkDelegate pointer sadly.",
+      "parentUuid": "7069ce74_e2282724",
       "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
