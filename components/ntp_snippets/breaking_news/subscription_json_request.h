@@ -45,6 +45,9 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
         const scoped_refptr<net::URLRequestContextGetter>& context_getter);
     Builder& SetAuthenticationHeader(const std::string& auth_header);
 
+    Builder& SetLocale(const std::string& locale);
+    Builder& SetCountryCode(const std::string& country_code);
+
    private:
     std::string BuildHeaders() const;
     std::string BuildBody() const;
@@ -55,7 +58,9 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
 
     // GCM subscription token obtained from GCM driver (instanceID::getToken()).
     std::string token_;
-    // TODO(mamir): Additional fields to be added: country, language.
+
+    std::string locale_;
+    std::string country_code_;
 
     GURL url_;
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
