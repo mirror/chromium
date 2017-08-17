@@ -6,6 +6,7 @@
 
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/tabs/tab_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/navigation_handle.h"
 
@@ -39,8 +40,24 @@ void SoundContentSettingObserver::OnContentSettingChanged(
 }
 
 void SoundContentSettingObserver::MuteOrUnmuteIfNecessary() {
-  web_contents()->SetAudioMuted(GetCurrentContentSetting() ==
-                                CONTENT_SETTING_BLOCK);
+  bool mute = GetCurrentContentSetting() == CONTENT_SETTING_BLOCK;
+
+  // We don't want to overwrite TabMutedReason with no change.
+  if (mute == web_contents()->IsAudioMuted())
+    return;
+
+  TabMutedReason reason = chrome::GetTabAudioMutedReason(web_contents());
+
+  // Do not unmute if we're muted due to media capture.
+  if (!mute && reason == TabMutedReason::MEDIA_CAPTURE)
+    return;
+
+  // Do not override the decisions of an extension.
+  if (reason == TabMutedReason::EXTENSION)
+    return;
+
+  chrome::SetTabAudioMuted(web_contents(), mute,
+                           TabMutedReason::CONTENT_SETTING, std::string());
 }
 
 ContentSetting SoundContentSettingObserver::GetCurrentContentSetting() {
