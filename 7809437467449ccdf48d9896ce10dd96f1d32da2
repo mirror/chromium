@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6c58af_93971d8b",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "I guess future CLs will implement more of this?",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8e11d1_922fd722",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "DLOG?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9ac6e0_1fa4e085",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "FWIW, I would personally write salt.size() here and below, but this is a stylistic thing.",
+      "range": {
+        "startLine": 36,
+        "startChar": 35,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea16180e_58af03f9",
+        "filename": "chrome/browser/media/media_storage_id_salt_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "Nit: kPrefsName to match constant naming convention",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeec2d12_22f2c2f9",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "DLOG?",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc63d900_8e3bee8b",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "It seems like the only reason this should fail is if |rfh| no longer exists: can we just encode that check here directly, and then assume that GetSalt will always return something?\n\n(I don\u0027t think it\u0027s possible for a RenderFrameHost not to have a profile associated with it)",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f09a95_9d2177bd",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:02:36Z",
+      "side": 1,
+      "message": "I\u0027m assuming that this will just do the right thing if |rfh| is navigated before the response callback runs? (since the other message handler does the same thing)",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
