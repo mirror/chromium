@@ -6,6 +6,7 @@
 
 #include "base/memory/discardable_shared_memory.h"
 #include "base/process/process_metrics.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -234,6 +235,31 @@ TEST(DiscardableSharedMemoryTest, LockShouldAlwaysFailAfterSuccessfulPurge) {
   // Lock should fail as memory has been purged.
   DiscardableSharedMemory::LockResult lock_rv = memory2.Lock(0, 0);
   EXPECT_EQ(DiscardableSharedMemory::FAILED, lock_rv);
+}
+
+TEST(DiscardableSharedMemoryTest, LockShouldFailIfPlatformLockPagesFails) {
+  const uint32_t kDataSize = 1024;
+
+  DiscardableSharedMemory memory;
+  bool rv = memory.CreateAndMap(kDataSize);
+  ASSERT_TRUE(rv);
+
+  // Unlock() the first page of memory, so we can test Lock()ing it.
+  memory.Unlock(0, base::GetPageSize());
+#if defined(OS_ANDROID)
+  // close() the shared memory object file-descriptor; the object continues
+  // to think the handle is valid, so will call ashmem_pin_region() in
+  // response to Lock(), which should fail since it is closed already.
+  ASSERT_EQ(0, close(memory.GetHandle()));
+
+  // Now re-Lock()ing the first page should fail.
+  DiscardableSharedMemory::LockResult lock_rv =
+      memory.Lock(0, base::GetPageSize());
+  EXPECT_EQ(DiscardableSharedMemory::FAILED, lock_rv);
+
+  // Take the underlying descriptor from |memory| so it won't re-close() it.
+  ignore_result(memory.Release());
+#endif  // defined(OS_ANDROID)
 }
 
 TEST(DiscardableSharedMemoryTest, LockAndUnlockRange) {
