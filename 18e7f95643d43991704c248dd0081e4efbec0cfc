@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e55f37_e4f2d1e2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-17T01:25:07Z",
+      "side": 1,
+      "message": "nit: \"Determine if this is still needed since the format...\"",
+      "range": {
+        "startLine": 947,
+        "startChar": 20,
+        "endLine": 948,
+        "endChar": 41
+      },
+      "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04b5373_aa9dd08c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-17T01:25:07Z",
+      "side": 1,
+      "message": "\"New\" is relative. How about having an example of expected time after formatting?",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
