@@ -33,6 +33,24 @@
       "revId": "b4151c7c91c142c7a25f633bd8853db54450619e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf8b1eb_7887fe28",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-17T02:08:35Z",
+      "side": 1,
+      "message": "Thanks! I added the is_any_column_collapsed_ boolean to avoid going through every cell every time. This way cells are only checked when some column has been collapsed before.",
+      "parentUuid": "f41757d7_1957edf3",
+      "revId": "b4151c7c91c142c7a25f633bd8853db54450619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
