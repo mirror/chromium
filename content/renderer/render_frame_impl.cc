@@ -3533,10 +3533,12 @@ void RenderFrameImpl::DidCreateDocumentLoader(
   if (document_loader->GetServiceWorkerNetworkProvider())
     return;
 
+  RenderThreadImpl* reander_thread = RenderThreadImpl::current();
   document_loader->SetServiceWorkerNetworkProvider(
       ServiceWorkerNetworkProvider::CreateForNavigation(
           routing_id_, navigation_state->request_params(), frame_,
-          content_initiated));
+          content_initiated,
+          render_thread ? GetDefaultURLLoaderFactoryGetter() : nullptr));
 }
 
 void RenderFrameImpl::DidStartProvisionalLoad(
