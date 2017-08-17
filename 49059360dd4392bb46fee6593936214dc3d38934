@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c6337d7_9670dda1",
+        "filename": "ash/public/cpp/window_properties.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T22:23:47Z",
+      "side": 1,
+      "message": "Properties in the negative are always minorly confusing. Also, most of the code uses overview. How about kShowInOverviewMode with a default value of true?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "49059360dd4392bb46fee6593936214dc3d38934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "537569d5_897599bb",
         "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
         "patchSetId": 12
