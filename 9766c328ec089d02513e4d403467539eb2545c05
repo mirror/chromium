@@ -34,6 +34,24 @@
       "revId": "9766c328ec089d02513e4d403467539eb2545c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3482b1_1a9bf940",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:56:35Z",
+      "side": 1,
+      "message": "So it sounds like for exo, we should do the same (i.e. use whatever dsf exo is using to generate the content)?",
+      "parentUuid": "eb3cacb8_a82e8abc",
+      "revId": "9766c328ec089d02513e4d403467539eb2545c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
