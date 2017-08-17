@@ -541,7 +541,7 @@ void ExtractCorsExposedHeaderNamesList(const WebURLResponse& response,
   // header.
   if (response.WasFetchedViaServiceWorker()) {
     for (const auto& header : response.CorsExposedHeaderNames())
-      header_set.insert(String(header));
+      header_set.insert(header);
     return;
   }
   ParseAccessControlExposeHeadersAllowList(

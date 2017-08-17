@@ -156,7 +156,8 @@ bool WebCORSPreflightResultCacheItem::Parse(
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
     const WebString& method,
     WebString& error_description) const {
-  if (methods_.Contains(method) || FetchUtils::IsCORSSafelistedMethod(method))
+  if (methods_.find(method) != methods_.end() ||
+      FetchUtils::IsCORSSafelistedMethod(method))
     return true;
 
   error_description.Assign(WebString::FromASCII("Method " + method.Ascii() +
@@ -171,7 +172,7 @@ bool WebCORSPreflightResultCacheItem::AllowsCrossOriginHeaders(
     const HTTPHeaderMap& request_headers,
     WebString& error_description) const {
   for (const auto& header : request_headers) {
-    if (!headers_.Contains(header.key) &&
+    if (headers_.find(header.key) == headers_.end() &&
         !FetchUtils::IsCORSSafelistedHeader(header.key, header.value) &&
         !FetchUtils::IsForbiddenHeaderName(header.key)) {
       error_description.Assign(
