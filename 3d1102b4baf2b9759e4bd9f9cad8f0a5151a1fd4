@@ -46,6 +46,30 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30057348_2fd2d913",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-17T00:11:24Z",
+      "side": 1,
+      "message": "Yes, I agree there is no need to do it in this patch necessarily, but since we are relying on our animation being \"long enough\", there might always be devices or situations that the launch of the activity actually takes slightly longer than that and maybe setting the window_background might be a fallback for those cases?",
+      "parentUuid": "5a6d087b_f092ce14",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
