@@ -85,6 +85,16 @@ struct SBChunkDelete {
   std::vector<ChunkRange> chunk_del;
 };
 
+// Returns true if the given IP address string falls within a private
+// (unroutable) network block.  Pages which are hosted on these IP addresses
+// are exempt from client-side phishing detection.  This is called by the
+// ClientSideDetectionHost prior to sending the renderer a
+// SafeBrowsingMsg_StartPhishingDetection IPC.
+//
+// ip_address should be a dotted IPv4 address, or an unbracketed IPv6
+// address.
+bool IsPrivateIPAddress(const std::string& ip_address);
+
 }  // namespace safe_browsing
 
 #endif  // CHROME_BROWSER_SAFE_BROWSING_SAFE_BROWSING_UTIL_H_

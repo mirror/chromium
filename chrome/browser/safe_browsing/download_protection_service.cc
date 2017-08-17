@@ -41,6 +41,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/download_feedback_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/safe_browsing_util.h"
 #include "chrome/browser/safe_browsing/sandboxed_zip_analyzer.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
@@ -588,8 +589,14 @@ class DownloadProtectionService::CheckClientDownloadRequest
             token = response.token();
             break;
           case ClientDownloadResponse::UNCOMMON:
-            reason = REASON_DOWNLOAD_UNCOMMON;
-            result = UNCOMMON;
+            // TODO: what should reason/result be here?
+            if (IsPrivateIPAddress(item_->GetRemoteAddress())) {
+              reason = REASON_VERDICT_UNKNOWN;
+              result = UNKNOWN;
+            } else {
+              reason = REASON_DOWNLOAD_UNCOMMON;
+              result = UNCOMMON;
+            }
             token = response.token();
             break;
           case ClientDownloadResponse::DANGEROUS_HOST:
