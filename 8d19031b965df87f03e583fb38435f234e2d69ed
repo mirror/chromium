@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f808d070_b2668a68",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-17T13:31:36Z",
+      "side": 1,
+      "message": "Thanks! Fixed.",
+      "parentUuid": "af7e9a4a_1d2c91e9",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d734e831_9c416967",
         "filename": "components/content_settings/core/common/content_settings_pattern_parser.cc",
         "patchSetId": 4
@@ -140,6 +158,24 @@
       "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83847a59_28e7e5ee",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-17T13:31:36Z",
+      "side": 1,
+      "message": "Fixed, although the code will probably need refactoring.",
+      "parentUuid": "862e9a2d_e42c5537",
+      "revId": "8d19031b965df87f03e583fb38435f234e2d69ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
