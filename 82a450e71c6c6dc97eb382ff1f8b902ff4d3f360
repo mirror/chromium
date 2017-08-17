@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a0bf1e0_b34adf9a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-17T17:17:18Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t make sense to me, how can we reopen something that is already open?\n\nIs this about the socket previously existing or not?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbeb185_fc75a578",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-17T17:17:18Z",
+      "side": 1,
+      "message": "It seems a little non-intuitive that we call \u0027xxxWithRetry\u0027 even if we don\u0027t have a retry stategy set.  It looks like we only check the strategy in the error handler, but if I was naively reading the code here I would assume that we are always retrying.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3142529_3b1a2c87",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-17T17:17:18Z",
+      "side": 1,
+      "message": "I think it would be useful to have a metric of what attempt the channel open was successful at.\n\nDo we have any plans for that, or some other way of getting data for checking/adjusting our timeouts and retries?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b7a9b8_8fe3fc52",
+        "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-17T17:17:18Z",
+      "side": 1,
+      "message": "nit, I think \u0027base_delay_xxx\u0027, or maybe \u0027default_delay_xxx\u0027 make more sense here, but it\u0027s not a major concern.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
