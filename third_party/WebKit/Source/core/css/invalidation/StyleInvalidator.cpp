@@ -74,6 +74,8 @@ void StyleInvalidator::ScheduleInvalidationSetsForNode(
     return;
 
   node.SetNeedsStyleInvalidation();
+  if (node.IsShadowRoot() && !!node.ParentOrShadowHostNode())
+    node.ParentOrShadowHostNode()->SetNeedsStyleInvalidation();
 
   PendingInvalidations& pending_invalidations =
       EnsurePendingInvalidations(node);
@@ -287,8 +289,10 @@ void StyleInvalidator::PushInvalidationSetsForContainerNode(
     SiblingData& sibling_data) {
   PendingInvalidations* pending_invalidations =
       pending_invalidation_map_.at(&node);
-  DCHECK(pending_invalidations);
+  // DCHECK(pending_invalidations);
 
+  if (!pending_invalidations)
+    return;
   for (const auto& invalidation_set : pending_invalidations->Siblings()) {
     CHECK(invalidation_set->IsAlive());
     sibling_data.PushInvalidationSet(
@@ -336,6 +340,20 @@ ALWAYS_INLINE bool StyleInvalidator::CheckInvalidationSetsAgainstElement(
     PushInvalidationSetsForContainerNode(element, recursion_data, sibling_data);
 
   return this_element_needs_style_recalc;
+}
+
+bool StyleInvalidator::InvalidateShadowHostChildren(
+    Element& element,
+    RecursionData& recursion_data) {
+  if (!element.YoungestShadowRoot())
+    return false;
+  Element& host = element.YoungestShadowRoot()->host();
+  if (UNLIKELY(host.NeedsStyleInvalidation())) {
+    RecursionCheckpoint checkpoint(&recursion_data);
+    SiblingData sibling_data;
+    host.ClearNeedsStyleInvalidation();
+  }
+  return true;
 }
 
 bool StyleInvalidator::InvalidateShadowRootChildren(
@@ -389,6 +407,8 @@ bool StyleInvalidator::Invalidate(Element& element,
 
   bool this_element_needs_style_recalc = CheckInvalidationSetsAgainstElement(
       element, recursion_data, sibling_data);
+  this_element_needs_style_recalc |=
+      InvalidateShadowHostChildren(element, recursion_data);
 
   bool some_children_need_style_recalc = false;
   if (recursion_data.HasInvalidationSets() ||
@@ -397,10 +417,15 @@ bool StyleInvalidator::Invalidate(Element& element,
         InvalidateChildren(element, recursion_data);
 
   if (this_element_needs_style_recalc) {
-    DCHECK(!recursion_data.WholeSubtreeInvalid());
+    // DCHECK(!recursion_data.WholeSubtreeInvalid());
     element.SetNeedsStyleRecalc(kLocalStyleChange,
                                 StyleChangeReasonForTracing::Create(
                                     StyleChangeReason::kStyleInvalidator));
+    if (element.IsShadowRoot() && !!element.ParentOrShadowHostNode()) {
+      element.ParentOrShadowHostNode()->SetNeedsStyleRecalc(
+          kLocalStyleChange, StyleChangeReasonForTracing::Create(
+                                 StyleChangeReason::kStyleInvalidator));
+    }
   } else if (recursion_data.HasInvalidationSets() &&
              some_children_need_style_recalc) {
     // Clone the ComputedStyle in order to preserve correct style sharing, if
