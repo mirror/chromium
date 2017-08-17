@@ -259,6 +259,30 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e69537_3b3dc9e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T17:35:06Z",
+      "side": 1,
+      "message": "How do you go about finishing the activity?  Separate task CCTs don\u0027t actually call finish(), they call finish and remove task, which means the entry shouldn\u0027t be in recents at all.  When you hit the home button on Android, finish is not called.\n\nI guess I\u0027m curious the exact steps in non-VR as I simply couldn\u0027t get this to work.\n\nI added the following to SeparateTaskCustomTabActivity, and it always returned false.  I changed handleFinishAndClose to just call finish as well, but that didn\u0027t seem to help.\n\n    @Override\n    public void preInflationStartup() {\n        super.preInflationStartup();\n\n        System.out.println(\"TED - SeparateTaskCustomTabActivity.java#preInflationStartup : \"\n                 + launchedFromRecentApps(getIntent()) + \", \" + launchedFromRecentApps(getInitialIntent()));\n    }\n\n    @Override\n    protected void onNewIntent(Intent intent) {\n        super.onNewIntent(intent);\n\n        System.out.println(\"TED - SeparateTaskCustomTabActivity.java#preInflationStartup : \"\n                + launchedFromRecentApps(getIntent()) + \", \" + launchedFromRecentApps(getInitialIntent()));\n    }\n\n    static boolean launchedFromRecentApps(Intent intent) {\n        return ((intent.getFlags() \u0026 Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) !\u003d 0);\n    }\n\nAgain sorry to belabor this point, but I\u0027m just very curious under what circumstances you get a non false value.",
+      "parentUuid": "aad63560_51b70708",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 55
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
