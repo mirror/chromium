@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4d1925f0_35b2582d",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T06:06:46Z",
+      "side": 1,
+      "message": "What happens in second call and later?\n\nSpecifically, OnceCallback is not copyable, AFAIK, so args cannot be passed?",
+      "parentUuid": "b982b406_9aada40d",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e33685f_b88d0e5b",
         "filename": "google_apis/drive/task_util.h",
         "patchSetId": 2
