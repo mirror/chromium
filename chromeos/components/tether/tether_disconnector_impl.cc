@@ -7,6 +7,7 @@
 #include "base/values.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
+#include "chromeos/components/tether/disconnect_tethering_operation_delegate.h"
 #include "chromeos/components/tether/network_configuration_remover.h"
 #include "chromeos/components/tether/pref_names.h"
 #include "chromeos/components/tether/tether_connector.h"
@@ -40,7 +41,8 @@ TetherDisconnectorImpl::TetherDisconnectorImpl(
     NetworkConnectionHandler* network_connection_handler,
     NetworkStateHandler* network_state_handler,
     ActiveHost* active_host,
-    BleConnectionManager* ble_connection_manager,
+    DisconnectTetheringOperationDelegate*
+        disconnect_tethering_operation_delegate,
     NetworkConfigurationRemover* network_configuration_remover,
     TetherConnector* tether_connector,
     DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
@@ -49,7 +51,8 @@ TetherDisconnectorImpl::TetherDisconnectorImpl(
     : network_connection_handler_(network_connection_handler),
       network_state_handler_(network_state_handler),
       active_host_(active_host),
-      ble_connection_manager_(ble_connection_manager),
+      disconnect_tethering_operation_delegate_(
+          disconnect_tethering_operation_delegate),
       network_configuration_remover_(network_configuration_remover),
       tether_connector_(tether_connector),
       device_id_tether_network_guid_map_(device_id_tether_network_guid_map),
@@ -68,9 +71,6 @@ TetherDisconnectorImpl::TetherDisconnectorImpl(
 }
 
 TetherDisconnectorImpl::~TetherDisconnectorImpl() {
-  if (disconnect_tethering_operation_)
-    disconnect_tethering_operation_->RemoveObserver(this);
-
   std::string active_tether_guid = active_host_->GetTetherNetworkGuid();
   if (!active_tether_guid.empty()) {
     PA_LOG(INFO) << "There was an active Tether connection during Tether "
@@ -86,6 +86,7 @@ void TetherDisconnectorImpl::DisconnectFromNetwork(
     const base::Closure& success_callback,
     const network_handler::StringResultCallback& error_callback) {
   DCHECK(!tether_network_guid.empty());
+  PA_LOG(INFO) << "TetherDisconnector::DisconnectFromNetwork called";
 
   ActiveHost::ActiveHostStatus status = active_host_->GetActiveHostStatus();
   std::string active_tether_network_guid = active_host_->GetTetherNetworkGuid();
@@ -125,7 +126,6 @@ void TetherDisconnectorImpl::DisconnectFromNetwork(
   }
 
   DCHECK(!active_wifi_network_guid.empty());
-  DCHECK(!disconnect_tethering_operation_);
   DisconnectActiveWifiConnection(tether_network_guid, active_wifi_network_guid,
                                  success_callback, error_callback);
 }
@@ -179,25 +179,7 @@ void TetherDisconnectorImpl::DisconnectActiveWifiConnection(
   tether_host_fetcher_->FetchTetherHost(
       device_id, base::Bind(&TetherDisconnectorImpl::OnTetherHostFetched,
                             weak_ptr_factory_.GetWeakPtr(), device_id));
-}
 
-void TetherDisconnectorImpl::OnOperationFinished(const std::string& device_id,
-                                                 bool success) {
-  if (success) {
-    PA_LOG(INFO) << "Successfully sent DisconnectTetheringRequest to device "
-                 << "with ID "
-                 << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(device_id);
-  } else {
-    PA_LOG(ERROR) << "Failed to send DisconnectTetheringRequest to device "
-                  << "with ID "
-                  << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(
-                         device_id);
-  }
-
-  // Regardless of success/failure, unregister as a listener and delete the
-  // operation.
-  disconnect_tethering_operation_->RemoveObserver(this);
-  disconnect_tethering_operation_.reset();
 }
 
 void TetherDisconnectorImpl::OnSuccessfulWifiDisconnect(
@@ -246,13 +228,8 @@ void TetherDisconnectorImpl::OnTetherHostFetched(
     return;
   }
 
-  disconnect_tethering_operation_ =
-      DisconnectTetheringOperation::Factory::NewInstance(
-          *tether_host, ble_connection_manager_);
-
-  // Start the operation; OnOperationFinished() will be called when finished.
-  disconnect_tethering_operation_->AddObserver(this);
-  disconnect_tethering_operation_->Initialize();
+  disconnect_tethering_operation_delegate_->SendDisconnectRequestToDevice(
+      tether_host.get());
 }
 
 }  // namespace tether

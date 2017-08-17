@@ -10,6 +10,7 @@
 #include "chromeos/components/tether/ble_connection_manager.h"
 #include "chromeos/components/tether/crash_recovery_manager.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
+#include "chromeos/components/tether/disconnect_tethering_operation_delegate.h"
 #include "chromeos/components/tether/host_connection_metrics_logger.h"
 #include "chromeos/components/tether/host_scan_device_prioritizer_impl.h"
 #include "chromeos/components/tether/host_scan_scheduler.h"
@@ -155,6 +156,9 @@ void Initializer::CreateComponent() {
       cryptauth_service_, adapter_, local_device_data_provider_.get(),
       remote_beacon_seed_fetcher_.get(),
       cryptauth::BluetoothThrottlerImpl::GetInstance());
+  disconnect_tethering_operation_delegate_ =
+      base::MakeUnique<DisconnectTetheringOperationDelegate>(
+          ble_connection_manager_.get());
   tether_host_response_recorder_ =
       base::MakeUnique<TetherHostResponseRecorder>(pref_service_);
   device_id_tether_network_guid_map_ =
@@ -208,13 +212,15 @@ void Initializer::CreateComponent() {
           network_state_handler_, managed_network_configuration_handler_);
   tether_disconnector_ = base::MakeUnique<TetherDisconnectorImpl>(
       network_connection_handler_, network_state_handler_, active_host_.get(),
-      ble_connection_manager_.get(), network_configuration_remover_.get(),
-      tether_connector_.get(), device_id_tether_network_guid_map_.get(),
-      tether_host_fetcher_.get(), pref_service_);
+      disconnect_tethering_operation_delegate_.get(),
+      network_configuration_remover_.get(), tether_connector_.get(),
+      device_id_tether_network_guid_map_.get(), tether_host_fetcher_.get(),
+      pref_service_);
   tether_network_disconnection_handler_ =
       base::MakeUnique<TetherNetworkDisconnectionHandler>(
           active_host_.get(), network_state_handler_,
-          network_configuration_remover_.get());
+          network_configuration_remover_.get(), tether_host_fetcher_.get(),
+          disconnect_tethering_operation_delegate_.get());
   network_connection_handler_tether_delegate_ =
       base::MakeUnique<NetworkConnectionHandlerTetherDelegate>(
           network_connection_handler_, tether_connector_.get(),
