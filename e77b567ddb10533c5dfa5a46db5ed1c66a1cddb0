@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef8bd2c_90936014",
+        "filename": "extensions/browser/api/serial/serial_connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-17T22:10:16Z",
+      "side": 1,
+      "message": "If you want to do a follow-up patch this class can be replaced with base::CancelableCallback.",
+      "revId": "e77b567ddb10533c5dfa5a46db5ed1c66a1cddb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bfee77_e1860cc8",
+        "filename": "services/device/serial/serial_io_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-17T22:10:16Z",
+      "side": 1,
+      "message": "I missed this on your last patch. Please do a follow-up that updates SendBuffer so that this copy is unnecessary.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 63
+      },
+      "revId": "e77b567ddb10533c5dfa5a46db5ed1c66a1cddb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
