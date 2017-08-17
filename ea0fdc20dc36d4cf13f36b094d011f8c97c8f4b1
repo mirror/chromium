@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "aa60e6ab_47b53cd2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T15:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9a660b_ee25e3b2",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 71
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2aaae1a_45a81f77",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -387,6 +411,30 @@
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9762598_2a25f4fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T15:52:28Z",
+      "side": 1,
+      "message": "You\u0027re right, yes. Thanks!",
+      "parentUuid": "a7338d9c_b93e0fba",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -792,6 +840,30 @@
     },
     {
       "key": {
+        "uuid": "0c6912b2_5a92c01d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T15:52:28Z",
+      "side": 1,
+      "message": "Moved these three here.",
+      "parentUuid": "872806c9_765daa1a",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c212f7d_d62ffca7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridViewHolder.java",
         "patchSetId": 1
@@ -812,6 +884,30 @@
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b658d0bf_62640e93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T15:52:28Z",
+      "side": 1,
+      "message": "The way I had structured my dummy data was always sending many categories. Now I only send it when Explore is enabled. Is this also how the backend behaves? Thanks.",
+      "parentUuid": "1c212f7d_d62ffca7",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -906,6 +1002,30 @@
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52147a4f_3f6ec4fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-17T15:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cdb2339_5143b59d",
+      "range": {
+        "startLine": 620,
+        "startChar": 28,
+        "endLine": 620,
+        "endChar": 37
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
