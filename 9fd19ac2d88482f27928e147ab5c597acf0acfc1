@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d39da93e_6bb88f39",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-17T14:45:52Z",
+      "side": 1,
+      "message": "Hmm I don\u0027t think we want to attach the observer to this webcontents as we\u0027ll start updating toolbar state and other state based on a non-visible webcontents.\n\nWhy not just set web_contents_ to null when we have a native page? The only reason you need to use the web contents is to check incognito state, which you could just do once here without storing it.",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 19
+      },
+      "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
