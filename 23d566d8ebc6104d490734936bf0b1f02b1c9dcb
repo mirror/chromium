@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5318cb_efd6dfc4",
+        "filename": "ui/chromeos/touch_exploration_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T23:41:18Z",
+      "side": 1,
+      "message": "optional nit: Can this reflow? I\u0027m not sure where 80 cols is.",
+      "revId": "23d566d8ebc6104d490734936bf0b1f02b1c9dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d03789_35bd356c",
+        "filename": "ui/chromeos/touch_exploration_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-17T23:41:18Z",
+      "side": 1,
+      "message": "Nice test. Thanks for adding it.",
+      "revId": "23d566d8ebc6104d490734936bf0b1f02b1c9dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
