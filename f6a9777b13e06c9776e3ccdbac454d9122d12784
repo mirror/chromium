@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc627b84_007164d6",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T22:40:50Z",
+      "side": 1,
+      "message": "Should you check first if target.frame_sink_id is valid?",
+      "revId": "f6a9777b13e06c9776e3ccdbac454d9122d12784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188aa313_0d2ad02a",
+        "filename": "services/ui/ws/event_targeter_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T22:40:50Z",
+      "side": 1,
+      "message": "Document that this can return null if the display does not exist.",
+      "revId": "f6a9777b13e06c9776e3ccdbac454d9122d12784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35757ee0_db6121f5",
+        "filename": "services/ui/ws/event_targeter_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T22:40:50Z",
+      "side": 1,
+      "message": "Document that frame_sink_id must be a valid id (i.e. non-null)\nDocument that it can return null if there\u0027s no window associated with the valid frame_sink_id.",
+      "revId": "f6a9777b13e06c9776e3ccdbac454d9122d12784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d249dc75_2e8a7ff8",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T22:40:50Z",
+      "side": 1,
+      "message": "DCHECK() that frame_sink_id is valid (i.e. client_id and window_id set)",
+      "revId": "f6a9777b13e06c9776e3ccdbac454d9122d12784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
