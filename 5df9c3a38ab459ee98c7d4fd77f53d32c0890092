@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f9ad87_abe141a7",
+        "filename": "extensions/common/extension_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T16:34:04Z",
+      "side": 1,
+      "message": "This is a shame - two \"versions\" of the same class that aren\u0027t entirely the same or different.  But I felt it was better than introducing a separate ExtensionBuilderV2 class.",
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
