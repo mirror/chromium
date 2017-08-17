@@ -35,6 +35,13 @@ class CONTENT_EXPORT AppCacheURLRequest : public AppCacheRequest {
   std::string GetResponseHeaderByName(const std::string& name) const override;
   net::URLRequest* GetURLRequest() override;
   AppCacheURLRequest* AsURLRequest() override;
+  net::NetworkDelegate* GetDelegate() override;
+
+  // Starts the request.
+  void Start();
+
+  // Cancels the request..
+  void Cancel();
 
  protected:
   explicit AppCacheURLRequest(net::URLRequest* url_request);
