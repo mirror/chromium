@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "08ef5d10_d193c950",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T05:37:33Z",
+      "side": 1,
+      "message": "RE \"relying on our animation being long enough\": The animation is 10s and is cancelled from VrShellDelegate. Starting CCT should never take that long hopefully.\n\nYou\u0027re right that it probably makes sense to add it though. Done :)",
+      "parentUuid": "30057348_2fd2d913",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d8f4861_59913b4d",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d887b01_c11d8160",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T05:37:33Z",
+      "side": 1,
+      "message": "See comment with Yusuf above.",
+      "parentUuid": "0d8f4861_59913b4d",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,54 @@
     },
     {
       "key": {
+        "uuid": "874b5cd9_6a8883d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T05:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f98c50c_1f274f8e",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e29a9384_7986e4c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T05:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f98c50c_1f274f8e",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55e95d2_456b0312",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
         "patchSetId": 5
@@ -130,6 +226,30 @@
       "writtenOn": "2017-08-17T00:25:51Z",
       "side": 1,
       "message": "Did you see that this works?  I recall trying this in the past (and I just tried it locally) and I can never get FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY to return true.\n\nI tried setting \"Don\u0027t keep activities\" and returning to a non-VR SeparateTask CCT.  I also tried without, but in those cases you get no signal at all.  How were you able to get this to return as you expect?  Does it work for non-vr activities?",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 55
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad63560_51b70708",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-17T05:37:33Z",
+      "side": 1,
+      "message": "Yes, I did test that it works locally for both VR and non-VR SeparateTask CCT.\n\nIt looks like it has something to do with finishing the activity before its re-created from the recent apps page. FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY is always false if I don\u0027t finish the activity when its stopped. I can\u0027t seem to find documentation to confirm, but it seems like the system only sets it in this case. It doesn\u0027t seem to work from \"Don\u0027t keep activities\" but I\u0027m not sure what\u0027s different between this setting and finishing the activity.",
+      "parentUuid": "f55e95d2_456b0312",
       "range": {
         "startLine": 122,
         "startChar": 33,
