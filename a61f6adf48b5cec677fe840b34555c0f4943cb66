@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fe3cd9f_1cc041ca",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/device_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Let keep this for another CL.",
+      "parentUuid": "304a72c0_e87d4e1e",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db9eb948_542b7672",
         "filename": "chrome/browser/chromeos/extensions/file_manager/device_event_router.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dc8689d8_ede7f0ec",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/device_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db9eb948_542b7672",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260e9843_77535489",
         "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_file_system.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-16T16:14:46Z",
       "side": 1,
       "message": "(off topic): Probably better to replace by base::Optional\u003cVolume\u003e.",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91394c7_d4808579",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Could we change from WeakPtr to Optional later in new CL if it\u0027s really necessary, because FindVolumeById is not used just by this method?",
+      "parentUuid": "260e9843_77535489",
       "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "129effb2_fa1d2178",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c492ec_2f35d6d3",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9f3bbc_64cdb8a2",
         "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3d320160_97194a18",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a9f3bbc_64cdb8a2",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247d69b4_3eb755d9",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15a155e_7de4b21a",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247d69b4_3eb755d9",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "f686d342_3cc0460f",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6564867f_a3d9f31f",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c33fe24_3431ba57",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 4
@@ -153,6 +279,24 @@
       "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96379e3_bba9cb42",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c33fe24_3431ba57",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "06c93370_cc9e39fd",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec90086_e6fd49dc",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a506c846_dd1a1ad7",
         "filename": "chromeos/disks/disk_mount_manager.h",
         "patchSetId": 4
@@ -187,6 +349,24 @@
       "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5e6872_1fb81414",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a506c846_dd1a1ad7",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "56762e5e_2777c569",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32a8e7a_27b3d65a",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e87cd8dc_e56d08f9",
         "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
         "patchSetId": 4
@@ -221,6 +419,24 @@
       "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8e2703_61d0f57f",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-17T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e87cd8dc_e56d08f9",
+      "revId": "a61f6adf48b5cec677fe840b34555c0f4943cb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
