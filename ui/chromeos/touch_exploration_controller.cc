@@ -53,10 +53,12 @@ TouchExplorationController::TouchExplorationController(
       touch_accessibility_enabler_(touch_accessibility_enabler) {
   DCHECK(root_window);
   root_window->GetHost()->GetEventSource()->AddEventRewriter(this);
+  touch_accessibility_enabler_->RemoveEventHandler();
 }
 
 TouchExplorationController::~TouchExplorationController() {
   root_window_->GetHost()->GetEventSource()->RemoveEventRewriter(this);
+  touch_accessibility_enabler_->AddEventHandler();
 }
 
 void TouchExplorationController::SetTouchAccessibilityAnchorPoint(

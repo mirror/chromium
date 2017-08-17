@@ -63,6 +63,12 @@ class UI_CHROMEOS_EXPORT TouchAccessibilityEnabler : public ui::EventHandler {
   }
   void TriggerOnTimerForTesting() { OnTimer(); }
 
+  // When TouchExplorationController is running, it tells this class to
+  // remove its event handler so that it can pass it the unrewritten events
+  // directly. Otherwise, this class would only receive the rewritten events,
+  // which would require entirely separate logic.
+  void RemoveEventHandler();
+  void AddEventHandler();
   void HandleTouchEvent(const ui::TouchEvent& event);
 
  private:
@@ -72,6 +78,8 @@ class UI_CHROMEOS_EXPORT TouchAccessibilityEnabler : public ui::EventHandler {
   void StartTimer();
   void CancelTimer();
   void OnTimer();
+
+  void ResetToNoFingersDown();
 
   // Returns the current time of the tick clock.
   base::TimeTicks Now();
@@ -117,6 +125,10 @@ class UI_CHROMEOS_EXPORT TouchAccessibilityEnabler : public ui::EventHandler {
   // When touch_accessibility_enabler gets time relative to real time during
   // testing, this clock is set to the simulated clock and used.
   base::TickClock* tick_clock_;
+
+  // Whether or not we currently have an event handler installed. It can
+  // be removed when TouchExplorationController is running.
+  bool event_handler_installed_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchAccessibilityEnabler);
 };
