@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690b634d_6cc90a9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-17T02:15:46Z",
+      "side": 1,
+      "message": "This is fixing several things at once. Is it possible to describe each fix in the change description and which test is being fixed?\n\nOne change seems to be that start and end has been fixed when in RTL, as is shown by the change to the third RTL testcase in editing/active-suggestion-marker-basic.html\n\nA second change seems to be that truncation is handled correctly, as the second testcase in editing/ellipsis-ltr-text-in-ltr-flow-with-markers.html now stops at \"markStart\" instead of including the ellipsis.\n\nAnother change looks like subpixel differences in all of the examples, probably due to rounding differences. Can you show where this change is in the code?\n\nThe last textmatch testcase in editing/ellipsis-ltr-text-in-rtl-flow-with-markers.html now looks correct. What fixed that?",
+      "revId": "e80fae7a5d317e82cc040479671e33a0e0080f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadc1319_cb0c01d6",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-17T02:15:46Z",
+      "side": 1,
+      "message": "This looks similar to the code on line 433. Can this common logic be split into a helper?",
+      "revId": "e80fae7a5d317e82cc040479671e33a0e0080f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
