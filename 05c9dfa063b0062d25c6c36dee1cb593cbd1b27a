@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08453a33_3ffb03ff",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T12:07:48Z",
+      "side": 1,
+      "message": "Just for neatness, you could probably separate these two blocks.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "05c9dfa063b0062d25c6c36dee1cb593cbd1b27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3166263_59d9ed1b",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T12:07:48Z",
+      "side": 1,
+      "message": "If you move this before the definition of MediaLicensesCounterPlugin, you don\u0027t need to declare it in line 29.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 63
+      },
+      "revId": "05c9dfa063b0062d25c6c36dee1cb593cbd1b27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c2249f_4ba75c07",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T12:07:48Z",
+      "side": 1,
+      "message": "Hm... you could not declare this method in the header in this case, so someone would immediately get an error at compile time in this case. Or maybe an explicit\n\n  #if !BUILDFLAG(ENABLE_PLUGINS) \u0026\u0026 !defined(OS_ANDROID)\n  #error \"Unsupported configuration\"\n  #endif\n\n?",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 5
+      },
+      "revId": "05c9dfa063b0062d25c6c36dee1cb593cbd1b27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
