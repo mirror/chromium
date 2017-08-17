@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "3ae6e2b5_f6789c26",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-17T14:51:34Z",
+      "side": 1,
+      "message": "Oops, thanks Camille.\nMy answer is almost the same with page_transition:\n\nYes I do ;-)\n\nWhat I did:\n* In NavigationRequest::CreateRendererInitiated, add:\n  std::cerr \u003c\u003c \"page_transition \u003d 0x\" \u003c\u003c std::hex \u003c\u003c common_params.page_transition \u003c\u003c std::endl;\n* Navigate to http://example.com\n* Open DevTool, type: location.href \u003d \"https://www.google.com\"\nResult in the console:\n\u003e page_transition \u003d 0x40000000\n\nWhat would be for you the correct page transition?",
+      "parentUuid": "6abc5c2c_d90c2ba2",
+      "range": {
+        "startLine": 715,
+        "startChar": 35,
+        "endLine": 715,
+        "endChar": 70
+      },
+      "revId": "9143943d0b9f60fafe156b76bab7d3ea44f31722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41c53010_877b433d",
         "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
         "patchSetId": 23
