@@ -22,7 +22,6 @@
 #include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
 #include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
-#include "content/browser/child_process_importance.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
@@ -37,6 +36,7 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/renderer_host.mojom.h"
 #include "content/common/storage_partition_service.mojom.h"
+#include "content/public/browser/child_process_importance.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -174,6 +174,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void RemoveWidget(RenderWidgetHost* widget) override;
   void UpdateWidgetImportance(ChildProcessImportance old_value,
                               ChildProcessImportance new_value) override;
+  ChildProcessImportance ComputeEffectiveImportance() override;
   void SetSuddenTerminationAllowed(bool enabled) override;
   bool SuddenTerminationAllowed() const override;
   IPC::ChannelProxy* GetChannel() override;
@@ -373,9 +374,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // globally-used spare RenderProcessHost at any time.
   static RenderProcessHost* GetSpareRenderProcessHostForTesting();
 
-  // Test-only method to get the importance of this process.
-  ChildProcessImportance GetWidgetImportanceForTesting();
-
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
   std::unique_ptr<IPC::ChannelProxy> channel_;
@@ -469,9 +467,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // appropriate. Should be called after any of the involved data members
   // change.
   void UpdateProcessPriority();
-
-  // Helper method to compute importance from |widget_importance_counts_|.
-  ChildProcessImportance ComputeEffectiveImportance();
 
   // Creates a PersistentMemoryAllocator and shares it with the renderer
   // process for it to store histograms from that process. The allocator is

@@ -465,7 +465,6 @@ public class ChildProcessLauncherHelper {
             @ChildProcessImportance int importance) {
         assert LauncherThread.runningOnLauncherThread();
         assert mLauncher.getPid() == pid;
-        getBindingManager().setPriority(pid, foreground, boostForPendingViews);
 
         if (mImportance == importance) return;
         ChildProcessConnection connection = mLauncher.getConnection();
@@ -486,6 +485,13 @@ public class ChildProcessLauncherHelper {
             default:
                 assert false;
         }
+
+        if (mCreationParams != null && mCreationParams.getIgnoreVisibilityForImportance()) {
+            foreground = false;
+            boostForPendingViews = false;
+        }
+        getBindingManager().setPriority(pid, foreground, boostForPendingViews);
+
         switch (mImportance) {
             case ChildProcessImportance.NORMAL:
                 // Nothing to remove.
