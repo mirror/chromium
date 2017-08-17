@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48075c66_ae2ca92e",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T09:48:29Z",
+      "side": 1,
+      "message": "We seem to have serious problems with cyclic definitions wrt. to the Visitors defined in Visitors.h and VisitorImpl.h (and thus Heap.h HeapPage.h, ...).\n\nVisitors.h declares inline methods for Mark and MarkHeader without defining them. VisitorImpl.h cannot be included in HeapPage.h because for cycles with HeapObjectHeader. Basically, we rely on somebody (SWV.h in this case) to include HeapPage.h and VisitorImpl.h in this order.",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "8e7bb3736c83e52f98511ddd0ebf82152cea7d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
