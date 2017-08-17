@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e583b20_4327df47",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-17T01:18:51Z",
+      "side": 1,
+      "message": "Or outdent line 108 two spaces",
+      "parentUuid": "8e47e6e6_e6d45f53",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "5162be72b21b41c956e1201a2da1a6eece9ebc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ce65bf8_c345f598",
         "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T00:20:41Z",
       "side": 1,
       "message": "Would it make sense to rename to settings-toggle-box and add settings-box to the host?\n\nNot sure if there\u0027s a way to reflect a class to the host like we can w/ hostAttributes, that would make this simpler, but we could add it w/ \n\n  attached: function() {\n    this.classList.add(\u0027settings-box\u0027);\n  },",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "5162be72b21b41c956e1201a2da1a6eece9ebc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec723fb_9dc47624",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-17T01:18:51Z",
+      "side": 1,
+      "message": "The styling should not necessarily be a settings-box. Also, I\u0027d like to avoid adding styling from code.",
+      "parentUuid": "3ce65bf8_c345f598",
       "range": {
         "startLine": 10,
         "startChar": 7,
