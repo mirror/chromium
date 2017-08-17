@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27cc543a_a8d1227d",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 30
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-17T10:15:24Z",
+      "side": 1,
+      "message": "Could you please add a default UNSET \u003d 0 value in a follow-up CL to follow proto best practices? This is required for new enums (see e.g. https://codereview.chromium.org/2898683002 or https://chromium-review.googlesource.com/c/548035 for examples).",
+      "range": {
+        "startLine": 825,
+        "startChar": 7,
+        "endLine": 825,
+        "endChar": 14
+      },
+      "revId": "9e3da12dd615b08156d5c1b3af2fc470b4b0503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
