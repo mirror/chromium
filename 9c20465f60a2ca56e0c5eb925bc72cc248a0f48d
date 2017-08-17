@@ -22,6 +22,30 @@
       "revId": "9c20465f60a2ca56e0c5eb925bc72cc248a0f48d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6d0f52_ad011138",
+        "filename": "net/nqe/weighted_observation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-17T22:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc34fd7c_0423c91d",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "9c20465f60a2ca56e0c5eb925bc72cc248a0f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
