@@ -16,6 +16,24 @@
       "revId": "38403c44ee1360d4666053959523d120a505ce56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12108830_e0cc90e4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-17T22:15:50Z",
+      "side": 1,
+      "message": "My presumption, based on the existence of the platform/mac/VersionUtilMac.h and its contents, was that it would not be appropriate for this code to rely upon /base/mac/mac_util.h.\n\nIf that\u0027s not the case, I\u0027m happy to change it?",
+      "parentUuid": "2faafd20_e7c16571",
+      "revId": "38403c44ee1360d4666053959523d120a505ce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
