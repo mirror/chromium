@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea212d54_b0591050",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-17T10:15:42Z",
+      "side": 1,
+      "message": "I think you can replace this long comment with one that says something like this:\n// These methods must be called on the main thread.\n// TODO(hbos): Allow these methods to be called on any thread and make them const. http://crbug.com/xxxxx\n\nAnd write everything you wrote here in the bug.",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "f19b1f0aab08b5cef09770fe0903f92154302c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
