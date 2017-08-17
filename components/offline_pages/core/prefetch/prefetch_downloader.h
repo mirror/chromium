@@ -17,9 +17,6 @@ class PrefetchDownloader {
  public:
   virtual ~PrefetchDownloader() = default;
 
-  virtual void SetCompletedCallback(
-      const PrefetchDownloadCompletedCallback& callback) = 0;
-
   // Starts to download an archive from |download_location|.
   virtual void StartDownload(const std::string& download_id,
                              const std::string& download_location) = 0;

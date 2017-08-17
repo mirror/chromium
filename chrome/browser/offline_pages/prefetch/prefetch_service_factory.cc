@@ -80,7 +80,9 @@ KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
 
   auto suggested_articles_observer =
       base::MakeUnique<SuggestedArticlesObserver>();
+
   auto prefetch_downloader = base::MakeUnique<PrefetchDownloaderImpl>(
+      prefetch_dispatcher.get(),
       DownloadServiceFactory::GetForBrowserContext(context),
       chrome::GetChannel());
 

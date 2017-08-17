@@ -19,8 +19,6 @@ class TestPrefetchDownloader : public PrefetchDownloader {
   TestPrefetchDownloader();
   ~TestPrefetchDownloader() override;
 
-  void SetCompletedCallback(
-      const PrefetchDownloadCompletedCallback& callback) override;
   void StartDownload(const std::string& download_id,
                      const std::string& download_location) override;
   void CancelDownload(const std::string& download_id) override;
