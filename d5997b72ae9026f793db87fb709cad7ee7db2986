@@ -116,6 +116,24 @@
       "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecb8748_275ff97e",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-17T01:07:31Z",
+      "side": 1,
+      "message": "Please note that SecurityViolationReportingPolicy is not only for CSP. For Non-CSP users the added value doesn\u0027t make sense, I think.",
+      "parentUuid": "502c590b_b8c9573d",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
