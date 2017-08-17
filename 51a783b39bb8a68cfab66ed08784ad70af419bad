@@ -16,6 +16,24 @@
       "revId": "51a783b39bb8a68cfab66ed08784ad70af419bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1f8040_cef1e9d0",
+        "filename": "cc/trees/mutator_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-17T18:46:48Z",
+      "side": 1,
+      "message": "Yes this is only for now. Once we start updating the animation local times in cc\nwe will change how this behave, in fact we will eliminate it. \nWe will still need to send updates back to main but I expect that to more or less \nbe done as part of SetAnimationEvents.\n\nI filed a bug https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756539 and updated\nthe following TODO to reflect this.",
+      "parentUuid": "227f02e6_dd694c6f",
+      "revId": "51a783b39bb8a68cfab66ed08784ad70af419bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
