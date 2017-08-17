@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "d00cf241_e3fe1dde",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T05:42:47Z",
+      "side": 1,
+      "message": "Yep, but lets not introduce deprecated and convey the feeling that this is something we want to still support for some time. I\u0027d rather just remove it when I remove the call sites.",
+      "parentUuid": "f958dec9_eef53d3c",
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cc11316_31f15171",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4d3c34_3ee11a59",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T05:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b264bbe_5f989aee",
+      "revId": "5af132dd42a4d1fceac09d1480bd509ae09f1dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
