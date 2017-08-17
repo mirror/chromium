@@ -34,6 +34,24 @@
       "revId": "6d4de1e42b8ef735ec6f1fc94a53f28877d858ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d950f48_a34092ec",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-17T11:24:03Z",
+      "side": 1,
+      "message": "Ups, sorry about that. \n\nI started a new CL (https://chromium-review.googlesource.com/c/618716) to fix this and will add you as reviewers once ready for review.",
+      "parentUuid": "bf08e4e8_c29f4a98",
+      "revId": "6d4de1e42b8ef735ec6f1fc94a53f28877d858ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
