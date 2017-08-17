@@ -37,6 +37,40 @@
     },
     {
       "key": {
+        "uuid": "12cb8928_be0f4f76",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T20:46:42Z",
+      "side": 1,
+      "message": "There are going to be more than 1 occurence of the same operation_name because many URLS are batched per operation. Maybe use std::set instead of a vector?",
+      "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5966fe49_07ae83e4",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T20:46:42Z",
+      "side": 1,
+      "message": "It\u0027s better to either explicitly compare with 0 (since it\u0027s int) or use .find() and comapre with .end().",
+      "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1f07544_859dfc14",
         "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
         "patchSetId": 3
@@ -69,6 +103,40 @@
       "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db65d26d_0ac2b303",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T20:46:42Z",
+      "side": 1,
+      "message": "I think this function should have Transaction logic and return cumulative success result, not ignoring results form the functions it calls.",
+      "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00a3a97_ab716def",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-17T20:46:42Z",
+      "side": 1,
+      "message": "I think it\u0027d be simpler to organize it a bit differently - \nfirst, convert all entries where count \u003e\u003d 3 to FINISHED\nsecond, select all remaining SENT_GET_OPERATION no matter what\u0027s counter and apply what you do in RetryGetOperationSync to them.",
+      "revId": "905d6121a39a9d6fff0d2b777a02a2878d61fd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
