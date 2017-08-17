@@ -44,6 +44,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/display/screen.h"
 #include "ui/events/base_event_utils.h"
+#include "ui/events/blink/blink_features.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/gesture_detection/gesture_provider_config_helper.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -579,6 +580,9 @@ class RenderWidgetHostTest : public testing::Test {
         features.push_back(features::kAsyncWheelEvents.name);
         break;
     }
+
+    features.push_back(features::kVsyncAlignedInputEvents.name);
+
     feature_list_.InitFromCommandLine(base::JoinString(features, ","),
                                       base::JoinString(disabled_features, ","));
 
@@ -2009,24 +2013,24 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 30, 0, true);
   dispatched_events =
       host_->mock_widget_input_handler_.GetAndResetDispatchedEvents();
-  EXPECT_EQ(3u, dispatched_events.size());
+  EXPECT_EQ(4u, dispatched_events.size());
   EXPECT_EQ(WebInputEvent::kGestureTapCancel,
             dispatched_events.at(0).event_->web_event->GetType());
   EXPECT_EQ(WebInputEvent::kGestureScrollBegin,
             dispatched_events.at(1).event_->web_event->GetType());
   EXPECT_EQ(WebInputEvent::kTouchScrollStarted,
             dispatched_events.at(2).event_->web_event->GetType());
+  EXPECT_EQ(WebInputEvent::kGestureScrollUpdate,
+            dispatched_events.at(3).event_->web_event->GetType());
   if (dispatched_events.at(1).callback_) {
     CallCallback(std::move(dispatched_events.at(1).callback_),
                  INPUT_EVENT_ACK_STATE_CONSUMED);
   }
   EXPECT_EQ(WebInputEvent::kTouchMove, host_->acked_touch_event_type());
-  dispatched_events =
-      host_->mock_widget_input_handler_.GetAndResetDispatchedEvents();
-  EXPECT_EQ(1u, dispatched_events.size());
-  EXPECT_EQ(WebInputEvent::kGestureScrollUpdate,
-            dispatched_events.at(0).event_->web_event->GetType());
-  CallCallback(std::move(dispatched_events.at(0).callback_),
+  EXPECT_EQ(
+      0u,
+      host_->mock_widget_input_handler_.GetAndResetDispatchedEvents().size());
+  CallCallback(std::move(dispatched_events.at(3).callback_),
                INPUT_EVENT_ACK_STATE_CONSUMED);
   // Mouse drag with shift becomes pinch.
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 40,
@@ -2102,23 +2106,23 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
   EXPECT_EQ(WebInputEvent::kTouchMove, host_->acked_touch_event_type());
   dispatched_events =
       host_->mock_widget_input_handler_.GetAndResetDispatchedEvents();
-  EXPECT_EQ(3u, dispatched_events.size());
+  EXPECT_EQ(4u, dispatched_events.size());
   EXPECT_EQ(WebInputEvent::kGestureTapCancel,
             dispatched_events.at(0).event_->web_event->GetType());
   EXPECT_EQ(WebInputEvent::kGestureScrollBegin,
             dispatched_events.at(1).event_->web_event->GetType());
   EXPECT_EQ(WebInputEvent::kTouchScrollStarted,
             dispatched_events.at(2).event_->web_event->GetType());
+  EXPECT_EQ(WebInputEvent::kGestureScrollUpdate,
+            dispatched_events.at(3).event_->web_event->GetType());
   if (dispatched_events.at(1).callback_) {
     CallCallback(std::move(dispatched_events.at(1).callback_),
                  INPUT_EVENT_ACK_STATE_CONSUMED);
   }
-  dispatched_events =
-      host_->mock_widget_input_handler_.GetAndResetDispatchedEvents();
-  EXPECT_EQ(1u, dispatched_events.size());
-  EXPECT_EQ(WebInputEvent::kGestureScrollUpdate,
-            dispatched_events.at(0).event_->web_event->GetType());
-  CallCallback(std::move(dispatched_events.at(0).callback_),
+  EXPECT_EQ(
+      0u,
+      host_->mock_widget_input_handler_.GetAndResetDispatchedEvents().size());
+  CallCallback(std::move(dispatched_events.at(3).callback_),
                INPUT_EVENT_ACK_STATE_CONSUMED);
   // Another pinch.
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 110,
@@ -2181,23 +2185,23 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
   EXPECT_EQ(WebInputEvent::kTouchMove, host_->acked_touch_event_type());
   dispatched_events =
       host_->mock_widget_input_handler_.GetAndResetDispatchedEvents();
-  EXPECT_EQ(3u, dispatched_events.size());
+  EXPECT_EQ(4u, dispatched_events.size());
   EXPECT_EQ(WebInputEvent::kGestureTapCancel,
             dispatched_events.at(0).event_->web_event->GetType());
   EXPECT_EQ(WebInputEvent::kGestureScrollBegin,
             dispatched_events.at(1).event_->web_event->GetType());
   EXPECT_EQ(WebInputEvent::kTouchScrollStarted,
             dispatched_events.at(2).event_->web_event->GetType());
+  EXPECT_EQ(WebInputEvent::kGestureScrollUpdate,
+            dispatched_events.at(3).event_->web_event->GetType());
   if (dispatched_events.at(1).callback_) {
     CallCallback(std::move(dispatched_events.at(1).callback_),
                  INPUT_EVENT_ACK_STATE_CONSUMED);
   }
-  dispatched_events =
-      host_->mock_widget_input_handler_.GetAndResetDispatchedEvents();
-  EXPECT_EQ(1u, dispatched_events.size());
-  EXPECT_EQ(WebInputEvent::kGestureScrollUpdate,
-            dispatched_events.at(0).event_->web_event->GetType());
-  CallCallback(std::move(dispatched_events.at(0).callback_),
+  EXPECT_EQ(
+      0u,
+      host_->mock_widget_input_handler_.GetAndResetDispatchedEvents().size());
+  CallCallback(std::move(dispatched_events.at(3).callback_),
                INPUT_EVENT_ACK_STATE_CONSUMED);
 
   // Turn off emulation during a scroll.
