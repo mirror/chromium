@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc535726_903a49af",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-17T20:37:51Z",
+      "side": 1,
+      "message": "That sounds reasonable to me.",
+      "parentUuid": "ae5cb118_4005ca2a",
+      "revId": "8b3b562236428be8b382775959a2e0ae40376a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b20448fc_666bcaa3",
         "filename": "chrome/browser/extensions/extension_util.cc",
         "patchSetId": 7
