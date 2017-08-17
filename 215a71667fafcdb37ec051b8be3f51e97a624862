@@ -69,6 +69,24 @@
       "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f358a4c0_75b92559",
+        "filename": "ui/base/ime/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-17T00:23:14Z",
+      "side": 1,
+      "message": "I think ui code isn\u0027t supposed to reference Blink code, and the right way to do this is to define a separate copy of the enum in ui and write code to convert back-and-forth where necessary. At least, that\u0027s what I did with the enum I added.",
+      "parentUuid": "770d1622_4908d53e",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
