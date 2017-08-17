@@ -117,6 +117,30 @@
       "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56af45f6_b5af81e9",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T17:13:25Z",
+      "side": 1,
+      "message": "This function is a pure virtual function of the ChromeToolbarModelDelegate. We have to implement it.",
+      "parentUuid": "d92bedee_9b4ea452",
+      "range": {
+        "startLine": 799,
+        "startChar": 31,
+        "endLine": 799,
+        "endChar": 51
+      },
+      "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
