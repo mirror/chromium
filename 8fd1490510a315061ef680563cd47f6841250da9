@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "397f62cf_573dd36b",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-17T13:34:28Z",
+      "side": 1,
+      "message": "Should it be \"navigation commit\" instead of \"commit of page level activation\"?\n\nSuggestion: \n..., but the activation conditions ...",
+      "revId": "8fd1490510a315061ef680563cd47f6841250da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
