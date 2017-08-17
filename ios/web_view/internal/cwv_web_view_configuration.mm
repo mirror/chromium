@@ -11,7 +11,6 @@
 #import "ios/web_view/internal/cwv_preferences_internal.h"
 #import "ios/web_view/internal/cwv_user_content_controller_internal.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
-#include "ios/web_view/internal/web_view_global_state_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -54,14 +53,6 @@
         [[self alloc] initWithBrowserState:std::move(browserState)];
   });
   return incognitoConfiguration;
-}
-
-+ (void)initialize {
-  if (self != [CWVWebViewConfiguration class]) {
-    return;
-  }
-
-  ios_web_view::InitializeGlobalState();
 }
 
 - (instancetype)initWithBrowserState:
