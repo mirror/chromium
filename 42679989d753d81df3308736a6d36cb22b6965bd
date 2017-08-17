@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c045f2_b572d796",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-17T17:36:49Z",
+      "side": 1,
+      "message": "The style guide says use either kBrowser or BROWSER.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "42679989d753d81df3308736a6d36cb22b6965bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
