@@ -87,6 +87,8 @@ class View;
 // or not.
 - (void)updateFullKeyboardAccess;
 
+- (int)currentEventFlags;
+
 @end
 
 #endif  // UI_VIEWS_COCOA_BRIDGED_CONTENT_VIEW_H_
