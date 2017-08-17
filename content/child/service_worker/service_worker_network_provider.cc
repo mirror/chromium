@@ -80,13 +80,13 @@ class WebServiceWorkerNetworkProviderForFrame
     }
   }
 
-  bool IsControlledByServiceWorker() override {
+  int GetProviderID() const override { return provider_->provider_id(); }
+
+  bool HasControllerServiceWorker() override {
     return provider_->IsControlledByServiceWorker();
   }
 
-  int GetProviderID() const override { return provider_->provider_id(); }
-
-  int64_t ServiceWorkerID() override {
+  int64_t ControllerServiceWorkerID() override {
     if (provider_->context() && provider_->context()->controller())
       return provider_->context()->controller()->version_id();
     return kInvalidServiceWorkerVersionId;
@@ -199,11 +199,13 @@ ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
 }
 
 ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
-  if (provider_id_ == kInvalidServiceWorkerProviderId)
-    return;
-  if (!ChildThreadImpl::current())
-    return;  // May be null in some tests.
   provider_host_.reset();
+}
+
+int ServiceWorkerNetworkProvider::provider_id() const {
+  if (!context())
+    return kInvalidServiceWorkerProviderId;
+  return context()->provider_id();
 }
 
 bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
@@ -215,17 +217,17 @@ bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
   return context() && context()->controller();
 }
 
-ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider()
-    : provider_id_(kInvalidServiceWorkerProviderId) {}
+// Creates an invalid instance (provider_id() returns
+// kInvalidServiceWorkerProviderId).
+ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider() {}
 
 // Constructor for service worker clients.
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     int route_id,
     ServiceWorkerProviderType provider_type,
     int browser_provider_id,
-    bool is_parent_frame_secure)
-    : provider_id_(browser_provider_id) {
-  if (provider_id_ == kInvalidServiceWorkerProviderId)
+    bool is_parent_frame_secure) {
+  if (browser_provider_id == kInvalidServiceWorkerProviderId)
     return;
   if (!ChildThreadImpl::current())
     return;  // May be null in some tests.
@@ -235,8 +237,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   DCHECK(provider_type == SERVICE_WORKER_PROVIDER_FOR_WINDOW ||
          provider_type == SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER);
 
-  ServiceWorkerProviderHostInfo host_info(provider_id_, route_id, provider_type,
-                                          is_parent_frame_secure);
+  ServiceWorkerProviderHostInfo host_info(
+      browser_provider_id, route_id, provider_type, is_parent_frame_secure);
   host_info.host_request = mojo::MakeRequest(&provider_host_);
   mojom::ServiceWorkerProviderAssociatedRequest client_request =
       mojo::MakeRequest(&host_info.client_ptr_info);
@@ -248,7 +250,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
           ChildThreadImpl::current()->thread_safe_sender(),
           base::ThreadTaskRunnerHandle::Get().get());
   context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
-      provider_id_, provider_type, std::move(client_request), dispatcher);
+      browser_provider_id, provider_type, std::move(client_request),
+      dispatcher);
   ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
       &dispatcher_host_);
   dispatcher_host_->OnProviderCreated(std::move(host_info));
@@ -256,8 +259,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 
 // Constructor for service worker execution contexts.
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
-    mojom::ServiceWorkerProviderInfoForStartWorkerPtr info)
-    : provider_id_(info->provider_id) {
+    mojom::ServiceWorkerProviderInfoForStartWorkerPtr info) {
   // Initialize the provider context with info for
   // ServiceWorkerGlobalScope#registration.
   ThreadSafeSender* sender = ChildThreadImpl::current()->thread_safe_sender();
@@ -265,7 +267,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
           sender, base::ThreadTaskRunnerHandle::Get().get());
   context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
-      provider_id_, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
+      info->provider_id, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
       std::move(info->client_request), dispatcher);
   std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration =
       ServiceWorkerRegistrationHandleReference::Adopt(info->registration,
