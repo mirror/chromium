@@ -2,6 +2,120 @@
   "comments": [
     {
       "key": {
+        "uuid": "2b187c13_6c20d6d5",
+        "filename": "chrome/browser/extensions/chrome_extension_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T21:09:09Z",
+      "side": 1,
+      "message": "Why do you call this explicitly by hand? WebContents itself will notify the ExtensionWebContentsObserver as it iterates through observers registered with it.",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6145e891_d5c0763c",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T21:09:09Z",
+      "side": 1,
+      "message": "Why delete here? What if the navigation was same document one or it just fails. Won\u0027t it be more correct to delete it at the DidFinishNavigation time?",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94116203_936bc4c1",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T21:09:09Z",
+      "side": 1,
+      "message": "Hmm, why do we need to store the throttle here? Throttles don\u0027t have a very long lifetime and storing them on your own seem like a recipe for problems.",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cd5bc5_abab6302",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T21:09:09Z",
+      "side": 1,
+      "message": "RenderFrameHost",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 59
+      },
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ec6e93_a6f5be01",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T21:09:09Z",
+      "side": 1,
+      "message": "Be consistent with empty spaces between comments and values - either have them on all cases or none.",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b79b94_a362ab70",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T21:09:09Z",
+      "side": 1,
+      "message": "Why not define a symbolic constant for it?",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 36
+      },
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d2146d5_6392b8a1",
         "filename": "third_party/WebKit/Source/core/html/HTMLEmbedElement.cpp",
         "patchSetId": 7
