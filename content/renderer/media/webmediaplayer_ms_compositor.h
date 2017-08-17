@@ -57,7 +57,7 @@ class CONTENT_EXPORT WebMediaPlayerMSCompositor
   // together with flag "--disable-rtc-smoothness-algorithm" determine whether
   // we enable algorithm or not.
   WebMediaPlayerMSCompositor(
-      scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
       const blink::WebMediaStream& web_stream,
       const base::WeakPtr<WebMediaPlayerMS>& player);
@@ -121,7 +121,10 @@ class CONTENT_EXPORT WebMediaPlayerMSCompositor
   // which is renderer main thread in this class.
   base::ThreadChecker thread_checker_;
 
-  const scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
+  // This will run tasks on the compositor thread. If
+  // kEnableSurfaceLayerForVideo is enabled, it will instead run tasks on
+  // the media thread.
+  const scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
   base::MessageLoop* main_message_loop_;
 
