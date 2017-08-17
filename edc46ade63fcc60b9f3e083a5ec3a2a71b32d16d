@@ -22,6 +22,30 @@
       "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f91915_b2347181",
+        "filename": "cc/tiles/checker_image_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T23:30:21Z",
+      "side": 1,
+      "message": "Sure. Would you prefer that in TileManager?",
+      "parentUuid": "8daf7b57_276f7826",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
