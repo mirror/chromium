@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b6858c_2c159a8a",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2980,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T20:13:45Z",
+      "side": 1,
+      "message": "Please put the configuration that you\u0027re more likely to launch at the start so that it gets tested. The other entries currently don\u0027t receive test coverage. (Not sure which one makes sense for this case, so up to you.)",
+      "range": {
+        "startLine": 2980,
+        "startChar": 41,
+        "endLine": 2980,
+        "endChar": 0
+      },
+      "revId": "8df4feceb62a9a58735c3135078f66a267b11540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
