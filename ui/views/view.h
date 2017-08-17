@@ -166,6 +166,54 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
     View* move_view;
   };
 
+  struct LayerOffsetData {
+    LayerOffsetData() : device_scale_factor(1.f) {}
+    LayerOffsetData(float device_scale_factor)
+        : device_scale_factor(device_scale_factor) {}
+    LayerOffsetData(const gfx::Vector2d& offset, float device_scale_factor)
+        : device_scale_factor(device_scale_factor) {
+      AddOffset(offset);
+    }
+
+    const gfx::Vector2d& offset() const { return offset_; }
+
+    const gfx::Vector2dF total_subpixel_offset() const {
+      return total_subpixel_offset_;
+    }
+
+    LayerOffsetData& operator+=(const gfx::Vector2d& offset) {
+      AddOffset(offset);
+      return *this;
+    }
+
+    LayerOffsetData operator+(const gfx::Vector2d& offset) const {
+      LayerOffsetData offset_data(*this);
+      offset_data.AddOffset(offset);
+      return offset_data;
+    }
+
+   private:
+    void AddOffset(const gfx::Vector2d& offset_to_parent) {
+      offset_ += offset_to_parent;
+      gfx::Vector2dF fractional_pixel_offset(
+          offset_to_parent.x() * device_scale_factor,
+          offset_to_parent.y() * device_scale_factor);
+      gfx::Vector2dF integral_pixel_offset(
+          gfx::ToRoundedInt(fractional_pixel_offset.x()),
+          gfx::ToRoundedInt(fractional_pixel_offset.y()));
+      total_subpixel_offset_ += integral_pixel_offset - fractional_pixel_offset;
+    }
+
+    // Total offset so far.
+    gfx::Vector2d offset_;
+
+    // Total subpixel offset so far,
+    gfx::Vector2dF total_subpixel_offset_;
+
+    // The device scale factor at which the subpixel offset is being computed.
+    float device_scale_factor;
+  };
+
   // Creation and lifetime -----------------------------------------------------
 
   View();
@@ -424,10 +472,6 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // deleted, or when a new LayoutManager is installed.
   LayoutManager* GetLayoutManager() const;
   void SetLayoutManager(LayoutManager* layout);
-
-  // Adjust the layer's offset so that it snaps to the physical pixel boundary.
-  // This has no effect if the view does not have an associated layer.
-  void SnapLayerToPixelBoundary();
 
   // Attributes ----------------------------------------------------------------
 
@@ -1179,7 +1223,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
 
   // Returns the offset from this view to the nearest ancestor with a layer. If
   // |layer_parent| is non-NULL it is set to the nearest ancestor with a layer.
-  virtual gfx::Vector2d CalculateOffsetToAncestorWithLayer(
+  virtual LayerOffsetData CalculateOffsetToAncestorWithLayer(
       ui::Layer** layer_parent);
 
   // Updates the view's layer's parent. Called when a view is added to a view
@@ -1192,11 +1236,11 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // recurses through all children. This is used when adding a layer to an
   // existing view to make sure all descendants that have layers are parented to
   // the right layer.
-  void MoveLayerToParent(ui::Layer* parent_layer, const gfx::Point& point);
+  void MoveLayerToParent(ui::Layer* parent_layer, LayerOffsetData offset_data);
 
   // Called to update the bounds of any child layers within this View's
   // hierarchy when something happens to the hierarchy.
-  void UpdateChildLayerBounds(const gfx::Vector2d& offset);
+  void UpdateChildLayerBounds(const LayerOffsetData& offset_data);
 
   // Overridden from ui::LayerDelegate:
   void OnPaintLayer(const ui::PaintContext& context) override;
@@ -1402,6 +1446,10 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // VisibilityChanged().
   void VisibilityChangedImpl(View* starting_from, bool is_visible);
 
+  // Adjust the layer's offset so that it snaps to the physical pixel boundary.
+  // This has no effect if the view does not have an associated layer.
+  void SnapLayerToPixelBoundary(const LayerOffsetData& offset_data);
+
   // Responsible for propagating bounds change notifications to relevant
   // views.
   void BoundsChanged(const gfx::Rect& previous_bounds);
@@ -1422,7 +1470,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   void RemoveDescendantToNotify(View* view);
 
   // Sets the layer's bounds given in DIP coordinates.
-  void SetLayerBounds(const gfx::Rect& bounds_in_dip);
+  void SetLayerBounds(const gfx::Size& size_in_dip,
+                      const LayerOffsetData& layer_offset_data);
 
   // Transformations -----------------------------------------------------------
 
