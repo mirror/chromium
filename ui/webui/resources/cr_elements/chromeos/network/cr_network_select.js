@@ -108,24 +108,55 @@ Polymer({
   },
 
   /**
-   * Request the list of visible networks. May be called externally to force a
-   * refresh and list update (e.g. when the element is shown).
+   * Request the device states then request the network states. May be called
+   * externally to force a refresh and list update (e.g. when the element is
+   * shown).
    */
   refreshNetworks: function() {
+    chrome.networkingPrivate.getDeviceStates(
+        this.getDeviceStatesCallback_.bind(this));
+  },
+
+  /**
+   * @param {!Array<!CrOnc.DeviceStateProperties>} deviceStates
+   * @private
+   */
+  getDeviceStatesCallback_: function(deviceStates) {
+    var uninitializedCellular = deviceStates.find(function(device) {
+      return device.Type == CrOnc.Type.CELLULAR &&
+          device.State == CrOnc.DeviceState.UNINITIALIZED;
+    });
+    this.getNetworkStates_(uninitializedCellular);
+  },
+
+  /**
+   * Request the list of visible networks. If CrOnc.DeviceStateProperties is
+   * not undefined, prepend it to the list.
+   * @param {!CrOnc.DeviceStateProperties|undefined} uninitializedCellular
+   */
+  getNetworkStates_: function(uninitializedCellular) {
     var filter = {
       networkType: chrome.networkingPrivate.NetworkType.ALL,
       visible: true,
       configured: false
     };
-    chrome.networkingPrivate.getNetworks(
-        filter, this.getNetworksCallback_.bind(this));
+    chrome.networkingPrivate.getNetworks(filter, function(states) {
+      this.getNetworksCallback_(uninitializedCellular, states);
+    }.bind(this));
   },
 
   /**
+   * @param {!CrOnc.DeviceStateProperties|undefined} uninitializedCellular
    * @param {!Array<!CrOnc.NetworkStateProperties>} states
    * @private
    */
-  getNetworksCallback_: function(states) {
+  getNetworksCallback_: function(uninitializedCellular, states) {
+    if (uninitializedCellular) {
+      states.unshift({
+        GUID: '',
+        Type: uninitializedCellular.Type,
+      });
+    }
     this.networkStateList_ = states;
     var defaultState = (this.networkStateList_.length > 0 &&
                         this.networkStateList_[0].ConnectionState ==
