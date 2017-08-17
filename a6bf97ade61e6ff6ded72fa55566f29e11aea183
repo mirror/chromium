@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83c22ac0_800c532a",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T21:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaba2480_6d3921da",
+      "range": {
+        "startLine": 56,
+        "startChar": 17,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbc5d8d9_48169651",
         "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
         "patchSetId": 38
@@ -45,6 +69,30 @@
       "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4715ae_a47ee2a5",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T21:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbc5d8d9_48169651",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7299e4f_7cb5b208",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T21:02:38Z",
+      "side": 1,
+      "message": "Done. However, I had to make GetWebContents() return a non-const pointer and drop const of ToWebContentsCoordinationUnit(). This is because I need to call non-const RecalculateProperty() on the returning WebContents CU.",
+      "parentUuid": "beea82e4_41dcebf8",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "553585af_33b908b6",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 38
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "99ef1635_99d518e6",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T21:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553585af_33b908b6",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 60
+      },
+      "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3670367c_170d9091",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
         "patchSetId": 38
@@ -114,6 +210,30 @@
       "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776e5b63_9351e5eb",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-17T21:02:38Z",
+      "side": 1,
+      "message": "Done. I will also change the parameter name in OnFramePropertyChanged() above to frame_cu to match coordination_unit_graph_observer.h.",
+      "parentUuid": "3670367c_170d9091",
+      "range": {
+        "startLine": 40,
+        "startChar": 45,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "a6bf97ade61e6ff6ded72fa55566f29e11aea183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
