@@ -1,0 +1,4 @@
+include_rules = [
+  "+components/offline_pages/core/downloads",
+  "+components/offline_pages/features",
+]
