@@ -21,6 +21,26 @@ struct CertPath;
 
 namespace cast_certificate {
 
+enum class CastCrlError {
+  OK,
+  // The certificates of the CRL issuer could not be parsed.
+  ERR_ISSUER_PARSE,
+  // The CRL issuer is expired.
+  ERR_ISSUER_DATE,
+  // The CRL issuer could not be verified.
+  ERR_ISSUER_VERIFY_GENERIC,
+  // The CRL signature could not be verified.
+  ERR_SIGNATURE,
+  // The CRL is malformed.
+  ERR_MALFORMED,
+  // The CRL validity date could not be parsed.
+  ERR_DATE_PARSE,
+  // The CRL is expired.
+  ERR_DATE,
+  // An internal coding error.
+  ERR_UNEXPECTED,
+};
+
 // This class represents the CRL information parsed from the binary proto.
 class CastCRL {
  public:
@@ -50,8 +70,9 @@ class CastCRL {
 //
 // Output:
 // Returns the CRL object if success, nullptr otherwise.
+// |error| is populated with the appropriate CastCrlError.
 std::unique_ptr<CastCRL> ParseAndVerifyCRL(const std::string& crl_proto,
-                                           const base::Time& time);
+                                           const base::Time& time, CastCrlError* error);
 
 // This is an overloaded version of ParseAndVerifyCRL that allows
 // the input of a custom TrustStore.
@@ -61,7 +82,7 @@ std::unique_ptr<CastCRL> ParseAndVerifyCRL(const std::string& crl_proto,
 std::unique_ptr<CastCRL> ParseAndVerifyCRLUsingCustomTrustStore(
     const std::string& crl_proto,
     const base::Time& time,
-    net::TrustStore* trust_store);
+    net::TrustStore* trust_store, CastCrlError* error);
 
 }  // namespace cast_certificate
 

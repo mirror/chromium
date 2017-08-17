@@ -76,3 +76,19 @@ source_set("unit_tests") {
     "//testing/gtest",
   ]
 }
+
+executable("cast_socket_runner") {
+  testonly = true
+  sources = [
+    "cast_socket_runner.cc",
+  ]
+
+  deps = [
+    ":cast_channel",
+    "//base",
+    "//base/test:test_support",
+    "//build/config:exe_and_shlib_deps",
+    "//components/cast_certificate",
+    "//net",
+  ]
+}

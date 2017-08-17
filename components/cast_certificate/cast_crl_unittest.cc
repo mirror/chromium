@@ -46,10 +46,13 @@ bool TestVerifyCRL(TestStepResult expected_result,
                    const std::string& crl_bundle,
                    const base::Time& time,
                    net::TrustStore* crl_trust_store) {
+  CastCrlError error;
   std::unique_ptr<CastCRL> crl =
-      ParseAndVerifyCRLUsingCustomTrustStore(crl_bundle, time, crl_trust_store);
+      ParseAndVerifyCRLUsingCustomTrustStore(crl_bundle, time, crl_trust_store, &error);
 
   bool success = crl != nullptr;
+  bool success_error = error == CastCrlError::OK;
+  EXPECT_EQ(success_error, success);
   if (expected_result != RESULT_SUCCESS) {
     success = !success;
   }
@@ -70,11 +73,13 @@ bool TestVerifyRevocation(CastCertError expected_result,
                           bool crl_required,
                           net::TrustStore* cast_trust_store,
                           net::TrustStore* crl_trust_store) {
+  CastCrlError error;
   std::unique_ptr<CastCRL> crl;
   if (!crl_bundle.empty()) {
     crl = ParseAndVerifyCRLUsingCustomTrustStore(crl_bundle, crl_time,
-                                                 crl_trust_store);
+                                                 crl_trust_store, &error);
     EXPECT_NE(crl.get(), nullptr);
+    EXPECT_EQ(error, CastCrlError::OK);
   }
 
   std::unique_ptr<CertVerificationContext> context;
@@ -204,6 +209,19 @@ void RunTestSuite(const std::string& test_suite_file_name) {
 TEST(CastCertificateTest, TestSuite1) {
   RunTestSuite("testsuite/testsuite1.pb");
 }
+
+TEST(CastCertificateTest, CRLMalformed) {
+  std::string crl_bundle = "woof";
+  base::Time now = base::Time::Now();
+
+    std::unique_ptr<net::TrustStoreInMemory> crl_trust_store = testing::CreateTrustStoreFromFile(
+        "certificates/cast_crl_test_root_ca.pem");
+    CastCrlError error;
+  std::unique_ptr<CastCRL> crl =
+      ParseAndVerifyCRLUsingCustomTrustStore(crl_bundle, now, crl_trust_store.get(), &error);
+
+      ASSERT_EQ(error, CastCrlError::ERR_MALFORMED);
+} 
 
 }  // namespace
 

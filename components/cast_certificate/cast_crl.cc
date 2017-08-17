@@ -87,6 +87,21 @@ bool ConvertTimeSeconds(uint64_t seconds,
                                                generalized_time);
 }
 
+// Returns the CastCrlError for the failed path building.
+// This function must only be called if path building failed.
+CastCrlError MapToCastError(const net::CertPathBuilder::Result& result) {
+  DCHECK(!result.HasValidPath());
+  if (result.paths.empty())
+    return CastCrlError::ERR_ISSUER_VERIFY_GENERIC;
+  const net::CertPathErrors& path_errors =
+      result.paths.at(result.best_result_index)->errors;
+  if (path_errors.ContainsError(net::kValidityFailedNotAfter) ||
+      path_errors.ContainsError(net::kValidityFailedNotBefore)) {
+    return CastCrlError::ERR_ISSUER_DATE;
+  }
+  return CastCrlError::ERR_ISSUER_VERIFY_GENERIC;
+}
+
 // Specifies the signature verification policy.
 // The required algorithms are:
 // RSASSA PKCS#1 v1.5 with SHA-256, using RSA keys 2048-bits or longer.
@@ -100,7 +115,7 @@ std::unique_ptr<net::SignaturePolicy> CreateCastSignaturePolicy() {
 // at |time|. The validity period of the CRL is adjusted to be the earliest
 // of the issuer certificate chain's expiration and the CRL's expiration and
 // the result is stored in |overall_not_after|.
-bool VerifyCRL(const Crl& crl,
+CastCrlError VerifyCRL(const Crl& crl,
                const TbsCrl& tbs_crl,
                const base::Time& time,
                net::TrustStore* trust_store,
@@ -114,7 +129,7 @@ bool VerifyCRL(const Crl& crl,
   if (parsed_cert == nullptr) {
     VLOG(2) << "CRL - Issuer certificate parsing failed:\n"
             << parse_errors.ToDebugString();
-    return false;
+    return CastCrlError::ERR_ISSUER_PARSE;
   }
 
   // Wrap the signature in a BitString.
@@ -132,14 +147,14 @@ bool VerifyCRL(const Crl& crl,
                         signature_policy.get(), &verify_errors)) {
     VLOG(2) << "CRL - Signature verification failed:\n"
             << verify_errors.ToDebugString();
-    return false;
+    return CastCrlError::ERR_SIGNATURE;
   }
 
   // Verify the issuer certificate.
   net::der::GeneralizedTime verification_time;
   if (!net::der::EncodeTimeAsGeneralizedTime(time, &verification_time)) {
     VLOG(2) << "CRL - Unable to parse verification time.";
-    return false;
+    return CastCrlError::ERR_UNEXPECTED;
   }
   net::CertPathBuilder::Result result;
   net::CertPathBuilder path_builder(
@@ -150,8 +165,7 @@ bool VerifyCRL(const Crl& crl,
   path_builder.Run();
   if (!result.HasValidPath()) {
     VLOG(2) << "CRL - Issuer certificate verification failed.";
-    // TODO(crbug.com/634443): Log the error information.
-    return false;
+    return MapToCastError(result);
   }
   // There are no requirements placed on the leaf certificate having any
   // particular KeyUsages. Leaf certificate checks are bypassed.
@@ -160,16 +174,16 @@ bool VerifyCRL(const Crl& crl,
   net::der::GeneralizedTime not_before;
   if (!ConvertTimeSeconds(tbs_crl.not_before_seconds(), &not_before)) {
     VLOG(2) << "CRL - Unable to parse not_before.";
-    return false;
+    return CastCrlError::ERR_DATE_PARSE;
   }
   net::der::GeneralizedTime not_after;
   if (!ConvertTimeSeconds(tbs_crl.not_after_seconds(), &not_after)) {
     VLOG(2) << "CRL - Unable to parse not_after.";
-    return false;
+    return CastCrlError::ERR_DATE_PARSE;
   }
   if ((verification_time < not_before) || (verification_time > not_after)) {
     VLOG(2) << "CRL - Not time-valid.";
-    return false;
+    return CastCrlError::ERR_DATE;
   }
 
   // Set CRL expiry to the earliest of the cert chain expiry and CRL expiry.
@@ -189,10 +203,10 @@ bool VerifyCRL(const Crl& crl,
     uint64_t last_serial_number = range.last_serial_number();
     if (last_serial_number < first_serial_number) {
       VLOG(2) << "CRL - Malformed serial number range.";
-      return false;
+      return CastCrlError::ERR_MALFORMED;
     }
   }
-  return true;
+  return CastCrlError::OK;
 }
 
 class CastCRLImpl : public CastCRL {
@@ -313,21 +327,23 @@ bool CastCRLImpl::CheckRevocation(const net::CertPath& trusted_chain,
 }  // namespace
 
 std::unique_ptr<CastCRL> ParseAndVerifyCRL(const std::string& crl_proto,
-                                           const base::Time& time) {
+                                           const base::Time& time, CastCrlError* error) {
   return ParseAndVerifyCRLUsingCustomTrustStore(crl_proto, time,
-                                                &CastCRLTrustStore::Get());
+                                                &CastCRLTrustStore::Get(), error);
 }
 
 std::unique_ptr<CastCRL> ParseAndVerifyCRLUsingCustomTrustStore(
     const std::string& crl_proto,
     const base::Time& time,
-    net::TrustStore* trust_store) {
+    net::TrustStore* trust_store,
+    CastCrlError* error) {
   if (!trust_store)
-    return ParseAndVerifyCRL(crl_proto, time);
+    return ParseAndVerifyCRL(crl_proto, time, error);
 
   CrlBundle crl_bundle;
   if (!crl_bundle.ParseFromString(crl_proto)) {
     LOG(ERROR) << "CRL - Binary could not be parsed.";
+    *error = CastCrlError::ERR_MALFORMED;
     return nullptr;
   }
   for (auto const& crl : crl_bundle.crls()) {
@@ -340,13 +356,15 @@ std::unique_ptr<CastCRL> ParseAndVerifyCRLUsingCustomTrustStore(
       continue;
     }
     net::der::GeneralizedTime overall_not_after;
-    if (!VerifyCRL(crl, tbs_crl, time, trust_store, &overall_not_after)) {
+    *error = VerifyCRL(crl, tbs_crl, time, trust_store, &overall_not_after);
+    if (*error != CastCrlError::OK) {
       LOG(ERROR) << "CRL - Verification failed.";
       return nullptr;
     }
     return base::MakeUnique<CastCRLImpl>(tbs_crl, overall_not_after);
   }
   LOG(ERROR) << "No supported version of revocation data.";
+  *error = CastCrlError::ERR_MALFORMED;
   return nullptr;
 }
 
