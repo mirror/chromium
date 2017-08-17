@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8724a60b_4d9f41da",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions_test_runner/ExtensionsAuditsTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-17T18:47:19Z",
+      "side": 1,
+      "message": "I don\u0027t think you really need to wait here, but if it\u0027s an idiom and you do it elsewhere, I don\u0027t mind.",
+      "revId": "f8a87314e69c2ad485a36bd57db8d8418b82351b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4ade23_f9791bd4",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/migrate_helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-17T18:47:19Z",
+      "side": 1,
+      "message": "Nuke them altogether? We don\u0027t land commented out code.",
+      "revId": "f8a87314e69c2ad485a36bd57db8d8418b82351b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
