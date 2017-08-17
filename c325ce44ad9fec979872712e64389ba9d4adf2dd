@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9a77b8a_aab1d3a1",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "160cd475_4a244a88",
+      "range": {
+        "startLine": 36,
+        "startChar": 58,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a659535_37587f01",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-17T09:51:47Z",
       "side": 1,
       "message": "// Label matching (between \"old\" and \"new\") can guide EquivalenceMap construction; but EquivalenceMap induces Label matching. This apparent \"chick and egg\" problem is solved by bootstrapping a \"coarse\" EquivalenceMap using \u003cwhatever data\u003e.\n\nHmm, the word \"index\" is overloaded:\n1. \"Index\" as in \"indexing the web\", i.e., \n2. \"Index\" as in Label \u003d {offset, index}.\nIf this bugs you then add TODO to rename stuff?",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d73aabb_76290073",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "Added comment.\nI plan on refactoring Label \u003d {offset, index}, but this has a larger scope.",
+      "parentUuid": "2a659535_37587f01",
       "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3db7797b_e6270d7d",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "Going for first option, but keeping same variable |equivalences| and adding comments. \nNote that I would like to make this computation in a loop eventually, and perhaps have more than 2 iterations, but some refactoring will be needed for this first:\n- associating targets should be a no-op if EquivalenceMap is empty.\n- |*image_index| really should be const, and mutable state (association between targets) should be in another local object.",
+      "parentUuid": "bd332e65_8d1e63bf",
+      "range": {
+        "startLine": 249,
+        "startChar": 2,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62e2182_f62b4366",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-17T09:51:47Z",
       "side": 1,
       "message": "// If images do not match known executable formats, or if detected formats don\u0027t match, fall back to generating a raw patch.\n\nAlso, output error\n  LOG(ERROR) \u003c\u003c \"Fall back to raw mode.\";",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d37667_0a8cdeb1",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "I think LOG(WARNING) makes more sense.",
+      "parentUuid": "d62e2182_f62b4366",
       "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "2129b1ee_c36b8ae8",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "That would be a good thing, but I think we need to figure out how to properly log an error that will notify us (even from automated scipts).",
+      "parentUuid": "d587f4bf_30862981",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1458c24_f41bd0fb",
         "filename": "chrome/installer/zucchini/zucchini_gen.h",
         "patchSetId": 8
@@ -110,6 +212,24 @@
       "writtenOn": "2017-08-17T09:51:47Z",
       "side": 1,
       "message": "Here\u0027s my shot at explaining this complex routine. Please adapt as you see fit:\n\n// Creates an EquivalenceMap from \"old\" image to \"new\" image, and returns the result. |*_image_index|:\n// - Provide \"old\" and \"new\" image data.\n// - Supply references, which serve as \"atomic constraints\", i.e., references in \"old\" (\"new\") must not straddle \"old\" (\"new\") ranges in each Equivalence.\n// - Mediate Label matching, which link references between \"old\" and \"new\", and guide EquivalenceMap construction.\n// |*_image_index| is assumed to hold targets as *unmarked* offsets. These are also temporarily modified during Label matching -- that\u0027s why they\u0027re passed by pointer. Meanwhile, |old_label_manager| contains labels for |old_image_index|.",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a92b13_487a0d7f",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "Adapting on this. I find second point a bit misleading - the main motivation for supplying references is point 3, and using references as atomic constraints is rather a symptom of trying to match targets.",
+      "parentUuid": "d1458c24_f41bd0fb",
       "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +256,30 @@
       "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efdd37b_00d0d8ed",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-17T21:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b142965_32a91928",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
