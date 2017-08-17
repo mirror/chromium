@@ -13,6 +13,7 @@
 #include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
 #include "chrome/browser/safe_browsing/download_protection/download_protection_util.h"
 #include "chrome/browser/safe_browsing/download_protection/ppapi_download_request.h"
+#include "chrome/browser/safe_browsing/safe_browsing_util.h"
 #include "chrome/common/safe_browsing/download_protection_util.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
@@ -301,8 +302,14 @@ void CheckClientDownloadRequest::OnURLFetchComplete(
           token = response.token();
           break;
         case ClientDownloadResponse::UNCOMMON:
-          reason = REASON_DOWNLOAD_UNCOMMON;
-          result = DownloadCheckResult::UNCOMMON;
+          // TODO: what should reason/result be here?
+          if (IsPrivateIPAddress(item_->GetRemoteAddress())) {
+            reason = REASON_VERDICT_UNKNOWN;
+            result = DownloadCheckResult::UNKNOWN;
+          } else {
+            reason = REASON_DOWNLOAD_UNCOMMON;
+            result = DownloadCheckResult::UNCOMMON;
+          }
           token = response.token();
           break;
         case ClientDownloadResponse::DANGEROUS_HOST:
