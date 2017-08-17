@@ -549,6 +549,24 @@
     },
     {
       "key": {
+        "uuid": "2a3a023d_408ccc31",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:17:02Z",
+      "side": 1,
+      "message": "It depends on if we want Blink objects to be able to make Mojo calls on a detached frame--we might want this if script execution is enabled in a detached context, for example.\n\n(Agree that this belongs in a separate discussion. I\u0027m currently working on a design doc for the Frame:Document thing, but I need to do some prototyping before I can send out something interesting \u003d)",
+      "parentUuid": "eeb3022f_c5faad22",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01be1bdc_f3ab95d5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
         "patchSetId": 24
