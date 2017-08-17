@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9917f188_e6f664b6",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-17T16:15:14Z",
+      "side": 1,
+      "message": "Regarding the concern (1), I was feeling it\u0027s at acceptable level given we\u0027re in rapid re-architecturing era. IIUC, we\u0027ve been using WTF types in Source/ for some real reason such as code consistency, benefit of PartitionAlloc based allocation, etc. Except for ones that are relatively less important during the big transition, it looks the only real disadvantage is that we\u0027re introducing conversion. But as we\u0027re going to use //base and stl soon (in WebKit/common/), it happens anyway. We\u0027re just doing them a bit earlier.\n\nI agree with the concern (2). Yes, it\u0027s going to go away and we should avoid it if possible.\n\nI think the solution (1) and (2) (looks over killing. just INSIDE_BLINK looks enough) are both reasonable. (3) looks ok as temporary solution, but sounds not so worth compared to (1) and (2).",
+      "parentUuid": "10c9bb07_815553c8",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5b883a_dc6fe362",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
