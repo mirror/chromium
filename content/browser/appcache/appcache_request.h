@@ -12,6 +12,8 @@
 #include "url/gurl.h"
 
 namespace net {
+class NetworkDelegate;
+;
 class URLRequest;
 }
 
@@ -67,6 +69,9 @@ class CONTENT_EXPORT AppCacheRequest {
   // Returns the underlying AppCacheURLLoaderRequest if any. This only applies
   // to AppCache requests loaded via the URLLoader mechanism.
   virtual AppCacheURLLoaderRequest* AsURLLoaderRequest();
+
+  // Returns a pointer to the network delegate if any.
+  virtual net::NetworkDelegate* GetDelegate() = 0;
 
  protected:
   friend class AppCacheRequestHandler;
