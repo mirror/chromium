@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a06f4e_7ddf4e6b",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T20:14:41Z",
+      "side": 1,
+      "message": "Why not add these to the framework.js file? That\u0027s the main goal of that file - have common code used by the tests.",
+      "revId": "82de967e16a573c297d347e6881386b59af06539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
