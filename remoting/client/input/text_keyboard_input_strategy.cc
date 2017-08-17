@@ -4,6 +4,7 @@
 
 #include "remoting/client/input/text_keyboard_input_strategy.h"
 
+#include "base/logging.h"
 #include "remoting/client/input/client_input_injector.h"
 #include "remoting/client/input/native_device_keymap.h"
 #include "ui/events/keycodes/dom/dom_code.h"
@@ -18,9 +19,7 @@ TextKeyboardInputStrategy::~TextKeyboardInputStrategy() {}
 
 // KeyboardInputStrategy
 
-void TextKeyboardInputStrategy::HandleTextEvent(const std::string& text,
-                                                uint8_t modifiers) {
-  // TODO(nicholss): Handle modifers.
+void TextKeyboardInputStrategy::HandleTextEvent(const std::string& text) {
   input_injector_->SendTextEvent(text);
 }
 
