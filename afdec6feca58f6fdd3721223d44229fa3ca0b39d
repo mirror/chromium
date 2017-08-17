@@ -70,6 +70,52 @@
     },
     {
       "key": {
+        "uuid": "f7549fff_f1fe99ea",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-17T07:48:21Z",
+      "side": 1,
+      "message": "Hm, I think this logic needs a comment. Why do we need to check the prefix? What is unknown_document_id? Do we have known document ids?",
+      "range": {
+        "startLine": 140,
+        "startChar": 27,
+        "endLine": 140,
+        "endChar": 35
+      },
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b419d12_9053b15e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-17T07:48:21Z",
+      "side": 1,
+      "message": "Same here, please add a comment. Why do we scan a directory after receiving recent documents? Can\u0027t we get all information we need via mojo?",
+      "range": {
+        "startLine": 154,
+        "startChar": 22,
+        "endLine": 154,
+        "endChar": 30
+      },
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8939dec_5036a8cb",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 6
@@ -98,6 +144,46 @@
       "writtenOn": "2017-08-17T07:45:24Z",
       "side": 1,
       "message": "As chatted offline, in theory, subpath can be changed call-by-call because the scanning is run in parallel. So, could you either;\n- comment it should not be problematic practically. Or,\n- canonicalize the path (like taking min)?",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fa4144_47daa9be",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-17T07:48:21Z",
+      "side": 1,
+      "message": "nit: Can we use auto?",
+      "range": {
+        "startLine": 245,
+        "startChar": 13,
+        "endLine": 245,
+        "endChar": 17
+      },
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea0439a_09d33439",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-17T07:48:21Z",
+      "side": 1,
+      "message": "nit: Shall we have DCHECKs on arguments too?",
       "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
