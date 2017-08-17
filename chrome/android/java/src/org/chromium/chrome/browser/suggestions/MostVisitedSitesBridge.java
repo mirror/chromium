@@ -13,6 +13,7 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -148,10 +149,75 @@ public class MostVisitedSitesBridge
     private void onURLsAvailable(String[] titles, String[] urls, int[] sections,
             String[] whitelistIconPaths, int[] sources) {
         // Don't notify observer if we've already been destroyed.
-        if (mNativeMostVisitedSitesBridge != 0) {
-            mWrappedObserver.onSiteSuggestionsAvailable(
-                    buildSiteSuggestions(titles, urls, sections, whitelistIconPaths, sources));
+        if (mNativeMostVisitedSitesBridge == 0) return;
+
+        List<SiteSuggestion> suggestions = new ArrayList<>();
+
+        suggestions.addAll(
+                buildSiteSuggestions(titles, urls, sections, whitelistIconPaths, sources));
+
+        if (SuggestionsConfig.useSitesExplorationUi()) {
+            String[] socialUrls = {"https://m.facebook.com/", "https://www.instagram.com",
+                    "https://twitter.com/", "https://www.pinterest.co.uk/"};
+            String[] socialTitles = {"Facebook", "Instagram", "Twitter", "Pinterest"};
+
+            Arrays.fill(sections, 2);
+
+            suggestions.addAll(buildSiteSuggestions(
+                    socialTitles, socialUrls, sections, whitelistIconPaths, sources));
+
+            String[] entertainmentUrls = {"https://www.youtube.com/", "http://www.hotstar.com",
+                    "https://m.cricbuzz.com/", "https://www.wittyfeed.com/"};
+
+            String[] entertainmentTitles = {"YouTube", "HotStar", "Cricbuzz", "WhittyFeed"};
+
+            Arrays.fill(sections, 3);
+
+            suggestions.addAll(buildSiteSuggestions(
+                    entertainmentTitles, entertainmentUrls, sections, whitelistIconPaths, sources));
+
+            String[] newsUrls = {"http://timesofindia.indiatimes.com/", "http://www.jagran.com/",
+                    "http://www.bbc.co.uk/news", "http://www.dailymail.co.uk/"};
+
+            String[] newsTitles = {"Times Of India", "Jagran", "BBC News", "Daily Mail"};
+
+            Arrays.fill(sections, 4);
+
+            suggestions.addAll(buildSiteSuggestions(
+                    entertainmentTitles, entertainmentUrls, sections, whitelistIconPaths, sources));
+
+            String[] ecommerceUrls = {"https://www.amazon.co.uk", "https://www.flipkart.com/",
+                    "https://www.snapdeal.com/", "https://www.olx.com/"};
+
+            String[] ecommerceTitles = {"Amazon", "Flipkart", "Snapdeal", "OLX"};
+
+            Arrays.fill(sections, 5);
+
+            suggestions.addAll(buildSiteSuggestions(
+                    ecommerceTitles, ecommerceUrls, sections, whitelistIconPaths, sources));
+
+            String[] toolsUrls = {"https://www.google.co.uk/maps/", "https://paytm.com/",
+                    "https://www.olacabs.com/", "https://in.bookmyshow.com/"};
+
+            String[] toolsTitles = {"Maps", "Paytm", "Ola Cabs", "BookMyShow"};
+
+            Arrays.fill(sections, 6);
+
+            suggestions.addAll(buildSiteSuggestions(
+                    toolsTitles, toolsUrls, sections, whitelistIconPaths, sources));
+
+            String[] travelUrls = {"https://www.makemytrip.com/", "https://in.via.com/",
+                    "https://housing.com/", "https://www.redbus.in/"};
+
+            String[] travelTitles = {"MakeMyTrip", "Via", "Housing", "RedBus"};
+
+            Arrays.fill(sections, 7);
+
+            suggestions.addAll(buildSiteSuggestions(
+                    travelTitles, travelUrls, sections, whitelistIconPaths, sources));
         }
+
+        mWrappedObserver.onSiteSuggestionsAvailable(suggestions);
     }
 
     /**
