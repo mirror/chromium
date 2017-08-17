@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 
 namespace offline_pages {
 class OfflineMetricsCollector;
@@ -18,7 +19,6 @@ class PrefetchDispatcher;
 class PrefetchDownloader;
 class PrefetchGCMHandler;
 class PrefetchImporter;
-class PrefetchService;
 class PrefetchNetworkRequestFactory;
 class PrefetchStore;
 class SuggestedArticlesObserver;
@@ -57,6 +57,8 @@ class PrefetchServiceTestTaco {
   void SetPrefetchBackgroundTaskHandler(
       std::unique_ptr<PrefetchBackgroundTaskHandler>
           prefetch_background_task_handler);
+  void SetEnabledBySettingsGetter(
+      PrefetchServiceImpl::EnabledBySettingsGetter enabled_getter);
 
   // Creates and caches an instance of PrefetchService, using default or
   // overridden test dependencies.
@@ -84,6 +86,7 @@ class PrefetchServiceTestTaco {
   std::unique_ptr<PrefetchImporter> prefetch_importer_;
   std::unique_ptr<PrefetchBackgroundTaskHandler>
       prefetch_background_task_handler_;
+  PrefetchServiceImpl::EnabledBySettingsGetter enabled_getter_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
 };

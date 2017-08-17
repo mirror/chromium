@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
@@ -14,6 +15,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "chrome/browser/download/download_service_factory.h"
+#include "chrome/browser/net/prediction_options.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.h"
@@ -22,6 +24,7 @@
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_content_client.h"
+#include "chrome/common/pref_names.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader_impl.h"
@@ -92,13 +95,20 @@ KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
           base::MakeUnique<PrefetchBackgroundTaskHandlerImpl>(
               profile->GetPrefs());
 
+  PrefetchServiceImpl::EnabledBySettingsGetter prefetching_enabled_getter =
+      base::BindRepeating([=]() -> bool {
+        return profile->GetPrefs()->GetInteger(
+                   prefs::kNetworkPredictionOptions) !=
+               chrome_browser_net::NETWORK_PREDICTION_NEVER;
+      });
+
   return new PrefetchServiceImpl(
       std::move(offline_metrics_collector), std::move(prefetch_dispatcher),
       std::move(prefetch_gcm_app_handler),
       std::move(prefetch_network_request_factory), std::move(prefetch_store),
       std::move(suggested_articles_observer), std::move(prefetch_downloader),
-      std::move(prefetch_importer),
-      std::move(prefetch_background_task_handler));
+      std::move(prefetch_importer), std::move(prefetch_background_task_handler),
+      prefetching_enabled_getter);
 }
 
 }  // namespace offline_pages

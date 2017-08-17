@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "components/offline_pages/core/client_id.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
@@ -32,7 +33,8 @@ PrefetchServiceImpl::PrefetchServiceImpl(
     std::unique_ptr<PrefetchDownloader> prefetch_downloader,
     std::unique_ptr<PrefetchImporter> prefetch_importer,
     std::unique_ptr<PrefetchBackgroundTaskHandler>
-        prefetch_background_task_handler)
+        prefetch_background_task_handler,
+    EnabledBySettingsGetter enabled_getter)
     : offline_metrics_collector_(std::move(offline_metrics_collector)),
       prefetch_dispatcher_(std::move(dispatcher)),
       prefetch_gcm_handler_(std::move(gcm_handler)),
@@ -42,7 +44,8 @@ PrefetchServiceImpl::PrefetchServiceImpl(
       prefetch_downloader_(std::move(prefetch_downloader)),
       prefetch_importer_(std::move(prefetch_importer)),
       prefetch_background_task_handler_(
-          std::move(prefetch_background_task_handler)) {
+          std::move(prefetch_background_task_handler)),
+      enabled_getter_(enabled_getter) {
   prefetch_dispatcher_->SetService(this);
   prefetch_gcm_handler_->SetService(this);
   suggested_articles_observer_->SetPrefetchService(this);
@@ -94,6 +97,10 @@ PrefetchImporter* PrefetchServiceImpl::GetPrefetchImporter() {
 PrefetchBackgroundTaskHandler*
 PrefetchServiceImpl::GetPrefetchBackgroundTaskHandler() {
   return prefetch_background_task_handler_.get();
+}
+
+bool PrefetchServiceImpl::IsPrefetchingEnabled() {
+  return IsPrefetchingOfflinePagesEnabled() && enabled_getter_.Run();
 }
 
 void PrefetchServiceImpl::Shutdown() {
