@@ -16,6 +16,24 @@
       "revId": "de45bdc3ec0cce5f6aa599ad1922527d850b6383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de765728_507a858c",
+        "filename": "third_party/WebKit/Source/core/resize_observer/ResizeObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-17T17:51:55Z",
+      "side": 1,
+      "message": "We\u0027re moving towards higher precision layout metrics for new APIs so no, no rounding is needed. It\u0027s only the legacy offsetWidth, clientWidth and friends properties that need to be pixel snapped.",
+      "parentUuid": "7e3dbdde_a9cb8fa4",
+      "revId": "de45bdc3ec0cce5f6aa599ad1922527d850b6383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
