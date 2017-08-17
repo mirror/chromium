@@ -33,12 +33,8 @@ public class ClientAddMessageToConsoleTest extends AwTestBase {
                 createAwTestContainerViewOnMainSync(mContentsClient);
         mAwContents = testContainerView.getAwContents();
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.getSettings().setJavaScriptEnabled(true);
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> mAwContents.getSettings().setJavaScriptEnabled(true));
     }
 
     private static String getLogMessageJavaScriptData(
