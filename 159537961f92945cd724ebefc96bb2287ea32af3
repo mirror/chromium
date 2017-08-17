@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e9984a_579601ff",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T22:05:52Z",
+      "side": 1,
+      "message": "Maybe call this GetMinimalFovAndViewport (I\u0027m not sure anymore after our discussion that this would be the right name) to make it clearer what it does? A function comment would be good too. How useful do you think this is for other platforms? I was mainly concerned with adding another 100 lines to the already pretty big vr_shell_gl.cc. Do you think it makes sense to put this into the platform independent code, e.g. vr_gl_util.cc?",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0947530b_4a1d8b13",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T22:05:52Z",
+      "side": 1,
+      "message": "If I understand this correctly, all viewport aware elements must be a child of ViewportAwareRoot and have viewport_aware_ set to true? And the only reason we need this flag is to distinguish between world and view port aware elements when we call UiScene::GetWorldElements() and UiScene::GetViewportAwareElements()? Would it be possible if we draw the viewport aware elements as part of the world elements since they will be drawn in the same buffer anyways? In order to only draw the viewport aware elements we could take all children of the viewport aware root. By doing so, we could remove this flag and wouldn\u0027t have the problem that an element can have the view_aware flag set to true but is not a child of the ViewportAwareRoot.",
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce02a877_a83ac7df",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T22:05:52Z",
+      "side": 1,
+      "message": "Call this AdjustTransformation or Update since it actually updates the rotation in this patch?",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 29
+      },
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81051c4_b6fba8c2",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T22:05:52Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, all viewport aware elements will be rotated together if we surpass the threshold? Could we use the element\u0027s normal rotation instead of the viewport_aware_rotation_? By doing so, this property would be animateable, which may be a neat effect.",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
