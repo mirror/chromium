@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42957baa_ad385081",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T22:46:57Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something...\n\nThese are going to create regular extension menu items and should not be subject to  ACTION_MENU_TOP_LEVEL_LIMIT IIUC. Even without hiding items in line 410-411, adding new items in 414-415 would succeed and we\u0027d have 8 items total.\n\n\u0027regular\u0027 items are added as children of extension top level item (when you right click on tab).\nThe limit should apply to \u0027browser_action\u0027 items (that is considered top_level, there probably are other kinds, I don\u0027t know). If you create items with\ncontexts: [\"browser_action\"] or contexts: [\"all\"]\nthen left/right click on the browser action of the extension you\u0027ll see the items.\n\nI think we want to make sure:\n  - limits are always respected for top_level items.\n  - adding more than 6 are ignored, only first 6 are visible\n  - hiding some from the top 6 makes \"extra\" ones visible\n  - interesting to know if I unhide them?",
+      "range": {
+        "startLine": 407,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 78
+      },
+      "revId": "8732a56f86f7530963b31f8f621256148055fa19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af2edf6_8f2856da",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T22:46:57Z",
+      "side": 1,
+      "message": "nit: can remove {}",
+      "range": {
+        "startLine": 1664,
+        "startChar": 6,
+        "endLine": 1664,
+        "endChar": 24
+      },
+      "revId": "8732a56f86f7530963b31f8f621256148055fa19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6ca3b6_07732cf9",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T22:46:57Z",
+      "side": 1,
+      "message": "This should be\nreturn RVCMBase::IsCommandIdVisible(id); ?",
+      "range": {
+        "startLine": 1667,
+        "startChar": 8,
+        "endLine": 1667,
+        "endChar": 9
+      },
+      "revId": "8732a56f86f7530963b31f8f621256148055fa19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
