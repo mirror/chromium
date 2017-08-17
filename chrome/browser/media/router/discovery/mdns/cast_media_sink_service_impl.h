@@ -23,6 +23,8 @@ class CastSocketService;
 
 namespace media_router {
 
+class RetryStrategy;
+
 // A service used to open/close cast channels for Cast devices. This class is
 // not thread safe and should be invoked only on the IO thread.
 class CastMediaSinkServiceImpl
@@ -38,6 +40,8 @@ class CastMediaSinkServiceImpl
                            cast_channel::CastSocketService* cast_socket_service,
                            DiscoveryNetworkMonitor* network_monitor);
   ~CastMediaSinkServiceImpl() override;
+
+  void SetRetryStrategyForTest(std::unique_ptr<RetryStrategy> retry_strategy);
 
   // MediaSinkService implementation
   void Start() override;
@@ -55,13 +59,20 @@ class CastMediaSinkServiceImpl
 
  private:
   friend class CastMediaSinkServiceImplTest;
-  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnChannelOpened);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
-                           TestMultipleOnChannelOpened);
+                           TestOnChannelOpenSucceeded);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestMultipleOnChannelOpenSucceeded);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestTimer);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOpenChannel);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestOpenChannelWithRetry);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
                            TestMultipleOpenChannels);
-  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnChannelError);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestOnChannelErrorWithoutRetry);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestOnChannelErrorWithRetry);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnDialSinkAdded);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestOnFetchCompleted);
 
@@ -80,15 +91,41 @@ class CastMediaSinkServiceImpl
   void OpenChannel(const net::IPEndPoint& ip_endpoint,
                    MediaSinkInternal cast_sink);
 
+  // Opens cast channel on the IO thread with retry.
+  // |ip_endpoint|: cast channel's target IP endpoint.
+  // |num_attempts|: number of retry attempts conducted before when
+  // |OpenChannelWithRetry| is invoked. |num_attempts| is 0 when
+  // |OpenChannelWithRetry| is invoked for the first time.
+  void OpenChannelWithRetry(const net::IPEndPoint& ip_endpoint,
+                            int num_attempts);
+
   // Invoked when opening cast channel on IO thread completes.
-  // |cast_sink|: Cast sink created from mDNS service description or DIAL sink.
+  // |num_attempts|: number of retry attempts conducted before when
+  // |OnChannelOpen| is invoked. |num_attempts| is 0 when |OnChannelOpened| is
+  // invoked for the first time.
   // |socket|: raw pointer of newly created cast channel. Does not take
   // ownership of |socket|.
-  void OnChannelOpened(MediaSinkInternal cast_sink,
-                       cast_channel::CastSocket* socket);
+  void OnChannelOpened(int num_attempts, cast_channel::CastSocket* socket);
+
+  // Invoked when opening cast channel on IO thread succeeds before using up
+  // retry attempts.
+  // |socket|: raw pointer of newly created cast channel. Does not take
+  // ownership of |socket|.
+  void OnChannelOpenSucceeded(cast_channel::CastSocket* socket);
+
+  // Invoked when opening cast channel on IO thread fails after all retry
+  // attempts.
+  // |socket|: newly created cast channel.
+  // |error_state|: erorr encountered when opending cast channel.
+  void OnChannelOpenFailed(const cast_channel::CastSocket& socket,
+                           cast_channel::ChannelError error_state);
 
   // Set of mDNS service IP endpoints from current round of discovery.
   std::set<net::IPEndPoint> current_service_ip_endpoints_;
+
+  // Map of cast sinks discovered by mDNS service and pending channel open,
+  // keyed by IP endpoint.
+  std::map<net::IPEndPoint, MediaSinkInternal> pending_cast_sinks_;
 
   using MediaSinkInternalMap = std::map<net::IPAddress, MediaSinkInternal>;
 
@@ -112,6 +149,10 @@ class CastMediaSinkServiceImpl
   std::map<std::string, std::vector<MediaSinkInternal>> sink_cache_;
 
   CastDeviceCountMetrics metrics_;
+
+  // Retry strategy to reopen cast channel when error occurs. No retry if
+  // |retry_strategy_| is nullptr.
+  std::unique_ptr<RetryStrategy> retry_strategy_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

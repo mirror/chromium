@@ -7,6 +7,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/mock_callback.h"
 #include "base/timer/mock_timer.h"
+#include "chrome/browser/media/router/discovery/mdns/retry_strategy.h"
 #include "chrome/browser/media/router/test_helper.h"
 #include "components/cast_channel/cast_socket.h"
 #include "components/cast_channel/cast_socket_service.h"
@@ -73,7 +74,9 @@ class CastMediaSinkServiceImplTest : public ::testing::Test {
         mock_cast_socket_service_(new cast_channel::MockCastSocketService()),
         media_sink_service_impl_(mock_sink_discovered_cb_.Get(),
                                  mock_cast_socket_service_.get(),
-                                 discovery_network_monitor_.get()) {}
+                                 discovery_network_monitor_.get()) {
+    media_sink_service_impl_.SetRetryStrategyForTest(nullptr);
+  }
 
   void SetUp() override {
     fake_network_info_.clear();
@@ -135,14 +138,14 @@ class CastMediaSinkServiceImplTest : public ::testing::Test {
 std::vector<DiscoveryNetworkInfo>
     CastMediaSinkServiceImplTest::fake_network_info_;
 
-TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpened) {
+TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenSucceeded) {
   auto cast_sink = CreateCastSink(1);
   net::IPEndPoint ip_endpoint1 = CreateIPEndPoint(1);
-  cast_channel::MockCastSocket socket;
-  socket.set_id(1);
+  cast_channel::MockCastSocket socket(1);
+  socket.SetIPEndpoint(ip_endpoint1);
 
-  media_sink_service_impl_.current_service_ip_endpoints_.insert(ip_endpoint1);
-  media_sink_service_impl_.OnChannelOpened(cast_sink, &socket);
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint1] = cast_sink;
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket);
 
   // Verify sink content
   EXPECT_CALL(mock_sink_discovered_cb_,
@@ -150,7 +153,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpened) {
   media_sink_service_impl_.OnFetchCompleted();
 }
 
-TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpened) {
+TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
   auto cast_sink1 = CreateCastSink(1);
   auto cast_sink2 = CreateCastSink(2);
   auto cast_sink3 = CreateCastSink(3);
@@ -158,17 +161,18 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpened) {
   auto ip_endpoint2 = CreateIPEndPoint(2);
   auto ip_endpoint3 = CreateIPEndPoint(3);
 
-  cast_channel::MockCastSocket socket2;
-  socket2.set_id(2);
-  cast_channel::MockCastSocket socket3;
-  socket3.set_id(3);
+  cast_channel::MockCastSocket socket2(2);
+  socket2.SetIPEndpoint(ip_endpoint2);
+  cast_channel::MockCastSocket socket3(3);
+  socket3.SetIPEndpoint(ip_endpoint3);
 
   // Current round of Dns discovery finds service1 and service 2.
-  media_sink_service_impl_.current_service_ip_endpoints_.insert(ip_endpoint1);
-  media_sink_service_impl_.current_service_ip_endpoints_.insert(ip_endpoint2);
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint1] = cast_sink1;
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint2] = cast_sink2;
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint3] = cast_sink3;
   // Fail to open channel 1.
-  media_sink_service_impl_.OnChannelOpened(cast_sink2, &socket2);
-  media_sink_service_impl_.OnChannelOpened(cast_sink3, &socket3);
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket2);
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket3);
 
   // Verify sink content
   EXPECT_CALL(mock_sink_discovered_cb_,
@@ -187,11 +191,11 @@ TEST_F(CastMediaSinkServiceImplTest, TestTimer) {
   EXPECT_TRUE(mock_timer_->IsRunning());
 
   // Channel 2 is opened.
-  cast_channel::MockCastSocket socket2;
-  socket2.set_id(2);
+  cast_channel::MockCastSocket socket2(2);
+  socket2.SetIPEndpoint(ip_endpoint2);
 
-  media_sink_service_impl_.current_service_ip_endpoints_.insert(ip_endpoint2);
-  media_sink_service_impl_.OnChannelOpened(cast_sink2, &socket2);
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint2] = cast_sink2;
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket2);
 
   std::vector<MediaSinkInternal> sinks;
   EXPECT_CALL(mock_sink_discovered_cb_, Run(_)).WillOnce(SaveArg<0>(&sinks));
@@ -202,12 +206,81 @@ TEST_F(CastMediaSinkServiceImplTest, TestTimer) {
 
   EXPECT_FALSE(mock_timer_->IsRunning());
   // Channel 1 is opened and timer is restarted.
-  cast_channel::MockCastSocket socket1;
-  socket1.set_id(1);
+  cast_channel::MockCastSocket socket1(1);
+  socket1.SetIPEndpoint(ip_endpoint1);
 
-  media_sink_service_impl_.current_service_ip_endpoints_.insert(ip_endpoint1);
-  media_sink_service_impl_.OnChannelOpened(cast_sink1, &socket1);
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint1] = cast_sink1;
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket1);
   EXPECT_TRUE(mock_timer_->IsRunning());
+}
+
+TEST_F(CastMediaSinkServiceImplTest, TestOpenChannel) {
+  MediaSinkInternal cast_sink = CreateCastSink(1);
+  net::IPEndPoint ip_endpoint = CreateIPEndPoint(1);
+
+  // No pending sink
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint, _, _, _));
+  media_sink_service_impl_.OpenChannel(ip_endpoint, cast_sink);
+
+  // One pending sink, the same as |cast_sink|
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint, _, _, _))
+      .Times(0);
+  media_sink_service_impl_.OpenChannel(ip_endpoint, cast_sink);
+
+  // One pending sink, different from |cast_sink|
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint].set_name(
+      "new sink");
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint, _, _, _));
+  media_sink_service_impl_.OpenChannel(ip_endpoint, cast_sink);
+  EXPECT_EQ(cast_sink,
+            media_sink_service_impl_.pending_cast_sinks_[ip_endpoint]);
+}
+
+TEST_F(CastMediaSinkServiceImplTest, TestOpenChannelWithRetry) {
+  int max_attempts = 3;
+  int delay_in_seconds = 0;
+  media_sink_service_impl_.SetRetryStrategyForTest(
+      RetryStrategy::UniformDelay(max_attempts, delay_in_seconds));
+
+  MediaSinkInternal cast_sink = CreateCastSink(1);
+  net::IPEndPoint ip_endpoint = CreateIPEndPoint(1);
+  media_sink_service_impl_.pending_cast_sinks_[ip_endpoint] = cast_sink;
+
+  cast_channel::MockCastSocket socket(1);
+  socket.SetIPEndpoint(ip_endpoint);
+  socket.SetErrorState(cast_channel::ChannelError::NONE);
+
+  // Opening channel succeeds, no retry
+  ExpectOpenSocketInternal(&socket);
+  media_sink_service_impl_.OpenChannelWithRetry(ip_endpoint, 0);
+  EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_by_mdns_.size());
+
+  // Opening channel succeeds at 2nd attempts
+  socket.SetErrorState(cast_channel::ChannelError::CAST_SOCKET_ERROR);
+  ExpectOpenSocketInternal(&socket);
+  media_sink_service_impl_.OpenChannelWithRetry(ip_endpoint, 0);
+
+  socket.SetErrorState(cast_channel::ChannelError::NONE);
+  ExpectOpenSocketInternal(&socket);
+  base::RunLoop().RunUntilIdle();
+
+  // Opening channel fails after 3rd attempts
+  socket.SetErrorState(cast_channel::ChannelError::CAST_SOCKET_ERROR);
+  // 1st attempt
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint, _, _, _))
+      .Times(4)
+      .WillRepeatedly(Invoke([&socket](const auto& ip_endpoint, auto* net_log,
+                                       auto open_cb, auto* observer) {
+        std::move(open_cb).Run(&socket);
+        return socket.id();
+      }));
+
+  media_sink_service_impl_.OpenChannelWithRetry(ip_endpoint, 0);
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
@@ -228,9 +301,9 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   media_sink_service_impl_.OpenChannels(sinks1);
 
   // Channel 2 opened.
-  cast_channel::MockCastSocket socket2;
-  socket2.set_id(2);
-  media_sink_service_impl_.OnChannelOpened(cast_sink2, &socket2);
+  cast_channel::MockCastSocket socket2(2);
+  socket2.SetIPEndpoint(ip_endpoint2);
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket2);
 
   EXPECT_CALL(*mock_cast_socket_service_,
               OpenSocketInternal(ip_endpoint2, _, _, _));
@@ -242,12 +315,12 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   media_sink_service_impl_.OpenChannels(sinks2);
 
   // Channel 1 and 3 opened.
-  cast_channel::MockCastSocket socket1;
-  cast_channel::MockCastSocket socket3;
-  socket1.set_id(1);
-  socket3.set_id(3);
-  media_sink_service_impl_.OnChannelOpened(cast_sink1, &socket1);
-  media_sink_service_impl_.OnChannelOpened(cast_sink3, &socket3);
+  cast_channel::MockCastSocket socket1(1);
+  cast_channel::MockCastSocket socket3(3);
+  socket1.SetIPEndpoint(ip_endpoint1);
+  socket3.SetIPEndpoint(ip_endpoint3);
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket1);
+  media_sink_service_impl_.OnChannelOpenSucceeded(&socket3);
 
   EXPECT_CALL(mock_sink_discovered_cb_,
               Run(std::vector<MediaSinkInternal>(
@@ -255,21 +328,63 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   media_sink_service_impl_.OnFetchCompleted();
 }
 
-TEST_F(CastMediaSinkServiceImplTest, TestOnChannelError) {
+TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorWithoutRetry) {
   auto cast_sink = CreateCastSink(1);
   net::IPEndPoint ip_endpoint1 = CreateIPEndPoint(1);
-  cast_channel::MockCastSocket socket;
-  socket.set_id(1);
-
-  media_sink_service_impl_.current_service_ip_endpoints_.insert(ip_endpoint1);
-  media_sink_service_impl_.OnChannelOpened(cast_sink, &socket);
-
-  EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_by_mdns_.size());
-
+  cast_channel::MockCastSocket socket(1);
   socket.SetIPEndpoint(ip_endpoint1);
+
+  media_sink_service_impl_.current_sinks_by_mdns_[ip_endpoint1.address()] =
+      cast_sink;
   media_sink_service_impl_.OnError(
       socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_by_mdns_.empty());
+}
+
+TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorWithRetry) {
+  auto cast_sink = CreateCastSink(1);
+  net::IPEndPoint ip_endpoint1 = CreateIPEndPoint(1);
+  cast_channel::MockCastSocket socket(1);
+  socket.SetIPEndpoint(ip_endpoint1);
+
+  // Test OnChannelError with retry
+  int max_attempts = 3;
+  int delay_in_seconds = 0;
+  media_sink_service_impl_.SetRetryStrategyForTest(
+      RetryStrategy::UniformDelay(max_attempts, delay_in_seconds));
+
+  // There is an existing cast sink in |current_sinks_by_mdns_|.
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint1, _, _, _));
+
+  media_sink_service_impl_.current_sinks_by_mdns_[ip_endpoint1.address()] =
+      cast_sink;
+  media_sink_service_impl_.OnError(
+      socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
+  EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_by_mdns_.size());
+
+  // There is an existing cast sink in |current_sinks_by_dial_|.
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint1, _, _, _));
+
+  media_sink_service_impl_.pending_cast_sinks_.clear();
+  media_sink_service_impl_.current_sinks_by_mdns_.clear();
+  media_sink_service_impl_.current_sinks_by_dial_[ip_endpoint1.address()] =
+      cast_sink;
+  media_sink_service_impl_.OnError(
+      socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
+  EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_by_dial_.size());
+
+  // There is no existing cast sink.
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint1, _, _, _))
+      .Times(0);
+
+  media_sink_service_impl_.pending_cast_sinks_.clear();
+  media_sink_service_impl_.current_sinks_by_mdns_.clear();
+  media_sink_service_impl_.current_sinks_by_dial_.clear();
+  media_sink_service_impl_.OnError(
+      socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAdded) {
@@ -280,10 +395,10 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAdded) {
   net::IPEndPoint ip_endpoint2(dial_sink2.dial_data().ip_address,
                                CastMediaSinkServiceImpl::kCastControlPort);
 
-  cast_channel::MockCastSocket socket1;
-  cast_channel::MockCastSocket socket2;
-  socket1.set_id(1);
-  socket2.set_id(2);
+  cast_channel::MockCastSocket socket1(1);
+  cast_channel::MockCastSocket socket2(2);
+  socket1.SetIPEndpoint(ip_endpoint1);
+  socket2.SetIPEndpoint(ip_endpoint2);
 
   // Channel 1, 2 opened.
   EXPECT_CALL(*mock_cast_socket_service_,

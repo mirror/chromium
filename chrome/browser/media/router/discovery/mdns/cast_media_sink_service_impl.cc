@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/media/router/discovery/mdns/retry_strategy.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service.h"
@@ -47,6 +48,8 @@ bool IsNetworkIdUnknownOrDisconnected(const std::string& network_id) {
 
 // static
 const int CastMediaSinkServiceImpl::kCastControlPort = 8009;
+const int kMaxAttempts = 3;
+const int kDelayInSeconds = 5;
 
 CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
     const OnSinksDiscoveredCallback& callback,
@@ -54,7 +57,9 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
     DiscoveryNetworkMonitor* network_monitor)
     : MediaSinkServiceBase(callback),
       cast_socket_service_(cast_socket_service),
-      network_monitor_(network_monitor) {
+      network_monitor_(network_monitor),
+      retry_strategy_(
+          RetryStrategy::UniformDelay(kMaxAttempts, kDelayInSeconds)) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
@@ -65,6 +70,11 @@ CastMediaSinkServiceImpl::~CastMediaSinkServiceImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   cast_channel::CastSocketService::GetInstance()->RemoveObserver(this);
   network_monitor_->RemoveObserver(this);
+}
+
+void CastMediaSinkServiceImpl::SetRetryStrategyForTest(
+    std::unique_ptr<RetryStrategy> retry_strategy) {
+  retry_strategy_ = std::move(retry_strategy);
 }
 
 // MediaSinkService implementation
@@ -128,28 +138,38 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
   DVLOG(1) << "OnError [ip_endpoint]: " << socket.ip_endpoint().ToString()
            << " [error_state]: "
            << cast_channel::ChannelErrorToString(error_state);
-  auto& ip_address = socket.ip_endpoint().address();
-  current_sinks_by_dial_.erase(ip_address);
-  current_sinks_by_mdns_.erase(ip_address);
-  MediaSinkServiceBase::RestartTimer();
+
+  if (!retry_strategy_) {
+    OnChannelOpenFailed(socket, error_state);
+    return;
+  }
+
+  // Only reopen cast channel if cast channel is already opened.
+  const net::IPEndPoint& ip_endpoint = socket.ip_endpoint();
+  DVLOG(2) << "Start reopen cast channel: " << ip_endpoint.ToString();
+
+  // find existing cast sink from |current_sinks_by_mdns_|.
+  auto cast_sink_it = current_sinks_by_mdns_.find(ip_endpoint.address());
+  if (cast_sink_it != current_sinks_by_mdns_.end()) {
+    OpenChannel(ip_endpoint, cast_sink_it->second);
+    return;
+  }
+
+  // find existing cast sink from |current_sinks_by_dial_|.
+  auto cast_sink_by_dial_it =
+      current_sinks_by_dial_.find(ip_endpoint.address());
+  if (cast_sink_by_dial_it != current_sinks_by_dial_.end()) {
+    OpenChannel(ip_endpoint, cast_sink_by_dial_it->second);
+    return;
+  }
+
+  DVLOG(2) << "Cannot find existing cast sink. Skip reopen cast channel: "
+           << ip_endpoint.ToString();
 }
 
 void CastMediaSinkServiceImpl::OnMessage(
     const cast_channel::CastSocket& socket,
     const cast_channel::CastMessage& message) {}
-
-void CastMediaSinkServiceImpl::OpenChannel(const net::IPEndPoint& ip_endpoint,
-                                           MediaSinkInternal cast_sink) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DVLOG(2) << "OpenChannel " << ip_endpoint.ToString()
-           << " name: " << cast_sink.sink().name();
-
-  cast_socket_service_->OpenSocket(
-      ip_endpoint, g_browser_process->net_log(),
-      base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
-                     std::move(cast_sink)),
-      this);
-}
 
 void CastMediaSinkServiceImpl::OnNetworksChanged(
     const std::string& network_id) {
@@ -181,11 +201,88 @@ void CastMediaSinkServiceImpl::OnNetworksChanged(
   OpenChannels(cache_entry->second);
 }
 
+void CastMediaSinkServiceImpl::OpenChannel(const net::IPEndPoint& ip_endpoint,
+                                           MediaSinkInternal cast_sink) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  auto pending_sink_it = pending_cast_sinks_.find(ip_endpoint);
+  if (pending_sink_it != pending_cast_sinks_.end()) {
+    if (pending_sink_it->second == cast_sink) {
+      DVLOG(2) << "Opening channel pending for: " << ip_endpoint.ToString()
+               << ". Skip opening...";
+      return;
+    }
+    // |cast_sink| is different from what we have cached, e.g. due to IP
+    // address changes.
+    pending_cast_sinks_.erase(pending_sink_it);
+  }
+
+  DVLOG(2) << "Start OpenChannel " << ip_endpoint.ToString()
+           << " name: " << cast_sink.sink().name();
+  pending_cast_sinks_.insert(std::make_pair(ip_endpoint, cast_sink));
+  OpenChannelWithRetry(ip_endpoint, 0);
+}
+
+void CastMediaSinkServiceImpl::OpenChannelWithRetry(
+    const net::IPEndPoint& ip_endpoint,
+    int num_attempts) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DVLOG(2) << "OpenChannelWithRetry [attempt]: " << num_attempts
+           << " [ip_endpoint]: " << ip_endpoint.ToString()
+           << " [time]: " << base::Time::Now();
+
+  cast_socket_service_->OpenSocket(
+      ip_endpoint, g_browser_process->net_log(),
+      base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
+                     num_attempts),
+      this);
+}
+
 void CastMediaSinkServiceImpl::OnChannelOpened(
-    MediaSinkInternal cast_sink,
+    int num_attempts,
     cast_channel::CastSocket* socket) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(socket);
+  const net::IPEndPoint& ip_endpoint = socket->ip_endpoint();
+
+  if (socket->error_state() == cast_channel::ChannelError::NONE) {
+    DVLOG(2) << "Open channel " << ip_endpoint.ToString();
+    OnChannelOpenSucceeded(socket);
+    return;
+  }
+
+  if (!retry_strategy_ || !retry_strategy_->TryAgain(num_attempts)) {
+    DVLOG(2) << "Fail to open channel " << ip_endpoint.ToString();
+    OnChannelOpenFailed(*socket, socket->error_state());
+    return;
+  }
+
+  int delay_in_seconds = retry_strategy_->GetDelayInSeconds(num_attempts);
+  DVLOG(2) << "Try to reopen: " << ip_endpoint.ToString() << " in ["
+           << delay_in_seconds << "] seconds"
+           << " [current time]: " << base::Time::Now();
+
+  content::BrowserThread::PostDelayedTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::OpenChannelWithRetry,
+                     AsWeakPtr(), ip_endpoint, ++num_attempts),
+      base::TimeDelta::FromSeconds(delay_in_seconds));
+}
+
+void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
+    cast_channel::CastSocket* socket) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(socket);
+
+  const net::IPEndPoint& ip_endpoint = socket->ip_endpoint();
+  auto sink_it = pending_cast_sinks_.find(ip_endpoint);
+  if (sink_it == pending_cast_sinks_.end()) {
+    DVLOG(1) << "No pending cast sink for: " << ip_endpoint.ToString();
+    return;
+  }
+
+  MediaSinkInternal cast_sink = sink_it->second;
+  pending_cast_sinks_.erase(sink_it);
+
   if (socket->error_state() != cast_channel::ChannelError::NONE) {
     DVLOG(2) << "Fail to open channel "
              << cast_sink.cast_data().ip_address.ToString()
@@ -209,6 +306,21 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
   } else {
     current_sinks_by_mdns_[ip_address] = updated_sink;
   }
+  MediaSinkServiceBase::RestartTimer();
+}
+
+void CastMediaSinkServiceImpl::OnChannelOpenFailed(
+    const cast_channel::CastSocket& socket,
+    cast_channel::ChannelError error_state) {
+  const net::IPEndPoint& ip_endpoint = socket.ip_endpoint();
+  DVLOG(1) << "Fail to open channel: " << ip_endpoint.ToString()
+           << " [error_state]: "
+           << cast_channel::ChannelErrorToString(error_state);
+  pending_cast_sinks_.erase(ip_endpoint);
+
+  auto& ip_address = ip_endpoint.address();
+  current_sinks_by_dial_.erase(ip_address);
+  current_sinks_by_mdns_.erase(ip_address);
   MediaSinkServiceBase::RestartTimer();
 }
 

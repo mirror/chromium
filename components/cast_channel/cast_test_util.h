@@ -94,6 +94,7 @@ class MockCastSocket : public CastSocket {
   using MockOnOpenCallback = base::Callback<void(CastSocket* socket)>;
 
   MockCastSocket();
+  MockCastSocket(int channel_id);
   ~MockCastSocket() override;
 
   void Connect(CastSocket::OnOpenCallback callback) override {

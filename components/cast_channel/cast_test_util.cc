@@ -32,8 +32,9 @@ MockCastSocketObserver::~MockCastSocketObserver() {}
 MockCastSocketService::MockCastSocketService() {}
 MockCastSocketService::~MockCastSocketService() {}
 
-MockCastSocket::MockCastSocket()
-    : channel_id_(0),
+MockCastSocket::MockCastSocket() : MockCastSocket(0) {}
+MockCastSocket::MockCastSocket(int channel_id)
+    : channel_id_(channel_id),
       error_state_(ChannelError::NONE),
       keep_alive_(false),
       audio_only_(false),

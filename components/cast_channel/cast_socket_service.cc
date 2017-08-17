@@ -95,6 +95,11 @@ int CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
   DCHECK(observer);
   auto* socket = GetSocket(open_params.ip_endpoint);
 
+  if (socket && socket->ready_state() == ReadyState::CLOSED) {
+    RemoveSocket(socket->id());
+    socket = nullptr;
+  }
+
   if (!socket) {
     // If cast socket does not exist.
     if (socket_for_test_) {
