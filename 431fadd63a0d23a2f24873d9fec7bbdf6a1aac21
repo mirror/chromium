@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc2f1b_409e7480",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-17T23:11:42Z",
+      "side": 1,
+      "message": "nit: keep these alphabetized",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66aef47b_98c69a98",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-17T23:11:42Z",
+      "side": 1,
+      "message": "nit: keep these alphabetized",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d7fb76_da666a7f",
+        "filename": "ash/accelerators/accelerator_controller_delegate_classic.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-17T23:11:42Z",
+      "side": 1,
+      "message": "nit: keep these alphabetized",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8003b8_a9a7bc9c",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-17T23:11:42Z",
+      "side": 1,
+      "message": "nit: keep these alphabetized",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
