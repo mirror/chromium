@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca30212_6c376955",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-17T06:30:53Z",
+      "side": 1,
+      "message": "Need a more descriptive name that informs that it\u0027s not just about the current state. Maybe just is_any_column_ever_collapsed_.\n\nThis isn\u0027t analogous to the above is_any_*row*_collapsed_, because that one is only set to true when we find a collapsed row during layout, right?\n\nAlso, I think this really belongs in LayoutTable, because columns aren\u0027t local to sections. I don\u0027t think LayoutTableSection needs to be involved at all. Can\u0027t you just write and read this flag from LayoutTable::UpdateLayout()?",
+      "revId": "af36a42953db15c78c7addc64e25775ab500e8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
