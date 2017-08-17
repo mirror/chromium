@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00244248_d49d4e2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:33:36Z",
+      "side": 1,
+      "message": "CacheRenderSurfaceObserver",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "7f2c8b548255d47e3ab7394a6b80f0595f3ea9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a2a8f6_e75de9b2",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:33:36Z",
+      "side": 1,
+      "message": "nit: ++value is preferred",
+      "revId": "7f2c8b548255d47e3ab7394a6b80f0595f3ea9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636698a4_e0ec4ac2",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:33:36Z",
+      "side": 1,
+      "message": "nit: --value is preferred",
+      "revId": "7f2c8b548255d47e3ab7394a6b80f0595f3ea9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf73e867_bf167858",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:33:36Z",
+      "side": 1,
+      "message": "nit: the exact size of the type doesn\u0027t matter so use unsigned instead of uint32_t",
+      "range": {
+        "startLine": 601,
+        "startChar": 2,
+        "endLine": 601,
+        "endChar": 10
+      },
+      "revId": "7f2c8b548255d47e3ab7394a6b80f0595f3ea9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cbf861_5bed1844",
+        "filename": "ui/compositor/scoped_layer_animation_settings.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:33:36Z",
+      "side": 1,
+      "message": "nit: request render surface caching",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "7f2c8b548255d47e3ab7394a6b80f0595f3ea9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fab232d_e290e892",
+        "filename": "ui/compositor/scoped_layer_animation_settings.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:33:36Z",
+      "side": 1,
+      "message": "request will be removed",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "7f2c8b548255d47e3ab7394a6b80f0595f3ea9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
