@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60926ae7_10f82c15",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T20:45:55Z",
+      "side": 1,
+      "message": "Should an error message be printed?",
+      "revId": "2a6b51bc573f51b73cbbcae843bd496fdd92f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5b5d0e_850f2deb",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T20:45:55Z",
+      "side": 1,
+      "message": "// The *Source classes below are light-weight (i.e., allows copying) visitors to read patch data. Each of them has an associated \"main type\", and performs the following:",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 13
+      },
+      "revId": "2a6b51bc573f51b73cbbcae843bd496fdd92f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5868f2ec_31d1eea8",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T20:45:55Z",
+      "side": 1,
+      "message": "cached sources",
+      "range": {
+        "startLine": 212,
+        "startChar": 59,
+        "endLine": 212,
+        "endChar": 73
+      },
+      "revId": "2a6b51bc573f51b73cbbcae843bd496fdd92f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f266f8d0_a9f8a37c",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T20:45:55Z",
+      "side": 1,
+      "message": "// The Get*() functions below return *copies* of cached sources.",
+      "revId": "2a6b51bc573f51b73cbbcae843bd496fdd92f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587525c8_61808217",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T20:45:55Z",
+      "side": 1,
+      "message": "// Cached sources.",
+      "revId": "2a6b51bc573f51b73cbbcae843bd496fdd92f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
