@@ -100,7 +100,6 @@ class ExtensionContextMenuApiTest : public ExtensionApiTest {
   }
 
   int get_top_level_index() { return top_level_index_; }
-
   TestRenderViewContextMenu* GetMenu() { return menu_.get(); }
 
   const extensions::Extension* extension() { return extension_; }
