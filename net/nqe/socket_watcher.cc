@@ -18,6 +18,34 @@ namespace nqe {
 
 namespace internal {
 
+namespace {
+
+// Generate a compact representation for the first IP in |address_list|. For
+// IPv4, all 32 bits are used and for IPv6, the first 64 bits are used as the
+// remote host identifier.
+base::Optional<IPHash> CalculateIPHash(const AddressList& address_list) {
+  if (address_list.empty())
+    return base::nullopt;
+
+  const IPAddress& ip_addr = address_list.front().address();
+
+  IPAddressBytes bytes = ip_addr.bytes();
+  int index_min = ip_addr.IsIPv4MappedIPv6() ? 12 : 0;
+  int index_max;
+  if (ip_addr.IsIPv4MappedIPv6())
+    index_max = 16;
+  else
+    index_max = ip_addr.IsIPv4() ? 4 : 8;
+
+  uint64_t result = 0ULL;
+  for (int i = index_min; i < index_max; ++i) {
+    result |= static_cast<uint64_t>(bytes[i]) << (8 * i);
+  }
+  return result;
+}
+
+}  // namespace
+
 SocketWatcher::SocketWatcher(
     SocketPerformanceWatcherFactory::Protocol protocol,
     const AddressList& address_list,
@@ -33,7 +61,8 @@ SocketWatcher::SocketWatcher(
       run_rtt_callback_(allow_rtt_private_address ||
                         (!address_list.empty() &&
                          !address_list.front().address().IsReserved())),
-      tick_clock_(tick_clock) {
+      tick_clock_(tick_clock),
+      host_(CalculateIPHash(address_list)) {
   DCHECK(tick_clock_);
 }
 
@@ -55,7 +84,8 @@ void SocketWatcher::OnUpdatedRTTAvailable(const base::TimeDelta& rtt) {
 
   last_rtt_notification_ = tick_clock_->NowTicks();
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(updated_rtt_observation_callback_, protocol_, rtt));
+      FROM_HERE,
+      base::Bind(updated_rtt_observation_callback_, protocol_, rtt, host_));
 }
 
 void SocketWatcher::OnConnectionChanged() {
