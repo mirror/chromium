@@ -102,6 +102,8 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
     }
     return CreatePermissionDescriptor(PermissionName::SENSORS);
   }
+  if (name == "accessibility-events")
+    return CreatePermissionDescriptor(PermissionName::ACCESSIBILITY_EVENTS);
 
   return nullptr;
 }
