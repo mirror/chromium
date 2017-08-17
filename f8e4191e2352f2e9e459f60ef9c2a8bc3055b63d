@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97433fbb_bc6aed5a",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-17T23:47:21Z",
+      "side": 1,
+      "message": "nit: change this to use SetNew.",
+      "revId": "f8e4191e2352f2e9e459f60ef9c2a8bc3055b63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
