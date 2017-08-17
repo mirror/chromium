@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b22fe72c_6ce80a92",
+        "filename": "chrome/profiling/json_exporter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-17T21:51:18Z",
+      "side": 1,
+      "message": "Until this morning this return value was a complicated iterator, hence the auto. This is a good change given the new API.",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "5a54603562c756dc53a448d1e1c68ff05965b492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
