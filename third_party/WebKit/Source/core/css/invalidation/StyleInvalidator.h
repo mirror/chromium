@@ -139,6 +139,7 @@ class CORE_EXPORT StyleInvalidator {
   };
 
   bool Invalidate(Element&, RecursionData&, SiblingData&);
+  bool InvalidateShadowHostChildren(Element&, RecursionData&);
   bool InvalidateShadowRootChildren(Element&, RecursionData&);
   bool InvalidateChildren(Element&, RecursionData&);
   void InvalidateSlotDistributedElements(HTMLSlotElement&,
