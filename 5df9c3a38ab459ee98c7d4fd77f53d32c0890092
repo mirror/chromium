@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ad8a3ee_14896dfc",
+        "filename": "extensions/common/extension_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T18:50:20Z",
+      "side": 1,
+      "message": "CHECK(!manifest_data_)?",
+      "range": {
+        "startLine": 139,
+        "startChar": 19,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2622fd34_38e7ecb2",
+        "filename": "extensions/common/extension_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T18:50:20Z",
+      "side": 1,
+      "message": "I think we should not allow this, if consumer is building manifest with the helpers then let them specify the stuffs to be merged using those helpers as well? i.e. you call MergeManifest only when in SetManifest mode.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39f9ad87_abe141a7",
         "filename": "extensions/common/extension_builder.h",
         "patchSetId": 3
@@ -49,6 +95,24 @@
       "side": 1,
       "message": "But then the separate class also needs to implement the common methods - SetPath(), SetLocation(), MergeManifest(), AddFlags(), and SetID().  I suppose we can have ExtensionBuilderBase(), ExtensionBuilder(), and NewExtensionBuilder(), but I\u0027m really not sure that reduces any confusion.\n\nIs this really so bad?  There\u0027s just one method that can\u0027t be used with the new version (SetManifest()), and it\u0027s not uncommon to have methods that, which called under the wrong circumstance, don\u0027t operate well (e.g., at(0) on an empty array).\n\nI\u0027m not entirely opposed to it, but I\u0027m not fully convinced that having 2 - 3 different ExtensionBuilder classes will be less confusing than this, especially since I think there is a much greater likelihood of someone using the wrong builder class than of someone trying to use both semantic building and SetManifest().\n\nWDYT?",
       "parentUuid": "2176d390_3b87aefc",
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3c2128_8425fb93",
+        "filename": "extensions/common/extension_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T18:50:20Z",
+      "side": 1,
+      "message": "\u003e But then the separate class also needs to implement the common methods - SetPath(), SetLocation(), MergeManifest(), AddFlags(), and SetID().  I suppose we can have ExtensionBuilderBase(), ExtensionBuilder(), and NewExtensionBuilder(), but I\u0027m really not sure that reduces any confusion.\nI was meaning the subclass to put non manifest stuff (location/flags/id) in base and not let MergeManifest available in both (see below).\n\u003e \n\u003e Is this really so bad?  There\u0027s just one method that can\u0027t be used with the new version (SetManifest()), and it\u0027s not uncommon to have methods that, which called under the wrong circumstance, don\u0027t operate well (e.g., at(0) on an empty array).\n\nat(0) is a runtime failure vs this issue here can be statically avoided, right?\n\u003e \n\u003e I\u0027m not entirely opposed to it, but I\u0027m not fully convinced that having 2 - 3 different ExtensionBuilder classes will be less confusing than this,\nAgree it\u0027s not less confusing. Hence, I\u0027m hoping for something better :)\n\n especially since I think there is a much greater likelihood of someone using the wrong builder class\n\nI think if we don\u0027t let DictionaryValue setters in one at all, then it\u0027s not possible to mix and match the two constructs.\nThis is based on my assumption that MergeManifest is not useful in the |manifest_data_| case (see more comment in ExtensionBuilder::MergeManifest). If it *really* is, then separating class probably isn\u0027t worthwhile.\n\n than of someone trying to use both semantic building and SetManifest().\n\u003e \n\u003e WDYT?",
+      "parentUuid": "b35b7ede_45a7cd9c",
       "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
