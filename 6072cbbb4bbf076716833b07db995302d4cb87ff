@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82f27cc_4e897c43",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:54:33Z",
+      "side": 1,
+      "message": "From the bug, looks like this is only flaky on Android, why was this disabled for all platforms?",
+      "revId": "6072cbbb4bbf076716833b07db995302d4cb87ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
