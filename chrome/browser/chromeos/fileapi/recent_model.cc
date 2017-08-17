@@ -13,6 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/fileapi/recent_arc_media_source.h"
 #include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_download_source.h"
 #include "chrome/browser/chromeos/fileapi/recent_model_factory.h"
@@ -32,6 +33,7 @@ constexpr base::TimeDelta kCacheExpiration = base::TimeDelta::FromSeconds(10);
 std::vector<std::unique_ptr<RecentSource>> CreateDefaultSources(
     Profile* profile) {
   std::vector<std::unique_ptr<RecentSource>> sources;
+  sources.emplace_back(base::MakeUnique<RecentArcMediaSource>(profile));
   sources.emplace_back(base::MakeUnique<RecentDownloadSource>(profile));
   return sources;
 }
@@ -61,6 +63,7 @@ RecentModel::RecentModel(std::vector<std::unique_ptr<RecentSource>> sources)
 
 RecentModel::~RecentModel() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(sources_.empty());
 }
 
 void RecentModel::GetRecentFiles(RecentContext context,
@@ -95,6 +98,14 @@ void RecentModel::GetRecentFiles(RecentContext context,
                            base::BindOnce(&RecentModel::OnGetRecentFiles,
                                           weak_ptr_factory_.GetWeakPtr()));
   }
+}
+
+void RecentModel::Shutdown() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // Some RecentSource implementations have references to other KeyedServices,
+  // so we destruct them here.
+  sources_.clear();
 }
 
 void RecentModel::OnGetRecentFiles(RecentFileList files) {
