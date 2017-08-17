@@ -2,13 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/feedback/feedback_uploader_chrome.h"
+#include "chrome/browser/feedback/feedback_uploader_chrome.h"
 
 #include "base/callback.h"
+#include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/strings/stringprintf.h"
+#include "chrome/browser/feedback/feedback_uploader_delegate.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/feedback/feedback_report.h"
-#include "components/feedback/feedback_uploader_delegate.h"
+#include "components/feedback/feedback_switches.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
@@ -20,21 +28,77 @@
 namespace feedback {
 namespace {
 
+constexpr char kFeedbackPostUrl[] =
+    "https://www.google.com/tools/feedback/chrome/__submit";
+
 const char kProtoBufMimeType[] = "application/x-protobuf";
+
+GURL GetFeedbackPostGURL() {
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  return GURL(command_line.HasSwitch(switches::kFeedbackServer)
+                  ? command_line.GetSwitchValueASCII(switches::kFeedbackServer)
+                  : kFeedbackPostUrl);
+}
 
 }  // namespace
 
 FeedbackUploaderChrome::FeedbackUploaderChrome(
     content::BrowserContext* context,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : FeedbackUploader(context ? context->GetPath() : base::FilePath(),
+    : OAuth2TokenService::Consumer("feedback_uploader_chrome"),
+      FeedbackUploader(context ? context->GetPath() : base::FilePath(),
                        task_runner),
-      context_(context) {
+      context_(context),
+      feedback_post_url_(GetFeedbackPostGURL()) {
   CHECK(context_);
+}
+
+FeedbackUploaderChrome::~FeedbackUploaderChrome() {}
+
+void FeedbackUploaderChrome::OnGetTokenSuccess(
+    const OAuth2TokenService::Request* request,
+    const std::string& access_token,
+    const base::Time& expiration_time) {
+  access_token_request_.reset();
+  SendReport(access_token);
+}
+
+void FeedbackUploaderChrome::OnGetTokenFailure(
+    const OAuth2TokenService::Request* request,
+    const GoogleServiceAuthError& error) {
+  LOG(ERROR) << "Failed to get the access token.";
+  access_token_request_.reset();
+  SendReport(std::string());
 }
 
 void FeedbackUploaderChrome::DispatchReport(
     scoped_refptr<FeedbackReport> report) {
+  report_ = report;
+
+  Profile* profile = Profile::FromBrowserContext(context_);
+  if (profile) {
+    auto* oauth2_token_service =
+        ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
+    auto* signin_manager = SigninManagerFactory::GetForProfile(profile);
+    if (oauth2_token_service && signin_manager &&
+        signin_manager->IsAuthenticated()) {
+      std::string account_id = signin_manager->GetAuthenticatedAccountId();
+      OAuth2TokenService::ScopeSet scopes;
+      scopes.insert("https://www.googleapis.com/auth/supportcontent");
+      access_token_request_ =
+          oauth2_token_service->StartRequest(account_id, scopes, this);
+      return;
+    }
+  }
+
+  LOG(ERROR)
+      << "Failed to request oauth access token. Feedback report will be sent "
+      << "without authentication.";
+  SendReport(std::string());
+}
+
+void FeedbackUploaderChrome::SendReport(const std::string& access_token) {
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("chrome_feedback_report_app", R"(
         semantics {
@@ -67,9 +131,9 @@ void FeedbackUploaderChrome::DispatchReport(
   // Note: FeedbackUploaderDelegate deletes itself and the fetcher.
   net::URLFetcher* fetcher =
       net::URLFetcher::Create(
-          feedback_post_url(), net::URLFetcher::POST,
+          feedback_post_url_, net::URLFetcher::POST,
           new FeedbackUploaderDelegate(
-              report,
+              report_,
               base::Bind(&FeedbackUploaderChrome::OnReportUploadSuccess,
                          AsWeakPtr()),
               base::Bind(&FeedbackUploaderChrome::OnReportUploadFailure,
@@ -88,10 +152,16 @@ void FeedbackUploaderChrome::DispatchReport(
                                      is_signed_in, &headers);
   fetcher->SetExtraRequestHeaders(headers.ToString());
 
-  fetcher->SetUploadData(kProtoBufMimeType, report->data());
+  fetcher->SetUploadData(kProtoBufMimeType, report_->data());
   fetcher->SetRequestContext(
-      content::BrowserContext::GetDefaultStoragePartition(context_)->
-          GetURLRequestContext());
+      content::BrowserContext::GetDefaultStoragePartition(context_)
+          ->GetURLRequestContext());
+
+  if (!access_token.empty()) {
+    fetcher->AddExtraRequestHeader(
+        base::StringPrintf("Authorization: Bearer %s", access_token.c_str()));
+  }
+
   fetcher->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
                         net::LOAD_DO_NOT_SEND_COOKIES);
   fetcher->Start();

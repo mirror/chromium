@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/feedback/feedback_uploader_factory.h"
+#include "chrome/browser/feedback/feedback_uploader_factory.h"
 
 #include "base/memory/singleton.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
+#include "chrome/browser/feedback/feedback_uploader_chrome.h"
 #include "components/feedback/feedback_uploader.h"
-#include "components/feedback/feedback_uploader_chrome.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 
 namespace feedback {

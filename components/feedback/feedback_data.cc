@@ -33,9 +33,12 @@ const char kHistogramsAttachmentName[] = "histograms.zip";
 
 }  // namespace
 
-FeedbackData::FeedbackData()
-    : send_report_(base::Bind(&feedback_util::SendReport)), context_(NULL),
-      trace_id_(0), pending_op_count_(1), report_sent_(false) {}
+FeedbackData::FeedbackData(UploadReportCallback upload_report_callback)
+    : upload_report_callback_(std::move(upload_report_callback)),
+      context_(nullptr),
+      trace_id_(0),
+      pending_op_count_(1),
+      report_sent_(false) {}
 
 FeedbackData::~FeedbackData() {
 }
@@ -135,7 +138,8 @@ void FeedbackData::SendReport() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (IsDataComplete() && !report_sent_) {
     report_sent_ = true;
-    send_report_.Run(this);
+    if (upload_report_callback_)
+      std::move(upload_report_callback_).Run(this);
   }
 }
 
