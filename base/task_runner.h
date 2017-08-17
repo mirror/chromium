@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 
 namespace base {
@@ -132,6 +133,27 @@ class BASE_EXPORT TaskRunner
   bool PostTaskAndReply(const tracked_objects::Location& from_here,
                         OnceClosure task,
                         OnceClosure reply);
+
+  template <typename ReturnType, typename ArgType>
+  bool PostTaskAndReply(const tracked_objects::Location& from_here,
+                        OnceCallback<ReturnType()> task,
+                        OnceCallback<void(ArgType)> reply) {
+    auto call_task = [](OnceCallback<ReturnType()> task,
+                        Optional<ReturnType>* result) {
+      result->emplace(std::move(task).Run());
+    };
+
+    auto call_reply = [](OnceCallback<void(ArgType)> reply,
+                         Optional<ReturnType>* result) {
+      DCHECK(result->has_value());
+      std::move(reply).Run(std::move(*result).value());
+    };
+
+    base::Optional<ReturnType>* result = new Optional<ReturnType>();
+    return PostTaskAndReply(
+        from_here, BindOnce(call_task, std::move(task), result),
+        BindOnce(call_reply, std::move(reply), Owned(result)));
+  }
 
  protected:
   friend struct TaskRunnerTraits;
