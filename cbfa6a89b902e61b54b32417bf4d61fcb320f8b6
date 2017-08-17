@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e48a83f6_ae44a0c5",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T00:11:59Z",
+      "side": 1,
+      "message": "Per comments below, \"includeStartUrl\" doesn\u0027t make sense for what we want. I\u0027d go with something like, \"loggedIntentUrlParam\" (or something). You\u0027ll need to make this change throughout the CL and description",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b17ac05_238f9c97",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T00:11:59Z",
+      "side": 1,
+      "message": "i would put this in the #bound_webapk section since it only makes sense in that context",
+      "range": {
+        "startLine": 42,
+        "startChar": 46,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7334cb_bfb33a5a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T00:11:59Z",
+      "side": 1,
+      "message": "this should be retrieved from the metadata and not hardcoded",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac647dd_7c3448fa",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T00:11:59Z",
+      "side": 1,
+      "message": "hmm, sorry I wasn\u0027t clear in the bug description but this isn\u0027t what we want. We don\u0027t want to include the \"start_url\" as a query param. We want to include the url passed in the intent which launched the webapk, in the case where we rewrite the url, see below.",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 25
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa024e2_439f5af5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T00:11:59Z",
+      "side": 1,
+      "message": "this the place - where if we happen to rewrite the url in a meaningful way, we should include the originally requested url as a query param",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "cbfa6a89b902e61b54b32417bf4d61fcb320f8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
