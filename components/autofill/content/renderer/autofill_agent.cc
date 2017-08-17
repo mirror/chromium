@@ -189,7 +189,7 @@ void AutofillAgent::DidCommitProvisionalLoad(bool is_new_navigation,
   } else {
     // Navigation to a new page or a page refresh.
     form_cache_.Reset();
-    submitted_forms_.clear();
+    being_submitted_forms_.clear();
     last_interacted_form_.Reset();
     formless_elements_user_edited_.clear();
   }
@@ -274,9 +274,14 @@ void AutofillAgent::FireHostSubmitEvents(const FormData& form_data,
   // We remember when we have fired this IPC for this form in this frame load,
   // because forms with a submit handler may fire both WillSendSubmitEvent
   // and WillSubmitForm, and we don't want duplicate messages.
-  if (!submitted_forms_.count(form_data)) {
+  // Add form to being_sumbitted_forms_ only if form isn't actually submitted,
+  // and remove the form from being_submitted_forms_ when form is submitted.
+  if (!being_submitted_forms_.count(form_data)) {
     GetAutofillDriver()->WillSubmitForm(form_data, base::TimeTicks::Now());
-    submitted_forms_.insert(form_data);
+    if (!form_submitted)
+      being_submitted_forms_.insert(form_data);
+  } else if (form_submitted) {
+    being_submitted_forms_.erase(form_data);
   }
 
   if (form_submitted) {

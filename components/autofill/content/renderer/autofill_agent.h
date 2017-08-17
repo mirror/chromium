@@ -237,9 +237,9 @@ class AutofillAgent : public content::RenderFrameObserver,
   // frame.
   FormCache form_cache_;
 
-  // Keeps track of the forms for which a "will submit" message has been sent in
-  // this frame's current load. We use a simplified comparison function.
-  std::set<FormData, FormDataCompare> submitted_forms_;
+  // Keeps track of the forms for which a "will submit" message has been being
+  // sent in this frame's current load. We use a simplified comparison function.
+  std::set<FormData, FormDataCompare> being_submitted_forms_;
 
   PasswordAutofillAgent* password_autofill_agent_;  // Weak reference.
   PasswordGenerationAgent* password_generation_agent_;  // Weak reference.
