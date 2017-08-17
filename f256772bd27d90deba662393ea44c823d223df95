@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6ebbe7_27974b10",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1239542
+      },
+      "writtenOn": "2017-08-17T21:56:51Z",
+      "side": 1,
+      "message": "Let us make it consistent with other URL/Hash proto to make the whole thing as a JSON string. Example here:\nhttps://chromium.googlesource.com/chromium/src/+/master/components/policy/resources/policy_templates.json#7985",
+      "range": {
+        "startLine": 864,
+        "startChar": 0,
+        "endLine": 864,
+        "endChar": 26
+      },
+      "revId": "f256772bd27d90deba662393ea44c823d223df95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b385ab_8de7dc5f",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1239542
+      },
+      "writtenOn": "2017-08-17T21:56:51Z",
+      "side": 1,
+      "message": "Let us make them two separate protos so that they can have their own inheritance status. This is align with other blacklist whitelist definitions.",
+      "revId": "f256772bd27d90deba662393ea44c823d223df95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3b9758_cf7ff972",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9345,
+      "author": {
+        "id": 1239542
+      },
+      "writtenOn": "2017-08-17T21:56:51Z",
+      "side": 1,
+      "message": "Maybe we want to put the retire version after the new feature is ready?",
+      "range": {
+        "startLine": 9345,
+        "startChar": 38,
+        "endLine": 9345,
+        "endChar": 40
+      },
+      "revId": "f256772bd27d90deba662393ea44c823d223df95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4f4ac9_8635df45",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9382,
+      "author": {
+        "id": 1239542
+      },
+      "writtenOn": "2017-08-17T21:56:51Z",
+      "side": 1,
+      "message": "I am not a naming expert but I am not sure if we want to put a V2 here, or name it more clear about large bulk printers?",
+      "range": {
+        "startLine": 9382,
+        "startChar": 15,
+        "endLine": 9382,
+        "endChar": 31
+      },
+      "revId": "f256772bd27d90deba662393ea44c823d223df95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ac2388_aca1da2d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9426,
+      "author": {
+        "id": 1239542
+      },
+      "writtenOn": "2017-08-17T21:56:51Z",
+      "side": 1,
+      "message": "We also need one Mode policy for each of user policy and device policy, check the design doc for details.",
+      "range": {
+        "startLine": 9426,
+        "startChar": 15,
+        "endLine": 9426,
+        "endChar": 37
+      },
+      "revId": "f256772bd27d90deba662393ea44c823d223df95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
