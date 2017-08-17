@@ -22,6 +22,8 @@ struct EnumTraits<arc::mojom::VoiceInteractionState,
         return arc::mojom::VoiceInteractionState::STOPPED;
       case ash::VoiceInteractionState::RUNNING:
         return arc::mojom::VoiceInteractionState::RUNNING;
+      case ash::VoiceInteractionState::DISABLED:
+        return arc::mojom::VoiceInteractionState::DISABLED;
     }
 
     NOTREACHED() << "Invalid state: " << static_cast<int>(state);
@@ -39,6 +41,9 @@ struct EnumTraits<arc::mojom::VoiceInteractionState,
         return true;
       case arc::mojom::VoiceInteractionState::RUNNING:
         *state = ash::VoiceInteractionState::RUNNING;
+        return true;
+      case arc::mojom::VoiceInteractionState::DISABLED:
+        *state = ash::VoiceInteractionState::DISABLED;
         return true;
     }
 

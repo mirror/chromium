@@ -12,7 +12,8 @@ import "screen_rect.mojom";
 enum VoiceInteractionState {
   NOT_READY = 0,
   STOPPED,
-  RUNNING
+  RUNNING,
+  DISABLED
 };
 
 // Handles voice interaction queries from Android.
