@@ -44,12 +44,7 @@ public class AwContentsLifecycleNotifierTest extends AwTestBase {
         observer.mFirstWebViewCreatedCallback.waitForCallback(0, 1);
         assertTrue(AwContentsLifecycleNotifier.hasWebViewInstances());
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().removeAllViews();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> getActivity().removeAllViews());
         destroyAwContentsOnMainSync(awTestContainerView.getAwContents());
         observer.mLastWebViewDestroyedCallback.waitForCallback(0, 1);
         assertFalse(AwContentsLifecycleNotifier.hasWebViewInstances());

@@ -69,42 +69,34 @@ public class AwStrictModeTest extends AwTestBase {
     }
 
     private void enableStrictModeOnUiThreadSync() {
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mOldThreadPolicy = StrictMode.getThreadPolicy();
-                mOldVmPolicy = StrictMode.getVmPolicy();
-                StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .penaltyDeath()
-                        .build());
-                StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .penaltyDeath()
-                        .build());
-            }});
+        getInstrumentation().runOnMainSync(() -> {
+            mOldThreadPolicy = StrictMode.getThreadPolicy();
+            mOldVmPolicy = StrictMode.getVmPolicy();
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        });
     }
 
     private void disableStrictModeOnUiThreadSync() {
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                StrictMode.setThreadPolicy(mOldThreadPolicy);
-                StrictMode.setVmPolicy(mOldVmPolicy);
-            }});
+        getInstrumentation().runOnMainSync(() -> {
+            StrictMode.setThreadPolicy(mOldThreadPolicy);
+            StrictMode.setVmPolicy(mOldVmPolicy);
+        });
     }
 
     private void startEverythingSync() throws Exception {
         getActivity();
         createAwBrowserContext();
         startBrowserProcess();
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwTestContainerView = createAwTestContainerView(mContentsClient);
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> mAwTestContainerView = createAwTestContainerView(mContentsClient));
     }
 }

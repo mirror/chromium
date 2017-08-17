@@ -88,13 +88,10 @@ public class AndroidViewIntegrationTest extends AwTestBase {
             final AwContentsClient awContentsClient, final int visibility) throws Exception {
         final AtomicReference<AwTestContainerView> testContainerView =
                 new AtomicReference<>();
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                testContainerView.set(createAwTestContainerView(awContentsClient));
-                testContainerView.get().setLayoutParams(mWrapContentLayoutParams);
-                testContainerView.get().setVisibility(visibility);
-            }
+        getInstrumentation().runOnMainSync(() -> {
+            testContainerView.set(createAwTestContainerView(awContentsClient));
+            testContainerView.get().setLayoutParams(mWrapContentLayoutParams);
+            testContainerView.get().setVisibility(visibility);
         });
         return testContainerView.get();
     }
@@ -103,33 +100,20 @@ public class AndroidViewIntegrationTest extends AwTestBase {
             final AwContentsClient awContentsClient) {
         final AtomicReference<AwTestContainerView> testContainerView =
                 new AtomicReference<>();
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                testContainerView.set(createDetachedAwTestContainerView(awContentsClient));
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> testContainerView.set(createDetachedAwTestContainerView(awContentsClient)));
         return testContainerView.get();
     }
 
     private void assertZeroHeight(final AwTestContainerView testContainerView) throws Throwable {
         // Make sure the test isn't broken by the view having a non-zero height.
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                assertEquals(0, testContainerView.getHeight());
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> assertEquals(0, testContainerView.getHeight()));
     }
 
     private int getRootLayoutWidthOnMainThread() throws Exception {
         final AtomicReference<Integer> width = new AtomicReference<>();
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                width.set(Integer.valueOf(getActivity().getRootLayoutWidth()));
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> width.set(Integer.valueOf(getActivity().getRootLayoutWidth())));
         return width.get();
     }
 
@@ -178,12 +162,8 @@ public class AndroidViewIntegrationTest extends AwTestBase {
         mOnContentSizeChangedHelper.waitForCallback(contentSizeChangeCallCount);
         assertTrue(mOnContentSizeChangedHelper.getHeight() > 0);
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                assertEquals(View.INVISIBLE, testContainerView.getVisibility());
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> assertEquals(View.INVISIBLE, testContainerView.getVisibility()));
     }
 
     /**
@@ -416,12 +396,8 @@ public class AndroidViewIntegrationTest extends AwTestBase {
         final int narrowLayoutHeight = mOnContentSizeChangedHelper.getHeight();
 
         contentSizeChangeCallCount = mOnContentSizeChangedHelper.getCallCount();
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                testContainerView.onSizeChanged(physicalWidth, 0, 0, 0);
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> testContainerView.onSizeChanged(physicalWidth, 0, 0, 0));
         mOnContentSizeChangedHelper.waitForCallback(contentSizeChangeCallCount);
 
         // As a result of calling the onSizeChanged method the layout size should be updated to

@@ -33,14 +33,9 @@ public class AwWebContentsObserverTest extends AwTestBase  {
         mTestContainerView = createAwTestContainerViewOnMainSync(mContentsClient);
         mUnreachableWebDataUrl = AwContentsStatics.getUnreachableWebDataUrl();
         // AwWebContentsObserver constructor must be run on the UI thread.
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mWebContentsObserver = new AwWebContentsObserver(
-                        mTestContainerView.getContentViewCore().getWebContents(),
-                        mTestContainerView.getAwContents(), mContentsClient);
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mWebContentsObserver = new AwWebContentsObserver(
+                mTestContainerView.getContentViewCore().getWebContents(),
+                mTestContainerView.getAwContents(), mContentsClient));
     }
 
     @SmallTest

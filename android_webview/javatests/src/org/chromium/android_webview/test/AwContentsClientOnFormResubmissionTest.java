@@ -110,12 +110,8 @@ public class AwContentsClientOnFormResubmissionTest extends AwTestBase {
                 mContentsClient.getOnPageFinishedHelper();
         int callCount = onPageFinishedHelper.getCallCount();
         // Run reload on UI thread.
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.getNavigationController().reload(true);
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> mAwContents.getNavigationController().reload(true));
         try {
             // Wait for page finished callback, or a timeout. A timeout is necessary
             // to detect a dontResend response.

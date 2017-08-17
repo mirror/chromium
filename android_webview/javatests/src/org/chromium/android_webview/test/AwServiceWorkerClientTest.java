@@ -13,7 +13,6 @@ import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.net.test.util.TestWebServer;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Tests Service Worker Client related APIs.
@@ -128,12 +127,7 @@ public class AwServiceWorkerClientTest extends AwTestBase {
         assertEquals(fullIndexUrl, onPageFinishedHelper.getUrl());
 
         // Check that the service worker has been registered successfully.
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getSuccessFromJS() == 1;
-            }
-        });
+        pollInstrumentationThread(() -> getSuccessFromJS() == 1);
 
         helper.waitForCallback(currentShouldInterceptRequestCount, expectedInterceptRequestCount);
     }
