@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b635f4c2_d5f89401",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "maybe something like:\n\"Add a test for stream response to ServiceWorkerURLLoaderJob\"\n\n(then you don\u0027t need line 9 also)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f416acc_49f6ab1a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "I don\u0027t think this EXPECT_TRUE is needed... I don\u0027t see a reason to forbid calling RespondWithStream() multiple times. (And if we wanted to forbid it, it should be a DCHECK() or ASSERT() instead of an EXPECT(), as it\u0027d be a bug in the test code, not in the implementation being tested.)",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c99bdae_930cf2f2",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "This belongs around line 119, with a comment like \"For ResponseMode::kStream\"",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298bc45d_45666228",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "\"\" /* blob_uuid */, 0 /* blob_size */\n\nfor consistency with the rest of the arguments",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c00329b_df472b5a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "This comment is better kept on your local machine, but doesn\u0027t need to be in committed code (it\u0027s seems basically the same as lines 272-273 with more detail for you).",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd067ec_6696ebd7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "typo: Construct",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c7e0ae_2daba78d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "I feel lines 293-299 should probably be done after TestRequest(), it seems closer to what the actual code would do. The service worker would first get the request and then provide a response with a stream/data pipe, and then write the data to that data pipe.",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da988dad_22d3d369",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:07:10Z",
+      "side": 1,
+      "message": "same with these comments",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
