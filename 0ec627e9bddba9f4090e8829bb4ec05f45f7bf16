@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df8cc326_0ecf2b8e",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-17T16:47:27Z",
+      "side": 1,
+      "message": "This implementation seems fine. I\u0027m also OK with adding stuff from C++17 that we\u0027re actually going to use.",
+      "parentUuid": "0b2baef6_59efe980",
+      "revId": "0ec627e9bddba9f4090e8829bb4ec05f45f7bf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9beafeae_0e631534",
         "filename": "base/values.cc",
         "patchSetId": 3
