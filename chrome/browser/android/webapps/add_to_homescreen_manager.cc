@@ -23,6 +23,7 @@
 #include "content/public/browser/web_contents.h"
 #include "jni/AddToHomescreenManager_jni.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/installation/installation.mojom.h"
 #include "ui/gfx/android/java_bitmap.h"
@@ -133,12 +134,19 @@ void AddToHomescreenManager::OnDidDetermineWebApkCompatibility(
 }
 
 void AddToHomescreenManager::OnUserTitleAvailable(
-    const base::string16& user_title) {
+    const base::string16& user_title,
+    const GURL& url) {
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> j_user_title =
       base::android::ConvertUTF16ToJavaString(env, user_title);
+  // Trim down the app URL to the domain and registry.
+  std::string trimmed_url =
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          url, net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+  ScopedJavaLocalRef<jstring> j_url =
+      base::android::ConvertUTF8ToJavaString(env, trimmed_url);
   Java_AddToHomescreenManager_onUserTitleAvailable(
-      env, java_ref_, j_user_title,
+      env, java_ref_, j_user_title, j_url,
       !is_webapk_compatible_ /* isTitleEditable */);
 }
 
