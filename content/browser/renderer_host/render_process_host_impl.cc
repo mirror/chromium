@@ -1060,6 +1060,15 @@ class UnmatchedServiceWorkerProcessTracker
   SiteProcessIDPairSet site_process_set_;
 };
 
+void CopyFeatureSwitch(base::CommandLine* dest,
+                       const base::CommandLine& src,
+                       const char* switch_name) {
+  if (!src.HasSwitch(switch_name))
+    return;
+  dest->AppendSwitchASCII(
+      switch_name, base::JoinString(FeaturesFromSwitch(src, switch_name), ","));
+}
+
 }  // namespace
 
 RendererMainThreadFactoryFunction g_renderer_main_thread_factory = NULL;
@@ -2515,7 +2524,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableAcceleratedJpegDecoding,
     switches::kDisableAcceleratedVideoDecode,
     switches::kDisableBackgroundTimerThrottling,
-    switches::kDisableBlinkFeatures,
     switches::kDisableBreakpad,
     switches::kDisablePreferCompositingToLCDText,
     switches::kDisableDatabases,
@@ -2553,7 +2561,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableV8IdleTasks,
     switches::kDisableWebGLImageChromium,
     switches::kDomAutomationController,
-    switches::kEnableBlinkFeatures,
     switches::kEnableBrowserSideNavigation,
     switches::kEnableDisplayList2dCanvas,
     switches::kEnableDistanceFieldText,
@@ -2757,6 +2764,9 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     renderer_cmd->AppendSwitch(switches::kNoSandbox);
   }
 #endif
+
+  CopyFeatureSwitch(renderer_cmd, browser_cmd, switches::kEnableBlinkFeatures);
+  CopyFeatureSwitch(renderer_cmd, browser_cmd, switches::kDisableBlinkFeatures);
 }
 
 base::ProcessHandle RenderProcessHostImpl::GetHandle() const {
