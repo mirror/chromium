@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f1acf5_1164a3eb",
+        "filename": "third_party/WebKit/Source/core/events/EventListenerMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T13:20:54Z",
+      "side": 1,
+      "message": "This is now dead code and could be removed (?)",
+      "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
