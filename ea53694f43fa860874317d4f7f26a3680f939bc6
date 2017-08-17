@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a1bc0dd_41b0f931",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T16:46:02Z",
+      "side": 1,
+      "message": "You can make this to always return true, and remove the IsPremultiplied() function in Accelerated.*. If a StaticBitmapImage is accelerated, it is always premultiplied.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 39
+      },
+      "revId": "ea53694f43fa860874317d4f7f26a3680f939bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0456b81c_370e4d20",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedStaticBitmapImage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-17T16:46:02Z",
+      "side": 1,
+      "message": "override.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "ea53694f43fa860874317d4f7f26a3680f939bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
