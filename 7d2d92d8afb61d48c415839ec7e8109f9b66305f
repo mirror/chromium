@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b5eff0_6724da38",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T03:24:52Z",
+      "side": 1,
+      "message": "The order obviously matters here since you\u0027re moving this code, but you don\u0027t document why. Why is it important that this check be here and not earlier? Also, it isn\u0027t at all obvious why this check is triggering crash. Seems to me you\u0027re working around the real issue, but I freely admit I\u0027m not familiar with this code.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 75
+      },
+      "revId": "7d2d92d8afb61d48c415839ec7e8109f9b66305f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
