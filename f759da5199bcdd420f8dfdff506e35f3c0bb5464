@@ -16,6 +16,24 @@
       "revId": "f759da5199bcdd420f8dfdff506e35f3c0bb5464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125f6577_93e1f45e",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T14:51:22Z",
+      "side": 0,
+      "message": "The check was filtering out only V8AbstractEventListeners. The barrier is in the TraceWrapperMember in RegisteredListener ctor now and fires for all EventListeners. \n\nThis is a consequence of not special casing the JS listener anymore and we are trading the if branch vs a (potentially empty) call.",
+      "parentUuid": "9e4c46a9_41c624fd",
+      "revId": "f759da5199bcdd420f8dfdff506e35f3c0bb5464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

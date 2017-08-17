@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "94d37a4d_9ff3c51b",
+        "filename": "third_party/WebKit/Source/core/events/EventListenerMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T14:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af25ebf1_f7e2132c",
+      "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "380e9278_b3354d53",
         "filename": "third_party/WebKit/Source/core/events/RegisteredEventListener.h",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2017-08-17T14:32:01Z",
       "side": 1,
       "message": "Would you help me understand who traces into RegisteredEventListener?",
+      "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71e1690_21c50f59",
+        "filename": "third_party/WebKit/Source/core/events/RegisteredEventListener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T14:51:22Z",
+      "side": 1,
+      "message": "Sure, the traces will be\n* Node-\u003eEventTargetData-\u003eEventListenerMap-\u003eRegisteredEventListener-\u003eEventListener\n* EventTargetWithInlineData-\u003eEventTargetData-\u003e...\n\nThe difference to Oilpan is that it starts at EventTargetDataMap for Node.",
+      "parentUuid": "380e9278_b3354d53",
       "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
