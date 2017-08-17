@@ -224,7 +224,8 @@ class PasswordManagerClient {
   // Checks the safe browsing reputation of the webpage where password reuse
   // happens.
   virtual void CheckProtectedPasswordEntry(
-      const std::string& password_saved_domain,
+      bool matches_sync_password,
+      const std::vector<std::string>& matching_domains,
       bool password_field_exists) = 0;
 
   // Records a Chrome Sync event that sync password reuse was detected.
