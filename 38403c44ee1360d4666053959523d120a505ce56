@@ -34,6 +34,24 @@
       "revId": "38403c44ee1360d4666053959523d120a505ce56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d4de20_1c8a56f6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-17T22:49:54Z",
+      "side": 1,
+      "message": "We have a plan to use base:: in Blink core, but I think it\u0027s not ready yet. Using VersionUtilMac.h is safer.",
+      "parentUuid": "12108830_e0cc90e4",
+      "revId": "38403c44ee1360d4666053959523d120a505ce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
