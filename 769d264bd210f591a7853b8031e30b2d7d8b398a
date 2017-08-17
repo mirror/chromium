@@ -140,6 +140,52 @@
     },
     {
       "key": {
+        "uuid": "29a42ec3_7e9c3531",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T14:33:39Z",
+      "side": 1,
+      "message": "Can we get by without PromoType enum? It looks like you should be able to add NEW_PROMO_VIEW/OLD_PROMO_VIEW to mPromoHeaderSection here. Then there will be no need to map PromoType to NEW_PROMO_VIEW/OLD_PROMO_VIEW in getItemViewType.",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 61
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20892146_829497b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T14:33:39Z",
+      "side": 1,
+      "message": "Please add \"@Retention(RetentionPolicy.SOURCE)\" to this IntDef.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 73
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb6bccdd_ab12cb55",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 16
@@ -151,6 +197,52 @@
       "writtenOn": "2017-08-17T13:54:33Z",
       "side": 1,
       "message": "Make this final? Actually, there seems to be a bunch of members you could make final.",
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12950d1b_2d641c04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T14:33:39Z",
+      "side": 1,
+      "message": "sShouldShowForTest doesn\u0027t really couple with a new enum-based state of promos. I would expect BookmarkTest.testSearchBookmarks to fail with a current implementation. Can you start a CQ dry run, please?",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3409cd6a_598f2c04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T14:33:39Z",
+      "side": 1,
+      "message": "This method would be simpler if you extract promo state calculation into a separate method. This way you won\u0027t actually need updatePromoState and can replace all lines that call it with \"mPromoState \u003d calculatePromoState();\"",
+      "range": {
+        "startLine": 250,
+        "startChar": 17,
+        "endLine": 250,
+        "endChar": 33
+      },
       "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
