@@ -16,6 +16,24 @@
       "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d4ad64_ad3ea263",
+        "filename": "services/resource_coordinator/resource_coordinator_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-17T20:25:19Z",
+      "side": 1,
+      "message": "How about mocking a CUGraphObserver, observing this CU, using a runloop and quitting the runloop when mojo IPC is delivered?",
+      "parentUuid": "af109b7c_a61b4133",
+      "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
