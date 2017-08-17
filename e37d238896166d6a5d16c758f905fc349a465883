@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6efb7d4_1dc28e78",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": "use DVLOGF(3); (please also apply others)",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd24f538_d0dc375a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": "merge into one line",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 75
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8824ee84_53cd7d4a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": "It\u0027s better to have ConvertErrorCode rather than static_cast\nhttps://cs.chromium.org/chromium/src/chrome/gpu/chrome_arc_video_decode_accelerator.cc?dr\u003dCSs\u0026l\u003d463",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 72
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7638a1f0_0bb904fb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": "In previous CAVDA, we have a histogram to record VDA init result which is also used for autotest, so please reserve this.\nhttps://cs.chromium.org/chromium/src/chrome/gpu/chrome_arc_video_decode_accelerator.cc?dr\u003dCSs\u0026l\u003d73",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 46
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4274f59f_a292addb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": "should we make a pre-check?\nif (!ashmem.is_valid())\n  client_-\u003eNotifyError(\n        ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);\n  return;",
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce199d87_fab01731",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": "dmabuf_fd",
+      "range": {
+        "startLine": 320,
+        "startChar": 17,
+        "endLine": 320,
+        "endChar": 26
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fc9990_07062015",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-17T08:30:08Z",
+      "side": 1,
+      "message": ":%s/picture_id/picture_buffer_id/g\n\nPicture and PictureBuffer are different classes for VDA. To avoid misunderstanding it is better to change to picture_buffer_id\n\nAfter the replacement please also check the line length again (\u003c\u003d80 char)",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
