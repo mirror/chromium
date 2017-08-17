@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cbcaf5b_ff0e1553",
+        "filename": "chrome/browser/safe_browsing/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "This is really useful information. Thanks!\nDEPS changed accordingly.",
+      "parentUuid": "844b88c0_686d1960",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7316c5b4_605b5af8",
         "filename": "chrome/browser/ui/views/safe_browsing/OWNER",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd9f721_08a6780b",
+        "filename": "chrome/browser/ui/views/safe_browsing/OWNER",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Oops. Thanks for catching this!",
+      "parentUuid": "7316c5b4_605b5af8",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6a05bfea_1a9b6981",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done. Now directly call OnWarningShown() in caller code.",
+      "parentUuid": "7d427669_b783ae5d",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d54c1be_bd1461ed",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -79,6 +139,30 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91444b5_dc7a6863",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Moved destructor to private.",
+      "parentUuid": "3d54c1be_bd1461ed",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e6dbf431_24bfc7c6",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f90b5b_200ce1a5",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dbce406_53a082e9",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "bfaeae88_677deb5b",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "tapted@ pointed me to the right way to show icon in a dialog. No need to do customized view anymore. Removed the Init() function entirely.",
+      "parentUuid": "6dbce406_53a082e9",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 17
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8a3465_c3d93997",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -142,6 +274,24 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8305b4d_8a8e0d30",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Changed to CreatePanel(). Thanks for the pointer.",
+      "parentUuid": "ad8a3465_c3d93997",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "ed7f75a6_14982ca5",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "18c5c0ce_7a026aa7",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 40
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8547db4b_07e075fe",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -182,6 +356,24 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0596b930_9db96f72",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Thanks for pointing me to ::GetWindowIcon() function! it makes things much easier.",
+      "parentUuid": "8547db4b_07e075fe",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "19f8079d_e78f3f36",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Call Removed.",
+      "parentUuid": "b5aefb2c_3874cd37",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 54
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a01cd28_7513cac5",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 10
@@ -225,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "c938d8df_5e2f2695",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Yes. this cleans up a large chunk of code. Thanks for the pointer!",
+      "parentUuid": "0a01cd28_7513cac5",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83d1793c_7fa0ec7f",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 10
@@ -239,6 +473,24 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f4647d_3dbd289c",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d1793c_7fa0ec7f",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "c66271c6_b4c795e4",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Remove Init() function, and put all the logic into constructor.",
+      "parentUuid": "10fe73bd_10401df6",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fba31ef_3f3dc0f0",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 10
@@ -288,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "8e2b6b21_15563440",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Removed the static create function.",
+      "parentUuid": "7fba31ef_3f3dc0f0",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b384e96f_af0313f4",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 10
@@ -305,6 +605,24 @@
     },
     {
       "key": {
+        "uuid": "b74dc6c9_d488e685",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b384e96f_af0313f4",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622a63f8_a049c170",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 10
@@ -319,6 +637,24 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c66f6d_c7585a40",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "622a63f8_a049c170",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -345,6 +681,30 @@
     },
     {
       "key": {
+        "uuid": "754ff2af_85ce035e",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fdacfed_93023ce7",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d770ee7b_7f0aeff5",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 10
@@ -365,6 +725,30 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6c0c03_bd78d706",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d770ee7b_7f0aeff5",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -391,6 +775,30 @@
     },
     {
       "key": {
+        "uuid": "f34af114_8d56b032",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89403692_78597386",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 2
+      },
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c52576c_9d5c04c5",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
         "patchSetId": 10
@@ -405,6 +813,24 @@
       "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980d51a6_a025f4a7",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-17T01:30:22Z",
+      "side": 1,
+      "message": "Done. Test added.",
+      "parentUuid": "8c52576c_9d5c04c5",
+      "revId": "a8920e518181a02f99b8fe1ac0e0885eb5da1fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
