@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5855db_49b54cf3",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-17T07:53:30Z",
+      "side": 1,
+      "message": "Merge issue?",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "2dee12b4c4b9b356b438b105a1011a2109d85c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bf76a3_793fc333",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 5973,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-17T07:53:30Z",
+      "side": 1,
+      "message": "Odd rebase?",
+      "revId": "2dee12b4c4b9b356b438b105a1011a2109d85c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
