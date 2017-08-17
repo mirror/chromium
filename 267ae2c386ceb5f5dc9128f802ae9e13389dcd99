@@ -22,6 +22,30 @@
       "revId": "267ae2c386ceb5f5dc9128f802ae9e13389dcd99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577ca1b0_73dfab7b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-17T07:07:01Z",
+      "side": 1,
+      "message": "As Eddy mentioned, it\u0027s for better encapsulation.",
+      "parentUuid": "7eac9335_6d0e6e3c",
+      "range": {
+        "startLine": 42,
+        "startChar": 34,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "267ae2c386ceb5f5dc9128f802ae9e13389dcd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
