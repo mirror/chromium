@@ -24,6 +24,7 @@ namespace content {
 
 class DevToolsAgentHostImpl;
 class RenderFrameHostImpl;
+class MouseWheelPhaseHandler;
 
 namespace protocol {
 
@@ -156,6 +157,7 @@ class InputHandler : public DevToolsDomainHandler,
   int last_id_;
   bool ignore_input_events_ = false;
   base::flat_map<int, blink::WebTouchPoint> touch_points_;
+  std::unique_ptr<MouseWheelPhaseHandler> mouse_wheel_phase_handler_;
   base::WeakPtrFactory<InputHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(InputHandler);
