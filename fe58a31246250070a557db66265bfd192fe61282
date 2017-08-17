@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7639a4cd_65659558",
+        "filename": "content/browser/webrtc/webrtc_internals.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:26:18Z",
+      "side": 1,
+      "message": "nullptr?",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 51
+      },
+      "revId": "fe58a31246250070a557db66265bfd192fe61282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec852a1_879b8d64",
+        "filename": "ui/shell_dialogs/select_file_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:26:18Z",
+      "side": 1,
+      "message": "If Create fails, then isn\u0027t policy null when you get to line 76?",
+      "range": {
+        "startLine": 71,
+        "startChar": 42,
+        "endLine": 71,
+        "endChar": 59
+      },
+      "revId": "fe58a31246250070a557db66265bfd192fe61282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
