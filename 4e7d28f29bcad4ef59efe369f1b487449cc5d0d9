@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "86fbb522_44bde2b8",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Scratch that. Renamed to MaybeCreateSubresourceLoader()",
+      "parentUuid": "093dba8d_8548cebb",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e76e0a_b531d6d7",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 3
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "doh! sorry for the bum steer\nIt\u0027d be good to remove that method provided a reasonable alternative since. Here are three possibilities?\n- empty_context_-\u003enetwork_delegate()\n- NetworkDelegateImpl empty_network_delegate_\n- nullptr",
       "parentUuid": "ec7e2418_ce621495",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8aadfc_9995a49e",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Replaced with nullptr",
+      "parentUuid": "c86cdb59_4c3a6526",
       "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "acca55f4_c7dd62e5",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "464b215a_36e8a78c",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6feb9eae_6988251a",
         "filename": "content/browser/appcache/appcache_request_handler.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "2c48be78f4a2e38000554994c3421deec610a005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecf329a_691839a5",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6feb9eae_6988251a",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f80c1020_17298273",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d8f8d7_3f8ea59b",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad321c81_b4e4c94f",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "2c48be78f4a2e38000554994c3421deec610a005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93275270_c563bea9",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad321c81_b4e4c94f",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6aa4c75e_6711b39f",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788072ec_6eba7d99",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebb3252a_bd50764d",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2d5184de_9acc6e15",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb3252a_bd50764d",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb451df_de06ce3b",
         "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-17T20:13:28Z",
       "side": 1,
       "message": "In production code, the job created here is deleted when MaybeLoadFallbackForRedirect and MaybeLoadFallbackForResponse are called, the job itself is what calles these methods. Should the tests not delete the initial job to more closely match actual usage?\n\nThis question/comment applies to other tests as well.",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7635fe15_aeb32394",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Thanks for noticing this. Done.",
+      "parentUuid": "deb451df_de06ce3b",
       "revId": "2c48be78f4a2e38000554994c3421deec610a005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -149,6 +275,24 @@
       "writtenOn": "2017-08-17T20:13:28Z",
       "side": 1,
       "message": "Since these aren\u0027t used in production code it\u0027d be nice to not add them for tests only, we could have the callsites use the GetURLRequest() method instead to invoke Start() directly on the url request object.",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f6edc9_78ac91d0",
+        "filename": "content/browser/appcache/appcache_url_request.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-17T21:49:49Z",
+      "side": 1,
+      "message": "Makes sense.Done.",
+      "parentUuid": "2b5801ae_2b8539ed",
       "revId": "2c48be78f4a2e38000554994c3421deec610a005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
