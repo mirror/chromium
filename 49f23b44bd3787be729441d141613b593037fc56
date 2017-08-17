@@ -16,6 +16,24 @@
       "revId": "49f23b44bd3787be729441d141613b593037fc56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aad344f_9bfa7844",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-17T22:58:36Z",
+      "side": 1,
+      "message": "As discussed offline, leaving this as-is - thanks for the suggestion though.",
+      "parentUuid": "48ab24f7_2208eb40",
+      "revId": "49f23b44bd3787be729441d141613b593037fc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
