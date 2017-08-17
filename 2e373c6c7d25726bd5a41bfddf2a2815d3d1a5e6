@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2403f0e_34bec8cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivityBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-17T21:55:11Z",
+      "side": 1,
+      "message": "Lets not make the class javadoc specific to the current state of the class hierarchy. It will become stale when we add a new one. Base class for First Run Experience should give the same idea.",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "2e373c6c7d25726bd5a41bfddf2a2815d3d1a5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef4531f_ba04164f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivityBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-17T21:55:11Z",
+      "side": 1,
+      "message": "I see another CL that essentially says there is no path to having multiple FRE activities running anymore. Does this mean all calls of this sort should just be plain finish calls?",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "2e373c6c7d25726bd5a41bfddf2a2815d3d1a5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b65c6a_28049b5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-17T21:55:11Z",
+      "side": 1,
+      "message": "Actually looking at this class, now I see that all calls can be made static. Can we also include that here? Rename the glue to be a utils and then just use it with static calls instead of having the static instance here?\n\nLet me know if I am mistaken about it being possible to turn into static.",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "2e373c6c7d25726bd5a41bfddf2a2815d3d1a5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
