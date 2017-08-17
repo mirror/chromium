@@ -16,6 +16,24 @@
       "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e98030f_5d7ed554",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T14:26:37Z",
+      "side": 1,
+      "message": "Yeah that could work. I\u0027m not sure if it would end up being simpler than the alternative (just making this the last check) though, because we will need logic to ensure that we don\u0027t log this message if this check *wasn\u0027t* the reason for the blocked popup.",
+      "parentUuid": "5c58d071_ea671fc4",
+      "revId": "e088395d9ef43e04bbe8583caadbd9bbca1e6298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
