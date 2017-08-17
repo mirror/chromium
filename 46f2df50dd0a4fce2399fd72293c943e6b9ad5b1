@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "741c4e10_3cac79ae",
+        "filename": "chrome/android/java/res/layout/add_to_homescreen_dialog.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Sans other opinions, this should use the same colour as the infobar banner currently does for the origin.",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2764c087_f77142d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Having the two separate inputs here is a little ugly to my mind. At the very least, can they be renamed to be clearer: mShortcutTitleInput, and mPwaLayout? Perhaps with a comment explaining they\u0027re mutually exclusive?",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 40
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01a3aa5_28eac871",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "This comment isn\u0027t accurate, see remarks on AddToHomescreenManager.",
+      "range": {
+        "startLine": 144,
+        "startChar": 23,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac10570d_5083244d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Move this into the conditional so that we don\u0027t ever set the text if we\u0027re just going to set the input to be GONE.",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 14
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fcd8c7_b37eff5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Nit: I would just use \"name\" and \"origin\" for these variable names since this flow can still fall back to installing a shortcut.",
+      "range": {
+        "startLine": 157,
+        "startChar": 17,
+        "endLine": 157,
+        "endChar": 27
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3983b1_986a7722",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "This comment is not correct; this method could be called if the web manifest request check times out. Making it slightly more accurate would be something like:\n\n\"Called when the homescreen icon title (and possibly information from the web manifest) is available.\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b5dc3e_fcbbdff5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Why do we need to send |name| separately? In the WebAPK case, can\u0027t we just send |name| as the first argument and avoid sending redundant data over the JNI?",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 45
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ba762a_30d9a119",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "shortName is not accurate, because we fall back to |name| if |short_name| is empty. I don\u0027t see why |title| needs to be changed.",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a771d879_f7426127",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Banners currently use net::registry_controlled_domains::GetDomainAndRegistry. What is the reason for using url_formatter instead? (it might be worth changing banners to match, or at least pulling that out into InstallableManager so all of installable code uses consistent stuff).",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a74acf_f92c0372",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Ditto the remark earlier about this comment not being accurate.",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 35
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9cd4c2_280f49e2",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T05:43:54Z",
+      "side": 1,
+      "message": "Changing this interface means you need to update add_to_homescreen_data_fetcher_unittest.cc as well.",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "46f2df50dd0a4fce2399fd72293c943e6b9ad5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
