@@ -140,6 +140,8 @@ class V8BrowsingDesktopExpecations(expectations.StoryExpectations):
   def SetExpectations(self):
     self.PermanentlyDisableBenchmark(
         [expectations.ALL_MOBILE], 'Desktop Benchmark')
+    self.PermanentlyDisableBenchmark(
+        [expectations.ALL_DESKTOP], 'Timing out crbug.com/756646')
     self.DisableStory('browse:news:hackernews',
                       [expectations.ALL_WIN, expectations.ALL_MAC],
                       'crbug.com/676336')
