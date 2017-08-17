@@ -16,6 +16,41 @@
       "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af25ebf1_f7e2132c",
+        "filename": "third_party/WebKit/Source/core/events/EventListenerMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-17T14:32:01Z",
+      "side": 1,
+      "message": "If it\u0027s unused, it makes sense to remove it.",
+      "parentUuid": "79f1acf5_1164a3eb",
+      "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380e9278_b3354d53",
+        "filename": "third_party/WebKit/Source/core/events/RegisteredEventListener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-17T14:32:01Z",
+      "side": 1,
+      "message": "Would you help me understand who traces into RegisteredEventListener?",
+      "revId": "3b8a0b3bb6f1ba5961c3f98efe0e3adbb6dacf89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
