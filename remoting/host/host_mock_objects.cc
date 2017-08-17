@@ -46,6 +46,11 @@ MockDesktopEnvironment::CreateMouseCursorMonitor() {
   return base::WrapUnique(CreateMouseCursorMonitorPtr());
 }
 
+std::unique_ptr<ProcessStatsAgent>
+MockDesktopEnvironment::StartProcessStatsAgent() {
+    return nullptr;
+}
+
 MockDesktopEnvironmentFactory::MockDesktopEnvironmentFactory() {}
 
 MockDesktopEnvironmentFactory::~MockDesktopEnvironmentFactory() {}
@@ -54,6 +59,11 @@ std::unique_ptr<DesktopEnvironment> MockDesktopEnvironmentFactory::Create(
     base::WeakPtr<ClientSessionControl> client_session_control,
     const DesktopEnvironmentOptions& options) {
   return base::WrapUnique(CreatePtr());
+}
+
+std::unique_ptr<ProcessStatsAgent>
+MockDesktopEnvironmentFactory::StartProcessStatsAgent() {
+    return nullptr;
 }
 
 MockInputInjector::MockInputInjector() {}

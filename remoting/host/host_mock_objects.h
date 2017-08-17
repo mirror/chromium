@@ -54,6 +54,9 @@ class MockDesktopEnvironment : public DesktopEnvironment {
   std::unique_ptr<webrtc::DesktopCapturer> CreateVideoCapturer() override;
   std::unique_ptr<webrtc::MouseCursorMonitor> CreateMouseCursorMonitor()
       override;
+
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
 };
 
 class MockClientSessionControl : public ClientSessionControl {
@@ -113,6 +116,9 @@ class MockDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
   std::unique_ptr<DesktopEnvironment> Create(
       base::WeakPtr<ClientSessionControl> client_session_control,
       const DesktopEnvironmentOptions& options) override;
+
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockDesktopEnvironmentFactory);

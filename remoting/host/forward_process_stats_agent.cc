@@ -22,4 +22,8 @@ void ForwardProcessStatsAgent::OnProcessStats(
   usage_ = usage;
 }
 
+void ForwardProcessStatsAgent::Clear() {
+  OnProcessStats(protocol::ProcessResourceUsage());
+}
+
 }  // namespace remoting

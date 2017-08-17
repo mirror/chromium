@@ -197,6 +197,8 @@ static_library("host") {
     "ipc_input_injector.h",
     "ipc_mouse_cursor_monitor.cc",
     "ipc_mouse_cursor_monitor.h",
+    "ipc_process_stats_agent.cc",
+    "ipc_process_stats_agent.h",
     "ipc_screen_controls.cc",
     "ipc_screen_controls.h",
     "ipc_video_frame_capturer.cc",
