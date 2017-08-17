@@ -86,14 +86,23 @@ enum HostCache::EraseReason : int {
 HostCache::Entry::Entry(int error,
                         const AddressList& addresses,
                         base::TimeDelta ttl)
-    : error_(error), addresses_(addresses), ttl_(ttl) {
+    : error_(error), addresses_(addresses), ttl_(ttl), refreshing_(false) {
+  DCHECK(ttl >= base::TimeDelta());
+}
+
+HostCache::Entry::Entry(int error,
+                        const AddressList& addresses,
+                        base::TimeDelta ttl,
+                        bool refreshing)
+    : error_(error), addresses_(addresses), ttl_(ttl), refreshing_(refreshing) {
   DCHECK(ttl >= base::TimeDelta());
 }
 
 HostCache::Entry::Entry(int error, const AddressList& addresses)
     : error_(error),
       addresses_(addresses),
-      ttl_(base::TimeDelta::FromSeconds(-1)) {}
+      ttl_(base::TimeDelta::FromSeconds(-1)),
+      refreshing_(false) {}
 
 HostCache::Entry::~Entry() {}
 
@@ -107,19 +116,32 @@ HostCache::Entry::Entry(const HostCache::Entry& entry,
       expires_(now + ttl),
       network_changes_(network_changes),
       total_hits_(0),
-      stale_hits_(0) {}
+      stale_hits_(0),
+      refreshing_(entry.refreshing()) {}
+
+HostCache::Entry::Entry(const HostCache::Entry& entry)
+    : error_(entry.error()),
+      addresses_(entry.addresses()),
+      ttl_(entry.ttl()),
+      expires_(entry.expires()),
+      network_changes_(entry.network_changes()),
+      total_hits_(0),
+      stale_hits_(0),
+      refreshing_(entry.refreshing()) {}
 
 HostCache::Entry::Entry(int error,
                         const AddressList& addresses,
                         base::TimeTicks expires,
-                        int network_changes)
+                        int network_changes,
+                        bool refreshing)
     : error_(error),
       addresses_(addresses),
       ttl_(base::TimeDelta::FromSeconds(-1)),
       expires_(expires),
       network_changes_(network_changes),
       total_hits_(0),
-      stale_hits_(0) {}
+      stale_hits_(0),
+      refreshing_(refreshing) {}
 
 bool HostCache::Entry::IsStale(base::TimeTicks now, int network_changes) const {
   EntryStaleness stale;
@@ -223,6 +245,10 @@ void HostCache::Set(const Key& key,
     result_changed =
         entry.error() == OK &&
         (it->second.error() != entry.error() || delta != DELTA_IDENTICAL);
+
+    // If nothing has changed, don't reduce the expiration
+    if (!result_changed && (ttl + now) < it->second.expires())
+      ttl = it->second.expires() - now;
     entries_.erase(it);
   } else {
     result_changed = true;
@@ -390,7 +416,7 @@ bool HostCache::RestoreFromListValue(const base::ListValue& old_cache) {
     auto found = entries_.find(key);
     if (found == entries_.end() && size() < max_entries_) {
       AddEntry(key, Entry(error, address_list, expiration_time,
-                          network_changes_ - 1));
+                          network_changes_ - 1, false));
     }
   }
   return true;
