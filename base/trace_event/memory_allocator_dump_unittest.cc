@@ -15,7 +15,11 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using testing::ElementsAre;
+using testing::Eq;
 
 namespace base {
 namespace trace_event {
@@ -56,8 +60,9 @@ std::unique_ptr<Value> CheckAttribute(const MemoryAllocatorDump* dump,
                                       const std::string& name,
                                       const char* expected_type,
                                       const char* expected_units) {
-  std::unique_ptr<Value> raw_attrs =
-      dump->attributes_for_testing()->ToBaseValue();
+  TracedValue attributes;
+  dump->dump_attributes_for_testing(&attributes);
+  std::unique_ptr<Value> raw_attrs = attributes.ToBaseValue();
   DictionaryValue* args = nullptr;
   DictionaryValue* arg = nullptr;
   std::string arg_value;
@@ -162,7 +167,10 @@ TEST(MemoryAllocatorDumpTest, DumpIntoProcessMemoryDump) {
       pmd.GetAllocatorDump("foobar_allocator/sub_heap/empty");
   ASSERT_NE(nullptr, empty_sub_heap);
   EXPECT_EQ("foobar_allocator/sub_heap/empty", empty_sub_heap->absolute_name());
-  auto raw_attrs = empty_sub_heap->attributes_for_testing()->ToBaseValue();
+
+  TracedValue attributes;
+  empty_sub_heap->dump_attributes_for_testing(&attributes);
+  auto raw_attrs = attributes.ToBaseValue();
   DictionaryValue* attrs = nullptr;
   ASSERT_TRUE(raw_attrs->GetAsDictionary(&attrs));
   ASSERT_FALSE(attrs->HasKey(MemoryAllocatorDump::kNameSize));
@@ -183,6 +191,24 @@ TEST(MemoryAllocatorDumpTest, GetSize) {
   EXPECT_EQ(1u, dump->GetSizeInternal());
 }
 
+TEST(MemoryAllocatorDumpTest, ReadValues) {
+  MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::DETAILED};
+  ProcessMemoryDump pmd(new HeapProfilerSerializationState, dump_args);
+  MemoryAllocatorDump* dump = pmd.CreateAllocatorDump("allocator_for_size");
+  dump->AddScalar("one", "byte", 1);
+  dump->AddScalarF("one", "ms", 1.0);
+  dump->AddString("one", "object", "one");
+
+  EXPECT_THAT(
+      dump->integers(),
+      ElementsAre(Eq(MemoryAllocatorDump::IntegerEntry{"one", "byte", 1})));
+  EXPECT_THAT(
+      dump->doubles(),
+      ElementsAre(Eq(MemoryAllocatorDump::DoubleEntry{"one", "ms", 1.0})));
+  EXPECT_THAT(dump->strings(), ElementsAre(Eq(MemoryAllocatorDump::StringEntry{
+                                   "one", "object", "one"})));
+}
+
 // DEATH tests are not supported in Android/iOS/Fuchsia.
 #if !defined(NDEBUG) && !defined(OS_ANDROID) && !defined(OS_IOS) && \
     !defined(OS_FUCHSIA)
@@ -196,6 +222,14 @@ TEST(MemoryAllocatorDumpTest, ForbidDuplicatesDeathTest) {
   ASSERT_DEATH(pmd.CreateAllocatorDump("bar_allocator/heap"), "");
   ASSERT_DEATH(pmd.CreateAllocatorDump(""), "");
 }
+
+TEST(MemoryAllocatorDumpTest, ForbidStringsInBackgroundModeDeathTest) {
+  MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::BACKGROUND};
+  ProcessMemoryDump pmd(new HeapProfilerSerializationState, dump_args);
+  MemoryAllocatorDump* dump = pmd.CreateAllocatorDump("malloc");
+  ASSERT_DEATH(dump->AddString("foo", "bar", "baz"), "");
+}
+
 #endif
 
 }  // namespace trace_event
