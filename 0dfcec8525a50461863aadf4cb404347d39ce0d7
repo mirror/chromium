@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72dbb709_1606941e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Optional nit: Prefer to reference already-closed commits by their commit position (or git hash) rather than their code review URL.\n\nMakes it easier to find the commit if you are just using Git locally.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "0dfcec8525a50461863aadf4cb404347d39ce0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

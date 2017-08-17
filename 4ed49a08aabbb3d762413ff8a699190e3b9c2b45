@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "da498750_b83a8dfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "You didn\u0027t attach a screenshot... it is very helpful to have it here; it just should be accessible to the public and not in a corp drive file.",
+      "parentUuid": "96a6213c_bddb175d",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 90
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07319444_8b4ddbd4",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 9
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "11e4d31a_66ac26c7",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Does this mean the button can still be displayed here on CrOS? (Or is hotwordInfo_.allowed always going to be false now?)\n\nI feel like it\u0027s safer to just remove this to ensure you will never see the hotword checkbox at the same time as the deprecation message. Especially if this CL is going to be merged and the future one is not.",
+      "parentUuid": "f47ff7bb_20b89a10",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75aeef2b_590e643d",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 9
@@ -211,6 +259,30 @@
       "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c5f996_5c566694",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "2099186f_15f46015",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 41
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "45449e39_f5f13cde",
+        "filename": "chrome/browser/search/hotword_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddfd780f_5f5c5fde",
+      "range": {
+        "startLine": 416,
+        "startChar": 37,
+        "endLine": 416,
+        "endChar": 70
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5fe05b0_626362a3",
         "filename": "chrome/browser/search/hotword_service_unittest.cc",
         "patchSetId": 9
@@ -308,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "6b54e5e4_51045345",
+        "filename": "chrome/browser/search/hotword_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3628586a_86231e2b",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 348,
+        "endChar": 25
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ed9e5c_6a6c13ae",
         "filename": "chrome/browser/search/hotword_service_unittest.cc",
         "patchSetId": 9
@@ -340,6 +460,24 @@
       "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcf3331_16d00f1e",
+        "filename": "chrome/browser/search/hotword_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77e15ad6_4b84cb5d",
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +525,30 @@
       "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692000de_7ddd488b",
+        "filename": "chrome/test/data/webui/settings/search_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-17T00:37:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50526528_1c084315",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 22
+      },
+      "revId": "4ed49a08aabbb3d762413ff8a699190e3b9c2b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
