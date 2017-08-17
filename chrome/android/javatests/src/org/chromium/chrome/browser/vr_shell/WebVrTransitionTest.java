@@ -118,7 +118,7 @@ public class WebVrTransitionTest {
     @CommandLineFlags.Add("enable-features=WebVrAutopresent")
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testTrustedIntentAllowsAutoPresent() throws InterruptedException {
-        VrIntentHandler.setInstanceForTesting(new MockVrIntentHandler(
+        VrIntentUtils.setHandlerInstanceForTesting(new MockVrIntentHandler(
                 true /* useMockImplementation */, true /* treatIntentsAsTrusted */));
         VrTransitionUtils.sendDaydreamAutopresentIntent(
                 mVrTestRule.getHtmlTestFile("test_webvr_autopresent"), mVrTestRule.getActivity());
