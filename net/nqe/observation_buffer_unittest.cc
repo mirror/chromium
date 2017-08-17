@@ -440,6 +440,154 @@ TEST(NetworkQualityObservationBufferTest, TestGetMedianRTTSince) {
   }
 }
 
+// Test that time filtering works and the remote hosts are split correctly.
+TEST(NetworkQualityObservationBufferTest,
+     RestGetPercentileForEachRemoteHostSinceTimeStamp) {
+  const uint64_t new_host = 0x101010UL;
+  const int32_t new_host_observation = 1000;
+  const size_t new_host_num_obs = 10;
+  const uint64_t old_host = 0x202020UL;
+  const int32_t old_host_observation = 2000;
+  const size_t old_host_num_obs = 20;
+  ObservationBuffer buffer(0.5, 1.0);
+  base::TimeTicks now = base::TimeTicks::Now();
+  for (unsigned int i = 0; i < old_host_num_obs; ++i) {
+    buffer.AddObservation(Observation(
+        old_host_observation, now - base::TimeDelta::FromSeconds(100),
+        INT32_MIN, NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, old_host));
+  }
+
+  for (unsigned int i = 0; i < new_host_num_obs; ++i) {
+    buffer.AddObservation(Observation(new_host_observation, now, INT32_MIN,
+                                      NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP,
+                                      new_host));
+  }
+
+  std::map<uint64_t, int32_t> host_keyed_percentiles;
+  std::map<uint64_t, size_t> host_keyed_counts;
+  buffer.GetPercentileForEachHostWithCounts(
+      now - base::TimeDelta::FromSeconds(50), 50,
+      std::vector<NetworkQualityObservationSource>(), base::nullopt,
+      &host_keyed_percentiles, &host_keyed_counts);
+  EXPECT_EQ(1u, host_keyed_percentiles.size());
+  EXPECT_EQ(1u, host_keyed_counts.size());
+  EXPECT_EQ(new_host_observation, host_keyed_percentiles[new_host]);
+  EXPECT_EQ(new_host_num_obs, host_keyed_counts[new_host]);
+
+  host_keyed_percentiles.clear();
+  host_keyed_counts.clear();
+
+  buffer.GetPercentileForEachHostWithCounts(
+      now - base::TimeDelta::FromSeconds(150), 50,
+      std::vector<NetworkQualityObservationSource>(), base::nullopt,
+      &host_keyed_percentiles, &host_keyed_counts);
+  EXPECT_EQ(2u, host_keyed_percentiles.size());
+  EXPECT_EQ(2u, host_keyed_counts.size());
+  EXPECT_EQ(new_host_observation, host_keyed_percentiles[new_host]);
+  EXPECT_EQ(new_host_num_obs, host_keyed_counts[new_host]);
+  EXPECT_EQ(old_host_observation, host_keyed_percentiles[old_host]);
+  EXPECT_EQ(old_host_num_obs, host_keyed_counts[old_host]);
+}
+
+// Test that the result is split correctly for multiple remote hosts and that
+// the count for each host correct.
+TEST(NetworkQualityObservationBufferTest,
+     RestGetPercentileForEachRemoteHostCounts) {
+  ObservationBuffer buffer(0.5, 1.0);
+  base::TimeTicks now = base::TimeTicks::Now();
+  const size_t num_remote_hosts = 5;
+
+  // Add |2*i| observations having value |4*i| for host |i|.
+  for (unsigned int i = 1; i <= num_remote_hosts; ++i) {
+    for (unsigned int j = 1; j <= 2 * i; ++j) {
+      buffer.AddObservation(Observation(4 * i, now, INT32_MIN,
+                                        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP,
+                                        static_cast<uint64_t>(i)));
+    }
+  }
+
+  std::map<uint64_t, int32_t> host_keyed_percentiles;
+  std::map<uint64_t, size_t> host_keyed_counts;
+  buffer.GetPercentileForEachHostWithCounts(
+      base::TimeTicks(), 50, std::vector<NetworkQualityObservationSource>(),
+      base::nullopt, &host_keyed_percentiles, &host_keyed_counts);
+  EXPECT_EQ(5u, host_keyed_percentiles.size());
+  EXPECT_EQ(5u, host_keyed_counts.size());
+
+  for (unsigned int i = 1; i <= num_remote_hosts; ++i) {
+    EXPECT_EQ(2u * i, host_keyed_counts[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<int32_t>(4 * i),
+              host_keyed_percentiles[static_cast<uint64_t>(i)]);
+  }
+}
+
+// Test that the percentiles are computed correctly for different remote hosts.
+TEST(NetworkQualityObservationBufferTest,
+     RestGetPercentileForEachRemoteHostComputation) {
+  ObservationBuffer buffer(0.5, 1.0);
+  base::TimeTicks now = base::TimeTicks::Now();
+  // For three different remote hosts, add observations such that the 50
+  // percentiles are different.
+  for (int i = 1; i <= 3; i++) {
+    // Add |20 * i + 1| observations for host |i|.
+    for (int j = 90 * i; j <= 110 * i; j++) {
+      buffer.AddObservation(Observation(j, now, INT32_MIN,
+                                        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP,
+                                        static_cast<uint64_t>(i)));
+    }
+  }
+  std::map<uint64_t, int32_t> host_keyed_percentiles;
+  std::map<uint64_t, size_t> host_keyed_counts;
+
+  // Test the computation of the median.
+  buffer.GetPercentileForEachHostWithCounts(
+      base::TimeTicks(), 50, std::vector<NetworkQualityObservationSource>(),
+      base::nullopt, &host_keyed_percentiles, &host_keyed_counts);
+
+  EXPECT_EQ(3u, host_keyed_percentiles.size());
+  EXPECT_EQ(3u, host_keyed_counts.size());
+
+  // The median must be equal to |100 * i| and the count must be equal to
+  // |20 * i + 1| for host |i|.
+  for (int i = 1; i <= 3; i++) {
+    EXPECT_EQ(100 * i, host_keyed_percentiles[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<size_t>(20 * i + 1),
+              host_keyed_counts[static_cast<uint64_t>(i)]);
+  }
+
+  // Test the computation of 0th percentile.
+  buffer.GetPercentileForEachHostWithCounts(
+      base::TimeTicks(), 0, std::vector<NetworkQualityObservationSource>(),
+      base::nullopt, &host_keyed_percentiles, &host_keyed_counts);
+
+  EXPECT_EQ(3u, host_keyed_percentiles.size());
+  EXPECT_EQ(3u, host_keyed_counts.size());
+
+  // The 0 percentile must be equal to |90 * i| and the count must be equal to
+  // |20 * i| for host |i|.
+  for (int i = 1; i <= 3; i++) {
+    EXPECT_EQ(90 * i, host_keyed_percentiles[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<size_t>(20 * i + 1),
+              host_keyed_counts[static_cast<uint64_t>(i)]);
+  }
+
+  // Test the computation of 100th percentile.
+  buffer.GetPercentileForEachHostWithCounts(
+      base::TimeTicks(), 100, std::vector<NetworkQualityObservationSource>(),
+      base::nullopt, &host_keyed_percentiles, &host_keyed_counts);
+
+  EXPECT_EQ(3u, host_keyed_percentiles.size());
+  EXPECT_EQ(3u, host_keyed_counts.size());
+
+  // The 0 percentile must be equal to |90 * i| and the count must be equal to
+  // |20 * i| for host |i|.
+  for (int i = 1; i <= 3; i++) {
+    EXPECT_EQ(110 * i, host_keyed_percentiles[static_cast<uint64_t>(i)]);
+    EXPECT_EQ(static_cast<size_t>(20 * i + 1),
+              host_keyed_counts[static_cast<uint64_t>(i)]);
+  }
+}
+
 }  // namespace
 
 }  // namespace internal
