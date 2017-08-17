@@ -4,9 +4,11 @@
 
 #include "core/paint/PaintInvalidationCapableScrollableArea.h"
 
+#include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
@@ -28,6 +30,8 @@ void PaintInvalidationCapableScrollableArea::WillRemoveScrollbar(
         .SlowSetPaintingLayerNeedsRepaintAndInvalidateDisplayItemClient(
             scrollbar, PaintInvalidationReason::kScrollControl);
   }
+
+  GetLayoutBox()->GetFrame()->GetEventHandler().OnRemoveScrollbar(&scrollbar);
 
   ScrollableArea::WillRemoveScrollbar(scrollbar, orientation);
 }

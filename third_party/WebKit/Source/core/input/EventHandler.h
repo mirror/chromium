@@ -271,6 +271,8 @@ class CORE_EXPORT EventHandler final
   // canceled.
   void ClearDragState();
 
+  void OnRemoveScrollbar(Scrollbar*);
+
  private:
   WebInputEventResult HandleMouseMoveOrLeaveEvent(
       const WebMouseEvent&,

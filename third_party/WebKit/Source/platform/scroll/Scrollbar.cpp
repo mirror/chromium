@@ -141,6 +141,7 @@ void Scrollbar::OffsetDidChange() {
 
 void Scrollbar::DisconnectFromScrollableArea() {
   scrollable_area_ = nullptr;
+  StopTimerIfNeeded();
 }
 
 void Scrollbar::SetProportion(int visible_size, int total_size) {
@@ -567,14 +568,10 @@ bool Scrollbar::IsWindowActive() const {
 IntPoint Scrollbar::ConvertFromRootFrame(
     const IntPoint& point_in_root_frame) const {
   DCHECK(scrollable_area_);
-  if (scrollable_area_) {
-    IntPoint parent_point =
-        scrollable_area_->ConvertFromRootFrame(point_in_root_frame);
-    return scrollable_area_->ConvertFromParentViewToScrollbar(*this,
-                                                              parent_point);
-  }
-
-  return point_in_root_frame;
+  IntPoint parent_point =
+      scrollable_area_->ConvertFromRootFrame(point_in_root_frame);
+  return scrollable_area_->ConvertFromParentViewToScrollbar(*this,
+                                                            parent_point);
 }
 
 IntPoint Scrollbar::ConvertFromRootFrameToParentView(
