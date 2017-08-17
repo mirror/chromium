@@ -209,6 +209,16 @@ DEFINE_TRACE(EventListenerMap) {
   visitor->Trace(entries_);
 }
 
+DEFINE_TRACE_WRAPPERS(EventListenerMap) {
+  // Trace wrappers in entries_.
+  for (unsigned entry_index = 0; entry_index < entries_.size(); ++entry_index) {
+    EventListenerVector& listeners = *entries_[entry_index].second;
+    for (unsigned index = 0; index < listeners.size(); ++index) {
+      visitor->TraceWrappers(listeners[index]);
+    }
+  }
+}
+
 EventListenerIterator::EventListenerIterator(EventTarget* target)
     : map_(nullptr), entry_index_(0), index_(0) {
   DCHECK(target);
