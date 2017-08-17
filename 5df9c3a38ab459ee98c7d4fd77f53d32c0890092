@@ -182,6 +182,47 @@
       "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab42c53b_130f9cc5",
+        "filename": "extensions/common/extension_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T21:32:54Z",
+      "side": 1,
+      "message": "\u003e I think MergeManifest will always be useful.  I think it\u0027d be undesirable to try and add specific methods and fields to ManifestData for *each* possible manifest feature; instead, I\u0027d rather only add the common ones, and let tests add other features as-needed using MergeManifest().  There\u0027s even an example of this in the unittests with externally_connectable.\n\u003e \n\u003e With that in mind, does it change your opinion?\n\nSure.",
+      "parentUuid": "283bbc0b_3cb6b715",
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f20e939_6e93a53a",
+        "filename": "extensions/common/extension_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-17T21:32:54Z",
+      "side": 1,
+      "message": "Also add a case to show MergeManifest can be used in conjunction SetManifest and how it overrides values from SetManifest?",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
