@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08a5beaf_c6fbfb36",
+        "filename": "ios/web/navigation/navigation_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3fa40ac_44ed0b97",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3e73185_0bcb3f68",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25689717_8b78342e",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T19:55:51Z",
+      "side": 1,
+      "message": "FinishGoToIndex() sounds a bit better because it indicates that nothing should come after it. Changed.",
+      "parentUuid": "a3e73185_0bcb3f68",
+      "range": {
+        "startLine": 190,
+        "startChar": 15,
+        "endLine": 190,
+        "endChar": 28
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1e39831_1204fb2c",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53d7805_47a7daed",
+      "range": {
+        "startLine": 163,
+        "startChar": 6,
+        "endLine": 163,
+        "endChar": 20
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9a0c31_86e7840a",
         "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d34abdb7_0a841116",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd9a0c31_86e7840a",
+      "range": {
+        "startLine": 2198,
+        "startChar": 30,
+        "endLine": 2198,
+        "endChar": 56
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31705033_56e2a1bf",
         "filename": "ios/web/web_state/ui/crw_web_controller.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b228824c_77c81107",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T19:55:51Z",
+      "side": 1,
+      "message": "I gave this some thought, but couldn\u0027t come up with anything interesting to test here that\u0027s not already covered by history_state_operations_inttest.mm. Given that this is really an implementation detail of navigation manager, I prefer leaning on the inttest and potentially WPT for more end-to-end coverage.",
+      "parentUuid": "31705033_56e2a1bf",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 31
+      },
+      "revId": "2038f256d446e342b52aca0642da94ef0f741b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
