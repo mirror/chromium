@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47b9973d_94696670",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-17T20:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5feaf024_1b642d1f",
+      "revId": "9d3c17a09014381f4366ebc7a551aea3668c5e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60c1140d_562e7b7e",
         "filename": "base/message_loop/message_loop_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T20:04:55Z",
       "side": 1,
       "message": "Why is this needed? Feels EnableHighResolutionTimer(false); should do this if it\u0027s a must do. The API says this should be called before something else not at the end of it all.",
+      "revId": "9d3c17a09014381f4366ebc7a551aea3668c5e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881f23c9_b103cdb6",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-17T20:43:03Z",
+      "side": 1,
+      "message": "Turns out this test is already broken today. Since tests aren\u0027t supposed to leave side effects, resetting the counter is a fix for now. Whether or not Time::*HighResolution* APIs should account for this is an interesting question.\n\nIt just so happens we get lucky due to sharding and ordering. HighResolutionTimer.GetUsage assumes it\u0027s the first one to use high resolution timers, which may not be true.\n\nRunning all high resolution tests will fail on trunk today:\n\n \u003eout\\Debug\\base_unittests.exe --gtest_filter\u003d*HighResolution*\n IMPORTANT DEBUGGING NOTE: batches of tests are run inside their\n own process. For debugging a test inside a debugger, use the\n --gtest_filter\u003d\u003cyour_test_name\u003e flag along with\n --single-process-tests.\n Using sharding settings from environment. This is shard 0/1\n Using 1 parallel jobs.\n Note: Google Test filter \u003d MessageLoopTest.HighResolutionTimer:HighResolutionTimer.GetUsage\n [\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 2 tests from 2 test cases.\n [----------] Global test environment set-up.\n [----------] 1 test from MessageLoopTest\n [ RUN      ] MessageLoopTest.HighResolutionTimer\n [       OK ] MessageLoopTest.HighResolutionTimer (107 ms)\n [----------] 1 test from MessageLoopTest (108 ms total)\n\n [----------] 1 test from HighResolutionTimer\n [ RUN      ] HighResolutionTimer.GetUsage\n ../../base/time/time_win_unittest.cc(304): error:       Expected: 0.0\n       Which is: 0\n To be equal to: Time::GetHighResolutionTimerUsage()\n       Which is: 6.7875e-06\n [  FAILED  ] HighResolutionTimer.GetUsage (65 ms)\n [----------] 1 test from HighResolutionTimer (66 ms total)\n\n [----------] Global test environment tear-down\n [\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 2 tests from 2 test cases ran. (182 ms total)\n [  PASSED  ] 1 test.\n [  FAILED  ] 1 test, listed below:\n [  FAILED  ] HighResolutionTimer.GetUsage",
+      "parentUuid": "60c1140d_562e7b7e",
       "revId": "9d3c17a09014381f4366ebc7a551aea3668c5e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
