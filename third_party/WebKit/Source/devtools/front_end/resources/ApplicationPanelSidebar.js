@@ -307,10 +307,13 @@ Resources.ApplicationPanelSidebar = class extends UI.VBox {
 
     var domStorageTreeElement = new Resources.DOMStorageTreeElement(this._panel, domStorage);
     this._domStorageTreeElements.set(domStorage, domStorageTreeElement);
-    if (domStorage.isLocalStorage)
+    if (domStorage.isLocalStorage) {
+      domStorageTreeElement.categoryKey = 'LocalStorage';
       this.localStorageListTreeElement.appendChild(domStorageTreeElement);
-    else
+    } else {
+      domStorageTreeElement.categoryKey = 'SessionStorage';
       this.sessionStorageListTreeElement.appendChild(domStorageTreeElement);
+    }
   }
 
   /**
@@ -621,6 +624,7 @@ Resources.StorageCategoryTreeElement = class extends Resources.BaseStorageTreeEl
     this._expandedSetting =
         Common.settings.createSetting('resources' + settingsKey + 'Expanded', settingsKey === 'Frames');
     this._categoryName = categoryName;
+    this._settingsKey = settingsKey;
   }
 
 
@@ -635,6 +639,10 @@ Resources.StorageCategoryTreeElement = class extends Resources.BaseStorageTreeEl
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._storagePanel.showCategoryView(this._categoryName);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action['ApplicationPanel' + this._settingsKey + 'Clicked']);
+
     return false;
   }
 
@@ -690,6 +698,10 @@ Resources.DatabaseTreeElement = class extends Resources.BaseStorageTreeElement {
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._sidebar._showDatabase(this._database);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelDatabasesClicked);
+
     return false;
   }
 
@@ -736,6 +748,10 @@ Resources.DatabaseTableTreeElement = class extends Resources.BaseStorageTreeElem
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._sidebar._showDatabase(this._database, this._tableName);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelDatabasesClicked);
+
     return false;
   }
 };
@@ -905,8 +921,11 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.ServiceWorkerCacheView(this._model, this._cache);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelCacheStorageClicked);
+
     return false;
   }
 
@@ -945,6 +964,10 @@ Resources.ServiceWorkersTreeElement = class extends Resources.BaseStorageTreeEle
     if (!this._view)
       this._view = new Resources.ServiceWorkersView();
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelServiceWorkersClicked);
+
     return false;
   }
 };
@@ -978,6 +1001,10 @@ Resources.AppManifestTreeElement = class extends Resources.BaseStorageTreeElemen
     if (!this._view)
       this._view = new Resources.AppManifestView();
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelManifestClicked);
+
     return false;
   }
 };
@@ -1011,6 +1038,10 @@ Resources.ClearStorageTreeElement = class extends Resources.BaseStorageTreeEleme
     if (!this._view)
       this._view = new Resources.ClearStorageView();
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelClearStorageClicked);
+
     return false;
   }
 };
@@ -1216,8 +1247,11 @@ Resources.IDBDatabaseTreeElement = class extends Resources.BaseStorageTreeElemen
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.IDBDatabaseView(this._model, this._database);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelIndexedDBClicked);
+
     return false;
   }
 
@@ -1334,8 +1368,11 @@ Resources.IDBObjectStoreTreeElement = class extends Resources.BaseStorageTreeEle
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.IDBDataView(this._model, this._databaseId, this._objectStore, null);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelIndexedDBClicked);
+
     return false;
   }
 
@@ -1412,8 +1449,11 @@ Resources.IDBIndexTreeElement = class extends Resources.BaseStorageTreeElement {
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.IDBDataView(this._model, this._databaseId, this._objectStore, this._index);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelIndexedDBClicked);
+
     return false;
   }
 
@@ -1436,6 +1476,7 @@ Resources.DOMStorageTreeElement = class extends Resources.BaseStorageTreeElement
     this._domStorage = domStorage;
     var icon = UI.Icon.create('mediumicon-table', 'resource-tree-item');
     this.setLeadingIcons([icon]);
+    this.categoryKey = '';
   }
 
   get itemURL() {
@@ -1450,6 +1491,10 @@ Resources.DOMStorageTreeElement = class extends Resources.BaseStorageTreeElement
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._storagePanel.showDOMStorage(this._domStorage);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action['ApplicationPanel' + this.categoryKey + 'Clicked']);
+
     return false;
   }
 
@@ -1511,6 +1556,10 @@ Resources.CookieTreeElement = class extends Resources.BaseStorageTreeElement {
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._storagePanel.showCookies(this._target, this._cookieDomain);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelCookiesClicked);
+
     return false;
   }
 };
@@ -1541,6 +1590,10 @@ Resources.ApplicationCacheManifestTreeElement = class extends Resources.BaseStor
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._storagePanel.showCategoryView(this._manifestURL);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelApplicationCacheClicked);
+
     return false;
   }
 };
@@ -1599,6 +1652,10 @@ Resources.ApplicationCacheFrameTreeElement = class extends Resources.BaseStorage
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._sidebar._showApplicationCache(this._frameId);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelApplicationCacheClicked);
+
     return false;
   }
 };
