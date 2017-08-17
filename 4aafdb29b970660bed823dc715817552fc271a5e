@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "614cf6be_5b1807f8",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2861,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T22:30:23Z",
+      "side": 1,
+      "message": "I think this might have been related to us trying to make sure fullscreen mode is exited when new popups are opened (to keep popups from obscuring fullscreen UI).\n\n+avi, who is moving this plumbing to be browser-based",
+      "revId": "4aafdb29b970660bed823dc715817552fc271a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108375a3_f4533ce6",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5519,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T22:30:23Z",
+      "side": 1,
+      "message": "Very similar lines to this appear in a lot of places. I wonder if we should still have a helper for this? In particular maybe it\u0027d be useful to just pass |info| and have the helper extract out the necessary fields (or maybe we can pass it to OpenURL itself...?)",
+      "revId": "4aafdb29b970660bed823dc715817552fc271a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
