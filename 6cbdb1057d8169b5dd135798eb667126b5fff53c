@@ -16,6 +16,24 @@
       "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa5fe75_fc4a79b4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-17T01:16:59Z",
+      "side": 1,
+      "message": "Audio and Video have different default preload types. We\u0027re looking at setting Video specifically to metadata, whereas Audio stays with auto.",
+      "parentUuid": "26ca0676_38481946",
+      "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
