@@ -7,6 +7,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "build/build_config.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
+#include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/command_buffer/common/command_buffer.h"
 #include "gpu/command_buffer/common/sync_token.h"
 #include "ppapi/c/pp_errors.h"
@@ -30,6 +31,18 @@ namespace {
 
 const int32_t kCommandBufferSize = 1024 * 1024;
 const int32_t kTransferBufferSize = 1024 * 1024;
+const int32_t kMinTransferBufferSize = 256 * 1024;
+const int32_t kMaxTransferBufferSize = 16 * 1024 * 1024;
+
+gpu::SharedMemoryLimits SharedMemoryLimitsForPpapi() {
+  gpu::SharedMemoryLimits limits;
+  limits.command_buffer_size = kCommandBufferSize;
+  limits.start_transfer_buffer_size = kTransferBufferSize;
+  limits.max_transfer_buffer_size = kMaxTransferBufferSize;
+  limits.min_transfer_buffer_size = kMinTransferBufferSize;
+
+  return limits;
+}
 
 #if !defined(OS_NACL)
 base::SharedMemoryHandle TransportSHMHandle(
@@ -68,8 +81,7 @@ bool Graphics3D::Init(gpu::gles2::GLES2Implementation* share_gles2,
       host_resource(), dispatcher, capabilities, shared_state,
       command_buffer_id));
 
-  return CreateGLES2Impl(kCommandBufferSize, kTransferBufferSize,
-                         share_gles2);
+  return CreateGLES2Impl(SharedMemoryLimitsForPpapi(), share_gles2);
 }
 
 PP_Bool Graphics3D::SetGetBuffer(int32_t /* transfer_buffer_id */) {
