@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b69dd1a_c09e347a",
+        "filename": "ui/gl/test/run_all_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "The BUILD.gn makes the target built using this file only depend on mojo/* and services/* if USE_OZONE is true. But when gn check parses this file on !ozone builds, it finds these includes that are not included in the DEPS and complains.",
+      "parentUuid": "a0451360_2bc0a7eb",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5392419_78c0decd",
         "filename": "ui/gl/test/run_all_unittests.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27092e6b_30ab779a",
+        "filename": "ui/gl/test/run_all_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "override implies virtual so compile fails if virtual is added.",
+      "parentUuid": "d5392419_78c0decd",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "68f28ec8_5b1b2570",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a36dbcb9_33b5ab79",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cee1c115_1f5ce66a",
         "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-17T01:32:34Z",
       "side": 1,
       "message": "How can we be sure that this won\u0027t be deleted before the callback gets called?",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73992ee3_4dffca58",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "I presume that you are referring to this here? this is the (single) ozone platform object and we have historically retained it until process end. Using a weakptr would be safer. Done.",
+      "parentUuid": "cee1c115_1f5ce66a",
       "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0b3d108b_27d517a4",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90fea9a0_5d7aa6fb",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "365bd263_e957cafe",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad5e230_b6f26d6f",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "365bd263_e957cafe",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "740ba2fe_69868eff",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3151f58b_1d7209b6",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23c42513_8809d5dd",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 8
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "4c2a23c5_6889b282",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c42513_8809d5dd",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a719b065_44bcf16e",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 8
@@ -152,6 +296,24 @@
       "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527fb345_12346a8b",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-17T21:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a719b065_44bcf16e",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
