@@ -1863,12 +1863,11 @@ int AXLayoutObject::IndexForVisiblePosition(
   if (index_position.IsNull())
     return 0;
 
-  Range* range = Range::Create(*GetDocument());
-  range->setStart(GetNode(), 0, IGNORE_EXCEPTION_FOR_TESTING);
-  range->setEnd(index_position, IGNORE_EXCEPTION_FOR_TESTING);
+  Position start_position = Position::FirstPositionInNode(*GetNode());
+  if (start_position > index_position)
+    return 0;
 
-  return TextIterator::RangeLength(range->StartPosition(),
-                                   range->EndPosition());
+  return TextIterator::RangeLength(start_position, index_position);
 }
 
 AXLayoutObject* AXLayoutObject::GetUnignoredObjectFromNode(Node& node) const {
