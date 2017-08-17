@@ -8,14 +8,18 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/stringprintf.h"
+#include "components/google/core/browser/google_util.h"
 #include "components/ntp_snippets/breaking_news/subscription_json_request.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/search_engines/search_engine_type.h"
+#include "components/search_engines/template_url_service.h"
 #include "components/signin/core/browser/access_token_fetcher.h"
 #include "components/signin/core/browser/signin_manager_base.h"
+#include "components/variations/service/variations_service.h"
 #include "net/base/url_util.h"
 
 namespace ntp_snippets {
@@ -26,6 +30,40 @@ namespace {
 
 const char kApiKeyParamName[] = "key";
 const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
+
+// Extract the country from the default search engine if it is Google.
+std::string GetCountryCodeFromSearchEngineIfGoogle(
+    const TemplateURLService* template_url_service) {
+  DCHECK(template_url_service);
+
+  const TemplateURL* default_provider =
+      template_url_service->GetDefaultSearchProvider();
+  // It's possible not to have a default provider e.g. if it is defined by
+  // policy.
+  if (default_provider && default_provider->GetEngineType(
+                              template_url_service->search_terms_data()) ==
+                              SearchEngineType::SEARCH_ENGINE_GOOGLE) {
+    GURL search_url = default_provider->GenerateSearchURL(
+        template_url_service->search_terms_data());
+    return google_util::GetGoogleCountryCode(search_url);
+  }
+
+  return std::string();
+}
+
+std::string GetCounryCode(variations::VariationsService* variations_service,
+                          const TemplateURLService* template_url_service) {
+  std::string country_code;
+  if (variations_service) {
+    country_code = variations_service->GetStoredPermanentCountry();
+  }
+
+  if (country_code.empty() && template_url_service) {
+    country_code = GetCountryCodeFromSearchEngineIfGoogle(template_url_service);
+  }
+
+  return country_code;
+}
 
 }  // namespace
 
@@ -60,19 +98,25 @@ class SubscriptionManagerImpl::SigninObserver
 SubscriptionManagerImpl::SubscriptionManagerImpl(
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
     PrefService* pref_service,
+    const TemplateURLService* template_url_service,
+    variations::VariationsService* variations_service,
     SigninManagerBase* signin_manager,
     OAuth2TokenService* access_token_service,
+    const std::string& locale,
     const std::string& api_key,
     const GURL& subscribe_url,
     const GURL& unsubscribe_url)
     : url_request_context_getter_(std::move(url_request_context_getter)),
       pref_service_(pref_service),
+      template_url_service_(template_url_service),
+      variations_service_(variations_service),
       signin_manager_(signin_manager),
       signin_observer_(base::MakeUnique<SigninObserver>(
           signin_manager,
           base::Bind(&SubscriptionManagerImpl::SigninStatusChanged,
                      base::Unretained(this)))),
       access_token_service_(access_token_service),
+      locale_(locale),
       api_key_(api_key),
       subscribe_url_(subscribe_url),
       unsubscribe_url_(unsubscribe_url) {}
@@ -107,6 +151,10 @@ void SubscriptionManagerImpl::SubscribeInternal(
     builder.SetUrl(
         net::AppendQueryParameter(subscribe_url_, kApiKeyParamName, api_key_));
   }
+
+  builder.SetLocale(locale_);
+  builder.SetCountryCode(
+      GetCounryCode(variations_service_, template_url_service_));
 
   request_ = builder.Build();
   request_->Start(base::BindOnce(&SubscriptionManagerImpl::DidSubscribe,
