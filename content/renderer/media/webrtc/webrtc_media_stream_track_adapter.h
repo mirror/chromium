@@ -51,9 +51,15 @@ class CONTENT_EXPORT WebRtcMediaStreamTrackAdapter
   // adapter.
   void Dispose();
 
-  // The adapter must be initialized in order to use |web_track| and
-  // |webrtc_track|.
   bool is_initialized() const;
+  // TODO(hbos): In order to make these methods accessible from any thread (and
+  // possibly make them const) the signaling of initialization must be
+  // redesigned in the event of remote tracks. Remote tracks are created on the
+  // signaling thread, initialization completes on the main thread. The main
+  // thread can call |EnsureTrackIsInitialized|, but the signaling thread would
+  // have to wait for a signal. Alternatively, enforce |is_initialized| and make
+  // |WebRtcMediaStreamTrackAdapterMap::GetRemoteTrackAdapter| wait for a signal
+  // as to always return initialized adapters.
   const blink::WebMediaStreamTrack& web_track();
   webrtc::MediaStreamTrackInterface* webrtc_track();
   bool IsEqual(const blink::WebMediaStreamTrack& web_track);
