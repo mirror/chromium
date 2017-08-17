@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea08aab7_de6476ed",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T22:11:53Z",
+      "side": 1,
+      "message": "Put pipes around |synced_printers_manager_|. Ditto on line 144.",
+      "revId": "3bdbc2b2eca97d856a5c901570f6a04393292f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9106dc_6177ec43",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T22:11:53Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "3bdbc2b2eca97d856a5c901570f6a04393292f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
