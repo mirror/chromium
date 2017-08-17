@@ -43,12 +43,16 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   void SetWaiting(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
   void SetActive(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
 
+  void SetRegistrationHandleReference(
+      std::unique_ptr<ServiceWorkerRegistrationHandleReference> handle_ref);
+
   void OnUpdateFound();
 
   // blink::WebServiceWorkerRegistration overrides.
   void SetProxy(blink::WebServiceWorkerRegistrationProxy* proxy) override;
   blink::WebServiceWorkerRegistrationProxy* Proxy() override;
   blink::WebURL Scope() const override;
+  blink::WebServiceWorkerUpdateViaCache UpdateViaCache() const override;
   void Update(
       blink::WebServiceWorkerProvider* provider,
       std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks) override;

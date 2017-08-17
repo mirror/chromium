@@ -263,12 +263,14 @@ static void FinishRegistrationOnIO(
 void ServiceWorkerContextWrapper::RegisterServiceWorker(
     const GURL& pattern,
     const GURL& script_url,
+    blink::WebServiceWorkerUpdateViaCache update_via_cache,
     const ResultCallback& continuation) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ServiceWorkerContextWrapper::RegisterServiceWorker,
-                       this, pattern, script_url, continuation));
+                       this, pattern, script_url, update_via_cache,
+                       continuation));
     return;
   }
   if (!context_core_) {
@@ -276,7 +278,8 @@ void ServiceWorkerContextWrapper::RegisterServiceWorker(
                             base::BindOnce(continuation, false));
     return;
   }
-  ServiceWorkerRegistrationOptions options(net::SimplifyUrlForRequest(pattern));
+  ServiceWorkerRegistrationOptions options(net::SimplifyUrlForRequest(pattern),
+                                           update_via_cache);
   context()->RegisterServiceWorker(
       net::SimplifyUrlForRequest(script_url), options,
       nullptr /* provider_host */,

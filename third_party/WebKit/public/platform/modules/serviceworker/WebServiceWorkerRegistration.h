@@ -5,10 +5,12 @@
 #ifndef WebServiceWorkerRegistration_h
 #define WebServiceWorkerRegistration_h
 
+#include <memory>
+
 #include "public/platform/WebCallbacks.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerError.h"
-#include <memory>
+#include "public/platform/modules/serviceworker/WebServiceWorkerUpdateViaCache.h"
 
 namespace blink {
 
@@ -51,6 +53,9 @@ class WebServiceWorkerRegistration {
   virtual void ProxyStopped() {}
 
   virtual WebURL Scope() const { return WebURL(); }
+  virtual WebServiceWorkerUpdateViaCache UpdateViaCache() const {
+    return WebServiceWorkerUpdateViaCache::kImports;
+  }
   virtual int64_t RegistrationId() const = 0;
   virtual void Update(WebServiceWorkerProvider*,
                       std::unique_ptr<WebServiceWorkerUpdateCallbacks>) {}

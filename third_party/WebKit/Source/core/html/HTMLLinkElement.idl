@@ -57,4 +57,5 @@ interface HTMLLinkElement : HTMLElement {
     // Service workers
     // https://w3c.github.io/ServiceWorker/#link-element-interface-extensions
     [Reflect, OriginTrialEnabled=LinkServiceWorker] attribute USVString scope;
+    [CEReactions, Reflect, ReflectOnly=("imports", "all", "none")] attribute DOMString updateViaCache;
 };

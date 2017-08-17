@@ -1950,6 +1950,7 @@ interface HTMLLinkElement : HTMLElement
     getter sizes
     getter target
     getter type
+    getter updateViaCache
     method constructor
     setter as
     setter charset
@@ -1965,6 +1966,7 @@ interface HTMLLinkElement : HTMLElement
     setter sizes
     setter target
     setter type
+    setter updateViaCache
 interface HTMLMapElement : HTMLElement
     getter areas
     getter name
@@ -4418,6 +4420,7 @@ interface ServiceWorkerRegistration : EventTarget
     getter onupdatefound
     getter scope
     getter sync
+    getter updateViaCache
     method constructor
     method unregister
     method update

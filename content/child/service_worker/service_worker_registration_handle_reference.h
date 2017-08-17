@@ -41,6 +41,9 @@ class CONTENT_EXPORT ServiceWorkerRegistrationHandleReference {
   const ServiceWorkerRegistrationObjectInfo& info() const { return info_; }
   int handle_id() const { return info_.handle_id; }
   GURL scope() const { return info_.options.scope; }
+  blink::WebServiceWorkerUpdateViaCache update_via_cache() const {
+    return info_.options.update_via_cache;
+  }
   int64_t registration_id() const { return info_.registration_id; }
 
  private:

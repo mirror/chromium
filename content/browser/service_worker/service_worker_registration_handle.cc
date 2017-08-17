@@ -49,6 +49,8 @@ ServiceWorkerRegistrationHandle::GetObjectInfo() {
   ServiceWorkerRegistrationObjectInfo info;
   info.handle_id = handle_id_;
   info.options.scope = registration_->pattern();
+  info.options.update_via_cache = registration_->update_via_cache();
+
   info.registration_id = registration_->id();
   return info;
 }

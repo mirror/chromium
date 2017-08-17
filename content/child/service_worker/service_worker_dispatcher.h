@@ -89,6 +89,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
       int provider_id,
       const GURL& pattern,
       const GURL& script_url,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks);
   // Corresponds to ServiceWorkerRegistration.update().
   void UpdateServiceWorker(

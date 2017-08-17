@@ -76,6 +76,7 @@ struct CONTENT_EXPORT ServiceWorkerRegistrationInfo {
                                 DeleteFlag delete_flag);
   ServiceWorkerRegistrationInfo(
       const GURL& pattern,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache,
       int64_t registration_id,
       DeleteFlag delete_flag,
       const ServiceWorkerVersionInfo& active_version,
@@ -86,6 +87,7 @@ struct CONTENT_EXPORT ServiceWorkerRegistrationInfo {
   ~ServiceWorkerRegistrationInfo();
 
   GURL pattern;
+  blink::WebServiceWorkerUpdateViaCache update_via_cache;
   int64_t registration_id;
   DeleteFlag delete_flag;
   ServiceWorkerVersionInfo active_version;
