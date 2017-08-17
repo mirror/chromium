@@ -318,8 +318,7 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
   // If the VRDisplay is already presenting, however, repeated calls are
   // allowed outside a user gesture so that the presented content may be
   // updated.
-  if (first_present && !UserGestureIndicator::ProcessingUserGesture() &&
-      !in_display_activate_) {
+  if (first_present && !UserGestureIndicator::ProcessingUserGesture()) {
     DOMException* exception = DOMException::Create(
         kInvalidStateError, "API can only be initiated by a user gesture.");
     resolver->Reject(exception);
@@ -329,8 +328,7 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
 
   // When we are requesting to start presentation with a user action or the
   // display has activated, record the user action.
-  if (first_present &&
-      (UserGestureIndicator::ProcessingUserGesture() || in_display_activate_)) {
+  if (first_present && UserGestureIndicator::ProcessingUserGesture()) {
     Platform::Current()->RecordAction(
         UserMetricsAction("VR.WebVR.requestPresent"));
   }
@@ -825,7 +823,7 @@ void VRDisplay::StopPresenting() {
 
 void VRDisplay::OnActivate(device::mojom::blink::VRDisplayEventReason reason,
                            OnActivateCallback on_handled) {
-  AutoReset<bool> activating(&in_display_activate_, true);
+  UserGestureIndicator gesture_indicator(UserGestureToken::kNewGesture);
   navigator_vr_->DispatchVREvent(VRDisplayEvent::Create(
       EventTypeNames::vrdisplayactivate, true, false, this, reason));
   std::move(on_handled).Run(!pending_present_request_ && !is_presenting_);
