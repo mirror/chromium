@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "191303f6_b3959eaa",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-17T22:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a8b0f4_d7e1473d",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1376973f_e669e4f7",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Nope - interesting though. I\u0027ll see what\u0027s up - and maybe file a bug.",
       "parentUuid": "1376973f_e669e4f7",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3999b040_632e918e",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-17T22:49:11Z",
+      "side": 1,
+      "message": "Under //src, there are lots of occurrences in non-test code of _for_testing_ members (not all bools), including in //src/media:\ngpu/android_video_decode_accelerator.h:  bool force_defer_surface_creation_for_testing_;\ngpu/avda_codec_allocator.h:  base::WaitableEvent* stop_event_for_testing_;\nrenderers/renderer_impl.h:  bool underflow_disabled_for_testing_;\nrenderers/renderer_impl.h:  bool clockless_video_playback_enabled_for_testing_;\nrenderers/skcanvas_video_renderer.h:  SkISize last_image_dimensions_for_testing_;\n\nUnderlying your question, is there a code smell here?\n\nNote that there *is* a presubmit check, for which I believe I\u0027ve made any production calling of l.594, above, fail in future by how I named that method.\nSee _CheckNoProductionCodeUsingTestOnlyFunctions in https://cs.chromium.org/chromium/src/PRESUBMIT.py?rcl\u003dc4d58bca11c73f010faf19ed32c7779dbd61db48\u0026l\u003d478",
+      "parentUuid": "c7967638_20ca5b3f",
       "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "e7b5814e_987d03c8",
+        "filename": "media/renderers/audio_renderer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-17T22:49:11Z",
+      "side": 1,
+      "message": "I switched to using play_delay in ::Render, and trampolining that value from audio thread (using BindToCurrentLoop in the fuzzer). In test, ::Render may call the cb multiple times now. And post-seek delays (especially in future MSE pipeline fuzzing) now shouldn\u0027t cause timeout from extreme silence padding by large play_delay.",
+      "parentUuid": "e1144abf_9c5f8d9d",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83ef7840_4e1a6800",
         "filename": "media/test/pipeline_integration_test_base.cc",
         "patchSetId": 1
@@ -139,6 +193,24 @@
       "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c133810a_d1d476c0",
+        "filename": "media/test/pipeline_integration_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-17T22:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ab0062_8bbc3679",
+      "revId": "72c57c8f11945119f6bedae9335fb283c2349e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
