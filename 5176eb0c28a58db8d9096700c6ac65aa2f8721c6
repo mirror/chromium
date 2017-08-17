@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "079c3120_2a176714",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:20:41Z",
+      "side": 1,
+      "message": "I\u0027d just drop it :)",
+      "parentUuid": "d94bee39_084e5bcb",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "914defd3_f502c957",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/get-response-body.js",
         "patchSetId": 1
