@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83449e02_00c2797b",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T11:49:51Z",
+      "side": 1,
+      "message": "I think you can use CRBProtocolObservers to implement the observers here.\n\n  @interface BrowserCoordinatorObservers : CRBProtocolObservers\u003cBrowserCoordinatorObserver\u003e\n  @end\n\n  @interface BrowserCoordinator\n\n  @property(nonatomic, strong) BrowserCoordinatorObservers* observers;\n\n  @end\n\nThen to notify the observers, you can just call the method you want on the \"observers\" object instead of passing a selector, like this:\n\n  [self.observers browserCoordinatorDidStop:self];\n  [self.observers browserCoordinatorConsumerDidStart:self];\n\nTo initialise the property, just use the +observersWithProtocol: method from BrowserCoordinatorObservers (inherited from CRBProtocolObservers):\n\n  self.observers \u003d [BrowserCoordinatorObservers\n      observersWithProtocol:@protocol(BrowserCoordinatorObserver)];\n\nThis works with @optional methods on the observers, so should work for you and remove most of the boilerplate code you\u0027re adding with this CL.",
+      "revId": "456dc61720e9cb01a1dd734a0067289d03051c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
