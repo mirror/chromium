@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53b43735_00d483d9",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T09:14:49Z",
+      "side": 1,
+      "message": "should this comment be rather placed at the struct definition above?\n\nnit: to -\u003e into ?",
+      "revId": "1636c14599a72a472df9798a4bffeee362767d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
