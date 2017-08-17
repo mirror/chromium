@@ -134,6 +134,11 @@ async function test()
     InspectorTest.dumpNavigatorViewInAllModes(sourcesNavigatorView);
 
     InspectorTest.addResult("\n\n================================================");
+    var rootURL4 = "http://rawgit.com/GoogleChrome/houdini-samples/master/paint-worklet/border-color/index.html";
+    await addUISourceCode(rootURL4, false);
+    InspectorTest.dumpNavigatorViewInAllModes(sourcesNavigatorView);
+
+    InspectorTest.addResult("\n\n================================================");
     InspectorTest.addResult("Revealing all resources:");
     for (var i = 0; i < uiSourceCodes.length; ++i)
         revealUISourceCode(uiSourceCodes[i]);
