@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "61ee5227_1968dd0f",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-17T20:06:02Z",
+      "side": 1,
+      "message": "nit: you can add DCHECK_CURRENTLY_ON(BrowserThread::IO); here too.",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f19d0674_f0513c4a",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.h",
         "patchSetId": 6
