@@ -88,12 +88,10 @@ void AppCacheSubresourceURLFactory::CreateLoaderAndStart(
   load_info->client = std::move(client);
   load_info->traffic_annotation = traffic_annotation;
 
-  handler->SetSubresourceRequestLoadInfo(std::move(load_info));
-
-  AppCacheJob* job = handler->MaybeLoadResource(nullptr);
-  if (job) {
-    // The handler is owned by the job.
-    job->AsURLLoaderJob()->set_request_handler(std::move(handler));
+  if (handler->MaybeCreateSubresourceLoader(std::move(load_info))) {
+    // The handler is owned by the job and will be destoryed when the job is
+    // destroyed.
+    handler.release();
   }
 }
 
