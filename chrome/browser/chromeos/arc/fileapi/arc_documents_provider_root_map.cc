@@ -45,9 +45,10 @@ ArcDocumentsProviderRootMap::GetForArcBrowserContext() {
   return GetForBrowserContext(ArcServiceManager::Get()->browser_context());
 }
 
-ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
+ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile)
+  : profile_(profile) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(IsArcAllowedForProfile(profile));  // Already checked in the factory.
+  DCHECK(IsArcAllowedForProfile(profile_));  // Already checked in the factory.
 
   ArcFileSystemOperationRunner* runner =
       ArcFileSystemOperationRunner::GetForBrowserContext(profile);
@@ -87,6 +88,25 @@ void ArcDocumentsProviderRootMap::Shutdown() {
   // ArcDocumentsProviderRoot has a reference to another KeyedService
   // (ArcFileSystemOperationRunner), so we need to destruct them on shutdown.
   map_.clear();
+}
+
+void ArcDocumentsProviderRootMap::Refresh(
+    const ArcDocumentsProviderRootMap::RefreshCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  ArcFileSystemOperationRunner* runner =
+      ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
+  runner->GetRoots(base::Bind(
+    &ArcDocumentsProviderRootMap::RefreshInternal_,
+    base::Unretained(this),
+    callback));
+}
+
+void ArcDocumentsProviderRootMap::RefreshInternal_(
+  const ArcDocumentsProviderRootMap::RefreshCallback& callback,
+  base::Optional<std::vector<mojom::RootPtr>> roots) {
+  //
+
+  callback.Run(roots);
 }
 
 }  // namespace arc
