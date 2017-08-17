@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57204b10_5afea14a",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T17:41:40Z",
+      "side": 0,
+      "message": "It\u0027d be nice to switch this one over as well in a followup. I.e. detect codec \u003d\u003d h264 \u0026\u0026 !platform support and do the same as you\u0027re doing for HLS.",
+      "revId": "047511efacd04f9849483a1b9060927e97d05b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
