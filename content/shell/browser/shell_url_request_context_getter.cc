@@ -39,6 +39,8 @@
 #include "net/url_request/url_request_context_builder.h"
 #include "url/url_constants.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace content {
 
 namespace {
@@ -76,6 +78,7 @@ ShellURLRequestContextGetter::ShellURLRequestContextGetter(
       request_interceptors_(std::move(request_interceptors)) {
   // Must first be created on the UI thread.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "Creating ShellURLRequestContextGetter from:" << base::debug::StackTrace().ToString();
 
   std::swap(protocol_handlers_, *protocol_handlers);
 
@@ -86,6 +89,11 @@ ShellURLRequestContextGetter::ShellURLRequestContextGetter(
 }
 
 ShellURLRequestContextGetter::~ShellURLRequestContextGetter() {
+  LOG(ERROR) << "Deleting ShellURLRequestContextGetter from:" << base::debug::StackTrace().ToString();
+}
+
+void ShellURLRequestContextGetter::Discard() {
+  url_request_context_ = nullptr;
 }
 
 std::unique_ptr<net::NetworkDelegate>
@@ -188,7 +196,7 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
     // Set up interceptors in the reverse order.
     builder.SetInterceptors(std::move(request_interceptors_));
 
-    url_request_context_ = builder.Build();
+    url_request_context_.reset(builder.Build().release());
   }
 
   return url_request_context_.get();

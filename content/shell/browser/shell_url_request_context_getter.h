@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/browser_thread.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory.h"
@@ -47,6 +48,8 @@ class ShellURLRequestContextGetter : public net::URLRequestContextGetter {
 
   net::HostResolver* host_resolver();
 
+  void Discard();
+
  protected:
   ~ShellURLRequestContextGetter() override;
 
@@ -71,7 +74,7 @@ class ShellURLRequestContextGetter : public net::URLRequestContextGetter {
   net::NetLog* net_log_;
 
   std::unique_ptr<net::ProxyConfigService> proxy_config_service_;
-  std::unique_ptr<net::URLRequestContext> url_request_context_;
+  std::unique_ptr<net::URLRequestContext, BrowserThread::DeleteOnIOThread> url_request_context_;
   ProtocolHandlerMap protocol_handlers_;
   URLRequestInterceptorScopedVector request_interceptors_;
 

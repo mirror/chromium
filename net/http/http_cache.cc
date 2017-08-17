@@ -47,6 +47,8 @@
 #include "net/log/net_log_with_source.h"
 #include "net/quic/chromium/quic_server_info.h"
 
+#include "base/debug/stack_trace.h"
+
 #if defined(OS_POSIX)
 #include <unistd.h>
 #endif
@@ -312,6 +314,7 @@ HttpCache::HttpCache(std::unique_ptr<HttpTransactionFactory> network_layer,
       network_layer_(std::move(network_layer)),
       clock_(new base::DefaultClock()),
       weak_factory_(this) {
+  LOG(ERROR) << "Creating HttpCache from:" << base::debug::StackTrace().ToString();
   HttpNetworkSession* session = network_layer_->GetSession();
   // Session may be NULL in unittests.
   // TODO(mmenke): Seems like tests could be changed to provide a session,
@@ -329,6 +332,7 @@ HttpCache::HttpCache(std::unique_ptr<HttpTransactionFactory> network_layer,
 
 HttpCache::~HttpCache() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  LOG(ERROR) << "Deleting HttpCache from:" << base::debug::StackTrace().ToString();
   // Transactions should see an invalid cache after this point; otherwise they
   // could see an inconsistent object (half destroyed).
   weak_factory_.InvalidateWeakPtrs();
