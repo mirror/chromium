@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c42faed_e1267254",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T13:40:11Z",
+      "side": 1,
+      "message": "Please add \"@Retention(RetentionPolicy.SOURCE)\" to this IntDef.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776a4f36_55c4b280",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T13:40:11Z",
+      "side": 1,
+      "message": "I would expect PROMO_NONE to be the first item here.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f359cad3_12007ded",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T13:40:11Z",
+      "side": 1,
+      "message": "s/ProfileDataCacheObserver/ProfileDataCache.Observer/",
+      "range": {
+        "startLine": 434,
+        "startChar": 7,
+        "endLine": 434,
+        "endChar": 31
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acc95f7_889005cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T13:40:11Z",
+      "side": 1,
+      "message": "Nit: I think that using these constants by qualified name would be more readable (RecentTabsManager.PROMO_NEW makes it obvious that this enum value is defined in different class).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 74
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d19870_8a4dbd78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T13:40:11Z",
+      "side": 1,
+      "message": "NewPromoGroup and OldPromoGroup share implementations for 5 methods out of 7. Can you please add a base abstract class that will implement these 5 methods?",
+      "range": {
+        "startLine": 358,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 39
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3d1c4b_734b5182",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-17T13:40:11Z",
+      "side": 1,
+      "message": "Nit: there\u0027s no need to have a local variable here, you can call getPromoType in switch statement.",
+      "range": {
+        "startLine": 808,
+        "startChar": 8,
+        "endLine": 808,
+        "endChar": 58
+      },
+      "revId": "a87ece28b2274f194e16e9e74211a03493bd8e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
