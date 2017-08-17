@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f79d043_72bd8e45",
+        "filename": "ui/gl/init/gl_factory.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-17T17:38:19Z",
+      "side": 1,
+      "message": "I\u0027ll do that and consider naming *ForTesting if a function is only used in tests in a follow up CL.",
+      "parentUuid": "e0f59910_8acd9f6b",
+      "revId": "8862b3eaaf8c7a7f380c4e7880e073dab9e32c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "613c83c7_e62c2d9f",
         "filename": "ui/gl/init/gl_factory.h",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T17:35:54Z",
       "side": 1,
       "message": "Per our offline discussion: could you add a comment indicating that this is the commonly used code path used during GPU process initialization?",
+      "revId": "8862b3eaaf8c7a7f380c4e7880e073dab9e32c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1852fd1f_3e9fe068",
+        "filename": "ui/gl/init/gl_factory.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-17T17:38:19Z",
+      "side": 1,
+      "message": "Same here. Don\u0027t want to trigger all bots and wait another day to land, so will address this in a followup CL.",
+      "parentUuid": "613c83c7_e62c2d9f",
       "revId": "8862b3eaaf8c7a7f380c4e7880e073dab9e32c10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
