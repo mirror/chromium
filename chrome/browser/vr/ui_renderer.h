@@ -54,8 +54,9 @@ class UiRenderer {
   void Draw(const RenderInfo& render_info,
             const ControllerInfo& controller_info,
             bool web_vr_mode);
-  void DrawHeadLocked(const RenderInfo& render_info,
-                      const ControllerInfo& controller_info);
+  void DrawViewportAware(const RenderInfo& render_info,
+                         const ControllerInfo& controller_info,
+                         bool web_vr_mode);
 
  private:
   void DrawWorldElements(const RenderInfo& render_info,
