@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "498481a7_b42298de",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-17T20:30:42Z",
+      "side": 1,
+      "message": "Static initializers are never OK.\n\nYou\u0027re probably thinking of some other use of the word \"static\" in C++.",
+      "parentUuid": "33e3f303_684006f8",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "4494449b9c3246f95bf6ce3dccc43f2978a6aa1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3204a0_988031ce",
         "filename": "ui/base/cocoa/nsview_additions.mm",
         "patchSetId": 2
