@@ -90,7 +90,8 @@ void MockEventPageRequestManager::RunOrDefer(
   RunOrDeferInternal(request, wake_reason);
 }
 
-MockMediaController::MockMediaController() : binding_(this) {}
+MockMediaController::MockMediaController()
+    : binding_(this), hangouts_binding_(this) {}
 
 MockMediaController::~MockMediaController() {}
 

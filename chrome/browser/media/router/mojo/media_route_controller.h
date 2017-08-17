@@ -37,8 +37,10 @@ class MediaRouter;
 // A MediaRouteController instance is destroyed when all its observers dispose
 // their references to it. When the associated route is destroyed, Invalidate()
 // is called to make the controller's observers dispose their refptrs.
-class MediaRouteController : public mojom::MediaStatusObserver,
-                             public base::RefCounted<MediaRouteController> {
+class MediaRouteController
+    : public mojom::MediaStatusObserver,
+      public base::RefCounted<MediaRouteController>,
+      public base::SupportsWeakPtr<MediaRouteController> {
  public:
   // Observes MediaRouteController for MediaStatus updates. The ownership of a
   // MediaRouteController is shared by its observers.
@@ -75,10 +77,16 @@ class MediaRouteController : public mojom::MediaStatusObserver,
   };
 
   // Constructs a MediaRouteController that forwards media commands to
-  // |mojo_media_controller|. |media_router| will be notified when the
+  // |mojo_media_controller_|. |media_router| will be notified when the
   // MediaRouteController is destroyed via DetachRouteController().
   MediaRouteController(const MediaRoute::Id& route_id,
                        content::BrowserContext* context);
+
+  // Overridable by subclasses to request interfaces for additional comamnds.
+  // Valid to call only once after |mojo_media_controller_| is bound.
+  virtual void InitAdditionalMojoConnnections();
+
+  virtual RouteControllerType GetType() const;
 
   // Media controller methods for forwarding commands to a
   // mojom::MediaControllerPtr held in |mojo_media_controller_|.
@@ -94,7 +102,7 @@ class MediaRouteController : public mojom::MediaStatusObserver,
 
   // Notifies |observers_| to dispose their references to the controller. The
   // controller gets destroyed when all the references are disposed.
-  void Invalidate();
+  virtual void Invalidate();
 
   // Returns an interface request tied to |mojo_media_controller_|, to be bound
   // to an implementation. |mojo_media_controller_| gets reset whenever this is
@@ -116,29 +124,31 @@ class MediaRouteController : public mojom::MediaStatusObserver,
  protected:
   ~MediaRouteController() override;
 
+  // Called when the connection between |this| and the MediaControllerPtr or
+  // the MediaStatusObserver binding is no longer valid. Notifies
+  // |media_router_| and |observers_| to dispose their references to |this|.
+  void OnMojoConnectionError();
+
  private:
   friend class base::RefCounted<MediaRouteController>;
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Called when the connection between |this| and the MediaControllerPtr or
-  // the MediaStatusObserver binding is no longer valid. Notifies
-  // |media_router_| and |observers_| to dispose their references to |this|.
-  void OnMojoConnectionError();
-
   // The ID of the Media Route that |this| controls.
   const MediaRoute::Id route_id_;
 
+ protected:
   // Handle to the mojom::MediaController that receives media commands.
   mojom::MediaControllerPtr mojo_media_controller_;
-
-  // |media_router_| will be notified when the controller is destroyed.
-  MediaRouter* const media_router_;
 
   // Request manager responsible for waking the component extension and calling
   // the requests to it.
   EventPageRequestManager* const request_manager_;
+
+ private:
+  // |media_router_| will be notified when the controller is destroyed.
+  MediaRouter* const media_router_;
 
   // The binding to observe the out-of-process provider of status updates.
   mojo::Binding<mojom::MediaStatusObserver> binding_;
@@ -153,9 +163,33 @@ class MediaRouteController : public mojom::MediaStatusObserver,
   // The latest media status that the controller has been notified with.
   base::Optional<MediaStatus> current_media_status_;
 
-  base::WeakPtrFactory<MediaRouteController> weak_factory_;
-
+ private:
   DISALLOW_COPY_AND_ASSIGN(MediaRouteController);
+};
+
+class HangoutsMediaRouteController : public MediaRouteController {
+ public:
+  // Casts |controller| to a HangoutsMediaRouteController if its
+  // |type_| is HANGOUT. Returns nullptr otherwise.
+  static HangoutsMediaRouteController* From(MediaRouteController* controller);
+
+  HangoutsMediaRouteController(const MediaRoute::Id& route_id,
+                               content::BrowserContext* context);
+
+  // MediaRouteController
+  void InitAdditionalMojoConnnections() override;
+  RouteControllerType GetType() const override;
+  void Invalidate() override;
+
+  void SetLocalPresent(bool local_present);
+
+ protected:
+  ~HangoutsMediaRouteController() override;
+
+ private:
+  mojom::HangoutsMediaRouteControllerPtr hangouts_controller_;
+
+  DISALLOW_COPY_AND_ASSIGN(HangoutsMediaRouteController);
 };
 
 }  // namespace media_router
