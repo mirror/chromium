@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93e09a28_0a3efbc8",
+        "filename": "sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-17T23:36:05Z",
+      "side": 1,
+      "message": "Can this be limited to an #if define for the sanitizer (I know there\u0027s ADDRESS_SANITIZER for example).\n\nI also think it would be good to pull this (and exit_group) out into a function, like this:\n\nbool IsSyscallForTestHarness(int sysno) {\n  if (nr \u003d\u003d __NR_exit_group) {\n    // exit_group is special and we really need it to work.\n    return true;\n  }\n#if defined(UBSAN_VPTR)\n  if (nr \u003d\u003d __NR_mmap || nr \u003d\u003d __NR_munmap || nr \u003d\u003d __NR_pipe || nr \u003d\u003d __NR_write) {\n    return true;\n  }\n#endif\n  return false;\n}",
+      "revId": "1b39727e5ad4378e2c98d058b74594665ff38299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
