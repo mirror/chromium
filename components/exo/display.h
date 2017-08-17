@@ -25,6 +25,7 @@ class Point;
 }
 
 namespace exo {
+class FileHelper;
 class NotificationSurface;
 class NotificationSurfaceManager;
 class SharedMemory;
@@ -42,7 +43,8 @@ class Buffer;
 class Display {
  public:
   Display();
-  explicit Display(NotificationSurfaceManager* notification_surface_manager);
+  explicit Display(NotificationSurfaceManager* notification_surface_manager,
+                   FileHelper* file_helper);
   ~Display();
 
   // Creates a new surface.
@@ -88,8 +90,11 @@ class Display {
       Surface* surface,
       const std::string& notification_key);
 
+  FileHelper* file_helper() const { return file_helper_; }
+
  private:
   NotificationSurfaceManager* const notification_surface_manager_;
+  FileHelper* const file_helper_;
 
 #if defined(USE_OZONE)
   std::vector<gfx::BufferFormat> overlay_formats_;

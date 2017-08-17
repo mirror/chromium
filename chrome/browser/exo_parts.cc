@@ -14,14 +14,20 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "chrome/browser/chromeos/file_manager/path_util.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/exo/display.h"
+#include "components/exo/file_helper.h"
 #include "components/exo/wayland/server.h"
 #include "components/exo/wm_helper_ash.h"
 #include "components/exo/wm_helper_mus.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/arc/notification/arc_notification_surface_manager_impl.h"
+
+namespace {
+constexpr char kMimeTypeArcUriList[] = "application/x-arc-uri-list";
+}  // namespace
 
 #if defined(USE_GLIB)
 namespace {
@@ -113,6 +119,21 @@ class ExoParts::WaylandWatcher : public base::MessagePumpLibevent::Watcher {
 };
 #endif
 
+class ExoParts::FileHelper : public exo::FileHelper {
+ public:
+  FileHelper() {}
+  ~FileHelper() override {}
+
+  std::string GetMimeTypeForUriList() const override {
+    return kMimeTypeArcUriList;
+  }
+
+  bool ConvertPathToUrl(const base::FilePath& path, GURL* out) override {
+    // Currently all containers are ARC.
+    return file_manager::util::ConvertPathToArcUrl(path, out);
+  }
+};
+
 // static
 std::unique_ptr<ExoParts> ExoParts::CreateIfNecessary() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -133,13 +154,14 @@ ExoParts::~ExoParts() {
 ExoParts::ExoParts() {
   arc_notification_surface_manager_ =
       base::MakeUnique<arc::ArcNotificationSurfaceManagerImpl>();
+  file_helper_ = base::MakeUnique<FileHelper>();
   if (ash_util::IsRunningInMash())
     wm_helper_ = base::MakeUnique<exo::WMHelperMus>();
   else
     wm_helper_ = base::MakeUnique<exo::WMHelperAsh>();
   exo::WMHelper::SetInstance(wm_helper_.get());
-  display_ =
-      base::MakeUnique<exo::Display>(arc_notification_surface_manager_.get());
+  display_ = base::MakeUnique<exo::Display>(
+      arc_notification_surface_manager_.get(), file_helper_.get());
   wayland_server_ = exo::wayland::Server::Create(display_.get());
   // Wayland server creation can fail if XDG_RUNTIME_DIR is not set correctly.
   if (wayland_server_)
