@@ -8,13 +8,17 @@
 
 #import "remoting/ios/client_keyboard.h"
 
-// TODO(nicholss): Look into inputAccessoryView to get the top bar for sending
-// special keys.
+#import "remoting/ios/app/advanced_keys_view.h"
+
+#include "remoting/client/input/keyboard_interpreter.h"
+#include "ui/events/keycodes/dom/dom_code.h"
+
 // TODO(nicholss): Look into inputView - The custom input view to display when
 // the receiver becomes the first responder
 
-@interface ClientKeyboard () {
+@interface ClientKeyboard ()<AdvancedKeysViewDelegate> {
   UIView* _inputView;
+  AdvancedKeysView* _advancedKeysView;
 }
 @end
 
@@ -49,10 +53,32 @@
 #pragma mark - UIKeyInput
 
 - (void)insertText:(NSString*)text {
-  [_delegate clientKeyboardShouldSend:text];
+  if (_advancedKeysView) {
+    std::vector<uint32_t> keys = _advancedKeysView.activeModifiers;
+    if (!keys.empty() && text.length == 1) {
+      unsigned char ch = [text characterAtIndex:0];
+      remoting::KeyboardInterpreter::AddKeysForCharacter(ch, &keys);
+      [_delegate clientKeyboardShouldSendKeyCombination:keys];
+      [_advancedKeysView releaseAllModifiers];
+      return;
+    }
+  }
+
+  // If text to be sent has multiple characters or modifiers are not pressed,
+  // just send it as normal text.
+  [_delegate clientKeyboardShouldSendText:text];
 }
 
 - (void)deleteBackward {
+  if (_advancedKeysView) {
+    std::vector<uint32_t> keys = _advancedKeysView.activeModifiers;
+    if (!keys.empty()) {
+      keys.push_back(static_cast<uint32_t>(ui::DomCode::BACKSPACE));
+      [_delegate clientKeyboardShouldSendKeyCombination:keys];
+      [_advancedKeysView releaseAllModifiers];
+      return;
+    }
+  }
   [_delegate clientKeyboardShouldDelete];
 }
 
@@ -82,7 +108,13 @@
 }
 
 - (UIView*)inputAccessoryView {
-  return nil;
+  if (!self.showsSoftKeyboard) {
+    _advancedKeysView = nil;
+    return _advancedKeysView;
+  }
+  _advancedKeysView = [[AdvancedKeysView alloc] initWithFrame:CGRectZero];
+  _advancedKeysView.delegate = self;
+  return _advancedKeysView;
 }
 
 - (UIView*)inputView {
@@ -90,6 +122,12 @@
 }
 
 #pragma mark - UITextInputTraits
+
+#pragma mark - AdvancedKeysViewDelegate
+
+- (void)onKeyCombination:(const std::vector<uint32_t>&)combination {
+  [_delegate clientKeyboardShouldSendKeyCombination:combination];
+}
 
 #pragma mark - Properties
 
