@@ -194,6 +194,11 @@ void MseTrackBuffer::SetHighestPresentationTimestampIfIncreased(
 void MseTrackBuffer::EnqueueProcessedFrame(
     const scoped_refptr<StreamParserBuffer>& frame) {
   if (frame->is_key_frame()) {
+    LOG(INFO) << "MDW - parsed "
+              << (frame->type() == DemuxerStream::VIDEO ? "VIDEO" : "non-video")
+              << " keyframe DTS "
+              << frame->GetDecodeTimestamp().InMilliseconds() << "ms, PTS "
+              << frame->timestamp().InMilliseconds() << "ms";
     last_keyframe_presentation_timestamp_ = frame->timestamp();
   } else {
     DCHECK(last_keyframe_presentation_timestamp_ != kNoTimestamp);
@@ -201,7 +206,21 @@ void MseTrackBuffer::EnqueueProcessedFrame(
     // others are more clearly disallowed in at least some of the MSE bytestream
     // specs, especially ISOBMFF. See https://crbug.com/739931 for more
     // information.
+    LOG(INFO) << "MDW - parsed "
+              << (frame->type() == DemuxerStream::VIDEO ? "VIDEO" : "non-video")
+              << " non-keyframe DTS "
+              << frame->GetDecodeTimestamp().InMilliseconds() << "ms, PTS "
+              << frame->timestamp().InMilliseconds() << "ms";
     if (frame->timestamp() < last_keyframe_presentation_timestamp_) {
+      LOG(INFO) << "MDW - Detected SAP Type 2 condition while parsing: "
+                << (frame->type() == DemuxerStream::VIDEO ? "VIDEO"
+                                                          : "non-video")
+                << " nonkeyframe PTS is " << frame->timestamp().InMilliseconds()
+                << "ms, DTS is " << frame->GetDecodeTimestamp().InMilliseconds()
+                << "ms; last processed keyframe (earlier in continuous DTS "
+                   "order with this new frame) PTS was "
+                << last_keyframe_presentation_timestamp_.InMilliseconds()
+                << "ms";
       if (!num_keyframe_time_greater_than_dependant_warnings_) {
         // At most once per each track (but potentially multiple times per
         // playback, if there are more than one tracks that exhibit this
