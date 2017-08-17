@@ -83,9 +83,11 @@ class CheckerImageTrackerTest : public testing::Test,
     LARGE_NON_CHECKERABLE
   };
 
-  void SetUpTracker(bool checker_images_enabled) {
+  void SetUpTracker(bool checker_images_enabled,
+                    bool only_checker_images_with_gpu_raster = false) {
     checker_image_tracker_ = base::MakeUnique<CheckerImageTracker>(
-        &image_controller_, this, checker_images_enabled);
+        &image_controller_, this, checker_images_enabled,
+        only_checker_images_with_gpu_raster);
     checker_image_tracker_->SetMaxDecodePriorityAllowed(
         CheckerImageTracker::DecodeType::kPreDecode);
   }
@@ -541,6 +543,27 @@ TEST_F(CheckerImageTrackerTest, RespectsDecodePriority) {
   EXPECT_EQ(image_controller_.decoded_images()[1], image2);
   EXPECT_EQ(image_controller_.decoded_images()[2], image3);
   EXPECT_EQ(image_controller_.decoded_images()[3], image4);
+}
+
+TEST_F(CheckerImageTrackerTest, DisableForSoftwareRaster) {
+  SetUpTracker(true, true);
+
+  // Should checker in GPU mode.
+  checker_image_tracker_->set_using_gpu_rasterization(true);
+  DrawImage image1 = CreateImage(ImageType::CHECKERABLE);
+  EXPECT_TRUE(checker_image_tracker_->ShouldCheckerImage(
+      image1, WhichTree::PENDING_TREE));
+
+  // Switch to software. If we were already checkering this image, we need to
+  // continue it.
+  checker_image_tracker_->set_using_gpu_rasterization(false);
+  EXPECT_TRUE(checker_image_tracker_->ShouldCheckerImage(
+      image1, WhichTree::PENDING_TREE));
+
+  // New image should not be checkered in software.
+  DrawImage image2 = CreateImage(ImageType::CHECKERABLE);
+  EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(
+      image2, WhichTree::PENDING_TREE));
 }
 
 }  // namespace

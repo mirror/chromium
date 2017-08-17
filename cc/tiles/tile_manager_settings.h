@@ -12,6 +12,7 @@ namespace cc {
 struct CC_EXPORT TileManagerSettings {
   bool use_partial_raster = false;
   bool enable_checker_imaging = false;
+  bool only_checker_images_with_gpu_raster = false;
 };
 
 }  // namespace cc

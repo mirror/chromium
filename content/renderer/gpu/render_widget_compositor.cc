@@ -364,6 +364,11 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.enable_checker_imaging =
       cmd.HasSwitch(cc::switches::kEnableCheckerImaging);
+#if defined(OS_ANDROID)
+  // Re-rasterization of checker-imaged content with software raster can be too
+  // costly on Android.
+  settings.only_checker_images_with_gpu_raster = true;
+#endif
 
   // TODO(danakj): This should not be a setting O_O; it should change when the
   // device scale factor on LayerTreeHost changes.

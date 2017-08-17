@@ -101,6 +101,9 @@ class CC_EXPORT LayerTreeSettings {
   // ready.
   bool enable_checker_imaging = false;
 
+  // Disables checkering of images when not using gpu rasterization.
+  bool only_checker_images_with_gpu_raster = false;
+
   LayerTreeDebugState initial_debug_state;
 
   // Indicates that the LayerTreeHost should defer commits unless it has a valid
