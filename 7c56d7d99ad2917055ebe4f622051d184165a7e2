@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb6ad58_95befe9d",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-08-17T11:20:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you also remove the observer when EasyUnlock is turned off (OnToggleEasyUnlockApiComplete)?",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "7c56d7d99ad2917055ebe4f622051d184165a7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
