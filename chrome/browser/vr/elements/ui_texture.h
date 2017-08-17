@@ -42,6 +42,10 @@ class UiTexture {
 
   void SetMode(ColorScheme::Mode mode);
 
+  static bool GetFontList(int size,
+                          base::string16 text,
+                          gfx::FontList* font_list);
+
  protected:
   enum TextAlignment {
     kTextAlignmentNone,
@@ -85,9 +89,6 @@ class UiTexture {
 
   static bool IsRTL();
   static gfx::FontList GetDefaultFontList(int size);
-  static bool GetFontList(int size,
-                          base::string16 text,
-                          gfx::FontList* font_list);
   static void SetForceFontFallbackFailureForTesting(bool force);
 
  private:

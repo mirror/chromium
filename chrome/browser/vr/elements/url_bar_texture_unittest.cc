@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/vr/elements/render_text_wrapper.h"
 #include "chrome/browser/vr/toolbar_state.h"
+#include "chrome/browser/vr/vr_url_util.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
 #include "components/url_formatter/url_formatter.h"
@@ -66,8 +67,8 @@ class TestUrlBarTexture : public UrlBarTexture {
                              security_state::SecurityLevel security_level,
                              vr::RenderTextWrapper* render_text,
                              const ColorScheme& color_scheme) {
-    ApplyUrlStyling(formatted_url, parsed, security_level, render_text,
-                    color_scheme);
+    vr::ApplyUrlStyling(formatted_url, parsed, security_level, render_text,
+                        color_scheme);
   }
 
   void SetForceFontFallbackFailure(bool force) {
@@ -108,8 +109,7 @@ class TestUrlBarTexture : public UrlBarTexture {
 };
 
 TestUrlBarTexture::TestUrlBarTexture()
-    : UrlBarTexture(false,
-                    base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
+    : UrlBarTexture(base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
                                base::Unretained(this))) {
   gfx::FontList::SetDefaultFontDescription("Arial, Times New Roman, 15px");
 }
