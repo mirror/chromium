@@ -22,6 +22,30 @@
       "revId": "5060b9c3837f75c9d0b2a9cea031d62e82436f23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479aa974_dab68c6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-17T01:13:39Z",
+      "side": 1,
+      "message": "Yes, the (i) button should only show up while the first item is visible in the recycler view (Basically hide it when header is no long visible).\n\nI guess the naming for this variable is not good, but I\u0027m not sure what name describes this situation well. I believe the position should be ready before onScrolled is called, and it will return the correct value. \n\nThe problem seems more related to the toolbar layout redraw. It works fine without this check on non-ChromeHome. But it becomes strange when a new history page is opened in Chrome Home. Even though I checked that both info and search button are both set visible eventually after a few updates, only the info button is drawn on screen but the search button is not. I can\u0027t find out what happened in the lower level, so I ended up avoid checking if the first item is visible when history page is first loaded so that the info button can be set visible earlier, which works:D",
+      "parentUuid": "183e2b70_b8cd47eb",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "5060b9c3837f75c9d0b2a9cea031d62e82436f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
