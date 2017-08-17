@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6947a503_62fb2f62",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-17T18:36:20Z",
+      "side": 1,
+      "message": "Will fix unittests if the approach is OK.\nAlso possible to remove EffectiveConnectionTypeThresholdForClientLoFi()",
+      "revId": "68a3b23aee26a3ed5259321c18dd3091ae1959a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
