@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
+#include "gpu/config/gpu_util.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 

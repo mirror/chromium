@@ -156,7 +156,7 @@ void UpdateStats(const gpu::GPUInfo& gpu_info,
                              max_entry_id + 1);
 
   if (blacklisted_features.size() != 0) {
-    std::vector<uint32_t> entry_indices = blacklist->GetActiveEntries();
+    const std::vector<uint32_t>& entry_indices = blacklist->GetActiveEntries();
     DCHECK_GT(entry_indices.size(), 0u);
     std::vector<uint32_t> entry_ids =
         blacklist->GetEntryIDsFromIndices(entry_indices);
@@ -553,7 +553,6 @@ void GpuDataManagerImplPrivate::SetGLStrings(const std::string& gl_vendor,
   gpu::CollectDriverInfoGL(&gpu_info);
 
   UpdateGpuInfo(gpu_info);
-  UpdateGpuSwitchingManager(gpu_info);
   UpdatePreliminaryBlacklistedFeatures();
 }
 
@@ -1191,7 +1190,6 @@ void GpuDataManagerImplPrivate::InitializeImpl(
 
   gpu_info_ = gpu_info;
   UpdateGpuInfo(gpu_info);
-  UpdateGpuSwitchingManager(gpu_info);
   UpdatePreliminaryBlacklistedFeatures();
 
   RunPostInitTasks();
@@ -1224,19 +1222,6 @@ void GpuDataManagerImplPrivate::UpdateBlacklistedFeatures(
 void GpuDataManagerImplPrivate::UpdatePreliminaryBlacklistedFeatures() {
   preliminary_blacklisted_features_ = blacklisted_features_;
   preliminary_blacklisted_features_initialized_ = true;
-}
-
-void GpuDataManagerImplPrivate::UpdateGpuSwitchingManager(
-    const gpu::GPUInfo& gpu_info) {
-  // The vendor IDs might be 0 on non-PCI devices (like Android), but
-  // the length of the vector is all we care about in most cases.
-  std::vector<uint32_t> vendor_ids;
-  vendor_ids.push_back(gpu_info.gpu.vendor_id);
-  for (const auto& device : gpu_info.secondary_gpus) {
-    vendor_ids.push_back(device.vendor_id);
-  }
-  ui::GpuSwitchingManager::GetInstance()->SetGpuVendorIds(vendor_ids);
-  gpu::InitializeDualGpusIfSupported(gpu_driver_bugs_);
 }
 
 void GpuDataManagerImplPrivate::NotifyGpuInfoUpdate() {
