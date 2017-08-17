@@ -94,10 +94,15 @@ std::string ReplaceTemplateExpressions(
     CHECK(!key.empty());
 
     TemplateReplacements::const_iterator value = replacements.find(key);
-    CHECK(value != replacements.end()) << "$i18n replacement key \"" << key
-                                       << "\" not found";
 
-    std::string replacement = value->second;
+    // Workaround only. Not intended to be committed to master branch.
+    // The master branch should keep the CHECK() that normally appears here.
+    std::string replacement;
+    if (value == replacements.end())
+      replacement = key;
+    else
+      replacement = value->second;
+
     if (context.empty()) {
       // Make the replacement HTML safe.
       replacement = net::EscapeForHTML(replacement);
