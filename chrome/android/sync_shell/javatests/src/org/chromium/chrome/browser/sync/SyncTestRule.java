@@ -6,6 +6,11 @@ package org.chromium.chrome.browser.sync;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+
+import org.junit.Assert;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -13,7 +18,7 @@ import org.chromium.chrome.browser.identity.UniqueIdentificationGenerator;
 import org.chromium.chrome.browser.identity.UniqueIdentificationGeneratorFactory;
 import org.chromium.chrome.browser.identity.UuidBasedUniqueIdentificationGenerator;
 import org.chromium.chrome.browser.signin.SigninManager;
-import org.chromium.chrome.test.ChromeActivityTestCaseBase;
+import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.util.ApplicationTestUtils;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
 import org.chromium.chrome.test.util.browser.sync.SyncTestUtil;
@@ -31,24 +36,20 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Base class for common functionality between sync tests.
+ * TestRule for common functionality between sync tests.
  */
-public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
+public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
     private static final String TAG = "SyncTestBase";
 
     private static final String CLIENT_ID = "Client_ID";
 
     private static final Set<Integer> USER_SELECTABLE_TYPES =
             new HashSet<Integer>(Arrays.asList(new Integer[] {
-                ModelType.AUTOFILL,
-                ModelType.BOOKMARKS,
-                ModelType.PASSWORDS,
-                ModelType.PREFERENCES,
-                ModelType.PROXY_TABS,
-                ModelType.TYPED_URLS,
+                    ModelType.AUTOFILL, ModelType.BOOKMARKS, ModelType.PASSWORDS,
+                    ModelType.PREFERENCES, ModelType.PROXY_TABS, ModelType.TYPED_URLS,
             }));
 
-    protected abstract class DataCriteria<T> extends Criteria {
+    public abstract static class DataCriteria<T> extends Criteria {
         public DataCriteria() {
             super("Sync data criteria not met.");
         }
@@ -67,36 +68,48 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         }
     }
 
-    protected Context mContext;
-    protected FakeServerHelper mFakeServerHelper;
-    protected ProfileSyncService mProfileSyncService;
-    protected MockSyncContentResolverDelegate mSyncContentResolver;
+    private Context mContext;
+    private FakeServerHelper mFakeServerHelper;
+    private ProfileSyncService mProfileSyncService;
+    private MockSyncContentResolverDelegate mSyncContentResolver;
 
-    public SyncTestBase() {
-      super(ChromeActivity.class);
+    public SyncTestRule() {
+        super(ChromeActivity.class);
+    }
+
+    /**Getters for Test variables */
+    public Context getTargetContext() {
+        return mContext;
+    }
+
+    public FakeServerHelper getFakeServerHelper() {
+        return mFakeServerHelper;
+    }
+
+    public ProfileSyncService getProfileSyncService() {
+        return mProfileSyncService;
+    }
+
+    public MockSyncContentResolverDelegate getSyncContentResolver() {
+        return mSyncContentResolver;
     }
 
     @Override
-    public void startMainActivity() throws InterruptedException {
-        // Start the activity by opening about:blank. This URL is ideal because it is not synced as
-        // a typed URL. If another URL is used, it could interfere with test data.
-        startMainActivityOnBlankPage();
-    }
-
-    @Override
-    protected void setUp() throws Exception {
+    public void ruleSetUp() throws Throwable {
         // This must be called before doing anything with the SharedPreferences because
         // super.setUp() normally wipes them clean between runs.  Setting a SharedPreference here
         // via the SigninTestUtil.setUpAuthForTest() call below causes Android to cache them before
         // the files get cleared, meaning that a data clear is useless and test runs influence each
         // other.
-        ApplicationTestUtils.clearAppData(getInstrumentation().getTargetContext());
+        ApplicationTestUtils.clearAppData(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
 
         // This must be called before super.setUp() in order for test authentication to work.
-        SigninTestUtil.setUpAuthForTest(getInstrumentation());
+        SigninTestUtil.setUpAuthForTest(InstrumentationRegistry.getInstrumentation());
 
-        super.setUp();
-        mContext = getInstrumentation().getTargetContext();
+        super.ruleSetUp();
+        startMainActivityForSyncTest();
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         setUpMockAndroidSyncSettings();
 
@@ -123,11 +136,11 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
                     public String getUniqueId(String salt) {
                         return CLIENT_ID;
                     }
-                }, true);
+                },
+                true);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    public void ruleTearDown() throws Exception {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -137,8 +150,12 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
         SigninTestUtil.resetSigninState();
         SigninTestUtil.tearDownAuthForTest();
+    }
 
-        super.tearDown();
+    public void startMainActivityForSyncTest() throws Exception {
+        // Start the activity by opening about:blank. This URL is ideal because it is not synced as
+        // a typed URL. If another URL is used, it could interfere with test data.
+        startMainActivityOnBlankPage();
     }
 
     private void setUpMockAndroidSyncSettings() {
@@ -147,19 +164,19 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         AndroidSyncSettings.overrideForTests(mContext, mSyncContentResolver);
     }
 
-    protected Account setUpTestAccount() {
+    public Account setUpTestAccount() {
         Account account = SigninTestUtil.addTestAccount();
-        assertFalse(SyncTestUtil.isSyncRequested());
+        Assert.assertFalse(SyncTestUtil.isSyncRequested());
         return account;
     }
 
-    protected Account setUpTestAccountAndSignIn() {
+    public Account setUpTestAccountAndSignIn() {
         Account account = setUpTestAccount();
         signIn(account);
         return account;
     }
 
-    protected void startSync() {
+    public void startSync() {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -168,22 +185,22 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
     }
 
-    protected void startSyncAndWait() {
+    public void startSyncAndWait() {
         startSync();
         SyncTestUtil.waitForSyncActive();
     }
 
-    protected void stopSync() {
+    public void stopSync() {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
                 mProfileSyncService.requestStop();
             }
         });
-        getInstrumentation().waitForIdleSync();
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
     }
 
-    protected void signIn(final Account account) {
+    public void signIn(final Account account) {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -192,10 +209,10 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
         SyncTestUtil.waitForSyncActive();
         SyncTestUtil.triggerSyncAndWaitForCompletion();
-        assertEquals(account, SigninTestUtil.getCurrentAccount());
+        Assert.assertEquals(account, SigninTestUtil.getCurrentAccount());
     }
 
-    protected void signOut() throws InterruptedException {
+    public void signOut() throws InterruptedException {
         final Semaphore s = new Semaphore(0);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
@@ -208,12 +225,12 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
                 });
             }
         });
-        assertTrue(s.tryAcquire(SyncTestUtil.TIMEOUT_MS, TimeUnit.MILLISECONDS));
-        assertNull(SigninTestUtil.getCurrentAccount());
-        assertFalse(SyncTestUtil.isSyncRequested());
+        Assert.assertTrue(s.tryAcquire(SyncTestUtil.TIMEOUT_MS, TimeUnit.MILLISECONDS));
+        Assert.assertNull(SigninTestUtil.getCurrentAccount());
+        Assert.assertFalse(SyncTestUtil.isSyncRequested());
     }
 
-    protected void clearServerData() {
+    public void clearServerData() {
         mFakeServerHelper.clearServerData();
         SyncTestUtil.triggerSync();
         CriteriaHelper.pollUiThread(new Criteria("Timed out waiting for sync to stop.") {
@@ -224,7 +241,7 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         }, SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
     }
 
-    protected void disableDataType(final int modelType) {
+    public void disableDataType(final int modelType) {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -236,8 +253,20 @@ public class SyncTestBase extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
     }
 
-    protected void pollInstrumentationThread(Criteria criteria) {
+    public void pollInstrumentationThread(Criteria criteria) {
         CriteriaHelper.pollInstrumentationThread(
                 criteria, SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
+    }
+
+    @Override
+    public Statement apply(Statement statement, Description desc) {
+        final Statement base = super.apply(statement, desc);
+        return new Statement() {
+            @Override
+            public void evaluate() throws Throwable {
+                base.evaluate();
+                ruleTearDown();
+            }
+        };
     }
 }
