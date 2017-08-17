@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39bb76b2_dd173f4f",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:27:33Z",
+      "side": 1,
+      "message": "Yes, I think reusing net error codes that currently have very specific meanings would make for more confusing errors.\n\nWe may want to consider a new error ERR_MOJO_PIPE_CLOSED (ERR_PIPE_CLOSED sounds too much like EPIPE).  This case seems pretty uncommon to me, except in cases of bugs in URLLoader implementations - the request would have to complete at almost the exact same time the network process crashes, before the body pipe has sent all its data.\n\nThe case where a new net error may be more useful is in OnConnectionError.",
+      "parentUuid": "290ce4df_a9271e99",
+      "range": {
+        "startLine": 321,
+        "startChar": 26,
+        "endLine": 321,
+        "endChar": 36
+      },
+      "revId": "ae55b08fc3fa7adf3116ee46b800333136b02477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "485b79e5_28838a36",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "ae55b08fc3fa7adf3116ee46b800333136b02477",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95c06e2_d7947648",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T00:27:33Z",
+      "side": 1,
+      "message": "Merged them.",
+      "parentUuid": "485b79e5_28838a36",
+      "range": {
+        "startLine": 182,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 24
+      },
+      "revId": "ae55b08fc3fa7adf3116ee46b800333136b02477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
