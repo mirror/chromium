@@ -708,6 +708,10 @@ group("gn_all") {
     ]
   }
 
+  if (is_fuchsia) {
+    deps += [ "//headless" ]
+  }
+
   if (enable_vr) {
     deps += [ "//chrome/browser/vr:vr_common_unittests" ]
 
