@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f7e62072_bd415f5f",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T18:26:24Z",
+      "side": 1,
+      "message": "Why don\u0027t you pass a parameter as I suggested?\nNV12 can have 1 or 2 native textures. The number of native textures is not the same as the number of planes.\nIt just happens to be the same in your case.",
+      "parentUuid": "e1ab63a6_f2a2e030",
+      "revId": "7b462197d465b61debce3768a5aa2f7732dc6479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d0cddde_4d53656a",
         "filename": "cc/resources/video_resource_updater_unittest.cc",
         "patchSetId": 2
