@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc2ee88_ba7f42ae",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T04:58:27Z",
+      "side": 1,
+      "message": "this change is so that the binding for importance is added before all other ones are removed, so that the connection doesn\u0027t momentarily drop to waived on webview",
+      "revId": "63e48c4ba4bc4dcc9fe09231f609b68c5dc9380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
