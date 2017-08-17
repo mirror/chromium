@@ -65,6 +65,8 @@ const char* const kKnownSettings[] = {
     kDeviceDisabledMessage,
     kDeviceLoginScreenAppInstallList,
     kDeviceOwner,
+    kDevicePrinterConfigurations,
+    kDevicePrintersPolicy,
     kDeviceQuirksDownloadEnabled,
     kDeviceWallpaperImage,
     kDisplayRotationDefault,

@@ -248,4 +248,10 @@ const char kDeviceLoginScreenInputMethods[] =
 // A boolean pref that matches enable-per-user-time-zone chrome://flags value.
 const char kPerUserTimezoneEnabled[] = "cros.flags.per_user_timezone_enabled";
 
+// An external data pref for the printer configurations download.
+const char kDevicePrinterConfigurations[] =
+    "cros.device.printer_configurations";
+// A dictionary pref for the printers whitelist and blacklist.
+const char kDevicePrintersPolicy[] = "cros.device.printers_policy";
+
 }  // namespace chromeos
