@@ -16,6 +16,24 @@
       "revId": "a20180c427e1b25fe219cc5107dafcff2ba45a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0edf95_e4dfa99b",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-17T21:53:58Z",
+      "side": 1,
+      "message": "Yeah, good point. Forgot about the other reasons as we currently don\u0027t use them ever :P\n\nWe definitely don\u0027t want a gesture on reason \u003d\u003d NAVIGATION, and probably not unmounted as that\u0027s probably an indication of no longer wanting to interact with the page.",
+      "parentUuid": "15ab019f_b6367e4a",
+      "revId": "a20180c427e1b25fe219cc5107dafcff2ba45a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
