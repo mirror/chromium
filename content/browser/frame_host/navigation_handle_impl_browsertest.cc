@@ -11,6 +11,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/url_constants.h"
@@ -1569,13 +1570,11 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
   }
 }
 
-// Check that iframes with embedded credentials are blocked.
-// Not working with PlzNavigate: See https://crbug.com/755892.
+// Check that iframe with embedded credentials are blocked.
+// See https://crbug.com/755892.
 IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
                        BlockCredentialedSubresources) {
-  // It doesn't work with PlzNavigate yet.
-  // See https://crbug.com/755892.
-  if (IsBrowserSideNavigationEnabled())
+  if (!base::FeatureList::IsEnabled(features::kBlockCredentialedSubresources))
     return;
 
   const struct {
@@ -1600,10 +1599,16 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
        GURL("http://a.com/title1.html"), false},
 
       // Same username in both frames
+      // For mkwst: I thought it should not be blocked. What do you think?
+      //            Isn't https://chromium-review.googlesource.com/c/530308
+      //            supposed to allow it?
       {GURL("http://user@a.com/frame_tree/page_with_one_frame.html"),
        GURL("http://user@a.com/title1.html"), true},
 
       // Same username and password in both frames.
+      // For mkwst: I thought it should not be blocked. What do you think?
+      //            Isn't https://chromium-review.googlesource.com/c/530308
+      //            supposed to allow it?
       {GURL("http://user:pass@a.com/frame_tree/page_with_one_frame.html"),
        GURL("http://user:pass@a.com/title1.html"), true},
 
@@ -1620,7 +1625,7 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
        GURL("http://wrong:pass@a.com/title1.html"), true},
   };
   for (const auto test_case : kTestCases) {
-    // Modify the URLs port to use the embedded test server's port.
+    // Modify the URLs port to use the one of the embedded test server.
     std::string port_str(std::to_string(embedded_test_server()->port()));
     GURL::Replacements set_port;
     set_port.SetPortStr(port_str);
