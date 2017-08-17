@@ -486,9 +486,11 @@ def PrintApkAnalysis(apk_filename, tool_prefix, chartjson=None):
 
   # Main metric that we want to monitor for jumps.
   normalized_apk_size = total_apk_size
-  # Always look at uncompressed .dex & .so.
-  normalized_apk_size -= java_code.ComputeZippedSize()
-  normalized_apk_size += java_code.ComputeUncompressedSize()
+  # Calculate odex overhead based on device being Android L+.
+  # Multiplier found using apk_operations.py disk-usage command.
+  # Once obfuscation is enabled, it will jump to 4.46.
+  normalized_apk_size += java_code.ComputeUncompressedSize() * 4.04
+  # Always look at uncompressed .so.
   normalized_apk_size -= native_code.ComputeZippedSize()
   normalized_apk_size += native_code.ComputeUncompressedSize()
   # Avoid noise caused when strings change and translations haven't yet been
