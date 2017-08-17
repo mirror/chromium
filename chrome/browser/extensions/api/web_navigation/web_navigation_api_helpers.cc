@@ -28,6 +28,7 @@
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_api_frame_id_map.h"
 #include "extensions/common/event_filtering_info.h"
+#include "extensions/common/permissions/permissions_data.h"
 #include "net/base/net_errors.h"
 #include "ui/base/page_transition_types.h"
 
@@ -45,6 +46,18 @@ double MilliSecondsFromTime(const base::Time& time) {
   return 1000 * time.ToDoubleT();
 }
 
+// Prevents policy protected events from being dispatched.
+bool WillDispatchWebNavigationEvent(
+    const GURL url,
+    content::BrowserContext* context,
+    const Extension* extension,
+    Event* event,
+    const base::DictionaryValue* listener_filter) {
+  if (extension && extension->permissions_data()->IsRuntimeBlockedHost(url))
+    return false;
+  return true;
+}
+
 // Dispatches events to the extension message service.
 void DispatchEvent(content::BrowserContext* browser_context,
                    std::unique_ptr<Event> event,
@@ -57,6 +70,8 @@ void DispatchEvent(content::BrowserContext* browser_context,
   if (profile && event_router) {
     DCHECK_EQ(profile, event->restrict_to_browser_context);
     event->filter_info = info;
+    event->will_dispatch_callback =
+        base::Bind(&WillDispatchWebNavigationEvent, url);
     event_router->BroadcastEvent(std::move(event));
   }
 }
@@ -87,6 +102,8 @@ std::unique_ptr<Event> CreateOnBeforeNavigateEvent(
   EventFilteringInfo info;
   info.url = navigation_handle->GetURL();
   event->filter_info = info;
+  event->will_dispatch_callback =
+      base::Bind(&WillDispatchWebNavigationEvent, url);
 
   return event;
 }

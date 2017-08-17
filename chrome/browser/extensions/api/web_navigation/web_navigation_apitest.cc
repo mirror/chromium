@@ -26,6 +26,7 @@
 #include "chrome/browser/extensions/api/web_navigation/web_navigation_api.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/extension_with_management_policy_apitest.h"
 #include "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/renderer_context_menu/render_view_context_menu_test_util.h"
@@ -485,6 +486,15 @@ IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, ReferenceFragment) {
 IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, SimpleLoad) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("webnavigation/simpleLoad")) << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy, PolicySimpleLoad) {
+  {
+    ExtensionManagementPolicyUpdater pref(&policy_provider_);
+    pref.AddRuntimeBlockedHost("*", "*://example.com");
+  }
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  ASSERT_TRUE(RunExtensionTest("webnavigation/policySimpleLoad")) << message_;
 }
 
 // Flaky on Windows and Mac. See http://crbug.com/477480 (Windows) and
