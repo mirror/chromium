@@ -11,14 +11,11 @@ import android.webkit.GeolocationPermissions;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.device.geolocation.LocationProviderFactory;
 import org.chromium.device.geolocation.MockLocationProvider;
-
-import java.util.concurrent.Callable;
 
 /**
  * Test suite for Geolocation in AwContents. Smoke tests for
@@ -79,12 +76,8 @@ public class GeolocationTest extends AwTestBase {
         mContentsClient = contentsClient;
         mAwContents = createAwTestContainerViewOnMainSync(mContentsClient).getAwContents();
         enableJavaScriptOnUiThread(mAwContents);
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.getSettings().setGeolocationEnabled(true);
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> mAwContents.getSettings().setGeolocationEnabled(true));
     }
 
     @Override
@@ -118,12 +111,7 @@ public class GeolocationTest extends AwTestBase {
     }
 
     private void ensureGeolocationRunning(final boolean running) throws Exception {
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mMockLocationProvider.isRunning() == running;
-            }
-        });
+        pollInstrumentationThread(() -> mMockLocationProvider.isRunning() == running);
     }
 
     private static class GeolocationOnInsecureOriginsTestDependencyFactory
@@ -154,20 +142,10 @@ public class GeolocationTest extends AwTestBase {
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() == 1;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() == 1);
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() == 2;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() == 2);
     }
 
     /**
@@ -184,12 +162,7 @@ public class GeolocationTest extends AwTestBase {
 
         mAwContents.evaluateJavaScriptForTests("initiate_watchPosition();", null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() > 1;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() > 1);
     }
 
     @MediumTest
@@ -203,21 +176,11 @@ public class GeolocationTest extends AwTestBase {
 
         mAwContents.evaluateJavaScriptForTests("initiate_watchPosition();", null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() > 1;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() > 1);
 
         ensureGeolocationRunning(true);
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.onPause();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mAwContents.onPause());
 
         ensureGeolocationRunning(false);
 
@@ -228,33 +191,18 @@ public class GeolocationTest extends AwTestBase {
         }
         assertEquals(0, getPositionCountFromJS());
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.onResume();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mAwContents.onResume());
 
         ensureGeolocationRunning(true);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() > 1;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() > 1);
     }
 
     @MediumTest
     @Feature({"AndroidWebView"})
     public void testPauseAwContentsBeforeNavigating() throws Throwable {
         initAwContents(new GrantPermisionAwContentClient());
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.onPause();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mAwContents.onPause());
 
         // Start a watch going.
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
@@ -267,44 +215,24 @@ public class GeolocationTest extends AwTestBase {
 
         ensureGeolocationRunning(false);
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.onResume();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mAwContents.onResume());
 
         ensureGeolocationRunning(true);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() > 1;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() > 1);
     }
 
     @MediumTest
     @Feature({"AndroidWebView"})
     public void testResumeWhenNotStarted() throws Throwable {
         initAwContents(new GrantPermisionAwContentClient());
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.onPause();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mAwContents.onPause());
 
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
                 "text/html", false, "https://google.com/",
                 ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.onResume();
-            }
-        });
+        getInstrumentation().runOnMainSync(() -> mAwContents.onResume());
 
         ensureGeolocationRunning(false);
     }
@@ -320,13 +248,9 @@ public class GeolocationTest extends AwTestBase {
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @SuppressFBWarnings("DM_GC")
-            @Override
-            public Boolean call() throws Exception {
-                Runtime.getRuntime().gc();
-                return "deny".equals(getTitleOnUiThread(mAwContents));
-            }
+        pollInstrumentationThread(() -> {
+            Runtime.getRuntime().gc();
+            return "deny".equals(getTitleOnUiThread(mAwContents));
         });
     }
 
@@ -342,13 +266,9 @@ public class GeolocationTest extends AwTestBase {
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @SuppressFBWarnings("DM_GC")
-            @Override
-            public Boolean call() throws Exception {
-                Runtime.getRuntime().gc();
-                return "deny".equals(getTitleOnUiThread(mAwContents));
-            }
+        pollInstrumentationThread(() -> {
+            Runtime.getRuntime().gc();
+            return "deny".equals(getTitleOnUiThread(mAwContents));
         });
     }
 
@@ -362,12 +282,7 @@ public class GeolocationTest extends AwTestBase {
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return getPositionCountFromJS() > 0;
-            }
-        });
+        pollInstrumentationThread(() -> getPositionCountFromJS() > 0);
     }
 
 }

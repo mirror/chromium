@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 /**
  * Tests for the CookieManager.
@@ -209,12 +208,7 @@ public class CookieManagerTest extends AwTestBase {
 
         mCookieManager.setCookie(url, cookie, null);
 
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mCookieManager.hasCookies();
-            }
-        });
+        pollInstrumentationThread(() -> mCookieManager.hasCookies());
     }
 
     @MediumTest
@@ -247,12 +241,7 @@ public class CookieManagerTest extends AwTestBase {
         mCookieManager.removeAllCookies(null);
 
         // Eventually the cookies are removed.
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return !mCookieManager.hasCookies();
-            }
-        });
+        pollInstrumentationThread(() -> !mCookieManager.hasCookies());
     }
 
     @MediumTest
@@ -300,12 +289,9 @@ public class CookieManagerTest extends AwTestBase {
         mCookieManager.removeSessionCookies(null);
 
         // Eventually the session cookie is removed.
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                String c = mCookieManager.getCookie(url);
-                return !c.contains(sessionCookie) && c.contains(normalCookie);
-            }
+        pollInstrumentationThread(() -> {
+            String c = mCookieManager.getCookie(url);
+            return !c.contains(sessionCookie) && c.contains(normalCookie);
         });
     }
 
@@ -331,12 +317,7 @@ public class CookieManagerTest extends AwTestBase {
         assertTrue(mCookieManager.hasCookies());
 
         // But eventually expires:
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return !mCookieManager.hasCookies();
-            }
-        });
+        pollInstrumentationThread(() -> !mCookieManager.hasCookies());
     }
 
     @MediumTest
@@ -716,32 +697,17 @@ public class CookieManagerTest extends AwTestBase {
 
     private void setCookieOnUiThread(final String url, final String cookie,
             final ValueCallback<Boolean> callback) throws Throwable {
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCookieManager.setCookie(url, cookie, callback);
-            }
-        });
+        runTestOnUiThread(() -> mCookieManager.setCookie(url, cookie, callback));
     }
 
     private void removeSessionCookiesOnUiThread(final ValueCallback<Boolean> callback)
             throws Throwable {
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCookieManager.removeSessionCookies(callback);
-            }
-        });
+        runTestOnUiThread(() -> mCookieManager.removeSessionCookies(callback));
     }
 
     private void removeAllCookiesOnUiThread(final ValueCallback<Boolean> callback)
             throws Throwable {
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCookieManager.removeAllCookies(callback);
-            }
-        });
+        runTestOnUiThread(() -> mCookieManager.removeAllCookies(callback));
     }
 
     /**
@@ -752,12 +718,7 @@ public class CookieManagerTest extends AwTestBase {
     }
 
     private void waitForCookie(final String url) throws Exception {
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mCookieManager.getCookie(url) != null;
-            }
-        });
+        pollInstrumentationThread(() -> mCookieManager.getCookie(url) != null);
     }
 
     private void validateCookies(String responseCookie, String... expectedCookieNames) {

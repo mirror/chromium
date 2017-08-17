@@ -38,12 +38,7 @@ public class AwJavaBridgeTest extends AwTestBase {
             @JavascriptInterface
             public void destroy() {
                 try {
-                    runTestOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                awContents.destroy();
-                            }
-                    });
+                    runTestOnUiThread(() -> awContents.destroy());
                     // Destroying one AwContents from within the JS callback should still
                     // leave others functioning. Note that we must do this asynchronously,
                     // as Blink thread is currently blocked waiting for this method to finish.
@@ -55,12 +50,7 @@ public class AwJavaBridgeTest extends AwTestBase {
         }
 
         enableJavaScriptOnUiThread(awContents);
-        runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    awContents.addJavascriptInterface(new Test(), "test");
-            }
-        });
+        runTestOnUiThread(() -> awContents.addJavascriptInterface(new Test(), "test"));
 
         loadDataSync(awContents, mContentsClient.getOnPageFinishedHelper(), html,
                 "text/html", false);
@@ -97,12 +87,9 @@ public class AwJavaBridgeTest extends AwTestBase {
             private int mValue;
         }
 
-        runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    awContents1.addJavascriptInterface(new Test(1), "test");
-                    awContents2.addJavascriptInterface(new Test(2), "test");
-                }
+        runTestOnUiThread(() -> {
+            awContents1.addJavascriptInterface(new Test(1), "test");
+            awContents2.addJavascriptInterface(new Test(2), "test");
         });
         final String html = "<html>Hello World</html>";
         loadDataSync(awContents1, mContentsClient.getOnPageFinishedHelper(), html,
@@ -134,12 +121,7 @@ public class AwJavaBridgeTest extends AwTestBase {
             private int mValue;
         }
 
-        runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    awContents1.addJavascriptInterface(new Test(1), "test");
-                }
-        });
+        runTestOnUiThread(() -> awContents1.addJavascriptInterface(new Test(1), "test"));
         final String html = "<html>Hello World</html>";
         loadDataSync(awContents1, mContentsClient.getOnPageFinishedHelper(), html,
                 "text/html", false);
@@ -151,12 +133,7 @@ public class AwJavaBridgeTest extends AwTestBase {
         final AwContents awContents2 = view2.getAwContents();
         enableJavaScriptOnUiThread(awContents2);
 
-        runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    awContents2.addJavascriptInterface(new Test(2), "test");
-                }
-        });
+        runTestOnUiThread(() -> awContents2.addJavascriptInterface(new Test(2), "test"));
         loadDataSync(awContents2, client2.getOnPageFinishedHelper(), html,
                 "text/html", false);
 

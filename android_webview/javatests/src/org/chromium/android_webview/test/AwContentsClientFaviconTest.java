@@ -4,11 +4,11 @@
 
 package org.chromium.android_webview.test;
 
+import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.test.filters.SmallTest;
-
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.test.util.CommonResources;
@@ -16,7 +16,6 @@ import org.chromium.net.test.util.TestWebServer;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.concurrent.Callable;
 
 /**
  * Tests for the Favicon and TouchIcon related APIs.
@@ -98,12 +97,7 @@ public class AwContentsClientFaviconTest extends AwTestBase {
                 CommonResources.getTextHtmlHeaders(true));
 
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), pageUrl);
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mWebServer.getRequestCount(FAVICON1_URL) == 1;
-            }
-        });
+        pollInstrumentationThread(() -> mWebServer.getRequestCount(FAVICON1_URL) == 1);
 
         // Make sure the request counter for favicon is not incremented, since we already got 404.
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), pageUrl);

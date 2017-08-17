@@ -11,7 +11,6 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -39,19 +38,16 @@ public class WebViewWebVrTest extends AwTestBase {
         loadUrlSync(mTestContainerView.getAwContents(), mContentsClient.getOnPageFinishedHelper(),
                 "file:///android_asset/webvr_not_functional_test.html");
         // Poll the boolean to know when the promise resolves
-        pollInstrumentationThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                String result = "false";
-                try {
-                    result = JavaScriptUtils.executeJavaScriptAndWaitForResult(
-                            mContentViewCore.getWebContents(), "promiseResolved", 100,
-                            TimeUnit.MILLISECONDS);
-                } catch (InterruptedException | TimeoutException e) {
-                    // Expected to happen regularly, do nothing
-                }
-                return Boolean.parseBoolean(result);
+        pollInstrumentationThread(() -> {
+            String result = "false";
+            try {
+                result = JavaScriptUtils.executeJavaScriptAndWaitForResult(
+                        mContentViewCore.getWebContents(), "promiseResolved", 100,
+                        TimeUnit.MILLISECONDS);
+            } catch (InterruptedException | TimeoutException e) {
+                // Expected to happen regularly, do nothing
             }
+            return Boolean.parseBoolean(result);
         });
 
         // Assert that the promise resolved instead of rejecting, but returned

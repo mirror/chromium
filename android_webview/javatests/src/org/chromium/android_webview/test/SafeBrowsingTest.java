@@ -21,7 +21,6 @@ import org.chromium.android_webview.AwContents.DependencyFactory;
 import org.chromium.android_webview.AwContents.InternalAccessDelegate;
 import org.chromium.android_webview.AwContents.NativeDrawGLFunctorFactory;
 import org.chromium.android_webview.AwContentsClient;
-import org.chromium.android_webview.AwContentsClient.AwWebResourceRequest;
 import org.chromium.android_webview.AwContentsStatics;
 import org.chromium.android_webview.AwSafeBrowsingConfigHelper;
 import org.chromium.android_webview.AwSafeBrowsingConversionHelper;
@@ -50,7 +49,6 @@ import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.Callable;
 
 /**
  * Test suite for SafeBrowsing.
@@ -142,12 +140,8 @@ public class SafeBrowsingTest extends AwTestBase {
                 metadata = SAFE_METADATA;
             }
 
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mObserver.onUrlCheckDone(callbackId, STATUS_SUCCESS, metadata);
-                }
-            });
+            ThreadUtils.runOnUiThread(
+                    () -> mObserver.onUrlCheckDone(callbackId, STATUS_SUCCESS, metadata));
         }
     }
 
@@ -291,14 +285,11 @@ public class SafeBrowsingTest extends AwTestBase {
         mAwContents = (MockAwContents) mContainerView.getAwContents();
 
         mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mWebContentsObserver = new TestAwWebContentsObserver(
+        getInstrumentation().runOnMainSync(
+                () -> mWebContentsObserver = new TestAwWebContentsObserver(
                         mContainerView.getContentViewCore().getWebContents(), mAwContents,
-                        mContentsClient) {};
-            }
-        });
+                        mContentsClient) {
+                });
     }
 
     @Override
@@ -333,24 +324,17 @@ public class SafeBrowsingTest extends AwTestBase {
 
     private void evaluateJavaScriptOnInterstitialOnUiThread(
             final String script, final ValueCallback<String> callback) {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAwContents.evaluateJavaScriptOnInterstitialForTesting(script, callback);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> mAwContents.evaluateJavaScriptOnInterstitialForTesting(script, callback));
     }
 
     private void waitForInterstitialToLoad() throws Exception {
         final String script = "document.readyState;";
         final JavaScriptHelper helper = new JavaScriptHelper();
 
-        final ValueCallback<String> callback = new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String value) {
-                helper.setValue(value);
-                helper.notifyCalled();
-            }
+        final ValueCallback<String> callback = value -> {
+            helper.setValue(value);
+            helper.notifyCalled();
         };
 
         final String expected = "\"complete\"";
@@ -461,14 +445,11 @@ public class SafeBrowsingTest extends AwTestBase {
     public void testSafeBrowsingWhitelistedUnsafePagesDontShowInterstitial() throws Throwable {
         loadGreenPage();
         final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                String host = Uri.parse(responseUrl).getHost();
-                ArrayList<String> s = new ArrayList<String>();
-                s.add(host);
-                AwContentsStatics.setSafeBrowsingWhitelist(s, null);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            String host = Uri.parse(responseUrl).getHost();
+            ArrayList<String> s = new ArrayList<String>();
+            s.add(host);
+            AwContentsStatics.setSafeBrowsingWhitelist(s, null);
         });
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
         assertTargetPageHasLoaded(MALWARE_PAGE_BACKGROUND_COLOR);
@@ -491,13 +472,10 @@ public class SafeBrowsingTest extends AwTestBase {
     private void verifyWhiteListRule(final String rule, boolean expected) throws Throwable {
         final WhitelistHelper helper = new WhitelistHelper();
         final int count = helper.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<String> s = new ArrayList<String>();
-                s.add(rule);
-                AwContentsStatics.setSafeBrowsingWhitelist(s, helper);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ArrayList<String> s = new ArrayList<String>();
+            s.add(rule);
+            AwContentsStatics.setSafeBrowsingWhitelist(s, helper);
         });
         helper.waitForCallback(count);
         assertEquals(expected, helper.success);
@@ -784,12 +762,8 @@ public class SafeBrowsingTest extends AwTestBase {
         mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
 
         // Wait for the onSafeBrowsingHit to call BACK_TO_SAFETY and navigate back
-        pollUiThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL.equals(mAwContents.getUrl());
-            }
-        });
+        pollUiThread(
+                () -> ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL.equals(mAwContents.getUrl()));
 
         // Check onSafeBrowsingHit arguments
         assertFalse(mContentsClient.getLastRequest().isMainFrame);
@@ -813,14 +787,9 @@ public class SafeBrowsingTest extends AwTestBase {
         mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
 
         // Wait for the onSafeBrowsingHit to call BACK_TO_SAFETY and navigate back
-        pollUiThread(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return GREEN_PAGE_BACKGROUND_COLOR
-                        == GraphicsTestUtils.getPixelColorAtCenterOfView(
-                                   mAwContents, mContainerView);
-            }
-        });
+        pollUiThread(() -> GREEN_PAGE_BACKGROUND_COLOR
+                == GraphicsTestUtils.getPixelColorAtCenterOfView(
+                mAwContents, mContainerView));
 
         // Check onSafeBrowsingHit arguments
         assertFalse(mContentsClient.getLastRequest().isMainFrame);
@@ -970,12 +939,9 @@ public class SafeBrowsingTest extends AwTestBase {
         CallbackHelper helper = new CallbackHelper();
         int count = helper.getCallCount();
         mOnUiThread = false;
-        AwContentsStatics.initSafeBrowsing(ctx, new ValueCallback<Boolean>() {
-            @Override
-            public void onReceiveValue(Boolean b) {
-                mOnUiThread = ThreadUtils.runningOnUiThread();
-                helper.notifyCalled();
-            }
+        AwContentsStatics.initSafeBrowsing(ctx, b -> {
+            mOnUiThread = ThreadUtils.runningOnUiThread();
+            helper.notifyCalled();
         });
         helper.waitForCallback(count);
         // Don't run the assert on the callback's thread, since the test runner loses the stack

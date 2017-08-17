@@ -28,14 +28,11 @@ public class AwContentsStaticsTest extends AwTestBase {
     public void testClearClientCertPreferences() throws Throwable {
         final ClearClientCertCallbackHelper callbackHelper = new ClearClientCertCallbackHelper();
         int currentCallCount = callbackHelper.getCallCount();
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // Make sure calling clearClientCertPreferences with null callback does not
-                // cause a crash.
-                AwContentsStatics.clearClientCertPreferences(null);
-                AwContentsStatics.clearClientCertPreferences(callbackHelper);
-            }
+        runTestOnUiThread(() -> {
+            // Make sure calling clearClientCertPreferences with null callback does not
+            // cause a crash.
+            AwContentsStatics.clearClientCertPreferences(null);
+            AwContentsStatics.clearClientCertPreferences(callbackHelper);
         });
         callbackHelper.waitForCallback(currentCallCount);
     }
