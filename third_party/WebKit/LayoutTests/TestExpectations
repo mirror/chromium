@@ -1749,6 +1749,10 @@ crbug.com/626703 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime
 crbug.com/626703 virtual/threaded/transitions/transition-end-event-multiple-03.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 [ Android Win7 ] external/wpt/http/content_length.html [ Crash ]
+crbug.com/626703 [ Android Win7 ] external/wpt/http/refresh/navigate.window.html [ Crash ]
+crbug.com/626703 [ Android Win7 ] external/wpt/http/refresh/subresource.any.html [ Crash ]
+crbug.com/626703 [ Android Win7 ] external/wpt/http/refresh/subresource.any.worker.html [ Crash ]
 crbug.com/626703 external/wpt/beacon/beacon-cors.sub.window.html [ Timeout ]
 crbug.com/626703 external/wpt/beacon/beacon-navigate.html [ Timeout ]
 crbug.com/626703 external/wpt/beacon/beacon-redirect.window.html [ Timeout ]
