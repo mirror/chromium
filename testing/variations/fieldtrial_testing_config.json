@@ -2971,9 +2971,27 @@
             ],
             "experiments": [
                 {
-                    "name": "DraftEnabled",
+                    "name": "Experiment",
+                    "params": {
+                        "variant": "experiment"
+                    }
+                },
+                {
+                    "name": "Draft",
                     "params": {
                         "variant": "draft"
+                    }
+                },
+                {
+                    "name": "NoSessionIDExperiment",
+                    "params": {
+                        "variant": "no-session-id"
+                    }
+                },
+                {
+                    "name": "RecordTypeExperiment",
+                    "params": {
+                        "variant": "record-type"
                     }
                 }
             ]
