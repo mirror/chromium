@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b56bd481_ba9d6510",
+        "filename": "ios/web_view/internal/cwv_page_transition.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-08-17T03:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1472b706_e0001cb5",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e055119_4891ee0e",
         "filename": "ios/web_view/public/cwv_page_transition.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3e5c5b63_d13df3e6",
+        "filename": "ios/web_view/public/cwv_page_transition.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-08-17T03:57:14Z",
+      "side": 1,
+      "message": "But I believe this should be mentioned somewhere, otherwise people may wonder why we don\u0027t simply use ui::PageTransition as is. I moved the comment to web_view_web_state_policy_decider.mm, but not sure if that\u0027s the best location of the comment. Let me know if you have any better idea.",
+      "parentUuid": "4e055119_4891ee0e",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 41
+      },
+      "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c428c5f_f91bb9ab",
         "filename": "ios/web_view/public/cwv_page_transition.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9565be10_36904c10",
+        "filename": "ios/web_view/public/cwv_page_transition.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-08-17T03:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c428c5f_f91bb9ab",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "beb6e170cae2d50f6108a4af0c7c9766c2cfaf6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
