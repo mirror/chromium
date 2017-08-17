@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afbadfbe_0e6b823d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-17T10:49:13Z",
+      "side": 1,
+      "message": "Done, I think.",
+      "parentUuid": "d0f02a5f_8d46ec48",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "7ea128d410ce50034c1f0a599c922940b2276643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0734f91_2e9b9107",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "7ea128d410ce50034c1f0a599c922940b2276643",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391b82f5_cebdf693",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-17T10:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0734f91_2e9b9107",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "7ea128d410ce50034c1f0a599c922940b2276643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
