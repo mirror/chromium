@@ -428,6 +428,22 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
     focusManager->SetKeyboardAccessible([NSApp isFullKeyboardAccessEnabled]);
 }
 
+- (int)currentEventFlags {
+  const NSUInteger modifiers = [keyDownEvent_ modifierFlags];
+
+  int flags = 0;
+  if (modifiers & NSShiftKeyMask)
+    flags |= ui::EF_SHIFT_DOWN;
+  if (modifiers & NSControlKeyMask)
+    flags |= ui::EF_CONTROL_DOWN;
+  if (modifiers & NSCommandKeyMask)
+    flags |= ui::EF_COMMAND_DOWN;
+  if (modifiers & NSAlternateKeyMask)
+    flags |= ui::EF_ALT_DOWN;
+
+  return flags;
+}
+
 // BridgedContentView private implementation.
 
 - (MenuController*)activeMenuController {
@@ -1230,7 +1246,7 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
   [self handleAction:ui::TextEditCommand::TRANSPOSE
              keyCode:ui::VKEY_T
              domCode:ui::DomCode::US_T
-          eventFlags:ui::EF_CONTROL_DOWN];
+          eventFlags:ui::EF_CONTROL_DOWN | [self currentEventFlags]];
 }
 
 // Deletions.
@@ -1239,63 +1255,65 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
   [self handleAction:ui::TextEditCommand::DELETE_FORWARD
              keyCode:ui::VKEY_DELETE
              domCode:ui::DomCode::DEL
-          eventFlags:0];
+          eventFlags:[self currentEventFlags]];
 }
 
 - (void)deleteBackward:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_BACKWARD
              keyCode:ui::VKEY_BACK
              domCode:ui::DomCode::BACKSPACE
-          eventFlags:0];
+          eventFlags:[self currentEventFlags]];
 }
 
 - (void)deleteWordForward:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_WORD_FORWARD
              keyCode:ui::VKEY_DELETE
              domCode:ui::DomCode::DEL
-          eventFlags:ui::EF_CONTROL_DOWN];
+          eventFlags:ui::EF_CONTROL_DOWN | [self currentEventFlags]];
 }
 
 - (void)deleteWordBackward:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_WORD_BACKWARD
              keyCode:ui::VKEY_BACK
              domCode:ui::DomCode::BACKSPACE
-          eventFlags:ui::EF_CONTROL_DOWN];
+          eventFlags:ui::EF_CONTROL_DOWN | [self currentEventFlags]];
 }
 
 - (void)deleteToBeginningOfLine:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_TO_BEGINNING_OF_LINE
              keyCode:ui::VKEY_BACK
              domCode:ui::DomCode::BACKSPACE
-          eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
+          eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN |
+                     [self currentEventFlags]];
 }
 
 - (void)deleteToEndOfLine:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_TO_END_OF_LINE
              keyCode:ui::VKEY_DELETE
              domCode:ui::DomCode::DEL
-          eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
+          eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN |
+                     [self currentEventFlags]];
 }
 
 - (void)deleteToBeginningOfParagraph:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_TO_BEGINNING_OF_PARAGRAPH
              keyCode:ui::VKEY_UNKNOWN
              domCode:ui::DomCode::NONE
-          eventFlags:0];
+          eventFlags:[self currentEventFlags]];
 }
 
 - (void)deleteToEndOfParagraph:(id)sender {
   [self handleAction:ui::TextEditCommand::DELETE_TO_END_OF_PARAGRAPH
              keyCode:ui::VKEY_UNKNOWN
              domCode:ui::DomCode::NONE
-          eventFlags:0];
+          eventFlags:[self currentEventFlags]];
 }
 
 - (void)yank:(id)sender {
   [self handleAction:ui::TextEditCommand::YANK
              keyCode:ui::VKEY_Y
              domCode:ui::DomCode::US_Y
-          eventFlags:ui::EF_CONTROL_DOWN];
+          eventFlags:ui::EF_CONTROL_DOWN | [self currentEventFlags]];
 }
 
 // Cancellation.
@@ -1304,7 +1322,7 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
   [self handleAction:ui::TextEditCommand::INVALID_COMMAND
              keyCode:ui::VKEY_ESCAPE
              domCode:ui::DomCode::ESCAPE
-          eventFlags:0];
+          eventFlags:[self currentEventFlags]];
 }
 
 // Support for Services in context menus.
