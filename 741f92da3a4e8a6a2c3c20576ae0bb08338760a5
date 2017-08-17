@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ccea5e4_cadc5c5a",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T03:31:15Z",
+      "side": 1,
+      "message": "Nit: move this include to the cc file since it\u0027s needed there but not here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 33,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "741f92da3a4e8a6a2c3c20576ae0bb08338760a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1b2ebd_557e71e0",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-17T03:31:15Z",
+      "side": 1,
+      "message": "Nit: this comment is duplicated from line 92, please remove.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 54
+      },
+      "revId": "741f92da3a4e8a6a2c3c20576ae0bb08338760a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
