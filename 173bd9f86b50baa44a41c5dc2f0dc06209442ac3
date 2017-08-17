@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a8787e2_e65a04d8",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c98afbe_94691cb3",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa07ce11_cf0bff1e",
         "filename": "ui/views/win/pen_event_processor.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "651d7d9a_a0ab2a61",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa07ce11_cf0bff1e",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 65
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "607054dd_f1d41a28",
         "filename": "ui/views/win/pen_event_processor.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T22:50:09Z",
       "side": 1,
       "message": "Can you only get one pointer down at a time? On the mouse you can press button 1 and then button 2. Is that equally true of pens?",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b48e5f2_4e9f967c",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "You only get a WM_POINTERUPDATE on button changes... Not a new WM_POINTERDOWN/WM_POINTERUP.",
+      "parentUuid": "607054dd_f1d41a28",
       "range": {
         "startLine": 68,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "71c0da8e_20f096c3",
+        "filename": "ui/views/win/pen_event_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6262cbd5_a1b613fc",
+      "range": {
+        "startLine": 149,
+        "startChar": 67,
+        "endLine": 149,
+        "endChar": 71
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7598e759_ce9e3c55",
         "filename": "ui/views/win/pen_event_processor.h",
         "patchSetId": 4
@@ -108,6 +204,24 @@
       "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de13e14d_88520203",
+        "filename": "ui/views/win/pen_event_processor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7598e759_ce9e3c55",
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "dada99ce_c3015814",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2b2f4ec_d869fecf",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "963c1914_2f9ec79a",
         "filename": "ui/views/win/pen_event_processor_unittest.cc",
         "patchSetId": 4
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6db44eb3_9dea8a8e",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "963c1914_2f9ec79a",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfbcf4b9_805b7eca",
         "filename": "ui/views/win/pen_event_processor_unittest.cc",
         "patchSetId": 4
@@ -177,6 +339,30 @@
       "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca23b4e2_297bdcd1",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T23:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfbcf4b9_805b7eca",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "173bd9f86b50baa44a41c5dc2f0dc06209442ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
