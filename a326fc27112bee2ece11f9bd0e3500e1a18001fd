@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2c0832_5a72c7e4",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-17T00:16:25Z",
+      "side": 1,
+      "message": "minor performance nit: there\u0027s 4 accesses to size() here, which is 1 if check and at least one math op. It\u0027s all probably going to be optimized but maybe it\u0027s worth saving it into a variable. Up to you.",
+      "revId": "a326fc27112bee2ece11f9bd0e3500e1a18001fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
