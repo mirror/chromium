@@ -684,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "43220aac_d2952c68",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T08:07:16Z",
+      "side": 1,
+      "message": "Oh, btw: CVE-2009-0021 (https://bugzilla.redhat.com/show_bug.cgi?id\u003dCVE-2009-0021)\n(Apparently there were more of this, like CVE-2008-5077)\n\nActual security bug, because it turns out that OpenSSL sometimes also uses non-0 values to indicate failure. In both of those cases, 1: signature verifies, 0: signature doesn\u0027t verify, -1: error (as in: verification didn\u0027t complete). The bug was that the totally-reasonable-if-it-wasn\u0027t-OpenSSL pattern of if(...verify...) would fail on verification failure, but would go to the \u0027success\u0027 branch on both \u0027success\u0027 and \u0027error\u0027 cases.\n\nI imagine BoringSSL tries to be more boring, but still...",
+      "parentUuid": "1e7ccf91_8f7dd01e",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c1d62a_2cb53a1d",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
