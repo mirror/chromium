@@ -22,6 +22,30 @@
       "revId": "06740f6c6088bfed2c2355804c79ab8549fc2599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf334a00_7e5b3964",
+        "filename": "chrome/android/java/res/drawable/tile_suggestion_default_icon.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-17T14:44:14Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "a86e88b1_f12ef2d4",
+      "range": {
+        "startLine": 5,
+        "startChar": 5,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "06740f6c6088bfed2c2355804c79ab8549fc2599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
