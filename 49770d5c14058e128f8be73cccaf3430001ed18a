@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5a91c02f_dd980f5f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "Looks like there\u0027s more overhead than I anticipated with running parameterized tests, so I\u0027ve gone through and removed parameterization from classes that have no current need for it, and likely never will (i.e. classes that are only for the VR Browser). It will be easy to re-add it in the future if it\u0027s ever necessary, but no need to keep the extra overhead around for no gain.",
+      "parentUuid": "1fe7056b_9c0f7972",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ff70f91_e2f9171c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrTestFramework.java",
         "patchSetId": 2
@@ -86,6 +110,24 @@
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7192842c_367f8c0e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrTestFramework.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff70f91_e2f9171c",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "ca44bfb6_e4b5efcb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "Added a filter to the XML file.",
+      "parentUuid": "24884dfb_23bb862f",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4e5352_588be16d",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/CustomTabActivityVrTestRule.java",
         "patchSetId": 2
@@ -201,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "299cc514_acd1e48b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/CustomTabActivityVrTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4e5352_588be16d",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b42b3a0b_34251ae5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
         "patchSetId": 2
@@ -215,6 +299,24 @@
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc281c0_c1c8afe6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestriction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42b3a0b_34251ae5",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "5df27bff_ec7c4d99",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestrictionRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "A lot of things we do for VR testing could use markdown documentation. I\u0027ve created https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756261 to track this, and explanation of VrActivityRestriction/VrActivityRestrictionRule will be part of that.",
+      "parentUuid": "a949eea0_17f1e4d9",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed00f424_54f1775e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestrictionRule.java",
         "patchSetId": 2
@@ -296,6 +416,24 @@
       "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e343b941_b0f19c4b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrActivityRestrictionRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed00f424_54f1775e",
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
