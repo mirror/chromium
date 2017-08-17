@@ -33,6 +33,24 @@
       "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21aa6d6d_69521fbb",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-17T23:16:39Z",
+      "side": 1,
+      "message": "This would require calculating the `fatal` bool for every failed request, and passing useless ssl_info and `fatal` parameters for failures that are not SSL errors.\n\nIs that preferable?\n\nIf so, is calculating ShouldSSLErrorsBeFatal() here still appropriate?",
+      "parentUuid": "ddc1b906_60d82bc0",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
