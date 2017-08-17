@@ -16,6 +16,315 @@
       "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914defd3_f502c957",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/get-response-body.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "You can inline it here. The order is guaranteed.\n\nvar requestWillBeSent \u003d await dp.Network.onceRequestWillBeSent();\nvar responseReceived \u003d await dp.Network.onceResponseReceived();",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f3b1e2_4546927d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "There are generated constants for this:\nprotocol::Audits::RequestEncodingEnum::jpeg",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c943bdd_7694b5b8",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "kMaximumEncodeImageWidth",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51f54df_3afe8816",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Is this necessary? What if original content was empty?",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123a36c5_e675388e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Drop this, make constructor public. It\u0027s legacy in other agents.",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eddfbd8_966a7c9f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Call it GetResponseBody :)",
+      "range": {
+        "startLine": 234,
+        "startChar": 7,
+        "endLine": 234,
+        "endChar": 27
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a1ad87_583e2dad",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Return Response instead of bool+failure_reason, then check on call sites\nif (!response.isSuccess()) return response;",
+      "range": {
+        "startLine": 234,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 6
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2fa095_d80ca878",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Use Network.RequestId instead.",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d13c73_56887bda",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "I\u0027d inline this into \"encoding\" parameter description:\n\n{ \"name\": \"encoding\", \"type\": \"string\", \"enum\": [\"webp\", \"jpeg\"] }",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00012cb_76637b45",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Should we also support png, or nobody needs it?",
+      "range": {
+        "startLine": 1197,
+        "startChar": 26,
+        "endLine": 1197,
+        "endChar": 30
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45bebe5_26fb19f9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Not only the size!",
+      "range": {
+        "startLine": 1204,
+        "startChar": 41,
+        "endLine": 1204,
+        "endChar": 48
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6368be59_6da7d9a1",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "What does \"if re-encoding\" mean? Don\u0027t we always re-encode here?",
+      "range": {
+        "startLine": 1207,
+        "startChar": 107,
+        "endLine": 1207,
+        "endChar": 121
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afcfae9_4f84c9dd",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Let\u0027s make it optional with reasonable default.",
+      "range": {
+        "startLine": 1208,
+        "startChar": 31,
+        "endLine": 1208,
+        "endChar": 38
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75ac50b_5b9f8cbf",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Should be optional. Also mention in description this is present based on sizeOnly value.",
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58839a51_ddd94f26",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-17T19:19:59Z",
+      "side": 1,
+      "message": "Just mark the whole domain experimental.",
+      "range": {
+        "startLine": 1216,
+        "startChar": 17,
+        "endLine": 1216,
+        "endChar": 29
+      },
+      "revId": "5176eb0c28a58db8d9096700c6ac65aa2f8721c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
