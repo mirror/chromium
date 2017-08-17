@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6405540f_ffdea0be",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-17T06:27:21Z",
+      "side": 1,
+      "message": "nit: Add const for other local variables if possible, or remove this const?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "00665d665bc39b24ec852b6eb69aebffdf9be594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
