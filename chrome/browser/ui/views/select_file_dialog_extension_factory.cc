@@ -14,6 +14,6 @@ SelectFileDialogExtensionFactory::~SelectFileDialogExtensionFactory() {
 
 ui::SelectFileDialog* SelectFileDialogExtensionFactory::Create(
     ui::SelectFileDialog::Listener* listener,
-    ui::SelectFilePolicy* policy) {
-  return SelectFileDialogExtension::Create(listener, policy);
+    std::unique_ptr<ui::SelectFilePolicy> policy) {
+  return SelectFileDialogExtension::Create(listener, std::move(policy));
 }

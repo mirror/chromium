@@ -87,12 +87,12 @@ NSString* GetDescriptionFromExtension(const base::FilePath::StringType& ext) {
 
 namespace ui {
 
-SelectFileDialogImpl::SelectFileDialogImpl(Listener* listener,
-                                           ui::SelectFilePolicy* policy)
-    : SelectFileDialog(listener, policy),
-      bridge_([[SelectFileDialogBridge alloc]
-               initWithSelectFileDialogImpl:this]) {
-}
+SelectFileDialogImpl::SelectFileDialogImpl(
+    Listener* listener,
+    std::unique_ptr<ui::SelectFilePolicy> policy)
+    : SelectFileDialog(listener, std::move(policy)),
+      bridge_(
+          [[SelectFileDialogBridge alloc] initWithSelectFileDialogImpl:this]) {}
 
 bool SelectFileDialogImpl::IsRunning(gfx::NativeWindow parent_window) const {
   return parents_.find(parent_window) != parents_.end();
@@ -366,9 +366,10 @@ bool SelectFileDialogImpl::HasMultipleFileTypeChoicesImpl() {
   return hasMultipleFileTypeChoices_;
 }
 
-SelectFileDialog* CreateSelectFileDialog(SelectFileDialog::Listener* listener,
-                                         SelectFilePolicy* policy) {
-  return new SelectFileDialogImpl(listener, policy);
+SelectFileDialog* CreateSelectFileDialog(
+    SelectFileDialog::Listener* listener,
+    std::unique_ptr<SelectFilePolicy> policy) {
+  return new SelectFileDialogImpl(listener, std::move(policy));
 }
 
 }  // namespace ui
