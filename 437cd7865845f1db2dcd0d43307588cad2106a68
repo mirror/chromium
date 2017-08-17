@@ -52,6 +52,24 @@
       "revId": "437cd7865845f1db2dcd0d43307588cad2106a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798f8d39_96aeef2b",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T07:04:15Z",
+      "side": 1,
+      "message": "The getter part\u0027s doc is rather subtle (partly driven by our automated rename script)... anyways ok to just leave it as is",
+      "parentUuid": "eaad1129_73d64de1",
+      "revId": "437cd7865845f1db2dcd0d43307588cad2106a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
