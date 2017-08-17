@@ -13,6 +13,7 @@
 #include "media/base/eme_constants.h"
 #include "media/base/media.h"
 #include "media/base/pipeline_status.h"
+#include "media/renderers/audio_renderer_impl.h"
 #include "media/test/pipeline_integration_test_base.h"
 
 namespace {
@@ -33,10 +34,10 @@ void OnEncryptedMediaInitData(media::PipelineIntegrationTestBase* test,
   test->FailTest(media::PIPELINE_ERROR_INITIALIZATION_FAILED);
 }
 
-void OnCheckFirstAudioPacketTimestamp(media::PipelineIntegrationTestBase* test,
-                                      base::TimeDelta first_packet_timestamp) {
-  if (first_packet_timestamp != media::kNoTimestamp &&
-      first_packet_timestamp > kMaxFirstAudioPacketTime) {
+void OnFirstAudioPacketTimestamp(media::PipelineIntegrationTestBase* test,
+                                 base::TimeDelta first_packet_timestamp) {
+  CHECK_NE(media::kNoTimestamp, first_packet_timestamp);
+  if (first_packet_timestamp > kMaxFirstAudioPacketTime) {
     test->FailTest(media::PIPELINE_ERROR_INITIALIZATION_FAILED);
   }
 }
@@ -58,8 +59,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   test.set_encrypted_media_init_data_cb(
       base::Bind(&OnEncryptedMediaInitData, &test));
 
-  test.set_check_first_audio_packet_timestamp_cb(
-      base::BindRepeating(&OnCheckFirstAudioPacketTimestamp, &test));
+  test.set_first_audio_packet_timestamp_cb(
+      base::BindRepeating(&OnFirstAudioPacketTimestamp, &test));
 
   media::PipelineStatus pipeline_status =
       test.Start(data, size,
