@@ -35,6 +35,7 @@
 #include "net/cert/cert_status_flags.h"
 #include "net/cert/x509_certificate.h"
 #include "net/disk_cache/disk_cache.h"
+#include "net/http/http_cache_writers.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_request_info.h"
 #include "net/http/http_util.h"
@@ -175,6 +176,7 @@ HttpCache::Transaction::Transaction(RequestPriority priority, HttpCache* cache)
       read_offset_(0),
       effective_load_flags_(0),
       write_len_(0),
+      shared_writing_error_(0),
       cache_entry_status_(CacheEntryStatus::ENTRY_UNDEFINED),
       validation_cause_(VALIDATION_CAUSE_UNDEFINED),
       total_received_bytes_(0),
@@ -207,6 +209,10 @@ HttpCache::Transaction::~Transaction() {
   }
 }
 
+HttpCache::Transaction::Mode HttpCache::Transaction::mode() const {
+  return mode_;
+}
+
 int HttpCache::Transaction::WriteMetadata(IOBuffer* buf, int buf_len,
                                           const CompletionCallback& callback) {
   DCHECK(buf);
@@ -223,31 +229,10 @@ int HttpCache::Transaction::WriteMetadata(IOBuffer* buf, int buf_len,
                                        callback, true);
 }
 
-bool HttpCache::Transaction::AddTruncatedFlag(bool* did_truncate) {
-  *did_truncate = false;
-  DCHECK(mode_ & WRITE || mode_ == NONE);
-
-  // Don't set the flag for sparse entries.
-  if (partial_ && !truncated_)
-    return true;
-
-  if (!CanResume(true))
-    return false;
-
-  // We may have received the whole resource already.
-  if (done_reading_)
-    return true;
-
-  truncated_ = true;
-  *did_truncate = truncated_;
-  next_state_ = STATE_CACHE_WRITE_TRUNCATED_RESPONSE;
-  DoLoop(OK);
-  return true;
-}
-
 LoadState HttpCache::Transaction::GetWriterLoadState() const {
-  if (network_trans_.get())
-    return network_trans_->GetLoadState();
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    return transaction->GetLoadState();
   if (entry_ || !request_)
     return LOAD_STATE_IDLE;
   return LOAD_STATE_WAITING_FOR_CACHE;
@@ -374,29 +359,81 @@ int HttpCache::Transaction::Read(IOBuffer* buf, int buf_len,
   if (auth_response_.headers.get() && mode_ != NONE) {
     UpdateCacheEntryStatus(CacheEntryStatus::ENTRY_OTHER);
     DCHECK(mode_ & WRITE);
-    DoneWritingToEntry(mode_ == READ_WRITE);
-    mode_ = NONE;
+    // TODO(shivanisha): Make sure this condition is true only for exclusive
+    // writers in the subsequent CL.
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(mode_ == READ_WRITE);
   }
 
   reading_ = true;
   read_buf_ = buf;
   io_buf_len_ = buf_len;
-  if (network_trans_) {
-    DCHECK(mode_ == WRITE || mode_ == NONE ||
-           (mode_ == READ_WRITE && partial_));
-    next_state_ = STATE_NETWORK_READ;
-  } else {
-    DCHECK(mode_ == READ || (mode_ == READ_WRITE && partial_));
-    next_state_ = STATE_CACHE_READ_DATA;
-  }
+  int rv = TransitionToReadingState();
+  if (rv != OK)
+    return rv;
 
-  int rv = DoLoop(OK);
+  rv = DoLoop(OK);
 
   if (rv == ERR_IO_PENDING) {
     DCHECK(callback_.is_null());
     callback_ = callback;
   }
   return rv;
+}
+
+int HttpCache::Transaction::TransitionToReadingState() {
+  if (!entry_) {
+    if (network_trans_) {
+      // This can happen when the request should be handled exclusively by
+      // the network layer (skipping the cache entirely using
+      // LOAD_DISABLE_CACHE) or there was an error during the headers phase
+      // due to which the transaction cannot write to the cache.
+      // TODO(crbug.com/740947) to get rid of this state in future.
+      next_state_ = STATE_NETWORK_READ;
+      return OK;
+    }
+
+    // If not the above case, entry_ should always be set except if shared
+    // writing had a failure.
+    next_state_ = STATE_NONE;
+    DCHECK_LT(shared_writing_error_, 0);
+    return shared_writing_error_;
+  }
+
+  // If entry_ is present, the transaction is either a writer or reader. If its
+  // a writer and it is partial then it may need to read from the cache or from
+  // the network based on whether network transaction is present or not. If its
+  // a writer and a full request then it may read from the cache if its offset
+  // is behind the current offset else from the network.
+  if (entry_->writers && entry_->writers->HasTransaction(this)) {
+    DCHECK(mode_ == WRITE || mode_ == NONE ||
+           (mode_ == READ_WRITE && partial_));
+    if (partial_) {
+      if (entry_->writers->network_transaction())
+        next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
+      else
+        next_state_ = STATE_CACHE_READ_DATA;
+      return OK;
+    }
+
+    // Full request.
+    int disk_entry_size =
+        entry_->disk_entry->GetDataSize(kResponseContentIndex);
+    if (read_offset_ == disk_entry_size ||
+        entry_->writers->network_read_only()) {
+      next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
+    } else {
+      DCHECK_LT(read_offset_, disk_entry_size);
+      next_state_ = STATE_CACHE_READ_DATA;
+    }
+    return OK;
+  }
+
+  DCHECK(entry_->readers.count(this));
+  DCHECK(mode_ == READ || (mode_ == READ_WRITE && partial_));
+  next_state_ = STATE_CACHE_READ_DATA;
+  return OK;
 }
 
 void HttpCache::Transaction::StopCaching() {
@@ -408,21 +445,20 @@ void HttpCache::Transaction::StopCaching() {
   // entry how it is (it will be marked as truncated at destruction), and let
   // the next piece of code that executes know that we are now reading directly
   // from the net.
-  if (cache_.get() && entry_ && (mode_ & WRITE) && network_trans_.get() &&
-      !is_sparse_ && !range_requested_) {
-    mode_ = NONE;
-
-    // Let entry_ know so that any dependent transactions are restarted and this
-    // entry is doomed.
-    cache_->DoneWritingToEntry(entry_, false /* success */, this);
-    entry_ = nullptr;
+  if (cache_.get() && entry_ && (mode_ & WRITE) && entry_->writers &&
+      entry_->writers->HasTransaction(this) &&
+      entry_->writers->network_transaction() && !is_sparse_ &&
+      !range_requested_) {
+    if (entry_->writers->StopCaching(this))
+      mode_ = NONE;
   }
 }
 
 bool HttpCache::Transaction::GetFullRequestHeaders(
     HttpRequestHeaders* headers) const {
-  if (network_trans_)
-    return network_trans_->GetFullRequestHeaders(headers);
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    return transaction->GetFullRequestHeaders(headers);
 
   // TODO(juliatuttle): Read headers from cache.
   return false;
@@ -430,23 +466,27 @@ bool HttpCache::Transaction::GetFullRequestHeaders(
 
 int64_t HttpCache::Transaction::GetTotalReceivedBytes() const {
   int64_t total_received_bytes = total_received_bytes_;
-  if (network_trans_)
-    total_received_bytes += network_trans_->GetTotalReceivedBytes();
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    total_received_bytes += transaction->GetTotalReceivedBytes();
   return total_received_bytes;
 }
 
 int64_t HttpCache::Transaction::GetTotalSentBytes() const {
   int64_t total_sent_bytes = total_sent_bytes_;
-  if (network_trans_)
-    total_sent_bytes += network_trans_->GetTotalSentBytes();
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    total_sent_bytes += transaction->GetTotalSentBytes();
   return total_sent_bytes;
 }
 
 void HttpCache::Transaction::DoneReading() {
   if (cache_.get() && entry_) {
     DCHECK_NE(mode_, UPDATE);
-    if (mode_ & WRITE) {
-      DoneWritingToEntry(true);
+    if (entry_ && entry_->writers && entry_->writers->HasTransaction(this)) {
+      RecordHistograms();
+      entry_->writers->DoneReading(this);
+      ResetStateDoneWritingToEntry();
     } else if (mode_ & READ) {
       // It is necessary to check mode_ & READ because it is possible
       // for mode_ to be NONE and entry_ non-NULL with a write entry
@@ -486,8 +526,9 @@ void HttpCache::Transaction::SetQuicServerInfo(
 
 bool HttpCache::Transaction::GetLoadTimingInfo(
     LoadTimingInfo* load_timing_info) const {
-  if (network_trans_)
-    return network_trans_->GetLoadTimingInfo(load_timing_info);
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    return transaction->GetLoadTimingInfo(load_timing_info);
 
   if (old_network_trans_load_timing_) {
     *load_timing_info = *old_network_trans_load_timing_;
@@ -506,8 +547,9 @@ bool HttpCache::Transaction::GetLoadTimingInfo(
 }
 
 bool HttpCache::Transaction::GetRemoteEndpoint(IPEndPoint* endpoint) const {
-  if (network_trans_)
-    return network_trans_->GetRemoteEndpoint(endpoint);
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    return transaction->GetRemoteEndpoint(endpoint);
 
   if (!old_remote_endpoint_.address().empty()) {
     *endpoint = old_remote_endpoint_;
@@ -519,8 +561,9 @@ bool HttpCache::Transaction::GetRemoteEndpoint(IPEndPoint* endpoint) const {
 
 void HttpCache::Transaction::PopulateNetErrorDetails(
     NetErrorDetails* details) const {
-  if (network_trans_)
-    return network_trans_->PopulateNetErrorDetails(details);
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    return transaction->PopulateNetErrorDetails(details);
   return;
 }
 
@@ -528,13 +571,16 @@ void HttpCache::Transaction::SetPriority(RequestPriority priority) {
   priority_ = priority;
   if (network_trans_)
     network_trans_->SetPriority(priority_);
+  else if (entry_ && entry_->writers && entry_->writers->HasTransaction(this))
+    entry_->writers->UpdatePriority();
 }
 
 void HttpCache::Transaction::SetWebSocketHandshakeStreamCreateHelper(
     WebSocketHandshakeStreamBase::CreateHelper* create_helper) {
   websocket_handshake_stream_base_create_helper_ = create_helper;
-  if (network_trans_)
-    network_trans_->SetWebSocketHandshakeStreamCreateHelper(create_helper);
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    transaction->SetWebSocketHandshakeStreamCreateHelper(create_helper);
 }
 
 void HttpCache::Transaction::SetBeforeNetworkStartCallback(
@@ -564,8 +610,9 @@ int HttpCache::Transaction::ResumeNetworkStart() {
 void HttpCache::Transaction::GetConnectionAttempts(
     ConnectionAttempts* out) const {
   ConnectionAttempts new_connection_attempts;
-  if (network_trans_)
-    network_trans_->GetConnectionAttempts(&new_connection_attempts);
+  HttpTransaction* transaction = network_transaction();
+  if (transaction)
+    transaction->GetConnectionAttempts(&new_connection_attempts);
 
   out->swap(new_connection_attempts);
   out->insert(out->begin(), old_connection_attempts_.begin(),
@@ -587,8 +634,9 @@ size_t HttpCache::Transaction::EstimateMemoryUsage() const {
 }
 
 void HttpCache::Transaction::SetSharedWritingFailState(int result) {
-  // TODO(shivanisha): Implement when integrating with HttpCache::Writers.
-  NOTIMPLEMENTED();
+  DCHECK_EQ(next_state_, STATE_NONE);
+  entry_ = nullptr;
+  shared_writing_error_ = result;
 }
 
 //-----------------------------------------------------------------------------
@@ -603,7 +651,8 @@ void HttpCache::Transaction::SetSharedWritingFailState(int result) {
 //   PartialHeadersReceived -> FinishHeaders*
 //
 //   Read():
-//   NetworkRead* -> CacheWriteData*
+//   NetworkReadCacheWrite*/CacheReadData* (if other writers are also writing to
+//   the cache)
 //
 // 2. Cached entry, no validation:
 //   Start():
@@ -635,7 +684,8 @@ void HttpCache::Transaction::SetSharedWritingFailState(int result) {
 //   TruncateCachedMetadata* -> PartialHeadersReceived -> FinishHeaders*
 //
 //   Read():
-//   NetworkRead* -> CacheWriteData*
+//   NetworkReadCacheWrite*/CacheReadData* (if other writers are also writing to
+//   the cache)
 //
 // 5. Sparse entry, partially cached, byte range request:
 //   Start():
@@ -649,17 +699,17 @@ void HttpCache::Transaction::SetSharedWritingFailState(int result) {
 //   PartialHeadersReceived -> FinishHeaders*
 //
 //   Read() 1:
-//   NetworkRead* -> CacheWriteData*
+//   NetworkReadCacheWrite*
 //
 //   Read() 2:
-//   NetworkRead* -> CacheWriteData* -> StartPartialCacheValidation ->
+//   NetworkReadCacheWrite* -> StartPartialCacheValidation ->
 //   CompletePartialCacheValidation -> CacheReadData* ->
 //
 //   Read() 3:
 //   CacheReadData* -> StartPartialCacheValidation ->
 //   CompletePartialCacheValidation -> BeginCacheValidation() -> SendRequest* ->
 //   SuccessfulSendRequest -> UpdateCachedResponse* -> OverwriteCachedResponse
-//   -> PartialHeadersReceived -> NetworkRead* -> CacheWriteData*
+//   -> PartialHeadersReceived -> NetworkReadCacheWrite*
 //
 // 6. HEAD. Not-cached entry:
 //   Pass through. Don't save a HEAD by itself.
@@ -877,12 +927,12 @@ int HttpCache::Transaction::DoLoop(int result) {
       case STATE_FINISH_HEADERS_COMPLETE:
         rv = DoFinishHeadersComplete(rv);
         break;
-      case STATE_NETWORK_READ:
+      case STATE_NETWORK_READ_CACHE_WRITE:
         DCHECK_EQ(OK, rv);
-        rv = DoNetworkRead();
+        rv = DoNetworkReadCacheWrite();
         break;
-      case STATE_NETWORK_READ_COMPLETE:
-        rv = DoNetworkReadComplete(rv);
+      case STATE_NETWORK_READ_CACHE_WRITE_COMPLETE:
+        rv = DoNetworkReadCacheWriteComplete(rv);
         break;
       case STATE_CACHE_READ_DATA:
         DCHECK_EQ(OK, rv);
@@ -891,18 +941,12 @@ int HttpCache::Transaction::DoLoop(int result) {
       case STATE_CACHE_READ_DATA_COMPLETE:
         rv = DoCacheReadDataComplete(rv);
         break;
-      case STATE_CACHE_WRITE_DATA:
-        rv = DoCacheWriteData(rv);
-        break;
-      case STATE_CACHE_WRITE_DATA_COMPLETE:
-        rv = DoCacheWriteDataComplete(rv);
-        break;
-      case STATE_CACHE_WRITE_TRUNCATED_RESPONSE:
+      case STATE_NETWORK_READ:
         DCHECK_EQ(OK, rv);
-        rv = DoCacheWriteTruncatedResponse();
+        rv = DoNetworkRead();
         break;
-      case STATE_CACHE_WRITE_TRUNCATED_RESPONSE_COMPLETE:
-        rv = DoCacheWriteTruncatedResponseComplete(rv);
+      case STATE_NETWORK_READ_COMPLETE:
+        rv = DoNetworkReadComplete(rv);
         break;
       default:
         NOTREACHED() << "bad state " << state;
@@ -1193,7 +1237,8 @@ void HttpCache::Transaction::AddCacheLockTimeoutHandler(ActiveEntry* entry) {
                    weak_factory_.GetWeakPtr(), entry_lock_waiting_since_));
   } else {
     int timeout_milliseconds = 20 * 1000;
-    if (partial_ && entry->writer && entry->writer->range_requested_) {
+    if (partial_ && !entry->writers->IsEmpty() &&
+        entry->writers->IsExclusive()) {
       // we're blocked by the reader/writer lock. Doing so eliminates a long
       // running issue, http://crbug.com/31014, where two of the same media
       // resources could not be played back simultaneously due to one locking
@@ -1349,9 +1394,8 @@ int HttpCache::Transaction::DoCacheReadResponseComplete(int result) {
       // Doom the entry so that no other transaction gets added to this entry
       // and avoid a race of not being able to check this condition because
       // writing is in progress.
-      cache_->DoneWritingToEntry(entry_, false, this);
-      entry_ = nullptr;
-      mode_ = NONE;
+      SetNetworkReadOnly(false);
+      cache_->DoomActiveEntry(cache_key_);
       TransitionToState(STATE_SEND_REQUEST);
       return OK;
     }
@@ -1494,10 +1538,12 @@ int HttpCache::Transaction::DoSendRequest() {
   // Create a network transaction.
   int rv =
       cache_->network_layer_->CreateTransaction(priority_, &network_trans_);
+
   if (rv != OK) {
     TransitionToState(STATE_FINISH_HEADERS);
     return rv;
   }
+
   network_trans_->SetBeforeNetworkStartCallback(before_network_start_callback_);
   network_trans_->SetBeforeHeadersSentCallback(before_headers_sent_callback_);
   network_trans_->SetRequestHeadersCallback(request_headers_callback_);
@@ -1611,7 +1657,9 @@ int HttpCache::Transaction::DoSuccessfulSendRequest() {
     // We have stored the full entry, but it changed and the server is
     // sending a range. We have to delete the old entry.
     UpdateCacheEntryStatus(CacheEntryStatus::ENTRY_OTHER);
-    DoneWritingToEntry(false);
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(false);
   }
 
   if (mode_ == WRITE &&
@@ -1626,9 +1674,7 @@ int HttpCache::Transaction::DoSuccessfulSendRequest() {
       int ret = cache_->DoomEntry(cache_key_, NULL);
       DCHECK_EQ(OK, ret);
     }
-    cache_->DoneWritingToEntry(entry_, true, this);
-    entry_ = NULL;
-    mode_ = NONE;
+    SetNetworkReadOnly(true);
   }
 
   // Invalidate any cached GET with a successful POST.
@@ -1727,7 +1773,9 @@ int HttpCache::Transaction::DoUpdateCachedResponseComplete(int result) {
     //
     // By closing the cached entry now, we make sure that the 304 rather than
     // the cached 200 response, is what will be returned to the user.
-    DoneWritingToEntry(true);
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(true);
   } else if (entry_ && !handling_206_) {
     DCHECK_EQ(READ_WRITE, mode_);
     if (!partial_ || partial_->IsLastRange()) {
@@ -1765,8 +1813,9 @@ int HttpCache::Transaction::DoOverwriteCachedResponse() {
 
   if (method_ == "HEAD") {
     // This response is replacing the cached one.
-    DoneWritingToEntry(false);
-    mode_ = NONE;
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(false);
     new_response_ = NULL;
     TransitionToState(STATE_FINISH_HEADERS);
     return OK;
@@ -1775,7 +1824,9 @@ int HttpCache::Transaction::DoOverwriteCachedResponse() {
   if (handling_206_ && !CanResume(false)) {
     // There is no point in storing this resource because it will never be used.
     // This may change if we support LOAD_ONLY_FROM_CACHE with sparse entries.
-    DoneWritingToEntry(false);
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(false);
     if (partial_)
       partial_->FixResponseHeaders(response_.headers.get(), true);
     TransitionToState(STATE_PARTIAL_HEADERS_RECEIVED);
@@ -1880,20 +1931,12 @@ int HttpCache::Transaction::DoPartialHeadersReceived() {
     return OK;
   }
 
-  if (reading_) {
-    if (network_trans_.get()) {
-      TransitionToState(STATE_NETWORK_READ);
-    } else {
-      TransitionToState(STATE_CACHE_READ_DATA);
-    }
-  } else if (mode_ != NONE) {
+  if (mode_ != NONE && !reading_) {
     // We are about to return the headers for a byte-range request to the user,
     // so let's fix them.
     partial_->FixResponseHeaders(response_.headers.get(), true);
-    TransitionToState(STATE_FINISH_HEADERS);
-  } else {
-    TransitionToState(STATE_FINISH_HEADERS);
   }
+  TransitionToState(STATE_FINISH_HEADERS);
   return OK;
 }
 
@@ -1929,18 +1972,20 @@ int HttpCache::Transaction::DoFinishHeaders(int result) {
 
   TransitionToState(STATE_FINISH_HEADERS_COMPLETE);
 
-  // If it was an auth failure or 416, this transaction should continue to be
+  // If it was an auth failure, this transaction should continue to be
   // headers_transaction till consumer takes an action, so no need to do
   // anything now.
-  if (auth_response_.headers.get() ||
-      (new_response_ && new_response_->headers &&
-       new_response_->headers->response_code() == 416))
+  if (auth_response_.headers.get())
     return OK;
 
   // If the transaction needs to wait because another transaction is still
   // writing the response body, it will return ERR_IO_PENDING now and the
   // io_callback_ will be invoked when the wait is done.
   int rv = cache_->DoneWithResponseHeaders(entry_, this, partial_ != nullptr);
+  if (reading_) {
+    DCHECK_EQ(OK, rv);
+  }
+
   if (rv == ERR_IO_PENDING) {
     DCHECK(entry_lock_waiting_since_.is_null());
     entry_lock_waiting_since_ = TimeTicks::Now();
@@ -1954,6 +1999,17 @@ int HttpCache::Transaction::DoFinishHeadersComplete(int rv) {
   if (rv == ERR_CACHE_RACE || rv == ERR_CACHE_LOCK_TIMEOUT) {
     TransitionToState(STATE_HEADERS_PHASE_CANNOT_PROCEED);
     return rv;
+  }
+
+  if (network_trans_ && entry_ && entry_->writers &&
+      entry_->writers->HasTransaction(this)) {
+    entry_->writers->SetNetworkTransaction(this, std::move(network_trans_));
+  }
+
+  if (reading_) {
+    int rv = TransitionToReadingState();
+    DCHECK_EQ(OK, rv);
+    return OK;
   }
 
   TransitionToState(STATE_NONE);
@@ -1987,6 +2043,57 @@ int HttpCache::Transaction::DoCacheReadMetadataComplete(int result) {
   return OK;
 }
 
+int HttpCache::Transaction::DoNetworkReadCacheWrite() {
+  TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWrite");
+  TransitionToState(STATE_NETWORK_READ_CACHE_WRITE_COMPLETE);
+  DCHECK(entry_ && entry_->writers->HasTransaction(this));
+  return entry_->writers->Read(read_buf_, io_buf_len_, io_callback_, this);
+}
+
+int HttpCache::Transaction::DoNetworkReadCacheWriteComplete(int result) {
+  TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWriteComplete");
+  DCHECK(mode_ & WRITE || mode_ == NONE);
+  if (!cache_.get()) {
+    TransitionToState(STATE_NONE);
+    return ERR_UNEXPECTED;
+  }
+  // Writers would have taken care of invoking processing on entry to handle any
+  // dependent transactions in case of network read or cache write failures.
+  // |result| will be error code in case of network read failure and |this|
+  // cannot proceed further, so set entry_ to null. |result| will not be error
+  // in case of cache write failure since |this| can continue to read from the
+  // network. If response is completed, then also set entry to null.
+  if (result < 0 || (!partial_ && result == 0)) {
+    TransitionToState(STATE_NONE);
+    ResetStateDoneWritingToEntry();
+    return result;
+  }
+
+  read_offset_ += result;
+  if (!partial_) {
+    TransitionToState(STATE_NONE);
+    return result;
+  }
+
+  // Partial specific logic.
+  return CheckAndProcessPartialCompletion(result);
+}
+
+int HttpCache::Transaction::CheckAndProcessPartialCompletion(int result) {
+  DCHECK(partial_);
+
+  // This may be the last request.
+  if (result != 0 || truncated_ ||
+      !(partial_->IsLastRange() || mode_ == WRITE)) {
+    return DoPartialNetworkReadCompleted(result);
+  }
+  if (result == 0) {
+    DoneWritingToEntry(true);
+  }
+  TransitionToState(STATE_NONE);
+  return result;
+}
+
 int HttpCache::Transaction::DoNetworkRead() {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkRead");
   TransitionToState(STATE_NETWORK_READ_COMPLETE);
@@ -1995,22 +2102,19 @@ int HttpCache::Transaction::DoNetworkRead() {
 
 int HttpCache::Transaction::DoNetworkReadComplete(int result) {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadComplete");
-  DCHECK(mode_ & WRITE || mode_ == NONE);
 
   if (!cache_.get()) {
     TransitionToState(STATE_NONE);
     return ERR_UNEXPECTED;
   }
 
-  // If there is an error or we aren't saving the data, we are done; just wait
-  // until the destructor runs to see if we can keep the data.
-  if (mode_ == NONE || result < 0) {
+  if (!partial_) {
     TransitionToState(STATE_NONE);
     return result;
   }
 
-  TransitionToState(STATE_CACHE_WRITE_DATA);
-  return result;
+  // Partial specific logic.
+  return CheckAndProcessPartialCompletion(result);
 }
 
 int HttpCache::Transaction::DoCacheReadData() {
@@ -2076,84 +2180,6 @@ int HttpCache::Transaction::DoCacheReadDataComplete(int result) {
 
   TransitionToState(STATE_NONE);
   return result;
-}
-
-int HttpCache::Transaction::DoCacheWriteData(int num_bytes) {
-  TRACE_EVENT0("io", "HttpCacheTransaction::DoCacheWriteData");
-  TransitionToState(STATE_CACHE_WRITE_DATA_COMPLETE);
-  write_len_ = num_bytes;
-  if (entry_) {
-    if (net_log_.IsCapturing())
-      net_log_.BeginEvent(NetLogEventType::HTTP_CACHE_WRITE_DATA);
-  }
-
-  if (!entry_ || !num_bytes)
-    return num_bytes;
-
-  int current_size = entry_->disk_entry->GetDataSize(kResponseContentIndex);
-  return WriteToEntry(kResponseContentIndex, current_size, read_buf_.get(),
-                      num_bytes, io_callback_);
-}
-
-int HttpCache::Transaction::DoCacheWriteDataComplete(int result) {
-  TRACE_EVENT0("io", "HttpCacheTransaction::DoCacheWriteDataComplete");
-  if (entry_) {
-    if (net_log_.IsCapturing()) {
-      net_log_.EndEventWithNetErrorCode(NetLogEventType::HTTP_CACHE_WRITE_DATA,
-                                        result);
-    }
-  }
-  if (!cache_.get()) {
-    TransitionToState(STATE_NONE);
-    return ERR_UNEXPECTED;
-  }
-
-  if (result != write_len_) {
-    DLOG(ERROR) << "failed to write response data to cache";
-    DoneWritingToEntry(false);
-
-    // We want to ignore errors writing to disk and just keep reading from
-    // the network.
-    result = write_len_;
-  } else if (!done_reading_ && entry_ && (!partial_ || truncated_)) {
-    int current_size = entry_->disk_entry->GetDataSize(kResponseContentIndex);
-    int64_t body_size = response_.headers->GetContentLength();
-    if (body_size >= 0 && body_size <= current_size)
-      done_reading_ = true;
-  }
-
-  if (partial_) {
-    // This may be the last request.
-    if (result != 0 || truncated_ ||
-        !(partial_->IsLastRange() || mode_ == WRITE)) {
-      return DoPartialNetworkReadCompleted(result);
-    }
-  }
-
-  if (result == 0) {
-    // End of file. This may be the result of a connection problem so see if we
-    // have to keep the entry around to be flagged as truncated later on.
-    if (done_reading_ || !entry_ || partial_ ||
-        response_.headers->GetContentLength() <= 0) {
-      DoneWritingToEntry(true);
-    }
-  }
-
-  TransitionToState(STATE_NONE);
-  return result;
-}
-
-int HttpCache::Transaction::DoCacheWriteTruncatedResponse() {
-  TRACE_EVENT0("io", "HttpCacheTransaction::DoCacheWriteTruncatedResponse");
-  TransitionToState(STATE_CACHE_WRITE_TRUNCATED_RESPONSE_COMPLETE);
-  return WriteResponseInfoToEntry(true);
-}
-
-int HttpCache::Transaction::DoCacheWriteTruncatedResponseComplete(int result) {
-  TRACE_EVENT0("io", "HttpCacheTransaction::DoCacheWriteTruncatedResponse");
-
-  TransitionToState(STATE_NONE);
-  return OnWriteResponseInfoToEntryComplete(result);
 }
 
 //-----------------------------------------------------------------------------
@@ -2752,15 +2778,16 @@ void HttpCache::Transaction::IgnoreRangeRequest() {
   // using the cache and see what happens. Most likely this is the first
   // response from the server (it's not changing its mind midway, right?).
   UpdateCacheEntryStatus(CacheEntryStatus::ENTRY_OTHER);
-  if (mode_ & WRITE)
-    DoneWritingToEntry(mode_ != WRITE);
-  else if (mode_ & READ && entry_)
+  if (mode_ & WRITE) {
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(mode_ != WRITE);
+  } else if (mode_ & READ && entry_)
     cache_->DoneWithEntry(entry_, this, false /* process_cancel */,
                           partial_ != nullptr);
 
   partial_.reset(NULL);
-  entry_ = NULL;
-  mode_ = NONE;
+  ResetStateDoneWritingToEntry();
 }
 
 void HttpCache::Transaction::FixHeadersForHead() {
@@ -2830,7 +2857,9 @@ int HttpCache::Transaction::WriteResponseInfoToEntry(bool truncated) {
   // status to a net error and replay the net error.
   if ((response_.headers->HasHeaderValue("cache-control", "no-store")) ||
       IsCertStatusError(response_.ssl_info.cert_status)) {
-    DoneWritingToEntry(false);
+    if (entry_)
+      RecordHistograms();
+    SetNetworkReadOnly(false);
     if (net_log_.IsCapturing())
       net_log_.EndEvent(NetLogEventType::HTTP_CACHE_WRITE_INFO);
     return OK;
@@ -2865,6 +2894,18 @@ int HttpCache::Transaction::OnWriteResponseInfoToEntryComplete(int result) {
   return OK;
 }
 
+void HttpCache::Transaction::SetNetworkReadOnly(bool success) {
+  mode_ = NONE;
+
+  // Let writers know so that it doesn't attempt to write to the cache.
+  if (entry_ && entry_->writers && entry_->writers->HasTransaction(this)) {
+    entry_->writers->SetNetworkReadOnly(this, success);
+  } else if (entry_) {
+    cache_->DoneWritingToEntry(entry_, success, this);
+    ResetStateDoneWritingToEntry();
+  }
+}
+
 void HttpCache::Transaction::DoneWritingToEntry(bool success) {
   if (!entry_)
     return;
@@ -2872,7 +2913,11 @@ void HttpCache::Transaction::DoneWritingToEntry(bool success) {
   RecordHistograms();
 
   cache_->DoneWritingToEntry(entry_, success, this);
-  entry_ = NULL;
+  ResetStateDoneWritingToEntry();
+}
+
+void HttpCache::Transaction::ResetStateDoneWritingToEntry() {
+  entry_ = nullptr;
   mode_ = NONE;  // switch to 'pass through' mode
 }
 
@@ -2944,7 +2989,10 @@ int HttpCache::Transaction::DoPartialNetworkReadCompleted(int result) {
 
   if (result == 0) {
     // We need to move on to the next range.
-    ResetNetworkTransaction();
+    if (network_trans_)
+      ResetNetworkTransaction();
+    else if (entry_ && entry_->writers && entry_->writers->HasTransaction(this))
+      entry_->writers->ResetNetworkTransaction(this);
     TransitionToState(STATE_START_PARTIAL_CACHE_VALIDATION);
   } else {
     TransitionToState(STATE_NONE);
@@ -2992,21 +3040,40 @@ void HttpCache::Transaction::ResetPartialState(bool delete_object) {
   }
 }
 
-void HttpCache::Transaction::ResetNetworkTransaction() {
+void HttpCache::Transaction::SaveNetworkTransactionInfo(
+    HttpTransaction* transaction) {
+  DCHECK(transaction);
   DCHECK(!old_network_trans_load_timing_);
-  DCHECK(network_trans_);
   LoadTimingInfo load_timing;
-  if (network_trans_->GetLoadTimingInfo(&load_timing))
+  if (transaction->GetLoadTimingInfo(&load_timing))
     old_network_trans_load_timing_.reset(new LoadTimingInfo(load_timing));
-  total_received_bytes_ += network_trans_->GetTotalReceivedBytes();
-  total_sent_bytes_ += network_trans_->GetTotalSentBytes();
+  total_received_bytes_ += transaction->GetTotalReceivedBytes();
+  total_sent_bytes_ += transaction->GetTotalSentBytes();
   ConnectionAttempts attempts;
-  network_trans_->GetConnectionAttempts(&attempts);
+  transaction->GetConnectionAttempts(&attempts);
   for (const auto& attempt : attempts)
     old_connection_attempts_.push_back(attempt);
   old_remote_endpoint_ = IPEndPoint();
-  network_trans_->GetRemoteEndpoint(&old_remote_endpoint_);
+  transaction->GetRemoteEndpoint(&old_remote_endpoint_);
+}
+
+void HttpCache::Transaction::ResetNetworkTransaction() {
+  SaveNetworkTransactionInfo(network_trans_.get());
   network_trans_.reset();
+}
+
+void HttpCache::Transaction::SaveWritersNetworkTransactionInfo() {
+  DCHECK(entry_ && entry_->writers);
+  HttpTransaction* transaction = entry_->writers->network_transaction();
+  SaveNetworkTransactionInfo(transaction);
+}
+
+HttpTransaction* HttpCache::Transaction::network_transaction() const {
+  if (network_trans_)
+    return network_trans_.get();
+  if (entry_ && entry_->writers->HasTransaction(const_cast<Transaction*>(this)))
+    return entry_->writers->network_transaction();
+  return nullptr;
 }
 
 // Histogram data from the end of 2010 show the following distribution of
