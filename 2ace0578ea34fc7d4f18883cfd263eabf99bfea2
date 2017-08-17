@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110a56a2_8a4dae04",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T21:08:11Z",
+      "side": 1,
+      "message": "Check existence of |ratings_| and |price_| because they are only created when playstore search is enabled.\n\ne.g. \n  if (ratings_ \u0026\u0026 ratings_-\u003evisible())",
+      "revId": "2ace0578ea34fc7d4f18883cfd263eabf99bfea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
