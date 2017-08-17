@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e93ca2b8_7f8b251e",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-17T19:45:57Z",
+      "side": 1,
+      "message": "Hey, thank you both for the elaborate discussion and sorry for making you feel uncomfortable! :-)\n\nI\u0027d like to emphasize that for my project to come to an reasonable end state within my remaining two weeks, I need to be able to use WebCORS from content/child/loader/CORSURLLoader and it is my understanding that content/child does not qualify as being INSIDE_BLINK(?).\n\nAs for the solutions, considering that I am literally counting the days that I have left to finish, I would appreciate something that wouldn\u0027t take me (i.e. a green intern) too much time or could be polished later once CORSURLLoader and friends are landed.",
+      "parentUuid": "9917f188_e6f664b6",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5b883a_dc6fe362",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
