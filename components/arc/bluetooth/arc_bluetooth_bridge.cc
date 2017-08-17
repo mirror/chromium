@@ -13,6 +13,7 @@
 #include <string>
 #include <utility>
 
+#include "ash/public/cpp/ash_pref_names.h"
 #include "base/bind.h"
 #include "base/json/json_writer.h"
 #include "base/logging.h"
@@ -23,9 +24,13 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/profiles/profile.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/bluetooth/bluetooth_type_converters.h"
+#include "components/prefs/pref_service.h"
+#include "components/user_manager/user_manager.h"
 #include "device/bluetooth/bluetooth_common.h"
 #include "device/bluetooth/bluetooth_device.h"
 #include "device/bluetooth/bluetooth_gatt_connection.h"
@@ -1035,12 +1040,18 @@ void ArcBluetoothBridge::CancelDiscovery() {
 
 void ArcBluetoothBridge::OnPoweredOn(
     const base::Callback<void(mojom::BluetoothAdapterState)>& callback) const {
+  // Saves the power state to user preference.
+  SetPrimaryUserBluetoothPowerSetting(true);
+
   callback.Run(mojom::BluetoothAdapterState::ON);
   SendCachedPairedDevices();
 }
 
 void ArcBluetoothBridge::OnPoweredOff(
     const base::Callback<void(mojom::BluetoothAdapterState)>& callback) const {
+  // Saves the power state to user preference.
+  SetPrimaryUserBluetoothPowerSetting(false);
+
   callback.Run(mojom::BluetoothAdapterState::OFF);
 }
 
@@ -2450,6 +2461,16 @@ void ArcBluetoothBridge::OnGetServiceRecordsError(
   sdp_bluetooth_instance->OnGetSdpRecords(
       status, std::move(remote_addr), target_uuid,
       std::vector<mojom::BluetoothSdpRecordPtr>());
+}
+
+void ArcBluetoothBridge::SetPrimaryUserBluetoothPowerSetting(
+    bool enabled) const {
+  const user_manager::User* const user =
+      user_manager::UserManager::Get()->GetPrimaryUser();
+  Profile* profile = chromeos::ProfileHelper::Get()->GetProfileByUser(user);
+  DCHECK(profile);
+  profile->GetPrefs()->SetBoolean(ash::prefs::kUserBluetoothAdapterEnabled,
+                                  enabled);
 }
 
 }  // namespace arc

@@ -438,6 +438,9 @@ class ArcBluetoothBridge
   void OnSetAdapterProperty(mojom::BluetoothStatus success,
                             mojom::BluetoothPropertyPtr property);
 
+  // Convenient function to set primary user's bluetooth pref.
+  void SetPrimaryUserBluetoothPowerSetting(bool enabled) const;
+
   // Callbacks for managing advertisements registered from the instance.
 
   // Called when we have an open slot in the advertisement map and want to

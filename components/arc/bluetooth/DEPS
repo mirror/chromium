@@ -1,3 +1,6 @@
 include_rules = [
+  "+ash/public/cpp/ash_pref_names.h",
+  "+chrome/browser/profiles/profile.h",
+  "+chrome/browser/chromeos/profiles/profile_helper.h",
   "+device/bluetooth",
 ]
