@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3dbdde_a9cb8fa4",
+        "filename": "third_party/WebKit/Source/core/resize_observer/ResizeObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-17T17:49:15Z",
+      "side": 1,
+      "message": "do these need to be rounded?",
+      "revId": "de45bdc3ec0cce5f6aa599ad1922527d850b6383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
