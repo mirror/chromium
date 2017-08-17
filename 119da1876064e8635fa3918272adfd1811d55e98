@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9bc746_69776210",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-17T08:54:07Z",
+      "side": 1,
+      "message": "I don\u0027t like having the toolbar height with this, but I don\u0027t see a good way to do this in old bling.",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 52
+      },
+      "revId": "119da1876064e8635fa3918272adfd1811d55e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
