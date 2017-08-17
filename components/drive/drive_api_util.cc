@@ -204,8 +204,7 @@ void RunAsyncTask(base::TaskRunner* task_runner,
                   const tracked_objects::Location& from_here,
                   base::OnceCallback<FileError()> task,
                   base::OnceCallback<void(FileError)> reply) {
-  PostTaskAndReplyWithResult(task_runner, from_here, std::move(task),
-                             std::move(reply));
+  task_runner->PostTaskAndReply(from_here, std::move(task), std::move(reply));
 }
 
 }  // namespace util

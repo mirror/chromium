@@ -81,9 +81,8 @@ class PrefetchStore {
     sql::Connection* db =
         initialization_status_ == InitializationStatus::SUCCESS ? db_.get()
                                                                 : nullptr;
-    base::PostTaskAndReplyWithResult(
-        blocking_task_runner_.get(), FROM_HERE,
-        base::BindOnce(std::move(run_callback), db),
+    blocking_task_runner_->PostTaskAndReply(
+        FROM_HERE, base::BindOnce(std::move(run_callback), db),
         std::move(result_callback));
   }
 

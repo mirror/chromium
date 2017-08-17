@@ -169,7 +169,7 @@ bool OpenFileWithBrowser(Profile* profile,
     } else {
       // The file is local (downloaded from an attachment or otherwise copied).
       // Parse the file to extract the Docs url and open this url.
-      base::PostTaskWithTraitsAndReplyWithResult(
+      base::PostTaskWithTraitsAndReply(
           FROM_HERE, {base::MayBlock()},
           base::Bind(&ReadUrlFromGDocAsync, file_path),
           base::Bind(&OpenNewTab, profile));

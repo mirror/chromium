@@ -495,11 +495,9 @@ ExtensionFunction::ResponseAction ProcessesTerminateFunction::Run() {
   // This could be a non-renderer child process like a plugin or a nacl
   // process. Try to get its handle from the BrowserChildProcessHost on the
   // IO thread.
-  content::BrowserThread::PostTaskAndReplyWithResult(
-      content::BrowserThread::IO,
-      FROM_HERE,
-      base::Bind(&ProcessesTerminateFunction::GetProcessHandleOnIO,
-                 this,
+  content::BrowserThread::PostTaskAndReply(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(&ProcessesTerminateFunction::GetProcessHandleOnIO, this,
                  child_process_host_id_),
       base::Bind(&ProcessesTerminateFunction::OnProcessHandleOnUI, this));
 

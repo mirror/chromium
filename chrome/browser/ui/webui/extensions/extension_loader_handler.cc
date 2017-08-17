@@ -123,7 +123,7 @@ void ExtensionLoaderHandler::GetManifestError(
 
   // This will read the manifest and call AddFailure with the read manifest
   // contents.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
       base::Bind(&ReadFileToString, extension_path.Append(kManifestFilename)),
       base::Bind(callback, extension_path, error, line));

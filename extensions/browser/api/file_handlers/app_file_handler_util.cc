@@ -169,7 +169,7 @@ void WritableFileChecker::Check() {
       continue;
     }
 #endif
-    content::BrowserThread::PostTaskAndReplyWithResult(
+    content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::FILE, FROM_HERE,
         base::Bind(&PrepareNativeLocalFileForWritableApp, path, is_directory),
         base::Bind(&WritableFileChecker::OnPrepareFileDone, this, path));

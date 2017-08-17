@@ -50,11 +50,10 @@ TEST_F(TruncateOperationTest, Truncate) {
 
   base::FilePath local_path;
   error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::GetFile,
-                 base::Unretained(cache()),
+      base::Bind(&internal::FileCache::GetFile, base::Unretained(cache()),
                  GetLocalId(file_in_root), &local_path),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
@@ -113,11 +112,10 @@ TEST_F(TruncateOperationTest, Extend) {
 
   base::FilePath local_path;
   error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::GetFile,
-                 base::Unretained(cache()),
+      base::Bind(&internal::FileCache::GetFile, base::Unretained(cache()),
                  GetLocalId(file_in_root), &local_path),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();

@@ -185,11 +185,11 @@ void MediaDevicesDispatcherHost::EnumerateDevices(
   devices_to_enumerate[MEDIA_DEVICE_TYPE_VIDEO_INPUT] = request_video_input;
   devices_to_enumerate[MEDIA_DEVICE_TYPE_AUDIO_OUTPUT] = request_audio_output;
 
-  base::PostTaskAndReplyWithResult(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI).get(), FROM_HERE,
-      base::Bind(GetOrigin, render_process_id_, render_frame_id_,
-                 security_origin_for_testing_),
-      base::Bind(
+  BrowserThread::PostTaskAndReply(
+      (BrowserThread::UI), FROM_HERE,
+      base::BindOnce(GetOrigin, render_process_id_, render_frame_id_,
+                     security_origin_for_testing_),
+      base::BindOnce(
           &MediaDevicesDispatcherHost::CheckPermissionsForEnumerateDevices,
           weak_factory_.GetWeakPtr(), devices_to_enumerate,
           base::Passed(&client_callback)));
@@ -198,22 +198,24 @@ void MediaDevicesDispatcherHost::EnumerateDevices(
 void MediaDevicesDispatcherHost::GetVideoInputCapabilities(
     GetVideoInputCapabilitiesCallback client_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  base::PostTaskAndReplyWithResult(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI).get(), FROM_HERE,
-      base::Bind(GetOrigin, render_process_id_, render_frame_id_,
-                 security_origin_for_testing_),
-      base::Bind(&MediaDevicesDispatcherHost::GetDefaultVideoInputDeviceID,
-                 weak_factory_.GetWeakPtr(), base::Passed(&client_callback)));
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(GetOrigin, render_process_id_, render_frame_id_,
+                     security_origin_for_testing_),
+      base::BindOnce(&MediaDevicesDispatcherHost::GetDefaultVideoInputDeviceID,
+                     weak_factory_.GetWeakPtr(),
+                     base::Passed(&client_callback)));
 }
 
 void MediaDevicesDispatcherHost::GetAudioInputCapabilities(
     GetAudioInputCapabilitiesCallback client_callback) {
-  base::PostTaskAndReplyWithResult(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI).get(), FROM_HERE,
-      base::Bind(GetOrigin, render_process_id_, render_frame_id_,
-                 security_origin_for_testing_),
-      base::Bind(&MediaDevicesDispatcherHost::GetDefaultAudioInputDeviceID,
-                 weak_factory_.GetWeakPtr(), base::Passed(&client_callback)));
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(GetOrigin, render_process_id_, render_frame_id_,
+                     security_origin_for_testing_),
+      base::BindOnce(&MediaDevicesDispatcherHost::GetDefaultAudioInputDeviceID,
+                     weak_factory_.GetWeakPtr(),
+                     base::Passed(&client_callback)));
 }
 
 void MediaDevicesDispatcherHost::SubscribeDeviceChangeNotifications(

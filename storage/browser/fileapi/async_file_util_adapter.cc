@@ -160,12 +160,11 @@ void AsyncFileUtilAdapter::CreateOrOpen(
     int file_flags,
     const CreateOrOpenCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(),
+  context_ptr->task_runner()->PostTaskAndReply(
       FROM_HERE,
-      Bind(&FileSystemFileUtil::CreateOrOpen, Unretained(sync_file_util_.get()),
-           context_ptr, url, file_flags),
-      Bind(&RunCreateOrOpenCallback, base::Owned(context_ptr), callback));
+      BindOnce(&FileSystemFileUtil::CreateOrOpen,
+               Unretained(sync_file_util_.get()), context_ptr, url, file_flags),
+      BindOnce(&RunCreateOrOpenCallback, base::Owned(context_ptr), callback));
 }
 
 void AsyncFileUtilAdapter::EnsureFileExists(
@@ -189,11 +188,11 @@ void AsyncFileUtilAdapter::CreateDirectory(
     bool recursive,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::CreateDirectory,
-           Unretained(sync_file_util_.get()),
-           base::Owned(context_ptr), url, exclusive, recursive),
+           Unretained(sync_file_util_.get()), base::Owned(context_ptr), url,
+           exclusive, recursive),
       callback);
   DCHECK(success);
 }
@@ -233,11 +232,10 @@ void AsyncFileUtilAdapter::Touch(
     const base::Time& last_modified_time,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::Touch, Unretained(sync_file_util_.get()),
-           base::Owned(context_ptr), url,
-           last_access_time, last_modified_time),
+           base::Owned(context_ptr), url, last_access_time, last_modified_time),
       callback);
   DCHECK(success);
 }
@@ -248,8 +246,8 @@ void AsyncFileUtilAdapter::Truncate(
     int64_t length,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::Truncate, Unretained(sync_file_util_.get()),
            base::Owned(context_ptr), url, length),
       callback);
@@ -265,11 +263,11 @@ void AsyncFileUtilAdapter::CopyFileLocal(
     const StatusCallback& callback) {
   // TODO(hidehiko): Support progress_callback.
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::CopyOrMoveFile,
-           Unretained(sync_file_util_.get()), base::Owned(context_ptr),
-           src_url, dest_url, option, true /* copy */),
+           Unretained(sync_file_util_.get()), base::Owned(context_ptr), src_url,
+           dest_url, option, true /* copy */),
       callback);
   DCHECK(success);
 }
@@ -281,11 +279,11 @@ void AsyncFileUtilAdapter::MoveFileLocal(
     CopyOrMoveOption option,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::CopyOrMoveFile,
-           Unretained(sync_file_util_.get()), base::Owned(context_ptr),
-           src_url, dest_url, option, false /* copy */),
+           Unretained(sync_file_util_.get()), base::Owned(context_ptr), src_url,
+           dest_url, option, false /* copy */),
       callback);
   DCHECK(success);
 }
@@ -296,11 +294,11 @@ void AsyncFileUtilAdapter::CopyInForeignFile(
     const FileSystemURL& dest_url,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::CopyInForeignFile,
-           Unretained(sync_file_util_.get()),
-           base::Owned(context_ptr), src_file_path, dest_url),
+           Unretained(sync_file_util_.get()), base::Owned(context_ptr),
+           src_file_path, dest_url),
       callback);
   DCHECK(success);
 }
@@ -310,10 +308,9 @@ void AsyncFileUtilAdapter::DeleteFile(
     const FileSystemURL& url,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
-      Bind(&FileSystemFileUtil::DeleteFile,
-           Unretained(sync_file_util_.get()),
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
+      Bind(&FileSystemFileUtil::DeleteFile, Unretained(sync_file_util_.get()),
            base::Owned(context_ptr), url),
       callback);
   DCHECK(success);
@@ -324,11 +321,10 @@ void AsyncFileUtilAdapter::DeleteDirectory(
     const FileSystemURL& url,
     const StatusCallback& callback) {
   FileSystemOperationContext* context_ptr = context.release();
-  const bool success = base::PostTaskAndReplyWithResult(
-      context_ptr->task_runner(), FROM_HERE,
+  const bool success = context_ptr->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       Bind(&FileSystemFileUtil::DeleteDirectory,
-           Unretained(sync_file_util_.get()),
-           base::Owned(context_ptr), url),
+           Unretained(sync_file_util_.get()), base::Owned(context_ptr), url),
       callback);
   DCHECK(success);
 }

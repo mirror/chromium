@@ -116,8 +116,8 @@ void StorageMonitorCros::CheckExistingMountPoints() {
       DiskMountManager::GetInstance()->mount_points();
   for (DiskMountManager::MountPointMap::const_iterator it =
       mount_point_map.begin(); it != mount_point_map.end(); ++it) {
-    base::PostTaskAndReplyWithResult(
-        blocking_task_runner.get(), FROM_HERE,
+    blocking_task_runner->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&MediaStorageUtil::HasDcim,
                    base::FilePath(it->second.mount_path)),
         base::Bind(&StorageMonitorCros::AddMountedPath,
@@ -164,7 +164,7 @@ void StorageMonitorCros::OnMountEvent(
         return;
       }
 
-      base::PostTaskWithTraitsAndReplyWithResult(
+      base::PostTaskWithTraitsAndReply(
           FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
           base::Bind(&MediaStorageUtil::HasDcim,
                      base::FilePath(mount_info.mount_path)),

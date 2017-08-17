@@ -598,8 +598,8 @@ void WebstoreInstaller::DownloadCrx(
   }
 #endif
 
-  base::PostTaskAndReplyWithResult(
-      GetExtensionFileTaskRunner().get(), FROM_HERE,
+  GetExtensionFileTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&GetDownloadFilePath, download_directory, extension_id),
       base::BindOnce(&WebstoreInstaller::StartDownload, this, extension_id));
 }

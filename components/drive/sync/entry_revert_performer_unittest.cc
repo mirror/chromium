@@ -46,11 +46,11 @@ TEST_F(EntryRevertPerformerTest, RevertEntry) {
   updated_entry.set_metadata_edit_state(ResourceEntry::DIRTY);
 
   FileError error = FILE_ERROR_FAILED;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::RefreshEntry,
-                 base::Unretained(metadata()), updated_entry),
+      base::Bind(&ResourceMetadata::RefreshEntry, base::Unretained(metadata()),
+                 updated_entry),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);
@@ -89,11 +89,11 @@ TEST_F(EntryRevertPerformerTest, RevertEntry_NotFoundOnServer) {
 
   FileError error = FILE_ERROR_FAILED;
   std::string local_id;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner(),
+
+  blocking_task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::AddEntry,
-                 base::Unretained(metadata()), entry, &local_id),
+      base::Bind(&ResourceMetadata::AddEntry, base::Unretained(metadata()),
+                 entry, &local_id),
       google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(FILE_ERROR_OK, error);

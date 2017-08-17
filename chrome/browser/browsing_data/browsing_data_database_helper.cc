@@ -53,8 +53,8 @@ void BrowsingDataDatabaseHelper::StartFetching(FetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!callback.is_null());
 
-  base::PostTaskAndReplyWithResult(
-      tracker_->task_runner(), FROM_HERE,
+  tracker_->task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(
           [](storage::DatabaseTracker* tracker) {
             std::list<DatabaseInfo> result;

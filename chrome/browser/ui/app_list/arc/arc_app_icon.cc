@@ -271,7 +271,7 @@ void ArcAppIcon::LoadForScaleFactor(ui::ScaleFactor scale_factor) {
   if (path.empty())
     return;
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(
           &ArcAppIcon::ReadOnFileThread, scale_factor, path,

@@ -133,12 +133,10 @@ void PluginPrivateFileSystemBackend::OpenPrivateFileSystem(
     return;
   }
 
-  PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
+  file_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&OpenFileSystemOnFileTaskRunner,
-                 obfuscated_file_util(), plugin_map_,
-                 origin_url, filesystem_id, plugin_id, mode),
+      base::Bind(&OpenFileSystemOnFileTaskRunner, obfuscated_file_util(),
+                 plugin_map_, origin_url, filesystem_id, plugin_id, mode),
       callback);
 }
 

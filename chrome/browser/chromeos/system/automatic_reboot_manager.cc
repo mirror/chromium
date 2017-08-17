@@ -176,7 +176,7 @@ AutomaticRebootManager::AutomaticRebootManager(
     OnUserActivity(NULL);
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN, base::MayBlock()},
       base::BindOnce(&GetSystemEventTimes),

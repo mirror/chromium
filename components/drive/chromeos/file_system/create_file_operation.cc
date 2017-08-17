@@ -89,20 +89,13 @@ void CreateFileOperation::CreateFile(const base::FilePath& file_path,
   DCHECK(!callback.is_null());
 
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateLocalState,
-                 metadata_,
-                 file_path,
-                 mime_type,
-                 entry),
+      base::Bind(&UpdateLocalState, metadata_, file_path, mime_type, entry),
       base::Bind(&CreateFileOperation::CreateFileAfterUpdateLocalState,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 file_path,
-                 is_exclusive,
-                 base::Owned(entry)));
+                 weak_ptr_factory_.GetWeakPtr(), callback, file_path,
+                 is_exclusive, base::Owned(entry)));
 }
 
 void CreateFileOperation::CreateFileAfterUpdateLocalState(

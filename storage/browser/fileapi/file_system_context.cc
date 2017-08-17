@@ -426,8 +426,8 @@ void FileSystemContext::DeleteFileSystem(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      default_file_task_runner(), FROM_HERE,
+  default_file_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       // It is safe to pass Unretained(quota_util) since context owns it.
       base::Bind(&FileSystemQuotaUtil::DeleteOriginDataOnFileTaskRunner,
                  base::Unretained(backend->GetQuotaUtil()),

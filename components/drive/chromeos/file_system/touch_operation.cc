@@ -61,13 +61,13 @@ void TouchOperation::TouchFile(const base::FilePath& file_path,
   DCHECK(!callback.is_null());
 
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&UpdateLocalState, metadata_, file_path, last_access_time,
-                 last_modified_time, entry),
-      base::Bind(&TouchOperation::TouchFileAfterUpdateLocalState,
-                 weak_ptr_factory_.GetWeakPtr(), file_path, callback,
-                 base::Owned(entry)));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&UpdateLocalState, metadata_, file_path, last_access_time,
+                     last_modified_time, entry),
+      base::BindOnce(&TouchOperation::TouchFileAfterUpdateLocalState,
+                     weak_ptr_factory_.GetWeakPtr(), file_path, callback,
+                     base::Owned(entry)));
 }
 
 void TouchOperation::TouchFileAfterUpdateLocalState(

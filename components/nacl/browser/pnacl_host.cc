@@ -378,7 +378,7 @@ void PnaclHost::CheckCacheQueryReady(
   pt->got_nexe_fd = false;
   FileProxy* proxy(new FileProxy(std::move(file), this));
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&FileProxy::Write, base::Unretained(proxy),
                  pt->nexe_read_buffer),
@@ -451,7 +451,7 @@ void PnaclHost::TranslationFinished(int render_process_id,
     entry->second.nexe_fd = NULL;
     entry->second.got_nexe_fd = false;
 
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(&PnaclHost::CopyFileToBuffer, Passed(&file)),
         base::Bind(&PnaclHost::StoreTranslatedNexe, base::Unretained(this),

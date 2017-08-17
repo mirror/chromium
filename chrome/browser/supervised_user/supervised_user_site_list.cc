@@ -89,7 +89,7 @@ void SupervisedUserSiteList::Load(const std::string& id,
                                   const base::FilePath& large_icon_path,
                                   const base::FilePath& path,
                                   const LoadedCallback& callback) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

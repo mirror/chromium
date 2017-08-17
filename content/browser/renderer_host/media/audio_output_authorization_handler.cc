@@ -138,7 +138,7 @@ void AudioOutputAuthorizationHandler::RequestDeviceAuthorization(
 
       // We don't need the origin for authorization in this case, but it's used
       // for hashing the device id before sending it back to the renderer.
-      BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::PostTaskAndReply(
           BrowserThread::UI, FROM_HERE,
           base::BindOnce(&GetOriginOnUIThread, render_process_id_,
                          render_frame_id),

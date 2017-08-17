@@ -279,9 +279,9 @@ void V4Database::VerifyChecksum(
     stores.push_back(std::make_pair(next_store.first, next_store.second.get()));
   }
 
-  base::PostTaskAndReplyWithResult(db_task_runner_.get(), FROM_HERE,
-                                   base::Bind(&VerifyChecksums, stores),
-                                   db_ready_for_updates_callback);
+  db_task_runner_->PostTaskAndReply(FROM_HERE,
+                                    base::Bind(&VerifyChecksums, stores),
+                                    db_ready_for_updates_callback);
 }
 
 bool V4Database::IsStoreAvailable(const ListIdentifier& identifier) const {

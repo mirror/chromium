@@ -517,12 +517,11 @@ void SupervisedUserManagerImpl::LoadSupervisedUserToken(
   // TODO(antrim): use profile->GetPath() once we sure it is safe.
   base::FilePath profile_dir = ProfileHelper::GetProfilePathByUserIdHash(
       ProfileHelper::Get()->GetUserByProfile(profile)->username_hash());
-  PostTaskAndReplyWithResult(
-      base::CreateTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})
-          .get(),
-      FROM_HERE, base::Bind(&LoadSyncToken, profile_dir), callback);
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::Bind(&LoadSyncToken, profile_dir), callback);
 }
 
 void SupervisedUserManagerImpl::ConfigureSyncWithToken(

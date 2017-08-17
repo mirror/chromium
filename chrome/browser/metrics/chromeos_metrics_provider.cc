@@ -173,7 +173,7 @@ void ChromeOSMetricsProvider::InitTaskGetHardwareClass(
     const base::Closure& callback) {
   // Run the (potentially expensive) task in the background to avoid blocking
   // the UI thread.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::WithBaseSyncPrimitives(),
        base::TaskPriority::BACKGROUND,

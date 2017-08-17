@@ -177,13 +177,9 @@ void OnDidCreateSnapshotFile(
           media_task_runner);
 
   if (validate_media_files) {
-    base::PostTaskAndReplyWithResult(
-        media_task_runner,
-        FROM_HERE,
-        base::Bind(&NativeMediaFileUtil::IsMediaFile, platform_path),
-        base::Bind(&OnDidCheckMediaForCreateSnapshotFile,
-                   callback,
-                   file_info,
+    media_task_runner->PostTaskAndReply(
+        FROM_HERE, base::Bind(&NativeMediaFileUtil::IsMediaFile, platform_path),
+        base::Bind(&OnDidCheckMediaForCreateSnapshotFile, callback, file_info,
                    file));
   } else {
     OnDidCheckMediaForCreateSnapshotFile(callback, file_info, file,
@@ -556,9 +552,9 @@ void DeviceMediaAsyncFileUtil::CreateSnapshotFile(
   }
 
   scoped_refptr<base::SequencedTaskRunner> task_runner(context->task_runner());
-  base::PostTaskAndReplyWithResult(
-      task_runner.get(), FROM_HERE,
-      base::Bind(&CreateSnapshotFileOnBlockingPool, profile_path_),
+
+  task_runner->PostTaskAndReply(
+      FROM_HERE, base::Bind(&CreateSnapshotFileOnBlockingPool, profile_path_),
       base::Bind(&OnSnapshotFileCreatedRunTask, base::Passed(&context),
                  callback, url, validate_media_files()));
 }
@@ -637,12 +633,10 @@ void DeviceMediaAsyncFileUtil::OnDidGetFileInfo(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      task_runner,
+  task_runner->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&MediaPathFilterWrapper::CheckFilePath,
-                 media_path_filter_wrapper_,
-                 path),
+                 media_path_filter_wrapper_, path),
       base::Bind(&OnDidCheckMediaForGetFileInfo, callback, file_info));
 }
 
@@ -657,12 +651,10 @@ void DeviceMediaAsyncFileUtil::OnDidReadDirectory(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      task_runner,
+  task_runner->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&MediaPathFilterWrapper::FilterMediaEntries,
-                 media_path_filter_wrapper_,
-                 file_list),
+                 media_path_filter_wrapper_, file_list),
       base::Bind(&OnDidCheckMediaForReadDirectory, callback, has_more));
 }
 

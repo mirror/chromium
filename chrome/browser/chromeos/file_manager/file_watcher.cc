@@ -87,8 +87,8 @@ void FileWatcher::WatchLocalFile(
   DCHECK(!callback.is_null());
   DCHECK(!local_file_watcher_);
 
-  base::PostTaskAndReplyWithResult(
-      sequenced_task_runner_.get(), FROM_HERE,
+  sequenced_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&CreateAndStartFilePathWatcher, local_path,
                  google_apis::CreateRelayCallback(file_watcher_callback)),
       base::Bind(&FileWatcher::OnWatcherStarted, weak_ptr_factory_.GetWeakPtr(),

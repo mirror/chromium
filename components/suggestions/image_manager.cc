@@ -202,11 +202,11 @@ void ImageManager::ServeFromCacheOrNetwork(
   scoped_refptr<base::RefCountedMemory> encoded_data =
       GetEncodedImageFromCache(url);
   if (encoded_data.get()) {
-    base::PostTaskAndReplyWithResult(
-        background_task_runner_.get(), FROM_HERE,
-        base::Bind(&DecodeImage, encoded_data),
-        base::Bind(&ImageManager::OnCacheImageDecoded,
-                   weak_ptr_factory_.GetWeakPtr(), url, image_url, callback));
+    background_task_runner_->PostTaskAndReply(
+        FROM_HERE, base::BindOnce(&DecodeImage, encoded_data),
+        base::BindOnce(&ImageManager::OnCacheImageDecoded,
+                       weak_ptr_factory_.GetWeakPtr(), url, image_url,
+                       callback));
   } else {
     image_fetcher_->StartOrQueueNetworkRequest(
         url.spec(), image_url, base::Bind(&WrapCallback, callback),

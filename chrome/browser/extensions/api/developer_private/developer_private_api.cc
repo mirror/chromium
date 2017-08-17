@@ -1297,7 +1297,7 @@ DeveloperPrivateRequestFileSourceFunction::Run() {
   if (properties.path_suffix == kManifestFile && !properties.manifest_key)
     return RespondNow(Error(kManifestKeyIsRequiredError));
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&ReadFileToString, extension->path().Append(path_suffix)),
       base::Bind(&DeveloperPrivateRequestFileSourceFunction::Finish, this));

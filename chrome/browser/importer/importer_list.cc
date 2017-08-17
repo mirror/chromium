@@ -179,7 +179,7 @@ void ImporterList::DetectSourceProfiles(
     bool include_interactive_profiles,
     const base::Closure& profiles_loaded_callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

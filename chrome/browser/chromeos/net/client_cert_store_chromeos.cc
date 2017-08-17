@@ -82,14 +82,14 @@ void ClientCertStoreChromeOS::GotAdditionalCerts(
   scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate> password_delegate;
   if (!password_delegate_factory_.is_null())
     password_delegate = password_delegate_factory_.Run(request->host_and_port);
-  if (base::PostTaskAndReplyWithResult(
-          base::WorkerPool::GetTaskRunner(true /* task_is_slow */).get(),
-          FROM_HERE,
-          base::Bind(&ClientCertStoreChromeOS::GetAndFilterCertsOnWorkerThread,
-                     base::Unretained(this), password_delegate,
-                     base::Unretained(request),
-                     base::Passed(&additional_certs)),
-          callback)) {
+  if (base::WorkerPool::GetTaskRunner(true /* task_is_slow */)
+          ->PostTaskAndReply(
+              FROM_HERE,
+              base::Bind(
+                  &ClientCertStoreChromeOS::GetAndFilterCertsOnWorkerThread,
+                  base::Unretained(this), password_delegate,
+                  base::Unretained(request), base::Passed(&additional_certs)),
+              callback)) {
     return;
   }
   // If the task could not be posted, behave as if there were no certificates.

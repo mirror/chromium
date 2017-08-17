@@ -123,8 +123,8 @@ SystemStorageGetAvailableCapacityFunction::Run() {
 
 void SystemStorageGetAvailableCapacityFunction::OnStorageMonitorInit(
     const std::string& transient_id) {
-  base::PostTaskAndReplyWithResult(
-      query_runner_.get(), FROM_HERE,
+  query_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(
           &StorageInfoProvider::GetStorageFreeSpaceFromTransientIdAsync,
           StorageInfoProvider::Get(), transient_id),

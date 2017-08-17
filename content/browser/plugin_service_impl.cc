@@ -305,8 +305,8 @@ base::string16 PluginServiceImpl::GetPluginDisplayNameByPath(
 }
 
 void PluginServiceImpl::GetPlugins(GetPluginsCallback callback) {
-  base::PostTaskAndReplyWithResult(
-      plugin_list_task_runner_.get(), FROM_HERE, base::BindOnce([]() {
+  plugin_list_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce([]() {
         std::vector<WebPluginInfo> plugins;
         PluginList::Singleton()->GetPlugins(&plugins);
         return plugins;

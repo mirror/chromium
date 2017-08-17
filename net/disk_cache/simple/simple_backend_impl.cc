@@ -288,12 +288,12 @@ int SimpleBackendImpl::Init(const CompletionCallback& completion_callback) {
   index_->ExecuteWhenReady(
       base::Bind(&RecordIndexLoad, cache_type_, base::TimeTicks::Now()));
 
-  PostTaskAndReplyWithResult(
-      cache_runner_.get(), FROM_HERE,
-      base::Bind(&SimpleBackendImpl::InitCacheStructureOnDisk, path_,
-                 orig_max_size_, GetSimpleExperiment(cache_type_)),
-      base::Bind(&SimpleBackendImpl::InitializeIndex, AsWeakPtr(),
-                 completion_callback));
+  cache_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&SimpleBackendImpl::InitCacheStructureOnDisk, path_,
+                     orig_max_size_, GetSimpleExperiment(cache_type_)),
+      base::BindOnce(&SimpleBackendImpl::InitializeIndex, AsWeakPtr(),
+                     completion_callback));
   return net::ERR_IO_PENDING;
 }
 
@@ -379,15 +379,12 @@ void SimpleBackendImpl::DoomEntries(std::vector<uint64_t>* entry_hashes,
   // base::Passed before mass_doom_entry_hashes.get().
   std::vector<uint64_t>* mass_doom_entry_hashes_ptr =
       mass_doom_entry_hashes.get();
-  PostTaskAndReplyWithResult(worker_pool_.get(),
-                             FROM_HERE,
-                             base::Bind(&SimpleSynchronousEntry::DoomEntrySet,
-                                        mass_doom_entry_hashes_ptr,
-                                        path_),
-                             base::Bind(&SimpleBackendImpl::DoomEntriesComplete,
-                                        AsWeakPtr(),
-                                        base::Passed(&mass_doom_entry_hashes),
-                                        barrier_callback));
+  worker_pool_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&SimpleSynchronousEntry::DoomEntrySet,
+                     mass_doom_entry_hashes_ptr, path_),
+      base::BindOnce(&SimpleBackendImpl::DoomEntriesComplete, AsWeakPtr(),
+                     base::Passed(&mass_doom_entry_hashes), barrier_callback));
 }
 
 net::CacheType SimpleBackendImpl::GetCacheType() const {

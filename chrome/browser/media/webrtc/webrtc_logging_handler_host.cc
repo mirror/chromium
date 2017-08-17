@@ -101,8 +101,8 @@ void WebRtcLoggingHandlerHost::UploadLog(const UploadDoneCallback& callback) {
   // Would it be better to upload whatever logs we have, or would the lack of
   // an error callback make it harder to debug potential errors?
 
-  base::PostTaskAndReplyWithResult(
-      log_uploader_->background_task_runner().get(), FROM_HERE,
+  log_uploader_->background_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&WebRtcLoggingHandlerHost::GetLogDirectoryAndEnsureExists,
                  this),
       base::Bind(&WebRtcLoggingHandlerHost::TriggerUpload, this, callback));
@@ -192,8 +192,8 @@ void WebRtcLoggingHandlerHost::StoreLogContinue(
   std::unique_ptr<WebRtcLogPaths> log_paths(new WebRtcLogPaths());
   ReleaseRtpDumps(log_paths.get());
 
-  base::PostTaskAndReplyWithResult(
-      log_uploader_->background_task_runner().get(), FROM_HERE,
+  log_uploader_->background_task_runner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&WebRtcLoggingHandlerHost::GetLogDirectoryAndEnsureExists,
                  this),
       base::Bind(&WebRtcLoggingHandlerHost::StoreLogInDirectory, this, log_id,
@@ -213,8 +213,8 @@ void WebRtcLoggingHandlerHost::StartRtpDump(
   stop_rtp_dump_callback_ = stop_callback;
 
   if (!rtp_dump_handler_) {
-    base::PostTaskAndReplyWithResult(
-        log_uploader_->background_task_runner().get(), FROM_HERE,
+    log_uploader_->background_task_runner()->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&WebRtcLoggingHandlerHost::GetLogDirectoryAndEnsureExists,
                    this),
         base::Bind(&WebRtcLoggingHandlerHost::CreateRtpDumpHandlerAndStart,
@@ -301,8 +301,8 @@ void WebRtcLoggingHandlerHost::OnChannelClosing() {
     case WebRtcTextLogHandler::STOPPED:
       text_log_handler_->ChannelClosing();
       if (upload_log_on_render_close_) {
-        base::PostTaskAndReplyWithResult(
-            log_uploader_->background_task_runner().get(), FROM_HERE,
+        log_uploader_->background_task_runner()->PostTaskAndReply(
+            FROM_HERE,
             base::Bind(
                 &WebRtcLoggingHandlerHost::GetLogDirectoryAndEnsureExists,
                 this),

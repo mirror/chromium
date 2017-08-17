@@ -65,7 +65,7 @@ void ContentVerifyJob::Start() {
   if (g_test_observer)
     g_test_observer->JobStarted(hash_reader_->extension_id(),
                                 hash_reader_->relative_path());
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&ContentHashReader::Init, hash_reader_),
       base::Bind(&ContentVerifyJob::OnHashesReady, this));

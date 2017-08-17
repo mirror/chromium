@@ -264,7 +264,7 @@ void ImageLoader::LoadImagesAsync(
     const std::vector<ImageRepresentation>& info_list,
     const ImageLoaderImageCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(LoadImagesBlocking, info_list,
                  LoadResourceBitmaps(extension, info_list)),
@@ -277,7 +277,7 @@ void ImageLoader::LoadImageFamilyAsync(
     const std::vector<ImageRepresentation>& info_list,
     const ImageLoaderImageFamilyCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(LoadImagesBlocking, info_list,
                  LoadResourceBitmaps(extension, info_list)),

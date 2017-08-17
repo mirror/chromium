@@ -199,7 +199,7 @@ ContentHashFetcherJob::ContentHashFetcherJob(
 void ContentHashFetcherJob::Start() {
   base::FilePath verified_contents_path =
       file_util::GetVerifiedContentsPath(extension_path_);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&ContentHashFetcherJob::LoadVerifiedContents, this,
                  verified_contents_path),
@@ -324,7 +324,7 @@ void ContentHashFetcherJob::OnURLFetchComplete(const net::URLFetcher* source) {
     base::FilePath destination =
         file_util::GetVerifiedContentsPath(extension_path_);
     size_t size = response->size();
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
         base::Bind(&WriteFileHelper, destination, base::Passed(&response)),
         base::Bind(&ContentHashFetcherJob::OnVerifiedContentsWritten, this,

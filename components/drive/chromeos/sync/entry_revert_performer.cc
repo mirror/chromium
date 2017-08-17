@@ -105,14 +105,13 @@ void EntryRevertPerformer::RevertEntry(const std::string& local_id,
 
   std::unique_ptr<ResourceEntry> entry(new ResourceEntry);
   ResourceEntry* entry_ptr = entry.get();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&ResourceMetadata::GetResourceEntryById,
-                 base::Unretained(metadata_), local_id, entry_ptr),
-      base::Bind(&EntryRevertPerformer::RevertEntryAfterPrepare,
-                 weak_ptr_factory_.GetWeakPtr(), context, callback,
-                 base::Passed(&entry)));
+      base::BindOnce(&ResourceMetadata::GetResourceEntryById,
+                     base::Unretained(metadata_), local_id, entry_ptr),
+      base::BindOnce(&EntryRevertPerformer::RevertEntryAfterPrepare,
+                     weak_ptr_factory_.GetWeakPtr(), context, callback,
+                     base::Passed(&entry)));
 }
 
 void EntryRevertPerformer::RevertEntryAfterPrepare(
@@ -147,19 +146,13 @@ void EntryRevertPerformer::RevertEntryAfterGetFileResource(
   DCHECK(!callback.is_null());
 
   FileChange* changed_files = new FileChange;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&FinishRevert,
-                 metadata_,
-                 local_id,
-                 status,
-                 base::Passed(&entry),
-                 changed_files),
-      base::Bind(&EntryRevertPerformer::RevertEntryAfterFinishRevert,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(changed_files)));
+      base::BindOnce(&FinishRevert, metadata_, local_id, status,
+                     base::Passed(&entry), changed_files),
+      base::BindOnce(&EntryRevertPerformer::RevertEntryAfterFinishRevert,
+                     weak_ptr_factory_.GetWeakPtr(), callback,
+                     base::Owned(changed_files)));
 }
 
 void EntryRevertPerformer::RevertEntryAfterFinishRevert(

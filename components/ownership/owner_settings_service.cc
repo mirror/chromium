@@ -110,8 +110,8 @@ bool OwnerSettingsService::AssembleAndSignPolicyAsync(
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!task_runner || !IsOwner())
     return false;
-  return base::PostTaskAndReplyWithResult(
-      task_runner, FROM_HERE,
+  return task_runner->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&AssembleAndSignPolicy, base::Passed(&policy), private_key_),
       callback);
 }

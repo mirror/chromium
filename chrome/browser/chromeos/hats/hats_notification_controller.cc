@@ -113,7 +113,7 @@ HatsNotificationController::HatsNotificationController(
     : profile_(profile),
       image_fetcher_(image_fetcher),
       weak_pointer_factory_(this) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&IsNewDevice, kHatsNewDeviceThresholdDays),
       base::Bind(&HatsNotificationController::Initialize,

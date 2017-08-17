@@ -80,7 +80,7 @@ void UpdateJobFileInfo(
     return;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&UpdateJobFileInfoOnWorkerThread, pwg_file_path,

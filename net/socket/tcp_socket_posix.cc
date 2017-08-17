@@ -138,7 +138,7 @@ bool IsTCPFastOpenUserEnabled() {
 // do that on the IO thread.
 void CheckSupportAndMaybeEnableTCPFastOpen(bool user_enabled) {
 #if defined(OS_LINUX) || defined(OS_ANDROID)
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(SystemSupportsTCPFastOpen),

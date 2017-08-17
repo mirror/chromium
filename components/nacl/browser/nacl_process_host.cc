@@ -821,7 +821,7 @@ bool NaClProcessHost::StartNaClExecution() {
       // We have to reopen the file in the browser process; we don't want a
       // compromised renderer to pass an arbitrary fd that could get loaded
       // into the plugin process.
-      base::PostTaskWithTraitsAndReplyWithResult(
+      base::PostTaskWithTraitsAndReply(
           FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
           base::Bind(OpenNaClReadExecImpl, file_path, true /* is_executable */),
           base::Bind(&NaClProcessHost::StartNaClFileResolved,
@@ -1038,7 +1038,7 @@ void NaClProcessHost::OnResolveFileToken(uint64_t file_token_lo,
   }
 
   // Open the file.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(OpenNaClReadExecImpl, file_path, true /* is_executable */),
       base::Bind(&NaClProcessHost::FileResolved, weak_factory_.GetWeakPtr(),

@@ -150,8 +150,8 @@ void CertificateProviderService::ClientCertIdentity::AcquirePrivateKey(
         private_key_callback) {
   // The caller is responsible for keeping the ClientCertIdentity alive until
   // |private_key_callback| is run, so it's safe to use Unretained here.
-  if (base::PostTaskAndReplyWithResult(
-          service_task_runner_.get(), FROM_HERE,
+  if (service_task_runner_->PostTaskAndReply(
+          FROM_HERE,
           base::Bind(&ClientCertIdentity::AcquirePrivateKeyOnServiceThread,
                      base::Unretained(this), base::Unretained(certificate())),
           private_key_callback)) {

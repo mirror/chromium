@@ -145,8 +145,8 @@ class IndexedDBBrowserTest : public ContentBrowserTest,
   }
 
   virtual int64_t RequestDiskUsage() {
-    PostTaskAndReplyWithResult(
-        GetContext()->TaskRunner(), FROM_HERE,
+    GetContext()->TaskRunner()->PostTaskAndReply(
+        FROM_HERE,
         base::BindOnce(&IndexedDBContext::GetOriginDiskUsage, GetContext(),
                        GURL("file:///")),
         base::BindOnce(&IndexedDBBrowserTest::DidGetDiskUsage,
@@ -160,8 +160,8 @@ class IndexedDBBrowserTest : public ContentBrowserTest,
   }
 
   virtual int RequestBlobFileCount() {
-    PostTaskAndReplyWithResult(
-        GetContext()->TaskRunner(), FROM_HERE,
+    GetContext()->TaskRunner()->PostTaskAndReply(
+        FROM_HERE,
         base::BindOnce(&IndexedDBContextImpl::GetOriginBlobFileCount,
                        GetContext(), Origin(GURL("file:///"))),
         base::BindOnce(&IndexedDBBrowserTest::DidGetBlobFileCount,

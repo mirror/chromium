@@ -382,8 +382,8 @@ void MHTMLGenerationManager::Job::CloseFile(
   }
 
   // If no previous error occurred the boundary should be sent.
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
+  GetDownloadTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(
           &MHTMLGenerationManager::Job::FinalizeAndCloseFileOnFileThread,
           save_status,
@@ -551,12 +551,12 @@ void MHTMLGenerationManager::SaveMHTML(WebContents* web_contents,
       web_contents->GetLastCommittedURL().possibly_invalid_spec(),
       "file", params.file_path.AsUTF8Unsafe());
 
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
-      base::Bind(&MHTMLGenerationManager::CreateFile, params.file_path),
-      base::Bind(&MHTMLGenerationManager::OnFileAvailable,
-                 base::Unretained(this),  // Safe b/c |this| is a singleton.
-                 job->id()));
+  GetDownloadTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&MHTMLGenerationManager::CreateFile, params.file_path),
+      base::BindOnce(&MHTMLGenerationManager::OnFileAvailable,
+                     base::Unretained(this),  // Safe b/c |this| is a singleton.
+                     job->id()));
 }
 
 void MHTMLGenerationManager::OnSerializeAsMHTMLResponse(

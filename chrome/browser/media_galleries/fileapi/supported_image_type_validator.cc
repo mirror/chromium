@@ -105,10 +105,8 @@ void SupportedImageTypeValidator::StartPreWriteValidation(
   DCHECK(callback_.is_null());
   callback_ = result_callback;
 
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&ReadOnFileThread, path_),
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::FILE, FROM_HERE, base::Bind(&ReadOnFileThread, path_),
       base::Bind(&SupportedImageTypeValidator::OnFileOpen,
                  weak_factory_.GetWeakPtr()));
 }

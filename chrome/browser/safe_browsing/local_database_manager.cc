@@ -1255,8 +1255,8 @@ void LocalSafeBrowsingDatabaseManager::StartSafeBrowsingCheck(
   SafeBrowsingCheck* check_ptr = check.get();
   checks_[check_ptr] = std::move(check);
 
-  base::PostTaskAndReplyWithResult(
-      safe_browsing_task_runner_.get(), FROM_HERE, task,
+  safe_browsing_task_runner_->PostTaskAndReply(
+      FROM_HERE, task,
       base::Bind(&LocalSafeBrowsingDatabaseManager::OnAsyncCheckDone,
                  check_ptr->weak_ptr_factory_->GetWeakPtr(), check_ptr));
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(

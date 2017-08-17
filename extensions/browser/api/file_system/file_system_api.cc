@@ -768,7 +768,7 @@ ExtensionFunction::ResponseAction FileSystemChooseEntryFunction::Run() {
     return RespondLater();
   }
 #endif
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&base::DirectoryExists, previous_path),
       set_initial_path_callback);

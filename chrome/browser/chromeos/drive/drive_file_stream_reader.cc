@@ -317,12 +317,9 @@ void GetFileContent(
     const base::Callback<void(const base::Closure&)>& reply_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(&GetFileContentOnUIThread,
-                 file_system_getter,
-                 drive_file_path,
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&GetFileContentOnUIThread, file_system_getter, drive_file_path,
                  google_apis::CreateRelayCallback(initialized_callback),
                  google_apis::CreateRelayCallback(get_content_callback),
                  google_apis::CreateRelayCallback(completion_callback)),

@@ -581,7 +581,7 @@ void GetKeyboardLayoutsForLocale(
   // thread.
   std::string (*get_application_locale)(const std::string&, bool) =
       &l10n_util::GetApplicationLocale;
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
       base::BindOnce(get_application_locale, locale,

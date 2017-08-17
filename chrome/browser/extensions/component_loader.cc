@@ -680,8 +680,8 @@ void ComponentLoader::AddComponentFromDir(
       IsNormalSession() ? extensions::kManifestFilename
                         : extension_misc::kGuestManifestFilename;
 
-  base::PostTaskAndReplyWithResult(
-      GetExtensionFileTaskRunner().get(), FROM_HERE,
+  GetExtensionFileTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&LoadManifestOnFileThread, root_directory, manifest_filename),
       base::Bind(&ComponentLoader::FinishAddComponentFromDir,
                  weak_factory_.GetWeakPtr(), root_directory, extension_id,

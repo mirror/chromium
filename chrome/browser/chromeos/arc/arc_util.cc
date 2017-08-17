@@ -353,7 +353,7 @@ void UpdateArcFileSystemCompatibilityPrefIfNeeded(
   }
 
   // Otherwise, check the underlying filesystem.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

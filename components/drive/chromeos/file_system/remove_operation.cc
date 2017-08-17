@@ -82,23 +82,14 @@ void RemoveOperation::Remove(const base::FilePath& path,
   std::string* local_id = new std::string;
   base::FilePath* changed_path = new base::FilePath;
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateLocalState,
-                 metadata_,
-                 cache_,
-                 path,
-                 is_recursive,
-                 local_id,
-                 entry,
-                 changed_path),
-      base::Bind(&RemoveOperation::RemoveAfterUpdateLocalState,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(local_id),
-                 base::Owned(entry),
-                 base::Owned(changed_path)));
+      base::BindOnce(&UpdateLocalState, metadata_, cache_, path, is_recursive,
+                     local_id, entry, changed_path),
+      base::BindOnce(&RemoveOperation::RemoveAfterUpdateLocalState,
+                     weak_ptr_factory_.GetWeakPtr(), callback,
+                     base::Owned(local_id), base::Owned(entry),
+                     base::Owned(changed_path)));
 }
 
 void RemoveOperation::RemoveAfterUpdateLocalState(

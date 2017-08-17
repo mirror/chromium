@@ -5717,8 +5717,8 @@ void RenderFrameImpl::OnSerializeAsMHTML(
       main_thread_use_time);
 
   if (save_status == MhtmlSaveStatus::SUCCESS && has_some_data) {
-    base::PostTaskAndReplyWithResult(
-        RenderThreadImpl::current()->GetFileThreadTaskRunner().get(), FROM_HERE,
+    RenderThreadImpl::current()->GetFileThreadTaskRunner()->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&WriteMHTMLToDisk, base::Passed(&mhtml_contents),
                    base::Passed(&file)),
         base::Bind(&RenderFrameImpl::OnWriteMHTMLToDiskComplete,

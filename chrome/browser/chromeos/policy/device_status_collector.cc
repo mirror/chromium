@@ -363,7 +363,7 @@ class GetStatusState : public base::RefCountedThreadSafe<GetStatusState> {
     }
 
     // Call out to the blocking pool to sample disk volume info.
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::Bind(volume_info_fetcher, mount_points),
         base::Bind(&GetStatusState::OnVolumeInfoReceived, this));
@@ -373,7 +373,7 @@ class GetStatusState : public base::RefCountedThreadSafe<GetStatusState> {
   void SampleCPUTempInfo(
       const policy::DeviceStatusCollector::CPUTempFetcher& cpu_temp_fetcher) {
     // Call out to the blocking pool to sample CPU temp.
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         cpu_temp_fetcher,
         base::Bind(&GetStatusState::OnCPUTempInfoReceived, this));
@@ -501,13 +501,13 @@ DeviceStatusCollector::DeviceStatusCollector(
   UpdateReportingSettings();
 
   // Get the the OS and firmware version info.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&chromeos::version_loader::GetVersion,
                  chromeos::version_loader::VERSION_FULL),
       base::Bind(&DeviceStatusCollector::OnOSVersion,
                  weak_factory_.GetWeakPtr()));
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&chromeos::version_loader::GetFirmware),
       base::Bind(&DeviceStatusCollector::OnOSFirmware,
@@ -726,7 +726,7 @@ void DeviceStatusCollector::SampleResourceUsage() {
     return;
 
   // Call out to the blocking pool to sample CPU stats.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       cpu_statistics_fetcher_,
       base::Bind(&DeviceStatusCollector::ReceiveCPUStatistics,

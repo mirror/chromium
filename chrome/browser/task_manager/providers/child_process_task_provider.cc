@@ -81,10 +81,8 @@ void ChildProcessTaskProvider::StartUpdating() {
   DCHECK(tasks_by_pid_.empty());
 
   // First, get the pre-existing child processes data.
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::IO,
-      FROM_HERE,
-      base::Bind(&CollectChildProcessData),
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::IO, FROM_HERE, base::Bind(&CollectChildProcessData),
       base::Bind(&ChildProcessTaskProvider::ChildProcessDataCollected,
                  weak_ptr_factory_.GetWeakPtr()));
 }

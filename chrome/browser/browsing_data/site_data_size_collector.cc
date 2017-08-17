@@ -146,7 +146,7 @@ void SiteDataSizeCollector::OnCookiesModelInfoLoaded(
   }
   base::FilePath cookie_file_path = default_storage_partition_path_
       .Append(chrome::kCookieFilename);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&GetFileSizeBlocking, cookie_file_path),
       base::Bind(&SiteDataSizeCollector::OnStorageSizeFetched,
@@ -201,7 +201,7 @@ void SiteDataSizeCollector::OnChannelIDModelInfoLoaded(
   }
   base::FilePath channel_id_file_path = default_storage_partition_path_
       .Append(chrome::kChannelIDFilename);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&GetFileSizeBlocking, channel_id_file_path),
       base::Bind(&SiteDataSizeCollector::OnStorageSizeFetched,
@@ -238,7 +238,7 @@ void SiteDataSizeCollector::OnFlashLSOInfoLoaded(
   }
   base::FilePath pepper_data_dir_path = default_storage_partition_path_
       .Append(content::kPepperDataDirname);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&base::ComputeDirectorySize, pepper_data_dir_path),
       base::Bind(&SiteDataSizeCollector::OnStorageSizeFetched,

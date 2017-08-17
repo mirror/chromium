@@ -267,11 +267,9 @@ CancelCallback DriveUploader::StartUploadFile(
   DVLOG(1) << "Uploading file: " << upload_file_info->DebugString();
 
   UploadFileInfo* info_ptr = upload_file_info.get();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&base::GetFileSize,
-                 info_ptr->file_path,
+      base::Bind(&base::GetFileSize, info_ptr->file_path,
                  &info_ptr->content_length),
       base::Bind(&DriveUploader::StartUploadFileAfterGetFileSize,
                  weak_ptr_factory_.GetWeakPtr(),

@@ -45,13 +45,13 @@ class ClientCertIdentityNSS : public ClientCertIdentity {
   void AcquirePrivateKey(
       const base::Callback<void(scoped_refptr<SSLPrivateKey>)>&
           private_key_callback) override {
-    if (base::PostTaskAndReplyWithResult(
-            base::WorkerPool::GetTaskRunner(true /* task_is_slow */).get(),
-            FROM_HERE,
-            base::Bind(&FetchClientCertPrivateKey,
-                       base::RetainedRef(certificate()),
-                       base::RetainedRef(password_delegate_)),
-            private_key_callback)) {
+    if (base::WorkerPool::GetTaskRunner(true /* task_is_slow */)
+            ->PostTaskAndReply(
+                FROM_HERE,
+                base::Bind(&FetchClientCertPrivateKey,
+                           base::RetainedRef(certificate()),
+                           base::RetainedRef(password_delegate_)),
+                private_key_callback)) {
       return;
     }
     // If the task could not be posted, behave as if there was no key.
@@ -77,15 +77,16 @@ void ClientCertStoreNSS::GetClientCerts(
   scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate> password_delegate;
   if (!password_delegate_factory_.is_null())
     password_delegate = password_delegate_factory_.Run(request.host_and_port);
-  if (base::PostTaskAndReplyWithResult(
-          base::WorkerPool::GetTaskRunner(true /* task_is_slow */).get(),
-          FROM_HERE,
-          base::Bind(&ClientCertStoreNSS::GetAndFilterCertsOnWorkerThread,
-                     // Caller is responsible for keeping the ClientCertStore
-                     // alive until the callback is run.
-                     base::Unretained(this), std::move(password_delegate),
-                     base::Unretained(&request)),
-          callback)) {
+  if (base::WorkerPool::GetTaskRunner(true /* task_is_slow */)
+          ->PostTaskAndReply(
+              FROM_HERE,
+              base::Bind(
+                  &ClientCertStoreNSS::GetAndFilterCertsOnWorkerThread,
+                  // Caller is responsible for keeping the ClientCertStore
+                  // alive until the callback is run.
+                  base::Unretained(this), std::move(password_delegate),
+                  base::Unretained(&request)),
+              callback)) {
     return;
   }
   // If the task could not be posted, behave as if there were no certificates.

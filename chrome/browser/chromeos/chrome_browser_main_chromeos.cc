@@ -730,7 +730,7 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
   WallpaperManager::Initialize();
   WallpaperManager::Get()->AddObservers();
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&version_loader::GetVersion, version_loader::VERSION_FULL),
       base::Bind(&ChromeOSVersionCallback));
@@ -791,7 +791,7 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
       l10n_util::GetStringUTF16(IDS_PRODUCT_OS_NAME));
 
   // Register all installed components for regular update.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::BindOnce(component_updater::CrOSComponent::GetInstalledComponents),
       base::BindOnce(component_updater::CrOSComponent::RegisterComponents));

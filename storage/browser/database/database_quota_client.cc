@@ -126,11 +126,11 @@ void DatabaseQuotaClient::GetOriginUsage(const GURL& origin_url,
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      db_tracker_->task_runner(), FROM_HERE,
-      base::BindOnce(&GetOriginUsageOnDBThread, base::RetainedRef(db_tracker_),
-                     origin_url),
-      static_cast<base::OnceCallback<void(int64_t usage)>>(callback));
+  db_tracker_->task_runner()->PostTaskAndReply(
+      FROM_HERE,
+      base::Bind(&GetOriginUsageOnDBThread, base::RetainedRef(db_tracker_),
+                 origin_url),
+      callback);
 }
 
 void DatabaseQuotaClient::GetOriginsForType(
@@ -195,11 +195,11 @@ void DatabaseQuotaClient::DeleteOriginData(const GURL& origin,
       &DidDeleteOriginData,
       base::RetainedRef(base::SequencedTaskRunnerHandle::Get()), callback);
 
-  base::PostTaskAndReplyWithResult(
-      db_tracker_->task_runner(), FROM_HERE,
-      base::BindOnce(&DatabaseTracker::DeleteDataForOrigin, db_tracker_,
-                     storage::GetIdentifierFromOrigin(origin), delete_callback),
-      static_cast<base::OnceCallback<void(int)>>(delete_callback));
+  db_tracker_->task_runner()->PostTaskAndReply(
+      FROM_HERE,
+      base::Bind(&DatabaseTracker::DeleteDataForOrigin, db_tracker_,
+                 storage::GetIdentifierFromOrigin(origin), delete_callback),
+      delete_callback);
 }
 
 bool DatabaseQuotaClient::DoesSupport(storage::StorageType type) const {

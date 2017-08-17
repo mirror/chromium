@@ -950,14 +950,12 @@ void IncidentReportingService::ProcessIncidentsIfCollectionComplete() {
     uploads_.push_back(std::move(context));
     IncidentReportingService::OnKillSwitchResult(temp_context, false);
   } else {
-    if (content::BrowserThread::PostTaskAndReplyWithResult(
-            content::BrowserThread::IO,
-            FROM_HERE,
+    if (content::BrowserThread::PostTaskAndReply(
+            content::BrowserThread::IO, FROM_HERE,
             base::Bind(&SafeBrowsingDatabaseManager::IsCsdWhitelistKillSwitchOn,
                        database_manager_),
             base::Bind(&IncidentReportingService::OnKillSwitchResult,
-                       weak_ptr_factory_.GetWeakPtr(),
-                       context.get()))) {
+                       weak_ptr_factory_.GetWeakPtr(), context.get()))) {
       uploads_.push_back(std::move(context));
     }  // else should not happen. Let the context be deleted automatically.
   }

@@ -250,8 +250,8 @@ class CacheStorage::SimpleCacheLoader : public CacheStorage::CacheLoader {
                                   CacheCallback callback) override {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-    PostTaskAndReplyWithResult(
-        cache_task_runner_.get(), FROM_HERE,
+    cache_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::BindOnce(&SimpleCacheLoader::PrepareNewCacheDirectoryInPool,
                        origin_path_),
         base::BindOnce(&SimpleCacheLoader::PrepareNewCacheCreateCache,
@@ -333,8 +333,8 @@ class CacheStorage::SimpleCacheLoader : public CacheStorage::CacheLoader {
     base::FilePath index_path =
         origin_path_.AppendASCII(CacheStorage::kIndexFileName);
 
-    PostTaskAndReplyWithResult(
-        cache_task_runner_.get(), FROM_HERE,
+    cache_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::BindOnce(&SimpleCacheLoader::WriteIndexWriteToFileInPool,
                        tmp_path, index_path, serialized),
         std::move(callback));
@@ -356,8 +356,8 @@ class CacheStorage::SimpleCacheLoader : public CacheStorage::CacheLoader {
   void LoadIndex(CacheStorageIndexLoadCallback callback) override {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-    PostTaskAndReplyWithResult(
-        cache_task_runner_.get(), FROM_HERE,
+    cache_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::BindOnce(&SimpleCacheLoader::ReadAndMigrateIndexInPool,
                        origin_path_),
         base::BindOnce(&SimpleCacheLoader::LoadIndexDidReadIndex,

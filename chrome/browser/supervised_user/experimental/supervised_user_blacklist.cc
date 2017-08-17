@@ -70,7 +70,7 @@ size_t SupervisedUserBlacklist::GetEntryCount() const {
 
 void SupervisedUserBlacklist::ReadFromFile(const base::FilePath& path,
                                            const base::Closure& done_callback) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

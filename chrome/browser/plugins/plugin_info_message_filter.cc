@@ -257,8 +257,9 @@ void PluginInfoMessageFilter::PluginsLoaded(
 
   if (output->status == ChromeViewHostMsg_GetPluginInfo_Status::kNotFound) {
     // Check to see if the component updater can fetch an implementation.
-    base::PostTaskAndReplyWithResult(
-        main_thread_task_runner_.get(), FROM_HERE,
+
+    main_thread_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(
             &component_updater::ComponentUpdateService::GetComponentForMimeType,
             base::Unretained(g_browser_process->component_updater()),

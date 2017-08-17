@@ -62,10 +62,9 @@ void SystemInfoProvider::StartQueryInfoPostInitialization() {
   PrepareQueryOnUIThread();
   // Post the custom query info task to blocking pool for information querying
   // and reply with OnQueryCompleted.
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::Bind(&SystemInfoProvider::QueryInfo, this),
-      base::Bind(&SystemInfoProvider::OnQueryCompleted, this));
+  task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&SystemInfoProvider::QueryInfo, this),
+      base::BindOnce(&SystemInfoProvider::OnQueryCompleted, this));
 }
 
 }  // namespace extensions

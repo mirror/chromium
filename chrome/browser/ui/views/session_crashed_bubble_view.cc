@@ -119,9 +119,8 @@ bool SessionCrashedBubble::Show(Browser* browser) {
           new SessionCrashedBubbleView::BrowserRemovalObserver(browser));
 
   if (DoesSupportConsentCheck()) {
-    base::PostTaskAndReplyWithResult(
-        GoogleUpdateSettings::CollectStatsConsentTaskRunner(), FROM_HERE,
-        base::Bind(&GoogleUpdateSettings::GetCollectStatsConsent),
+    GoogleUpdateSettings::CollectStatsConsentTaskRunner()->PostTaskAndReply(
+        FROM_HERE, base::Bind(&GoogleUpdateSettings::GetCollectStatsConsent),
         base::Bind(&SessionCrashedBubbleView::ShowForReal,
                    base::Passed(&browser_observer)));
   } else {

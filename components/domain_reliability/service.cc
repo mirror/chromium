@@ -82,10 +82,8 @@ class DomainReliabilityServiceImpl : public DomainReliabilityService {
                         callback) const override {
     DCHECK(network_task_runner_.get());
 
-    PostTaskAndReplyWithResult(
-        network_task_runner_.get(),
-        FROM_HERE,
-        base::Bind(&GetWebUIDataOnNetworkTaskRunner, monitor_),
+    network_task_runner_->PostTaskAndReply(
+        FROM_HERE, base::Bind(&GetWebUIDataOnNetworkTaskRunner, monitor_),
         callback);
   }
 

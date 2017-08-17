@@ -1081,9 +1081,8 @@ void AccessibilityManager::CheckBrailleState() {
   BrailleController* braille_controller = GetBrailleController();
   if (!scoped_braille_observer_.IsObserving(braille_controller))
     scoped_braille_observer_.Add(braille_controller);
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::IO,
-      FROM_HERE,
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::IO, FROM_HERE,
       base::Bind(&BrailleController::GetDisplayState,
                  base::Unretained(braille_controller)),
       base::Bind(&AccessibilityManager::ReceiveBrailleDisplayState,

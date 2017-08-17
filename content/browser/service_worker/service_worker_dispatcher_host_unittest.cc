@@ -75,7 +75,7 @@ RemoteProviderInfo SetupProviderHostInfoPtrs(
 std::unique_ptr<ServiceWorkerNavigationHandleCore> CreateNavigationHandleCore(
     ServiceWorkerContextWrapper* context_wrapper) {
   std::unique_ptr<ServiceWorkerNavigationHandleCore> navigation_handle_core;
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
       base::Bind(
           [](ServiceWorkerContextWrapper* wrapper) {

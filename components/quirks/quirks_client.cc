@@ -141,10 +141,9 @@ void QuirksClient::OnURLFetchComplete(const net::URLFetcher* source) {
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      manager_->task_runner(), FROM_HERE,
-      base::Bind(&WriteIccFile, icc_path_, data),
-      base::Bind(&QuirksClient::Shutdown, weak_ptr_factory_.GetWeakPtr()));
+  manager_->task_runner()->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&WriteIccFile, icc_path_, data),
+      base::BindOnce(&QuirksClient::Shutdown, weak_ptr_factory_.GetWeakPtr()));
 }
 
 void QuirksClient::Shutdown(bool success) {

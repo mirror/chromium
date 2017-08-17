@@ -627,7 +627,7 @@ TestDownloadRequestHandler::TestDownloadRequestHandler(const GURL& url)
     : url_(url) {
   DCHECK(base::SequencedTaskRunnerHandle::IsSet());
   base::RunLoop run_loop;
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&Interceptor::Register, url_,
                  base::SequencedTaskRunnerHandle::Get()),

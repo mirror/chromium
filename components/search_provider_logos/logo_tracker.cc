@@ -103,13 +103,13 @@ void LogoTracker::GetLogo(LogoObserver* observer) {
 
   if (is_idle_) {
     is_idle_ = false;
-    base::PostTaskAndReplyWithResult(
-        cache_task_runner_.get(), FROM_HERE,
-        base::Bind(&GetLogoFromCacheOnFileThread,
-                   base::Unretained(logo_cache_.get()), logo_url_,
-                   clock_->Now()),
-        base::Bind(&LogoTracker::OnCachedLogoRead,
-                   weak_ptr_factory_.GetWeakPtr()));
+    cache_task_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&GetLogoFromCacheOnFileThread,
+                       base::Unretained(logo_cache_.get()), logo_url_,
+                       clock_->Now()),
+        base::BindOnce(&LogoTracker::OnCachedLogoRead,
+                       weak_ptr_factory_.GetWeakPtr()));
   } else if (is_cached_logo_valid_) {
     observer->OnLogoAvailable(cached_logo_.get(), true);
   }
@@ -351,7 +351,7 @@ void LogoTracker::OnURLFetchComplete(const net::URLFetcher* source) {
   bool from_http_cache = source->WasCached();
 
   bool* parsing_failed = new bool(false);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},

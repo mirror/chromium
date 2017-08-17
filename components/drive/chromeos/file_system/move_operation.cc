@@ -86,20 +86,14 @@ void MoveOperation::Move(const base::FilePath& src_file_path,
 
   FileChange* changed_files = new FileChange;
   std::string* local_id = new std::string;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_.get()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateLocalState,
-                 metadata_,
-                 src_file_path,
-                 dest_file_path,
-                 changed_files,
-                 local_id),
+      base::Bind(&UpdateLocalState, metadata_, src_file_path, dest_file_path,
+                 changed_files, local_id),
       base::Bind(&MoveOperation::MoveAfterUpdateLocalState,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(changed_files),
-                 base::Owned(local_id)));
+                 weak_ptr_factory_.GetWeakPtr(), callback,
+                 base::Owned(changed_files), base::Owned(local_id)));
 }
 
 void MoveOperation::MoveAfterUpdateLocalState(

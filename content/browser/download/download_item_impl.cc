@@ -410,8 +410,8 @@ void DownloadItemImpl::StealDangerousDownload(
 
   if (delete_file_afterward) {
     if (download_file_) {
-      base::PostTaskAndReplyWithResult(
-          GetDownloadTaskRunner().get(), FROM_HERE,
+      GetDownloadTaskRunner()->PostTaskAndReply(
+          FROM_HERE,
           base::Bind(&DownloadFileDetach, base::Passed(&download_file_)),
           callback);
     } else {
@@ -421,9 +421,9 @@ void DownloadItemImpl::StealDangerousDownload(
     Remove();
     // Download item has now been deleted.
   } else if (download_file_) {
-    base::PostTaskAndReplyWithResult(
-        GetDownloadTaskRunner().get(), FROM_HERE,
-        base::Bind(&MakeCopyOfDownloadFile, download_file_.get()), callback);
+    GetDownloadTaskRunner()->PostTaskAndReply(
+        FROM_HERE, base::Bind(&MakeCopyOfDownloadFile, download_file_.get()),
+        callback);
   } else {
     callback.Run(GetFullPath());
   }
@@ -765,11 +765,10 @@ void DownloadItemImpl::DeleteFile(const base::Callback<void(bool)>& callback) {
                    base::WeakPtr<DownloadItemImpl>(), callback, true));
     return;
   }
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
-      base::Bind(&DeleteDownloadedFile, GetFullPath()),
-      base::Bind(&DeleteDownloadedFileDone, weak_ptr_factory_.GetWeakPtr(),
-                 callback));
+  GetDownloadTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&DeleteDownloadedFile, GetFullPath()),
+      base::BindOnce(&DeleteDownloadedFileDone, weak_ptr_factory_.GetWeakPtr(),
+                     callback));
 }
 
 bool DownloadItemImpl::IsDangerous() const {

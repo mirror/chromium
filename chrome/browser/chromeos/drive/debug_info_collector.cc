@@ -73,13 +73,11 @@ void DebugInfoCollector::GetResourceEntry(
 
   std::unique_ptr<ResourceEntry> entry(new ResourceEntry);
   ResourceEntry* entry_ptr = entry.get();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetResourceEntryByPath,
-                 base::Unretained(metadata_),
-                 file_path,
-                 entry_ptr),
+                 base::Unretained(metadata_), file_path, entry_ptr),
       base::Bind(&RunGetResourceEntryCallback, callback, base::Passed(&entry)));
 }
 
@@ -91,13 +89,11 @@ void DebugInfoCollector::ReadDirectory(
 
   std::unique_ptr<ResourceEntryVector> entries(new ResourceEntryVector);
   ResourceEntryVector* entries_ptr = entries.get();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::ReadDirectoryByPath,
-                 base::Unretained(metadata_),
-                 file_path,
-                 entries_ptr),
+                 base::Unretained(metadata_), file_path, entries_ptr),
       base::Bind(&RunReadDirectoryCallback, callback, base::Passed(&entries)));
 }
 

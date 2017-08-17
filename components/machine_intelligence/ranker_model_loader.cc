@@ -144,10 +144,10 @@ void RankerModelLoader::StartLoadFromFile() {
   DCHECK(!model_path_.empty());
   state_ = LoaderState::LOADING_FROM_FILE;
   load_start_time_ = base::TimeTicks::Now();
-  base::PostTaskAndReplyWithResult(background_task_runner_.get(), FROM_HERE,
-                                   base::Bind(&LoadFromFile, model_path_),
-                                   base::Bind(&RankerModelLoader::OnFileLoaded,
-                                              weak_ptr_factory_.GetWeakPtr()));
+  background_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&LoadFromFile, model_path_),
+      base::BindOnce(&RankerModelLoader::OnFileLoaded,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 void RankerModelLoader::OnFileLoaded(const std::string& data) {

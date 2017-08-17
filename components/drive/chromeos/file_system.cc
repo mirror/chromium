@@ -316,10 +316,8 @@ void FileSystem::Reset(const FileOperationCallback& callback) {
   // want to have a way to abort and flush callbacks in in-flight operations.
   ResetComponents();
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&ResetOnBlockingPool, resource_metadata_, cache_),
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&ResetOnBlockingPool, resource_metadata_, cache_),
       callback);
 }
 
@@ -538,14 +536,12 @@ void FileSystem::Pin(const base::FilePath& file_path,
   DCHECK(!callback.is_null());
 
   std::string* local_id = new std::string;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&PinInternal, resource_metadata_, cache_, file_path, local_id),
-      base::Bind(&FileSystem::FinishPin,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(local_id)));
+      base::BindOnce(&PinInternal, resource_metadata_, cache_, file_path,
+                     local_id),
+      base::BindOnce(&FileSystem::FinishPin, weak_ptr_factory_.GetWeakPtr(),
+                     callback, base::Owned(local_id)));
 }
 
 void FileSystem::FinishPin(const FileOperationCallback& callback,
@@ -565,15 +561,12 @@ void FileSystem::Unpin(const base::FilePath& file_path,
   DCHECK(!callback.is_null());
 
   std::string* local_id = new std::string;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(
-          &UnpinInternal, resource_metadata_, cache_, file_path, local_id),
-      base::Bind(&FileSystem::FinishUnpin,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(local_id)));
+      base::BindOnce(&UnpinInternal, resource_metadata_, cache_, file_path,
+                     local_id),
+      base::BindOnce(&FileSystem::FinishUnpin, weak_ptr_factory_.GetWeakPtr(),
+                     callback, base::Owned(local_id)));
 }
 
 void FileSystem::FinishUnpin(const FileOperationCallback& callback,
@@ -653,14 +646,11 @@ void FileSystem::GetResourceEntryAfterRead(
 
   std::unique_ptr<ResourceEntry> entry(new ResourceEntry);
   ResourceEntry* entry_ptr = entry.get();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
-      base::Bind(&GetLocallyStoredResourceEntry,
-                 resource_metadata_,
-                 cache_,
-                 file_path,
-                 entry_ptr),
+      base::Bind(&GetLocallyStoredResourceEntry, resource_metadata_, cache_,
+                 file_path, entry_ptr),
       base::Bind(&RunGetResourceEntryCallback, callback, base::Passed(&entry)));
 }
 
@@ -722,19 +712,14 @@ void FileSystem::GetShareUrl(const base::FilePath& file_path,
 
   // Resolve the resource id.
   ResourceEntry* entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetResourceEntryByPath,
-                 base::Unretained(resource_metadata_),
-                 file_path,
-                 entry),
+                 base::Unretained(resource_metadata_), file_path, entry),
       base::Bind(&FileSystem::GetShareUrlAfterGetResourceEntry,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 file_path,
-                 embed_origin,
-                 callback,
-                 base::Owned(entry)));
+                 weak_ptr_factory_.GetWeakPtr(), file_path, embed_origin,
+                 callback, base::Owned(entry)));
 }
 
 void FileSystem::GetShareUrlAfterGetResourceEntry(
@@ -837,17 +822,13 @@ void FileSystem::OnEntryUpdatedByOperation(const ClientContext& context,
 void FileSystem::OnDriveSyncError(file_system::DriveSyncErrorType type,
                                   const std::string& local_id) {
   base::FilePath* file_path = new base::FilePath;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetFilePath,
-                 base::Unretained(resource_metadata_),
-                 local_id,
-                 file_path),
+                 base::Unretained(resource_metadata_), local_id, file_path),
       base::Bind(&FileSystem::OnDriveSyncErrorAfterGetFilePath,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 type,
-                 base::Owned(file_path)));
+                 weak_ptr_factory_.GetWeakPtr(), type, base::Owned(file_path)));
 }
 
 void FileSystem::OnDriveSyncErrorAfterGetFilePath(
@@ -908,15 +889,12 @@ void FileSystem::GetMetadata(
   metadata.last_update_check_error = last_update_check_error_;
 
   int64_t* largest_changestamp = new int64_t(0);
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetLargestChangestamp,
-                 base::Unretained(resource_metadata_),
-                 largest_changestamp),
-      base::Bind(&OnGetLargestChangestamp,
-                 metadata,
-                 callback,
+                 base::Unretained(resource_metadata_), largest_changestamp),
+      base::Bind(&OnGetLargestChangestamp, metadata, callback,
                  base::Owned(largest_changestamp)));
 }
 
@@ -927,16 +905,13 @@ void FileSystem::MarkCacheFileAsMounted(
   DCHECK(!callback.is_null());
 
   base::FilePath* cache_file_path = new base::FilePath;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
-      base::Bind(&MarkCacheFileAsMountedInternal,
-                 resource_metadata_,
-                 cache_,
-                 drive_file_path,
-                 cache_file_path),
-      base::Bind(
-          &RunMarkMountedCallback, callback, base::Owned(cache_file_path)));
+      base::Bind(&MarkCacheFileAsMountedInternal, resource_metadata_, cache_,
+                 drive_file_path, cache_file_path),
+      base::Bind(&RunMarkMountedCallback, callback,
+                 base::Owned(cache_file_path)));
 }
 
 void FileSystem::MarkCacheFileAsUnmounted(
@@ -950,12 +925,11 @@ void FileSystem::MarkCacheFileAsUnmounted(
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
       base::Bind(&internal::FileCache::MarkAsUnmounted,
-                 base::Unretained(cache_),
-                 cache_file_path),
+                 base::Unretained(cache_), cache_file_path),
       callback);
 }
 
@@ -968,18 +942,13 @@ void FileSystem::AddPermission(const base::FilePath& drive_file_path,
 
   // Resolve the resource id.
   ResourceEntry* const entry = new ResourceEntry;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetResourceEntryByPath,
-                 base::Unretained(resource_metadata_),
-                 drive_file_path,
-                 entry),
+                 base::Unretained(resource_metadata_), drive_file_path, entry),
       base::Bind(&FileSystem::AddPermissionAfterGetResourceEntry,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 email,
-                 role,
-                 callback,
+                 weak_ptr_factory_.GetWeakPtr(), email, role, callback,
                  base::Owned(entry)));
 }
 
@@ -1032,15 +1001,12 @@ void FileSystem::GetPathFromResourceId(const std::string& resource_id,
   DCHECK(!callback.is_null());
 
   base::FilePath* const file_path = new base::FilePath();
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
+
       FROM_HERE,
-      base::Bind(&GetPathFromResourceIdOnBlockingPool,
-                 resource_metadata_,
-                 resource_id,
-                 file_path),
-      base::Bind(&GetPathFromResourceIdAfterGetPath,
-                 base::Owned(file_path),
+      base::Bind(&GetPathFromResourceIdOnBlockingPool, resource_metadata_,
+                 resource_id, file_path),
+      base::Bind(&GetPathFromResourceIdAfterGetPath, base::Owned(file_path),
                  callback));
 }
 
@@ -1049,8 +1015,8 @@ void FileSystem::FreeDiskSpaceIfNeededFor(
     const FreeDiskSpaceCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&FreeDiskSpaceIfNeededForOnBlockingPool, cache_, num_bytes),
       callback);
 }
@@ -1058,17 +1024,17 @@ void FileSystem::FreeDiskSpaceIfNeededFor(
 void FileSystem::CalculateCacheSize(const CacheSizeCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&CalculateCacheSizeOnBlockingPool, cache_), callback);
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&CalculateCacheSizeOnBlockingPool, cache_),
+      callback);
 }
 
 void FileSystem::CalculateEvictableCacheSize(
     const CacheSizeCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&CalculateEvictableCacheSizeOnBlockingPool, cache_), callback);
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&CalculateEvictableCacheSizeOnBlockingPool, cache_),
+      callback);
 }
 }  // namespace drive

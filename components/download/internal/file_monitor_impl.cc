@@ -150,8 +150,8 @@ FileMonitorImpl::FileMonitorImpl(
 FileMonitorImpl::~FileMonitorImpl() = default;
 
 void FileMonitorImpl::Initialize(const InitCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      file_thread_task_runner_.get(), FROM_HERE,
+  file_thread_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&InitializeAndCreateDownloadDirectory, download_file_dir_),
       callback);
 }
@@ -206,9 +206,9 @@ void FileMonitorImpl::DeleteFiles(
 }
 
 void FileMonitorImpl::HardRecover(const InitCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      file_thread_task_runner_.get(), FROM_HERE,
-      base::Bind(&HardRecoverOnFileThread, download_file_dir_), callback);
+  file_thread_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&HardRecoverOnFileThread, download_file_dir_),
+      callback);
 }
 
 bool FileMonitorImpl::ReadyForCleanup(const Entry* entry) {

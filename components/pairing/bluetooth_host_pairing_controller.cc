@@ -369,10 +369,11 @@ void BluetoothHostPairingController::OnForget() {
                                 base::Bind(&base::DoNothing));
     }
 
-    base::PostTaskAndReplyWithResult(
-        input_service_task_runner_.get(), FROM_HERE, base::Bind(&GetDevices),
-        base::Bind(&BluetoothHostPairingController::PowerOffAdapterIfApplicable,
-                   ptr_factory_.GetWeakPtr()));
+    input_service_task_runner_->PostTaskAndReply(
+        FROM_HERE, base::BindOnce(&GetDevices),
+        base::BindOnce(
+            &BluetoothHostPairingController::PowerOffAdapterIfApplicable,
+            ptr_factory_.GetWeakPtr()));
   }
   ChangeStage(STAGE_NONE);
 }

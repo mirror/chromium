@@ -312,7 +312,7 @@ void BrowserContext::CreateMemoryBackedBlob(BrowserContext* browser_context,
 
   ChromeBlobStorageContext* blob_context =
       ChromeBlobStorageContext::GetFor(browser_context);
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&ChromeBlobStorageContext::CreateMemoryBackedBlob,
                  make_scoped_refptr(blob_context), data, length),
@@ -331,7 +331,7 @@ void BrowserContext::CreateFileBackedBlob(
 
   ChromeBlobStorageContext* blob_context =
       ChromeBlobStorageContext::GetFor(browser_context);
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&ChromeBlobStorageContext::CreateFileBackedBlob,
                  make_scoped_refptr(blob_context), path, offset, size,

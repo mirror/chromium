@@ -128,7 +128,7 @@ ArcDefaultAppList::ArcDefaultAppList(Delegate* delegate,
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
   // Once ready OnAppsReady is called.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&ReadAppsFromFileThread),
       base::Bind(&ArcDefaultAppList::OnAppsReady,

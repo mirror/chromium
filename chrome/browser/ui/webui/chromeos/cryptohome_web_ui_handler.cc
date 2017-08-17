@@ -40,9 +40,8 @@ void CryptohomeWebUIHandler::OnPageLoaded(const base::ListValue* args) {
   cryptohome_client->Pkcs11IsTpmTokenReady(
       GetCryptohomeBoolCallback("pkcs11-is-tpm-token-ready"));
 
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::IO,
-      FROM_HERE,
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::IO, FROM_HERE,
       base::Bind(&crypto::IsTPMTokenReady, base::Closure()),
       base::Bind(&CryptohomeWebUIHandler::DidGetNSSUtilInfoOnUIThread,
                  weak_ptr_factory_.GetWeakPtr()));

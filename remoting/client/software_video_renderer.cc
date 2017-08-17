@@ -153,13 +153,13 @@ void SoftwareVideoRenderer::ProcessVideoPacket(
       consumer_->AllocateFrame(source_size_);
   frame->set_dpi(source_dpi_);
 
-  base::PostTaskAndReplyWithResult(
-      decode_task_runner_.get(), FROM_HERE,
-      base::Bind(&DoDecodeFrame, decoder_.get(), base::Passed(&packet),
-                 base::Passed(&frame)),
-      base::Bind(&SoftwareVideoRenderer::RenderFrame,
-                 weak_factory_.GetWeakPtr(), base::Passed(&frame_stats),
-                 base::AdaptCallbackForRepeating(done_runner.Release())));
+  decode_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&DoDecodeFrame, decoder_.get(), base::Passed(&packet),
+                     base::Passed(&frame)),
+      base::BindOnce(&SoftwareVideoRenderer::RenderFrame,
+                     weak_factory_.GetWeakPtr(), base::Passed(&frame_stats),
+                     base::AdaptCallbackForRepeating(done_runner.Release())));
 }
 
 void SoftwareVideoRenderer::RenderFrame(

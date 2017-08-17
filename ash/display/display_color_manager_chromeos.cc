@@ -244,11 +244,11 @@ void DisplayColorManager::FinishLoadCalibrationForDisplay(
           << " for display id: " << display_id
           << " with product id: " << product_string;
 
-  base::PostTaskAndReplyWithResult(
-      sequenced_task_runner_.get(), FROM_HERE,
-      base::Bind(&ParseDisplayProfile, path, has_color_correction_matrix),
-      base::Bind(&DisplayColorManager::UpdateCalibrationData,
-                 weak_ptr_factory_.GetWeakPtr(), display_id, product_id));
+  sequenced_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&ParseDisplayProfile, path, has_color_correction_matrix),
+      base::BindOnce(&DisplayColorManager::UpdateCalibrationData,
+                     weak_ptr_factory_.GetWeakPtr(), display_id, product_id));
 }
 
 void DisplayColorManager::UpdateCalibrationData(

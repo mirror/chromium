@@ -121,19 +121,14 @@ void OpenFileOperation::OpenFileAfterFileDownloaded(
 
   std::unique_ptr<base::ScopedClosureRunner>* file_closer =
       new std::unique_ptr<base::ScopedClosureRunner>;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&internal::FileCache::OpenForWrite,
-                 base::Unretained(cache_),
-                 entry->local_id(),
-                 file_closer),
+      base::Bind(&internal::FileCache::OpenForWrite, base::Unretained(cache_),
+                 entry->local_id(), file_closer),
       base::Bind(&OpenFileOperation::OpenFileAfterOpenForWrite,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 local_file_path,
-                 entry->local_id(),
-                 callback,
-                 base::Owned(file_closer)));
+                 weak_ptr_factory_.GetWeakPtr(), local_file_path,
+                 entry->local_id(), callback, base::Owned(file_closer)));
 }
 
 void OpenFileOperation::OpenFileAfterOpenForWrite(

@@ -91,9 +91,8 @@ void DictionaryDataStore::Flush(OnFlushedCallback on_flushed) {
 
 void DictionaryDataStore::Load(
     DictionaryDataStore::OnLoadedCallback on_loaded) {
-  base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(), FROM_HERE,
-      base::BindOnce(&DictionaryDataStore::LoadAsync, this),
+  file_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&DictionaryDataStore::LoadAsync, this),
       std::move(on_loaded));
 }
 

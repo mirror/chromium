@@ -102,8 +102,9 @@ AsyncDocumentSubresourceFilter::AsyncDocumentSubresourceFilter(
   // because a task to delete it can only be posted to (and, therefore,
   // processed by) |task_runner| after this method returns, hence after the
   // below task is posted.
-  base::PostTaskAndReplyWithResult(
-      task_runner_, FROM_HERE,
+
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&Core::Initialize, base::Unretained(core_.get()),
                  base::Passed(&params), ruleset_handle->ruleset_.get()),
       base::Bind(&AsyncDocumentSubresourceFilter::OnActivateStateCalculated,
@@ -129,8 +130,9 @@ void AsyncDocumentSubresourceFilter::GetLoadPolicyForSubdocument(
 
   // TODO(pkalinnikov): Think about avoiding copy of |subdocument_url| if it is
   // too big and won't be allowed anyway (e.g., it's a data: URI).
-  base::PostTaskAndReplyWithResult(
-      task_runner_, FROM_HERE,
+
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(
           [](AsyncDocumentSubresourceFilter::Core* core,
              const GURL& subdocument_url) {

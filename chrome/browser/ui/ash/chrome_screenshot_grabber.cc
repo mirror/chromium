@@ -470,7 +470,7 @@ void ChromeScreenshotGrabber::ReadScreenshotFileForPreviewLocal(
     const base::FilePath& screenshot_cache_path) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, kBlockingTaskTraits,
       base::BindOnce(&ReadFileToString, screenshot_cache_path),
       base::BindOnce(&ChromeScreenshotGrabber::DecodeScreenshotFileForPreview,

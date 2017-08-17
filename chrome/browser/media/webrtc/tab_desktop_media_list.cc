@@ -141,8 +141,9 @@ void TabDesktopMediaList::Refresh() {
   for (const auto& it : favicon_pairs) {
     // Create a thumbail in a different thread and update the thumbnail in
     // current thread.
-    base::PostTaskAndReplyWithResult(
-        thumbnail_task_runner_.get(), FROM_HERE,
+
+    thumbnail_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&CreateEnclosedFaviconImage, thumbnail_size_, it.second),
         base::Bind(&TabDesktopMediaList::UpdateSourceThumbnail,
                    weak_factory_.GetWeakPtr(), it.first));

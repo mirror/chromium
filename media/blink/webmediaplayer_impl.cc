@@ -2350,8 +2350,8 @@ void WebMediaPlayerImpl::ReportMemoryUsage() {
   // posted here must finish earlier.
 
   if (demuxer_) {
-    base::PostTaskAndReplyWithResult(
-        media_task_runner_.get(), FROM_HERE,
+    media_task_runner_->PostTaskAndReply(
+        FROM_HERE,
         base::Bind(&Demuxer::GetMemoryUsage, base::Unretained(demuxer_.get())),
         base::Bind(&WebMediaPlayerImpl::FinishMemoryUsageReport, AsWeakPtr()));
   } else {

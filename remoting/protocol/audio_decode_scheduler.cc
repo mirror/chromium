@@ -40,12 +40,12 @@ void AudioDecodeScheduler::ProcessAudioPacket(
     const base::Closure& done) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  base::PostTaskAndReplyWithResult(
-      audio_decode_task_runner_.get(), FROM_HERE,
-      base::Bind(&AudioDecoder::Decode, base::Unretained(decoder_.get()),
-                 base::Passed(&packet)),
-      base::Bind(&AudioDecodeScheduler::ProcessDecodedPacket,
-                 weak_factory_.GetWeakPtr(), done));
+  audio_decode_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&AudioDecoder::Decode, base::Unretained(decoder_.get()),
+                     base::Passed(&packet)),
+      base::BindOnce(&AudioDecodeScheduler::ProcessDecodedPacket,
+                     weak_factory_.GetWeakPtr(), done));
 }
 
 void AudioDecodeScheduler::ProcessDecodedPacket(

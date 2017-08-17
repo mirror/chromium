@@ -346,12 +346,10 @@ void SupervisedUserCreationControllerNew::RegistrationCallback(
   if (error.state() == GoogleServiceAuthError::NONE) {
     creation_context_->token = token;
 
-    PostTaskAndReplyWithResult(
-        base::CreateTaskRunnerWithTraits(
-            {base::MayBlock(), base::TaskPriority::BACKGROUND,
-             base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})
-            .get(),
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
         base::Bind(&StoreSupervisedUserFiles, creation_context_->token,
                    ProfileHelper::GetProfilePathByUserIdHash(
                        creation_context_->mount_hash)),

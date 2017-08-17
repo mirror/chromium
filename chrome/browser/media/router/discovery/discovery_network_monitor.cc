@@ -69,16 +69,16 @@ void DiscoveryNetworkMonitor::RemoveObserver(Observer* const observer) {
 }
 
 void DiscoveryNetworkMonitor::Refresh(NetworkIdCallback callback) {
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&DiscoveryNetworkMonitor::UpdateNetworkInfo,
                      base::Unretained(this)),
       std::move(callback));
 }
 
 void DiscoveryNetworkMonitor::GetNetworkId(NetworkIdCallback callback) {
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&DiscoveryNetworkMonitor::GetNetworkIdOnSequence,
                      base::Unretained(this)),
       std::move(callback));

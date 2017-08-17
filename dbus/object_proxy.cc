@@ -184,11 +184,11 @@ void ObjectProxy::ConnectToSignal(const std::string& interface_name,
   bus_->AssertOnOriginThread();
 
   if (bus_->HasDBusThread()) {
-    base::PostTaskAndReplyWithResult(
-        bus_->GetDBusTaskRunner(), FROM_HERE,
-        base::Bind(&ObjectProxy::ConnectToSignalInternal, this, interface_name,
-                   signal_name, signal_callback),
-        base::Bind(on_connected_callback, interface_name, signal_name));
+    bus_->GetDBusTaskRunner()->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&ObjectProxy::ConnectToSignalInternal, this,
+                       interface_name, signal_name, signal_callback),
+        base::BindOnce(on_connected_callback, interface_name, signal_name));
   } else {
     // If the bus doesn't have a dedicated dbus thread we need to call
     // ConnectToSignalInternal directly otherwise we might miss a signal

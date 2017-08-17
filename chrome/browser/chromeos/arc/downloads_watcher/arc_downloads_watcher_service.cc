@@ -324,7 +324,7 @@ void ArcDownloadsWatcherService::DownloadsWatcher::OnFilePathChanged(
 void ArcDownloadsWatcherService::DownloadsWatcher::DelayBuildTimestampMap() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(outstanding_task_);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::Bind(&BuildTimestampMapCallback, downloads_dir_),
       base::Bind(&DownloadsWatcher::OnBuildTimestampMap,

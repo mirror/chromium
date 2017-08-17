@@ -300,11 +300,10 @@ TransportSecurityPersister::TransportSecurityPersister(
       weak_ptr_factory_(this) {
   transport_security_state_->SetDelegate(this);
 
-  base::PostTaskAndReplyWithResult(
-      background_runner_.get(), FROM_HERE,
-      base::Bind(&LoadState, writer_.path()),
-      base::Bind(&TransportSecurityPersister::CompleteLoad,
-                 weak_ptr_factory_.GetWeakPtr()));
+  background_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&LoadState, writer_.path()),
+      base::BindOnce(&TransportSecurityPersister::CompleteLoad,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 TransportSecurityPersister::~TransportSecurityPersister() {

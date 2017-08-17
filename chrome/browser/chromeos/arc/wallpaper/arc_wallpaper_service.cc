@@ -222,7 +222,7 @@ void ArcWallpaperService::GetWallpaper(const GetWallpaperCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   ash::WallpaperController* wc = ash::Shell::Get()->wallpaper_controller();
   gfx::ImageSkia wallpaper = wc->GetWallpaper();
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&EncodeImagePng, wallpaper), callback);
 }

@@ -34,8 +34,8 @@ void PostHSTSQueryForHostAndRequestContext(
     const GURL& origin,
     const scoped_refptr<net::URLRequestContextGetter>& request_context,
     const HSTSCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      request_context->GetNetworkTaskRunner().get(), FROM_HERE,
+  request_context->GetNetworkTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::Bind(&IsHSTSActiveForHostAndRequestContext, origin,
                  request_context),
       callback);

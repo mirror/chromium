@@ -177,7 +177,7 @@ class ServiceWorkerURLRequestJob::FileSizeResolver {
       return;
     }
 
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE,
         {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
         base::BindOnce(&GetFileSizes, std::move(file_paths)),

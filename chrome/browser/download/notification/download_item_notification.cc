@@ -485,7 +485,7 @@ void DownloadItemNotification::UpdateNotificationData(
 
     if (model.HasSupportedImageMimeType()) {
       base::FilePath file_path = item_->GetFullPath();
-      base::PostTaskWithTraitsAndReplyWithResult(
+      base::PostTaskWithTraitsAndReply(
           FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
           base::Bind(&ReadNotificationImage, file_path),
           base::Bind(&DownloadItemNotification::OnImageLoaded,
@@ -596,7 +596,7 @@ void DownloadItemNotification::OnImageDecoded(const SkBitmap& decoded_bitmap) {
     return;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&CropImage, decoded_bitmap),
       base::Bind(&DownloadItemNotification::OnImageCropped,

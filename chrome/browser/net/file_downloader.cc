@@ -44,12 +44,11 @@ FileDownloader::FileDownloader(
   if (overwrite) {
     fetcher_->Start();
   } else {
-    base::PostTaskAndReplyWithResult(
-        base::CreateTaskRunnerWithTraits(
-            {base::MayBlock(), base::TaskPriority::BACKGROUND,
-             base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})
-            .get(),
-        FROM_HERE, base::Bind(&base::PathExists, local_path_),
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        base::Bind(&base::PathExists, local_path_),
         base::Bind(&FileDownloader::OnFileExistsCheckDone,
                    weak_ptr_factory_.GetWeakPtr()));
   }
@@ -83,12 +82,11 @@ void FileDownloader::OnURLFetchComplete(const net::URLFetcher* source) {
     return;
   }
 
-  base::PostTaskAndReplyWithResult(
-      base::CreateTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})
-          .get(),
-      FROM_HERE, base::Bind(&base::Move, response_path, local_path_),
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::Bind(&base::Move, response_path, local_path_),
       base::Bind(&FileDownloader::OnFileMoveDone,
                  weak_ptr_factory_.GetWeakPtr()));
 }

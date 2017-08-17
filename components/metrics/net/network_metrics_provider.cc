@@ -295,7 +295,7 @@ NetworkMetricsProvider::GetWifiPHYLayerProtocol() const {
 
 void NetworkMetricsProvider::ProbeWifiPHYLayerProtocol() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

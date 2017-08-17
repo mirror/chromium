@@ -163,8 +163,8 @@ void PrefetchStore::Initialize(base::OnceClosure pending_command) {
   DCHECK_EQ(initialization_status_, InitializationStatus::NOT_INITIALIZED);
 
   initialization_status_ = InitializationStatus::INITIALIZING;
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&InitializeSync, db_.get(), db_file_path_, in_memory_),
       base::BindOnce(&PrefetchStore::OnInitializeDone,
                      weak_ptr_factory_.GetWeakPtr(),

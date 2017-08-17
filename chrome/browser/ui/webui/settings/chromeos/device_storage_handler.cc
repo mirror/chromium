@@ -181,7 +181,7 @@ void StorageHandler::UpdateDownloadsSize() {
   const base::FilePath downloads_path =
       file_manager::util::GetDownloadsFolderForProfile(profile);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&base::ComputeDirectorySize, downloads_path),
       base::Bind(&StorageHandler::OnGetDownloadsSize,

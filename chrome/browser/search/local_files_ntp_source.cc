@@ -127,7 +127,7 @@ void SendLocalFileResourceWithOrigin(
   fullpath = fullpath.AppendASCII(kBasePath).AppendASCII(path);
   content::URLDataSource::GotDataCallback wrapper =
       base::Bind(&CheckLocalIncludes, callback);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&ReadFileAndReturn, fullpath),
       base::Bind(&CallbackWithLoadedResource, origin, wrapper));

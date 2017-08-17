@@ -148,7 +148,7 @@ void ComponentExtensionIMEManagerImpl::Load(Profile* profile,
   // and InputMethodEngine creation, so that the virtual keyboard web content
   // url won't be override by IME component extensions.
   base::FilePath* copied_file_path = new base::FilePath(file_path);
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&CheckFilePath, base::Unretained(copied_file_path)),
       base::Bind(&OnFilePathChecked, base::Unretained(profile),

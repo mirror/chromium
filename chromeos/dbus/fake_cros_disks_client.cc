@@ -103,7 +103,7 @@ void FakeCrosDisksClient::Mount(const std::string& source_path,
   }
   mounted_paths_.insert(mounted_path);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(&PerformFakeMount, source_path, mounted_path),

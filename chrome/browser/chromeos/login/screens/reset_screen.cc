@@ -113,7 +113,7 @@ void ResetScreen::Show() {
 
   // Set availability of TPM firmware update.
   if (base::FeatureList::IsEnabled(features::kTPMFirmwareUpdate)) {
-    base::PostTaskWithTraitsAndReplyWithResult(
+    base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
         base::Bind(&base::PathExists,
                    base::FilePath(kTPMFirmwareUpdateAvailableFlagFile)),

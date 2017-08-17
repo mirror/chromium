@@ -107,12 +107,12 @@ void SecurityKeyMessageWriterImplTest::WriteMessageToOutput(
   base::MessageLoopForIO message_loop;
   base::RunLoop run_loop;
 
-  ASSERT_TRUE(base::PostTaskAndReplyWithResult(
-      reader_thread.task_runner().get(), FROM_HERE,
-      base::Bind(&SecurityKeyMessageWriterImplTest::ReadMessage,
-                 base::Unretained(this), payload.size()),
-      base::Bind(&SecurityKeyMessageWriterImplTest::OnReadComplete,
-                 base::Unretained(this), run_loop.QuitClosure())));
+  ASSERT_TRUE(reader_thread.task_runner()->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&SecurityKeyMessageWriterImplTest::ReadMessage,
+                     base::Unretained(this), payload.size()),
+      base::BindOnce(&SecurityKeyMessageWriterImplTest::OnReadComplete,
+                     base::Unretained(this), run_loop.QuitClosure())));
 
   if (payload.size()) {
     ASSERT_TRUE(writer_->WriteMessageWithPayload(kTestMessageType, payload));

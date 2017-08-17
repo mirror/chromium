@@ -446,14 +446,14 @@ void DialServiceImpl::StartDiscovery() {
 #if defined(OS_CHROMEOS)
   auto task_runner =
       content::BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
-  task_tracker_.PostTaskAndReplyWithResult(
+  task_tracker_.PostTaskAndReply(
       task_runner.get(), FROM_HERE,
       base::BindOnce(&GetBestBindAddressOnUIThread),
       base::BindOnce(&DialServiceImpl::DiscoverOnAddresses,
                      base::Unretained(this)));
 #else
   auto task_runner = base::CreateTaskRunnerWithTraits({base::MayBlock()});
-  task_tracker_.PostTaskAndReplyWithResult(
+  task_tracker_.PostTaskAndReply(
       task_runner.get(), FROM_HERE, base::BindOnce(&GetNetworkList),
       base::BindOnce(&DialServiceImpl::SendNetworkList,
                      base::Unretained(this)));

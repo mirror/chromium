@@ -280,7 +280,7 @@ void DidNavigate(const base::WeakPtr<ServiceWorkerContextCore>& context,
         provider_host->frame_id() != render_frame_id) {
       continue;
     }
-    BrowserThread::PostTaskAndReplyWithResult(
+    BrowserThread::PostTaskAndReply(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&GetWindowClientInfoOnUI, provider_host->process_id(),
                    provider_host->route_id(), provider_host->create_time(),
@@ -459,7 +459,7 @@ void FocusWindowClient(ServiceWorkerProviderHost* provider_host,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_EQ(blink::kWebServiceWorkerClientTypeWindow,
             provider_host->client_type());
-  BrowserThread::PostTaskAndReplyWithResult(
+  BrowserThread::PostTaskAndReply(
       BrowserThread::UI, FROM_HERE,
       base::Bind(&FocusOnUI, provider_host->process_id(),
                  provider_host->frame_id(), provider_host->create_time(),
@@ -507,7 +507,7 @@ void GetClient(ServiceWorkerProviderHost* provider_host,
       << client_type;
 
   if (client_type == blink::kWebServiceWorkerClientTypeWindow) {
-    BrowserThread::PostTaskAndReplyWithResult(
+    BrowserThread::PostTaskAndReply(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&GetWindowClientInfoOnUI, provider_host->process_id(),
                    provider_host->route_id(), provider_host->create_time(),

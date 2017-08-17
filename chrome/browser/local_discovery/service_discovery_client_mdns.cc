@@ -407,7 +407,7 @@ void ServiceDiscoveryClientMdns::StartNewClient() {
   DestroyMdns();
   mdns_ = net::MDnsClient::CreateDefault();
   client_ = base::MakeUnique<ServiceDiscoveryClientImpl>(mdns_.get());
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::BindOnce(&net::GetMDnsInterfacesToBind),
       base::BindOnce(&ServiceDiscoveryClientMdns::OnInterfaceListReady,

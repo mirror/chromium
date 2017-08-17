@@ -756,7 +756,7 @@ void SupervisedUserService::LoadBlacklist(const base::FilePath& path,
                                           const GURL& url) {
   DCHECK(blacklist_state_ == BlacklistLoadState::NOT_LOADED);
   blacklist_state_ = BlacklistLoadState::LOAD_STARTED;
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},

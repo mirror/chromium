@@ -131,13 +131,13 @@ void QuirksManager::RequestIccProfilePath(
   }
 
   std::string name = IdToFileName(product_id);
-  base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::Bind(&CheckForIccFile,
-                 delegate_->GetDisplayProfileDirectory().Append(name)),
-      base::Bind(&QuirksManager::OnIccFilePathRequestCompleted,
-                 weak_ptr_factory_.GetWeakPtr(), product_id, display_name,
-                 on_request_finished));
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&CheckForIccFile,
+                     delegate_->GetDisplayProfileDirectory().Append(name)),
+      base::BindOnce(&QuirksManager::OnIccFilePathRequestCompleted,
+                     weak_ptr_factory_.GetWeakPtr(), product_id, display_name,
+                     on_request_finished));
 }
 
 void QuirksManager::ClientFinished(QuirksClient* client) {

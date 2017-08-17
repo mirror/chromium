@@ -545,7 +545,7 @@ void ServicesCustomizationDocument::StartFetching() {
   if (url_.is_valid()) {
     fetch_started_ = true;
     if (url_.SchemeIsFile()) {
-      base::PostTaskWithTraitsAndReplyWithResult(
+      base::PostTaskWithTraitsAndReply(
           FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
           base::BindOnce(&ReadFileInBackground, base::FilePath(url_.path())),
           base::BindOnce(&ServicesCustomizationDocument::OnManifestRead,

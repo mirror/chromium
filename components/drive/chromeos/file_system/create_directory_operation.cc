@@ -145,22 +145,14 @@ void CreateDirectoryOperation::CreateDirectory(
 
   std::set<std::string>* updated_local_ids = new std::set<std::string>;
   FileChange* changed_files(new FileChange);
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
+  blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&UpdateLocalState,
-                 metadata_,
-                 directory_path,
-                 is_exclusive,
-                 is_recursive,
-                 updated_local_ids,
-                 changed_files),
-      base::Bind(
+      base::BindOnce(&UpdateLocalState, metadata_, directory_path, is_exclusive,
+                     is_recursive, updated_local_ids, changed_files),
+      base::BindOnce(
           &CreateDirectoryOperation::CreateDirectoryAfterUpdateLocalState,
-          weak_ptr_factory_.GetWeakPtr(),
-          callback,
-          base::Owned(updated_local_ids),
-          base::Owned(changed_files)));
+          weak_ptr_factory_.GetWeakPtr(), callback,
+          base::Owned(updated_local_ids), base::Owned(changed_files)));
 }
 
 void CreateDirectoryOperation::CreateDirectoryAfterUpdateLocalState(

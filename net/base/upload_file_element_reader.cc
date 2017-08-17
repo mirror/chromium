@@ -138,14 +138,11 @@ void UploadFileElementReader::OnSeekCompleted(
   }
 
   base::File::Info* file_info = new base::File::Info;
-  bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&base::GetFileInfo, path_, file_info),
-      base::Bind(&UploadFileElementReader::OnGetFileInfoCompleted,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 callback,
-                 base::Owned(file_info)));
+  bool posted = task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&base::GetFileInfo, path_, file_info),
+      base::BindOnce(&UploadFileElementReader::OnGetFileInfoCompleted,
+                     weak_ptr_factory_.GetWeakPtr(), callback,
+                     base::Owned(file_info)));
   DCHECK(posted);
 }
 

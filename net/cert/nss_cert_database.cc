@@ -376,11 +376,10 @@ bool NSSCertDatabase::DeleteCertAndKey(X509Certificate* cert) {
 void NSSCertDatabase::DeleteCertAndKeyAsync(
     const scoped_refptr<X509Certificate>& cert,
     const DeleteCertCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      GetSlowTaskRunner().get(), FROM_HERE,
-      base::Bind(&NSSCertDatabase::DeleteCertAndKeyImpl, cert),
-      base::Bind(&NSSCertDatabase::NotifyCertRemovalAndCallBack,
-                 weak_factory_.GetWeakPtr(), callback));
+  GetSlowTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&NSSCertDatabase::DeleteCertAndKeyImpl, cert),
+      base::BindOnce(&NSSCertDatabase::NotifyCertRemovalAndCallBack,
+                     weak_factory_.GetWeakPtr(), callback));
 }
 
 bool NSSCertDatabase::IsReadOnly(const X509Certificate* cert) const {

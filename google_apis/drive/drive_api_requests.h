@@ -150,12 +150,12 @@ class DriveApiDataRequest : public DriveApiPartialFieldRequest {
     switch (error) {
       case HTTP_SUCCESS:
       case HTTP_CREATED:
-        base::PostTaskAndReplyWithResult(
-            blocking_task_runner(),
+        blocking_task_runner()->PostTaskAndReply(
             FROM_HERE,
-            base::Bind(&DriveApiDataRequest::Parse, response_writer()->data()),
-            base::Bind(&DriveApiDataRequest::OnDataParsed,
-                       weak_ptr_factory_.GetWeakPtr(), error));
+            base::BindOnce(&DriveApiDataRequest::Parse,
+                           response_writer()->data()),
+            base::BindOnce(&DriveApiDataRequest::OnDataParsed,
+                           weak_ptr_factory_.GetWeakPtr(), error));
         break;
       default:
         RunCallbackOnPrematureFailure(error);

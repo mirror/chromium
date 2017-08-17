@@ -86,11 +86,8 @@ void ParseJsonOnBlockingPool(
     base::TaskRunner* blocking_task_runner,
     const std::string& json,
     const base::Callback<void(std::unique_ptr<base::Value> value)>& callback) {
-  base::PostTaskAndReplyWithResult(
-      blocking_task_runner,
-      FROM_HERE,
-      base::Bind(&google_apis::ParseJson, json),
-      callback);
+  blocking_task_runner->PostTaskAndReply(
+      FROM_HERE, base::Bind(&google_apis::ParseJson, json), callback);
 }
 
 // Returns response headers as a string. Returns a warning message if
@@ -864,15 +861,16 @@ void MultipartUploadRequestBase::Prepare(const PrepareCallback& callback) {
   // |UrlFetchRequestBase::Cancel| and OnPrepareUploadContent won't be called.
   std::string* const upload_content_type = new std::string();
   std::string* const upload_content_data = new std::string();
-  PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(), FROM_HERE,
-      base::Bind(&GetMultipartContent, boundary_, metadata_json_, content_type_,
-                 local_path_, base::Unretained(upload_content_type),
-                 base::Unretained(upload_content_data)),
-      base::Bind(&MultipartUploadRequestBase::OnPrepareUploadContent,
-                 weak_ptr_factory_.GetWeakPtr(), callback,
-                 base::Owned(upload_content_type),
-                 base::Owned(upload_content_data)));
+  blocking_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&GetMultipartContent, boundary_, metadata_json_,
+                     content_type_, local_path_,
+                     base::Unretained(upload_content_type),
+                     base::Unretained(upload_content_data)),
+      base::BindOnce(&MultipartUploadRequestBase::OnPrepareUploadContent,
+                     weak_ptr_factory_.GetWeakPtr(), callback,
+                     base::Owned(upload_content_type),
+                     base::Owned(upload_content_data)));
 }
 
 void MultipartUploadRequestBase::OnPrepareUploadContent(

@@ -39,7 +39,7 @@ ZipFileCreator::ZipFileCreator(
 void ZipFileCreator::Start() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE, {base::MayBlock()},
       base::Bind(&OpenFileHandleAsync, dest_file_),
       base::Bind(&ZipFileCreator::CreateZipFile, this));

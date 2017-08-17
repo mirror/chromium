@@ -154,11 +154,11 @@ void NetExportFileWriter::Initialize(
 
   NotifyStateObserversAsync();
 
-  base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(), FROM_HERE,
-      base::Bind(&SetUpDefaultLogPath, default_log_base_dir_getter_),
-      base::Bind(&NetExportFileWriter::SetStateAfterSetUpDefaultLogPath,
-                 weak_ptr_factory_.GetWeakPtr()));
+  file_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&SetUpDefaultLogPath, default_log_base_dir_getter_),
+      base::BindOnce(&NetExportFileWriter::SetStateAfterSetUpDefaultLogPath,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 void NetExportFileWriter::StartNetLog(
@@ -227,11 +227,11 @@ void NetExportFileWriter::StopNetLog(
   NotifyStateObserversAsync();
 
   if (context_getter) {
-    base::PostTaskAndReplyWithResult(
-        net_task_runner_.get(), FROM_HERE,
-        base::Bind(&AddNetInfo, context_getter, base::Passed(&polled_data)),
-        base::Bind(&NetExportFileWriter::StopNetLogAfterAddNetInfo,
-                   weak_ptr_factory_.GetWeakPtr()));
+    net_task_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&AddNetInfo, context_getter, base::Passed(&polled_data)),
+        base::BindOnce(&NetExportFileWriter::StopNetLogAfterAddNetInfo,
+                       weak_ptr_factory_.GetWeakPtr()));
   } else {
     StopNetLogAfterAddNetInfo(std::move(polled_data));
   }
@@ -286,9 +286,9 @@ void NetExportFileWriter::GetFilePathToCompletedLog(
   DCHECK(file_task_runner_);
   DCHECK(!log_path_.empty());
 
-  base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(), FROM_HERE,
-      base::Bind(&GetPathWithAllPermissions, log_path_), path_callback);
+  file_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&GetPathWithAllPermissions, log_path_),
+      path_callback);
 }
 
 std::string NetExportFileWriter::CaptureModeToString(

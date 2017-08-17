@@ -819,7 +819,7 @@ bool BookmarksExportFunction::RunOnReady() {
   // extensions use user gesture for export, so use USER_VISIBLE priority.
   // GetDefaultFilepathForBookmarkExport() might have to touch filesystem
   // (stat or access, for example), so this requires IO.
-  base::PostTaskWithTraitsAndReplyWithResult(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
