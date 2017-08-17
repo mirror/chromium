@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "416d6876_2520d766",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T01:27:26Z",
+      "side": 1,
+      "message": "Actually, assigning lo \u003d hi won\u0027t cause |while (lo \u003c\u003d hi)| to exit...",
+      "revId": "5f23436307f0c6ca15dc78fb83e00e25eb8393fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3ac143_1bf0736b",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T01:27:26Z",
+      "side": 1,
+      "message": "\u0027no need\u0027... or just do it, since the comment is longer than the assignment :)",
+      "revId": "5f23436307f0c6ca15dc78fb83e00e25eb8393fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
