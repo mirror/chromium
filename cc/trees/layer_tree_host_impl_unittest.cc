@@ -3063,6 +3063,10 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
 
     SetupLayers(settings);
 
+    // Enable wheel scroll latching flag.
+    TestInputHandlerClient input_handler_client;
+    host_impl_->BindToClient(&input_handler_client, true);
+
     base::TimeTicks fake_now = base::TimeTicks::Now();
 
     // Android Overlay Scrollbar does not have a initial show and fade out.
@@ -3121,8 +3125,8 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     EXPECT_TRUE(animation_task_.Equals(base::Closure()));
     host_impl_->DidFinishImplFrame();
 
-    // After a scroll, a scrollbar animation should be scheduled about 20ms from
-    // now.
+    // After a scroll, a scrollbar animation should not be scheduled after
+    // ScrollBegin.
     host_impl_->ScrollBegin(BeginState(gfx::Point()).get(),
                             InputHandler::WHEEL);
     host_impl_->ScrollBy(UpdateState(gfx::Point(), gfx::Vector2dF(0, 5)).get());
@@ -3208,6 +3212,9 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
       EXPECT_EQ(base::TimeDelta(), requested_animation_delay_);
       EXPECT_TRUE(animation_task_.Equals(base::Closure()));
     }
+    // Tear down the LayerTreeHostImpl before the InputHandlerClient.
+    host_impl_->ReleaseLayerTreeFrameSink();
+    host_impl_ = nullptr;
   }
 };
 
