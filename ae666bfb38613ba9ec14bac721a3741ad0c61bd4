@@ -70,6 +70,24 @@
       "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613d12fc_323c10c9",
+        "filename": "services/resource_coordinator/resource_coordinator_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T22:29:09Z",
+      "side": 1,
+      "message": "Yep sounds good!",
+      "parentUuid": "073a1861_6ce9b917",
+      "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
