@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ac0cf8cd_b4c26cf0",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-17T17:07:28Z",
+      "side": 1,
+      "message": "Ack, I will implement insert_or_assign in a follow up CL and then update this accordingly.",
+      "parentUuid": "df8cc326_0ecf2b8e",
+      "revId": "0ec627e9bddba9f4090e8829bb4ec05f45f7bf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9beafeae_0e631534",
         "filename": "base/values.cc",
         "patchSetId": 3
@@ -57,6 +75,30 @@
       "revId": "0ec627e9bddba9f4090e8829bb4ec05f45f7bf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11837012_123407e2",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-17T17:07:28Z",
+      "side": 1,
+      "message": "No longer relevant due to revert.",
+      "parentUuid": "9beafeae_0e631534",
+      "range": {
+        "startLine": 326,
+        "startChar": 20,
+        "endLine": 326,
+        "endChar": 27
+      },
+      "revId": "0ec627e9bddba9f4090e8829bb4ec05f45f7bf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
