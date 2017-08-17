@@ -62,7 +62,9 @@ class ShowWallpaperAnimationObserver : public ui::ImplicitAnimationObserver,
 }  // namespace
 
 WallpaperWidgetController::WallpaperWidgetController(views::Widget* widget)
-    : widget_(widget), widget_parent_(widget->GetNativeWindow()->parent()) {
+    : widget_(widget),
+      widget_parent_(widget->GetNativeWindow()->parent()),
+      has_blur_cache_(false) {
   DCHECK(widget_);
   widget_->AddObserver(this);
   widget_parent_->AddObserver(this);
@@ -71,7 +73,7 @@ WallpaperWidgetController::WallpaperWidgetController(views::Widget* widget)
 WallpaperWidgetController::~WallpaperWidgetController() {
   if (widget_) {
     if (widget_->GetLayer()->layer_blur() > 0.0f)
-      widget_parent_->layer()->SetCacheRenderSurface(false);
+      widget_parent_->layer()->RemoveCacheRenderSurfaceRequest();
     views::Widget* widget = widget_;
     RemoveObservers();
     widget->CloseNow();
@@ -91,14 +93,15 @@ bool WallpaperWidgetController::Reparent(aura::Window* root_window,
                                          int container) {
   if (widget_) {
     // Ensures the cache render surface of the old parent is unset.
-    widget_parent_->layer()->SetCacheRenderSurface(false);
+    if (has_blur_cache_)
+      widget_parent_->layer()->RemoveCacheRenderSurfaceRequest();
     widget_parent_->RemoveObserver(this);
     aura::Window* window = widget_->GetNativeWindow();
     root_window->GetChildById(container)->AddChild(window);
     widget_parent_ = widget_->GetNativeWindow()->parent();
     widget_parent_->AddObserver(this);
-    if (widget_->GetLayer()->layer_blur() > 0.0f)
-      widget_parent_->layer()->SetCacheRenderSurface(true);
+    if (has_blur_cache_)
+      widget_parent_->layer()->AddCacheRenderSurfaceRequest();
     return true;
   }
   // Nothing to reparent.
@@ -137,7 +140,11 @@ void WallpaperWidgetController::StartAnimating(
 void WallpaperWidgetController::SetWallpaperBlur(float blur_sigma) {
   widget_->GetLayer()->SetLayerBlur(blur_sigma);
   // Force the use of cache render surface to make blur more efficient.
-  widget_parent_->layer()->SetCacheRenderSurface(blur_sigma > 0.0f);
+  has_blur_cache_ = blur_sigma > 0.0f;
+  if (has_blur_cache_)
+    widget_parent_->layer()->AddCacheRenderSurfaceRequest();
+  else
+    widget_parent_->layer()->RemoveCacheRenderSurfaceRequest();
 }
 
 AnimatingWallpaperWidgetController::AnimatingWallpaperWidgetController(
