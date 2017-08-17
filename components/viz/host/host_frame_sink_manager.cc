@@ -93,6 +93,7 @@ void HostFrameSinkManager::CreateCompositorFrameSink(
     mojom::CompositorFrameSinkRequest request,
     mojom::CompositorFrameSinkClientPtr client) {
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  DCHECK(data.IsFrameSinkRegistered());
   DCHECK(!data.HasCompositorFrameSinkData());
 
   data.is_root = false;
@@ -148,6 +149,7 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
   DCHECK(frame_sink_manager_impl_);
 
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  DCHECK(data.IsFrameSinkRegistered());
   DCHECK(!data.HasCompositorFrameSinkData());
 
   auto support = CompositorFrameSinkSupport::Create(
