@@ -114,6 +114,30 @@
     },
     {
       "key": {
+        "uuid": "e4396a52_164fef47",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de06e666_46be127c",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "416bbd5f_534914be",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 4
@@ -125,6 +149,24 @@
       "writtenOn": "2017-08-17T22:16:20Z",
       "side": 1,
       "message": "I thought you wanted 512 MiB? (256 is fine by me; just curious.)",
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3314fd8_cc00d8b7",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T22:41:58Z",
+      "side": 1,
+      "message": "After discussing this with Brad, I\u0027m upping it to 512. Let\u0027s see how that works.",
+      "parentUuid": "416bbd5f_534914be",
       "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
