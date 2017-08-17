@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa987b75_dcf6dd40",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-08-17T15:56:26Z",
+      "side": 1,
+      "message": "There are some cases when system_store_ is not [NSHTTPCookieStorage sharedHTTPCookieStorage] should we still add the observer in this cases ?",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 70
+      },
+      "revId": "55ce6ce1c5df286060811a6a60394893f766c680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
