@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "608156e5_16ad11da",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-17T01:38:26Z",
+      "side": 1,
+      "message": "I think this is the one difference between menus and the tray. For example, tray can be opened when user presses physical volume button. Volume slider is shown. I don\u0027t think that user wants tray to capture key events (non focus related ones) while the volume slider is shown.",
+      "parentUuid": "eb196b10_60b4c6fb",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 62
+      },
+      "revId": "1085803101a12216ffd6c8f486781ae3b9d98773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e14722d_edfb8995",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 11
