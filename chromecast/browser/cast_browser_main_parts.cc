@@ -223,7 +223,7 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
     // TODO(714676): this should probably set the no restrictions autoplay
     // policy instead.
     {switches::kIgnoreAutoplayRestrictionsForTests, ""},
-    {switches::kDisableMediaSuspend, ""},
+    {switches::kEnableMediaSuspend, ""},
 #else
     // GPU shader disk cache disabling is largely to conserve disk space.
     {switches::kDisableGpuShaderDiskCache, ""},
