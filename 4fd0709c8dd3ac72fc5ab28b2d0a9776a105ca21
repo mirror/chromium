@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91f5e5c7_cd039e5f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/GeolocationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T18:37:36Z",
+      "side": 0,
+      "message": "does new code generate warnings?",
+      "revId": "4fd0709c8dd3ac72fc5ab28b2d0a9776a105ca21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
