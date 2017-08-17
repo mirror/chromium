@@ -22,6 +22,30 @@
       "revId": "9ddb3be7b7455b090d9170fbb900bb25875595a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bea25e_7f688394",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T14:45:36Z",
+      "side": 0,
+      "message": "With the new round of refactoring (latest patchset), I can confirm that those calls are not required.\n\nThe call of -didReplaceSessionHistory is not needed because the session is never loaded in an existing tab but instead a new tab is created and is replacing the current tab (this also mean that -loadSessionTab: and -replaceHistoryWithNavigations: are also removed).\n\nThe call of -loadCurrentURL is not needed because the load is automatically started when the WebState is inserted in the WebStateList (which happens after the call to NavigationManager::Restore with the new code).",
+      "parentUuid": "3954e7b4_0e3781b1",
+      "range": {
+        "startLine": 718,
+        "startChar": 1,
+        "endLine": 720,
+        "endChar": 38
+      },
+      "revId": "9ddb3be7b7455b090d9170fbb900bb25875595a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
