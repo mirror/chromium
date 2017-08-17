@@ -22,6 +22,30 @@
       "revId": "a34429763eb82fd3afe5a3041b5ab6d13a02e76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b1ef35_2d65d1a8",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-17T12:34:54Z",
+      "side": 1,
+      "message": "I tried with other subresources like images. Relatives URLs are always blocked.\nFor instance:\nhttps://mdn.github.io/learning-area/html/multimedia-and-embedding/images-in-html/index.html\nand\nhttps://user:pass@mdn.github.io/learning-area/html/multimedia-and-embedding/images-in-html/index.html\nare different.",
+      "parentUuid": "a5da647e_688b4379",
+      "range": {
+        "startLine": 1614,
+        "startChar": 36,
+        "endLine": 1614,
+        "endChar": 42
+      },
+      "revId": "a34429763eb82fd3afe5a3041b5ab6d13a02e76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
