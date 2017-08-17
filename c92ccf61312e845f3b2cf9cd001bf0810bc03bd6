@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c186d44f_af47f442",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "Done. But I do like plums. :-)",
+      "parentUuid": "7a850efd_69c2fc6a",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739d1bd9_018256a8",
         "filename": "components/password_manager/core/browser/password_manager_client.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253d0d03_3931fc81",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739d1bd9_018256a8",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c655a85c_35f24216",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "There are tests with single and multiple domains in password_reuse_detector_unittest.cc -- Is that sufficient?  The test here just to verify it doesn\u0027t get called repeatedly, not to verify its results.",
+      "parentUuid": "e56aba8b_0e0cda2e",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "479fc183_129de3f9",
         "filename": "components/password_manager/core/browser/password_reuse_detector.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a9f21d_542fe3ff",
+        "filename": "components/password_manager/core/browser/password_reuse_detector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "It actually already is!\nhttps://cs.chromium.org/chromium/src/components/password_manager/core/browser/password_manager_metrics_util.cc?type\u003dcs\u0026q\u003dmetrics_util::LogPasswordReuse\u0026sq\u003dpackage:chromium\u0026l\u003d160",
+      "parentUuid": "479fc183_129de3f9",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "4eae7d09_19c527d8",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "How about 200? That keeps us within the 99.9%tile:\nhttps://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20170816\u0026dayCount\u003d7\u0026histograms\u003dPasswordManager.PasswordReuse.NumberOfMatches\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dplatform%2Cone_of%2CW%7CM%7CL%7CC%2Cchannel%2Ceq%2C4%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial\n\nI\u0027d like to not drop any legitimate ones since it\u0027ll introduce some random bias, and 200*20B \u003d 4KB which is very small. This is just to ensure some bot-driven Chrome installations on click-farms (or some such) don\u0027t clog up our analysis pipelines. Even there it seems unlikely to create large reports.",
+      "parentUuid": "910543d8_2dc23625",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb0ed7e_d8dbd297",
         "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
         "patchSetId": 2
@@ -119,6 +221,30 @@
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d46993_f30a9114",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb0ed7e_d8dbd297",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 3
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "1eb60519_aca51eaf",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "nope, can\u0027t be non-empty if \u003d\u003dtrue, currently.  Clarified.",
+      "parentUuid": "c8bd2695_78ef2ff9",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 51
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c78222c_2f52a54a",
         "filename": "components/safe_browsing/password_protection/password_protection_service_unittest.cc",
         "patchSetId": 2
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "c3bb80e9_5e6c4506",
+        "filename": "components/safe_browsing/password_protection/password_protection_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c78222c_2f52a54a",
+      "range": {
+        "startLine": 933,
+        "startChar": 2,
+        "endLine": 933,
+        "endChar": 11
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ef9545e_e01036aa",
         "filename": "components/safe_browsing/proto/csd.proto",
         "patchSetId": 2
@@ -188,6 +362,30 @@
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846f51ad_9940b622",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-17T21:26:29Z",
+      "side": 1,
+      "message": "I wouldn\u0027t expect the pings to be dropped, but the field will be ignored. CL to add it is http://cl/165229641.",
+      "parentUuid": "1ef9545e_e01036aa",
+      "range": {
+        "startLine": 216,
+        "startChar": 20,
+        "endLine": 216,
+        "endChar": 45
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
