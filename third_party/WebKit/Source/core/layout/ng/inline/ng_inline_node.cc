@@ -532,7 +532,8 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGWritingMode writing_mode = FromPlatformWritingMode(style.GetWritingMode());
 
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpaceBuilder(writing_mode)
+      NGConstraintSpaceBuilder(writing_mode,
+                               {NGSizeIndefinite, NGSizeIndefinite})
           .SetTextDirection(style.Direction())
           .SetAvailableSize({available_inline_size, NGSizeIndefinite})
           .ToConstraintSpace(writing_mode);

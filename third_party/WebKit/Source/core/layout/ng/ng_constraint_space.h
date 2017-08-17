@@ -171,6 +171,10 @@ class CORE_EXPORT NGConstraintSpace final
     return baseline_requests_;
   }
 
+  NGPhysicalSize InitialContainingBlockSize() const {
+    return initial_containing_block_size_;
+  }
+
   bool operator==(const NGConstraintSpace&) const;
   bool operator!=(const NGConstraintSpace&) const;
 
@@ -202,10 +206,6 @@ class CORE_EXPORT NGConstraintSpace final
       Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
       const WTF::Optional<LayoutUnit>& clearance_offset,
       Vector<NGBaselineRequest>& baseline_requests);
-
-  NGPhysicalSize InitialContainingBlockSize() const {
-    return initial_containing_block_size_;
-  }
 
   NGLogicalSize available_size_;
   NGLogicalSize percentage_resolution_size_;
