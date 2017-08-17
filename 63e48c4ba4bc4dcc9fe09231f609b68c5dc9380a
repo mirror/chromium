@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51ae2a7b_42ffcaea",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T20:15:31Z",
+      "side": 1,
+      "message": "\u003e Is there any reason to call this here, if updateContentViewCoreVisibility() just called it?\n\nNope. I thought updateContentViewCoreVisibility might have an early out (which would be a bug already), but it doesn\u0027t. Removed.",
+      "parentUuid": "5ed946e4_430151ab",
+      "range": {
+        "startLine": 1090,
+        "startChar": 8,
+        "endLine": 1090,
+        "endChar": 36
+      },
+      "revId": "63e48c4ba4bc4dcc9fe09231f609b68c5dc9380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f31aeb_1abba786",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsTest.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "99520ccc_3ace39b3",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T20:15:31Z",
+      "side": 1,
+      "message": "\u003e What guarantees that the two views get assigned to two different renderer processes?\n\nDefault process model is process per site-instance: https://www.chromium.org/developers/design-documents/process-models#1_Process_per_Site_Instance\n\nSo other than the limit, two independent (ie not related by pop up) webviews loading normal (not webui/etc) web pages will not share the same process.",
+      "parentUuid": "72f31aeb_1abba786",
+      "range": {
+        "startLine": 680,
+        "startChar": 16,
+        "endLine": 680,
+        "endChar": 50
+      },
+      "revId": "63e48c4ba4bc4dcc9fe09231f609b68c5dc9380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5bab37_eb404cc9",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T17:03:54Z",
       "side": 1,
       "message": "so just double-confirming we weren\u0027t previously depending on binding manager always getting updated and it\u0027s ok to short-circuit? (haven\u0027t looked at that code in a bit and it looks like you\u0027ve been updating it)",
+      "range": {
+        "startLine": 469,
+        "startChar": 12,
+        "endLine": 469,
+        "endChar": 23
+      },
+      "revId": "63e48c4ba4bc4dcc9fe09231f609b68c5dc9380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ae4722_0c88438a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T20:15:31Z",
+      "side": 1,
+      "message": "\u003e so just double-confirming we weren\u0027t previously depending on binding manager always getting updated and it\u0027s ok to short-circuit? (haven\u0027t looked at that code in a bit and it looks like you\u0027ve been updating it)\n\ndoh, missed that. This is definitely a bug. gonna have to convert to two if (old !\u003d new) blocks :/\n\nfwiw, after this, next refactor is pulling BindingManager.setPriority into here, then I think BindingManager can be entirely lifted to chrome layer... I can dream",
+      "parentUuid": "0f5bab37_eb404cc9",
       "range": {
         "startLine": 469,
         "startChar": 12,
