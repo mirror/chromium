@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d48d9b_52178fe3",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-17T20:27:54Z",
+      "side": 1,
+      "message": "Going even earlier, looks like it should be equivalent to multiply device_scale_factor() * painted_device_scale_factor() in LayerTreeImpl::GetViewportSelection().  That relies on the information passed in via RenderWidget::OnDeviceScaleFactorChanged.  Please apply it there and write a cc_unittest case.",
+      "revId": "99fd4ad10975ee1024d7c774f4e854cc3d46c6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
