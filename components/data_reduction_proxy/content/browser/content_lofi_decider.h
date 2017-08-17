@@ -8,6 +8,8 @@
 #include "components/data_reduction_proxy/core/common/lofi_decider.h"
 #include "base/macros.h"
 
+class GURL;
+
 namespace net {
 class HttpRequestHeaders;
 class URLRequest;
@@ -42,6 +44,9 @@ class ContentLoFiDecider : public LoFiDecider {
   bool IsClientLoFiImageRequest(const net::URLRequest& request) const override;
   bool IsClientLoFiAutoReloadRequest(
       const net::URLRequest& request) const override;
+
+  void MaybeApplyAMPPreview(net::URLRequest* request,
+                            GURL* new_url) const override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ContentLoFiDecider);
