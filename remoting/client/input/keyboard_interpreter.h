@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
 
@@ -22,16 +23,27 @@ class KeyboardInterpreter {
   explicit KeyboardInterpreter(ClientInputInjector* input_injector);
   ~KeyboardInterpreter();
 
-  // Delegates to |KeyboardInputStrategy| to covert and send the input.
-  void HandleTextEvent(const std::string& text, uint8_t modifiers);
-  // Delegates to |KeyboardInputStrategy| to covert and send the delete.
-  void HandleDeleteEvent(uint8_t modifiers);
+  // Delegates to |KeyboardInputStrategy| to convert and send the input.
+  void HandleTextEvent(const std::string& text);
+  // Delegates to |KeyboardInputStrategy| to convert and send the delete.
+  void HandleDeleteEvent();
   // Assembles CTRL+ALT+DEL key event and then delegates to
   // |KeyboardInputStrategy| send the keys.
   void HandleCtrlAltDeleteEvent();
   // Assembles PRINT_SCREEN key event and then delegates to
   // |KeyboardInputStrategy| send the keys.
   void HandlePrintScreenEvent();
+
+  // A combination of keys that should be pressed at the same time. For example,
+  // passing CTRL_LEFT, ALT_LEFT, DEL will make |KeyboardInputStrategy| send
+  // keydown-CTRL, keydown-ALT, keydown-DEL, keyup-DEL, keyup-ALT, keyup-CTRL.
+  // Note that modifier keys must come before non-modifier keys.
+  void HandleKeyCombination(const std::vector<uint32_t>& combination);
+
+  // Adds keys needed to press to |keys| for typing the character |ch|.
+  // e.g. a for 'a' and SHIFT_LEFT+a for 'A'.
+  static void AddKeysForCharacter(unsigned char ch,
+                                  std::vector<uint32_t>* keys);
 
  private:
   std::unique_ptr<KeyboardInputStrategy> input_strategy_;

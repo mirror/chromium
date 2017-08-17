@@ -248,13 +248,17 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
 
 #pragma mark - ClientKeyboardDelegate
 
-- (void)clientKeyboardShouldSend:(NSString*)text {
-  _client.keyboardInterpreter->HandleTextEvent(base::SysNSStringToUTF8(text),
-                                               0);
+- (void)clientKeyboardShouldSendText:(NSString*)text {
+  _client.keyboardInterpreter->HandleTextEvent(base::SysNSStringToUTF8(text));
 }
 
 - (void)clientKeyboardShouldDelete {
-  _client.keyboardInterpreter->HandleDeleteEvent(0);
+  _client.keyboardInterpreter->HandleDeleteEvent();
+}
+
+- (void)clientKeyboardShouldSendKeyCombination:
+    (const std::vector<uint32_t>&)combination {
+  _client.keyboardInterpreter->HandleKeyCombination(combination);
 }
 
 #pragma mark - ClientGesturesDelegate
