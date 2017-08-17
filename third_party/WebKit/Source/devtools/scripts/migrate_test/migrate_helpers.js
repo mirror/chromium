@@ -496,11 +496,13 @@ function scanHelpers() {
       if (utils.isDir(file))
         scan(file);
       else if (
-          file.indexOf('-test.js') !== -1 || file.indexOf('syntax-highlight.js') !== -1 ||
-          file.indexOf('timeline-data.js') !== -1 || file.indexOf('styles-update-links.js') !== -1 ||
-          file.indexOf('breakpoint-manager.js') !== -1 ||
-          file.indexOf('elements-panel-shadow-selection-on-refresh.js') !== -1 || file.indexOf('page-mock.js') !== -1)
+          // file.indexOf('-test.js') !== -1 || file.indexOf('syntax-highlight.js') !== -1 ||
+          // file.indexOf('timeline-data.js') !== -1 || file.indexOf('styles-update-links.js') !== -1 ||
+          // file.indexOf('breakpoint-manager.js') !== -1 ||
+          // file.indexOf('elements-panel-shadow-selection-on-refresh.js') !== -1 || file.indexOf('page-mock.js') !== -1 ||
+          file.indexOf('extensions-audits-tests.js') !== -1) {
         paths.push(file);
+      }
     }
   }
 

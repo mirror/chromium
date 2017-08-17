@@ -1,5 +1,6 @@
 {
   "modules" : [
+    { "name": "extensions_audits_test_runner" },
     { "name": "application_test_runner" },
     { "name": "audits_test_runner" },
     { "name": "bindings_test_runner" },
