@@ -46,6 +46,7 @@
 #include "components/data_reduction_proxy/core/browser/data_store_impl.h"
 #include "components/domain_reliability/monitor.h"
 #include "components/net_log/chrome_net_log.h"
+#include "components/network_error_logging/network_error_logging_service.h"
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/offline_pages/features/features.h"
 #include "components/prefs/json_pref_store.h"
@@ -517,6 +518,9 @@ void ProfileImplIOData::InitializeInternal(
       std::move(profile_params->protocol_handler_interceptor));
 
   builder->set_reporting_policy(MaybeCreateReportingPolicy());
+
+  builder->SetNetworkErrorLoggingDelegate(
+      network_error_logging::NetworkErrorLoggingService::Create());
 }
 
 void ProfileImplIOData::OnMainRequestContextCreated(

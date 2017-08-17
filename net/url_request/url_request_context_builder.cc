@@ -42,6 +42,7 @@
 #include "net/ssl/default_channel_id_store.h"
 #include "net/ssl/ssl_config_service_defaults.h"
 #include "net/url_request/data_protocol_handler.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/static_http_user_agent_settings.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_storage.h"
@@ -384,6 +385,12 @@ void URLRequestContextBuilder::SetCreateHttpTransactionFactoryCallback(
       std::move(create_http_network_transaction_factory);
 }
 
+void URLRequestContextBuilder::SetNetworkErrorLoggingDelegate(
+    std::unique_ptr<NetworkErrorLoggingDelegate>
+        network_error_logging_delegate) {
+  network_error_logging_delegate_ = std::move(network_error_logging_delegate);
+}
+
 std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
   std::unique_ptr<ContainerURLRequestContext> context(
       new ContainerURLRequestContext());
@@ -644,6 +651,13 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
         ReportingService::Create(*reporting_policy_, context.get()));
   }
 #endif  // BUILDFLAG(ENABLE_REPORTING)
+
+  if (network_error_logging_delegate_) {
+    storage->set_network_error_logging_delegate(
+        std::move(network_error_logging_delegate_));
+    context->network_error_logging_delegate()->SetReportingService(
+        context->reporting_service());
+  }
 
   return std::move(context);
 }
