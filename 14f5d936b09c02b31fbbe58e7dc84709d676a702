@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "55a6ae52_bf2425a3",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-17T00:43:05Z",
+      "side": 1,
+      "message": "Another case to consider: when printing to local printers, this code can get called when Print Preview is hidden. In this case the UI is not actually closed, just invisible, and the renderer may not be done generating the data to print yet (for example, if the user hits print before the preview is loaded). See https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_handler.cc?l\u003d1023",
+      "parentUuid": "66d3e21c_927e9b5f",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ea5517_02e5c5be",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 4
