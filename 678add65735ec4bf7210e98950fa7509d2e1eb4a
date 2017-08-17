@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b383e7ca_afee09fb",
+        "filename": "net/url_request/url_request_file_dir_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T01:44:17Z",
+      "side": 1,
+      "message": "Yes, this works on Windows as is. Updated the comment.",
+      "parentUuid": "434856e7_1fce00ad",
+      "range": {
+        "startLine": 116,
+        "startChar": 51,
+        "endLine": 116,
+        "endChar": 56
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e588073_d44ee3a2",
         "filename": "net/url_request/url_request_file_dir_job.cc",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e091273_96e53de3",
+        "filename": "net/url_request/url_request_file_dir_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T01:44:17Z",
+      "side": 1,
+      "message": "So looking at StripTrailingSeparators some more - at the comments in the header, at the implementation, and at the unit tests - I don\u0027t think StripTrailingSeparators cares about directories at all. It only deals with paths and all it wants to do is remove trailing slashes.\n\nThe only corner cases are the root path cases I mentioned, but they work out. The parent dir of c:\\\\ is c:\\\\, and the parent dir of c:\\ is c:\\.\n\nI added more comments and more unit tests. If I replace this block with:\n\nif (dir_path_ !\u003d dir_path_.DirName()) {\n  data_.append(GetParentDirectoryLink());\n}\n\nThen one test case fails.",
+      "parentUuid": "0757844e_8b2dd1b4",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "49bcc6d6_816b5397",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T01:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a37dc3_2f255348",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "198362d4_f8d0a774",
         "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
         "patchSetId": 4
@@ -163,6 +235,30 @@
       "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec83f743_d99b2d20",
+        "filename": "net/url_request/url_request_file_dir_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T01:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "198362d4_f8d0a774",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "678add65735ec4bf7210e98950fa7509d2e1eb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
