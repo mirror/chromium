@@ -246,7 +246,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, WindowOpenExtension) {
   WebContents* newtab = NULL;
   ASSERT_NO_FATAL_FAILURE(
       OpenWindow(browser()->tab_strip_model()->GetActiveWebContents(),
-                 start_url.Resolve("newtab.html"), true, &newtab));
+                 start_url.Resolve("newtab.html"), true, true, &newtab));
 
   bool result = false;
   ASSERT_TRUE(content::ExecuteScriptAndExtractBool(newtab, "testExtensionApi()",
@@ -269,7 +269,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, WindowOpenInvalidExtension) {
   ASSERT_NO_FATAL_FAILURE(OpenWindow(
       browser()->tab_strip_model()->GetActiveWebContents(),
       GURL("chrome-extension://thisissurelynotavalidextensionid/newtab.html"),
-      expect_error_page_in_new_process, &newtab));
+      expect_error_page_in_new_process, false, &newtab));
 
   // This is expected to commit an error page.
   ASSERT_EQ(content::PAGE_TYPE_ERROR,
@@ -298,10 +298,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, WindowOpenNoPrivileges) {
   ASSERT_NO_FATAL_FAILURE(
       OpenWindow(browser()->tab_strip_model()->GetActiveWebContents(),
                  GURL(std::string(extensions::kExtensionScheme) +
-                     url::kStandardSchemeSeparator +
-                     last_loaded_extension_id() + "/newtab.html"),
-                 false,
-                 &newtab));
+                      url::kStandardSchemeSeparator +
+                      last_loaded_extension_id() + "/newtab.html"),
+                 false, true, &newtab));
 
   // Extension API should succeed.
   bool result = false;
