@@ -34,6 +34,24 @@
       "revId": "b9e0b514bfbb16764684e1236b3bd289e6a73fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cbc119_5100a871",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7876,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-17T19:08:19Z",
+      "side": 0,
+      "message": "The testing functions aren\u0027t set up the best, but it is possible in the real world where a layer is not fully opaque, but a quad is opaque?",
+      "parentUuid": "a4242267_374bc0b5",
+      "revId": "b9e0b514bfbb16764684e1236b3bd289e6a73fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
