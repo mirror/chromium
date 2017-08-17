@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20e0244_0e5e641a",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T09:17:24Z",
+      "side": 1,
+      "message": "Not initialized. Maybe it\u0027s causing r495036 to get reverted.",
+      "revId": "1b56803c0e2a1ff75797486f44712e951ee4f1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
