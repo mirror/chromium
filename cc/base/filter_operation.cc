@@ -118,7 +118,7 @@ FilterOperation::FilterOperation(FilterType type,
 }
 
 FilterOperation::FilterOperation(FilterType type,
-                                 const SkRegion& region,
+                                 const ShapeRects& region,
                                  float inner_threshold,
                                  float outer_threshold)
     : type_(type),
@@ -182,7 +182,8 @@ static FilterOperation CreateNoOpFilter(FilterOperation::FilterType type) {
     case FilterOperation::REFERENCE:
       return FilterOperation::CreateReferenceFilter(nullptr);
     case FilterOperation::ALPHA_THRESHOLD:
-      return FilterOperation::CreateAlphaThresholdFilter(SkRegion(), 1.f, 0.f);
+      return FilterOperation::CreateAlphaThresholdFilter(
+          FilterOperation::ShapeRects(), 1.f, 0.f);
   }
   NOTREACHED();
   return FilterOperation::CreateEmptyFilter();
@@ -320,11 +321,11 @@ void FilterOperation::AsValueInto(base::trace_event::TracedValue* value) const {
       value->SetDouble("outer_threshold", outer_threshold_);
       std::unique_ptr<base::ListValue> region_value(new base::ListValue());
       value->BeginArray("region");
-      for (SkRegion::Iterator it(region_); !it.done(); it.next()) {
-        value->AppendInteger(it.rect().x());
-        value->AppendInteger(it.rect().y());
-        value->AppendInteger(it.rect().width());
-        value->AppendInteger(it.rect().height());
+      for (const gfx::Rect& rect : region_) {
+        value->AppendInteger(rect.x());
+        value->AppendInteger(rect.y());
+        value->AppendInteger(rect.width());
+        value->AppendInteger(rect.height());
       }
       value->EndArray();
     } break;
