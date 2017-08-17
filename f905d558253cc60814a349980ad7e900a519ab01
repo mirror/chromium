@@ -128,6 +128,24 @@
       "revId": "f905d558253cc60814a349980ad7e900a519ab01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef3ec75_d73bb38f",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-17T13:23:07Z",
+      "side": 1,
+      "message": "Which other getContext()?  Are you talking about InstrumentationRegistry.getContext()?  I think our tests only care about the target context, and I\u0027d rather not replace every call to getContext() with getTargetContext() as it hurts readability and complicates the code.  Can we add a static function CronetTestCommon.getContext() and statically import this?",
+      "parentUuid": "512a394d_224172a8",
+      "revId": "f905d558253cc60814a349980ad7e900a519ab01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
