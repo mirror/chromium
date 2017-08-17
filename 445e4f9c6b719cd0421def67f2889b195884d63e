@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b02f92f_581b33dc",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T17:24:31Z",
+      "side": 1,
+      "message": "You can use emplace, instead of insert + make_pair.",
+      "revId": "445e4f9c6b719cd0421def67f2889b195884d63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a526e988_a5a32f6e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T17:24:31Z",
+      "side": 1,
+      "message": "IIUC, practically, we do not expect this case, so how about LOG(ERROR)?",
+      "revId": "445e4f9c6b719cd0421def67f2889b195884d63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52818ade_4fc3a26b",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T17:24:31Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "445e4f9c6b719cd0421def67f2889b195884d63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
