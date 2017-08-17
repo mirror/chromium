@@ -344,8 +344,8 @@ static StreamParser* BuildMP2TParser(const std::vector<std::string>& codecs,
 #endif
 
 static const SupportedTypeInfo kSupportedTypeInfo[] = {
-    {"video/webm", &BuildWebMParser, kVideoWebMCodecs},
-    {"audio/webm", &BuildWebMParser, kAudioWebMCodecs},
+    {"video/webm-DISABLED", &BuildWebMParser, kVideoWebMCodecs},
+    {"audio/webm-DISABLED", &BuildWebMParser, kAudioWebMCodecs},
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
     {"audio/aac", &BuildADTSParser, kAudioADTSCodecs},
     {"audio/mpeg", &BuildMP3Parser, kAudioMP3Codecs},
