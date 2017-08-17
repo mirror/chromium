@@ -16,6 +16,24 @@
       "revId": "2ace0578ea34fc7d4f18883cfd263eabf99bfea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f577f27_8d41ba0b",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-17T23:28:57Z",
+      "side": 1,
+      "message": "Scary! Thanks for catching!\n\nThis would have been caught by unit tests, luckily; now I\u0027m feeling guilty, and I volunteered to improve unit tests for this. I\u0027ve updated the CL description.",
+      "parentUuid": "110a56a2_8a4dae04",
+      "revId": "2ace0578ea34fc7d4f18883cfd263eabf99bfea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
