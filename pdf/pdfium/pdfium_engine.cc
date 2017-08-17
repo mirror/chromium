@@ -1785,7 +1785,7 @@ bool PDFiumEngine::OnLeftMouseDown(const pp::MouseInputEvent& event) {
 
   // Decide whether to open link or not based on user action in mouse up and
   // mouse move events.
-  if (IsLinkArea(area))
+  if (IsLinkArea(area) && !client_->IsPrintPreview())
     return true;
 
   if (page_index != -1) {
@@ -1948,6 +1948,8 @@ bool PDFiumEngine::OnMouseUp(const pp::MouseInputEvent& event) {
   // Open link on mouse up for same link for which mouse down happened earlier.
   if (mouse_down_state_.Matches(area, target)) {
     if (area == PDFiumPage::WEBLINK_AREA) {
+      if (client_->IsPrintPreview())
+        return false;
       uint32_t modifiers = event.GetModifiers();
       bool middle_button =
           !!(modifiers & PP_INPUTEVENT_MODIFIER_MIDDLEBUTTONDOWN);
@@ -2010,7 +2012,10 @@ bool PDFiumEngine::OnMouseMove(const pp::MouseInputEvent& event) {
         break;
       case PDFiumPage::WEBLINK_AREA:
       case PDFiumPage::DOCLINK_AREA:
-        cursor = PP_CURSORTYPE_HAND;
+        if (client_->IsPrintPreview())
+          cursor = PP_CURSORTYPE_POINTER;
+        else
+          cursor = PP_CURSORTYPE_HAND;
         break;
       case PDFiumPage::NONSELECTABLE_AREA:
       case PDFiumPage::FORM_TEXT_AREA:
@@ -2527,7 +2532,7 @@ std::string PDFiumEngine::GetLinkAtPosition(const pp::Point& point) {
   PDFiumPage::LinkTarget target;
   PDFiumPage::Area area =
       GetCharIndex(point, &page_index, &temp, &form_type, &target);
-  if (area == PDFiumPage::WEBLINK_AREA)
+  if (area == PDFiumPage::WEBLINK_AREA && !client_->IsPrintPreview())
     url = target.url;
   return url;
 }
