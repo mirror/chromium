@@ -232,7 +232,7 @@ TEST_F(StyleEngineTest, RuleSetInvalidationCustomPseudo) {
             kRuleSetInvalidationsScheduled);
   GetDocument().View()->UpdateAllLifecyclePhases();
   unsigned after_count = GetStyleEngine().StyleForElementCount();
-  EXPECT_EQ(3u, after_count - before_count);
+  EXPECT_EQ(4u, after_count - before_count);
 }
 
 TEST_F(StyleEngineTest, RuleSetInvalidationHost) {
@@ -267,6 +267,9 @@ TEST_F(StyleEngineTest, RuleSetInvalidationHost) {
   after_count = GetStyleEngine().StyleForElementCount();
   EXPECT_EQ(1u, after_count - before_count);
 
+  EXPECT_EQ(ScheduleInvalidationsForRules(*shadow_root,
+                                          ":host(div) { background: green}"),
+            kRuleSetInvalidationsScheduled);
   EXPECT_EQ(ScheduleInvalidationsForRules(*shadow_root,
                                           ":host(*) { background: green}"),
             kRuleSetInvalidationFullRecalc);
