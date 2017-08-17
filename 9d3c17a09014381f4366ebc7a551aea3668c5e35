@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5feaf024_1b642d1f",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:04:55Z",
+      "side": 1,
+      "message": "nit: constexpr while you\u0027re here",
+      "revId": "9d3c17a09014381f4366ebc7a551aea3668c5e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c1140d_562e7b7e",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T20:04:55Z",
+      "side": 1,
+      "message": "Why is this needed? Feels EnableHighResolutionTimer(false); should do this if it\u0027s a must do. The API says this should be called before something else not at the end of it all.",
+      "revId": "9d3c17a09014381f4366ebc7a551aea3668c5e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
