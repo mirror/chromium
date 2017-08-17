@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.feedback.FeedbackCollector;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.util.UrlUtilities;
 
 import javax.annotation.Nonnull;
@@ -88,7 +89,7 @@ public class HelpAndFeedback {
             @Nullable String url) {
         RecordUserAction.record("MobileHelpAndFeedback");
         FeedbackCollector.create(activity, profile, url, true /* takeScreenshot */,
-                new FeedbackCollector.FeedbackResult() {
+                ProfileSyncService.get(), new FeedbackCollector.FeedbackResult() {
                     @Override
                     public void onResult(FeedbackCollector collector) {
                         show(activity, helpContext, collector);
@@ -108,7 +109,7 @@ public class HelpAndFeedback {
     public void showFeedback(final Activity activity, Profile profile, @Nullable String url,
             @Nullable final String categoryTag) {
         FeedbackCollector.create(activity, profile, url, false /* takeScreenshot */,
-                new FeedbackCollector.FeedbackResult() {
+                ProfileSyncService.get(), new FeedbackCollector.FeedbackResult() {
                     @Override
                     public void onResult(FeedbackCollector collector) {
                         if (categoryTag != null) {

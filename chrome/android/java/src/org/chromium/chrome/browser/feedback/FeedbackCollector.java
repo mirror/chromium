@@ -15,6 +15,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.StatisticsRecorderAndroid;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.components.variations.VariationsAssociatedData;
 
 import java.util.HashMap;
@@ -38,6 +39,9 @@ public class FeedbackCollector
      */
     @VisibleForTesting
     static final String URL_KEY = "URL";
+
+    @VisibleForTesting
+    static final String SYNC_INTERNALS_KEY = "about_sync_data";
 
     /**
      * The timeout (ms) for gathering data asynchronously.
@@ -98,6 +102,11 @@ public class FeedbackCollector
     private String mCategoryTag;
 
     /**
+     * The ProfileSyncService for the current user.
+     */
+    private ProfileSyncService mProfileSyncService;
+
+    /**
      * A callback for when the gathering of feedback data has finished. This may be called either
      * when all data has been collected, or after a timeout.
      */
@@ -119,20 +128,23 @@ public class FeedbackCollector
      * @return the created {@link FeedbackCollector}.
      */
     public static FeedbackCollector create(Activity activity, Profile profile, @Nullable String url,
-            boolean takeScreenshot, FeedbackResult callback) {
+            boolean takeScreenshot, ProfileSyncService profileSyncService,
+            FeedbackResult callback) {
         ThreadUtils.assertOnUiThread();
-        return new FeedbackCollector(activity, profile, url, takeScreenshot, callback);
+        return new FeedbackCollector(
+                activity, profile, url, takeScreenshot, profileSyncService, callback);
     }
 
     @VisibleForTesting
     FeedbackCollector(Activity activity, Profile profile, String url, boolean takeScreenshot,
-            FeedbackResult callback) {
+            ProfileSyncService profileSyncService, FeedbackResult callback) {
         mData = new HashMap<>();
         mProfile = profile;
         mUrl = url;
         mCallback = callback;
         mCollectionStartTime = SystemClock.elapsedRealtime();
         mTakeScreenshot = takeScreenshot;
+        mProfileSyncService = profileSyncService;
         init(activity);
     }
 
@@ -292,6 +304,7 @@ public class FeedbackCollector
         addConnectivityData();
         addDataReductionProxyData();
         addVariationsData();
+        addSyncInternalsData();
         return asBundle();
     }
 
@@ -317,6 +330,14 @@ public class FeedbackCollector
     private void addVariationsData() {
         if (mProfile.isOffTheRecord()) return;
         mData.putAll(VariationsAssociatedData.getFeedbackMap());
+    }
+
+    private void addSyncInternalsData() {
+        if (mProfileSyncService == null) {
+            return;
+        }
+
+        mData.put(SYNC_INTERNALS_KEY, mProfileSyncService.getSyncInternalsInfo());
     }
 
     private Bundle asBundle() {

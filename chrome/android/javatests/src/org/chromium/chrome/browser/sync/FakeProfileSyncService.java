@@ -29,4 +29,9 @@ public class FakeProfileSyncService extends ProfileSyncService {
     public boolean isUsingSecondaryPassphrase() {
         return true;
     }
+
+    @Override
+    public String getSyncInternalsInfo() {
+        return "{syncInternals: true}";
+    }
 }

@@ -12,6 +12,7 @@ import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.feedback.FeedbackCollector;
 import org.chromium.chrome.browser.feedback.FeedbackReporter;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
@@ -26,7 +27,8 @@ public final class ChildAccountFeedbackReporter {
             sFeedbackReporter = AppHooks.get().createFeedbackReporter();
         }
         FeedbackCollector.create(activity, Profile.getLastUsedProfile(), url,
-                true /* takeScreenshot */, new FeedbackCollector.FeedbackResult() {
+                true /* takeScreenshot */, ProfileSyncService.get(),
+                new FeedbackCollector.FeedbackResult() {
                     @Override
                     public void onResult(FeedbackCollector collector) {
                         collector.setDescription(description);

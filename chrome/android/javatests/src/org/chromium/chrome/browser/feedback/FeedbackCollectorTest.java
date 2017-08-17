@@ -24,6 +24,8 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.sync.FakeProfileSyncService;
+import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.UiUtils;
@@ -69,8 +71,9 @@ public class FeedbackCollectorTest {
         private final AtomicBoolean mTimedOut = new AtomicBoolean(false);
 
         TestFeedbackCollector(Activity activity, Profile profile, String url,
-                boolean takeScreenshot, FeedbackResult callback) {
-            super(activity, profile, url, takeScreenshot, callback);
+                boolean takeScreenshot, ProfileSyncService profileSyncService,
+                FeedbackResult callback) {
+            super(activity, profile, url, takeScreenshot, profileSyncService, callback);
         }
 
         @Override
@@ -212,13 +215,15 @@ public class FeedbackCollectorTest {
                 mProfile = Profile.getLastUsedProfile();
             }
         });
+        ProfileSyncService.overrideForTests(new FakeProfileSyncService());
     }
 
     @Test
     @SmallTest
     @Feature({"Feedback"})
     public void testGatheringOfData() {
-        mCollector = createCollector("http://www.example.com/", true /* takeScreenshot */, null);
+        mCollector = createCollector("http://www.example.com/", true /* takeScreenshot */,
+                ProfileSyncService.get(), null);
         ConnectivityTask.FeedbackData feedbackData = createFeedbackData();
         mTestConnectivityTask.setFeedbackData(feedbackData);
         mCollector.setDescription("some description");
@@ -234,6 +239,8 @@ public class FeedbackCollectorTest {
         Assert.assertEquals(bitmap, mCollector.getScreenshot());
         Assert.assertEquals("false",
                 bundle.getString(DataReductionProxySettings.DATA_REDUCTION_PROXY_ENABLED_KEY));
+        Assert.assertEquals(
+                "{syncInternals: true}", bundle.getString(FeedbackCollector.SYNC_INTERNALS_KEY));
     }
 
     @Test
@@ -249,8 +256,8 @@ public class FeedbackCollectorTest {
                 semaphore.release();
             }
         };
-        mCollector =
-                createCollector("http://www.example.com/", true /* takeScreenshot */, callback);
+        mCollector = createCollector("http://www.example.com/", true /* takeScreenshot */,
+                ProfileSyncService.get(), callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
         ConnectivityTask.FeedbackData feedbackData = createFeedbackData();
         mCollector.onResult(feedbackData);
@@ -286,7 +293,8 @@ public class FeedbackCollectorTest {
                 semaphore.release();
             }
         };
-        mCollector = createCollector(null, true /* takeScreenshot */, callback);
+        mCollector = createCollector(
+                null, true /* takeScreenshot */, ProfileSyncService.get(), callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
         ConnectivityTask.FeedbackData feedbackData = createFeedbackData();
         // Set the feedback data on the connectivity task instead of through callback.
@@ -323,7 +331,8 @@ public class FeedbackCollectorTest {
                 semaphore.release();
             }
         };
-        mCollector = createCollector(null, true /* takeScreenshot */, callback);
+        mCollector = createCollector(
+                null, true /* takeScreenshot */, ProfileSyncService.get(), callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
         ConnectivityTask.FeedbackData feedbackData = createFeedbackData();
         mCollector.onResult(feedbackData);
@@ -363,7 +372,8 @@ public class FeedbackCollectorTest {
                 semaphore.release();
             }
         };
-        mCollector = createCollector(null, false /* takeScreenshot */, callback);
+        mCollector = createCollector(
+                null, false /* takeScreenshot */, ProfileSyncService.get(), callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
         ConnectivityTask.FeedbackData feedbackData = createFeedbackData();
         mCollector.onResult(feedbackData);
@@ -389,12 +399,13 @@ public class FeedbackCollectorTest {
     }
 
     private TestFeedbackCollector createCollector(final String url, final boolean takeScreenshot,
+            final ProfileSyncService profileSyncService,
             final FeedbackCollector.FeedbackResult callback) {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<TestFeedbackCollector>() {
             @Override
             public TestFeedbackCollector call() {
                 return new TestFeedbackCollector(
-                        mActivity, mProfile, url, takeScreenshot, callback);
+                        mActivity, mProfile, url, takeScreenshot, profileSyncService, callback);
             }
         });
     }
