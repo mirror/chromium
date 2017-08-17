@@ -104,6 +104,24 @@
       "revId": "f515ee8d6c6a7e33d37744cd4f533ec1ebb7b9ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc5da47_f8fe18fe",
+        "filename": "media/capture/video/chromeos/video_capture_device_factory_chromeos.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T17:58:55Z",
+      "side": 1,
+      "message": "That is probably in line with what is (in my opinion dangerous) common practice, so I am okay if you keep it like this. \n\nJust to voice my concern, IMO, this is one of the situations where less code !\u003d simpler. Yes, we save code by not having to pass down dependencies. But we pay for it with two things:\n1. The consumers calling the static method take an unnecessary dependency on the whole VideoCaptureDeviceFactoryChromeOS. This means they can no longer be tested or reused in isolation (or testing setup requires setting global state, and possible cleaning it up afterwards).\n2. That dependency is \"hidden\", i.e. it is only visible from the implementation details. This makes it harder for readers to see and understand the design and leads to non-obvious issues exactly like what you described with the use of BrowserGpuMemoryBufferManager::current(), which  works form one context but not from another.",
+      "parentUuid": "c9f950c5_b0fc62e9",
+      "revId": "f515ee8d6c6a7e33d37744cd4f533ec1ebb7b9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
