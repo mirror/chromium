@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "918b5cb7_f1e9e819",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T21:42:26Z",
+      "side": 1,
+      "message": "I don\u0027t think there is an \u0027and\u0027 intended here. We should only record the metric when we select a first child of:\nLocal Storage, Local Storage, Cookies, Cache Storage (maybe websql and appcache?)\n\nand second nested child of:\nIndexedDB, and possibly Web SQL \u0026 Application Cache depending on that tree structure.\n\n\nYou can even just say ObjectStore or Index tree items in IndexedDB",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "7041cff90588e5f5f5d898f511b7dc403be7f4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d8525b_eb50cd68",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-17T21:42:26Z",
+      "side": 1,
+      "message": "Instead of using concatenation, could you make the UserActionId an argument in the constructor? Or another option is to set the id on the object.\n\nThen you can test to see if it\u0027s not undefined (or initialize it to null) before you report it.\n\nI\u0027ll defer to what dev tools folks think here though.",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 93
+      },
+      "revId": "7041cff90588e5f5f5d898f511b7dc403be7f4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
