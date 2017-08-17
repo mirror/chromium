@@ -24,6 +24,7 @@ class NetworkHandler;
 class BrowserContext;
 class DevToolsURLInterceptorRequestJob;
 class WebContents;
+class RenderFrameHost;
 
 // An interceptor that creates DevToolsURLInterceptorRequestJobs for requests
 // from pages where interception has been enabled via
@@ -85,6 +86,7 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
    public:
     State();
 
+    using FrameTreeNodeId = int;
     using ContinueInterceptedRequestCallback =
         protocol::Network::Backend::ContinueInterceptedRequestCallback;
 
@@ -104,7 +106,8 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     // Must be called on the UI thread.
     void StartInterceptingRequests(
         WebContents* web_contents,
-        base::WeakPtr<protocol::NetworkHandler> network_handler);
+        base::WeakPtr<protocol::NetworkHandler> network_handler,
+        std::vector<std::string> patterns);
 
     // Must be called on the UI thread.
     void StopInterceptingRequests(WebContents* web_contents);
@@ -126,15 +129,20 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
    private:
     class InterceptedWebContentsObserver;
 
+    struct RenderFrameHostInfo {
+      explicit RenderFrameHostInfo(RenderFrameHost* host);
+      const int routing_id;
+      const FrameTreeNodeId frame_tree_node_id;
+      const int process_id;
+    };
+
     struct InterceptedPage {
-      InterceptedPage();
-      InterceptedPage(const InterceptedPage& other);
-      InterceptedPage(WebContents* web_contents,
-                      base::WeakPtr<protocol::NetworkHandler> network_handler);
+      InterceptedPage(base::WeakPtr<protocol::NetworkHandler> network_handler,
+                      std::vector<std::string> patterns);
       ~InterceptedPage();
 
-      WebContents* web_contents;
       base::WeakPtr<protocol::NetworkHandler> network_handler;
+      std::vector<std::string> patterns;
     };
 
     void ContinueInterceptedRequestOnIoThread(
@@ -143,16 +151,22 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
             modifications,
         std::unique_ptr<ContinueInterceptedRequestCallback> callback);
 
-    void StartInterceptingRequestsInternal(
-        int render_frame_id,
-        int frame_tree_node_id,
-        int process_id,
-        WebContents* web_contents,
-        base::WeakPtr<protocol::NetworkHandler> network_handler);
+    void RenderFrameHostChangedOnIo(
+        base::Optional<RenderFrameHostInfo> old_host_info,
+        RenderFrameHostInfo new_host_info,
+        WebContents* web_contents);
 
-    void StopInterceptingRequestsInternal(int render_frame_id,
-                                          int frame_tree_node_id,
-                                          int process_id);
+    void StartInterceptingRequestsForHostInfoInternal(
+        RenderFrameHostInfo host_info,
+        WebContents* web_contents);
+
+    void StartInterceptingRequestsOnIo(
+        std::vector<RenderFrameHostInfo> host_info_list,
+        WebContents* web_contents,
+        base::WeakPtr<protocol::NetworkHandler> network_handler,
+        std::unique_ptr<InterceptedPage> interceptedPage);
+
+    void StopInterceptingRequestsForHostInfoOnIo(RenderFrameHostInfo host_info);
     void StopInterceptingRequestsOnIoThread(WebContents* web_contents);
 
     std::string GetIdForRequest(const net::URLRequest* request,
@@ -163,10 +177,16 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     DevToolsURLInterceptorRequestJob* GetJob(
         const std::string& interception_id) const;
 
-    base::flat_map<std::pair<int, int>, InterceptedPage>
+    // |intercepted_page_for_web_contents_| should always have an entry if
+    // |intercepted_render_frames_| or |intercepted_frame_tree_nodes_| have
+    // values. Entries in |intercepted_page_for_web_contents_| only get removed
+    // if WebContents goes away.
+    base::flat_map<WebContents*, std::unique_ptr<InterceptedPage>>
+        intercepted_page_for_web_contents_;
+    // First item is routing_id second is process_id.
+    base::flat_map<std::pair<int, int>, WebContents*>
         intercepted_render_frames_;
-
-    base::flat_map<int, InterceptedPage> intercepted_frame_tree_nodes_;
+    base::flat_map<FrameTreeNodeId, WebContents*> intercepted_frame_tree_nodes_;
 
     // UI thread only.
     base::flat_map<WebContents*,
