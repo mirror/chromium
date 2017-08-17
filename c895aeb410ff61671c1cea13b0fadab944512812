@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f7f4de9b_bb193a7a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-17T15:32:35Z",
+      "side": 1,
+      "message": "No it would be for the initial submission. Nasko had the following scenario to trigger it:\nwindow.open, navigate cross-site for a new process, submit the form with the target window",
+      "parentUuid": "cf476123_174f56b2",
+      "revId": "c895aeb410ff61671c1cea13b0fadab944512812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d096749_638022f3",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 10
