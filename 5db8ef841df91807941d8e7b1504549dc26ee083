@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517f9913_a0727964",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-17T23:16:36Z",
+      "side": 1,
+      "message": "This is not using has_blur_cache_, is it intended?",
+      "revId": "5db8ef841df91807941d8e7b1504549dc26ee083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180c37ec_d7b33179",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-17T23:16:36Z",
+      "side": 1,
+      "message": "Just wondering, if someone else sets blur directly by accessing widget()-\u003eGetLayer(), instead of going through this function, there is no way to force cache render surface? The worst case scenario is, someone else sets blur to zero, but has_blur_cache_ won\u0027t be updated, and when we do re-parenting, in line 104 we are still setting the cache render surface on the new parent. So I\u0027m wondering what is the benefit of storing this as member variable?",
+      "revId": "5db8ef841df91807941d8e7b1504549dc26ee083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
