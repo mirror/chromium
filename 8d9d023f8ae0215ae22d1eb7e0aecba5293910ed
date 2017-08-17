@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1909afa_adc76b08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-17T22:07:00Z",
+      "side": 1,
+      "message": "The commit message should be clear about what are and aren\u0027t the impacts of this. (So we don\u0027t get confused later on about what\u0027s going on with the experiment.) Something like:\n\n SSLConfigServicePref calls this function when any of the\n prefs it uses changes. tls13_variant is one of these, so it should\n trigger notifications. This change should be a no-op. These prefs\n are set based on:\n\n - Field trials (n/a because field trials set default values)\n\n - Command-line flags (n/a because command-line flags are set\n   early enough to not need a change signal)\n\n - Admin policy (n/a because tls13_variant is not attached to\n   any admin policies)",
+      "revId": "8d9d023f8ae0215ae22d1eb7e0aecba5293910ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
