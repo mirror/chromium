@@ -45,6 +45,30 @@
       "revId": "dd571622633f17d6969e72ea0ae195753b80a05e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7948ccc6_e1173f7c",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-17T20:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde71f2b_34f3dbe1",
+      "range": {
+        "startLine": 495,
+        "startChar": 32,
+        "endLine": 495,
+        "endChar": 41
+      },
+      "revId": "dd571622633f17d6969e72ea0ae195753b80a05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
