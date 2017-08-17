@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8109afc_af4b1663",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-17T08:49:20Z",
+      "side": 1,
+      "message": "Pretty much. The infobar system keeps the actual infobar and hides it on tab switching.\n\nThis is paired with WasHidden(), which doesn\u0027t delete view_ on Android (deleting it doesn\u0027t actually hide the UI on Android, it just leaves around prompts that do nothing). There\u0027s a comment in the header file that tries to explain, it seems nicer than a comment here as it covers WasHidden() too.",
+      "parentUuid": "5a244aee_60e8b077",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c9922ae_e209bbc6",
         "filename": "chrome/browser/permissions/permission_request_manager.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T09:34:32Z",
       "side": 1,
       "message": "Any reason you can\u0027t do this now?",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f642e9_173475b0",
+        "filename": "chrome/browser/permissions/permission_request_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-17T08:49:20Z",
+      "side": 1,
+      "message": "It sprawls a bit more than I\u0027d like (doesn\u0027t entirely work yet but https://chromium-review.googlesource.com/c/616328)",
+      "parentUuid": "2c9922ae_e209bbc6",
       "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

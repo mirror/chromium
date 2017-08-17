@@ -16,6 +16,24 @@
       "revId": "a557c8af25770cbc8be68985f19172a4e8fdfdea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f845e5aa_364251a9",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-17T08:49:20Z",
+      "side": 0,
+      "message": "Accidentally deleted too much...",
+      "parentUuid": "cb1657ee_053d8e0c",
+      "revId": "a557c8af25770cbc8be68985f19172a4e8fdfdea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
