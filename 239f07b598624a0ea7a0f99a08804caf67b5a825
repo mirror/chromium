@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "bce69c16_d36cf4a0",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e69ece33_7d28f601",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec6e2be7_149b4cf0",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Per Scott\u0027s comment (https://chromium-review.googlesource.com/c/616100/3/ui/base/models/menu_model.h#104), the IsMenuModelEmpty() was added to menu_model.h, but it was only used here. It would better to offload this functionality from the menu_model.h and instead keep it here, where it is needed. The method menuHasVisibleItems has been created in this file to address this.",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be6b6e37_2498d1f7",
         "filename": "ui/base/cocoa/menu_controller.mm",
         "patchSetId": 3
@@ -42,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "f547df46_3e69f000",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6b6e37_2498d1f7",
+      "range": {
+        "startLine": 162,
+        "startChar": 36,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "620bd5b5_3123ab49",
         "filename": "ui/base/cocoa/menu_controller.mm",
         "patchSetId": 3
@@ -56,6 +115,24 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6b4e17_4fcb5567",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "620bd5b5_3123ab49",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "318e1cfc_3415988a",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59cabc25_74646091",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4551a18_8fe2380a",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 3
@@ -90,6 +185,24 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ea53f1_cef87379",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "More or less, I kept things as is. \n\nTo use emplace_back on a struct (in this case Item), I would need to create a ctor for the Item struct. Then emplace_back would forward the provided parameters to the Item ctor to avoid the extra copy or move operation required when using push_back. [1] \n\nThe explanation above is arguably hand-wavy considering all the nuances with emplace_back. Since this is just a unit test and performance gains with emplace_back are negligible, I will stick with push_back.\n\n[1] Visit http://en.cppreference.com/w/cpp/container/vector/emplace_back and grep for \" emplace_back avoids the extra copy or move operation required when using push_back\".",
+      "parentUuid": "e4551a18_8fe2380a",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "d320dad0_09052e4e",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30883b9e_36b5b7c5",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53161a3d_8fc845c2",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 3
@@ -127,6 +258,24 @@
     },
     {
       "key": {
+        "uuid": "2043930e_e80f2257",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53161a3d_8fc845c2",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48772e23_81d5a268",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 3
@@ -138,6 +287,24 @@
       "writtenOn": "2017-08-16T01:10:52Z",
       "side": 1,
       "message": "using",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fa1370_f038f94a",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "It seems that \u0027using\u0027 is only for member templates, but not member template specialization [1].\n\nI\u0027m keeping this as \u0027typedef\u0027 for now.  \n\n\n[1] Visit http://en.cppreference.com/w/cpp/language/using_declaration and grep for \"cannot refer to a member template specialization\".",
+      "parentUuid": "48772e23_81d5a268",
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "30a3fa66_4c75e592",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Yeah, \u0027expected\u0027 should come first. The order was swapped throughout this file (\u0027actual, expected\u0027), which was why I was using \u0027actual, expected\u0027.\n\nI made the change now. I have gone ahead and flipped the ordering in other places in this file too, so that it everything is consistent with \u0027expected, actual\u0027.",
+      "parentUuid": "8b3c37c6_9a01e412",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcfbc4b1_f2480c85",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 3
@@ -175,6 +360,24 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d05790a_72435417",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Good to know. Removing this b/c it\u0027s N/A with the change below.",
+      "parentUuid": "bcfbc4b1_f2480c85",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "5602e31e_62353022",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad6c2cfc_3b0484a9",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c67793d8_94668c8a",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 3
@@ -209,6 +430,24 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d175e11d_201749ce",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c67793d8_94668c8a",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +468,24 @@
     },
     {
       "key": {
+        "uuid": "8f956409_99a711f9",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cffbb8c4_8800a649",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df27cc3_323ad99b",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 3
@@ -243,6 +500,24 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84fc581_4d8d1ced",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df27cc3_323ad99b",
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +541,30 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f19789_bf1b3c2d",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54d3e560_1c85b0d0",
+      "range": {
+        "startLine": 393,
+        "startChar": 40,
+        "endLine": 393,
+        "endChar": 44
+      },
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +636,30 @@
       "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d875ecd6_44967de0",
+        "filename": "ui/base/models/menu_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 1,
+      "message": "I decided to remove this method entirely from the the MenuModel, since it is only used in the menu_controller.mm and called only once. I have offloaded this logic to the menu_controller.mm file (fyi: https://chromium-review.googlesource.com/c/616100/3..5/ui/base/cocoa/menu_controller.mm#b156).",
+      "parentUuid": "e5d4d571_2c97bf69",
+      "range": {
+        "startLine": 104,
+        "startChar": 15,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

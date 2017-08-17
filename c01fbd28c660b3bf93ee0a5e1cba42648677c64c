@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "619152da_70cdaeef",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 0,
+      "message": "Will fix this unnecessary line change in the next patch.",
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e8e362d_92b7dbb6",
         "filename": "ui/views/controls/menu/menu_item_view.cc",
         "patchSetId": 4
@@ -22,6 +39,30 @@
       "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea35a3bb_fcf8cd3a",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-17T04:55:12Z",
+      "side": 0,
+      "message": "Unintentional deletion. Added it back.",
+      "parentUuid": "0e8e362d_92b7dbb6",
+      "range": {
+        "startLine": 647,
+        "startChar": 3,
+        "endLine": 647,
+        "endChar": 19
+      },
+      "revId": "c01fbd28c660b3bf93ee0a5e1cba42648677c64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
