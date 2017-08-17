@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83ef37f2_176e756b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "nit/style: Let\u0027s use a sentence.\n\nAdd GetRoots in file_system.mojom.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd32ae71_0c0248df",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "Could you keep const?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314a9aaf_dab930b6",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "WDY mean? ADPRM is communicating with ARC already?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9561a3af_de8cc25b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "Could you add DCHECK(runner); here?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77be0893_77c74df8",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "style: 4 white space indent.\n\nCould you run \"git cl format\" just before uploading?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7d9d29_a5dbc0ad",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "AFSORunner can be alive longer than RootMap.\nYou\u0027d need WeakPtrFactory member, and use WeakPtr here.\nThose ptrs should be invalidated in Shutdown().",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885d977c_a29aa6c4",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "style: ditto for indent.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda63e5a_c45e1f87",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85bfcf7_a0d578c3",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "Ditto. WDYM?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fad223_3e7f2746",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "nit/style: could you elide braces for consistency?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db667d4_9e7d1bc8",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "style/nit: often we use \u0027\u003d\u0027 for construction with MakeUnique. Could you use it for consistency?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0f4c67_e25b276c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "IIUC, whole |map_| elements should be updated?\nIn this case, older entries can be still alive?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34915ba2_d863e590",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "style: 4 space indent.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4acaf1_3510d9be",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "Could you move above, because this is not a part of \"// KeyedService overrides\" methods.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb65274_8a333865",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "nit: This looks redundant, because it is already written in the class comment.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bdb20f_36fa4958",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "To me, root-not-found case is equivalent that zero-root is found.\nSo maybe empty array is good enough.\nWDYT?",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08771838_01901a69",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T04:47:56Z",
+      "side": 1,
+      "message": "nit/optional: s/Bind/BindOnce/\nYou may want to do it in another CL with replacing other Bind()s, too, at once.",
+      "revId": "df308770296e8e537bf64feb050985107fc58835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
