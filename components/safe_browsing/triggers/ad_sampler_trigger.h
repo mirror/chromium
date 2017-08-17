@@ -6,15 +6,26 @@
 #define COMPONENTS_SAFE_BROWSING_TRIGGERS_AD_SAMPLER_TRIGGER_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents_observer.h"
-
 #include "content/public/browser/web_contents_user_data.h"
+
+class PrefService;
 
 namespace content {
 class NavigationHandle;
 }
 
+namespace history {
+class HistoryService;
+}
+
+namespace net {
+class URLRequestContextGetter;
+}
 namespace safe_browsing {
+class TriggerManager;
 
 // Param name of the denominator for controlling sampling frequency.
 extern const char kAdSamplerFrequencyDenominatorParam[];
@@ -29,17 +40,41 @@ class AdSamplerTrigger : public content::WebContentsObserver,
  public:
   ~AdSamplerTrigger() override;
 
+  static void CreateForWebContents(
+      content::WebContents* web_contents,
+      TriggerManager* trigger_manager,
+      PrefService* prefs,
+      net::URLRequestContextGetter* request_context,
+      history::HistoryService* history_service);
+
   // content::WebContentsObserver implementation.
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
 
  private:
-  explicit AdSamplerTrigger(content::WebContents* contents);
   friend class content::WebContentsUserData<AdSamplerTrigger>;
+
+  AdSamplerTrigger(content::WebContents* web_contents,
+                   TriggerManager* trigger_manager,
+                   PrefService* prefs,
+                   net::URLRequestContextGetter* request_context,
+                   history::HistoryService* history_service);
+
+  // Called to begin collecting ad data. Called on the UI thread to synchronize
+  // access to pref service.
+  void CollectAdDataOnUIThread();
 
   // Ad samples will be collected with frequency
   // 1/|sampler_frequency_denominator_|
   size_t sampler_frequency_denominator_;
+
+  // TriggerManager gets called if this trigger detects an ad and wants to
+  // collect some data about it. Not owned.
+  TriggerManager* trigger_manager_;
+
+  PrefService* prefs_;
+  net::URLRequestContextGetter* request_context_;
+  history::HistoryService* history_service_;
 
   DISALLOW_COPY_AND_ASSIGN(AdSamplerTrigger);
 };
