@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1da13f8_d02debc8",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T02:00:51Z",
+      "side": 1,
+      "message": "Sorry, I hadn\u0027t closely checked this in WebCORS one either, but these look a little weird-- we usually only expose these headers to blink, by wrapping #if INSIDE_BLINK, because the types used there are not really usable outside blink.  How are we planning to use that?",
+      "revId": "6d4de1e42b8ef735ec6f1fc94a53f28877d858ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
