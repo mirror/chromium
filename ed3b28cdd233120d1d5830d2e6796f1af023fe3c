@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf659745_138bf9f4",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-17T13:34:20Z",
+      "side": 1,
+      "message": "nit: this call is repeated very often, consider adding a helper function.",
+      "revId": "ed3b28cdd233120d1d5830d2e6796f1af023fe3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
