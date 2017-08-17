@@ -16,6 +16,24 @@
       "revId": "c167c5e8b769ab71180e191f5ec3cc9c0f3fdff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745f3f36_6dc5c5d8",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2017-08-17T18:55:02Z",
+      "side": 1,
+      "message": "I\u0027ll revert that CL separately.",
+      "parentUuid": "a0fcdddd_e079f516",
+      "revId": "c167c5e8b769ab71180e191f5ec3cc9c0f3fdff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
