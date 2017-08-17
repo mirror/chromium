@@ -61,7 +61,7 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
     std::move(callback).Run(f);
   }
 
-  void EchoSharedQuadState(const SharedQuadState& s,
+  void EchoSharedQuadState(const viz::SharedQuadState& s,
                            EchoSharedQuadStateCallback callback) override {
     std::move(callback).Run(s);
   }
@@ -350,12 +350,12 @@ TEST_F(StructTraitsTest, SharedQuadState) {
   const float opacity = 0.9f;
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   const int sorting_context_id = 1337;
-  SharedQuadState input_sqs;
+  viz::SharedQuadState input_sqs;
   input_sqs.SetAll(quad_to_target_transform, layer_rect, visible_layer_rect,
                    clip_rect, is_clipped, opacity, blend_mode,
                    sorting_context_id);
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  SharedQuadState output_sqs;
+  viz::SharedQuadState output_sqs;
   proxy->EchoSharedQuadState(input_sqs, &output_sqs);
   EXPECT_EQ(quad_to_target_transform, output_sqs.quad_to_target_transform);
   EXPECT_EQ(layer_rect, output_sqs.quad_layer_rect);
