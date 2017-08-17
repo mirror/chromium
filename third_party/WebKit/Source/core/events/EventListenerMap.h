@@ -37,6 +37,7 @@
 #include "core/events/AddEventListenerOptionsResolved.h"
 #include "core/events/EventListenerOptions.h"
 #include "core/events/RegisteredEventListener.h"
+#include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/AtomicStringHash.h"
 
@@ -73,6 +74,7 @@ class CORE_EXPORT EventListenerMap {
   void CopyEventListenersNotCreatedFromMarkupToTarget(EventTarget*);
 
   DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   friend class EventListenerIterator;
