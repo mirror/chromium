@@ -6,6 +6,7 @@
 
 #include "base/i18n/number_formatting.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/utf_string_conversions.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_view_delegate.h"
@@ -145,6 +146,13 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
       !item->badge_icon().BackedBySameObjectAs(old_item->badge_icon())) {
     OnBadgeIconChanged();
   }
+
+  base::string16 accessible_name = title()->text();
+  if (rating_->visible())
+    accessible_name += base::UTF8ToUTF16(". ") + rating_->text();
+  if (price_->visible())
+    accessible_name += base::UTF8ToUTF16(". ") + price_->text();
+  SetAccessibleName(accessible_name);
 }
 
 void SearchResultTileItemView::SetRating(float rating) {
