@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb89582_c5c8136b",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-17T21:11:12Z",
+      "side": 1,
+      "message": "nit: how about this?\n\n  if (notification_tray-\u003eIsMessageCenterBubbleVisible())\n    notification_tray-\u003eCloseBubble();\n  else\n    notification_tray-\u003eShowBubble();",
+      "revId": "7245b017c089cacaa4da8e5900a0fd88d990f11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2012c442_e97d3361",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-17T21:11:12Z",
+      "side": 1,
+      "message": "can you rename this to TOGGLE_MESSAGE_CENTER_BUBBLE?",
+      "range": {
+        "startLine": 1010,
+        "startChar": 9,
+        "endLine": 1010,
+        "endChar": 35
+      },
+      "revId": "7245b017c089cacaa4da8e5900a0fd88d990f11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
