@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4b95de0_f0db1969",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSwitches.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8066df2_9826b95e",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8766d96_0347b138",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4025f7e7_dfb7997f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8766d96_0347b138",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "a12b08b4_1694ec61",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf216a4_b2091e61",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c54baf6_06245f85",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 5
@@ -121,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "415e9c8c_011c00de",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "Hmm, maybe the reasoning is that we\u0027ll just give up this time and try again next time an app starts and needs a WebView? I\u0027ll have to look through this more to understand",
+      "parentUuid": "18d5126d_b7f40813",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac935e4_e4142553",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 5
@@ -135,6 +207,24 @@
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642963b5_42a0e458",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "removed locks.\n\nmoved rename.",
+      "parentUuid": "fac935e4_e4142553",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "9e71221f_e388df2b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0047cb0_38c110f0",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9f7bac_9c9668bb",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 5
@@ -166,6 +274,24 @@
       "writtenOn": "2017-08-17T17:54:27Z",
       "side": 1,
       "message": "maybe leave a clean up, this feels kinda dangerous, doing serialization ourselves, eg relying on Boolean.toString and parseBoolean.\n\nmight be easier if we pick an existing library that supports structured data, eg json?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29460ff3_cbeb82d4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "isGzipCompressed isn\u0027t actually needed anywhere, so we should be able to remove it completely",
+      "parentUuid": "bc9f7bac_9c9668bb",
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +312,24 @@
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf216d59_e296fdd4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-17T22:40:47Z",
+      "side": 1,
+      "message": "removed lock",
+      "parentUuid": "9c36fa49_0c904de3",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
