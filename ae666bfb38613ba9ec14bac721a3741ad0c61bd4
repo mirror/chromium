@@ -52,6 +52,24 @@
       "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073a1861_6ce9b917",
+        "filename": "services/resource_coordinator/resource_coordinator_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-08-17T22:03:31Z",
+      "side": 1,
+      "message": "Ah, if that\u0027s all we\u0027re testing, then I can just call GetID on the CoordinationUnit, right? If so, then done. :)",
+      "parentUuid": "290c94f2_a0ac1d8a",
+      "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
