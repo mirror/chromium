@@ -109,15 +109,7 @@ class ReplacementFragment final {
 };
 
 static bool IsInterchangeHTMLBRElement(const Node* node) {
-  DEFINE_STATIC_LOCAL(String, interchange_newline_class_string,
-                      (AppleInterchangeNewline));
-  if (!isHTMLBRElement(node) ||
-      toHTMLBRElement(node)->getAttribute(classAttr) !=
-          interchange_newline_class_string)
-    return false;
-  UseCounter::Count(node->GetDocument(),
-                    WebFeature::kEditingAppleInterchangeNewline);
-  return true;
+  return isHTMLBRElement(node);
 }
 
 static Position PositionAvoidingPrecedingNodes(Position pos) {
