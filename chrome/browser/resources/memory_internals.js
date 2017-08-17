@@ -23,7 +23,7 @@ function returnProcessList(processList) {
     row.appendChild(description);
 
     var button = document.createElement('button');
-    button.innerText = '[dump]';
+    button.innerText = '[Save dump]';
     button.className = 'button';
     let proc_id = proc[0];
     button.onclick = () => dumpProcess(proc_id);
