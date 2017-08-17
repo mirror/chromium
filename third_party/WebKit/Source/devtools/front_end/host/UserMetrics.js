@@ -92,7 +92,17 @@ Host.UserMetrics.Action = {
   StyleRuleCopied: 27,
   CoverageStarted: 28,
   Audits2Started: 29,
-  Audits2Finished: 30
+  Audits2Finished: 30,
+  ApplicationPanelManifestClicked: 31,
+  ApplicationPanelServiceWorkersClicked: 32,
+  ApplicationPanelClearStorageClicked: 33,
+  ApplicationPanelLocalStorageClicked: 34,
+  ApplicationPanelSessionStorageClicked: 35,
+  ApplicationPanelIndexedDBClicked: 36,
+  ApplicationPanelDatabasesClicked: 37,
+  ApplicationPanelCookiesClicked: 38,
+  ApplicationPanelCacheStorageClicked: 39,
+  ApplicationPanelApplicationCacheClicked: 40
 };
 
 Host.UserMetrics._PanelCodes = {
