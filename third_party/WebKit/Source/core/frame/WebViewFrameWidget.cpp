@@ -245,6 +245,26 @@ HitTestResult WebViewFrameWidget::CoreHitTestResultAt(const WebPoint& point) {
   return web_view_->CoreHitTestResultAt(point);
 }
 
+bool WebViewFrameWidget::EndActiveFlingAnimation() {
+  //  NOTREACHED();
+  return false;
+}
+
+WebInputEventResult WebViewFrameWidget::HandleGestureFlingEvent(
+    const WebGestureEvent& event) {
+  //  NOTREACHED();
+  return WebInputEventResult::kNotHandled;
+}
+
+void WebViewFrameWidget::UpdateGestureAnimation(double) {
+  //  NOTREACHED();
+}
+
+void WebViewFrameWidget::TransferActiveWheelFlingAnimation(
+    const WebActiveWheelFlingParameters& parameters) {
+  //  NOTREACHED();
+}
+
 DEFINE_TRACE(WebViewFrameWidget) {
   visitor->Trace(main_frame_);
   WebFrameWidgetBase::Trace(visitor);

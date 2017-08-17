@@ -41,6 +41,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashSet.h"
 #include "public/platform/WebCoalescedInputEvent.h"
+#include "public/platform/WebGestureCurveTarget.h"
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebSize.h"
 #include "public/web/WebInputMethodController.h"
@@ -53,6 +54,7 @@ class Element;
 class LocalFrame;
 class PaintLayerCompositor;
 class UserGestureToken;
+class WebActiveGestureAnimation;
 class WebLayer;
 class WebLayerTreeView;
 class WebMouseEvent;
@@ -63,6 +65,7 @@ using WebFrameWidgetsSet =
     PersistentHeapHashSet<WeakMember<WebFrameWidgetImpl>>;
 
 class WebFrameWidgetImpl final : public WebFrameWidgetBase,
+                                 public WebGestureCurveTarget,
                                  public PageWidgetEventHandler {
  public:
   static WebFrameWidgetImpl* Create(WebWidgetClient*, WebLocalFrame*);
@@ -107,6 +110,7 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   bool GetCompositionCharacterBounds(WebVector<WebRect>& bounds) override;
   void SetRemoteViewportIntersection(const WebRect&) override;
   void SetIsInert(bool) override;
+  bool IsFlinging() const override;
 
   // WebFrameWidget implementation.
   WebLocalFrameImpl* LocalRoot() const override { return local_root_; }
@@ -136,6 +140,15 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   WebLayerTreeView* GetLayerTreeView() const override;
   CompositorAnimationHost* AnimationHost() const override;
   HitTestResult CoreHitTestResultAt(const WebPoint&) override;
+  bool EndActiveFlingAnimation() override;
+  WebInputEventResult HandleGestureFlingEvent(const WebGestureEvent&) override;
+  void UpdateGestureAnimation(double last_frame_time_monotonic) override;
+  void TransferActiveWheelFlingAnimation(
+      const WebActiveWheelFlingParameters&) override;
+
+  // WebGestureCurveTarget implementation.
+  bool ScrollBy(const WebFloatSize& delta,
+                const WebFloatSize& velocity) override;
 
   // Exposed for the purpose of overriding device metrics.
   void SendResizeEventAndRepaint();
@@ -178,6 +191,10 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   WebInputEventResult HandleGestureEvent(const WebGestureEvent&) override;
   WebInputEventResult HandleKeyEvent(const WebKeyboardEvent&) override;
   WebInputEventResult HandleCharEvent(const WebKeyboardEvent&) override;
+
+  // Fling local.
+  WebGestureEvent CreateGestureScrollEventFromFling(WebInputEvent::Type,
+                                                    WebGestureDevice) const;
 
   // This method returns the focused frame belonging to this WebWidget, that
   // is, a focused frame with the same local root as the one corresponding
@@ -227,6 +244,12 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   bool ime_accept_events_;
 
   static const WebInputEvent* current_input_event_;
+
+  std::unique_ptr<WebActiveGestureAnimation> gesture_animation_;
+  WebPoint position_on_fling_start_;
+  WebPoint global_position_on_fling_start_;
+  int fling_modifier_;
+  WebGestureDevice fling_source_device_;
 
   WebColor base_background_color_;
 

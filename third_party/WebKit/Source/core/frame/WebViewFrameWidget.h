@@ -105,6 +105,11 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
   CompositorAnimationHost* AnimationHost() const override;
   WebWidgetClient* Client() const override { return client_; }
   HitTestResult CoreHitTestResultAt(const WebPoint&) override;
+  bool EndActiveFlingAnimation() override;
+  WebInputEventResult HandleGestureFlingEvent(const WebGestureEvent&) override;
+  void UpdateGestureAnimation(double) override;
+  void TransferActiveWheelFlingAnimation(
+      const WebActiveWheelFlingParameters&) override;
 
   DECLARE_VIRTUAL_TRACE();
 
