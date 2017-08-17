@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2236c4f9_849bcf7b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-17T00:55:09Z",
+      "side": 1,
+      "message": "Definitely, must have merged it weirdly. A oversight, thanks!",
+      "parentUuid": "9df0f04e_c94d5f47",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 65
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f750422e_770aaef1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/SingleTabModel.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78decf26_dde19009",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/SingleTabModel.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-17T00:55:09Z",
+      "side": 1,
+      "message": "FYI This is only needed for reparenting on \"Open in Chrome\". I can separate that into a separate patch if preferred.",
+      "parentUuid": "f750422e_770aaef1",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f0414731_7c768de6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-17T00:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8065b83_05916869",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 58
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa48f5e6_1b1b343e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappDisplayModeTest.java",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c71ddcb0_1ec773be",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappDisplayModeTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-17T00:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa48f5e6_1b1b343e",
+      "range": {
+        "startLine": 112,
+        "startChar": 37,
+        "endLine": 112,
+        "endChar": 60
+      },
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c13a44d4_f818f3b7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappVisibilityTest.java",
         "patchSetId": 12
@@ -108,6 +204,24 @@
       "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb038034_64d6309c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappVisibilityTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-17T00:55:09Z",
+      "side": 1,
+      "message": "Not quite what you requested, but similar effect I believe, PTAL.",
+      "parentUuid": "c13a44d4_f818f3b7",
+      "revId": "8109c2f0af871b8996c7d898d7eaf290a6cbfb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
