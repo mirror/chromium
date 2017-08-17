@@ -105,6 +105,29 @@
     },
     {
       "key": {
+        "uuid": "1cb7c3c4_fc6a7866",
+        "filename": "components/exo/display.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:36:53Z",
+      "side": 1,
+      "message": "Would it make sense for Display to take ownership of FileHelper? Is there a reason this wouldn\u0027t work?",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edec11f9_63552bfa",
         "filename": "components/exo/display.h",
         "patchSetId": 8
