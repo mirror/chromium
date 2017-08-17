@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efbfd48_fc92c34a",
+        "filename": "content/browser/tracing/background_memory_tracing_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T21:25:20Z",
+      "side": 1,
+      "message": "If the config is null, we probably want to disable heap profiling if it\u0027s currently enabled? IIRC it\u0027s possible for the fieldtrial configs to be swapped out (and an empty config to appear), though that may be theoretical.",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffef203_5addeee7",
+        "filename": "content/browser/tracing/background_memory_tracing_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T21:25:20Z",
+      "side": 1,
+      "message": "nit: since this is the first member introduced here which requires initialization, maybe do the initialization directly in the class declaration.",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63137713_80ab4814",
+        "filename": "content/browser/tracing/background_tracing_rule.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-17T21:25:20Z",
+      "side": 1,
+      "message": "Isn\u0027t the DictionaryValue here owned by the dict of the background tracing config? I\u0027d think this would cause it to be owned by two different unique_ptrs.",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
