@@ -1694,6 +1694,141 @@ TEST(LayerAnimatorTest, ImplicitAnimationObservers) {
   EXPECT_FLOAT_EQ(0.0f, delegate.GetBrightnessForAnimation());
 }
 
+// Tests that caching render surface added to a scoped settings object is still
+// reset when the object goes out of scope.
+TEST(LayerAnimatorTest, CacheRenderSurface) {
+  ui::Layer layer;
+  scoped_refptr<LayerAnimator> animator(layer.GetAnimator());
+  animator->set_disable_timer_for_test(true);
+  TestImplicitAnimationObserver observer(false);
+
+  EXPECT_FALSE(observer.animations_completed());
+  EXPECT_FALSE(layer.cc_layer_for_testing()->cache_render_surface());
+  animator->SetOpacity(1.0f);
+
+  {
+    ScopedLayerAnimationSettings settings(animator.get());
+    settings.CacheRenderSurface();
+    settings.AddObserver(&observer);
+    animator->SetOpacity(0.0f);
+  }
+
+  EXPECT_FALSE(observer.animations_completed());
+  EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+  base::TimeTicks start_time = animator->last_step_time();
+  animator->Step(start_time + base::TimeDelta::FromMilliseconds(1000));
+  EXPECT_TRUE(observer.animations_completed());
+  EXPECT_TRUE(observer.WasAnimationCompletedForProperty(
+      LayerAnimationElement::BRIGHTNESS));
+  EXPECT_FLOAT_EQ(0.0f, layer.opacity());
+  EXPECT_FALSE(layer.cc_layer_for_testing()->cache_render_surface());
+}
+
+// Tests that caching render surface added to a scoped settings object will not
+// crash when the layer was destroyed.
+TEST(LayerAnimatorTest, CacheRenderSurfaceOnWillBeDestroyedLayer) {
+  ui::Layer* layer = new Layer();
+  scoped_refptr<LayerAnimator> animator(layer->GetAnimator());
+  animator->set_disable_timer_for_test(true);
+  TestImplicitAnimationObserver observer(false);
+
+  EXPECT_FALSE(observer.animations_completed());
+  animator->SetOpacity(1.0f);
+
+  {
+    ScopedLayerAnimationSettings settings(animator.get());
+    settings.CacheRenderSurface();
+    settings.AddObserver(&observer);
+    animator->SetOpacity(0.0f);
+  }
+
+  EXPECT_FALSE(observer.animations_completed());
+  delete layer;
+  layer = nullptr;
+  base::TimeTicks start_time = animator->last_step_time();
+  animator->Step(start_time + base::TimeDelta::FromMilliseconds(1000));
+  EXPECT_TRUE(observer.animations_completed());
+}
+
+// Tests that caching render surface added to two scoped settings objects is
+// still reset when animation finishes.
+TEST(LayerAnimatorTest, CacheRenderSurfaceInTwoAnimations) {
+  ui::Layer layer;
+  scoped_refptr<LayerAnimator> animator(layer.GetAnimator());
+  animator->set_disable_timer_for_test(true);
+
+  // Case 1: the original cache status if false.
+  EXPECT_FALSE(layer.cc_layer_for_testing()->cache_render_surface());
+  animator->SetBrightness(1.0f);
+  animator->SetOpacity(1.0f);
+
+  // Start the brightness animation.
+  {
+    ScopedLayerAnimationSettings settings(animator.get());
+    settings.CacheRenderSurface();
+    animator->SetBrightness(0.0f);
+  }
+  EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+
+  // Start the opacity animation.
+  {
+    ScopedLayerAnimationSettings settings(animator.get());
+    settings.CacheRenderSurface();
+    animator->SetOpacity(0.0f);
+  }
+  EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+
+  // Finish the brightness animation.
+  {
+    animator->StopAnimatingProperty(LayerAnimationElement::BRIGHTNESS);
+    EXPECT_FLOAT_EQ(0.0f, layer.layer_brightness());
+    EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+  }
+
+  // Finish the opacity animation.
+  {
+    animator->StopAnimatingProperty(LayerAnimationElement::OPACITY);
+    EXPECT_FLOAT_EQ(0.0f, layer.opacity());
+    EXPECT_FALSE(layer.cc_layer_for_testing()->cache_render_surface());
+  }
+
+  // Case 2: the original cache status if true.
+  layer.SetCacheRenderSurface(true);
+  EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+  animator->SetBrightness(1.0f);
+  animator->SetOpacity(1.0f);
+
+  // Start the brightness animation.
+  {
+    ScopedLayerAnimationSettings settings(animator.get());
+    settings.CacheRenderSurface();
+    animator->SetBrightness(0.0f);
+  }
+  EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+
+  // Start the opacity animation.
+  {
+    ScopedLayerAnimationSettings settings(animator.get());
+    settings.CacheRenderSurface();
+    animator->SetOpacity(0.0f);
+  }
+  EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+
+  // Finish the brightness animation.
+  {
+    animator->StopAnimatingProperty(LayerAnimationElement::BRIGHTNESS);
+    EXPECT_FLOAT_EQ(0.0f, layer.layer_brightness());
+    EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+  }
+
+  // Finish the opacity animation.
+  {
+    animator->StopAnimatingProperty(LayerAnimationElement::OPACITY);
+    EXPECT_FLOAT_EQ(0.0f, layer.opacity());
+    EXPECT_TRUE(layer.cc_layer_for_testing()->cache_render_surface());
+  }
+}
+
 // Tests that an observer added to a scoped settings object is still notified
 // when the object goes out of scope due to the animation being interrupted.
 TEST(LayerAnimatorTest, InterruptedImplicitAnimationObservers) {

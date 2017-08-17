@@ -10,10 +10,50 @@
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/layer_animation_sequence.h"
 #include "ui/compositor/layer_animator.h"
+#include "ui/compositor/layer_observer.h"
 
 namespace {
 
 const int kDefaultTransitionDurationMs = 200;
+
+class CleanupCacheRenderSurfaceObserver : public ui::ImplicitAnimationObserver,
+                                          public ui::LayerObserver {
+ public:
+  CleanupCacheRenderSurfaceObserver(ui::Layer* layer)
+      : layer_(layer), layer_destroyed_(false) {
+    layer_->AddObserver(this);
+    layer_->SetCacheRenderSurface(true);
+  }
+  ~CleanupCacheRenderSurfaceObserver() override {}
+
+  // ui::ImplicitAnimationObserver overrides:
+  void OnImplicitAnimationsCompleted() override {
+    // If animation finishes before |layer_| is destoyed, we will remove |this|
+    // from the |layer_| observer list and delete |this|.
+    if (!layer_destroyed_)
+      ResetCacheRenderSurface();
+    delete this;
+  }
+
+  // ui::LayerObserver overrides:
+  void LayerDestroyed(ui::Layer* layer) override {
+    // If |layer_| is destroyed before animation finishes, we will defer
+    // deleting |this| until the animation finishes.
+    ResetCacheRenderSurface();
+    layer_destroyed_ = true;
+  }
+
+ private:
+  void ResetCacheRenderSurface() {
+    layer_->RemoveObserver(this);
+    layer_->SetCacheRenderSurface(false);
+  }
+
+  ui::Layer* layer_;
+  bool layer_destroyed_;
+
+  DISALLOW_COPY_AND_ASSIGN(CleanupCacheRenderSurfaceObserver);
+};
 
 }  // namespace
 
@@ -61,6 +101,11 @@ void ScopedLayerAnimationSettings::SetAnimationMetricsReporter(
 void ScopedLayerAnimationSettings::SetTransitionDuration(
     base::TimeDelta duration) {
   animator_->SetTransitionDuration(duration);
+}
+
+void ScopedLayerAnimationSettings::CacheRenderSurface() {
+  AddObserver(
+      new CleanupCacheRenderSurfaceObserver(animator_->delegate()->GetLayer()));
 }
 
 void ScopedLayerAnimationSettings::LockTransitionDuration() {
