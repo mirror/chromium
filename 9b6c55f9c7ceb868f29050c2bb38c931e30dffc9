@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "54fd7067_b5c581b7",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-17T21:32:48Z",
+      "side": 1,
+      "message": "Oh and to answer your question, idle did work before this change for non-UI/Java type loops as they use message_pump_default which isn\u0027t broken as far as I know :P",
+      "parentUuid": "bfff2b4a_aa901d92",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f3fdde3_97088744",
         "filename": "base/message_loop/message_loop_unittest.cc",
         "patchSetId": 16
