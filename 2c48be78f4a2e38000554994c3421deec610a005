@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464b215a_36e8a78c",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "if the getter is added as a parameter to the new MaybeCreateSubresourceLoader method, can this method be removed?",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feb9eae_6988251a",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "can this method now be removed?",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d8f8d7_3f8ea59b",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "also, since its an instance method, lets move it up above the static methods",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad321c81_b4e4c94f",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "ditto IsDeliveringNetworkResponse()",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788072ec_6eba7d99",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "In the URLLOADER world, we expect the same job object to be returned.\nEXPECT_EQ(original_job, redirect_fallback_job);",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb3252a_bd50764d",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "ditto IsDeliveringNetworkResponse() expectation?",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb451df_de06ce3b",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "In production code, the job created here is deleted when MaybeLoadFallbackForRedirect and MaybeLoadFallbackForResponse are called, the job itself is what calles these methods. Should the tests not delete the initial job to more closely match actual usage?\n\nThis question/comment applies to other tests as well.",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4645e0c_2cfddafd",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "is it valid to expect job-\u003eIsDeliveringNetworkResponse() here?",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5801ae_2b8539ed",
+        "filename": "content/browser/appcache/appcache_url_request.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T20:13:28Z",
+      "side": 1,
+      "message": "Since these aren\u0027t used in production code it\u0027d be nice to not add them for tests only, we could have the callsites use the GetURLRequest() method instead to invoke Start() directly on the url request object.",
+      "revId": "2c48be78f4a2e38000554994c3421deec610a005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
