@@ -4,13 +4,6 @@
 
 cr.exportPath('extensions');
 
-// Declare this here to make closure compiler happy, and us sad.
-/** @enum {number} */
-extensions.ShowingType = {
-  EXTENSIONS: 0,
-  APPS: 1,
-};
-
 cr.define('extensions', function() {
   /** @interface */
   const SidebarListDelegate = function() {};
