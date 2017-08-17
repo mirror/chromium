@@ -292,18 +292,6 @@ static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
   return nullptr;
 }
 
-static CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange& range,
-                                              bool allow_text_value) {
-  // The values 'border', 'padding' and 'content' are deprecated and do not
-  // apply to the version of the property that has the -webkit- prefix removed.
-  if (CSSValue* value =
-          ConsumeIdentRange(range, CSSValueBorder, CSSValuePaddingBox))
-    return value;
-  if (allow_text_value && range.Peek().Id() == CSSValueText)
-    return ConsumeIdent(range);
-  return nullptr;
-}
-
 static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
                                             CSSParserTokenRange& range,
                                             const CSSParserContext& context) {
@@ -378,14 +366,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return CSSPropertyTextDecorationLineUtils::ConsumeTextDecorationLine(
           range_);
-    case CSSPropertyWebkitBackgroundClip:
-    case CSSPropertyWebkitMaskClip:
-      return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range_,
-                                       true /* allow_text_value */);
-    case CSSPropertyWebkitBackgroundOrigin:
-    case CSSPropertyWebkitMaskOrigin:
-      return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range_,
-                                       false /* allow_text_value */);
     case CSSPropertyWebkitMaskRepeatX:
     case CSSPropertyWebkitMaskRepeatY:
       return nullptr;
