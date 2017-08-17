@@ -6,7 +6,6 @@ package org.chromium.mojo.bindings;
 
 import android.support.test.filters.SmallTest;
 
-import org.chromium.mojo.MojoTestCase;
 import org.chromium.mojo.bindings.Callbacks.Callback1;
 import org.chromium.mojo.bindings.test.mojom.sample.Enum;
 import org.chromium.mojo.bindings.test.mojom.sample.IntegerAccessor;
@@ -16,11 +15,24 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.junit.Rule;
+import org.chromium.net.MojoTestRule;
+import org.junit.Test;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import org.junit.Assert;
+import org.junit.After;
 
 /**
  * Tests for interface control messages.
  */
-public class InterfaceControlMessageTest extends MojoTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class InterfaceControlMessageTest {
+
+    @Rule
+    public MojoTestRule mTestRule = new MojoTestRule();
+
+
     private final List<Closeable> mCloseablesToClose = new ArrayList<Closeable>();
 
     /**
@@ -68,62 +80,63 @@ public class InterfaceControlMessageTest extends MojoTestCase {
     /**
      * @see MojoTestCase#tearDown()
      */
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+        public void tearDown() throws Exception {
         // Close the elements in the reverse order they were added. This is needed because it is an
         // error to close the handle of a proxy without closing the proxy first.
         Collections.reverse(mCloseablesToClose);
         for (Closeable c : mCloseablesToClose) {
             c.close();
         }
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     public void testQueryVersion() {
         IntegerAccessor.Proxy p = BindingsTestUtils.newProxyOverPipe(
                 IntegerAccessor.MANAGER, new IntegerAccessorImpl(), mCloseablesToClose);
-        assertEquals(0, p.getProxyHandler().getVersion());
+        Assert.assertEquals(0, p.getProxyHandler().getVersion());
         p.getProxyHandler().queryVersion(new Callback1<Integer>() {
             @Override
             public void call(Integer version) {
-                assertEquals(3, version.intValue());
+                Assert.assertEquals(3, version.intValue());
             }
         });
-        runLoopUntilIdle();
-        assertEquals(3, p.getProxyHandler().getVersion());
+        mTestRule.runLoopUntilIdle();
+        Assert.assertEquals(3, p.getProxyHandler().getVersion());
     }
 
+    @Test
     @SmallTest
     public void testRequireVersion() {
         IntegerAccessorImpl impl = new IntegerAccessorImpl();
         IntegerAccessor.Proxy p = BindingsTestUtils.newProxyOverPipe(
                 IntegerAccessor.MANAGER, impl, mCloseablesToClose);
 
-        assertEquals(0, p.getProxyHandler().getVersion());
+        Assert.assertEquals(0, p.getProxyHandler().getVersion());
 
         p.getProxyHandler().requireVersion(1);
-        assertEquals(1, p.getProxyHandler().getVersion());
+        Assert.assertEquals(1, p.getProxyHandler().getVersion());
         p.setInteger(123, Enum.VALUE);
-        runLoopUntilIdle();
-        assertFalse(impl.encounteredError());
-        assertEquals(123, impl.getValue());
+        mTestRule.runLoopUntilIdle();
+        Assert.assertFalse(impl.encounteredError());
+        Assert.assertEquals(123, impl.getValue());
 
         p.getProxyHandler().requireVersion(3);
-        assertEquals(3, p.getProxyHandler().getVersion());
+        Assert.assertEquals(3, p.getProxyHandler().getVersion());
         p.setInteger(456, Enum.VALUE);
-        runLoopUntilIdle();
-        assertFalse(impl.encounteredError());
-        assertEquals(456, impl.getValue());
+        mTestRule.runLoopUntilIdle();
+        Assert.assertFalse(impl.encounteredError());
+        Assert.assertEquals(456, impl.getValue());
 
         // Require a version that is not supported by the implementation side.
         p.getProxyHandler().requireVersion(4);
         // getVersion() is updated synchronously.
-        assertEquals(4, p.getProxyHandler().getVersion());
+        Assert.assertEquals(4, p.getProxyHandler().getVersion());
         p.setInteger(789, Enum.VALUE);
-        runLoopUntilIdle();
-        assertTrue(impl.encounteredError());
+        mTestRule.runLoopUntilIdle();
+        Assert.assertTrue(impl.encounteredError());
         // The call to setInteger() after requireVersion() is ignored.
-        assertEquals(456, impl.getValue());
+        Assert.assertEquals(456, impl.getValue());
     }
 }

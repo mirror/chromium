@@ -6,35 +6,47 @@ package org.chromium.mojo.bindings;
 
 import android.support.test.filters.SmallTest;
 
-import org.chromium.mojo.MojoTestCase;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import org.junit.Rule;
+import org.chromium.net.MojoTestRule;
+import org.junit.Test;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import org.junit.Assert;
 
 /**
  * Testing {@link ValidationTestUtil}.
  */
-public class ValidationTestUtilTest extends MojoTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class ValidationTestUtilTest {
 
     /**
      * Check that the input parser is correct on a given input.
      */
+
+    @Rule
+    public MojoTestRule mTestRule = new MojoTestRule();
+
+
     public static void checkInputParser(
             String input, boolean isInputValid, ByteBuffer expectedData, int expectedHandlesCount) {
         ValidationTestUtil.Data data = ValidationTestUtil.parseData(input);
         if (isInputValid) {
-            assertNull(data.getErrorMessage());
-            assertEquals(expectedData, data.getData());
-            assertEquals(expectedHandlesCount, data.getHandlesCount());
+            Assert.assertNull(data.getErrorMessage());
+            Assert.assertEquals(expectedData, data.getData());
+            Assert.assertEquals(expectedHandlesCount, data.getHandlesCount());
         } else {
-            assertNotNull(data.getErrorMessage());
-            assertNull(data.getData());
+            Assert.assertNotNull(data.getErrorMessage());
+            Assert.assertNull(data.getData());
         }
     }
 
     /**
      * Testing {@link ValidationTestUtil#parseData(String)}.
      */
+    @Test
     @SmallTest
     public void testCorrectMessageParsing() {
         {
