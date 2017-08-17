@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17e57d45_ac40e2f2",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Yep, this is allowed now.\n\n(Funny story: I accidentally typoed one of my template parameters and left _t off of typename \u003d std::enable_if_t\u003c...\u003e. Fun debugging times were had.)",
+      "parentUuid": "92158b10_5a7d0c7b",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16b20de8_68d743e5",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7301b29f_0211d484",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done (sorry I moved this in and out of the actual Span class several times)\n\n(I\u0027ve left T and U as-is in the Span template definition itself, since I think that usage of T and U is pretty canonical)",
+      "parentUuid": "16b20de8_68d743e5",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e124cc8_14cccded",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T16:54:54Z",
       "side": 1,
       "message": "Are there situations where containers don\u0027t have integral sizes?",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d29fd9_ba7ee912",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "You never know! It\u0027s mostly a sanity check thing.",
+      "parentUuid": "5e124cc8_14cccded",
       "range": {
         "startLine": 49,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "efe14892_0cac3170",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6191f66c_96e3dee2",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e4f24d6_981f3f1b",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-17T16:54:54Z",
       "side": 1,
       "message": "Why can\u0027t spans be created from arrays?",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4143f94a_ca378980",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "The proposal has a specific span overload for std::array, so they want to omit this from overload resolution in that case.",
+      "parentUuid": "3e4f24d6_981f3f1b",
       "range": {
         "startLine": 66,
         "startChar": 21,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d1621384_54403190",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce52e47_596e8e34",
+      "range": {
+        "startLine": 82,
+        "startChar": 30,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bec98f6_cfe2f81b",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c43c62_2ecbf3e3",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bec98f6_cfe2f81b",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "dea177ba_0c53eea7",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "It\u0027s implicit \u003dP\n\nI put the prototype in comments to make it clearer.",
+      "parentUuid": "5d965f59_b1391a55",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1493bb54_29a2a588",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b351307b_17cc4ffd",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1493bb54_29a2a588",
+      "range": {
+        "startLine": 113,
+        "startChar": 1,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "dc312b4c_4007c3ee",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "It\u0027s what\u0027s listed in the proposal though.\n\nBut yes, it doesn\u0027t catch everything. I noted this in a comment.",
+      "parentUuid": "866dfdb7_d84bd98c",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 27
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f114f6_1257618e",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -252,6 +492,30 @@
       "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8747b4dc_08d54f39",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "I was implementing it as specced. But it turns out this is problematic for other reasons (see the MSVC warnings) so I\u0027ve removed them and left a note as such.",
+      "parentUuid": "b3f114f6_1257618e",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 44
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "6c8ede31_1cd22b88",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "339bfe7f_aded9675",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 55
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f9c8500_38a52a47",
         "filename": "base/containers/span.h",
         "patchSetId": 5
@@ -298,6 +586,30 @@
       "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee891a01_2738f922",
+        "filename": "base/containers/span.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Added more nocompile tests.",
+      "parentUuid": "0f9c8500_38a52a47",
+      "range": {
+        "startLine": 204,
+        "startChar": 31,
+        "endLine": 204,
+        "endChar": 62
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "8695be03_bd5ccac6",
+        "filename": "base/containers/span_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d470d87_b98fc4eb",
+      "range": {
+        "startLine": 22,
+        "startChar": 63,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b7d0b0d_796ac55a",
         "filename": "base/containers/span_unittest.nc",
         "patchSetId": 5
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "4da0defb_fd3c42ed",
+        "filename": "base/containers/span_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b7d0b0d_796ac55a",
+      "range": {
+        "startLine": 23,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 55
+      },
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c2d139e_610f75ca",
         "filename": "base/containers/span_unittest.nc",
         "patchSetId": 5
@@ -361,6 +721,24 @@
       "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127f78a9_d1619768",
+        "filename": "base/containers/span_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2d139e_610f75ca",
+      "revId": "0149efb5403a04651139da9f217ab7ac3073c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
