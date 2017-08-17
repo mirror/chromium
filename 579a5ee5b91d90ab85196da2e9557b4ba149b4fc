@@ -16,6 +16,24 @@
       "revId": "579a5ee5b91d90ab85196da2e9557b4ba149b4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0be376_b5791d33",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12337,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-17T02:35:57Z",
+      "side": 0,
+      "message": "Yup! The bot ran successfully. Thanks for the input!",
+      "parentUuid": "4e6e2fdc_e7dae285",
+      "revId": "579a5ee5b91d90ab85196da2e9557b4ba149b4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
