@@ -17,6 +17,7 @@ from telemetry.testing import progress_reporter
 
 from py_utils import discover
 
+
 def _GetAllPerfBenchmarks():
   return discover.DiscoverClasses(
       path_util.GetPerfBenchmarksDir(), path_util.GetPerfDir(),
@@ -49,20 +50,28 @@ class TestNoBenchmarkNamesDuplication(unittest.TestCase):
 class TestBenchmarkNamingMobile(unittest.TestCase):
 
   def runTest(self):
-    all_benchmarks = _GetAllPerfBenchmarks()
+    def detect_mobile_expectation(e):
+      _, reason = e
+      if reason == 'Mobile Benchmark':
+        return True
+      return False
+
     names_to_benchmarks = defaultdict(list)
-    for b in all_benchmarks:
+    for b in _GetAllPerfBenchmarks():
       names_to_benchmarks[b.Name()] = b
 
     for n, bench in names_to_benchmarks.items():
       if 'mobile' in n:
+        benchmark_expectations = bench().GetExpectations()
+        expectations_test = any(detect_mobile_expectation(e) for e in
+                                benchmark_expectations.disabled_platforms)
+
+        # TODO(rnephew): Get rid of decorators test when they are all gone.
         enabled_tags = decorators.GetEnabledAttributes(bench)
         disabled_tags = decorators.GetDisabledAttributes(bench)
+        annotation_test = 'all' in disabled_tags or 'android' in enabled_tags
 
-        self.assertTrue('all' in disabled_tags or 'android' in enabled_tags,
-                        ','.join([
-                            str(bench), bench.Name(),
-                            str(disabled_tags), str(enabled_tags)]))
+        self.assertTrue(expectations_test or annotation_test)
 
 
 class TestNoOverrideCustomizeBrowserOptions(unittest.TestCase):
