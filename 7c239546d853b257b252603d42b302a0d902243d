@@ -22,6 +22,30 @@
       "revId": "7c239546d853b257b252603d42b302a0d902243d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23777b81_b0756d0f",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-17T23:30:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83d27939_76121902",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 42
+      },
+      "revId": "7c239546d853b257b252603d42b302a0d902243d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
