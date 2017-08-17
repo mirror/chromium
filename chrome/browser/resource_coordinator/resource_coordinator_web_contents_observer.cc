@@ -26,6 +26,9 @@
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(ResourceCoordinatorWebContentsObserver);
 
+// We delay the sending of WebContents signal to GRC for 5 minutes after the
+// main frame is committed.
+const base::TimeDelta kSignalSendingDelay = base::TimeDelta::FromMinutes(5);
 bool ResourceCoordinatorWebContentsObserver::ukm_recorder_initialized = false;
 
 ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
@@ -127,6 +130,8 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
 
   if (navigation_handle->IsInMainFrame()) {
     UpdateUkmRecorder(navigation_handle->GetURL());
+    ResetFlag();
+    navigation_finished_time_ = base::TimeTicks::Now();
   }
 
   content::RenderFrameHost* render_frame_host =
@@ -144,14 +149,32 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
 void ResourceCoordinatorWebContentsObserver::TitleWasSet(
     content::NavigationEntry* entry,
     bool explicit_set) {
-  // Ignore first time title updated event, since it happens as part of loading
-  // process.
-  if (!first_time_title_updated_) {
-    first_time_title_updated_ = true;
+  // Ignore update when the tab is in foreground.
+  if (web_contents()->IsVisible())
+    return;
+  if (!first_time_title_set_) {
+    first_time_title_set_ = true;
     return;
   }
+  if (base::TimeTicks::Now() - navigation_finished_time_ < kSignalSendingDelay)
+    return;
   tab_resource_coordinator_->SendEvent(
       resource_coordinator::mojom::Event::kTitleUpdated);
+}
+
+void ResourceCoordinatorWebContentsObserver::DidUpdateFaviconURL(
+    const std::vector<content::FaviconURL>& candidates) {
+  // Ignore update when the tab is in foreground.
+  if (web_contents()->IsVisible())
+    return;
+  if (!first_time_favicon_set_) {
+    first_time_favicon_set_ = true;
+    return;
+  }
+  if (base::TimeTicks::Now() - navigation_finished_time_ < kSignalSendingDelay)
+    return;
+  tab_resource_coordinator_->SendEvent(
+      resource_coordinator::mojom::Event::kFaviconUpdated);
 }
 
 void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
@@ -166,4 +189,9 @@ void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
   ukm::UkmRecorder::Get()->UpdateSourceURL(ukm_source_id_, url);
   tab_resource_coordinator_->SetProperty(
       resource_coordinator::mojom::PropertyType::kUKMSourceId, ukm_source_id_);
+}
+
+void ResourceCoordinatorWebContentsObserver::ResetFlag() {
+  first_time_title_set_ = false;
+  first_time_favicon_set_ = false;
 }
