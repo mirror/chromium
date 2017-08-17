@@ -171,8 +171,8 @@ class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
   }
 
  private:
-  Member<NodeListsNodeData> node_lists_;
-  Member<NodeMutationObserverData> mutation_observer_data_;
+  TraceWrapperMember<NodeListsNodeData> node_lists_;
+  TraceWrapperMember<NodeMutationObserverData> mutation_observer_data_;
 
   unsigned connected_frame_count_ : kConnectedFrameCountBits;
   unsigned element_flags_ : kNumberOfElementFlags;
