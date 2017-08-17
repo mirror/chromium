@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00c4278_50793ca4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T20:37:44Z",
+      "side": 1,
+      "message": "nit: dropped the word \"tree\" in \"accessibility tree\"",
+      "revId": "cb61a9d1ff8ddd4b5c7be30fa48a72159ab5582b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
