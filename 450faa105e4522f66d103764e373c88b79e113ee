@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d880d22f_6dc7edad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/BackgroundSyncLauncher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1168179
+      },
+      "writtenOn": "2017-08-17T18:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd75a6d_df967a9e",
+      "revId": "450faa105e4522f66d103764e373c88b79e113ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ddb0e57_7dbdc991",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/SSLClientCertificateRequest.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "450faa105e4522f66d103764e373c88b79e113ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456ae791_2adfdc5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SSLClientCertificateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1168179
+      },
+      "writtenOn": "2017-08-17T18:45:41Z",
+      "side": 1,
+      "message": "I checked the original CL that put this in, and it seems that this is intended behavior due to reviewer\u0027s request",
+      "parentUuid": "9ddb0e57_7dbdc991",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "450faa105e4522f66d103764e373c88b79e113ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
