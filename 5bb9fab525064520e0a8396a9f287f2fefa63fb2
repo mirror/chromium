@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03cba74c_60ee791d",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-17T02:38:05Z",
+      "side": 1,
+      "message": "Instead of doing this additional check everywhere, how about making GetCharIndex() return NONSELECTABLE_AREA any time there is a link in print preview mode?",
+      "revId": "5bb9fab525064520e0a8396a9f287f2fefa63fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
