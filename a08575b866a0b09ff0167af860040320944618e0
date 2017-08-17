@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15d12246_b77d0d83",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T23:37:02Z",
+      "side": 1,
+      "message": "I wonder if this is related to the \"PasswordCredential interface: existence and properties of interface object\" test failure. The error message says:\nassert_false: self\u0027s property XXX should not be enumerable expected false got true\n\nLooking into idlharness.js, the assertion checks this:\nassert_false(Object.getOwnPropertyDescriptor(window, \"PasswordCredential\").enumerable)\n\nMaybe declaring PasswordCredential needs to be added to window object using Object.defineProperty with \"enumerable: false\" instead of declared as a function?",
+      "revId": "a08575b866a0b09ff0167af860040320944618e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa65a17_e78fae40",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-17T23:37:02Z",
+      "side": 1,
+      "message": "I wonder if these two lines might contribute to the failure of the two \"FederatedCredential interface: attribute\" test cases, with the error message:\n\nassert_true: The prototype object must have a property XXX expected true got false\n\nHave you tried defining the provider and protocol property using Object.defineProperty() function?",
+      "revId": "a08575b866a0b09ff0167af860040320944618e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
