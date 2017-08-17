@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b1b49f_f10a950d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:32:15Z",
+      "side": 1,
+      "message": "Would be good to link to https://codereview.chromium.org/2771823002/ here too, say something like\n\nMigrated from original Rietveld codereview: https://codereview.chromium.org/2771823002/",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09c088e_dfb79db3",
+        "filename": "content/browser/service_worker/link_header_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:32:15Z",
+      "side": 1,
+      "message": "Looks like this is impossible (ParseUpdateViaCache never returns this, so this should just be a DCHECK_NE() rather than an if() {return })",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb4a4a2_a87bcd93",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:32:15Z",
+      "side": 1,
+      "message": "Would prefer doing:\n\nswitch (cache_mode) {\n\n}\n\nand handling all the cases. It\u0027s more resilient to future changes to the the enum and more clear what the possible cases are.",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d4072c_74ead85f",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:32:15Z",
+      "side": 1,
+      "message": "is git-cl format OK with this? i think we typically have a blank line after \"namespace {\" and before \"} //namespace \"",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082c6d88_748f9668",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T14:32:15Z",
+      "side": 1,
+      "message": "Hm something doesn\u0027t look right about this. I suspect this means on the renderer-side there can be ServiceWorkerRegistration objects with the wrong update_via_cache attribute. Instead we have to do something like ServiceWorkerRegistration::NotifyVersionAttributesChanged() sends an IPC to the renderer to tell it when the registration\u0027s .installing/.waiting/.active properties changed. Similarly, it seems we have to tell it when .update_via_cache changed.",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
