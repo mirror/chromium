@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e919593e_7bd3158e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "Nit: Use \"Variations\" in Chromium code rather than \"Finch\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 71,
+        "endLine": 43,
+        "endChar": 76
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a5fe60_6fdcda23",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "See my comment on toList(), once you make it return ArrayList, this extra conversion can be removed.",
+      "range": {
+        "startLine": 112,
+        "startChar": 41,
+        "endLine": 112,
+        "endChar": 50
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a524882_e22ae033",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "I don\u0027t think these locks are needed.\n\nAt the very least, I don\u0027t see why you need two separate locks. As an initial simplification, suggest replacing both of these locks with a single sLock \u003d new Object(); and using \"synchronized(sLock)\" blocks around the places where you have these.",
+      "range": {
+        "startLine": 63,
+        "startChar": 47,
+        "endLine": 63,
+        "endChar": 60
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798cb499_4038dae7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "Suggest the following refactor:\n\nMake isSeedExpired() and getLastSeedFetchTime() as members of SeedPreference and then the caller can just readSeedPreference() and call isSeedExpired() on it.",
+      "range": {
+        "startLine": 75,
+        "startChar": 5,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419b6a6f_41a51186",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "Nit: Maybe make a helper for this - copyBytes(in, out).\n\nI tried to look if there\u0027s already something existing but didn\u0027t find something used in Chromium. There\u0027s some stuff in Guava and Apache Commons and in some internal Android library code, but didn\u0027t look any of that was useable. At least if you make a separate function, in the future it could be easier replaced by a library function if one becomes available.",
+      "range": {
+        "startLine": 103,
+        "startChar": 13,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa261bbb_af029671",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "Nit: FIELD_COUNT seems more accurate, since it\u0027s a count of fields and not the size of a field.",
+      "range": {
+        "startLine": 168,
+        "startChar": 32,
+        "endLine": 168,
+        "endChar": 42
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5950e681_27eaaf7e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "Use CollectionUtil.newArrayList() instead:\n\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/CollectionUtil.java\n\nThen you can return as ArrayList and not do an extra conversion at the caller.",
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ae0bdc_8d3148ab",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "This should be readSeedPreference() to indicate what it\u0027s actually doing.",
+      "range": {
+        "startLine": 209,
+        "startChar": 33,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a69c83_396a6979",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T18:02:08Z",
+      "side": 1,
+      "message": "Declare this as a static at the top of the file, so it can be re-used.",
+      "range": {
+        "startLine": 235,
+        "startChar": 8,
+        "endLine": 235,
+        "endChar": 24
+      },
+      "revId": "8181bcf5e4bdaff4a504e18538bcfe135d666ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
