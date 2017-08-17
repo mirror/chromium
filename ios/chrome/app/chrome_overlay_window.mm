@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #import "ios/chrome/browser/crash_report/breakpad_helper.h"
+#include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/metrics/drag_and_drop_recorder.h"
 #import "ios/chrome/browser/metrics/size_class_recorder.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
@@ -37,7 +38,9 @@
     // When not created via a nib, create the recorders immediately.
     [self initializeSizeClassRecorder];
     [self updateBreakpad];
-    _dragAndDropRecorder = [[DragAndDropRecorder alloc] initWithView:self];
+    if (experimental_flags::IsDragAndDropEnabled()) {
+      _dragAndDropRecorder = [[DragAndDropRecorder alloc] initWithView:self];
+    }
   }
   return self;
 }

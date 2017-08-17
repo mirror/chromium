@@ -678,10 +678,12 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11, *)) {
-    _dropInteraction =
-        [[DropAndNavigateInteraction alloc] initWithDelegate:self];
-    [self.view addInteraction:_dropInteraction];
+  if (experimental_flags::IsDragAndDropEnabled()) {
+    if (@available(iOS 11, *)) {
+      _dropInteraction =
+          [[DropAndNavigateInteraction alloc] initWithDelegate:self];
+      [self.view addInteraction:_dropInteraction];
+    }
   }
 #endif
 

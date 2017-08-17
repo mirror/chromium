@@ -418,10 +418,12 @@ const CGFloat kNewTabButtonBottomOffsetHighRes = 2.0;
             forControlEvents:UIControlEventTouchUpInside];
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-    if (@available(iOS 11.0, *)) {
-      _buttonNewTabInteraction =
-          [[DropAndNavigateInteraction alloc] initWithDelegate:self];
-      [_buttonNewTab addInteraction:_buttonNewTabInteraction];
+    if (experimental_flags::IsDragAndDropEnabled()) {
+      if (@available(iOS 11.0, *)) {
+        _buttonNewTabInteraction =
+            [[DropAndNavigateInteraction alloc] initWithDelegate:self];
+        [_buttonNewTab addInteraction:_buttonNewTabInteraction];
+      }
     }
 #endif
 

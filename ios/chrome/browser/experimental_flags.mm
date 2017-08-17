@@ -42,6 +42,7 @@ NSString* const kGaiaEnvironment = @"GAIAEnvironment";
 NSString* const kOriginServerHost = @"AlternateOriginServerHost";
 NSString* const kSafariVCSignInDisabled = @"SafariVCSignInDisabled";
 NSString* const kWhatsNewPromoStatus = @"WhatsNewPromoStatus";
+NSString* const kDisableDragAndDrop = @"DragAndDropDisabled";
 const base::Feature kEnableSlimNavigationManager{
     "EnableSlimNavigationManager", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kEnableThirdPartyKeyboardWorkaround{
@@ -253,6 +254,11 @@ bool IsThirdPartyKeyboardWorkaroundEnabled() {
 
   // Check if the Finch experiment is turned on.
   return base::FeatureList::IsEnabled(kEnableThirdPartyKeyboardWorkaround);
+}
+
+bool IsDragAndDropEnabled() {
+  return !
+      [[NSUserDefaults standardUserDefaults] boolForKey:kDisableDragAndDrop];
 }
 
 }  // namespace experimental_flags

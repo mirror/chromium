@@ -96,6 +96,9 @@ bool IsSlimNavigationManagerEnabled();
 // Whether the 3rd party keyboard omnibox workaround is enabled.
 bool IsThirdPartyKeyboardWorkaroundEnabled();
 
+// Whether support for drag and dropping items is enabled.
+bool IsDragAndDropEnabled();
+
 }  // namespace experimental_flags
 
 #endif  // IOS_CHROME_BROWSER_EXPERIMENTAL_FLAGS_H_
