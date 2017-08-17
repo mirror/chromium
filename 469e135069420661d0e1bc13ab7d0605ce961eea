@@ -33,6 +33,24 @@
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414e4511_ee2f6e19",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T09:48:31Z",
+      "side": 1,
+      "message": "For things that aren\u0027t associated with a context, I think we had no choice but to use a pre-finalizer: we needed to invalidate the binding to ensure that Mojo doesn\u0027t call back into a finalized but not yet swept object.",
+      "parentUuid": "3720f810_887a4ae8",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
