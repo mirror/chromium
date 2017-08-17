@@ -22,6 +22,7 @@ class LayerTreeHostCheckerImagingTest : public LayerTreeTest {
 
   void InitializeSettings(LayerTreeSettings* settings) override {
     settings->enable_checker_imaging = true;
+    settings->min_image_size_to_consider_checkering = 512 * 1024;
   }
 
   void SetupTree() override {
