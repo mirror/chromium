@@ -11,6 +11,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/url_constants.h"
@@ -1569,13 +1570,11 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
   }
 }
 
-// Check that iframes with embedded credentials are blocked.
-// Not working with PlzNavigate: See https://crbug.com/755892.
+// Check that iframe with embedded credentials are blocked.
+// See https://crbug.com/755892.
 IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
                        BlockCredentialedSubresources) {
-  // It doesn't work with PlzNavigate yet.
-  // See https://crbug.com/755892.
-  if (IsBrowserSideNavigationEnabled())
+  if (!base::FeatureList::IsEnabled(features::kBlockCredentialedSubresources))
     return;
 
   const struct {

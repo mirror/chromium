@@ -232,6 +232,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   ContentSecurityPolicyCheckResult CheckContentSecurityPolicyFrameSrc(
       bool is_redirect);
 
+  bool ShouldBlockCredentialedSubresources() const;
+
   FrameTreeNode* frame_tree_node_;
 
   // Initialized on creation of the NavigationRequest. Sent to the renderer when
