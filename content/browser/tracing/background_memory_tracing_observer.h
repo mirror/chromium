@@ -22,6 +22,8 @@ class BackgroundMemoryTracingObserver
   BackgroundMemoryTracingObserver();
   ~BackgroundMemoryTracingObserver() override;
 
+  bool heap_profiling_enabled_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(BackgroundMemoryTracingObserver);
 };
 
