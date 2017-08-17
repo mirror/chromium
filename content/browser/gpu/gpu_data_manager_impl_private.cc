@@ -289,7 +289,7 @@ void OnVideoMemoryUsageStats(
         callback,
     const gpu::VideoMemoryUsageStats& stats) {
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(callback, stats));
+                          base::BindOnce(callback, stats));
 }
 
 void RequestVideoMemoryUsageStats(
@@ -308,7 +308,7 @@ void UpdateGpuInfoOnIO(const gpu::GPUInfo& gpu_info) {
   // expect to run in the UI thread, e.g. ContentClient::SetGpuInfo()).
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(
+      base::BindOnce(
           [](const gpu::GPUInfo& gpu_info) {
             TRACE_EVENT0("test_gpu", "OnGraphicsInfoCollected");
             GpuDataManagerImpl::GetInstance()->UpdateGpuInfo(gpu_info);
@@ -997,11 +997,9 @@ void GpuDataManagerImplPrivate::ProcessCrashed(
     // Unretained is ok, because it's posted to UI thread, the thread
     // where the singleton GpuDataManagerImpl lives until the end.
     BrowserThread::PostTask(
-        BrowserThread::UI,
-        FROM_HERE,
-        base::Bind(&GpuDataManagerImpl::ProcessCrashed,
-                   base::Unretained(owner_),
-                   exit_code));
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&GpuDataManagerImpl::ProcessCrashed,
+                       base::Unretained(owner_), exit_code));
     return;
   }
   {
@@ -1134,9 +1132,9 @@ bool GpuDataManagerImplPrivate::Are3DAPIsBlocked(const GURL& top_origin_url,
     // where the singleton GpuDataManagerImpl lives until the end.
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&GpuDataManagerImpl::Notify3DAPIBlocked,
-                   base::Unretained(owner_), top_origin_url, render_process_id,
-                   render_frame_id, requester));
+        base::BindOnce(&GpuDataManagerImpl::Notify3DAPIBlocked,
+                       base::Unretained(owner_), top_origin_url,
+                       render_process_id, render_frame_id, requester));
   }
 
   return blocked;

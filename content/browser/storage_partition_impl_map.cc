@@ -336,8 +336,8 @@ void BlockingGarbageCollect(
   }
 
   file_access_runner->PostTask(
-      FROM_HERE,
-      base::Bind(base::IgnoreResult(&base::DeleteFile), trash_directory, true));
+      FROM_HERE, base::BindOnce(base::IgnoreResult(&base::DeleteFile),
+                                trash_directory, true));
 }
 
 }  // namespace
@@ -507,9 +507,9 @@ void StoragePartitionImplMap::AsyncObliterate(
 
   base::PostTaskWithTraits(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&BlockingObliteratePath, browser_context_->GetPath(),
-                 domain_root, paths_to_keep,
-                 base::ThreadTaskRunnerHandle::Get(), on_gc_required));
+      base::BindOnce(&BlockingObliteratePath, browser_context_->GetPath(),
+                     domain_root, paths_to_keep,
+                     base::ThreadTaskRunnerHandle::Get(), on_gc_required));
 }
 
 void StoragePartitionImplMap::GarbageCollect(
@@ -531,9 +531,8 @@ void StoragePartitionImplMap::GarbageCollect(
       GetStoragePartitionDomainPath(std::string()));
   file_access_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&BlockingGarbageCollect, storage_root,
-                 file_access_runner_,
-                 base::Passed(&active_paths)),
+      base::BindOnce(&BlockingGarbageCollect, storage_root, file_access_runner_,
+                     base::Passed(&active_paths)),
       done);
 }
 
@@ -563,7 +562,7 @@ void StoragePartitionImplMap::PostCreateInitialization(
   if (BrowserThread::IsMessageLoopValid(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(
+        base::BindOnce(
             &ChromeAppCacheService::InitializeOnIOThread,
             partition->GetAppCacheService(),
             in_memory ? base::FilePath()
@@ -574,23 +573,23 @@ void StoragePartitionImplMap::PostCreateInitialization(
 
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&CacheStorageContextImpl::SetBlobParametersForCache,
-                   partition->GetCacheStorageContext(),
-                   base::RetainedRef(partition->GetURLRequestContext()),
-                   base::RetainedRef(
-                       ChromeBlobStorageContext::GetFor(browser_context_))));
+        base::BindOnce(&CacheStorageContextImpl::SetBlobParametersForCache,
+                       partition->GetCacheStorageContext(),
+                       base::RetainedRef(partition->GetURLRequestContext()),
+                       base::RetainedRef(ChromeBlobStorageContext::GetFor(
+                           browser_context_))));
 
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&ServiceWorkerContextWrapper::InitializeResourceContext,
-                   partition->GetServiceWorkerContext(),
-                   browser_context_->GetResourceContext()));
+        base::BindOnce(&ServiceWorkerContextWrapper::InitializeResourceContext,
+                       partition->GetServiceWorkerContext(),
+                       browser_context_->GetResourceContext()));
 
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&BackgroundFetchContext::InitializeOnIOThread,
-                   partition->GetBackgroundFetchContext(),
-                   base::RetainedRef(partition->GetURLRequestContext())));
+        base::BindOnce(&BackgroundFetchContext::InitializeOnIOThread,
+                       partition->GetBackgroundFetchContext(),
+                       base::RetainedRef(partition->GetURLRequestContext())));
 
     // We do not call InitializeURLRequestContext() for media contexts because,
     // other than the HTTP cache, the media contexts share the same backing

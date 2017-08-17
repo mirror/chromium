@@ -83,8 +83,8 @@ class CookieRetriever : public base::RefCountedThreadSafe<CookieRetriever> {
       for (const GURL& url : urls) {
         net::URLRequestContext* request_context =
             context_getter->GetURLRequestContext();
-        request_context->cookie_store()->GetAllCookiesForURLAsync(url,
-            base::Bind(&CookieRetriever::GotCookies, this));
+        request_context->cookie_store()->GetAllCookiesForURLAsync(
+            url, base::BindOnce(&CookieRetriever::GotCookies, this));
       }
     }
 
@@ -96,7 +96,7 @@ class CookieRetriever : public base::RefCountedThreadSafe<CookieRetriever> {
       net::URLRequestContext* request_context =
           context_getter->GetURLRequestContext();
       request_context->cookie_store()->GetAllCookiesAsync(
-          base::Bind(&CookieRetriever::GotCookies, this));
+          base::BindOnce(&CookieRetriever::GotCookies, this));
     }
   protected:
     virtual ~CookieRetriever() {}
@@ -121,11 +121,9 @@ class CookieRetriever : public base::RefCountedThreadSafe<CookieRetriever> {
         master_cookie_list.push_back(pair.second);
 
       BrowserThread::PostTask(
-          BrowserThread::UI,
-          FROM_HERE,
-          base::Bind(&CookieRetriever::SendCookiesResponseOnUI,
-                     this,
-                     master_cookie_list));
+          BrowserThread::UI, FROM_HERE,
+          base::BindOnce(&CookieRetriever::SendCookiesResponseOnUI, this,
+                         master_cookie_list));
     }
 
     void SendCookiesResponseOnUI(const net::CookieList& cookie_list) {
@@ -181,9 +179,10 @@ class CookieRetriever : public base::RefCountedThreadSafe<CookieRetriever> {
 void ClearedCookiesOnIO(std::unique_ptr<ClearBrowserCookiesCallback> callback,
                         uint32_t num_deleted) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(&ClearBrowserCookiesCallback::sendSuccess,
-                                     base::Passed(std::move(callback))));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&ClearBrowserCookiesCallback::sendSuccess,
+                     base::Passed(std::move(callback))));
 }
 
 void ClearCookiesOnIO(net::URLRequestContextGetter* context_getter,
@@ -192,16 +191,14 @@ void ClearCookiesOnIO(net::URLRequestContextGetter* context_getter,
   net::URLRequestContext* request_context =
       context_getter->GetURLRequestContext();
   request_context->cookie_store()->DeleteAllAsync(
-      base::Bind(&ClearedCookiesOnIO, base::Passed(std::move(callback))));
+      base::BindOnce(&ClearedCookiesOnIO, base::Passed(std::move(callback))));
 }
 
 void DeletedCookieOnIO(std::unique_ptr<DeleteCookieCallback> callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(&DeleteCookieCallback::sendSuccess,
-                 base::Passed(std::move(callback))));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(&DeleteCookieCallback::sendSuccess,
+                                         base::Passed(std::move(callback))));
 }
 
 void DeleteCookieOnIO(
@@ -213,18 +210,16 @@ void DeleteCookieOnIO(
   net::URLRequestContext* request_context =
       context_getter->GetURLRequestContext();
   request_context->cookie_store()->DeleteCookieAsync(
-      url, cookie_name, base::Bind(&DeletedCookieOnIO,
-                                   base::Passed(std::move(callback))));
+      url, cookie_name,
+      base::BindOnce(&DeletedCookieOnIO, base::Passed(std::move(callback))));
 }
 
 void CookieSetOnIO(std::unique_ptr<SetCookieCallback> callback, bool success) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(&SetCookieCallback::sendSuccess,
-                 base::Passed(std::move(callback)),
-                 success));
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&SetCookieCallback::sendSuccess,
+                     base::Passed(std::move(callback)), success));
 }
 
 void SetCookieOnIO(net::URLRequestContextGetter* context_getter,
@@ -272,8 +267,8 @@ void CookiesSetOnIO(std::unique_ptr<SetCookiesCallback> callback,
                     bool success) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(&SetCookiesCallback::sendSuccess,
-                                     base::Passed(std::move(callback))));
+                          base::BindOnce(&SetCookiesCallback::sendSuccess,
+                                         base::Passed(std::move(callback))));
 }
 
 void SetCookiesOnIO(
@@ -592,11 +587,11 @@ void NetworkHandler::ClearBrowserCookies(
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&ClearCookiesOnIO,
-                 base::Unretained(host_->GetProcess()
-                                      ->GetStoragePartition()
-                                      ->GetURLRequestContext()),
-                 base::Passed(std::move(callback))));
+      base::BindOnce(&ClearCookiesOnIO,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     base::Passed(std::move(callback))));
 }
 
 void NetworkHandler::GetCookies(Maybe<Array<String>> protocol_urls,
@@ -612,12 +607,11 @@ void NetworkHandler::GetCookies(Maybe<Array<String>> protocol_urls,
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&CookieRetriever::RetrieveCookiesOnIO,
-                 retriever,
-                 base::Unretained(host_->GetProcess()
-                                       ->GetStoragePartition()
-                                       ->GetURLRequestContext()),
-                 urls));
+      base::BindOnce(&CookieRetriever::RetrieveCookiesOnIO, retriever,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     urls));
 }
 
 void NetworkHandler::GetAllCookies(
@@ -632,11 +626,10 @@ void NetworkHandler::GetAllCookies(
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&CookieRetriever::RetrieveAllCookiesOnIO,
-                 retriever,
-                 base::Unretained(host_->GetProcess()
-                                       ->GetStoragePartition()
-                                       ->GetURLRequestContext())));
+      base::BindOnce(&CookieRetriever::RetrieveAllCookiesOnIO, retriever,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext())));
 }
 
 void NetworkHandler::SetCookie(const std::string& name,
@@ -656,7 +649,7 @@ void NetworkHandler::SetCookie(const std::string& name,
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(
+      base::BindOnce(
           &SetCookieOnIO,
           base::Unretained(host_->GetProcess()
                                ->GetStoragePartition()
@@ -678,7 +671,7 @@ void NetworkHandler::SetCookies(
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(
+      base::BindOnce(
           &SetCookiesOnIO,
           base::Unretained(host_->GetProcess()
                                ->GetStoragePartition()
@@ -695,13 +688,14 @@ void NetworkHandler::DeleteCookie(
     callback->sendFailure(Response::InternalError());
     return;
   }
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, base::Bind(
-      &DeleteCookieOnIO,
-      base::Unretained(host_->GetProcess()->GetStoragePartition()->
-                       GetURLRequestContext()),
-      GURL(url),
-      cookie_name,
-      base::Passed(std::move(callback))));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DeleteCookieOnIO,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     GURL(url), cookie_name,
+                     base::Passed(std::move(callback))));
 }
 
 Response NetworkHandler::SetUserAgentOverride(const std::string& user_agent) {
