@@ -117,6 +117,12 @@ const char* TaskQueue::GetName() const {
   return impl_->GetName();
 }
 
+WebFrameScheduler* TaskQueue::GetFrameScheduler() const {
+  return nullptr;
+}
+
+void TaskQueue::SetFrameScheduler(WebFrameScheduler* frame) {}
+
 void TaskQueue::SetObserver(Observer* observer) {
   if (observer) {
     // Observer is guaranteed to outlive TaskQueue and TaskQueueImpl lifecycle

@@ -21,6 +21,9 @@ class BlameContext;
 }
 
 namespace blink {
+
+class WebFrameScheduler;
+
 namespace scheduler {
 
 namespace internal {
@@ -51,6 +54,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // Unregisters the task queue after which no tasks posted to it will run and
   // the TaskQueueManager's reference to it will be released soon.
   virtual void UnregisterTaskQueue();
+
+  virtual WebFrameScheduler* GetFrameScheduler() const;
+  virtual void SetFrameScheduler(WebFrameScheduler* frame);
 
   enum QueuePriority {
     // Queues with control priority will run before any other queue, and will
