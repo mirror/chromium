@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445ae5ff_6cc21809",
+        "filename": "chrome/browser/ui/webui/sync_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T23:54:54Z",
+      "side": 1,
+      "message": "There\u0027s another copy of this file over at ios/chrome/browser/ui/webui/sync_internals/sync_internals_ui.cc\n\nAnd it looks like I forgot to update it when I added the UserEvents resource path... So while you\u0027re in there :)",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed04333_23f82141",
+        "filename": "components/sync/driver/resources/traffic_log.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T23:54:54Z",
+      "side": 1,
+      "message": "2017?",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5493816a_be7fb2ed",
+        "filename": "components/sync/driver/resources/traffic_log.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T23:54:54Z",
+      "side": 1,
+      "message": "Would be nice to have the Capture Specifics checkbox here... and have them both get updated when things change, I know that\u0027s a lot to ask. Feel free to not do it.",
+      "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
