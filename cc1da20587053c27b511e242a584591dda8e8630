@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e688fad_c2c2d86b",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T11:51:17Z",
+      "side": 1,
+      "message": "Please make this comment a bit more precise about exactly when this is used: is it only because we are (incorrectly) making calls on the RVH when the main frame is remote, because of ordering issues during widget shutdown or something else. etc.",
+      "revId": "cc1da20587053c27b511e242a584591dda8e8630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
