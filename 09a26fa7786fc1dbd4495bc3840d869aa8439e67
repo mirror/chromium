@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28cbef76_f57078c8",
+        "filename": "chrome/utility/chrome_content_utility_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T20:15:49Z",
+      "side": 1,
+      "message": "nit: use callback instead of single-method interface?",
+      "revId": "09a26fa7786fc1dbd4495bc3840d869aa8439e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2b1046_3e4344ec",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T20:15:49Z",
+      "side": 1,
+      "message": "nit: combine includes",
+      "revId": "09a26fa7786fc1dbd4495bc3840d869aa8439e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79765909_e5e72254",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T20:15:49Z",
+      "side": 1,
+      "message": "nit: blank line",
+      "revId": "09a26fa7786fc1dbd4495bc3840d869aa8439e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
