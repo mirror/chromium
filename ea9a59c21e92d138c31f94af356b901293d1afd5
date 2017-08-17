@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d58dee9_f24dfa4e",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T14:16:50Z",
+      "side": 1,
+      "message": "Isn\u0027t this missing GBM_BO_USE_TEXTURING?\nWhy don\u0027t you set SCANOUT too? If it fails, we retry without SCANOUT.",
+      "revId": "ea9a59c21e92d138c31f94af356b901293d1afd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
