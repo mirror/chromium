@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc3b8acb_e58a833d",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2022,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T13:07:06Z",
+      "side": 1,
+      "message": "WB for EventTargetData emitted here.",
+      "range": {
+        "startLine": 2022,
+        "startChar": 26,
+        "endLine": 2022,
+        "endChar": 29
+      },
+      "revId": "17a1015865fdcc07295f16aa96488f5eba17d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1757ce6_d25f192b",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2653,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T13:07:06Z",
+      "side": 1,
+      "message": "This is the only difference between wrapper tracing and Oilpan: Oilpan knows about PersistentHashMap, while wrapper tracing has to trace it from here.",
+      "range": {
+        "startLine": 2653,
+        "startChar": 11,
+        "endLine": 2653,
+        "endChar": 46
+      },
+      "revId": "17a1015865fdcc07295f16aa96488f5eba17d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1161673e_a73e7ef0",
+        "filename": "third_party/WebKit/Source/core/events/EventListener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T13:07:06Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be a problem since we already have the virtual Trace() call.",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "17a1015865fdcc07295f16aa96488f5eba17d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c08ecd_1a1ab94b",
+        "filename": "third_party/WebKit/Source/core/events/RegisteredEventListener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T13:07:06Z",
+      "side": 1,
+      "message": "WB for EventListener emitted here.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "17a1015865fdcc07295f16aa96488f5eba17d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00fedba_9b80287d",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-17T13:07:06Z",
+      "side": 1,
+      "message": "Just renamed to avoid confusion and over-eagerly matching of the signature.",
+      "revId": "17a1015865fdcc07295f16aa96488f5eba17d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
