@@ -22,6 +22,30 @@
       "revId": "a00842bbcbb75703c1508c462ef7423ead639da1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5ac750_752243f5",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T16:42:50Z",
+      "side": 0,
+      "message": "Right, forgot to remove the include (happens too often to me).\n\nA previous version was passing all the tests without it, so should be fine. I think this runner needs to have a base::MayBlock to work, had the same issue before (if it\u0027s not this runner, then it\u0027s some other runner, but it\u0027s about the base::MayBlock).\n\nLet\u0027s see if it works now with the base::MayBlock.",
+      "parentUuid": "d2adaa7b_c98b5c24",
+      "range": {
+        "startLine": 65,
+        "startChar": 30,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "a00842bbcbb75703c1508c462ef7423ead639da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

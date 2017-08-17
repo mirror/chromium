@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "740a2a57_a3215ba8",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T16:42:50Z",
+      "side": 1,
+      "message": "Agreed. Probably a leftover comment, thanks.",
+      "parentUuid": "e5ae7a06_828574eb",
+      "range": {
+        "startLine": 199,
+        "startChar": 21,
+        "endLine": 199,
+        "endChar": 38
+      },
+      "revId": "7a1c863934fc913658f98a3f638d76d05d61b926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf8f1e2_254c9a55",
         "filename": "components/policy/core/common/configuration_policy_provider_test.h",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "7a1c863934fc913658f98a3f638d76d05d61b926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3746b8bd_5fd011b2",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-17T16:42:50Z",
+      "side": 1,
+      "message": "Completely removed this part, directly passing in the TaskRunner at the callsite.",
+      "parentUuid": "7cf8f1e2_254c9a55",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "7a1c863934fc913658f98a3f638d76d05d61b926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
