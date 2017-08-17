@@ -5,8 +5,10 @@
 #include "content/browser/service_worker/service_worker_script_url_loader.h"
 
 #include <memory>
+#include "content/browser/service_worker/service_worker_cache_writer.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_provider_host.h"
+#include "content/browser/service_worker/service_worker_storage.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/common/resource_response.h"
@@ -30,6 +32,29 @@ ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader(
       provider_host_(provider_host) {
   mojom::URLLoaderClientPtr network_client;
   network_client_binding_.Bind(mojo::MakeRequest(&network_client));
+
+  int resource_id = context->storage()->NewResourceId();
+  int incumbent_resource_id = 1;
+  // TODO(nhiroki): Handle an error case.
+  // if (resource_id == kInvalidServiceWorkerResourceId) {}
+
+  // Create response readers only when we have to do the byte-for-byte check.
+  std::unique_ptr<ServiceWorkerResponseReader> compare_reader;
+  std::unique_ptr<ServiceWorkerResponseReader> copy_reader;
+  if (ShouldByteForByteCheck()) {
+    compare_reader =
+        context->storage()->CreateResponseReader(incumbent_resource_id);
+    copy_reader =
+        context->storage()->CreateResponseReader(incumbent_resource_id);
+  }
+  cache_writer_ = base::MakeUnique<ServiceWorkerCacheWriter>(
+      std::move(compare_reader), std::move(copy_reader),
+      context->storage()->CreateResponseWriter(resource_id));
+
+  provider_host_->running_hosted_version()
+      ->script_cache_map()
+      ->NotifyStartedCaching(resource_request.url, resource_id);
+
   loader_factory_getter->GetNetworkFactory()->get()->CreateLoaderAndStart(
       mojo::MakeRequest(&network_loader_), routing_id, request_id, options,
       resource_request, std::move(network_client), traffic_annotation);
@@ -109,6 +134,11 @@ void ServiceWorkerScriptURLLoader::OnStartLoadingResponseBody(
 void ServiceWorkerScriptURLLoader::OnComplete(
     const ResourceRequestCompletionStatus& status) {
   forwarding_client_->OnComplete(status);
+}
+
+bool ServiceWorkerScriptURLLoader::ShouldByteForByteCheck() const {
+  return incumbent_resource_id_ != kInvalidServiceWorkerResourceId &&
+         provider_host_->running_hosted_version()->pause_after_download();
 }
 
 }  // namespace content
