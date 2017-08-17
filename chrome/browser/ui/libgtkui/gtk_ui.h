@@ -65,7 +65,7 @@ class GtkUi : public views::LinuxUI {
       ui::SelectFileDialog::Listener* listener,
       ui::SelectFilePolicy* policy) const override;
 
-  // ui::LinuxUI:
+  // views::LinuxUI:
   void Initialize() override;
   bool GetTint(int id, color_utils::HSL* tint) const override;
   bool GetColor(int id, SkColor* color) const override;
@@ -99,18 +99,17 @@ class GtkUi : public views::LinuxUI {
   bool UnityIsRunning() override;
   NonClientMiddleClickAction GetNonClientMiddleClickAction() override;
   void NotifyWindowManagerStartupComplete() override;
+  void UpdateDeviceScaleFactor() override;
+  float GetDeviceScaleFactor() const override;
   void AddDeviceScaleFactorObserver(
       views::DeviceScaleFactorObserver* observer) override;
   void RemoveDeviceScaleFactorObserver(
       views::DeviceScaleFactorObserver* observer) override;
+  views::NavButtonProvider* GetNavButtonProvider() override;
 
   // ui::TextEditKeybindingDelegate:
   bool MatchEvent(const ui::Event& event,
                   std::vector<ui::TextEditCommandAuraLinux>* commands) override;
-
-  // ui::Views::LinuxUI:
-  void UpdateDeviceScaleFactor() override;
-  float GetDeviceScaleFactor() const override;
 
  private:
   typedef std::map<int, SkColor> ColorMap;
@@ -184,6 +183,8 @@ class GtkUi : public views::LinuxUI {
   std::vector<views::FrameButton> trailing_buttons_;
 
   std::unique_ptr<Gtk2KeyBindingsHandler> key_bindings_handler_;
+
+  std::unique_ptr<views::NavButtonProvider> nav_button_provider_;
 
   // Objects to notify when the window frame button order changes.
   base::ObserverList<views::WindowButtonOrderObserver>

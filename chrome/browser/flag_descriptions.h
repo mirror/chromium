@@ -506,6 +506,9 @@ extern const char kNostatePrefetchDescription[];
 extern const char kNotificationsNativeFlagName[];
 extern const char kNotificationsNativeFlagDescription[];
 
+extern const char kWindowNavNativeFlagName[];
+extern const char kWindowNavNativeFlagDescription[];
+
 extern const char kNumRasterThreadsName[];
 extern const char kNumRasterThreadsDescription[];
 extern const char kNumRasterThreadsOne[];

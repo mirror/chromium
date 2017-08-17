@@ -66,6 +66,7 @@
 #include "chrome/browser/ui/libgtkui/native_theme_gtk2.h"  // nogncheck
 #elif GTK_MAJOR_VERSION == 3
 #include "chrome/browser/ui/libgtkui/native_theme_gtk3.h"  // nogncheck
+#include "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.h"  // nogncheck
 #endif
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
@@ -403,6 +404,7 @@ GtkUi::GtkUi() : middle_click_action_(GetDefaultMiddleClickAction()) {
   native_theme_ = NativeThemeGtk2::instance();
   fake_window_ = chrome_gtk_frame_new();
 #elif GTK_MAJOR_VERSION == 3
+  nav_button_provider_ = base::MakeUnique<libgtkui::NavButtonProviderGtk3>();
   native_theme_ = NativeThemeGtk3::instance();
   fake_window_ = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 #else
@@ -775,6 +777,10 @@ void GtkUi::AddDeviceScaleFactorObserver(
 void GtkUi::RemoveDeviceScaleFactorObserver(
     views::DeviceScaleFactorObserver* observer) {
   device_scale_factor_observer_list_.RemoveObserver(observer);
+}
+
+views::NavButtonProvider* GtkUi::GetNavButtonProvider() {
+  return nav_button_provider_.get();
 }
 
 bool GtkUi::MatchEvent(const ui::Event& event,

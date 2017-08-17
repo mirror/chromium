@@ -806,6 +806,13 @@ const char kNotificationsNativeFlagDescription[] =
     "Enable support for using the native notification toasts and notification "
     "center on platforms where these are available.";
 
+const char kWindowNavNativeFlagName[] =
+    "Enable native window navigation buttons.";
+const char kWindowNavNativeFlagDescription[] =
+    "Whether we should draw the minimize, maximize/restore, and close "
+    "buttons using the system theme.  Has no effect unless using the GTK3 "
+    "theme.";
+
 const char kNumRasterThreadsName[] = "Number of raster threads";
 const char kNumRasterThreadsDescription[] =
     "Specify the number of raster threads.";
