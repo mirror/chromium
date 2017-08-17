@@ -46,6 +46,30 @@
       "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ae5065_ac387113",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-17T15:50:35Z",
+      "side": 1,
+      "message": "It might be, I don\u0027t know. If you\u0027ve tested this thoroughly and things work as expected then I\u0027m okay with this.\n\nHowever, I\u0027m pretty sure this web contents can be null, and while it\u0027s safe to create the observer on a null webcontents, wouldn\u0027t the incognito state and URL be wrong?",
+      "parentUuid": "d624a71c_eb8a6e78",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 19
+      },
+      "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
