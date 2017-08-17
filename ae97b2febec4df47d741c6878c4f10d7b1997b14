@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408af588_64f57efc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T15:03:12Z",
+      "side": 1,
+      "message": "pass by comment: Won\u0027t this be seen as a regression from UMA perspective? ICON_DEFAULT is basically \"we can\u0027t do anything to make that event slightly appealing\". What if we tinted the icon with the fallback color? 😀",
+      "range": {
+        "startLine": 208,
+        "startChar": 36,
+        "endLine": 208,
+        "endChar": 48
+      },
+      "revId": "ae97b2febec4df47d741c6878c4f10d7b1997b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
