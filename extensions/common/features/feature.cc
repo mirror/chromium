@@ -33,14 +33,13 @@ Feature::Platform Feature::GetCurrentPlatform() {
 
 Feature::Availability Feature::IsAvailableToExtension(
     const Extension* extension) const {
-  return IsAvailableToManifest(extension->id(),
-                               extension->GetType(),
+  return IsAvailableToManifest(extension->hashed_id(), extension->GetType(),
                                extension->location(),
                                extension->manifest_version());
 }
 
 Feature::Availability Feature::IsAvailableToEnvironment() const {
-  return IsAvailableToManifest("",  // extension_id
+  return IsAvailableToManifest(HashedExtensionId(),
                                Manifest::TYPE_UNKNOWN,
                                Manifest::INVALID_LOCATION,
                                -1);  // manifest_version
