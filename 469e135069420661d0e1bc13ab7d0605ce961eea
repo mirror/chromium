@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86d26ed_511f084d",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-17T02:10:01Z",
+      "side": 1,
+      "message": "dcheng@: See my below comment.",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3720f810_887a4ae8",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-17T02:10:01Z",
+      "side": 1,
+      "message": "dcheng@: At the moment we need to add a pre-finalizer and destruct mojo::Binding, right? Or should we use ContextLifecycleObserver?\n\nI\u0027m a bit confused because existing mojo::Bindings in Source/modules/ are using pre-finalizers.",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
