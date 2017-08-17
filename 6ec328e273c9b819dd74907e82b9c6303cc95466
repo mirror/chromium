@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f31ebeb3_b4144ef1",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "ASSERT_TRUE()?\n\nIn general, I use ASSERT*() for:\n  - Stuff related to test infrastructure,\n  - Sanity check\n  - Serious error for which all tests that follow become meaningless.\nThen I use EXPECT*() for stuff related to stuff you actually want to test.\n\nAsk around and see what people use these for though.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2892f170_0280d186",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "// Generate patch from \"old\" to \"new\".",
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395f3645_ddaf7141",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "Stored that into temp variable, and EXPECT_EQ() it to be greater than some minimal size?\n\nAlso, consider injecting an estimated size (say, 120% of what we have now) to TestGenApply() and EXPECT_LE() the size, so patch size regressions can be caught?",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fe245d_9ad0dc78",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "// Read back generated patch.",
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b6d495_967cdb61",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "// Check basic check properties.\n\nYou might want to ad dmore checks, e.g., old_file.length().",
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a285de_7301626c",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "(New block)\n// Apply patch to \"old\" to get \"patched new\", ensure it\u0027s identical to \"new\".",
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f97ede6_a88e0c6e",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "NIT: \"generated\" sounds like \"patch generation\". Maybe |patched_new_buffer|?",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ae1076_3a83f9a1",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T23:46:48Z",
+      "side": 1,
+      "message": "Don\u0027t know how long the test runs, but might be interesting to test more cases, like\n- \"setup1.exe\" to \"setpu1.exe\",\n- \"setup2.exe\" to \"setup1.exe\",\netc.",
+      "revId": "6ec328e273c9b819dd74907e82b9c6303cc95466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
