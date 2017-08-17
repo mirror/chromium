@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "0f5bab37_eb404cc9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-17T17:03:54Z",
+      "side": 1,
+      "message": "so just double-confirming we weren\u0027t previously depending on binding manager always getting updated and it\u0027s ok to short-circuit? (haven\u0027t looked at that code in a bit and it looks like you\u0027ve been updating it)",
+      "range": {
+        "startLine": 469,
+        "startChar": 12,
+        "endLine": 469,
+        "endChar": 23
+      },
+      "revId": "63e48c4ba4bc4dcc9fe09231f609b68c5dc9380a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecc2ee88_ba7f42ae",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 5
