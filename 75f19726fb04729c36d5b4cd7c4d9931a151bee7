@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cbddcb8_72ecabc9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T20:47:05Z",
+      "side": 0,
+      "message": "Have you manually checked this with VoiceOver? What happens\nwhen you navigate between items that are descendants of a\ntree (I think an AXOutline on Mac) but some aren\u0027t tree items?",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5812319a_dd34625a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T20:47:05Z",
+      "side": 0,
+      "message": "Isn\u0027t the idea of roles with presentational children\npart of the ARIA spec, though?",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e76a96_9bb1133d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T20:47:05Z",
+      "side": 0,
+      "message": "Can we still expose this for the narrow case of an element\nwith just one text child?",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

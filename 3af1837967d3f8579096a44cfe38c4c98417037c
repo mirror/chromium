@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e43ec87f_f48a2451",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2443,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T20:47:05Z",
+      "side": 1,
+      "message": "This logic makes sense, thanks.",
+      "revId": "3af1837967d3f8579096a44cfe38c4c98417037c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e500dd8_d25c0231",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T20:47:05Z",
+      "side": 1,
+      "message": "dropped \"tree\" in \"accessibility tree\"",
+      "revId": "3af1837967d3f8579096a44cfe38c4c98417037c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
