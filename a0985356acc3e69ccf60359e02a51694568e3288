@@ -34,6 +34,24 @@
       "revId": "a0985356acc3e69ccf60359e02a51694568e3288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ba9dad_a22873ec",
+        "filename": "tools/perf/benchmarks/benchmark_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-17T09:08:08Z",
+      "side": 1,
+      "message": "This is using the reason string, instead of relying on ALL_ANDROID, which I think is not ideal. Another point here is you gonna change the Permanently Benchmark Disabling to the benchmark soon, which mean this need to be updated again. \nFinally, people are not adding new benchmarks very often, So I think there is little risk in fully disabling this test for now.",
+      "parentUuid": "c42bcc32_33f5c9bf",
+      "revId": "a0985356acc3e69ccf60359e02a51694568e3288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
