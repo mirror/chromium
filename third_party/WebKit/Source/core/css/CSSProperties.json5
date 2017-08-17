@@ -2977,6 +2977,7 @@
     {
       name: "-webkit-background-clip",
       api_class: "CSSPropertyAPIWebkitClip",
+      api_methods: ["ParseSingleValue"],
       use_handlers_for: "CSSPropertyBackgroundClip",
     },
     {

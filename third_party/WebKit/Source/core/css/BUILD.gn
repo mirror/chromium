@@ -513,6 +513,7 @@ blink_core_sources("css") {
     "properties/CSSPropertyAPIWebkitBoxFlexGroup.cpp",
     "properties/CSSPropertyAPIWebkitBoxOrdinalGroup.cpp",
     "properties/CSSPropertyAPIWebkitBoxReflect.cpp",
+    "properties/CSSPropertyAPIWebkitClip.cpp",
     "properties/CSSPropertyAPIWebkitColorNoQuirks.cpp",
     "properties/CSSPropertyAPIWebkitFontSizeDelta.cpp",
     "properties/CSSPropertyAPIWebkitHighlight.cpp",
