@@ -164,6 +164,9 @@ namespace system.display {
 
     // True if this display has a touch input device associated with it.
     boolean hasTouchSupport;
+
+    // True if this display has an accelerometer associated with it.
+    boolean hasAccelerometerSupport;
   };
 
   dictionary DisplayProperties {
