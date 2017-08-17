@@ -52,6 +52,24 @@
       "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28873ab6_bb8108f2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-17T16:19:07Z",
+      "side": 1,
+      "message": "Audio is currently has a default of \u0027auto\u0027 in the spec.\n\nhttps://html.spec.whatwg.org/#the-audio-element\n\n\"A constructor is provided for creating HTMLAudioElement... Set an attribute value for audio using \"preload\" and \"auto\".\"",
+      "parentUuid": "04875c6b_3673c37b",
+      "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
