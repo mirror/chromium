@@ -53,9 +53,14 @@ public class EventForwarder {
         // TODO(mustaq): Should we include MotionEvent.TOOL_TYPE_STYLUS here?
         // crbug.com/592082
         if (event.getToolType(0) == MotionEvent.TOOL_TYPE_MOUSE) {
-            // Mouse button info is incomplete on L and below
-            int apiVersion = Build.VERSION.SDK_INT;
-            if (apiVersion >= android.os.Build.VERSION_CODES.M) {
+            // Skip firing mouse events in the follwoing cases:
+            // - In Android L and below, where mouse button info is incomplete.
+            // - A move w/o a button press, which represents a trackpad scroll. Real mouse moves w/o
+            //   buttons goes to onHoverEvent.
+            final int apiVersion = Build.VERSION.SDK_INT;
+            if (apiVersion >= android.os.Build.VERSION_CODES.M
+                    || !(event.getActionMasked() == MotionEvent.ACTION_MOVE
+                               && event.getButtonState() == 0)) {
                 return onMouseEvent(event);
             }
         }
