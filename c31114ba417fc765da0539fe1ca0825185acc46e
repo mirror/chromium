@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8125eb54_9f656be0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/oobe_display_chooser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:13:12Z",
+      "side": 1,
+      "message": "I created IsWhiteListedVendorId(). Any better?",
+      "parentUuid": "f1a0f0a2_aac8c795",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "c31114ba417fc765da0539fe1ca0825185acc46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09962486_a7f93c94",
         "filename": "ui/events/devices/device_data_manager.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-17T13:05:32Z",
       "side": 1,
       "message": "Does every time the touchscreen devices change |are_touchscreen_target_displays_valid_| goes false until ConfigureTouchDevices() gets called again?",
+      "revId": "c31114ba417fc765da0539fe1ca0825185acc46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d55e3d_5de93210",
+        "filename": "ui/events/devices/device_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:13:12Z",
+      "side": 1,
+      "message": "I believe so. This is the only place resets touchscreen_devices_.",
+      "parentUuid": "09962486_a7f93c94",
       "revId": "c31114ba417fc765da0539fe1ca0825185acc46e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9498fbf9_ef336be6",
+        "filename": "ui/events/devices/device_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d92d4e_ad94c15d",
+      "revId": "c31114ba417fc765da0539fe1ca0825185acc46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fec8644_bc54f5cb",
         "filename": "ui/events/devices/device_data_manager_unittest.cc",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2017-08-17T13:05:32Z",
       "side": 1,
       "message": "Could you just use static_cast\u003cDeviceHotplugEventObserver*\u003e(device_data_manager) like below and avoid the DeviceDataManagerTestApiStub problem?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "c31114ba417fc765da0539fe1ca0825185acc46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e794f80_0d6295c2",
+        "filename": "ui/events/devices/device_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:13:12Z",
+      "side": 1,
+      "message": "Making this file only compiled on x11/ozone means this is ok.",
+      "parentUuid": "6fec8644_bc54f5cb",
       "range": {
         "startLine": 91,
         "startChar": 2,
