@@ -16,6 +16,24 @@
       "revId": "5f8c1c65aa18b3d98d321fb945855389f6040359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becd07bd_08e22141",
+        "filename": "gpu/config/gpu_control_list.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-17T17:54:30Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll avoid uploading a new CL and re-try and delay for another day. Instead, I\u0027ll address this in a follow up.",
+      "parentUuid": "82dd811b_b58df1b4",
+      "revId": "5f8c1c65aa18b3d98d321fb945855389f6040359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
