@@ -16,6 +16,24 @@
       "revId": "18ce8ab93b1572ab4ba574c6c85f94e5942189f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ec01fd_e5078090",
+        "filename": "chrome/browser/resources/settings/site_settings/zoom_levels.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-17T19:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827e2bbe_9aa33dd7",
+      "revId": "18ce8ab93b1572ab4ba574c6c85f94e5942189f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
