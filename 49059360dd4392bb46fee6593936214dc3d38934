@@ -46,6 +46,30 @@
       "revId": "49059360dd4392bb46fee6593936214dc3d38934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5426ffca_d12a1cdc",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-17T21:55:32Z",
+      "side": 1,
+      "message": "Ok, I guess it kind of makes sense. It\u0027s supposed to be part of the systems UI and as such it doesn\u0027t make sense to consider it and application that you can switch to.",
+      "parentUuid": "fccc6d2c_7597a650",
+      "range": {
+        "startLine": 212,
+        "startChar": 70,
+        "endLine": 212,
+        "endChar": 78
+      },
+      "revId": "49059360dd4392bb46fee6593936214dc3d38934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
