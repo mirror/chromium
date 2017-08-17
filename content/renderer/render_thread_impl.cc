@@ -763,9 +763,6 @@ void RenderThreadImpl::Init(
       const service_manager::BindSourceInfo&>>();
   registry->AddInterface(base::Bind(&CreateFrameFactory),
                          base::ThreadTaskRunnerHandle::Get());
-  registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
-                                    base::TimeTicks::Now(), GetIOTaskRunner()),
-                         base::ThreadTaskRunnerHandle::Get());
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
           std::move(registry)));
@@ -2176,6 +2173,13 @@ void RenderThreadImpl::CreateFrame(mojom::CreateFrameParamsPtr params) {
       params->parent_routing_id, params->previous_sibling_routing_id,
       params->replication_state, compositor_deps, *params->widget_params,
       params->frame_owner_properties);
+}
+
+void RenderThreadImpl::CreateServiceWorker(
+    mojom::CreateServiceWorkerParamsPtr params) {
+  EmbeddedWorkerInstanceClientImpl::Create(base::TimeTicks::Now(),
+                                           GetIOTaskRunner(),
+                                           std::move(params->client_request));
 }
 
 void RenderThreadImpl::CreateFrameProxy(
