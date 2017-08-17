@@ -9,7 +9,9 @@
 #include <memory>
 #include <vector>
 
+#include "base/base_switches.h"
 #include "base/callback.h"
+#include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -106,6 +108,7 @@ class MockMemoryDumpProvider : public MemoryDumpProvider {
   MOCK_METHOD0(Destructor, void());
   MOCK_METHOD2(OnMemoryDump,
                bool(const MemoryDumpArgs& args, ProcessMemoryDump* pmd));
+  MOCK_METHOD1(OnHeapProfilingEnabled, void(bool enabled));
   MOCK_METHOD1(PollFastMemoryTotal, void(uint64_t* memory_total));
   MOCK_METHOD0(SuspendFastMemoryPolling, void());
 
@@ -822,6 +825,71 @@ TEST_F(MemoryDumpManagerTest, UnregisterAndDeleteDumpProviderSoonDuringDump) {
                                           MemoryDumpLevelOfDetail::DETAILED));
   }
   DisableTracing();
+}
+
+TEST_F(MemoryDumpManagerTest, EnableHeapProfiling_PSEUDO_STACK) {
+  InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
+  MockMemoryDumpProvider mdp1;
+  RegisterDumpProvider(&mdp1, nullptr);
+  testing::InSequence sequence;
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
+
+  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::PSEUDO_STACK,
+            AllocationContextTracker::capture_mode());
+  // Disable will permanently disable heap profiling.
+  mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
+  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
+}
+
+TEST_F(MemoryDumpManagerTest, EnableHeapProfiling_BACKGROUND) {
+  InitializeMemoryDumpManagerForInProcessTesting(true /* is_coordinator */);
+  MockMemoryDumpProvider mdp1;
+  RegisterDumpProvider(&mdp1, nullptr);
+  testing::InSequence sequence;
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
+
+  mdm_->EnableHeapProfiling(kHeapProfilingModeBackground);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::BACKGROUND,
+            AllocationContextTracker::capture_mode());
+  // Do nothing when already enabled.
+  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::BACKGROUND,
+            AllocationContextTracker::capture_mode());
+  // Disable will permanently disable heap profiling.
+  mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
+  mdm_->EnableHeapProfiling(kHeapProfilingModePseudo);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
+}
+
+TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
+  InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
+  MockMemoryDumpProvider mdp1;
+  RegisterDumpProvider(&mdp1, nullptr);
+  testing::InSequence sequence;
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
+  EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
+
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableHeapProfiling, "");
+  mdm_->EnableHeapProfilingIfNeeded();
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::PSEUDO_STACK,
+            AllocationContextTracker::capture_mode());
+  mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
+  mdm_->EnableHeapProfiling(kHeapProfilingModeBackground);
+  ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
+            AllocationContextTracker::capture_mode());
 }
 
 }  // namespace trace_event
