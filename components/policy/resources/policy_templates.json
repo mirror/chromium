@@ -9714,11 +9714,12 @@
           'caption': '''Allow data migration''',
         },
       ],
-      'supported_on': ['chrome_os:60-'],
+      'supported_on': ['chrome_os:60-60'],
       'device_only': True,
       'features': {
         'dynamic_refresh': True,
       },
+      'deprecated': True,
       'example_value': 1,
       'id': 374,
       'caption': '''Migration strategy for ecryptfs''',
