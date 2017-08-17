@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de51e5b_dc93f54f",
+        "filename": "tools/perf/benchmarks/benchmark_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-17T00:44:11Z",
+      "side": 1,
+      "message": "Just disable this whole test for now to make it easier.",
+      "revId": "a0985356acc3e69ccf60359e02a51694568e3288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
