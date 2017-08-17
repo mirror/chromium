@@ -37,7 +37,9 @@ enum PreviewsTypes {
   PREVIEWS_OFF = 1 << 5,  // Request a normal (non-Preview) version of
                           // the resource. Server transformations may
                           // still happen if the page is heavy.
-  PREVIEWS_STATE_LAST = PREVIEWS_OFF
+  PREVIEWS_AMP_REDIRECTION = 1 << 6,  // Request the AMP version of the page if
+                                      // possible.
+  PREVIEWS_STATE_LAST = PREVIEWS_AMP_REDIRECTION
 };
 
 // Combination of all previews that are guaranteed not to provide partial
