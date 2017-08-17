@@ -231,6 +231,10 @@ class CORE_EXPORT InspectorNetworkAgent final
                             const KURL&,
                             String* content,
                             bool* base64_encoded);
+  bool FetchResourceContent(const String& request_id,
+                            String* content,
+                            bool* base64_encoded,
+                            String* failure_reason);
   bool CacheDisabled();
 
  private:

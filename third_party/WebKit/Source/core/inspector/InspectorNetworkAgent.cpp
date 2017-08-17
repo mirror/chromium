@@ -1310,56 +1310,22 @@ void InspectorNetworkAgent::GetResponseBodyBlob(
 
 void InspectorNetworkAgent::getResponseBody(
     const String& request_id,
-    std::unique_ptr<GetResponseBodyCallback> pass_callback) {
-  std::unique_ptr<GetResponseBodyCallback> callback = std::move(pass_callback);
-  NetworkResourcesData::ResourceData const* resource_data =
-      resources_data_->Data(request_id);
-  if (!resource_data) {
-    callback->sendFailure(
-        Response::Error("No resource with given identifier found"));
-    return;
-  }
-
+    std::unique_ptr<GetResponseBodyCallback> callback) {
   if (CanGetResponseBodyBlob(request_id)) {
     GetResponseBodyBlob(request_id, std::move(callback));
     return;
   }
 
-  if (resource_data->HasContent()) {
-    callback->sendSuccess(resource_data->Content(),
-                          resource_data->Base64Encoded());
-    return;
+  String content;
+  String failure_reason;
+  bool base64_encoded;
+  if (FetchResourceContent(request_id, &content, &base64_encoded,
+                           &failure_reason)) {
+    callback->sendSuccess(content, base64_encoded);
+  } else {
+    DCHECK(failure_reason);
+    callback->sendFailure(Response::Error(failure_reason));
   }
-
-  if (resource_data->IsContentEvicted()) {
-    callback->sendFailure(
-        Response::Error("Request content was evicted from inspector cache"));
-    return;
-  }
-
-  if (resource_data->Buffer() && !resource_data->TextEncodingName().IsNull()) {
-    String result;
-    bool base64_encoded;
-    bool success = InspectorPageAgent::SharedBufferContent(
-        resource_data->Buffer(), resource_data->MimeType(),
-        resource_data->TextEncodingName(), &result, &base64_encoded);
-    DCHECK(success);
-    callback->sendSuccess(result, base64_encoded);
-    return;
-  }
-
-  if (resource_data->CachedResource()) {
-    String content;
-    bool base64_encoded = false;
-    if (InspectorPageAgent::CachedResourceContent(
-            resource_data->CachedResource(), &content, &base64_encoded)) {
-      callback->sendSuccess(content, base64_encoded);
-      return;
-    }
-  }
-
-  callback->sendFailure(
-      Response::Error("No data found for resource with given identifier"));
 }
 
 Response InspectorNetworkAgent::setBlockedURLs(
@@ -1530,6 +1496,47 @@ void InspectorNetworkAgent::FrameClearedScheduledClientNavigation(
 
 void InspectorNetworkAgent::SetHostId(const String& host_id) {
   host_id_ = host_id;
+}
+
+bool InspectorNetworkAgent::FetchResourceContent(const String& request_id,
+                                                 String* content,
+                                                 bool* base64_encoded,
+                                                 String* failure_reason) {
+  NetworkResourcesData::ResourceData const* resource_data =
+      resources_data_->Data(request_id);
+  if (!resource_data) {
+    *failure_reason = "No resource with given identifier found";
+    return false;
+  }
+
+  if (resource_data->HasContent()) {
+    *content = resource_data->Content();
+    *base64_encoded = resource_data->Base64Encoded();
+    return true;
+  }
+
+  if (resource_data->IsContentEvicted()) {
+    *failure_reason = "Request content was evicted from inspector cache";
+    return false;
+  }
+
+  if (resource_data->Buffer() && !resource_data->TextEncodingName().IsNull()) {
+    bool success = InspectorPageAgent::SharedBufferContent(
+        resource_data->Buffer(), resource_data->MimeType(),
+        resource_data->TextEncodingName(), content, base64_encoded);
+    DCHECK(success);
+    return success;
+  }
+
+  if (resource_data->CachedResource()) {
+    if (InspectorPageAgent::CachedResourceContent(
+            resource_data->CachedResource(), content, base64_encoded)) {
+      return true;
+    }
+  }
+
+  *failure_reason = "No data found for resource with given identifier";
+  return false;
 }
 
 bool InspectorNetworkAgent::FetchResourceContent(Document* document,
