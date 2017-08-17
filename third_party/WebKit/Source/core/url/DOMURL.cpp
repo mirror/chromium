@@ -78,9 +78,10 @@ void DOMURL::setSearch(const String& value) {
 
 String DOMURL::CreatePublicURL(ExecutionContext* execution_context,
                                URLRegistrable* registrable,
-                               const String& uuid) {
+                               const String& uuid,
+                               const String& file_name) {
   return execution_context->GetPublicURLManager().RegisterURL(
-      execution_context, registrable, uuid);
+      execution_context, registrable, uuid, file_name);
 }
 
 void DOMURL::RevokeObjectUUID(ExecutionContext* execution_context,

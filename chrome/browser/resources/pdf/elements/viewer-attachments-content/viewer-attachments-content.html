@@ -1,0 +1,12 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="../viewer-attachment/viewer-attachment.html">
+
+<dom-module id="viewer-attachments-content">
+  <template>
+    <template is="dom-repeat" items="[[attachments]]">
+      <viewer-attachment attachment="{{item}}"></viewer-attachment>
+    </template>
+  </template>
+  <script src="viewer-attachments-content.js"></script>
+</dom-module>

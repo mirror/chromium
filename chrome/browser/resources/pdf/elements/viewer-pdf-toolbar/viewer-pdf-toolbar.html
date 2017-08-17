@@ -8,6 +8,7 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="chrome://resources/cr_elements/icons.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../viewer-attachments-content/viewer-attachments-content.html">
 <link rel="import" href="../viewer-bookmarks-content/viewer-bookmarks-content.html">
 <link rel="import" href="../viewer-page-selector/viewer-page-selector.html">
 <link rel="import" href="../viewer-toolbar-dropdown/viewer-toolbar-dropdown.html">
@@ -80,6 +81,7 @@
       }
 
       @media(max-width: 675px) {
+        #attachments,
         #bookmarks,
         #rotate-left {
           display: none;
@@ -143,6 +145,16 @@
               <viewer-bookmarks-content bookmarks="{{bookmarks}}">
               </viewer-bookmarks-content>
           </viewer-toolbar-dropdown>
+
+          <viewer-toolbar-dropdown id="attachments"
+                                   hidden$="[[!attachments.length]]"
+                                   open-icon="pdf:attachment"
+                                   closed-icon="pdf:attachment"
+                                   header="{{strings.attachments}}">
+              <viewer-attachments-content attachments="{{attachments}}">
+              </viewer-attachments-content>
+          </viewer-toolbar-dropdown>
+
         </div>
       </div>
       <div class="bottom fit">

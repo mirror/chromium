@@ -36,6 +36,7 @@
       'target_name': 'pdf_resources',
       'type': 'none',
       'dependencies': [
+        'elements/viewer-attachment/compiled_resources2.gyp:*',
         'elements/viewer-bookmark/compiled_resources2.gyp:*',
         'elements/viewer-error-screen/compiled_resources2.gyp:*',
         'elements/viewer-page-indicator/compiled_resources2.gyp:*',

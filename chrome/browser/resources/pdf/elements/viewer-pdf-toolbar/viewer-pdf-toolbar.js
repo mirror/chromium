@@ -29,6 +29,11 @@ Polymer({
     bookmarks: {type: Object, value: null},
 
     /**
+     * Array of PDF attachments (or null if the document has no attachments).
+     */
+    attachments: {type: Object, value: null},
+
+    /**
      * The number of pages in the PDF document.
      */
     docLength: Number,
@@ -96,20 +101,24 @@ Polymer({
   },
 
   shouldKeepOpen: function() {
-    return this.$.bookmarks.dropdownOpen || this.loadProgress < 100 ||
-        this.$.pageselector.isActive();
+    return this.$.bookmarks.dropdownOpen || this.$.attachments.dropdownOpen ||
+        this.loadProgress < 100 || this.$.pageselector.isActive();
   },
 
   hideDropdowns: function() {
-    if (this.$.bookmarks.dropdownOpen) {
+    if (!this.$.bookmarks.dropdownOpen && !this.$.attachments.dropdownOpen)
+      return false;
+
+    if (this.$.bookmarks.dropdownOpen)
       this.$.bookmarks.toggleDropdown();
-      return true;
-    }
-    return false;
+    if (this.$.attachments.dropdownOpen)
+      this.$.attachments.toggleDropdown();
+    return true;
   },
 
   setDropdownLowerBound: function(lowerBound) {
     this.$.bookmarks.lowerBound = lowerBound;
+    this.$.attachments.lowerBound = lowerBound;
   },
 
   rotateRight: function() {

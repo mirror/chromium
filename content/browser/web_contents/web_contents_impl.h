@@ -417,6 +417,9 @@ class CONTENT_EXPORT WebContentsImpl
   void SaveFrameWithHeaders(const GURL& url,
                             const Referrer& referrer,
                             const std::string& headers) override;
+  void SaveFrameWithHeadersSkipDelegate(const GURL& url,
+                                        const Referrer& referrer,
+                                        const std::string& headers) override;
   void GenerateMHTML(const MHTMLGenerationParams& params,
                      const base::Callback<void(int64_t)>& callback) override;
   const std::string& GetContentsMimeType() const override;

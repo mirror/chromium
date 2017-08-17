@@ -92,6 +92,12 @@ void SaveAs(PP_Instance instance) {
     enter.functions()->SaveAs();
 }
 
+void SaveAttachmentAs(PP_Instance instance, PP_Var url) {
+  EnterInstanceAPI<PPB_PDF_API> enter(instance);
+  if (enter.succeeded())
+    enter.functions()->SaveAttachmentAs(url);
+}
+
 void Print(PP_Instance instance) {
   EnterInstanceAPI<PPB_PDF_API> enter(instance);
   if (enter.succeeded())
@@ -190,6 +196,7 @@ const PPB_PDF g_ppb_pdf_thunk = {
     &UserMetricsRecordAction,
     &HasUnsupportedFeature,
     &SaveAs,
+    &SaveAttachmentAs,
     &Print,
     &IsFeatureEnabled,
     &SetSelectedText,
