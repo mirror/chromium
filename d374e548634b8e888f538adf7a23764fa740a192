@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd010b96_61f60e3d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T22:32:51Z",
+      "side": 1,
+      "message": "nit: unnecessary since we have the \"if\" above ?",
+      "range": {
+        "startLine": 1042,
+        "startChar": 2,
+        "endLine": 1042,
+        "endChar": 18
+      },
+      "revId": "d374e548634b8e888f538adf7a23764fa740a192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cbd4a0_b52c4c85",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T22:32:51Z",
+      "side": 1,
+      "message": "This CL does not include minimized state check, right?",
+      "range": {
+        "startLine": 19,
+        "startChar": 33,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "d374e548634b8e888f538adf7a23764fa740a192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be42f7cb_4866653c",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T22:32:51Z",
+      "side": 1,
+      "message": "|windows_| could include empty ARC window such as ExoShellSurface created for task 0 (root window to host Android system window).\n\nI proposed the following to reveman@ to detect empty ARC window so that we can skip them here:\n\n  for (const auto\u0026 window : windows_) { \n    exo::Surface* main_surface \u003d                                                    \n        exo::ShellSurface::GetMainSurface(window.first);                            \n    if (main_surface \u0026\u0026 main_surface-\u003ewindow()-\u003echildren().empty()) {               \n      continue;                                                                     \n    unsorted_windows.push_back(window.first);                                       \n  }                                                                                 \n\nAfter doing this, the occlusion works as expected.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "d374e548634b8e888f538adf7a23764fa740a192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1261ad7_6f7e0cbf",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-17T22:32:51Z",
+      "side": 1,
+      "message": "typo, RemoveObserver ?",
+      "range": {
+        "startLine": 205,
+        "startChar": 9,
+        "endLine": 205,
+        "endChar": 20
+      },
+      "revId": "d374e548634b8e888f538adf7a23764fa740a192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
