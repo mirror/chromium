@@ -46,6 +46,30 @@
       "revId": "a34429763eb82fd3afe5a3041b5ab6d13a02e76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea914de6_6f415144",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-17T13:12:51Z",
+      "side": 1,
+      "message": "Sorry about my last message. I was using chrome 60.0.3112.90. The relatives URLs are no more blocked now (#493698.)\nSo it works as expected with images. On the other side, with iframes, it doesn\u0027t work. It is probably a bug(?).",
+      "parentUuid": "a6b1ef35_2d65d1a8",
+      "range": {
+        "startLine": 1614,
+        "startChar": 36,
+        "endLine": 1614,
+        "endChar": 42
+      },
+      "revId": "a34429763eb82fd3afe5a3041b5ab6d13a02e76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
