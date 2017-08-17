@@ -16,6 +16,24 @@
       "revId": "21221d1d8d4376eb3b9444491f12feac632c36da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcee618_48c58487",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2597,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-17T00:19:39Z",
+      "side": 1,
+      "message": "Changed the implementation to exclude the gesture duration. Updated the description accordingly.",
+      "parentUuid": "a4e77d9c_f6ed792b",
+      "revId": "21221d1d8d4376eb3b9444491f12feac632c36da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

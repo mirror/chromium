@@ -337,6 +337,30 @@
     },
     {
       "key": {
+        "uuid": "104953af_9f307c1e",
+        "filename": "ash/system/palette/common_palette_tool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-17T00:19:39Z",
+      "side": 1,
+      "message": "The added if statement is following the pattern established by the previous two ifs. I think what makes it more confusing is that \"Metalayer\" and \"Assistant\" are the two names for he same thing (internal vs. user-visible).",
+      "parentUuid": "e9d0fb75_a7e4f423",
+      "range": {
+        "startLine": 35,
+        "startChar": 46,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58a135bc_d7edf9cd",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
