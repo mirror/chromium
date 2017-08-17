@@ -309,7 +309,6 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::Append(
     const ComputedStyle* style,
     LayoutObject* layout_object) {
   DCHECK_NE(character, kSpaceCharacter);
-  DCHECK_NE(character, kZeroWidthSpaceCharacter);
 
   text_.Append(character);
   mapping_builder_.AppendIdentityMapping(1);
