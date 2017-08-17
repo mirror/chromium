@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d03e4296_128aa2a7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "Fixed in latest patchset. As a result, TabManagerStatsCollector no longer holds a pointer to TabManager, as this was the only TabManager method being called.",
+      "parentUuid": "c95d6287_815017d3",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a885ca76_cf774c63",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
         "patchSetId": 2
@@ -228,6 +252,24 @@
       "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1c5a61_6ddcf8b3",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "OnBackgroundTabOpenSession[Started|Ended] will only be used to add and set the local |is_in_background_tab_opening_session_|, and will be used in place of TabManager::IsLoadingBackgroundTabs(). This will help enable unit testing because these new state change methods can be called directly from tests.\n\nI\u0027ll leave it up to your CL to actually call these methods from TabManager where appropriate. It should be an easy merge for either CL.\n\n(Discussed offline and this seems reasonable).",
+      "parentUuid": "d955aaec_df225673",
+      "revId": "55b14878945c6b7ffda92280622f8ee8350ef5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

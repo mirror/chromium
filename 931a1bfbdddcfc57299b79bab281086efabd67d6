@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3da0415c_54d5c534",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "TabManagerStatsCollectorTest wraps all of the private TabManager functionality needed in the unittests, and so is the only class that needs to be friended. Rather than friending every test that inherits from it, it seemed cleaner to friend the test class.\n\nI was able to remove TabManagerStatsCollectorTabSwitchTest in the latest patch.",
+      "parentUuid": "0ed194c4_f888a424",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a991a3_228ecd48",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3bda4eed_9b487588",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a991a3_228ecd48",
+      "range": {
+        "startLine": 70,
+        "startChar": 73,
+        "endLine": 70,
+        "endChar": 80
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9768279e_3697e427",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed216c4e_f7284c6c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "We can use TabManager::ActiveTabChanged, but that would only replace the call to RecordSwitchToTab() above -- we\u0027d still need to track the tabs manually unless we add a tabstrip, which I don\u0027t want to do here. The original unittest used RecordSwitchToTab, which is now wrapped by the methods in this test class. The changes in this CL made it necessary to switch in a more realistic way, i.e. between two WebContentses, hence the tracking.\n\n(Discussed offline and this approach seems reasonable.)",
+      "parentUuid": "9768279e_3697e427",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "cb9de44d_b00fac46",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80534,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968b61c2_3b8cee79",
+      "range": {
+        "startLine": 80534,
+        "startChar": 15,
+        "endLine": 80534,
+        "endChar": 22
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cd79640_91a7c98c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80534,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37f7d24_95dce7d7",
+      "range": {
+        "startLine": 80534,
+        "startChar": 54,
+        "endLine": 80534,
+        "endChar": 61
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56fb4292_67d05f32",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5ceef849_aeb83577",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80635,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56fb4292_67d05f32",
+      "range": {
+        "startLine": 80635,
+        "startChar": 71,
+        "endLine": 80635,
+        "endChar": 78
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408a6dc5_6601a277",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e26c68_3622fc54",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80636,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-17T23:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "408a6dc5_6601a277",
+      "range": {
+        "startLine": 80636,
+        "startChar": 35,
+        "endLine": 80636,
+        "endChar": 42
+      },
+      "revId": "931a1bfbdddcfc57299b79bab281086efabd67d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
