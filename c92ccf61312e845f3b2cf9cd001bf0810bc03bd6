@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb0ed7e_d8dbd297",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T01:35:42Z",
+      "side": 1,
+      "message": "The if condition can be folded within DCHECK so that it gets compiled out in Release builds.\n\nDCHECK(type !\u003d REUSE || matches_sync_password_ || matching_domains_.size() \u003e 0)",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 3
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bd2695_78ef2ff9",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T01:35:42Z",
+      "side": 1,
+      "message": "can it be non-empty if matches_sync_password_ \u003d\u003d true ?\n\nalso, |matches_sync_password_|",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 51
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c78222c_2f52a54a",
+        "filename": "components/safe_browsing/password_protection/password_protection_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T01:35:42Z",
+      "side": 1,
+      "message": "Generally speaking, ASSERT_ is used if the ASSERTs/EXPECTs following it won\u0027t make any sense if the assert fails and the test should just end there.\n\nIn this case, I think it might make more sense to have EXPECT_",
+      "range": {
+        "startLine": 933,
+        "startChar": 2,
+        "endLine": 933,
+        "endChar": 11
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef9545e_e01036aa",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T01:35:42Z",
+      "side": 1,
+      "message": "this message is not in the server side proto yet. I assume that\u0027s OK and such pings just get silently dropped at the moment?",
+      "range": {
+        "startLine": 216,
+        "startChar": 20,
+        "endLine": 216,
+        "endChar": 45
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
