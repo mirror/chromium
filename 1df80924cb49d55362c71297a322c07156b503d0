@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed5eecb7_2e83a3c2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T16:35:30Z",
+      "side": 1,
+      "message": "delete_categories_not_present_in_last_fetch_response? (Shorter and IMO a bit clearer)\n\nAlternatively, should we make it a separate feature? That might actually make future configs easier... WDYT?",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f1bf75_f425748a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T16:35:30Z",
+      "side": 1,
+      "message": "Hm, this relies on a rather non-obvious side effect, but I guess we have no other method that actually removes categories?",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
