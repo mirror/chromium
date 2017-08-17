@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b232d3c_d0f8fa9a",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T21:15:24Z",
+      "side": 1,
+      "message": "I think that might work now. I forget why this is a component. It might be necessary to avoid double linking. I feel like I remember there was a comment here about that at some point.\n\nIn any case, I think this CL has already gotten large enough though, so I\u0027ll save that for a followup :)",
+      "parentUuid": "002f9378_c8060429",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 9
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10e2ad2c_b2d6f844",
         "filename": "media/base/BUILD.gn",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T21:44:46Z",
       "side": 1,
       "message": "I think you\u0027re doing this so that references to test_support don\u0027t need to also reference //media. As discussed offline, this looks to be the recommended practice. However, should the public_deps be on //media:test_support, and not here?",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 13
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863c8fb4_37ca801e",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T21:15:24Z",
+      "side": 1,
+      "message": "This can\u0027t depend on //media:test_support since that would be a cycle.",
+      "parentUuid": "10e2ad2c_b2d6f844",
       "range": {
         "startLine": 404,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8dac9c51_18aa0705",
+        "filename": "media/base/media_shmem_export.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b8147c3_3cb0785c",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4110dad2_63ddc1cb",
         "filename": "media/cast/BUILD.gn",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-16T21:44:46Z",
       "side": 1,
       "message": "Do these tests require specific stuff from test_support, or is //media sufficient?",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 25
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8df73a6_02ed44e3",
+        "filename": "media/cast/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T21:15:24Z",
+      "side": 1,
+      "message": "They\u0027re using a few fakes that are specifically in test_support.",
+      "parentUuid": "4110dad2_63ddc1cb",
       "range": {
         "startLine": 341,
         "startChar": 7,
@@ -114,6 +210,30 @@
       "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f5174f_c3c1825b",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-17T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "835f7bf2_bbe14db1",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 8
+      },
+      "revId": "136720d1cc3470a0909a08e8e90f37921ed0e175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
