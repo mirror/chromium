@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20d2e940_99f3be3a",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f68f4d8a_5f592c01",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cee07d16_f88d16af",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55716f1_3696cc06",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee07d16_f88d16af",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fc832ef9_13c56df0",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Good point. Done!",
+      "parentUuid": "c0b47d56_62b6f21e",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29cbfa3c_83671da3",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 5
@@ -64,6 +118,30 @@
       "writtenOn": "2017-08-17T19:23:00Z",
       "side": 1,
       "message": "it should never be less than 0. that would be a bug",
+      "range": {
+        "startLine": 600,
+        "startChar": 5,
+        "endLine": 600,
+        "endChar": 9
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca58544_df0b259a",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Changed to \u003d\u003d 0.",
+      "parentUuid": "29cbfa3c_83671da3",
       "range": {
         "startLine": 600,
         "startChar": 5,
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "e43094d5_1da05de9",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Changed to uint32_t.",
+      "parentUuid": "a8159986_89721e4c",
+      "range": {
+        "startLine": 601,
+        "startChar": 2,
+        "endLine": 601,
+        "endChar": 9
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b1de485_f0e13c1f",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 5
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "9ce1ee4a_237d481a",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b1de485_f0e13c1f",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c45c0e0_96ec3e5d",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 5
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "ce7d1a76_a95b64b8",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c45c0e0_96ec3e5d",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63c3e8ae_b1bfaea0",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 5
@@ -153,6 +297,24 @@
       "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a72f2a_1b5cb87f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c3e8ae_b1bfaea0",
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +338,30 @@
       "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aeab7cd_21b990d2",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T20:59:56Z",
+      "side": 1,
+      "message": "Thanks. This is better!",
+      "parentUuid": "d5a4c2a4_30f9adf2",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "ce7459349f29ac5ee73505965eff4fefa9475f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
