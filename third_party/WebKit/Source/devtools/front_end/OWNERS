@@ -3,3 +3,6 @@ caseq@chromium.org
 dgozman@chromium.org
 lushnikov@chromium.org
 pfeldman@chromium.org
+
+# test files can be modified by anyone
+per-file *test_runner=*
