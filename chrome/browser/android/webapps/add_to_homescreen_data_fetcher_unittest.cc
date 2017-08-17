@@ -65,7 +65,8 @@ class ObserverWaiter : public AddToHomescreenDataFetcher::Observer {
     is_webapk_compatible_ = is_webapk_compatible;
   }
 
-  void OnUserTitleAvailable(const base::string16& title) override {
+  void OnUserTitleAvailable(const base::string16& title,
+                            const GURL& url) override {
     // This should only be called once.
     EXPECT_FALSE(title_available_);
     EXPECT_FALSE(data_available_);
