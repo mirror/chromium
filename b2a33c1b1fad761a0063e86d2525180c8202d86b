@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d08cc2c8_dd9d1c39",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-17T16:17:01Z",
+      "side": 1,
+      "message": "The patch ensures that the bubble will be displayed for at least the first time, and after that the behavior would be similar to without patch.\n\nLeaving as-is according to dtapuska@\u0027s opinion.",
+      "parentUuid": "4aa47847_baee6cb9",
+      "range": {
+        "startLine": 109,
+        "startChar": 26,
+        "endLine": 109,
+        "endChar": 49
+      },
+      "revId": "b2a33c1b1fad761a0063e86d2525180c8202d86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd86fcc_361717d2",
         "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "b2a33c1b1fad761a0063e86d2525180c8202d86b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e40d4ae_87bf931d",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-17T16:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd86fcc_361717d2",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "b2a33c1b1fad761a0063e86d2525180c8202d86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
