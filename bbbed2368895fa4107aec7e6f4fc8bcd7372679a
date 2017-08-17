@@ -46,6 +46,30 @@
       "revId": "bbbed2368895fa4107aec7e6f4fc8bcd7372679a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8233ae60_c07c7681",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-08-17T09:09:46Z",
+      "side": 1,
+      "message": "After offline discussion I decided to drop the trybot configs entirely to avoid confusion. We\u0027ll never have 100% protection against CQ breakages and since trybots and commit bots are usually in sync, PS#3 is good enough.",
+      "parentUuid": "3ae6e2ab_b2eaecee",
+      "range": {
+        "startLine": 436,
+        "startChar": 36,
+        "endLine": 436,
+        "endChar": 42
+      },
+      "revId": "bbbed2368895fa4107aec7e6f4fc8bcd7372679a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
