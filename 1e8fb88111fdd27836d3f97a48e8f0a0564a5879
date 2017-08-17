@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "e4d743f6_9b9b5625",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "Makes sense. Tnx for the detailed explanation.",
+      "parentUuid": "c112bb44_7f0b725f",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47fb919d_0e32c875",
         "filename": "ui/ozone/platform/drm/mus_thread_proxy.cc",
         "patchSetId": 4

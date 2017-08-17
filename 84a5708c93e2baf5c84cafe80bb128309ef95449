@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0451360_2bc0a7eb",
+        "filename": "ui/gl/test/run_all_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "Why do we need the nogncheck here?",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5392419_78c0decd",
+        "filename": "ui/gl/test/run_all_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "nit: virtual destructor.",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36dbcb9_33b5ab79",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "nit: remove leftover.",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee1c115_1f5ce66a",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "How can we be sure that this won\u0027t be deleted before the callback gets called?",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fea9a0_5d7aa6fb",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "Would you mind adding a comment (maybe before line 245) explaining when/why Create*Binding could be called before InitializeGPU?",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365bd263_e957cafe",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "Super nit: comments should be descriptive, not imperative (according to c++ style guide.) In this way it\u0027d be consistent with the previous comments too.\nSame for all the other comments following.",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3151f58b_1d7209b6",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "nit: Space before status.",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c42513_8809d5dd",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "I think this deserves a comment too for consistency with the other ones.",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a719b065_44bcf16e",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-17T01:32:34Z",
+      "side": 1,
+      "message": "It might be worth adding a comment explaining briefly what HDCP is.",
+      "revId": "84a5708c93e2baf5c84cafe80bb128309ef95449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
