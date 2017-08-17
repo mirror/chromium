@@ -44,6 +44,8 @@ class MITMSoftwareBlockingPage
       const GURL& request_url,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       const net::SSLInfo& ssl_info,
+      const std::string& mitm_software_name,
+      bool is_enterprise_managed,
       const base::Callback<void(content::CertificateRequestResultType)>&
           callback);
 
@@ -54,6 +56,10 @@ class MITMSoftwareBlockingPage
 
   void SetSSLCertReporterForTesting(
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter);
+
+  // Returns true if the machine executing this code is a Windows or ChromeOS
+  // machine that is enterprise managed.
+  static bool IsEnterpriseManaged();
 
  protected:
   // InterstitialPageDelegate implementation:
