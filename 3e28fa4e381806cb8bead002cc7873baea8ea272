@@ -141,6 +141,30 @@
       "revId": "3e28fa4e381806cb8bead002cc7873baea8ea272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c36667_65fd5521",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-17T00:40:24Z",
+      "side": 1,
+      "message": "OK, done.  (Except I actually moved it into SyncedPrintersManager::IsPrinterInstalled, as it seems like the most sensible point to guarantee that contract as it\u0027s the lowest level public API involved)",
+      "parentUuid": "b3047369_934fd82a",
+      "range": {
+        "startLine": 166,
+        "startChar": 27,
+        "endLine": 166,
+        "endChar": 43
+      },
+      "revId": "3e28fa4e381806cb8bead002cc7873baea8ea272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
