@@ -225,6 +225,10 @@ void BleConnectionManager::RegisterRemoteDevice(
   }
   has_registered_observer_ = true;
 
+  if (device_to_metadata_map_.empty()) {
+    ble_scanner_->StartDiscoverySession();
+  }
+
   PA_LOG(INFO) << "Register - Device ID: \""
                << remote_device.GetTruncatedDeviceIdForLogs()
                << "\", Reason: " << MessageTypeToString(connection_reason);
@@ -275,6 +279,10 @@ void BleConnectionManager::UnregisterRemoteDevice(
   }
 
   UpdateConnectionAttempts();
+
+  if (device_to_metadata_map_.empty()) {
+    ble_scanner_->StopDiscoverySession();
+  }
 }
 
 int BleConnectionManager::SendMessage(
