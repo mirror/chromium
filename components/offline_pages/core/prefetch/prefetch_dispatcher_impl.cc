@@ -22,6 +22,7 @@
 #include "components/offline_pages/core/prefetch/import_archives_task.h"
 #include "components/offline_pages/core/prefetch/import_completed_task.h"
 #include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
+#include "components/offline_pages/core/prefetch/metrics_finalization_task.h"
 #include "components/offline_pages/core/prefetch/page_bundle_update_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
@@ -107,6 +108,8 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
   // to.
   task_queue_.AddTask(
       base::MakeUnique<StaleEntryFinalizerTask>(service_->GetPrefetchStore()));
+  task_queue_.AddTask(
+      base::MakeUnique<MetricsFinalizationTask>(service_->GetPrefetchStore()));
 
   // TODO(dimich): add more reconciliation tasks here.
 }
