@@ -111,6 +111,8 @@ Timeline.TimelineUIUtils = class {
         new Timeline.TimelineRecordStyle(Common.UIString('DOMContentLoaded event'), categories['scripting'], true);
     eventStyles[recordTypes.MarkFirstPaint] =
         new Timeline.TimelineRecordStyle(Common.UIString('First paint'), categories['painting'], true);
+    eventStyles[recordTypes.MarkFCP] =
+        new Timeline.TimelineRecordStyle(Common.UIString('FCP'), categories['rendering'], true);
     eventStyles[recordTypes.MarkFMP] =
         new Timeline.TimelineRecordStyle(Common.UIString('FMP'), categories['rendering'], true);
     eventStyles[recordTypes.MarkFMPCandidate] =
@@ -1726,15 +1728,19 @@ Timeline.TimelineUIUtils = class {
         tall = true;
         break;
       case recordTypes.MarkFirstPaint:
-        color = 'green';
+        color = 'hsl(180, 45%, 79%)';
         tall = true;
         break;
-      case recordTypes.MarkFMP:
-        color = 'orange';
+      case recordTypes.MarkFCP:
+        color = 'hsl(160, 43%, 58%)';
         tall = true;
         break;
       case recordTypes.MarkFMPCandidate:
-        color = 'orange';
+        color = 'hsl(146, 57%, 40%)';
+        tall = true;
+        break;
+      case recordTypes.MarkFMP:
+        color = 'hsl(144, 100%, 21%)';
         tall = true;
         break;
       case recordTypes.TimeStamp:
