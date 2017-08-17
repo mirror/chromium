@@ -16,6 +16,24 @@
       "revId": "a2826b46d87220ffec89423ec79b940d4fabc64b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b7e70e_326ce258",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-17T18:06:36Z",
+      "side": 1,
+      "message": "No. The branch that handles DEMUXER_ERROR_DETECTED_HLS in WMPI::OnError() returns right before logging.\n\nInstead, we should see an increase in Media.DetectedContainer UMAs, from this line\nhttps://cs.chromium.org/chromium/src/media/filters/ffmpeg_glue.cc?l\u003d166",
+      "parentUuid": "62b8e631_257841bd",
+      "revId": "a2826b46d87220ffec89423ec79b940d4fabc64b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
