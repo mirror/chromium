@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "938862dd_645ca846",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-17T17:32:44Z",
+      "side": 1,
+      "message": ".nit could just add this to above if stmt, up to you.",
+      "revId": "1dddb6a782b7d2a9a3e3235b3a8178ae18a4de90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc29056_c41da68a",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_painter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-17T17:32:44Z",
+      "side": 1,
+      "message": "?",
+      "revId": "1dddb6a782b7d2a9a3e3235b3a8178ae18a4de90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
