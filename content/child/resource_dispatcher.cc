@@ -386,10 +386,12 @@ bool ResourceDispatcher::RemovePendingRequest(int request_id) {
 
   PendingRequestInfo* request_info = it->second.get();
 
-  // |url_loader_client| releases the downloaded file. Otherwise (i.e., we
-  // are using Chrome IPC), we should release it here.
+  // |url_loader_client| releases the downloaded file or blob. Otherwise (i.e.,
+  // we are using Chrome IPC), we should release either here.
   bool release_downloaded_file =
       request_info->download_to_file && !it->second->url_loader_client;
+  bool release_downloaded_blob =
+      request_info->download_to_blob && !it->second->url_loader_client;
 
   ReleaseResourcesInMessageQueue(&request_info->deferred_message_queue);
 
@@ -408,6 +410,11 @@ bool ResourceDispatcher::RemovePendingRequest(int request_id) {
   if (release_downloaded_file) {
     message_sender_->Send(
         new ResourceHostMsg_ReleaseDownloadedFile(request_id));
+  }
+
+  if (release_downloaded_blob) {
+    message_sender_->Send(
+        new ResourceHostMsg_ReleaseDownloadedBlob(request_id));
   }
 
   if (resource_scheduling_filter_.get())
@@ -508,7 +515,8 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
     int origin_pid,
     const url::Origin& frame_origin,
     const GURL& request_url,
-    bool download_to_file)
+    bool download_to_file,
+    bool download_to_blob)
     : peer(std::move(peer)),
       resource_type(resource_type),
       origin_pid(origin_pid),
@@ -516,6 +524,7 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
       frame_origin(frame_origin),
       response_url(request_url),
       download_to_file(download_to_file),
+      download_to_blob(download_to_blob),
       request_start(base::TimeTicks::Now()) {}
 
 ResourceDispatcher::PendingRequestInfo::~PendingRequestInfo() {
@@ -606,6 +615,7 @@ void ResourceDispatcher::StartSync(
   response->devtools_info = result.devtools_info;
   response->data.swap(result.data);
   response->download_file_path = result.download_file_path;
+  response->blob_uuid = result.blob_uuid;
   response->socket_address = result.socket_address;
   response->encoded_data_length = result.encoded_data_length;
   response->encoded_body_length = result.encoded_body_length;
@@ -628,7 +638,8 @@ int ResourceDispatcher::StartAsync(
   int request_id = MakeRequestID();
   pending_requests_[request_id] = base::MakeUnique<PendingRequestInfo>(
       std::move(peer), request->resource_type, request->origin_pid,
-      frame_origin, request->url, request->download_to_file);
+      frame_origin, request->url, request->download_to_file,
+      request->download_to_blob);
 
   if (resource_scheduling_filter_.get() && loading_task_runner) {
     resource_scheduling_filter_->SetRequestIdTaskRunner(request_id,

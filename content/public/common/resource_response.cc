@@ -30,6 +30,7 @@ scoped_refptr<ResourceResponse> ResourceResponse::DeepCopy() const {
     new_response->head.devtools_info = head.devtools_info->DeepCopy();
   }
   new_response->head.download_file_path = head.download_file_path;
+  new_response->head.blob_uuid = head.blob_uuid;
   new_response->head.was_fetched_via_spdy = head.was_fetched_via_spdy;
   new_response->head.was_alpn_negotiated = head.was_alpn_negotiated;
   new_response->head.was_alternate_protocol_available =
