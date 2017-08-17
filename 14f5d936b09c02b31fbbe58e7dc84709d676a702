@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1291f67d_c593a333",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-17T06:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad55a5c_f125a652",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2decc7b_5428e53f",
         "filename": "chrome/browser/printing/print_view_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T23:57:00Z",
       "side": 1,
       "message": "I don\u0027t think you can ever get to this code if print preview is not enabled.",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2cc467_6085539e",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-17T06:33:17Z",
+      "side": 1,
+      "message": "Do you think we should define PrintMsg_ClosePrintPreviewDialog even in !ENABLE_PRINT_PREVIEW, or keep this #if?",
+      "parentUuid": "c2decc7b_5428e53f",
       "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4d685170_e26cd2e8",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-17T06:33:17Z",
+      "side": 1,
+      "message": "\u003e After (2), print preview closes and the native system print dialog pops up. During this transition, this code runs. Would the webpage get the afterprint event too early in this case, or get the event twice?\n\nWith this patch, the following sequence runs:\n\n1. WebLocalFrame::DispatchBeforePrintEvent is called for PRINT_PREVIEW\n2. A user press \"Print using system dialog...\"\n3. WebLocalFrame::DispatchBeforePrintEvent is called for BASIC_PRINTING\n4. WebLocalFrame::DispatchAfterPrintEvent is called for PRINT_PREVIEW\n5. (The user interacts with the system dialog)\n6. WebLocalFrame::DispatchAfterPrintEvent is called for BASIC_PRINTING\n\nI didn\u0027t expected this scenario, and ideally I\u0027d like to skip the step 3 and 4 in this sequence if possible. I\u0027ll try it.\nHowever, I can work around this issue by adding nesting level field to WebLocalFrameImpl.\n\n\u003e Another case to consider: when printing to local printers, this code can get called when Print Preview is hidden. In this case the UI is not actually closed, just invisible, and the renderer may not be done generating the data to print yet (for example, if the user hits print before the preview is loaded). \n\nShould we send the message from PrintPreviewHandler::ClosePreviewDialog?",
+      "parentUuid": "55a6ae52_bf2425a3",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ea5517_02e5c5be",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 4
@@ -82,6 +136,24 @@
       "writtenOn": "2017-08-16T23:57:00Z",
       "side": 1,
       "message": "Do we want to move these calls into DidFinishPrinting()?",
+      "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254f774e_e4ac1fa2",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-17T06:33:17Z",
+      "side": 1,
+      "message": "We want.\nDo we have a way to distinguish PRINT_PREVIEW and BASIC_PRINT in DidFinishPrinting? DidFinishPrinting is called in a case of PRINT_PREVIEW too, and it\u0027s called just after preview document is generated.",
+      "parentUuid": "f8ea5517_02e5c5be",
       "revId": "14f5d936b09c02b31fbbe58e7dc84709d676a702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
