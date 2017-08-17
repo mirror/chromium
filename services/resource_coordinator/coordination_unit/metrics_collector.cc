@@ -29,6 +29,8 @@ constexpr base::TimeDelta kMaxAudioSlientTime = base::TimeDelta::FromMinutes(1);
 
 const char kTabFromBackgroundedToFirstAudioStartsUMA[] =
     "TabManager.Heuristics.FromBackgroundedToFirstAudioStarts";
+const char kTabFromBackgroundedToFirstFaviconUpdatedUMA[] =
+    "TabManager.Heuristics.FromBackgroundedToFirstFaviconUpdated";
 const char kTabFromBackgroundedToFirstTitleUpdatedUMA[] =
     "TabManager.Heuristics.FromBackgroundedToFirstTitleUpdated";
 
@@ -151,6 +153,20 @@ void MetricsCollector::OnWebContentsEventReceived(
                            now - web_contents_data.last_invisible_time);
       record.first_title_updated_after_backgrounded_reported = true;
     }
+  } else if (event == mojom::Event::kFaviconUpdated) {
+    // Only record metrics while it is backgrounded.
+    if (web_contents_cu->IsVisible())
+      return;
+    auto now = clock_->NowTicks();
+    MetricsReportRecord& record =
+        metrics_report_record_map_[web_contents_cu->id()];
+    if (!record.first_favicon_updated_after_backgrounded_reported) {
+      const WebContentsData web_contents_data =
+          web_contents_data_map_[web_contents_cu->id()];
+      HEURISTICS_HISTOGRAM(kTabFromBackgroundedToFirstFaviconUpdatedUMA,
+                           now - web_contents_data.last_invisible_time);
+      record.first_favicon_updated_after_backgrounded_reported = true;
+    }
   }
 }
 
@@ -207,10 +223,12 @@ void MetricsCollector::ResetMetricsReportRecord(CoordinationUnitID cu_id) {
 
 MetricsCollector::MetricsReportRecord::MetricsReportRecord()
     : first_audible_after_backgrounded_reported(false),
+      first_favicon_updated_after_backgrounded_reported(false),
       first_title_updated_after_backgrounded_reported(false) {}
 
 void MetricsCollector::MetricsReportRecord::Reset() {
   first_audible_after_backgrounded_reported = false;
+  first_favicon_updated_after_backgrounded_reported = false;
   first_title_updated_after_backgrounded_reported = false;
 }
 
