@@ -238,19 +238,19 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (io_data->IsOffTheRecord())
-    return;
+    return;  // Account consistency is disabled in incognito.
 
+  if (io_data->GetMainRequestContext() != request->context())
+    return;  // AccountReconcilor is only attached to the main request context.
+
+  bool is_native_signin = false;
 #if !defined(OS_ANDROID)
   extensions::WebViewRendererState::WebViewInfo webview_info;
   bool is_guest = extensions::WebViewRendererState::GetInstance()->GetInfo(
       child_id, route_id, &webview_info);
-  // Do not set the account consistency header on requests from a native signin
-  // webview, as identified by an empty extension id which means the webview is
-  // embedded in a webui page, otherwise user may end up with a blank page as
-  // gaia uses the header to decide whether it returns 204 for certain end
-  // points.
-  if (is_guest && webview_info.owner_host.empty())
-    return;
+  // Native signin webview is identified by an empty owner host, which means
+  // the webview is embedded in a webui page.
+  is_native_signin = is_guest && webview_info.owner_host.empty();
 #endif  // !defined(OS_ANDROID)
 
   int profile_mode_mask = PROFILE_MODE_DEFAULT;
@@ -263,10 +263,12 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
   std::string account_id = io_data->google_services_account_id()->GetValue();
 
   // If new url is eligible to have the header, add it, otherwise remove it.
-  AppendOrRemoveAccountConsistentyRequestHeader(
+  AppendOrRemoveMirrorRequestHeader(
+      request, redirect_url, account_id, is_native_signin,
+      io_data->GetCookieSettings(), profile_mode_mask);
+  AppendOrRemoveDiceRequestHeader(
       request, redirect_url, account_id, io_data->IsSyncEnabled(),
-      io_data->SyncHasAuthError(), io_data->GetCookieSettings(),
-      profile_mode_mask);
+      io_data->SyncHasAuthError(), io_data->GetCookieSettings());
 }
 
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,

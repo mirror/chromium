@@ -37,6 +37,7 @@ class ChromeConnectedHeaderHelper : public SigninHeaderHelper {
   std::string BuildRequestHeader(bool is_header_request,
                                  const GURL& url,
                                  const std::string& account_id,
+                                 bool is_native_signin,
                                  int profile_mode_mask);
 
  private:

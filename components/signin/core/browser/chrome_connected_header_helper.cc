@@ -59,7 +59,8 @@ std::string ChromeConnectedHeaderHelper::BuildRequestCookieIfPossible(
   if (!chrome_connected_helper.ShouldBuildRequestHeader(url, cookie_settings))
     return "";
   return chrome_connected_helper.BuildRequestHeader(
-      false /* is_header_request */, url, account_id, profile_mode_mask);
+      false /* is_header_request */, url, account_id,
+      false /* is_native_signin */, profile_mode_mask);
 }
 
 // static
@@ -147,7 +148,14 @@ std::string ChromeConnectedHeaderHelper::BuildRequestHeader(
     bool is_header_request,
     const GURL& url,
     const std::string& account_id,
+    bool is_native_signin,
     int profile_mode_mask) {
+  // Mirror header is not sent for signin requests from native webviews,
+  // otherwise the user may end up with a blank page as Gaia uses the header to
+  // decide whether it returns 204 for certain end points.
+  if (is_native_signin)
+    return std::string();
+
   if (account_id.empty())
     return std::string();
 
