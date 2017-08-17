@@ -890,13 +890,6 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
             boolean annotateAsLink, boolean isEditableText, String language) {
         CharSequence computedText = computeText(text, isEditableText, language);
         node.setText(computedText);
-
-        /**
-        if (isEditableText) {
-            node.setText(computedText);
-        } else {
-            node.setContentDescription(computedText);
-            }**/
     }
 
     protected CharSequence computeText(String text, boolean annotateAsLink, String language) {
@@ -968,8 +961,8 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     @CalledByNative
     protected void setAccessibilityNodeInfoKitKatAttributes(AccessibilityNodeInfo node,
-            boolean isRoot, boolean isEditableText, String roleDescription, int selectionStartIndex,
-            int selectionEndIndex) {
+            boolean isRoot, boolean isEditableText, String roleDescription, String hint,
+            int selectionStartIndex, int selectionEndIndex) {
         // Requires KitKat or higher.
     }
 

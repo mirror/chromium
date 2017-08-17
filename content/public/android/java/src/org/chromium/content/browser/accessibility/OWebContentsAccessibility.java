@@ -43,6 +43,15 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
     }
 
     @Override
+    protected void setAccessibilityNodeInfoKitKatAttributes(AccessibilityNodeInfo node,
+            boolean isRoot, boolean isEditableText, String roleDescription, String hint,
+            int selectionStartIndex, int selectionEndIndex) {
+        super.setAccessibilityNodeInfoKitKatAttributes(node, isRoot, isEditableText,
+                roleDescription, hint, selectionStartIndex, selectionEndIndex);
+        node.setHintText(hint);
+    }
+
+    @Override
     public void addExtraDataToAccessibilityNodeInfo(
             int virtualViewId, AccessibilityNodeInfo info, String extraDataKey, Bundle arguments) {
         if (!extraDataKey.equals(EXTRA_DATA_TEXT_CHARACTER_LOCATION_KEY)) return;
@@ -55,7 +64,7 @@ public class OWebContentsAccessibility extends LollipopWebContentsAccessibility 
                 arguments.getInt(EXTRA_DATA_TEXT_CHARACTER_LOCATION_ARG_START_INDEX, -1);
         int positionInfoLength =
                 arguments.getInt(EXTRA_DATA_TEXT_CHARACTER_LOCATION_ARG_LENGTH, -1);
-        if ((positionInfoLength <= 0) || (positionInfoStartIndex < 0)) return;
+        if (positionInfoLength <= 0 || positionInfoStartIndex < 0) return;
 
         int[] coords = nativeGetCharacterBoundingBoxes(
                 mNativeObj, virtualViewId, positionInfoStartIndex, positionInfoLength);
