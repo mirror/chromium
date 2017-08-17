@@ -20,11 +20,18 @@
 #include "chrome/browser/ui/cocoa/download/download_item_controller.h"
 #include "chrome/browser/ui/cocoa/download/download_shelf_mac.h"
 #import "chrome/browser/ui/cocoa/download/download_shelf_view_cocoa.h"
+#import "chrome/browser/ui/cocoa/harmony_button.h"
+#import "chrome/browser/ui/cocoa/md_hover_button.h"
+#import "chrome/browser/ui/cocoa/nsview_additions.h"
+#include "chrome/common/chrome_features.h"
+#include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
+#include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_manager.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMNSAnimation+Duration.h"
-#import "ui/base/cocoa/hover_button.h"
 #import "ui/base/cocoa/nsview_additions.h"
+#include "ui/base/l10n/l10n_util_mac.h"
 
 using content::DownloadItem;
 
@@ -68,12 +75,30 @@ const NSTimeInterval kAutoCloseDelaySeconds = 5;
 // The size of the x button by default.
 const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 
+// An arbitrary initial width that leaves room for all views. Necessary to do
+// initial layout in a way that works with autoresizing masks.
+const CGFloat kMDShelfInitialWidth = 500;
+
+const CGFloat kMDShelfPadding = 6;
+
 }  // namespace
+
+@interface MDDownloadShelfCloseButton : MDHoverButton
+@end
+
+@implementation MDDownloadShelfCloseButton
+- (NSRect)hitbox {
+  if (self.window.styleMask & NSFullScreenWindowMask)
+    return NSMakeRect(0, (self.isFlipped ? 0 : -NSMinY(self.frame)),
+                      NSMaxY(self.superview.bounds) - NSMinY(self.frame),
+                      NSMaxY(self.frame));
+  return super.hitbox;
+}
+@end
 
 @interface DownloadShelfController(Private)
 - (void)removeDownload:(DownloadItemController*)download
         isShelfClosing:(BOOL)isShelfClosing;
-- (void)layoutItems:(BOOL)skipFirst;
 - (void)closed;
 - (void)maybeAutoCloseAfterDelay;
 - (void)scheduleAutoClose;
@@ -119,29 +144,86 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   return self;
 }
 
-- (void)awakeFromNib {
-  DCHECK(hoverCloseButton_);
+- (void)loadView {
+  if (base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf)) {
+    NSView* view = [[DownloadShelfView alloc]
+        initWithFrame:NSMakeRect(0, 0, kMDShelfInitialWidth,
+                                 [DownloadShelfView shelfHeight])];
+    view.autoresizingMask = [NSView
+        cr_localizedAutoresizingMask:NSViewWidthSizable | NSViewMaxYMargin];
+    const NSRect paddedRect =
+        NSInsetRect(view.bounds, kMDShelfPadding, kMDShelfPadding);
+    const NSRect closeButtonFrame =
+        NSMakeRect(NSMaxX(paddedRect) - 32, NSMidY(paddedRect) - 16, 32, 32);
+    MDDownloadShelfCloseButton* closeButton = [[
+        [MDDownloadShelfCloseButton alloc]
+        initWithFrame:[view cr_localizedRect:closeButtonFrame]] autorelease];
+    closeButton.autoresizingMask =
+        [NSView cr_localizedAutoresizingMask:NSViewMinXMargin];
+    closeButton.icon = &vector_icons::kCloseIcon;
+    [closeButton
+        cr_setAccessibilityLabel:l10n_util::GetNSString(IDS_ACCNAME_CLOSE)];
+    closeButton.target = self;
+    closeButton.action = @selector(handleClose:);
+    hoverCloseButton_ = closeButton;
+    [view addSubview:hoverCloseButton_];
+
+    HarmonyButton* showAllButton =
+        [[[HarmonyButton alloc] initWithFrame:NSZeroRect] autorelease];
+    showAllButton.autoresizingMask =
+        [NSView cr_localizedAutoresizingMask:NSViewMinXMargin];
+    showAllButton.title = l10n_util::GetNSString(IDS_SHOW_ALL_DOWNLOADS);
+    showAllButton.target = self;
+    showAllButton.action = @selector(showDownloadsTab:);
+    [showAllButton sizeToFit];
+    NSRect showAllButtonFrame = showAllButton.frame;
+    showAllButtonFrame.origin.x = NSMinX(closeButtonFrame) - kMDShelfPadding -
+                                  NSWidth(showAllButton.frame);
+    showAllButtonFrame.origin.y =
+        NSMidY(paddedRect) - NSHeight(showAllButtonFrame) / 2;
+    showAllButton.frame = [view cr_localizedRect:showAllButtonFrame];
+    [view addSubview:showAllButton];
+
+    itemContainerView_ = [[[NSView alloc]
+        initWithFrame:[view cr_localizedRect:NSMakeRect(
+                                                 NSMinX(paddedRect), 0,
+                                                 NSMinX(showAllButtonFrame) -
+                                                     kMDShelfPadding,
+                                                 NSHeight(view.bounds))]]
+        autorelease];
+    itemContainerView_.autoresizingMask =
+        [NSView cr_localizedAutoresizingMask:NSViewWidthSizable];
+    [view addSubview:itemContainerView_];
+    self.view = view;
+  } else {
+    [super loadView];
+    DCHECK(hoverCloseButton_);
+  }
 
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
   [[self animatableView] setResizeDelegate:resizeDelegate_];
-  [[self view] setPostsFrameChangedNotifications:YES];
-  [defaultCenter addObserver:self
-                    selector:@selector(viewFrameDidChange:)
-                        name:NSViewFrameDidChangeNotification
-                      object:[self view]];
+  if (!base::FeatureList::IsEnabled(
+          features::kMacMaterialDesignDownloadShelf)) {
+    [[self view] setPostsFrameChangedNotifications:YES];
+    [defaultCenter addObserver:self
+                      selector:@selector(viewFrameDidChange:)
+                          name:NSViewFrameDidChangeNotification
+                        object:[self view]];
 
-  [defaultCenter addObserver:self
-                    selector:@selector(willEnterFullscreen)
-                        name:NSWindowWillEnterFullScreenNotification
-                      object:nil];
-  [defaultCenter addObserver:self
-                    selector:@selector(didExitFullscreen)
-                        name:NSWindowDidExitFullScreenNotification
-                      object:nil];
+    [defaultCenter addObserver:self
+                      selector:@selector(willEnterFullscreen)
+                          name:NSWindowWillEnterFullScreenNotification
+                        object:nil];
+    [defaultCenter addObserver:self
+                      selector:@selector(didExitFullscreen)
+                          name:NSWindowDidExitFullScreenNotification
+                        object:nil];
+  }
   [self installTrackingArea];
 }
 
 - (void)dealloc {
+  [[self animatableView] setResizeDelegate:nil];
   [self browserWillBeDestroyed];
   [super dealloc];
 }
@@ -167,6 +249,8 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 // Called after the frame's rect has changed; usually when the height is
 // animated.
 - (void)viewFrameDidChange:(NSNotification*)notification {
+  DCHECK(
+      !base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf));
   // Anchor subviews at the top of |view|, so that it looks like the shelf
   // is sliding out.
   CGFloat newShelfHeight = NSHeight([[self view] frame]);
@@ -255,7 +339,7 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   if (animate && !show) {
     [view animateToNewHeight:0 duration:kDownloadShelfCloseDuration];
   } else {
-    [view setHeight:show ? maxShelfHeight_ : 0];
+    [view setHeight:show ? [self height] : 0];
     [view setHidden:!show];
   }
 
@@ -279,26 +363,24 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 }
 
 - (float)height {
-  return maxShelfHeight_;
+  if (base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf)) {
+    return [DownloadShelfView shelfHeight] + [self.view cr_lineWidth];
+  } else {
+    return maxShelfHeight_;
+  }
 }
 
-// If |skipFirst| is true, the frame of the leftmost item is not set.
-- (void)layoutItems:(BOOL)skipFirst {
+- (void)layoutItems {
   CGFloat currentX = 0;
   for (DownloadItemController* itemController
       in downloadItemControllers_.get()) {
     NSRect frame = [[itemController view] frame];
     frame.origin.x = currentX;
     frame.size.width = [itemController preferredSize].width;
-    if (!skipFirst)
-      [[[itemController view] animator] setFrame:frame];
+    [[[itemController view] animator]
+        setFrame:[itemContainerView_ cr_localizedRect:frame]];
     currentX += frame.size.width + kDownloadItemPadding;
-    skipFirst = NO;
   }
-}
-
-- (void)layoutItems {
-  [self layoutItems:NO];
 }
 
 - (void)addDownloadItem:(DownloadItem*)downloadItem {
@@ -320,6 +402,8 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   [downloadItemControllers_ insertObject:controller atIndex:0];
 
   [itemContainerView_ addSubview:[controller view]];
+  [controller view].autoresizingMask =
+      [NSView cr_localizedAutoresizingMask:NSViewMaxXMargin];
 
   // The controller is in charge of removing itself as an observer in its
   // dealloc.
@@ -337,16 +421,7 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   // Start at width 0...
   NSSize size = [controller preferredSize];
   NSRect frame = NSMakeRect(0, 0, 0, size.height);
-  [[controller view] setFrame:frame];
-
-  // ...then animate in
-  frame.size.width = size.width;
-  [NSAnimationContext beginGrouping];
-  [[NSAnimationContext currentContext]
-      gtm_setDuration:kDownloadItemOpenDuration
-            eventMask:NSLeftMouseUpMask];
-  [[[controller view] animator] setFrame:frame];
-  [NSAnimationContext endGrouping];
+  [[controller view] setFrame:[itemContainerView_ cr_localizedRect:frame]];
 
   // Keep only a limited number of items in the shelf.
   if ([downloadItemControllers_ count] > kMaxDownloadItemCount) {
@@ -359,10 +434,12 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
           isShelfClosing:NO];
   }
 
-  // Finally, move the remaining items to the right. Skip the first item when
-  // laying out the items, so that the longer animation duration we set up above
-  // is not overwritten.
-  [self layoutItems:YES];
+  // ...then animate in
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+    context.duration = kDownloadItemOpenDuration;
+    [self layoutItems];
+  }
+                      completionHandler:nil];
 }
 
 - (void)closed {
@@ -476,11 +553,15 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 }
 
 - (void)willEnterFullscreen {
+  DCHECK(
+      !base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf));
   isFullscreen_ = YES;
   [self updateCloseButton];
 }
 
 - (void)didExitFullscreen {
+  DCHECK(
+      !base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf));
   isFullscreen_ = NO;
   [self updateCloseButton];
   for (DownloadItemController* controller in downloadItemControllers_.get())
@@ -488,6 +569,8 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
 }
 
 - (void)updateCloseButton {
+  if (base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf))
+    return;
   if (!barIsVisible_)
     return;
 
