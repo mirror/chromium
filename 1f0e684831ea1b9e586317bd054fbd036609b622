@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ab63f5_c5a323ff",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T05:34:10Z",
+      "side": 1,
+      "message": "In this case, do we still paint an extra blue block after \"div1\"?",
+      "revId": "1f0e684831ea1b9e586317bd054fbd036609b622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
