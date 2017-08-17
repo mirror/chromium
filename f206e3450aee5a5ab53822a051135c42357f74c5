@@ -142,6 +142,30 @@
       "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae04662_86bebe6a",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T04:22:16Z",
+      "side": 1,
+      "message": "Agreed. Would this plan work:\n\n1) Move Mojo bindings to SWProviderContext, and have ~SWNetworkProvider tell SWProviderContext to kill the bindings.\n2) Change all Renderer-\u003eBrowser legacy IPC messages using provider_id today to use the Mojo pipe to SWDispatcherHost/SWProviderHost.\n\nAfter step 2, we should be crash free and still have frame.remove() tearing down the ProviderHost in a timely manner.",
+      "parentUuid": "9be4e7a4_c3d2bbf1",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
