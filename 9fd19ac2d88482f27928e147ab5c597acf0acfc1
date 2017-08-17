@@ -70,6 +70,30 @@
       "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce25704_7e2627a0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-17T16:23:34Z",
+      "side": 1,
+      "message": "Do you know in which cases the web contents can be null?\n\nWe can query the incognito state from the tab. However, dtrainer@ thought that we always have  web contents in a previous code review and suggested getting the incognito state from the web contents regardless of whether it is a native page or not.\n\nThe ToolbarModelImpl returns about:blank if the web contents are null. I would do the same, as null web contents seem like an edge case. Alternatively, we could hide the URL. That is what we do right now, assuming it is a native page. But lets discuss in the review of the other CL.\n\nI checked all native pages in https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/UrlConstants.java. They all work. And you can navigate back and forth from the NTP and history page.",
+      "parentUuid": "46ae5065_ac387113",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 19
+      },
+      "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
