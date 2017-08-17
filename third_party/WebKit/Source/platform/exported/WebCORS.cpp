@@ -101,7 +101,7 @@ class HTTPHeaderNameListParser {
   //
   // |output| must be empty.
   void Parse(HTTPHeaderSet& output) {
-    DCHECK(output.IsEmpty());
+    DCHECK(output.empty());
 
     while (true) {
       ConsumeSpaces();
@@ -541,7 +541,7 @@ void ExtractCorsExposedHeaderNamesList(const WebURLResponse& response,
   // header.
   if (response.WasFetchedViaServiceWorker()) {
     for (const auto& header : response.CorsExposedHeaderNames())
-      header_set.insert(String(header));
+      header_set.insert(header);
     return;
   }
   ParseAccessControlExposeHeadersAllowList(
@@ -563,7 +563,8 @@ bool IsOnAccessControlResponseHeaderWhitelist(const WebString& name) {
           "cache-control", "content-language", "content-type", "expires",
           "last-modified", "pragma",
       }));
-  return allowed_cross_origin_response_headers.Contains(name);
+  return allowed_cross_origin_response_headers.find(name) !=
+         allowed_cross_origin_response_headers.end();
 }
 
 }  // namespace WebCORS

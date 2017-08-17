@@ -52,11 +52,12 @@ bool ParseAccessControlMaxAge(const String& string, unsigned& expiry_delta) {
   return ok;
 }
 
-template <class HashType>
-void AddToAccessControlAllowList(const String& string,
-                                 unsigned start,
-                                 unsigned end,
-                                 HashSet<String, HashType>& set) {
+template <class HashType, class EqualsType>
+void AddToAccessControlAllowList(
+    const String& string,
+    unsigned start,
+    unsigned end,
+    std::unordered_set<WebString, HashType, EqualsType>& set) {
   StringImpl* string_impl = string.Impl();
   if (!string_impl)
     return;
@@ -76,9 +77,10 @@ void AddToAccessControlAllowList(const String& string,
   set.insert(string.Substring(start, end - start + 1));
 }
 
-template <class HashType>
-bool ParseAccessControlAllowList(const String& string,
-                                 HashSet<String, HashType>& set) {
+template <class HashType, class EqualsType>
+bool ParseAccessControlAllowList(
+    const String& string,
+    std::unordered_set<WebString, HashType, EqualsType>& set) {
   unsigned start = 0;
   size_t end;
   while ((end = string.find(',', start)) != kNotFound) {
@@ -156,7 +158,8 @@ bool WebCORSPreflightResultCacheItem::Parse(
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
     const WebString& method,
     WebString& error_description) const {
-  if (methods_.Contains(method) || FetchUtils::IsCORSSafelistedMethod(method))
+  if (methods_.find(method) != methods_.end() ||
+      FetchUtils::IsCORSSafelistedMethod(method))
     return true;
 
   error_description.Assign(WebString::FromASCII("Method " + method.Ascii() +
@@ -171,7 +174,7 @@ bool WebCORSPreflightResultCacheItem::AllowsCrossOriginHeaders(
     const HTTPHeaderMap& request_headers,
     WebString& error_description) const {
   for (const auto& header : request_headers) {
-    if (!headers_.Contains(header.key) &&
+    if (headers_.find(header.key) == headers_.end() &&
         !FetchUtils::IsCORSSafelistedHeader(header.key, header.value) &&
         !FetchUtils::IsForbiddenHeaderName(header.key)) {
       error_description.Assign(

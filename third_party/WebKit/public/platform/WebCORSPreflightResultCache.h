@@ -28,10 +28,8 @@
 #define WebCORSPreflightResultCache_h
 
 #include <memory>
+#include <unordered_set>
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/wtf/HashMap.h"
-#include "platform/wtf/HashSet.h"
-#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
@@ -62,7 +60,14 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
                      const HTTPHeaderMap& request_headers) const;
 
  private:
-  typedef HashSet<String, CaseFoldingHash> HeadersSet;
+  typedef std::
+      unordered_set<WebString, std::hash<WebString>, std::equal_to<WebString>>
+          StringSet;
+
+  typedef std::unordered_set<WebString,
+                             WebString::IgnoreCaseASCIIHash,
+                             WebString::IgnoreCaseASCIIEqual>
+      IgnoreCaseStringSet;
 
   explicit WebCORSPreflightResultCacheItem(WebURLRequest::FetchCredentialsMode);
 
@@ -76,8 +81,8 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
 
   // Corresponds to the fields of the CORS-preflight cache with the same name.
   bool credentials_;
-  HashSet<String> methods_;
-  HeadersSet headers_;
+  StringSet methods_;
+  IgnoreCaseStringSet headers_;
 };
 
 class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
