@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34344025_47c822aa",
+        "filename": "chrome/browser/extensions/api/web_navigation/web_navigation_api_helpers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-17T05:02:10Z",
+      "side": 1,
+      "message": "Yes, each extension can have a different set of blocked hosts. This means that some extensions may get this event while others may not.\n\nI\u0027m still a bit new to working with the EventRouter, is there a more efficient way to accomplish this? I\u0027m happy to update the code if there is :)\n\nI have more information about this feature at go/limit-host-permissions or can jump on a GVC to explain further.",
+      "parentUuid": "b192720e_c02f15ed",
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c45fc6_5626e13f",
         "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4057c7ec_16dbbfda",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-17T05:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c45fc6_5626e13f",
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b653072a_7fb80f99",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-17T05:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc28e714_c2237ff8",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adb8b73_35c33676",
         "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.js",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011d00eb_f0aee749",
+        "filename": "chrome/test/data/extensions/api_test/webnavigation/policySimpleLoad/test_simpleLoad.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-17T05:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8adb8b73_35c33676",
+      "revId": "b1c2ddb707c8e88208170d569425d1818df94b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
