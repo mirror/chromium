@@ -4,6 +4,7 @@
 
 #include "content/browser/appcache/appcache_url_request.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
 
 namespace content {
 
@@ -60,6 +61,18 @@ net::URLRequest* AppCacheURLRequest::GetURLRequest() {
 
 AppCacheURLRequest* AppCacheURLRequest::AsURLRequest() {
   return this;
+}
+
+net::NetworkDelegate* AppCacheURLRequest::GetDelegate() {
+  return url_request_->context()->network_delegate();
+}
+
+void AppCacheURLRequest::Start() {
+  url_request_->Start();
+}
+
+void AppCacheURLRequest::Cancel() {
+  url_request_->Cancel();
 }
 
 AppCacheURLRequest::AppCacheURLRequest(net::URLRequest* url_request)

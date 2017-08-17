@@ -15,6 +15,7 @@
 #include "base/supports_user_data.h"
 #include "content/browser/appcache/appcache_entry.h"
 #include "content/browser/appcache/appcache_host.h"
+#include "content/browser/appcache/appcache_request_handler.h"
 #include "content/browser/appcache/appcache_service_impl.h"
 #include "content/browser/loader/url_loader_request_handler.h"
 #include "content/browser/url_loader_factory_getter.h"
@@ -88,6 +89,19 @@ class CONTENT_EXPORT AppCacheRequestHandler
   }
 
   void SetSubresourceRequestLoadInfo(
+      std::unique_ptr<SubresourceLoadInfo> subresource_load_info);
+
+  // Called by unittests to indicate that we are in test mode.
+  static void SetRunningInTests(bool in_tests);
+
+  // Returns true if we are running in tests.
+  static bool IsRunningInTests();
+
+  // This method is called in the network service code path for creating a job
+  // for handling subresource load requests.
+  // The |subresource_load_info| parameter contains the information required to
+  // service the load request.
+  AppCacheJob* MaybeCreateSubresourceJob(
       std::unique_ptr<SubresourceLoadInfo> subresource_load_info);
 
  private:
