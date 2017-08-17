@@ -7,9 +7,9 @@
 #include "base/bind_helpers.h"
 #include "base/logging.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
-#include "content/common/media/media_stream_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "url/origin.h"
 
@@ -38,11 +38,26 @@ MediaStreamDispatcherHost::MediaStreamDispatcherHost(
     int render_process_id,
     const std::string& salt,
     MediaStreamManager* media_stream_manager)
-    : BrowserMessageFilter(MediaStreamMsgStart),
-      BrowserAssociatedInterface<mojom::MediaStreamDispatcherHost>(this, this),
-      render_process_id_(render_process_id),
+    : render_process_id_(render_process_id),
       salt_(salt),
-      media_stream_manager_(media_stream_manager) {}
+      media_stream_manager_(media_stream_manager) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  bindings_.set_connection_error_handler(base::Bind(
+      &MediaStreamDispatcherHost::OnConnectionError, base::Unretained(this)));
+}
+
+MediaStreamDispatcherHost::~MediaStreamDispatcherHost() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  bindings_.CloseAllBindings();
+  OnConnectionError();
+}
+
+void MediaStreamDispatcherHost::Add(
+    mojom::MediaStreamDispatcherHostRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
 
 void MediaStreamDispatcherHost::StreamGenerated(
     int render_frame_id,
@@ -144,19 +159,11 @@ void MediaStreamDispatcherHost::DeviceOpened(
                  label, video_device));
 }
 
-bool MediaStreamDispatcherHost::OnMessageReceived(const IPC::Message& message) {
-  NOTREACHED();
-  return true;
-}
+void MediaStreamDispatcherHost::OnConnectionError() {
+  if (!bindings_.empty())
+    return;
 
-void MediaStreamDispatcherHost::OnChannelClosing() {
-  DVLOG(1) << __func__;
-
-  // Since the IPC sender is gone, close all requesting/requested streams.
   media_stream_manager_->CancelAllRequests(render_process_id_);
-}
-
-MediaStreamDispatcherHost::~MediaStreamDispatcherHost() {
 }
 
 void MediaStreamDispatcherHost::DeviceOpenFailed(int render_frame_id,
