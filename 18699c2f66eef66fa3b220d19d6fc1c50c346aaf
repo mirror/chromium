@@ -87,6 +87,30 @@
       "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb3e57d5_51e01ed5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-17T23:19:14Z",
+      "side": 1,
+      "message": "Also CacheHandler() can be set after ScriptStreamer ctor here when the response from ServiceWorker is received. I removed |cache_handler_| and instead pass it as an argument of PrepareDataOnMainThread().",
+      "parentUuid": "25cb7413_14f1c85b",
+      "range": {
+        "startLine": 581,
+        "startChar": 44,
+        "endLine": 581,
+        "endChar": 56
+      },
+      "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
