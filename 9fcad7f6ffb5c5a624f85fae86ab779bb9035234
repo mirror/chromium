@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de3a5a5_58454c0a",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:14:30Z",
+      "side": 1,
+      "message": "Why adding this source_set instead of just having code using explicit dependency on \"//ios/clean/chrome/browser/ui/dialogs/java_script_dialogs\"?\n\nIf you insist on the separate target, then please change it to a \"group\" instead (but I think it is better to just have the explicit dependency as the rest of the //ios/chrome/ code does).",
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61c2d28_c8a5fc00",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:14:30Z",
+      "side": 1,
+      "message": "If it is a property, can it be @synthesized?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d594e14_f652263e",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_overlay_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:14:30Z",
+      "side": 1,
+      "message": "nit: can you put DISALLOW_COPY_AND_ASSIGN() at the end of the class.",
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de530ec_fbcf8f70",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:14:30Z",
+      "side": 1,
+      "message": "I think it should instead be \"//ios/clean/chrome/ui/dialogs/java_script_dialogs\".",
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f97f226_cb449692",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:14:30Z",
+      "side": 1,
+      "message": "Why using sometime parameter \"webState\" and sometime use \"self.webState\" in this method? Are they guaranteed to be the same? Can you DCHECK it? If not, can you add a comment explaining why not using the same in both place.",
+      "range": {
+        "startLine": 124,
+        "startChar": 54,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
