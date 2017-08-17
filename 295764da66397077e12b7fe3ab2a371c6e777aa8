@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4a6ffe_0a18123c",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-17T14:49:36Z",
+      "side": 1,
+      "message": "Why does this return by value, unlike the other Get*() routines? Probably warrants comment -- unless it\u0027s only to accommodate {} below, then maybe add\n  const static TargetSource TargetSource::kEmptySource;\nto be returned instead?",
+      "revId": "295764da66397077e12b7fe3ab2a371c6e777aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
