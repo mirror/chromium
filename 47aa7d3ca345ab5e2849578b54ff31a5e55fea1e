@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "eed368fa_ae29120c",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-17T07:31:35Z",
+      "side": 1,
+      "message": "If we don\u0027t declare `Credential`, we won\u0027t be exposing the same interface to iOS and other platforms (which we can verify by running the IDL tests). It\u0027s important that we\u0027re consistent to the extent possible.",
+      "parentUuid": "a47c0456_c7607a05",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08157894_4eb70f5a",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 6
