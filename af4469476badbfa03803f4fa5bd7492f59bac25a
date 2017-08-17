@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d964ea6f_88a50053",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T13:49:16Z",
+      "side": 1,
+      "message": "maybe something like: \"transferred to a PostTask() call after process allocation\"",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2695f5_b0e9929d",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T13:49:16Z",
+      "side": 1,
+      "message": "This comment is kinda vague... what is an \"entry point\"? What is being connected to what?",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08893f58_6d387af6",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T13:49:16Z",
+      "side": 1,
+      "message": "This comment/name seems misleading. IIUC it\u0027s not creating a JS ServiceWorker object or a C++ ServiceWorker object or even starting a service worker. It\u0027s creating an EmbeddedWorkerInstanceClientImpl which is something that allows you to start and stop a service worker.\n\nI kinda think this should just be named CreateEmbeddedWorkerInstanceClient() and the comment explain the relationship to SW, until we figure out a better name than EmbeddedWorkerInstanceClient.",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5715ba_ab6420c7",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T13:49:16Z",
+      "side": 1,
+      "message": "It\u0027d be good for EWICL::Create() to have comments about who owns the instance that was just created and what it\u0027s lifetime is, etc. (Sorry if this is obvious in Mojo world but I\u0027m still adjusting/confused).\n\nBefore I sort of understood that registry-\u003eAddInterface() meant that registry thing owned it, but now it just looks like a bare Create() call.",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a37a6f_6ed7dbb0",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T13:49:16Z",
+      "side": 1,
+      "message": "Can this comment be expanded: when exactly does |client| thing get deleted?",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
