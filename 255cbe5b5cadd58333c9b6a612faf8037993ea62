@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6365ecdd_03798da5",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-17T16:07:30Z",
+      "side": 1,
+      "message": "\"transparent comparators\":\nWould \"transparent comparators on containers\" make sense? As-written it sounds like you\u0027re referring to std::less which the text just said was OK.",
+      "range": {
+        "startLine": 627,
+        "startChar": 170,
+        "endLine": 627,
+        "endChar": 181
+      },
+      "revId": "255cbe5b5cadd58333c9b6a612faf8037993ea62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
