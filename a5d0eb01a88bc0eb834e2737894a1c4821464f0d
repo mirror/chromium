@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "361b0d2c_cc9c3dd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-17T23:46:37Z",
+      "side": 1,
+      "message": "What is the purpose of the UT you are adding versus the UT that you are omitting then?",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "a5d0eb01a88bc0eb834e2737894a1c4821464f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec15a27_3d1858fc",
+        "filename": "media/filters/vpx_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-17T23:46:37Z",
+      "side": 1,
+      "message": "Isn\u0027t the data read from the test clip slightly below?",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 333,
+        "endChar": 33
+      },
+      "revId": "a5d0eb01a88bc0eb834e2737894a1c4821464f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a362caa4_0d4d6c7a",
+        "filename": "media/filters/vpx_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-17T23:46:37Z",
+      "side": 1,
+      "message": "It\u0027s not apparent to me how this UT is connected to this CL. The duplicate frame could be 2 video frames that happen to have the exact same data, rather than 1 video frame referenced twice.\n\nHow does the UT fail without the changes to vpx_video_decoder.cc? I may be completely missing something :)",
+      "range": {
+        "startLine": 352,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 0
+      },
+      "revId": "a5d0eb01a88bc0eb834e2737894a1c4821464f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
