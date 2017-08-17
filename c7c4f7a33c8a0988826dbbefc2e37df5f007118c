@@ -16,6 +16,24 @@
       "revId": "c7c4f7a33c8a0988826dbbefc2e37df5f007118c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5770cb34_c8e57498",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-17T12:46:03Z",
+      "side": 1,
+      "message": "Removing |dispatcher_host_| would need some changes in unit tests in media_stream_video_capturer_source_unittest.cc. Similar thing needs to be done in media_stream_dispatcher.h and its unit tests as well. I am taking this up in another CL at https://chromium-review.googlesource.com/c/618312.",
+      "parentUuid": "dd755f09_cc211207",
+      "revId": "c7c4f7a33c8a0988826dbbefc2e37df5f007118c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
