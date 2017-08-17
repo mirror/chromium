@@ -33,6 +33,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/upload_progress.h"
 #include "net/url_request/redirect_info.h"
+#include "storage/browser/blob/blob_storage_context.h"
 
 using base::TimeDelta;
 using base::TimeTicks;
@@ -86,11 +87,14 @@ class DependentIOBuffer : public net::WrappedIOBuffer {
   scoped_refptr<ResourceBuffer> backing_;
 };
 
-AsyncResourceHandler::AsyncResourceHandler(net::URLRequest* request,
-                                           ResourceDispatcherHostImpl* rdh)
+AsyncResourceHandler::AsyncResourceHandler(
+    net::URLRequest* request,
+    ResourceDispatcherHostImpl* rdh,
+    base::WeakPtr<storage::BlobStorageContext> blob_storage_context)
     : ResourceHandler(request),
       ResourceMessageDelegate(request),
       rdh_(rdh),
+      blob_storage_context_(std::move(blob_storage_context)),
       pending_data_count_(0),
       allocation_size_(0),
       total_read_body_bytes_(0),
@@ -205,6 +209,14 @@ void AsyncResourceHandler::OnResponseStarted(
     rdh_->RegisterDownloadedTempFile(
         info->GetChildID(), info->GetRequestID(),
         response->head.download_file_path);
+  }
+
+  // If the parent handler downloaded the resource to a blob, then keep a
+  // temporary handle to prevent the blob from dying during the request.
+  if (blob_storage_context_ && !response->head.blob_uuid.empty()) {
+    rdh_->RegisterDownloadedTempBlob(
+        info->GetChildID(), info->GetRequestID(),
+        blob_storage_context_->GetBlobDataFromUUID(response->head.blob_uuid));
   }
 
   response->head.request_start = request()->creation_time();

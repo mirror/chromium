@@ -49,9 +49,10 @@ class STORAGE_EXPORT BlobEntry {
   };
 
   // Building state for pending blobs. State can include:
-  // 1. Waiting for quota to be granted for transport data (PENDING_QUOTA)
-  // 2. Waiting for user population of data after quota (PENDING_TRANSPORT)
-  // 3. Waiting for blobs we reference to complete & quota granted for possible
+  // 1. Waiting for data sizes to be resolved (PENDING_CONTRUCTION)
+  // 2. Waiting for quota to be granted for transport data (PENDING_QUOTA)
+  // 3. Waiting for user population of data after quota (PENDING_TRANSPORT)
+  // 4. Waiting for blobs we reference to complete & quota granted for possible
   //    copies. (PENDING_INTERNALS)
   struct STORAGE_EXPORT BuildingState {
     // |transport_allowed_callback| is not null when data needs population. See

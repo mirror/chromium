@@ -176,7 +176,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
                        int origin_pid,
                        const url::Origin& frame_origin,
                        const GURL& request_url,
-                       bool download_to_file);
+                       bool download_to_file,
+                       bool download_to_blob);
 
     ~PendingRequestInfo();
 
@@ -195,6 +196,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
     // The url of the latest response even in case of redirection.
     GURL response_url;
     bool download_to_file;
+    bool download_to_blob;
     std::unique_ptr<IPC::Message> pending_redirect_message;
     base::TimeTicks request_start;
     base::TimeTicks response_start;

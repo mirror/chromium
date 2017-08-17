@@ -379,6 +379,9 @@ class PLATFORM_EXPORT ResourceResponse final {
   const String& DownloadedFilePath() const { return downloaded_file_path_; }
   void SetDownloadedFilePath(const String&);
 
+  const String& BlobUUID() const { return blob_uuid_; }
+  void SetBlobUUID(const String&);
+
   // Extra data associated with this response.
   ExtraData* GetExtraData() const { return extra_data_.Get(); }
   void SetExtraData(RefPtr<ExtraData> extra_data) {
@@ -526,6 +529,13 @@ class PLATFORM_EXPORT ResourceResponse final {
   // be deleted.
   RefPtr<BlobDataHandle> downloaded_file_handle_;
 
+  // The blob uuid if the response was streamed to a blob.
+  String blob_uuid_;
+
+  // Handle to the blob to ensure the underlying data will not be released. Does
+  // not have accurate size data.
+  RefPtr<BlobDataHandle> blob_handle_;
+
   // ExtraData associated with the response.
   RefPtr<ExtraData> extra_data_;
 
@@ -590,6 +600,9 @@ struct CrossThreadResourceResponseData {
   long long decoded_body_length_;
   String downloaded_file_path_;
   RefPtr<BlobDataHandle> downloaded_file_handle_;
+  String blob_uuid_;
+  uint64_t blob_size_;
+  RefPtr<BlobDataHandle> blob_handle_;
 };
 
 }  // namespace blink

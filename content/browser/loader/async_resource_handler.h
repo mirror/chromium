@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "content/browser/loader/resource_handler.h"
 #include "content/browser/loader/resource_message_delegate.h"
 #include "content/common/content_export.h"
@@ -21,6 +22,10 @@
 namespace net {
 class URLRequest;
 class UploadProgress;
+}
+
+namespace storage {
+class BlobStorageContext;
 }
 
 namespace content {
@@ -34,8 +39,10 @@ class UploadProgressTracker;
 class CONTENT_EXPORT AsyncResourceHandler : public ResourceHandler,
                                             public ResourceMessageDelegate {
  public:
-  AsyncResourceHandler(net::URLRequest* request,
-                       ResourceDispatcherHostImpl* rdh);
+  AsyncResourceHandler(
+      net::URLRequest* request,
+      ResourceDispatcherHostImpl* rdh,
+      base::WeakPtr<storage::BlobStorageContext> blob_storage_context);
   ~AsyncResourceHandler() override;
 
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -77,6 +84,7 @@ class CONTENT_EXPORT AsyncResourceHandler : public ResourceHandler,
 
   scoped_refptr<ResourceBuffer> buffer_;
   ResourceDispatcherHostImpl* rdh_;
+  base::WeakPtr<storage::BlobStorageContext> blob_storage_context_;
 
   // Number of messages we've sent to the renderer that we haven't gotten an
   // ACK for. This allows us to avoid having too many messages in flight.
