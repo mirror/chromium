@@ -16,6 +16,24 @@
       "revId": "1b76138b02ee188f562bc38e29bf9bccd1aacabc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7cdebe_aa6c1021",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-17T00:10:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f3bb9159_a50ac87c",
+      "revId": "1b76138b02ee188f562bc38e29bf9bccd1aacabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
