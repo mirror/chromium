@@ -175,8 +175,14 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
   // App list needs to know the new shelf layout in order to calculate its
   // UI layout when AppListView visibility changes.
   if (is_fullscreen_app_list_enabled_) {
+    int target_y = display::Screen::GetScreen()
+                       ->GetDisplayNearestWindow(root_window)
+                       .bounds()
+                       .bottom() -
+                   Shelf::ForWindow(root_window)->GetIdealBounds().height();
+    int current_widget_position = view_->GetBoundsInScreen().y();
     return gfx::Vector2d(
-        0, IsSideShelf(root_window) ? 0 : kAnimationOffsetFullscreen);
+        0, IsSideShelf(root_window) ? 0 : target_y - current_widget_position);
   }
 
   Shelf* shelf = Shelf::ForWindow(root_window);
