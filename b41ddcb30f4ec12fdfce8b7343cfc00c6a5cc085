@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7200f9cb_4c1d7e5a",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-17T17:28:59Z",
+      "side": 1,
+      "message": "Check to make sure |discard_virtual_memory| !\u003d NULL before calling the function!",
+      "range": {
+        "startLine": 396,
+        "startChar": 60,
+        "endLine": 396,
+        "endChar": 74
+      },
+      "revId": "b41ddcb30f4ec12fdfce8b7343cfc00c6a5cc085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
