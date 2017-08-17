@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95766949_ee111612",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-17T14:25:31Z",
+      "side": 1,
+      "message": "Perhaps GetFrameScheduler \u0026 SetFrameScheduler?\n\nDo we need WebFrameSchedulerImpl or just WebFrameScheduler?",
+      "range": {
+        "startLine": 56,
+        "startChar": 36,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "c5866d1392353a995e3c750f43008db2fff47272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25edca8_a26831c4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-17T14:25:31Z",
+      "side": 1,
+      "message": "This +\u003d is a bit confusing, as it implies that this is accumulating something.\nMaybe just start \u003d base::TimeTicks() + base::TimeDelta(...)",
+      "range": {
+        "startLine": 521,
+        "startChar": 41,
+        "endLine": 521,
+        "endChar": 46
+      },
+      "revId": "c5866d1392353a995e3c750f43008db2fff47272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34527ea7_0b43ed91",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-17T14:25:31Z",
+      "side": 1,
+      "message": "Add .",
+      "range": {
+        "startLine": 1895,
+        "startChar": 35,
+        "endLine": 1895,
+        "endChar": 36
+      },
+      "revId": "c5866d1392353a995e3c750f43008db2fff47272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b92a066_32e15743",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-17T14:25:31Z",
+      "side": 1,
+      "message": "Chromium style requires the parameter name here. (It\u0027s a bit confusing, as WebKit style didn\u0027t.)",
+      "range": {
+        "startLine": 238,
+        "startChar": 44,
+        "endLine": 238,
+        "endChar": 46
+      },
+      "revId": "c5866d1392353a995e3c750f43008db2fff47272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
