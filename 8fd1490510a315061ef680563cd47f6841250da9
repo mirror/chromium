@@ -16,6 +16,24 @@
       "revId": "8fd1490510a315061ef680563cd47f6841250da9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bf82af_8566b03e",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T13:52:10Z",
+      "side": 1,
+      "message": "I think I was going for \"This class will be notified of page level activation, before the associated navigation commits.\"\n\nReworded and took your second suggestion.",
+      "parentUuid": "397f62cf_573dd36b",
+      "revId": "8fd1490510a315061ef680563cd47f6841250da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
