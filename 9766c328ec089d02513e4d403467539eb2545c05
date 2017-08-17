@@ -16,6 +16,24 @@
       "revId": "9766c328ec089d02513e4d403467539eb2545c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3cacb8_a82e8abc",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-17T15:44:45Z",
+      "side": 1,
+      "message": "Looks like, we receive frame from render process, and then we use the device_scale_factor from the frame\u0027s meta data to\ncreate SurfaceInfo and set it to the ui::Layer. So I think the child process can choice any dsf they want.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/delegated_frame_host.cc?type\u003dcs\u0026q\u003dSurfaceInfo+file:%5Esrc/content/browser/+package:%5Echromium$\u0026l\u003d460\n[2] https://cs.chromium.org/chromium/src/content/browser/frame_host/render_widget_host_view_child_frame.cc?type\u003dcs\u0026q\u003dSurfaceInfo+file:%5Esrc/content/browser/+package:%5Echromium$\u0026l\u003d510",
+      "parentUuid": "f68e0c67_f7eb8b86",
+      "revId": "9766c328ec089d02513e4d403467539eb2545c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
