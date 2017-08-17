@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1031dc7_bd2dd1d6",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7134048_a74c4da0",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e887bd9_e0c2c41b",
         "filename": "components/cronet/ios/ios_global_state_configuration.cc",
         "patchSetId": 5
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "ebfcfa84_f84c1432",
+        "filename": "components/cronet/ios/ios_global_state_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e887bd9_e0c2c41b",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02a36900_d35b8210",
+        "filename": "components/cronet/ios/ios_global_state_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "PTAL at the latest patch, I\u0027m only changing the behavior of Cronet if it is in fact built with ChromeWebView in the same framework.",
+      "parentUuid": "f14babc9_4ac429bf",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0c6c3_97641f11",
         "filename": "components/cronet/ios/ios_global_state_configuration.cc",
         "patchSetId": 5
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "9eebf120_71ece52c",
+        "filename": "components/cronet/ios/ios_global_state_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "EDIT: I was able to refactor this so Cronet has it\u0027s existing thread reference intact unless it should use the thread from ios/web. However, original comment below intact for reference in case my new change won\u0027t work.\n_____________\n\nThere is currently no way in ios/web to get the actual Thread object. (WebThreadImpl could potentially be extended to return it, but that is probably not something we would want to do. It looks like we never do much with the threads directly in ios/web except use their message loop to get the task runner, but maybe that isn\u0027t common.[1])\n\nHaving access to other methods like Stop sounds useful, but if we need them, we could extend this class instead. For example, |StopIOThread()|. I\u0027m not sure that would be ideal either, but just offering an alternative instead of exposing the base::Thread.\n\n[1]: https://cs.chromium.org/chromium/src/ios/web/web_thread_impl.cc?rcl\u003dda9f22e7d4c44c80c53b6aac8ad3271c4272585d\u0026l\u003d295",
+      "parentUuid": "3aa0c6c3_97641f11",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc617d6_4ec16fd8",
         "filename": "components/cronet/ios/ios_global_state_cronet_configuration.cc",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2159cde_d157d424",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "You\u0027re right. This file isn\u0027t needed. I was actually able to greatly simplify this in the latest patch by removing the thread here too and only returning it if cronet should instead use the thread from ios/web.",
+      "parentUuid": "9bc617d6_4ec16fd8",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "94077743_c88d1f23",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42bab2a5_bf44c8ef",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe6fa1ab_ae312960",
         "filename": "ios/web_view/internal/chrome_web_view.mm",
         "patchSetId": 5
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "808d295c_7dc2cb39",
+        "filename": "ios/web_view/internal/chrome_web_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6fa1ab_ae312960",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "827c8d62_7ea5baf1",
         "filename": "ios/web_view/public/chrome_web_view.h",
         "patchSetId": 5
@@ -159,6 +303,30 @@
       "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206983c3_e4496160",
+        "filename": "ios/web_view/public/chrome_web_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-17T22:08:37Z",
+      "side": 1,
+      "message": "EDIT: I proceeded with my proposal described in my comment below and was able to remove this file. I left my original comment for reference if needed.\n__________________\n\nI created a doc[1] which led me to re-attempt using the same thread. That path failed as URLRequest instances can only be created on a single thread in the application, so I came back to revisit the change here.\n\nCronet and ChromeWebView don\u0027t know about each other so Cronet can\u0027t call |ios_web_view::InitializeGlobalState()| directly.\n\nThe only other possibility I can think of would be to have the |GetSharedNetworkIOThreadTaskRunner| implementation be broken out into the ios/web_view target so that it can initialize the global state before returning the thread. That would remove the need for external initialization. I will add this option to the doc and look into it.\n\n[1]: https://docs.google.com/a/google.com/document/d/1IC7qsCNTA3InBvtD0S613okb12_kGAWGGf8ZLC8xnno/edit?usp\u003dsharing",
+      "parentUuid": "827c8d62_7ea5baf1",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
