@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0c4c501_aa0aa020",
+        "filename": "content/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "These files should be before the arm ones so everything is in alphabetical order.\nSame thing at lines 541,542.",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe60eb8d_d598153f",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d971a6f8_2280a6a9",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to be used.",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de867107_c5c8a90e",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this newline.",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d253d874_d66cfe85",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "May as well just use arraysize(kReadOnlyList), right?",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91b9f58_724ff03c",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "Can you format this with git cl format? I\u0027m surprised the indentation is different than the block at line 53.",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac61d37_3e734f85",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "arraysize?",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f2a453_592fbf5c",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "Is this copy-pasted from the ARM code? This doesn\u0027t seem correct to have here...",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bafaa2b_f6d98511",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "I know this comment is copy-pasted from the ARM code, but I don\u0027t understand it. Why does networking need to be allowed in the sandbox?",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5198fb03_40932593",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "Why would this code ever run on other platforms?",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c7c527_dff3f554",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0e1877_a2e3a5d1",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "s/ARM/systems with AMD GPUs/ perhaps?",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe48310_2baf65e2",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115020
+      },
+      "writtenOn": "2017-08-17T14:42:39Z",
+      "side": 1,
+      "message": "I don\u0027t think you need explicit here.",
+      "revId": "943aa336c8ee6035dc7815e4ce48e1442592e838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
