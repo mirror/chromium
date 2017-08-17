@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6adceff_25d4a7a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/TabListSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T16:26:42Z",
+      "side": 0,
+      "message": "Thanks for cleaning these up!",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 94
+      },
+      "revId": "68ade5482719ec2436f648b28e17ebb7c6472774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
