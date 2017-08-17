@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "015fada1_51d6db59",
+        "filename": "chrome/browser/ui/webui/browsing_history_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T13:03:58Z",
+      "side": 1,
+      "message": "Why not use GetProfile() here?",
+      "range": {
+        "startLine": 257,
+        "startChar": 21,
+        "endLine": 257,
+        "endChar": 49
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af60f02_a4f27b22",
+        "filename": "components/history/core/browser/browsing_history_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T13:03:58Z",
+      "side": 1,
+      "message": "This is a public method so can be called even if BrowsingHistoryService is created with a null value for local_history_. I think it should support local_history_ to be null (and not dereference a potentially null pointer).",
+      "range": {
+        "startLine": 155,
+        "startChar": 29,
+        "endLine": 155,
+        "endChar": 41
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebad536_3e3fc148",
+        "filename": "components/history/core/browser/browsing_history_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T13:03:58Z",
+      "side": 1,
+      "message": "This is a public method so can be called even if BrowsingHistoryService is created with a null value for local_history_. I think it should support local_history_ to be null (and not dereference a potentially null pointer).",
+      "range": {
+        "startLine": 230,
+        "startChar": 29,
+        "endLine": 230,
+        "endChar": 41
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08200ed_421dc0b8",
+        "filename": "components/history/core/browser/browsing_history_service_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T13:03:58Z",
+      "side": 1,
+      "message": "Interface that are implemented by an embedder (desktop, iOS, ...) to help with the implementation of a service (say \"FooService\") are usually called a driver in the other components (so \"FooDriver\").\n\nI think this class should be renamed to \"BrowsingHistoryDriver\" to use the same naming pattern.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11ca883_95f05f37",
+        "filename": "components/history/core/browser/browsing_history_service_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T13:03:58Z",
+      "side": 1,
+      "message": "It looks like this class does two things:\n1. expose some callbacks that embedder may be interested in listening to,\n2. expose API that embedder needs to implement to have a working BrowsingHistoryService.\n\nShould they be two separates interfaces?",
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
