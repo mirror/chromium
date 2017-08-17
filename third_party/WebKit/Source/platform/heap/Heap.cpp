@@ -226,7 +226,7 @@ void ThreadHeap::PushTraceCallback(void* object, TraceCallback callback) {
   *slot = CallbackStack::Item(object, callback);
 }
 
-bool ThreadHeap::PopAndInvokeTraceCallback(Visitor* visitor) {
+ALWAYS_INLINE bool ThreadHeap::PopAndInvokeTraceCallback(Visitor* visitor) {
   CallbackStack::Item* item = marking_stack_->Pop();
   if (!item)
     return false;

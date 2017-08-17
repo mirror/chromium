@@ -801,11 +801,7 @@ void LayoutTable::InvalidateCollapsedBorders() {
   SetMayNeedPaintInvalidation();
 }
 
-void LayoutTable::InvalidateCollapsedBordersForAllCellsIfNeeded() {
-  DCHECK(ShouldCollapseBorders());
-
-  if (!needs_invalidate_collapsed_borders_for_all_cells_)
-    return;
+void LayoutTable::InvalidateCollapsedBordersForAllCells() {
   needs_invalidate_collapsed_borders_for_all_cells_ = false;
 
   for (LayoutObject* section = FirstChild(); section;
