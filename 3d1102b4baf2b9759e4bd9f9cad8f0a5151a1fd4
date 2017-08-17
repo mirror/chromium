@@ -70,6 +70,75 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8f4861_59913b4d",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T00:25:51Z",
+      "side": 1,
+      "message": "do we need to set the windowBackground to black or does this flag ensure no window background is shown?",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f98c50c_1f274f8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T00:25:51Z",
+      "side": 1,
+      "message": "nit, no need for public in interface methods.  they\u0027re all public",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55e95d2_456b0312",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T00:25:51Z",
+      "side": 1,
+      "message": "Did you see that this works?  I recall trying this in the past (and I just tried it locally) and I can never get FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY to return true.\n\nI tried setting \"Don\u0027t keep activities\" and returning to a non-VR SeparateTask CCT.  I also tried without, but in those cases you get no signal at all.  How were you able to get this to return as you expect?  Does it work for non-vr activities?",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 55
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
