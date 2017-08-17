@@ -77,10 +77,11 @@ CheckerImagingDecision GetLoadDecision(const PaintImage& image) {
 }
 
 CheckerImagingDecision GetSizeDecision(const PaintImage& image,
+                                       const SkIRect& src_rect,
                                        size_t max_bytes) {
   base::CheckedNumeric<size_t> checked_size = 4;
-  checked_size *= image.width();
-  checked_size *= image.height();
+  checked_size *= src_rect.width();
+  checked_size *= src_rect.height();
   size_t size = checked_size.ValueOrDefault(std::numeric_limits<size_t>::max());
 
   if (size < kMinImageSizeToCheckerBytes)
@@ -92,6 +93,7 @@ CheckerImagingDecision GetSizeDecision(const PaintImage& image,
 }
 
 CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
+                                                 const SkIRect& src_rect,
                                                  size_t max_bytes) {
   CheckerImagingDecision decision = GetAnimationDecision(image);
   if (decision != CheckerImagingDecision::kCanChecker)
@@ -101,7 +103,7 @@ CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
   if (decision != CheckerImagingDecision::kCanChecker)
     return decision;
 
-  return GetSizeDecision(image, max_bytes);
+  return GetSizeDecision(image, src_rect, max_bytes);
 }
 
 }  // namespace
@@ -288,7 +290,8 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
     // frames, checkering which would cause each video frame to flash and
     // therefore should not be checkered.
     CheckerImagingDecision decision = GetCheckerImagingDecision(
-        image, image_controller_->image_cache_max_limit_bytes());
+        image, draw_image.src_rect(),
+        image_controller_->image_cache_max_limit_bytes());
     it->second.policy = decision == CheckerImagingDecision::kCanChecker
                             ? DecodePolicy::ASYNC
                             : DecodePolicy::SYNC;
@@ -339,9 +342,10 @@ void CheckerImageTracker::UpdateDecodeState(const DrawImage& draw_image,
 void CheckerImageTracker::ScheduleNextImageDecode() {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "CheckerImageTracker::ScheduleNextImageDecode");
+  return;
   // We can have only one outstanding decode pending completion with the decode
   // service. We'll come back here when it is completed.
-  if (outstanding_image_decode_.has_value())
+  /*if (outstanding_image_decode_.has_value())
     return;
 
   if (image_decode_queue_.empty())
@@ -394,7 +398,7 @@ void CheckerImageTracker::ScheduleNextImageDecode() {
                                  weak_factory_.GetWeakPtr(), image_id));
 
   image_id_to_decode_.emplace(image_id, base::MakeUnique<ScopedDecodeHolder>(
-                                            image_controller_, request_id));
+                                            image_controller_, request_id));*/
 }
 
 }  // namespace cc

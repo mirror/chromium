@@ -283,7 +283,8 @@ bool IsMainFrameBeforeActivationEnabled() {
 }
 
 bool IsCheckerImagingEnabled() {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  return true;
+  /*if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           cc::switches::kDisableCheckerImaging))
     return false;
 
@@ -294,7 +295,7 @@ bool IsCheckerImagingEnabled() {
   if (base::FeatureList::IsEnabled(features::kCheckerImaging))
     return true;
 
-  return false;
+  return false;*/
 }
 
 std::unique_ptr<base::DictionaryValue> GetFeatureStatus() {
