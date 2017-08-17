@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17e28c9e_24083e57",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T23:04:22Z",
+      "side": 1,
+      "message": "Stored in a bool when we have blur cache.",
+      "parentUuid": "4af1b1ff_629ad0f0",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "e765e7b24f0c08ecad4f456517a6514cf728cd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4319af5c_8f373cbf",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "e765e7b24f0c08ecad4f456517a6514cf728cd13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0398875c_d3ca6063",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-17T23:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4319af5c_8f373cbf",
+      "range": {
+        "startLine": 598,
+        "startChar": 38,
+        "endLine": 598,
+        "endChar": 77
+      },
+      "revId": "e765e7b24f0c08ecad4f456517a6514cf728cd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
