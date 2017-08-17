@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc71f8c_25c4449d",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T17:31:51Z",
+      "side": 1,
+      "message": "Is there a reason why we must call this before OnConnectionError()? If yes, please add a comment, because it is not obvious to me. If not, would the destructor of |bindings_| do this for us if we were to remove this line?",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad81bc6e_fb42c31c",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T17:31:51Z",
+      "side": 1,
+      "message": "Even though this probably leads to the correct behavior, it is misleading for the reader to call a method named OnConnectionError() for a case that is clearly not a connection error. If the logic for handling a connection error is the same as for destruction, I recommend we rename the method to something like \"Uninitialize()\".",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19d0674_f0513c4a",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T17:31:51Z",
+      "side": 1,
+      "message": "The method name \"Add\" does not reveal the intent of a call to it very well. How about naming it \"BindRequest\"?",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f7511c_62bea220",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T17:31:51Z",
+      "side": 1,
+      "message": "With the method name now revealing what it does (which is great), this comment now seems awfully redundant. I recommend we remove it.",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f567db_2dd64749",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-17T17:31:51Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
