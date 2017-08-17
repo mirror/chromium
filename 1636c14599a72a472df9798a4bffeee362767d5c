@@ -16,6 +16,24 @@
       "revId": "1636c14599a72a472df9798a4bffeee362767d5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f01aac_e9b9afe8",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-17T09:56:46Z",
+      "side": 1,
+      "message": "That sounds good. Updated.",
+      "parentUuid": "53b43735_00d483d9",
+      "revId": "1636c14599a72a472df9798a4bffeee362767d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
