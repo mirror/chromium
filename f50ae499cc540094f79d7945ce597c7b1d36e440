@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "5e3da9dc_bd9b8efd",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-17T19:06:31Z",
+      "side": 1,
+      "message": "If the weak pointers were never referenced, we weren\u0027t calling OnCookieChangedAsyncHelper, right?  Since in the old version we had to dereference the weak_ptrs to call that method.",
+      "parentUuid": "59df8303_5ccbf01b",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
