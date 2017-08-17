@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3327bf28_0ea7507e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T10:13:17Z",
+      "side": 1,
+      "message": "no, for example tablets still use the bookmarks section afaik",
+      "range": {
+        "startLine": 82,
+        "startChar": 20,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "1759706da791fe632d4c7a5103f65ebc65b2b197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54867c31_daa1cbe0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T10:13:17Z",
+      "side": 1,
+      "message": "progressIndicator seems more descriptive, `progress` would be the 0-100 value for example",
+      "range": {
+        "startLine": 135,
+        "startChar": 12,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "1759706da791fe632d4c7a5103f65ebc65b2b197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4531a2cb_63f58c2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T10:13:17Z",
+      "side": 1,
+      "message": "cast unnecessary, same above (new in O SDK)",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 35
+      },
+      "revId": "1759706da791fe632d4c7a5103f65ebc65b2b197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5047f54_6a2f84a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T10:13:17Z",
+      "side": 1,
+      "message": "labmdas? :D",
+      "range": {
+        "startLine": 140,
+        "startChar": 54,
+        "endLine": 140,
+        "endChar": 69
+      },
+      "revId": "1759706da791fe632d4c7a5103f65ebc65b2b197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
