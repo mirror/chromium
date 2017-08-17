@@ -58,6 +58,11 @@ bool NativeViewHost::SetCornerRadius(int corner_radius) {
   return native_wrapper_->SetCornerRadius(corner_radius);
 }
 
+void NativeViewHost::SetRenderingSize(const gfx::Size& size) {
+  rendering_size_ = size;
+  InvalidateLayout();
+}
+
 void NativeViewHost::NativeViewDestroyed() {
   // Detach so we can clear our state and notify the native_wrapper_ to release
   // ref on the native view.
@@ -99,9 +104,11 @@ void NativeViewHost::Layout() {
     // view.  Also, they should be positioned respecting the border insets
     // of the native view.
     gfx::Rect local_bounds = ConvertRectToWidget(GetContentsBounds());
-    native_wrapper_->ShowWidget(local_bounds.x(), local_bounds.y(),
-                                local_bounds.width(),
-                                local_bounds.height());
+    gfx::Size rendering_size =
+        rendering_size_.IsEmpty() ? local_bounds.size() : rendering_size_;
+    native_wrapper_->ShowWidget(
+        local_bounds.x(), local_bounds.y(), local_bounds.width(),
+        local_bounds.height(), rendering_size.width(), rendering_size.height());
   } else {
     native_wrapper_->HideWidget();
   }

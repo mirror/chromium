@@ -262,6 +262,9 @@ gfx::Rect Window::GetBoundsInScreen() const {
 }
 
 void Window::SetTransform(const gfx::Transform& transform) {
+  if (transform == this->transform())
+    return;
+
   for (WindowObserver& observer : observers_)
     observer.OnWindowTransforming(this);
   gfx::Transform old_transform = layer()->transform();
