@@ -1037,6 +1037,10 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                                          const volatile GLbyte* key);
   void DoApplyScreenSpaceAntialiasingCHROMIUM();
 
+  void BindImage(uint32_t client_texture_id,
+                 uint32_t texture_target,
+                 gl::GLImage* image,
+                 bool can_bind_to_sampler) override;
   void DoBindTexImage2DCHROMIUM(
       GLenum target,
       GLint image_id);
@@ -17940,6 +17944,19 @@ void GLES2DecoderImpl::DoPushGroupMarkerEXT(
 }
 
 void GLES2DecoderImpl::DoPopGroupMarkerEXT(void) {
+}
+
+void GLES2DecoderImpl::BindImage(uint32_t client_texture_id,
+                                 uint32_t texture_target,
+                                 gl::GLImage* image,
+                                 bool can_bind_to_sampler) {
+  TextureRef* ref = texture_manager()->GetTexture(client_texture_id);
+  if (ref) {
+    texture_manager()->SetLevelImage(ref, texture_target, 0, image,
+                                     can_bind_to_sampler
+                                         ? gpu::gles2::Texture::BOUND
+                                         : gpu::gles2::Texture::UNBOUND);
+  }
 }
 
 void GLES2DecoderImpl::DoBindTexImage2DCHROMIUM(
