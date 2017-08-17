@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d608a0d_20a1e0ec",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "sounds like android:textAppearance\u003d\"BlueButtonText2\" or BlueLink1 would be appropriate.\n\nexample style config you could use\n\n\u003cstyle name\u003d\"PasswordEntryName\" parent\u003d\"BlueButtonText2\"\u003e \u003c!-- Or BlueLink1 --\u003e\n        \u003citem name\u003d\"android:layout_width\"\u003ematch_parent\u003c/item\u003e\n        \u003citem name\u003d\"android:layout_height\"\u003ewrap_content\u003c/item\u003e\n        \u003citem name\u003d\"android:layout_marginTop\"\u003e15dp\u003c/item\u003e\n        \u003citem name\u003d\"android:layout_marginStart\"\u003e15dp\u003c/item\u003e\n        \u003c!-- Although if everything has the same start margin you might as well make it a paddingStart on the layout --\u003e\n    \u003c/style\u003e\n\ngoes in //chrome/android/java/res/values-v17/styles.xml",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848bd16f_0a063464",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "is the marginTop right now that you removed the above view?",
+      "range": {
+        "startLine": 24,
+        "startChar": 38,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5c2620_2eb3466a",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "Does that have any visual effect? I\u0027d expect that\u0027s the default behaviour.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf3e2f8_4fe4ad61",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "if the file is not used anywhere, delete it?",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1316937_95f6786d",
+        "filename": "chrome/android/java/res/layout/password_entry_exception.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "does that still work now that it\u0027s empty?",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98100644_e5358276",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "you can also set the content description in XML",
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fb1cd0_54bd7165",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T14:42:38Z",
+      "side": 1,
+      "message": "now unused?",
+      "range": {
+        "startLine": 333,
+        "startChar": 17,
+        "endLine": 333,
+        "endChar": 40
+      },
+      "revId": "4fb635b75177ea4caad2650b13ffeead202ed1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
