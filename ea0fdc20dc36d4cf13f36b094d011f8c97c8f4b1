@@ -366,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "a7338d9c_b93e0fba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "Still applies. You are looking at the data here right? in getCount() you say \"I have 42 pages of stuff\", which means that the adapter can ask to instatiate any page between 0 and 41, but not 42. It should not ask it in the first place.\n\nYou might not have the page itself, which you look up in mTileSectionLayouts. so the check at line 91 is right.",
+      "parentUuid": "f4568b78_1c0c9373",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b160850_17fb59f2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 1
@@ -410,6 +434,30 @@
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b055a2_7562d5ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "Resolving the comment :)",
+      "parentUuid": "8c48ea27_411ad1c3",
+      "range": {
+        "startLine": 103,
+        "startChar": 16,
+        "endLine": 103,
+        "endChar": 42
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -460,6 +508,30 @@
     },
     {
       "key": {
+        "uuid": "87c89808_28cc45a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "looks about right",
+      "parentUuid": "e66b0c35_cf659980",
+      "range": {
+        "startLine": 109,
+        "startChar": 83,
+        "endLine": 109,
+        "endChar": 84
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40bfb421_6e468b31",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
         "patchSetId": 1
@@ -504,6 +576,30 @@
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4478754_d6b4f168",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "resolved",
+      "parentUuid": "9c676d78_4f952aa0",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -601,6 +697,30 @@
     },
     {
       "key": {
+        "uuid": "006569d4_540d323a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "you can have static classes in an interface :)",
+      "parentUuid": "807e263b_25ad1f4d",
+      "range": {
+        "startLine": 134,
+        "startChar": 24,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "478c53e8_b69582ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
         "patchSetId": 1
@@ -641,6 +761,53 @@
         "startChar": 52,
         "endLine": 15,
         "endChar": 72
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872806c9_765daa1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "would it be worth it to move some implementations in here there? update icon view and offline badge, binddatasource seem like good candidates",
+      "parentUuid": "3e57e5b9_80d1ff62",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c212f7d_d62ffca7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T11:21:48Z",
+      "side": 1,
+      "message": "why not? in which cases do we have more than one section but don\u0027t use explore?",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 41
       },
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
