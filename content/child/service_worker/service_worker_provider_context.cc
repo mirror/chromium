@@ -12,6 +12,7 @@
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
+#include "content/child/service_worker/service_worker_subresource_loader.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
 
@@ -24,8 +25,19 @@ struct ServiceWorkerProviderContext::ControlleeState {
 
   std::unique_ptr<ServiceWorkerHandleReference> controller;
 
-  // Used to dispatch events to the controller.
+  // S13nServiceWorker:
+  // Used to intercept requests from the controllee and dispatch them
+  // as an event to the controller ServiceWorker.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher;
+  mojom::URLLoaderFactoryPtr subresource_loader_factory;
+
+  // S13nServiceWorker:
+  // Contains a set of default loader factories for the associated loading
+  // context. Is used when we create a subresource loader for controllees.
+  // This is non-null only if the provider is created for controllees, and if
+  // the loading context, e.g. a frame, provides the loading factory getter
+  // for default loaders.
+  scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter_;
 
   // Tracks feature usage for UseCounter.
   std::set<uint32_t> used_features;
@@ -45,10 +57,12 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerProviderAssociatedRequest request,
-    ServiceWorkerDispatcher* dispatcher)
+    ServiceWorkerDispatcher* dispatcher,
+    scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      binding_(this, std::move(request)) {
+      binding_(this, std::move(request)),
+      default_loader_factory_getter_(default_loader_factory_getter) {
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER)
     controller_state_ = base::MakeUnique<ControllerState>();
   else
@@ -111,8 +125,13 @@ void ServiceWorkerProviderContext::SetController(
          state->controller->handle_id() != kInvalidServiceWorkerHandleId);
   state->controller = std::move(controller);
   state->used_features = used_features;
-  if (event_dispatcher_ptr_info.is_valid())
+  if (event_dispatcher_ptr_info.is_valid()) {
     state->event_dispatcher.Bind(std::move(event_dispatcher_ptr_info));
+    ServiceWorkerSubresourceLoaderFactory::CreateAndBind(
+        mojo::MakeRequest(&state->subresource_loader_factory),
+        event_dispatcher_.get(), state->default_loader_factory_getter,
+        state->controller->url().GetOrigin());
+  }
 }
 
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {
@@ -121,10 +140,10 @@ ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {
   return controllee_state_->controller.get();
 }
 
-mojom::ServiceWorkerEventDispatcher*
-ServiceWorkerProviderContext::event_dispatcher() {
+mojom::URLLoaderFactory*
+ServiceWorkerProviderContext::subresource_loader_factory() {
   DCHECK(controllee_state_);
-  return controllee_state_->event_dispatcher.get();
+  return controllee_state_->subresource_loader_factory.get();
 }
 
 void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
