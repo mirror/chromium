@@ -93,6 +93,7 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
   void SetBaseBackgroundColor(WebColor) override;
   WebLocalFrameImpl* LocalRoot() const override;
   WebInputMethodController* GetActiveWebInputMethodController() const override;
+  void DidCommitCompositorFrame() override;
 
   // WebFrameWidgetBase overrides:
   bool ForSubframe() const override { return false; }

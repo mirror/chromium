@@ -245,6 +245,10 @@ HitTestResult WebViewFrameWidget::CoreHitTestResultAt(const WebPoint& point) {
   return web_view_->CoreHitTestResultAt(point);
 }
 
+void WebViewFrameWidget::DidCommitCompositorFrame() {
+  return web_view_->DidCommitCompositorFrame();
+}
+
 DEFINE_TRACE(WebViewFrameWidget) {
   visitor->Trace(main_frame_);
   WebFrameWidgetBase::Trace(visitor);

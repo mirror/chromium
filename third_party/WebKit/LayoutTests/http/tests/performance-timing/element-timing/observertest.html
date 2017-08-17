@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+<title>Performance Element Timing Test: PerformanceObserver Base Test</title>
+</head>
+<body>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script>
+        var entries;
+        var observer = new PerformanceObserver(function(entryList) {
+            entries = entryList.getEntries();
+            entries.sort(function(a, b) { return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0); })
+        });
+        observer.observe({entryTypes: ["elementtiming"]});
+
+        async_test(function (t) {
+            testRunner.capturePixelsAsyncThen(t.step_func_done(function() {
+              assert_equals(entries.length, 3, "Expected to observe 3 elementtiming entries");
+              assert_equals(entries[0].entryType, "elementtiming");
+              assert_equals(entries[0].name, "element1");
+              assert_equals(entries[0].duration, 0);
+              assert_equals(entries[1].entryType, "elementtiming");
+              assert_equals(entries[1].name, "element2");
+              assert_equals(entries[1].duration, 0);
+              assert_equals(entries[2].entryType, "elementtiming");
+              assert_equals(entries[2].name, "element3");
+              assert_equals(entries[2].duration, 0);
+            }));
+      }, "Performance elementtiming entries are observable");
+    </script>
+
+    <h1 elementtiming="element1">Element 1</h1>
+    <div elementtiming="element2">Element 2</div>
+    <p elementtiming="element3">Element 3</p>
+    <p>No timing</p>
+</body>
+</html>

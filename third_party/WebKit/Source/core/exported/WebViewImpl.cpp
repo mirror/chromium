@@ -107,6 +107,7 @@
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
+#include "core/timing/TextElementTiming.h"
 #include "platform/ContextMenu.h"
 #include "platform/ContextMenuItem.h"
 #include "platform/Cursor.h"
@@ -4129,6 +4130,14 @@ LocalFrame* WebViewImpl::FocusedLocalFrameInWidget() const {
 
 LocalFrame* WebViewImpl::FocusedLocalFrameAvailableForIme() const {
   return ime_accept_events_ ? FocusedLocalFrameInWidget() : nullptr;
+}
+
+void WebViewImpl::DidCommitCompositorFrame() {
+  if (!MainFrameImpl())
+    return;
+  Document* document = MainFrameImpl()->GetFrame()->GetDocument();
+  if (document)
+    TextElementTiming::From(*document).DidCommitCompositorFrame();
 }
 
 }  // namespace blink

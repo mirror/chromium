@@ -225,6 +225,9 @@ class WebWidget {
   // Called by client to request showing the context menu.
   virtual void ShowContextMenu(WebMenuSourceType) {}
 
+  // Called when a compositor frame commit operation finishes.
+  virtual void DidCommitCompositorFrame() {}
+
  protected:
   ~WebWidget() {}
 };

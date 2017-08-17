@@ -40,6 +40,7 @@
 #include "core/layout/api/LayoutTextItem.h"
 #include "core/layout/svg/LayoutSVGInlineText.h"
 #include "core/svg/SVGForeignObjectElement.h"
+#include "core/timing/TextElementTiming.h"
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -346,6 +347,7 @@ void Text::AttachLayoutTree(AttachContext& context) {
       LayoutTreeBuilderForText(*this, parent_layout_object,
                                style_parent->MutableComputedStyle())
           .CreateLayoutObject();
+      TextElementTiming::From(GetDocument()).TrackTextElementIfNeeded(this);
     }
   }
   CharacterData::AttachLayoutTree(context);
