@@ -97,7 +97,7 @@ void HTMLOListElement::ParseAttribute(
   }
 }
 
-int HTMLOListElement::start() const {
+int HTMLOListElement::startFromJavascript() const {
   if (has_explicit_start_)
     return start_;
 
@@ -105,13 +105,12 @@ int HTMLOListElement::start() const {
     UseCounter::Count(
         GetDocument(),
         WebFeature::kHTMLOListElementStartGetterReversedWithoutStartAttribute);
-    return ItemCount();
   }
 
   return 1;
 }
 
-void HTMLOListElement::setStart(int start) {
+void HTMLOListElement::setStartFromJavascript(int start) {
   SetIntegralAttribute(startAttr, start);
 }
 
