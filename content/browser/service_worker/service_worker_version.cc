@@ -350,9 +350,6 @@ void ServiceWorkerVersion::SetStatus(Status status) {
       RestartTick(&skip_waiting_time_);
     } else if (status == ACTIVATED) {
       ClearTick(&skip_waiting_time_);
-      for (int request_id : pending_skip_waiting_requests_)
-        DidSkipWaiting(request_id);
-      pending_skip_waiting_requests_.clear();
     }
   }
 
@@ -1326,27 +1323,18 @@ void ServiceWorkerVersion::OnNavigateClientFinished(
 
 void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
   skip_waiting_ = true;
-  if (status_ != INSTALLED)
-    return DidSkipWaiting(request_id);
+  embedded_worker_->SendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));
 
-  if (!context_)
+  if (status_ != INSTALLED || !context_)
     return;
+
   ServiceWorkerRegistration* registration =
       context_->GetLiveRegistration(registration_id_);
   if (!registration)
     return;
   if (skip_waiting_time_.is_null())
     RestartTick(&skip_waiting_time_);
-  pending_skip_waiting_requests_.push_back(request_id);
-  if (pending_skip_waiting_requests_.size() == 1)
-    registration->ActivateWaitingVersionWhenReady();
-}
-
-void ServiceWorkerVersion::DidSkipWaiting(int request_id) {
-  if (running_status() == EmbeddedWorkerStatus::STARTING ||
-      running_status() == EmbeddedWorkerStatus::RUNNING) {
-    embedded_worker_->SendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));
-  }
+  registration->ActivateWaitingVersionWhenReady();
 }
 
 void ServiceWorkerVersion::OnClaimClients(int request_id) {

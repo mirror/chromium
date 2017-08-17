@@ -783,7 +783,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   bool is_update_scheduled_ = false;
   bool in_dtor_ = false;
 
-  std::vector<int> pending_skip_waiting_requests_;
   base::TimeTicks skip_waiting_time_;
   base::TimeTicks no_controllees_time_;
 
