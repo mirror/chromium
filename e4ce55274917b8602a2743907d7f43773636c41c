@@ -16,6 +16,29 @@
       "revId": "e4ce55274917b8602a2743907d7f43773636c41c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ef81b5_89997986",
+        "filename": "base/memory/discardable_shared_memory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-17T01:59:30Z",
+      "side": 1,
+      "message": "From what I can tell from the code in DiscardableSharedMemory::Lock(...) it ends up calling into LockPages(const SharedMemory\u0026 memory, size_t offset, size_t length), where memory.handle() returns the invalid handle mentioned above.\n\nWe currently have this:\n\n  DiscardableSharedMemory::LockResult LockPages(const SharedMemory\u0026 memory,\n                                                size_t offset,\n                                                size_t length) {\n  #if defined(OS_ANDROID)\n    SharedMemoryHandle handle \u003d memory.handle();\n    if (handle.IsValid()) {\n      int pin_result \u003d ashmem_pin_region(handle.GetHandle(), offset, length);\n      if (pin_result \u003d\u003d ASHMEM_WAS_PURGED)\n        return DiscardableSharedMemory::PURGED;\n      if (pin_result \u003c 0)\n        return DiscardableSharedMemory::FAILED;\n    }\n  #endif\n\n    return DiscardableSharedMemory::SUCCESS;\n  }\n\nI don\u0027t know the details of ashmem_pin_region, but I\u0027m guessing that the idea is that if neither the PURGED state nor the FAILED state occured, we would want to return SUCCESS? That happens now if the ashmem_pin_region() call was a success (if my previous assumption is correct), or if the handle is invalid.\n\nTo make the test pass, one could do something along the lines of:\n\n  DiscardableSharedMemory::LockResult LockPages(const SharedMemory\u0026 memory,\n                                                size_t offset,\n                                                size_t length) {\n  #if defined(OS_ANDROID)\n    SharedMemoryHandle handle \u003d memory.handle();\n    if (!handle.IsValid())\n      return DiscardableSharedMemory::FAILED;  // NOTE: New code here.\n\n    int pin_result \u003d ashmem_pin_region(handle.GetHandle(), offset, length);\n    if (pin_result \u003d\u003d ASHMEM_WAS_PURGED)\n      return DiscardableSharedMemory::PURGED;\n    if (pin_result \u003c 0)\n      return DiscardableSharedMemory::FAILED;\n  #endif\n\n    return DiscardableSharedMemory::SUCCESS;\n  }\n\nHowever, this doesn\u0027t really test that the ashmem_pin_region(...) call fails, since it\u0027s never invoked, either in the current code path, nor with this change.",
+      "range": {
+        "startLine": 256,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 42
+      },
+      "revId": "e4ce55274917b8602a2743907d7f43773636c41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
