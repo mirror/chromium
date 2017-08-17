@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1806804_312e4691",
+        "filename": "media/gpu/vt_video_decode_accelerator_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-17T18:27:43Z",
+      "side": 1,
+      "message": "So what happens if we get full-range video?\nDoes full-range video not work on mac?",
+      "range": {
+        "startLine": 375,
+        "startChar": 9,
+        "endLine": 375,
+        "endChar": 56
+      },
+      "revId": "73f47fe6f09c322bdce1726977db8366731ba7cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
