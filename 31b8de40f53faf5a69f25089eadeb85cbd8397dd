@@ -69,6 +69,24 @@
       "revId": "31b8de40f53faf5a69f25089eadeb85cbd8397dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cac8bfd_12ee7110",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2171,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-17T14:29:41Z",
+      "side": 1,
+      "message": "drive-by (since I did a similar removal yesterday): this will need to also be removed from all the files that define crash keys as well: chrome/common/crash_keys.cc, chromecast/crash/cast_crash_keys.cc, chrome/app/chrome_crash_reporter_client_win.cc, android_webview/common/crash_reporter/crash_keys.cc.",
+      "parentUuid": "f19a9c54_ad84404e",
+      "revId": "31b8de40f53faf5a69f25089eadeb85cbd8397dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
