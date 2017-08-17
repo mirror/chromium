@@ -59,8 +59,9 @@ class ContentSettingsPattern {
     DISJOINT_ORDER_PRE = 2,
   };
 
-  // This enum is used to back an UMA histogram, the order of existing values
-  // should not be changed. New values should only append before SCHEME_MAX.
+  // This enum is used to back the UMA histogram ContentSettingScheme,
+  // the order of existing values should not be changed.
+  // New values should only be appended before SCHEME_MAX.
   // Also keep it consistent with kSchemeNames in content_settings_pattern.cc.
   enum SchemeType {
     SCHEME_WILDCARD,
@@ -69,6 +70,7 @@ class ContentSettingsPattern {
     SCHEME_HTTPS,
     SCHEME_FILE,
     SCHEME_CHROMEEXTENSION,
+    SCHEME_CHROMESEARCH,
     SCHEME_MAX,
   };
 
@@ -88,7 +90,7 @@ class ContentSettingsPattern {
     // - IPv4 or IPv6
     // - hostname
     // - domain
-    // - empty string if the |is_host_wildcard flag is set.
+    // - empty string if the |is_host_wildcard| flag is set.
     std::string host;
 
     // True if the domain wildcard is set.
