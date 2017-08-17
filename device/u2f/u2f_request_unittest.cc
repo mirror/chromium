@@ -47,21 +47,12 @@ class TestResponseCallback {
   ~TestResponseCallback() {}
 
   void ReceivedCallback(U2fReturnCode status,
-                        const std::vector<uint8_t>& data) {
-    closure_.Run();
-  }
-
-  void WaitForCallback() {
-    closure_ = run_loop_.QuitClosure();
-    run_loop_.Run();
-  }
+                        const std::vector<uint8_t>& data) {}
 
   U2fRequest::ResponseCallback& callback() { return callback_; }
 
  private:
-  base::Closure closure_;
   U2fRequest::ResponseCallback callback_;
-  base::RunLoop run_loop_;
 };
 
 class U2fRequestTest : public testing::Test {
@@ -84,7 +75,8 @@ TEST_F(U2fRequestTest, TestAddRemoveDevice) {
 
   TestResponseCallback cb;
   FakeU2fRequest request(cb.callback());
-  request.Enumerate();
+  request.hid_service_observer_.Add(hid_service);
+
   EXPECT_EQ(static_cast<size_t>(0), request.devices_.size());
 
   // Add one U2F device
@@ -157,7 +149,6 @@ TEST_F(U2fRequestTest, TestBasicMachine) {
       new HidDeviceInfo(kTestDeviceId0, 0, 0, "Test Fido Device", "123FIDO",
                         kHIDBusTypeUSB, c_info, 64, 64, 0));
   hid_service->AddDevice(u2f_device);
-  cb.WaitForCallback();
   EXPECT_EQ(U2fRequest::State::BUSY, request.state_);
 }
 

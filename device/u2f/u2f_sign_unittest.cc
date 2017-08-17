@@ -43,22 +43,28 @@ class TestSignCallback {
   void ReceivedCallback(U2fReturnCode status_code,
                         const std::vector<uint8_t>& response) {
     response_ = std::make_pair(status_code, response);
-    closure_.Run();
+    if (is_callback_async) {
+      closure_.Run();
+    }
   }
 
   std::pair<U2fReturnCode, std::vector<uint8_t>>& WaitForCallback() {
-    closure_ = run_loop_.QuitClosure();
-    run_loop_.Run();
+    if (is_callback_async) {
+      closure_ = run_loop_.QuitClosure();
+      run_loop_.Run();
+    }
     return response_;
   }
 
   const U2fRequest::ResponseCallback& callback() { return callback_; }
+  void SetCallbackAsync() { is_callback_async = true; }
 
  private:
   std::pair<U2fReturnCode, std::vector<uint8_t>> response_;
   base::Closure closure_;
   U2fRequest::ResponseCallback callback_;
   base::RunLoop run_loop_;
+  bool is_callback_async = false;
 };
 
 TEST_F(U2fSignTest, TestSignSuccess) {
@@ -73,8 +79,8 @@ TEST_F(U2fSignTest, TestSignSuccess) {
   std::unique_ptr<U2fRequest> request =
       U2fSign::TrySign(handles, std::vector<uint8_t>(32),
                        std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
@@ -96,12 +102,13 @@ TEST_F(U2fSignTest, TestDelayedSuccess) {
       .Times(2)
       .WillRepeatedly(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestSignCallback cb;
+  cb.SetCallbackAsync();
 
   std::unique_ptr<U2fRequest> request =
       U2fSign::TrySign(handles, std::vector<uint8_t>(32),
                        std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
@@ -134,8 +141,8 @@ TEST_F(U2fSignTest, TestMultipleHandles) {
   std::unique_ptr<U2fRequest> request =
       U2fSign::TrySign(handles, std::vector<uint8_t>(32),
                        std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
@@ -167,9 +174,9 @@ TEST_F(U2fSignTest, TestMultipleDevices) {
   std::unique_ptr<U2fRequest> request =
       U2fSign::TrySign(handles, std::vector<uint8_t>(32),
                        std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
@@ -185,7 +192,6 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
   std::vector<std::vector<uint8_t>> handles = {key0, key1};
   std::unique_ptr<MockU2fDevice> device0(new MockU2fDevice());
   std::unique_ptr<MockU2fDevice> device1(new MockU2fDevice());
-
   EXPECT_CALL(*device0.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WrongData))
       .WillOnce(testing::Invoke(MockU2fDevice::NotSatisfied));
@@ -204,9 +210,9 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
   std::unique_ptr<U2fRequest> request =
       U2fSign::TrySign(handles, std::vector<uint8_t>(32),
                        std::vector<uint8_t>(32), cb.callback());
-  request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
+  request->Start();
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
       cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);

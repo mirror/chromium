@@ -35,11 +35,6 @@ class HidService {
     // removing the device from HidService. Observers should not depend on the
     // order in which they are notified of the OnDeviceRemove event.
     virtual void OnDeviceRemoved(scoped_refptr<HidDeviceInfo> info);
-    // Notifies all observers again, after having first notified all observers
-    // with OnDeviceRemoved and removed the device from internal structures.
-    // Each observer must not depend on any other observers' awareness of the
-    // device as they could be cleaned up in any order.
-    virtual void OnDeviceRemovedCleanup(scoped_refptr<HidDeviceInfo> info);
   };
 
   using GetDevicesCallback =
