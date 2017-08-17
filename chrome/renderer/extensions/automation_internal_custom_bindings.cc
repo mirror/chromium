@@ -73,9 +73,8 @@ static gfx::Rect ComputeGlobalNodeBounds(
     gfx::RectF local_bounds = gfx::RectF()) {
   gfx::RectF bounds = local_bounds;
 
+  bounds = cache->tree.RelativeToTreeBounds(node, bounds);
   while (node) {
-    bounds = cache->tree.RelativeToTreeBounds(node, bounds);
-
     TreeCache* previous_cache = cache;
     ui::AXNode* parent = cache->owner->GetParent(cache->tree.root(), &cache);
     if (parent == node)
