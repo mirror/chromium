@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb4ff51_9daa8592",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T20:41:59Z",
+      "side": 1,
+      "message": "Why FATAL?",
+      "revId": "5675d87343acc2fcb10a5c57108355c4b7d675fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
