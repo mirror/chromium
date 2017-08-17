@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d47249_392421a6",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-17T06:12:39Z",
+      "side": 1,
+      "message": "Please add comment that why check for H264 but no need to check other codecs.",
+      "revId": "b9fc7fccdbc58eb93719f87093e4617d0761d1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe5417e_7154c26a",
+        "filename": "content/renderer/media/gpu/rtc_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-17T06:12:39Z",
+      "side": 1,
+      "message": "add checking for 0 here\nEXPECT_EQ(0, rtc_decoder_-\u003eGetVDAErrorCounterForTesting());",
+      "revId": "b9fc7fccdbc58eb93719f87093e4617d0761d1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
