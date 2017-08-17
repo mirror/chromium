@@ -66,6 +66,21 @@
 
 namespace blink {
 
+namespace {
+
+WebServiceWorkerUpdateViaCache ParseUpdateViaCache(const String& value) {
+  if (value == "imports")
+    return WebServiceWorkerUpdateViaCache::kImports;
+  if (value == "all")
+    return WebServiceWorkerUpdateViaCache::kAll;
+  if (value == "none")
+    return WebServiceWorkerUpdateViaCache::kNone;
+  // Default value
+  return WebServiceWorkerUpdateViaCache::kImports;
+}
+
+}  // namespace
+
 class GetRegistrationCallback : public WebServiceWorkerProvider::
                                     WebServiceWorkerGetRegistrationCallbacks {
  public:
@@ -156,6 +171,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
     ExecutionContext* execution_context,
     const KURL& raw_script_url,
     const KURL& scope,
+    WebServiceWorkerUpdateViaCache update_via_cache,
     std::unique_ptr<RegistrationCallbacks> callbacks) {
   if (!provider_) {
     callbacks->OnError(
@@ -261,7 +277,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
     }
   }
 
-  provider_->RegisterServiceWorker(pattern_url, script_url,
+  provider_->RegisterServiceWorker(pattern_url, script_url, update_via_cache,
                                    std::move(callbacks));
 }
 
@@ -294,8 +310,11 @@ ScriptPromise ServiceWorkerContainer::registerServiceWorker(
   else
     pattern_url = execution_context->CompleteURL(options.scope());
 
+  WebServiceWorkerUpdateViaCache update_via_cache =
+      ParseUpdateViaCache(options.updateViaCache());
+
   RegisterServiceWorkerImpl(
-      execution_context, script_url, pattern_url,
+      execution_context, script_url, pattern_url, update_via_cache,
       WTF::MakeUnique<CallbackPromiseAdapter<ServiceWorkerRegistration,
                                              ServiceWorkerErrorForUpdate>>(
           resolver));

@@ -255,6 +255,7 @@ class ClearSiteDataThrottleBrowserTest : public ContentBrowserTest {
         base::BindOnce(
             &ServiceWorkerContextWrapper::RegisterServiceWorker,
             base::Unretained(service_worker_context), scope_url, js_url,
+            blink::WebServiceWorkerUpdateViaCache::kImports,
             base::Bind(
                 &ClearSiteDataThrottleBrowserTest::AddServiceWorkerCallback,
                 base::Unretained(this))));

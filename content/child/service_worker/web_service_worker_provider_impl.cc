@@ -65,9 +65,11 @@ void WebServiceWorkerProviderImpl::SetClient(
 void WebServiceWorkerProviderImpl::RegisterServiceWorker(
     const WebURL& pattern,
     const WebURL& script_url,
+    blink::WebServiceWorkerUpdateViaCache update_via_cache,
     std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks) {
   GetDispatcher()->RegisterServiceWorker(context_->provider_id(), pattern,
-                                         script_url, std::move(callbacks));
+                                         script_url, update_via_cache,
+                                         std::move(callbacks));
 }
 
 void WebServiceWorkerProviderImpl::GetRegistration(

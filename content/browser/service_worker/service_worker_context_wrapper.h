@@ -102,9 +102,11 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   // ServiceWorkerContext implementation:
   void AddObserver(ServiceWorkerContextObserver* observer) override;
   void RemoveObserver(ServiceWorkerContextObserver* observer) override;
-  void RegisterServiceWorker(const GURL& pattern,
-                             const GURL& script_url,
-                             const ResultCallback& continuation) override;
+  void RegisterServiceWorker(
+      const GURL& pattern,
+      const GURL& script_url,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache,
+      const ResultCallback& continuation) override;
   void UnregisterServiceWorker(const GURL& pattern,
                                const ResultCallback& continuation) override;
   void GetAllOriginsInfo(const GetUsageInfoCallback& callback) override;

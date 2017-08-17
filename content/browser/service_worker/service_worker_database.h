@@ -23,6 +23,7 @@
 #include "content/common/origin_trials/trial_token_validator.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerUpdateViaCache.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -35,7 +36,7 @@ class DB;
 class Env;
 class Status;
 class WriteBatch;
-}
+}  // namespace leveldb
 
 namespace content {
 
@@ -66,6 +67,7 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
     // These values are immutable for the life of a registration.
     int64_t registration_id;
     GURL scope;
+    blink::WebServiceWorkerUpdateViaCache update_via_cache;
 
     // Versions are first stored once they successfully install and become
     // the waiting version. Then transition to the active version. The stored

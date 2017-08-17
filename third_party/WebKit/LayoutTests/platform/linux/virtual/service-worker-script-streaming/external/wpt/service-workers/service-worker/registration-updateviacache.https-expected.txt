@@ -1,31 +1,31 @@
 This is a testharness.js-based test.
-FAIL register-via-api-updateViaCache-undefined assert_equals: reg.updateViaCache expected (string) "imports" but got (undefined) undefined
-FAIL register-via-api-updateViaCache-imports assert_equals: reg.updateViaCache expected (string) "imports" but got (undefined) undefined
-FAIL register-via-api-updateViaCache-all assert_equals: reg.updateViaCache expected (string) "all" but got (undefined) undefined
-FAIL register-via-api-updateViaCache-none assert_equals: reg.updateViaCache expected (string) "none" but got (undefined) undefined
-FAIL register-via-link-element-updateViaCache-undefined assert_equals: reg.updateViaCache expected (string) "imports" but got (undefined) undefined
-FAIL register-via-link-element-updateViaCache-imports assert_equals: reg.updateViaCache expected (string) "imports" but got (undefined) undefined
-FAIL register-via-link-element-updateViaCache-all assert_equals: reg.updateViaCache expected (string) "all" but got (undefined) undefined
-FAIL register-via-link-element-updateViaCache-none assert_equals: reg.updateViaCache expected (string) "none" but got (undefined) undefined
-FAIL register-via-link-header-updateViaCache-undefined assert_equals: reg.updateViaCache expected (string) "imports" but got (undefined) undefined
-FAIL register-via-link-header-updateViaCache-imports assert_equals: reg.updateViaCache expected (string) "imports" but got (undefined) undefined
-FAIL register-via-link-header-updateViaCache-all assert_equals: reg.updateViaCache expected (string) "all" but got (undefined) undefined
-FAIL register-via-link-header-updateViaCache-none assert_equals: reg.updateViaCache expected (string) "none" but got (undefined) undefined
-FAIL register-with-updateViaCache-undefined-then-undefined assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-undefined-then-imports assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-undefined-then-all assert_equals: reg.updateViaCache updated expected (string) "all" but got (undefined) undefined
-FAIL register-with-updateViaCache-undefined-then-none assert_equals: reg.updateViaCache updated expected (string) "none" but got (undefined) undefined
-FAIL register-with-updateViaCache-imports-then-undefined assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-imports-then-imports assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-imports-then-all assert_equals: reg.updateViaCache updated expected (string) "all" but got (undefined) undefined
-FAIL register-with-updateViaCache-imports-then-none assert_equals: reg.updateViaCache updated expected (string) "none" but got (undefined) undefined
-FAIL register-with-updateViaCache-all-then-undefined assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-all-then-imports assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-all-then-all assert_equals: reg.updateViaCache updated expected (string) "all" but got (undefined) undefined
-FAIL register-with-updateViaCache-all-then-none assert_equals: reg.updateViaCache updated expected (string) "none" but got (undefined) undefined
-FAIL register-with-updateViaCache-none-then-undefined assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-none-then-imports assert_equals: reg.updateViaCache updated expected (string) "imports" but got (undefined) undefined
-FAIL register-with-updateViaCache-none-then-all assert_equals: reg.updateViaCache updated expected (string) "all" but got (undefined) undefined
-FAIL register-with-updateViaCache-none-then-none assert_equals: reg.updateViaCache updated expected (string) "none" but got (undefined) undefined
+PASS register-via-api-updateViaCache-undefined 
+PASS register-via-api-updateViaCache-imports 
+PASS register-via-api-updateViaCache-all 
+PASS register-via-api-updateViaCache-none 
+PASS register-via-link-element-updateViaCache-undefined 
+PASS register-via-link-element-updateViaCache-imports 
+PASS register-via-link-element-updateViaCache-all 
+PASS register-via-link-element-updateViaCache-none 
+PASS register-via-link-header-updateViaCache-undefined 
+PASS register-via-link-header-updateViaCache-imports 
+PASS register-via-link-header-updateViaCache-all 
+PASS register-via-link-header-updateViaCache-none 
+PASS register-with-updateViaCache-undefined-then-undefined 
+PASS register-with-updateViaCache-undefined-then-imports 
+PASS register-with-updateViaCache-undefined-then-all 
+PASS register-with-updateViaCache-undefined-then-none 
+PASS register-with-updateViaCache-imports-then-undefined 
+PASS register-with-updateViaCache-imports-then-imports 
+PASS register-with-updateViaCache-imports-then-all 
+PASS register-with-updateViaCache-imports-then-none 
+PASS register-with-updateViaCache-all-then-undefined 
+PASS register-with-updateViaCache-all-then-imports 
+PASS register-with-updateViaCache-all-then-all 
+PASS register-with-updateViaCache-all-then-none 
+PASS register-with-updateViaCache-none-then-undefined 
+PASS register-with-updateViaCache-none-then-imports 
+PASS register-with-updateViaCache-none-then-all 
+PASS register-with-updateViaCache-none-then-none 
 Harness: the test ran to completion.
 

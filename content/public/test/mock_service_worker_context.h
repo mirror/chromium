@@ -23,9 +23,10 @@ class MockServiceWorkerContext : public ServiceWorkerContext {
 
   MOCK_METHOD1(AddObserver, void(ServiceWorkerContextObserver*));
   MOCK_METHOD1(RemoveObserver, void(ServiceWorkerContextObserver*));
-  MOCK_METHOD3(RegisterServiceWorker,
+  MOCK_METHOD4(RegisterServiceWorker,
                void(const ServiceWorkerContext::Scope&,
                     const GURL&,
+                    const blink::WebServiceWorkerUpdateViaCache,
                     const ServiceWorkerContext::ResultCallback&));
   MOCK_METHOD2(StartingExternalRequest, bool(int64_t, const std::string&));
   MOCK_METHOD2(FinishedExternalRequest, bool(int64_t, const std::string&));

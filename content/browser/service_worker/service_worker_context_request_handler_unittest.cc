@@ -61,15 +61,12 @@ class ServiceWorkerContextRequestHandlerTest : public testing::Test {
     context()->storage()->LazyInitialize(base::Bind(&base::DoNothing));
     base::RunLoop().RunUntilIdle();
 
-    // A new unstored registration/version.
     scope_ = GURL("https://host/scope/");
     script_url_ = GURL("https://host/script.js");
     import_script_url_ = GURL("https://host/import.js");
-    registration_ = new ServiceWorkerRegistration(
-        ServiceWorkerRegistrationOptions(scope_), 1L, context()->AsWeakPtr());
-    version_ = new ServiceWorkerVersion(registration_.get(), script_url_,
-                                        context()->storage()->NewVersionId(),
-                                        context()->AsWeakPtr());
+    provider_host_ = nullptr;
+
+    SetUpServiceWorker(blink::WebServiceWorkerUpdateViaCache::kImports);
     SetUpProvider();
 
     std::unique_ptr<MockHttpProtocolHandler> handler(
@@ -86,6 +83,19 @@ class ServiceWorkerContextRequestHandlerTest : public testing::Test {
   }
 
   ServiceWorkerContextCore* context() const { return helper_->context(); }
+
+  void SetUpServiceWorker(
+      blink::WebServiceWorkerUpdateViaCache update_via_cache) {
+    registration_ = new ServiceWorkerRegistration(
+        ServiceWorkerRegistrationOptions(scope_, update_via_cache),
+        context()->storage()->NewRegistrationId(), context()->AsWeakPtr());
+    version_ = new ServiceWorkerVersion(registration_.get(), script_url_,
+                                        context()->storage()->NewVersionId(),
+                                        context()->AsWeakPtr());
+
+    if (provider_host_)
+      provider_host_->running_hosted_version_ = version_;
+  }
 
   void SetUpProvider() {
     std::unique_ptr<ServiceWorkerProviderHost> host =
@@ -163,11 +173,39 @@ TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateBefore24Hours) {
           ServiceWorkerContextRequestHandler::CreateJobStatus::WRITE_JOB),
       1);
 
+  // Verify the net request is initialized to bypass the browser cache.
+  EXPECT_TRUE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+}
+
+TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateBefore24HoursUsingCache) {
+  SetUpServiceWorker(blink::WebServiceWorkerUpdateViaCache::kAll);
+  // Give the registration a very recent last update time and pretend
+  // we're installing a new version.
+  registration_->set_last_update_check(base::Time::Now());
+  version_->SetStatus(ServiceWorkerVersion::NEW);
+
+  // Conduct a resource fetch for the main script.
+  base::HistogramTester histograms;
+  std::unique_ptr<net::URLRequest> request(CreateRequest(script_url_));
+  std::unique_ptr<ServiceWorkerContextRequestHandler> handler(
+      CreateHandler(RESOURCE_TYPE_SERVICE_WORKER));
+  std::unique_ptr<net::URLRequestJob> job(
+      handler->MaybeCreateJob(request.get(), nullptr, nullptr));
+  ASSERT_TRUE(job.get());
+  ServiceWorkerWriteToCacheJob* sw_job =
+      static_cast<ServiceWorkerWriteToCacheJob*>(job.get());
+  histograms.ExpectUniqueSample(
+      "ServiceWorker.ContextRequestHandlerStatus.NewWorker.MainScript",
+      static_cast<int>(
+          ServiceWorkerContextRequestHandler::CreateJobStatus::WRITE_JOB),
+      1);
+
   // Verify the net request is not initialized to bypass the browser cache.
   EXPECT_FALSE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
 }
 
-TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateAfter24Hours) {
+TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateAfter24HoursUsingCache) {
+  SetUpServiceWorker(blink::WebServiceWorkerUpdateViaCache::kAll);
   // Give the registration a old update time and pretend
   // we're installing a new version.
   registration_->set_last_update_check(
@@ -195,6 +233,7 @@ TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateAfter24Hours) {
 }
 
 TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateForceBypassCache) {
+  SetUpServiceWorker(blink::WebServiceWorkerUpdateViaCache::kNone);
   // Give the registration a very recent last update time and pretend
   // we're installing a new version.
   registration_->set_last_update_check(base::Time::Now());

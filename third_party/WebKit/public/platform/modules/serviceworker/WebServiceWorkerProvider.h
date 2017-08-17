@@ -34,6 +34,7 @@
 #include "public/platform/WebCallbacks.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerUpdateViaCache.h"
 
 #include <memory>
 
@@ -105,6 +106,7 @@ class WebServiceWorkerProvider {
   virtual void RegisterServiceWorker(
       const WebURL& pattern,
       const WebURL& script_url,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks>) {}
   // For ServiceWorkerContainer#getRegistration(). Requests the embedder to
   // return a registration.

@@ -77,6 +77,7 @@ class MODULES_EXPORT ServiceWorkerContainer final
   void RegisterServiceWorkerImpl(ExecutionContext*,
                                  const KURL& script_url,
                                  const KURL& scope,
+                                 WebServiceWorkerUpdateViaCache,
                                  std::unique_ptr<RegistrationCallbacks>);
 
   ScriptPromise registerServiceWorker(ScriptState*,

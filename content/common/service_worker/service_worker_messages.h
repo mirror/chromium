@@ -45,6 +45,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(blink::WebServiceWorkerResponseError,
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebServiceWorkerClientType,
                           blink::kWebServiceWorkerClientTypeLast)
 
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebServiceWorkerUpdateViaCache,
+                          blink::WebServiceWorkerUpdateViaCache::kLast)
+
 IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::FetchResponseType,
                           network::mojom::FetchResponseType::kLast)
 
@@ -112,6 +115,7 @@ IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerRegistrationOptions)
   IPC_STRUCT_TRAITS_MEMBER(scope)
+  IPC_STRUCT_TRAITS_MEMBER(update_via_cache)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerRegistrationObjectInfo)
