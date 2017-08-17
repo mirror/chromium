@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af109b7c_a61b4133",
+        "filename": "services/resource_coordinator/resource_coordinator_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-08-17T20:10:20Z",
+      "side": 1,
+      "message": "This test doesn\u0027t do anything useful at this point. Should I just delete it or are there useful things I could assert?",
+      "revId": "ae666bfb38613ba9ec14bac721a3741ad0c61bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

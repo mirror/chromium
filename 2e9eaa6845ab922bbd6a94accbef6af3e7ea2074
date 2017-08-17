@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "483e1a63_5b4cefd3",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-08-17T20:10:20Z",
+      "side": 0,
+      "message": "As best I can tell, this test is just checking that the SetPolicyClosure callback gets called, so doesn\u0027t test anything now that we don\u0027t have policies.",
+      "revId": "2e9eaa6845ab922bbd6a94accbef6af3e7ea2074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
