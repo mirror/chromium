@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64a053d_b21246c6",
+        "filename": "chrome/browser/page_load_metrics/observers/loading_predictor_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-17T14:33:35Z",
+      "side": 1,
+      "message": "Do you mind commenting here as well?",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "c7a0f68e7c79a0ce828091062641fd1ed4296e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
