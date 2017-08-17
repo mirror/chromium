@@ -12,6 +12,8 @@
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "content/common/content_switches_internal.h"
 #include "content/public/common/content_features.h"
@@ -26,7 +28,9 @@ using blink::WebRuntimeFeatures;
 
 namespace content {
 
-static void SetRuntimeFeatureDefaultsForPlatform() {
+namespace {
+
+void SetRuntimeFeatureDefaultsForPlatform() {
 #if defined(OS_ANDROID)
   // Android does not have support for PagePopup
   WebRuntimeFeatures::EnablePagePopup(false);
@@ -86,6 +90,40 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
   WebRuntimeFeatures::EnableNotificationContentImage(true);
 #endif
 }
+
+#if defined(OS_WIN)
+#define WIN_CONV(conv, val) (conv(val))
+#elif defined(OS_POSIX)
+#define WIN_CONV(conv, val) (val)
+#endif
+
+typedef base::CommandLine::StringType NativeString;
+typedef base::BasicStringPiece<NativeString> NativeStringPiece;
+
+std::vector<std::string> FeaturesFromSwitch(
+    const base::CommandLine& command_line,
+    const char* switch_name) {
+  NativeString prefix =
+      WIN_CONV(base::ASCIIToUTF16, base::StringPrintf("--%s=", switch_name));
+  size_t prefix_len = prefix.size();
+  std::vector<std::string> features;
+  for (const NativeString& arg : command_line.argv()) {
+    if (arg.compare(0, prefix_len, prefix) == 0) {
+      NativeStringPiece val(arg.begin() + prefix_len, arg.end());
+      if (base::IsStringASCII(val)) {
+        std::vector<std::string> split_vals =
+            base::SplitString(WIN_CONV(base::UTF16ToASCII, val), ",",
+                              base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+        features.insert(features.end(), split_vals.begin(), split_vals.end());
+      }
+    }
+  }
+  return features;
+}
+
+#undef WIN_CONV
+
+}  // namespace
 
 void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
     const base::CommandLine& command_line) {
@@ -414,18 +452,17 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   if (command_line.HasSwitch(switches::kEnableBlinkFeatures)) {
-    std::vector<std::string> enabled_features = base::SplitString(
-        command_line.GetSwitchValueASCII(switches::kEnableBlinkFeatures),
-        ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-    for (const std::string& feature : enabled_features)
+    for (const std::string& feature :
+         FeaturesFromSwitch(command_line, switches::kEnableBlinkFeatures)) {
+      LOG(INFO) << "enable " << feature;
       WebRuntimeFeatures::EnableFeatureFromString(feature, true);
+    }
   }
   if (command_line.HasSwitch(switches::kDisableBlinkFeatures)) {
-    std::vector<std::string> disabled_features = base::SplitString(
-        command_line.GetSwitchValueASCII(switches::kDisableBlinkFeatures),
-        ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-    for (const std::string& feature : disabled_features)
+    for (const std::string& feature :
+         FeaturesFromSwitch(command_line, switches::kDisableBlinkFeatures)) {
       WebRuntimeFeatures::EnableFeatureFromString(feature, false);
+    }
   }
 }
 
