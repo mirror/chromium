@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14728ab8_1d3fb953",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-17T20:53:18Z",
+      "side": 1,
+      "message": "Is a content feature needed or can we just use the RuntimeEnabledFeature?",
+      "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3720f8d8_7455f3d8",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-17T20:53:18Z",
+      "side": 1,
+      "message": "Bikeshed: why not \"RuntimeEnabledFeatures::Composite2DAndOpacityAnimations\" and then have the feature enabled by default. Your flag would then be to disable this enabled-by-default feature.",
+      "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
