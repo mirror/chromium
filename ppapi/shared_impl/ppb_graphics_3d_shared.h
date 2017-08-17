@@ -20,6 +20,7 @@
 namespace gpu {
 class CommandBuffer;
 class GpuControl;
+struct SharedMemoryLimits;
 class TransferBuffer;
 namespace gles2 {
 class GLES2CmdHelper;
@@ -77,8 +78,7 @@ class PPAPI_SHARED_EXPORT PPB_Graphics3D_Shared
                                 const gfx::Size& size) = 0;
 
   bool HasPendingSwap() const;
-  bool CreateGLES2Impl(int32_t command_buffer_size,
-                       int32_t transfer_buffer_size,
+  bool CreateGLES2Impl(const gpu::SharedMemoryLimits& limits,
                        gpu::gles2::GLES2Implementation* share_gles2);
   void DestroyGLES2Impl();
 
