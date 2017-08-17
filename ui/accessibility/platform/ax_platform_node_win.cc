@@ -1184,12 +1184,14 @@ STDMETHODIMP AXPlatformNodeWin::get_states(AccessibleStates* states) {
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_uniqueID(LONG* unique_id) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_UNIQUE_ID);
   COM_OBJECT_VALIDATE_1_ARG(unique_id);
   *unique_id = -unique_id_;
   return S_OK;
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_windowHandle(HWND* window_handle) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_WINDOW_HANDLE);
   COM_OBJECT_VALIDATE_1_ARG(window_handle);
   *window_handle = delegate_->GetTargetForNativeAccessibilityEvent();
   return *window_handle ? S_OK : S_FALSE;
@@ -1245,6 +1247,11 @@ STDMETHODIMP AXPlatformNodeWin::get_relationTargetsOfType(
 
 STDMETHODIMP AXPlatformNodeWin::get_attributes(BSTR* attributes) {
   COM_OBJECT_VALIDATE_1_ARG(attributes);
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_IA2_GET_ATTRIBUTES);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
+  *attributes = nullptr;
+
   base::string16 attributes_str;
 
   // Text fields need to report the attribute "text-model:a1" to instruct
@@ -1254,8 +1261,14 @@ STDMETHODIMP AXPlatformNodeWin::get_attributes(BSTR* attributes) {
   // http://www.linuxfoundation.org/collaborate/workgroups/accessibility/ia2/ia2_implementation_guide
   if (GetData().role == ui::AX_ROLE_TEXT_FIELD) {
     attributes_str = L"text-model:a1;";
+  } else {
+    std::vector<base::string16> attributes = ComputeIA2Attributes();
+    for (const base::string16& attribute : attributes)
+      attributes_str += attribute + L';';
   }
 
+  if (attributes_str.empty())
+    return S_FALSE;
   *attributes = SysAllocString(attributes_str.c_str());
   DCHECK(*attributes);
   return S_OK;
@@ -1263,6 +1276,7 @@ STDMETHODIMP AXPlatformNodeWin::get_attributes(BSTR* attributes) {
 
 STDMETHODIMP AXPlatformNodeWin::get_indexInParent(LONG* index_in_parent) {
   COM_OBJECT_VALIDATE_1_ARG(index_in_parent);
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_INDEX_IN_PARENT);
   *index_in_parent = GetIndexInParent();
   if (*index_in_parent < 0)
     return E_FAIL;
