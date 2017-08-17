@@ -102,13 +102,13 @@ class WebServiceWorkerNetworkProviderImpl
     }
   }
 
-  bool IsControlledByServiceWorker() override {
+  int GetProviderID() const override { return provider_->provider_id(); }
+
+  bool HasControllerServiceWorker() override {
     return provider_->IsControlledByServiceWorker();
   }
 
-  int GetProviderID() const override { return provider_->provider_id(); }
-
-  int64_t ServiceWorkerID() override {
+  int64_t ControllerServiceWorkerID() override {
     if (provider_->context()->controller())
       return provider_->context()->controller()->version_id();
     return kInvalidServiceWorkerVersionId;
@@ -281,7 +281,7 @@ EmbeddedSharedWorkerStub::CreateWorkerFetchContext(
     worker_fetch_context->set_service_worker_provider_id(
         web_network_provider->GetProviderID());
     worker_fetch_context->set_is_controlled_by_service_worker(
-        web_network_provider->IsControlledByServiceWorker());
+        web_network_provider->HasControllerServiceWorker());
   }
   return std::move(worker_fetch_context);
 }
