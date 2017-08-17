@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9175949_8437ddda",
+        "filename": "base/trace_event/malloc_dump_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-17T23:47:57Z",
+      "side": 1,
+      "message": "NO_STACK?",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 42
+      },
+      "revId": "c364ad59173557724768d3639149b1e4a1261f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
