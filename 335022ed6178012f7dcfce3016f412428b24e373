@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c12776_14842751",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "optional: This is mildly confusing. Maybe \u0027Whether the window frame buttons should be drawn using the system theme?\u0027",
+      "range": {
+        "startLine": 812,
+        "startChar": 5,
+        "endLine": 813,
+        "endChar": 35
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67656b98_4c31c958",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "Keep section sorted.",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 37
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faf23d0_aea9caae",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "I find this change confusing. This code wants to know where the caption buttons are, not the profile button.",
+      "range": {
+        "startLine": 170,
+        "startChar": 38,
+        "endLine": 170,
+        "endChar": 52
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a46e69_412683de",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "Does GTK really allow different size/position buttons?",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 24
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7060fc39_5472de34",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "That you have this function take this is a good indication you should make a member function, which is far less cryptic than what you have here.",
+      "range": {
+        "startLine": 669,
+        "startChar": 8,
+        "endLine": 669,
+        "endChar": 51
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315ed2f7_23aadba4",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "This function should do layout only, not set the image too. Please more this else where.",
+      "range": {
+        "startLine": 685,
+        "startChar": 4,
+        "endLine": 702,
+        "endChar": 5
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b959e9ef_131e0feb",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "Make member match new name.",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1b1e08_e83519d3",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "Please add test coverage of this being true.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 70
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c129444_f1ab8e5d",
+        "filename": "ui/views/linux_ui/nav_button_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:21:05Z",
+      "side": 1,
+      "message": "Forward declare what you can.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
