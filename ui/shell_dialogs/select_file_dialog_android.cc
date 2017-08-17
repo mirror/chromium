@@ -23,9 +23,10 @@ using base::android::ScopedJavaLocalRef;
 namespace ui {
 
 // static
-SelectFileDialogImpl* SelectFileDialogImpl::Create(Listener* listener,
-                                                   SelectFilePolicy* policy) {
-  return new SelectFileDialogImpl(listener, policy);
+SelectFileDialogImpl* SelectFileDialogImpl::Create(
+    Listener* listener,
+    std::unique_ptr<SelectFilePolicy> policy) {
+  return new SelectFileDialogImpl(listener, std::move(policy));
 }
 
 void SelectFileDialogImpl::OnFileSelected(
@@ -128,9 +129,10 @@ void SelectFileDialogImpl::SelectFileImpl(
 SelectFileDialogImpl::~SelectFileDialogImpl() {
 }
 
-SelectFileDialogImpl::SelectFileDialogImpl(Listener* listener,
-                                           SelectFilePolicy* policy)
-    : SelectFileDialog(listener, policy) {
+SelectFileDialogImpl::SelectFileDialogImpl(
+    Listener* listener,
+    std::unique_ptr<SelectFilePolicy> policy)
+    : SelectFileDialog(listener, std::move(policy)) {
   JNIEnv* env = base::android::AttachCurrentThread();
   java_object_.Reset(
       Java_SelectFileDialog_create(env, reinterpret_cast<intptr_t>(this)));
@@ -141,9 +143,10 @@ bool SelectFileDialogImpl::HasMultipleFileTypeChoicesImpl() {
   return false;
 }
 
-SelectFileDialog* CreateSelectFileDialog(SelectFileDialog::Listener* listener,
-                                         SelectFilePolicy* policy) {
-  return SelectFileDialogImpl::Create(listener, policy);
+SelectFileDialog* CreateSelectFileDialog(
+    SelectFileDialog::Listener* listener,
+    std::unique_ptr<SelectFilePolicy> policy) {
+  return SelectFileDialogImpl::Create(listener, std::move(policy));
 }
 
 }  // namespace ui

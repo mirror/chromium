@@ -1,4 +1,4 @@
-// Copyright (c) 2013 The Chromium Authors. All rights reserved.
+
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -63,7 +63,7 @@ class GtkUi : public views::LinuxUI {
   // ui::ShellDialogLinux:
   ui::SelectFileDialog* CreateSelectFileDialog(
       ui::SelectFileDialog::Listener* listener,
-      ui::SelectFilePolicy* policy) const override;
+      std::unique_ptr<ui::SelectFilePolicy> policy) const override;
 
   // ui::LinuxUI:
   void Initialize() override;
