@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "116eb9a5_d9d7b974",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-17T12:52:33Z",
+      "side": 1,
+      "message": "nit: Can we fit this in 80 columns?",
+      "revId": "f826a247605385d5a93c508b90d920d387bac103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb54fc16_a698db94",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterface.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-17T12:52:33Z",
+      "side": 1,
+      "message": "nit: I think that this should be \"SetCapital...\".\nWe should respect that the name \"CapitalImplementation\" starts with a capital letter.\n\nI\u0027m fine that you file a separate issue and/or address it separately.",
+      "range": {
+        "startLine": 335,
+        "startChar": 8,
+        "endLine": 335,
+        "endChar": 11
+      },
+      "revId": "f826a247605385d5a93c508b90d920d387bac103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
