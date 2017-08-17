@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13944457_4efd40a5",
+        "filename": "ui/views/win/pen_event_processor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T23:35:12Z",
+      "side": 1,
+      "message": "Remove this and change your test macros to TEST. For example, TEST(PenProcessorTest, Typical...);",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "c365eb42ccb708b67646d0f6a8ec255ee52ceeba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
