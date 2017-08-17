@@ -81,8 +81,10 @@ void ChromeTestSuite::Initialize() {
   // values for DIR_EXE and DIR_MODULE.
   content::ContentTestSuiteBase::Initialize();
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
+  ContentSettingsPattern::PutNonWildcardDomainNonPortScheme(
       extensions::kExtensionScheme);
+  ContentSettingsPattern::PutNonWildcardDomainNonPortScheme(
+      chrome::kChromeSearchScheme);
 
 #if defined(OS_MACOSX)
   // Look in the framework bundle for resources.
