@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d145edb_185bad74",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:11:26Z",
+      "side": 1,
+      "message": "Is this really !Android or is it whatever ENABLE_PEPPER_CDM became?",
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cba5c5_78cb9619",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:11:26Z",
+      "side": 1,
+      "message": "Unrelated to this change: Do we really think we need to cache this? Will there be a lot of calls to GetOneOrigin() or could we just move these two lines there?",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f1de72_199bc8fe",
+        "filename": "chrome/browser/browsing_data/media_licenses_counter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:11:26Z",
+      "side": 1,
+      "message": "This is not used on Android either.\n\nIdeally, the platform-specific code would probably be separated into another class or abstraction.",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41ab4cd8_d8f4a8c1",
         "filename": "components/cdm/browser/media_drm_storage_impl.h",
         "patchSetId": 1
@@ -42,6 +105,29 @@
         "startChar": 9,
         "endLine": 9,
         "endChar": 17
+      },
+      "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87d7e76_4793dfc1",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-17T03:11:26Z",
+      "side": 1,
+      "message": "This function name does not match the comment. The need for a comment is perhaps a sign that the name is insufficient. You could add \"WithMediaLicenses,\" but is it really all origins contained in the storage?",
+      "range": {
+        "startLine": 38,
+        "startChar": 24,
+        "endLine": 38,
+        "endChar": 37
       },
       "revId": "978b379e373d7a88fd1e74afd721062e69a0f343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
