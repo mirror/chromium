@@ -81,8 +81,8 @@ const char kSecondProfileHash[] = "fileBrowserApiTestProfile2";
 class FakeSelectFileDialog : public ui::SelectFileDialog {
  public:
   FakeSelectFileDialog(ui::SelectFileDialog::Listener* listener,
-                       ui::SelectFilePolicy* policy)
-      : ui::SelectFileDialog(listener, policy) {}
+                       std::unique_ptr<ui::SelectFilePolicy> policy)
+      : ui::SelectFileDialog(listener, std::move(policy)) {}
 
   void SelectFileImpl(Type type,
                       const base::string16& title,
@@ -110,9 +110,10 @@ class FakeSelectFileDialog : public ui::SelectFileDialog {
 
 class FakeSelectFileDialogFactory : public ui::SelectFileDialogFactory {
  private:
-  ui::SelectFileDialog* Create(ui::SelectFileDialog::Listener* listener,
-                               ui::SelectFilePolicy* policy) override {
-    return new FakeSelectFileDialog(listener, policy);
+  ui::SelectFileDialog* Create(
+      ui::SelectFileDialog::Listener* listener,
+      std::unique_ptr<ui::SelectFilePolicy> policy) override {
+    return new FakeSelectFileDialog(listener, std::move(policy));
   }
 };
 

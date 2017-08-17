@@ -748,7 +748,7 @@ void GtkUi::GetDefaultFontDescription(std::string* family_out,
 
 ui::SelectFileDialog* GtkUi::CreateSelectFileDialog(
     ui::SelectFileDialog::Listener* listener,
-    ui::SelectFilePolicy* policy) const {
+    std::unique_ptr<ui::SelectFilePolicy> policy) const {
   return SelectFileDialogImpl::Create(listener, policy);
 }
 
