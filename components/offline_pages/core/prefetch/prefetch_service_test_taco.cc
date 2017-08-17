@@ -16,6 +16,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_downloader_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_importer.h"
+#include "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
@@ -24,13 +25,14 @@
 #include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_importer.h"
-#include "components/offline_pages/core/prefetch/test_prefetch_network_request_factory.h"
+#include "net/url_request/url_request_test_util.h"
 
 namespace offline_pages {
 
 namespace {
 
 const version_info::Channel kTestChannel = version_info::Channel::UNKNOWN;
+const char kTestUserAgent[] = "Chrome/57.0.2987.133";
 
 class StubPrefetchBackgroundTaskHandler : public PrefetchBackgroundTaskHandler {
  public:
@@ -53,7 +55,10 @@ PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
   metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>(nullptr);
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   network_request_factory_ =
-      base::MakeUnique<TestPrefetchNetworkRequestFactory>();
+      base::MakeUnique<PrefetchNetworkRequestFactoryImpl>(
+          new net::TestURLRequestContextGetter(
+              base::ThreadTaskRunnerHandle::Get()),
+          kTestChannel, kTestUserAgent);
   prefetch_store_sql_ =
       base::MakeUnique<PrefetchStore>(base::ThreadTaskRunnerHandle::Get());
   suggested_articles_observer_ = base::MakeUnique<SuggestedArticlesObserver>();
