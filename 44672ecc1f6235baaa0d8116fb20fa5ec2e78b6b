@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "128dcd74_134faf7b",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T19:19:19Z",
+      "side": 1,
+      "message": "Nit: let\u0027s use base::MakeRefCounted for new code",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "44672ecc1f6235baaa0d8116fb20fa5ec2e78b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1559b8cc_3665d645",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T19:19:19Z",
+      "side": 1,
+      "message": "Nit: please std::move() parameters that are passed by value.",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "44672ecc1f6235baaa0d8116fb20fa5ec2e78b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85b7b9df_f3ba43c5",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 7
