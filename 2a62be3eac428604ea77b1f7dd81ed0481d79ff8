@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c47454_a0ae8668",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:35:53Z",
+      "side": 1,
+      "message": "Why adding this source_set instead of just having code using explicit dependency on \"//ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs\"?\n\nIf you insist on the separate target, then please change it to a \"group\" instead (but I think it is better to just have the explicit dependency as the rest of the //ios/chrome/ code does).",
+      "revId": "2a62be3eac428604ea77b1f7dd81ed0481d79ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5a4159_31f4f605",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:35:53Z",
+      "side": 1,
+      "message": "Since this is a property, can\u0027t you just @synthesize it?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "2a62be3eac428604ea77b1f7dd81ed0481d79ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27e8c90_73e68397",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_mediator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:35:53Z",
+      "side": 1,
+      "message": "datat → data",
+      "range": {
+        "startLine": 16,
+        "startChar": 72,
+        "endLine": 16,
+        "endChar": 77
+      },
+      "revId": "2a62be3eac428604ea77b1f7dd81ed0481d79ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cdcf44_532ae7c6",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-17T12:35:53Z",
+      "side": 1,
+      "message": "This should be \"//ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs\".",
+      "revId": "2a62be3eac428604ea77b1f7dd81ed0481d79ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
