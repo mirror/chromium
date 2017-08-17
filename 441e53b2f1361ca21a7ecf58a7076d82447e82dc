@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d251ea05_2faf597b",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-17T03:23:48Z",
+      "side": 1,
+      "message": "That hits a banned pattern. base::Bind currently rejects to bind a callback with no bound argument to avoid an extra allocation.",
+      "parentUuid": "60f381e0_ac73b114",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c190ae15_89321523",
         "filename": "google_apis/drive/task_util.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T15:31:01Z",
       "side": 1,
       "message": "BTW, do you hit the actual use case of Repeating?\nAlthough when we worked on google_apis there is no OnceCallback so we didn\u0027t care much,\nIIRC, most use cases are suitable for OnceCallback?",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df41335a_204270cd",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-17T03:23:48Z",
+      "side": 1,
+      "message": "base::Bind and base::Callback are currently aliases of base::BindRepeating and base::RepeatingCallback. And, since users of this function have not migrated to OnceCallback yet, most of user uses Repeating for now.",
+      "parentUuid": "c190ae15_89321523",
       "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b982b406_9aada40d",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-17T03:23:48Z",
+      "side": 1,
+      "message": "Hm, each invocation of Run runs |runner| and |callback| only once. But, the invocation itself may be repeating.",
+      "parentUuid": "47d8f4b2_414dc671",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e33685f_b88d0e5b",
         "filename": "google_apis/drive/task_util.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-16T15:31:01Z",
       "side": 1,
       "message": "Just curious: why don\u0027t you do this in advance, so that you can just remove these code as you TODO\u0027ed?",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149e0c8d_31040f3d",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-17T03:23:48Z",
+      "side": 1,
+      "message": "Here is a context discussion:\nhttps://groups.google.com/a/chromium.org/d/msg/chromium-mojo/zyKcD5C7COk/JRT3M7lyBwAJ\n\nI\u0027m trying to do that, but as it\u0027s a kind of controversial, it may take awhile.",
+      "parentUuid": "9e33685f_b88d0e5b",
       "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
