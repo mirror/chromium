@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c448dd0a_49c37f4a",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-17T23:27:14Z",
+      "side": 1,
+      "message": "well, I have no idea why this happens for some languages. I took a look and did not find any reason. So fix is to set height explicitly which eliminates the problem. \nYou may see the problem at b/64812679.",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "35658705912216324fbecf63e429ffde7997ca8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
