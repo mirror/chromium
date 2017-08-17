@@ -22,6 +22,29 @@
       "revId": "7f977cfca298c190311b6a04375066368a6ed45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708c9561_ee3bb89e",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControls.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-17T18:49:40Z",
+      "side": 1,
+      "message": "nit: This name is a bit confusing since this class doesn\u0027t really handle animation and it isn\u0027t reset after the impl side finishes. Can you update the doc and/or name to reflect that?",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 17
+      },
+      "revId": "7f977cfca298c190311b6a04375066368a6ed45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
