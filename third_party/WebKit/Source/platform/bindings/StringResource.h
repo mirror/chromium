@@ -53,7 +53,7 @@ class StringResourceBase {
 
   const String& WebcoreString() { return plain_string_; }
 
-  const AtomicString& GetAtomicString() {
+  ALWAYS_INLINE const AtomicString& GetAtomicString() {
 #if DCHECK_IS_ON()
     DCHECK(thread_id_ == WTF::CurrentThread());
 #endif
