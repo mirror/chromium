@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183e2b70_b8cd47eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-17T00:31:10Z",
+      "side": 1,
+      "message": "what does ready mean?  Is the position invalid before onScrolled is called?  would this findFirstVisibleItemPosition() return some invalid value?\n\nShould anything be setting this to false?  Is the (i) only supposed to show up while you\u0027re at the very top?  Should we be looking at scroll position instead?",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "5060b9c3837f75c9d0b2a9cea031d62e82436f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
