@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8157124_556a7ef1",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Ooops.  Done.",
+      "parentUuid": "e27fd3f3_f662d96f",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "4ed7fdd869e3f532669d803dc96c7a24916e1a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa50fe39_b3ea80a1",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "4ed7fdd869e3f532669d803dc96c7a24916e1a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb34362_662af64b",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa50fe39_b3ea80a1",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "4ed7fdd869e3f532669d803dc96c7a24916e1a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fd2b358c_a64ba115",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8249ec77_1a9d472e",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "4ed7fdd869e3f532669d803dc96c7a24916e1a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "178b6a64_8f15e864",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "4ed7fdd869e3f532669d803dc96c7a24916e1a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd118f9a_816f18bd",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "178b6a64_8f15e864",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "4ed7fdd869e3f532669d803dc96c7a24916e1a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

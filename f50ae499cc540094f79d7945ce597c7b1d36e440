@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "59df8303_5ccbf01b",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-17T19:04:14Z",
+      "side": 1,
+      "message": "Ok.  So I put a LOG statement in the destructor, ran \"out/Default/browser_tests --gtest_filter\u003dExtensionApiTest.Cookies*\", and saw the object destructed in those tests.  So I think we have tests that cover object destruction.\n\nIn terms of the DCHECK, what I think was going on is that weak references are specifically setup so that they are created detached from any sequence and only become attached when they are first referenced.  I believe this is specifically so that objects containing a weak factory can be created on one thread and then transferred to another which is going to be its home.  See the code and comments at https://cs.chromium.org/chromium/src/base/memory/weak_ptr.cc?q\u003dWeakReference::Flag\u0026sq\u003dpackage:chromium\u0026l\u003d10.\n\nFrom my perspective, that resolves this issue satisfactorily; please let me know if you disagree.  I generally believe in taking the more demanding of my reviewers\u0027 comments, and I don\u0027t think it would be hard to nail this down further if that\u0027s needed.",
+      "parentUuid": "afe80803_b55fcd63",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
