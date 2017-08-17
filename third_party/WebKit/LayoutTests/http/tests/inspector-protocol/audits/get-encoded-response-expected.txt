@@ -1,0 +1,20 @@
+Tests encoding of a response body
+
+Results for /resources/square200.png encoding=jpeg q=undefined sizeOnly=undefined
+body=string original=15506 encoded=2884
+
+Results for /resources/square200.png encoding=webp q=0.8 sizeOnly=false
+body=string original=15506 encoded=922
+
+Results for /resources/square200.png encoding=jpeg q=1 sizeOnly=true
+body=undefined original=15506 encoded=13560
+
+Results for /resources/square200.png encoding=jpeg q=0.5 sizeOnly=true
+body=undefined original=15506 encoded=1236
+
+Results for /resources/square20.bmp encoding=jpeg q=0.8 sizeOnly=true
+body=undefined original=1322 encoded=294
+
+Results for /resources/square20.bmp encoding=png q=undefined sizeOnly=undefined
+body=string original=1322 encoded=100
+
