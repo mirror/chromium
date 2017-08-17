@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df8f1e2f_bac8fa21",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-17T19:55:16Z",
+      "side": 1,
+      "message": "maybe something like RequiredSelectorEditorFieldMatcher would be clearer?",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 41
+      },
+      "revId": "2635906ecd97ff70652abe3c613167c3a873c5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ab5379_2333f272",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-17T19:55:16Z",
+      "side": 1,
+      "message": "Please change the name of this test to something that reflects what it does. Maybe something like \"testAccessibilityOnPaymentRequestShippingAddressAndAddAddressPages\"",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 60
+      },
+      "revId": "2635906ecd97ff70652abe3c613167c3a873c5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e51610d_a4aec9dd",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-17T19:55:16Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 58
+      },
+      "revId": "2635906ecd97ff70652abe3c613167c3a873c5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c61bb74_70a8236e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-17T19:55:16Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 56
+      },
+      "revId": "2635906ecd97ff70652abe3c613167c3a873c5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
