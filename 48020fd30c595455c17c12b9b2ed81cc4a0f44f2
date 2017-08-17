@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a98bba8_ada0084c",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T02:20:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t need an SkImage.",
+      "range": {
+        "startLine": 214,
+        "startChar": 29,
+        "endLine": 214,
+        "endChar": 39
+      },
+      "revId": "48020fd30c595455c17c12b9b2ed81cc4a0f44f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2b4fdc_9a34c94b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-17T02:20:07Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 111,
+        "startChar": 29,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "48020fd30c595455c17c12b9b2ed81cc4a0f44f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
