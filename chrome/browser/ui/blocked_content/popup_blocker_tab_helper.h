@@ -44,25 +44,20 @@ class PopupBlockerTabHelper
     virtual ~Observer() = default;
   };
 
-  // Returns true if a popup with |user_gesture| should be considered for
-  // blocking from |web_contents|.
-  static bool ConsiderForPopupBlocking(
-      content::WebContents* web_contents,
-      bool user_gesture,
-      const content::OpenURLParams* open_url_params);
-
   ~PopupBlockerTabHelper() override;
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Returns true if the popup request defined by |params| should be blocked.
-  // In that case, it is also added to the |blocked_popups_| container.
-  bool MaybeBlockPopup(const chrome::NavigateParams& params,
-                       const blink::mojom::WindowFeatures& window_features);
-
-  // Adds a popup request to the |blocked_popups_| container.
-  void AddBlockedPopup(const BlockedWindowParams& params);
+  // Returns true if the popup request defined by |params| and the optional
+  // |open_url_params| should be blocked. In that case, it is also added to the
+  // |blocked_popups_| container.
+  static bool MaybeBlockPopup(
+      content::WebContents* web_contents,
+      const GURL& opener_url,
+      const chrome::NavigateParams& params,
+      const content::OpenURLParams* open_url_params,
+      const blink::mojom::WindowFeatures& window_features);
 
   // Creates the blocked popup with |popup_id| in given |dispostion|.
   // Note that if |disposition| is WindowOpenDisposition::CURRENT_TAB,
