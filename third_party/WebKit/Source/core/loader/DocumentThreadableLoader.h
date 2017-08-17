@@ -198,6 +198,8 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // TODO(kinuko): Remove dependency to document.
   Document* GetDocument() const;
 
+  ExecutionContext* GetExecutionContext() const;
+
   ThreadableLoaderClient* client_;
   Member<ThreadableLoadingContext> loading_context_;
 
