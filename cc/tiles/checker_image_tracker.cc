@@ -76,11 +76,11 @@ CheckerImagingDecision GetLoadDecision(const PaintImage& image) {
   return CheckerImagingDecision::kCanChecker;
 }
 
-CheckerImagingDecision GetSizeDecision(const PaintImage& image,
+CheckerImagingDecision GetSizeDecision(const SkIRect& src_rect,
                                        size_t max_bytes) {
   base::CheckedNumeric<size_t> checked_size = 4;
-  checked_size *= image.width();
-  checked_size *= image.height();
+  checked_size *= src_rect.width();
+  checked_size *= src_rect.height();
   size_t size = checked_size.ValueOrDefault(std::numeric_limits<size_t>::max());
 
   if (size < kMinImageSizeToCheckerBytes)
@@ -92,6 +92,7 @@ CheckerImagingDecision GetSizeDecision(const PaintImage& image,
 }
 
 CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
+                                                 const SkIRect& src_rect,
                                                  size_t max_bytes) {
   CheckerImagingDecision decision = GetAnimationDecision(image);
   if (decision != CheckerImagingDecision::kCanChecker)
@@ -101,7 +102,7 @@ CheckerImagingDecision GetCheckerImagingDecision(const PaintImage& image,
   if (decision != CheckerImagingDecision::kCanChecker)
     return decision;
 
-  return GetSizeDecision(image, max_bytes);
+  return GetSizeDecision(src_rect, max_bytes);
 }
 
 }  // namespace
@@ -288,7 +289,8 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
     // frames, checkering which would cause each video frame to flash and
     // therefore should not be checkered.
     CheckerImagingDecision decision = GetCheckerImagingDecision(
-        image, image_controller_->image_cache_max_limit_bytes());
+        image, draw_image.src_rect(),
+        image_controller_->image_cache_max_limit_bytes());
     it->second.policy = decision == CheckerImagingDecision::kCanChecker
                             ? DecodePolicy::ASYNC
                             : DecodePolicy::SYNC;
