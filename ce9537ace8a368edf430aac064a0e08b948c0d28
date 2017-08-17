@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7faac8ce_b772ae6e",
+        "filename": "content/test/gpu/gather_swarming_json_results.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-08-17T17:33:03Z",
+      "side": 1,
+      "message": "be aware that the new polymer API for swarming supports URLs in the form:\n  https://chromium-swarm.appspot.com/task?id\u003d3674af8a52d8a010\n\nI think that the URLs the recipe currently emits are the old URL format, but I wouldn\u0027t be surprised if someone changes them to the new format at some point (the faults of parsing UI state...)",
+      "revId": "ce9537ace8a368edf430aac064a0e08b948c0d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f45f59e_97be6962",
+        "filename": "content/test/gpu/gather_swarming_json_results.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-08-17T17:33:03Z",
+      "side": 1,
+      "message": "maybe remove the default value and add required\u003dTrue?",
+      "range": {
+        "startLine": 184,
+        "startChar": 50,
+        "endLine": 184,
+        "endChar": 54
+      },
+      "revId": "ce9537ace8a368edf430aac064a0e08b948c0d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
