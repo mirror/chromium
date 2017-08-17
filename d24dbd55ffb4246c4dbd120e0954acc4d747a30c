@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d81bc0e_2e4f2c71",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-17T23:21:03Z",
+      "side": 1,
+      "message": "I\u0027ll fix this, but in the future can you please be more careful when inserting into a list of stuff to do so in an appropriate place? This list is sorted and we\u0027re trying to keep this file under control.",
+      "range": {
+        "startLine": 1215,
+        "startChar": 18,
+        "endLine": 1215,
+        "endChar": 49
+      },
+      "revId": "d24dbd55ffb4246c4dbd120e0954acc4d747a30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
