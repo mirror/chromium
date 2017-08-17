@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.customtabs;
 
 import android.app.Application;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.SystemClock;
 import android.support.customtabs.CustomTabsCallback;
@@ -220,25 +219,19 @@ class CustomTabObserver extends EmptyTabObserver {
         if (mCustomTabsConnection == null) return;
         if (!mCustomTabsConnection.shouldSendNavigationInfoForSession(mSession)) return;
 
-        final ContentBitmapCallback callback = new ContentBitmapCallback() {
-            @Override
-            public void onFinishGetBitmap(Bitmap bitmap, int response) {
-                if (TextUtils.isEmpty(tab.getTitle()) && bitmap == null) return;
-                mCustomTabsConnection.sendNavigationInfo(
-                        mSession, tab.getUrl(), tab.getTitle(), bitmap);
-            }
+        final ContentBitmapCallback callback = (bitmap, response) -> {
+            if (TextUtils.isEmpty(tab.getTitle()) && bitmap == null) return;
+            mCustomTabsConnection.sendNavigationInfo(
+                    mSession, tab.getUrl(), tab.getTitle(), bitmap);
         };
         // Delay screenshot capture since the page might be doing post load tasks. And this also
         // gives time to get rid of any redirects and avoid capturing screenshots for those.
-        ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!tab.isHidden() && mCurrentState != STATE_RESET) return;
-                if (tab.getWebContents() == null) return;
-                tab.getWebContents().getContentBitmapAsync(
-                        mContentBitmapWidth, mContentBitmapHeight, callback);
-                mScreenshotTakenForCurrentNavigation = true;
-            }
+        ThreadUtils.postOnUiThreadDelayed(() -> {
+            if (!tab.isHidden() && mCurrentState != STATE_RESET) return;
+            if (tab.getWebContents() == null) return;
+            tab.getWebContents().getContentBitmapAsync(
+                    mContentBitmapWidth, mContentBitmapHeight, callback);
+            mScreenshotTakenForCurrentNavigation = true;
         }, 1000);
     }
 }

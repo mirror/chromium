@@ -4,8 +4,10 @@
 
 package org.chromium.chrome.browser.customtabs;
 
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_DEFAULT;
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_INFO_PAGE;
+import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider
+        .CUSTOM_TABS_UI_TYPE_DEFAULT;
+import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider
+        .CUSTOM_TABS_UI_TYPE_INFO_PAGE;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -30,8 +32,6 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RemoteViews;
@@ -462,15 +462,12 @@ public class CustomTabActivity extends ChromeActivity {
                 (ToolbarControlContainer) findViewById(R.id.control_container));
         getToolbarManager().initializeWithNative(getTabModelSelector(),
                 getFullscreenManager().getBrowserVisibilityDelegate(), getFindToolbarManager(),
-                null, layoutDriver, null, null, null, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        RecordUserAction.record("CustomTabs.CloseButtonClicked");
-                        if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()) {
-                            RecordUserAction.record("CustomTabs.CloseButtonClicked.DownloadsUI");
-                        }
-                        finishAndClose(false);
+                null, layoutDriver, null, null, null, v -> {
+                    RecordUserAction.record("CustomTabs.CloseButtonClicked");
+                    if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()) {
+                        RecordUserAction.record("CustomTabs.CloseButtonClicked.DownloadsUI");
                     }
+                    finishAndClose(false);
                 });
 
         mCustomTabContentHandler = new CustomTabContentHandler() {
@@ -660,15 +657,12 @@ public class CustomTabActivity extends ChromeActivity {
         if (TextUtils.isEmpty(clientName)) clientName = mIntentDataProvider.getClientPackageName();
         final String packageName = clientName;
         if (TextUtils.isEmpty(packageName) || packageName.contains(getPackageName())) return;
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                RapporServiceBridge.sampleString(
-                        "CustomTabs.ServiceClient.PackageName", packageName);
-                if (GSAState.isGsaPackageName(packageName)) return;
-                RapporServiceBridge.sampleString(
-                        "CustomTabs.ServiceClient.PackageNameThirdParty", packageName);
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            RapporServiceBridge.sampleString(
+                    "CustomTabs.ServiceClient.PackageName", packageName);
+            if (GSAState.isGsaPackageName(packageName)) return;
+            RapporServiceBridge.sampleString(
+                    "CustomTabs.ServiceClient.PackageNameThirdParty", packageName);
         });
     }
 
@@ -863,12 +857,8 @@ public class CustomTabActivity extends ChromeActivity {
             // memory consumption, as the current renderer goes away. We create a renderer as a lot
             // of users open several Custom Tabs in a row. The delay is there to avoid jank in the
             // transition animation when closing the tab.
-            ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    WarmupManager.getInstance().createSpareWebContents();
-                }
-            }, 500);
+            ThreadUtils.postOnUiThreadDelayed(
+                    () -> WarmupManager.getInstance().createSpareWebContents(), 500);
         }
 
         handleFinishAndClose();
@@ -910,19 +900,16 @@ public class CustomTabActivity extends ChromeActivity {
         getToolbarManager().setCustomActionButton(
                 params.getIcon(getResources()),
                 params.getDescription(),
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (getActivityTab() == null) return;
-                        mIntentDataProvider.sendButtonPendingIntentWithUrl(
-                                getApplicationContext(), getActivityTab().getUrl());
-                        RecordUserAction.record("CustomTabsCustomActionButtonClick");
-                        if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()
-                                && TextUtils.equals(
-                                           params.getDescription(), getString(R.string.share))) {
-                            RecordUserAction.record(
-                                    "CustomTabsCustomActionButtonClick.DownloadsUI.Share");
-                        }
+                v -> {
+                    if (getActivityTab() == null) return;
+                    mIntentDataProvider.sendButtonPendingIntentWithUrl(
+                            getApplicationContext(), getActivityTab().getUrl());
+                    RecordUserAction.record("CustomTabsCustomActionButtonClick");
+                    if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()
+                            && TextUtils.equals(
+                            params.getDescription(), getString(R.string.share))) {
+                        RecordUserAction.record(
+                                "CustomTabsCustomActionButtonClick.DownloadsUI.Share");
                     }
                 });
     }
@@ -1060,12 +1047,7 @@ public class CustomTabActivity extends ChromeActivity {
         Bundle startActivityOptions = ActivityOptionsCompat.makeCustomAnimation(
                 this, R.anim.abc_fade_in, R.anim.abc_fade_out).toBundle();
         if (willChromeHandleIntent || forceReparenting) {
-            Runnable finalizeCallback = new Runnable() {
-                @Override
-                public void run() {
-                    finishAndClose(true);
-                }
-            };
+            Runnable finalizeCallback = () -> finishAndClose(true);
 
             mMainTab = null;
             // mHasCreatedTabEarly == true => mMainTab != null in the rest of the code.
@@ -1132,12 +1114,9 @@ public class CustomTabActivity extends ChromeActivity {
 
                 // Blink has rendered the page by this point, but Android asynchronously shows it.
                 // Introduce a small delay, then actually show the page.
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!tab.isInitialized() || isActivityDestroyed()) return;
-                        tab.getView().setBackgroundResource(0);
-                    }
+                new Handler().postDelayed(() -> {
+                    if (!tab.isInitialized() || isActivityDestroyed()) return;
+                    tab.getView().setBackgroundResource(0);
                 }, 50);
             }
         };

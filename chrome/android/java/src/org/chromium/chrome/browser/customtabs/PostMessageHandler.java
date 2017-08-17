@@ -17,7 +17,6 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.customtabs.OriginVerifier.OriginVerificationListener;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.AppWebMessagePort;
-import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.MessagePort.MessageCallback;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
@@ -46,11 +45,8 @@ public class PostMessageHandler
      */
     public PostMessageHandler(CustomTabsSessionToken session) {
         super(session);
-        mMessageCallback = new MessageCallback() {
-            @Override
-            public void onMessage(String message, MessagePort[] sentPorts) {
-                if (mBoundToService) postMessage(message, null);
-            }
+        mMessageCallback = (message, sentPorts) -> {
+            if (mBoundToService) postMessage(message, null);
         };
     }
 
@@ -148,12 +144,7 @@ public class PostMessageHandler
      */
     public void verifyAndInitializeWithOrigin(final Uri origin) {
         if (mOriginVerifier == null) mOriginVerifier = new OriginVerifier(this, mPackageName);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mOriginVerifier.start(origin);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mOriginVerifier.start(origin));
     }
 
     /**
@@ -169,14 +160,11 @@ public class PostMessageHandler
         if (mWebContents == null || mWebContents.isDestroyed()) {
             return CustomTabsService.RESULT_FAILURE_MESSAGING_ERROR;
         }
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // It is still possible that the page has navigated while this task is in the queue.
-                // If that happens fail gracefully.
-                if (mChannel == null || mChannel[0].isClosed()) return;
-                mChannel[0].postMessage(message, null);
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            // It is still possible that the page has navigated while this task is in the queue.
+            // If that happens fail gracefully.
+            if (mChannel == null || mChannel[0].isClosed()) return;
+            mChannel[0].postMessage(message, null);
         });
         return CustomTabsService.RESULT_SUCCESS;
     }

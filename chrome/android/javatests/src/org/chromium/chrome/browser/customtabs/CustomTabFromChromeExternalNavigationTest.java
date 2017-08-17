@@ -41,7 +41,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -78,15 +77,12 @@ public class CustomTabFromChromeExternalNavigationTest {
     }
 
     private Intent getCustomTabFromChromeIntent(final String url) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Intent>() {
-            @Override
-            public Intent call() throws Exception {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                return ChromeLauncherActivity.createCustomTabActivityIntent(
-                        InstrumentationRegistry.getInstrumentation().getTargetContext(), intent,
-                        true);
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return ChromeLauncherActivity.createCustomTabActivityIntent(
+                    InstrumentationRegistry.getInstrumentation().getTargetContext(), intent,
+                    true);
         });
 
     }
@@ -146,12 +142,7 @@ public class CustomTabFromChromeExternalNavigationTest {
 
         CriteriaHelper.pollUiThread(Criteria.equals(
                 OverrideUrlLoadingResult.OVERRIDE_WITH_EXTERNAL_INTENT,
-                new Callable<OverrideUrlLoadingResult>() {
-                    @Override
-                    public OverrideUrlLoadingResult call() throws Exception {
-                        return navigationDelegate.get().getLastOverrideUrlLoadingResultForTests();
-                    }
-                }));
+                () -> navigationDelegate.get().getLastOverrideUrlLoadingResultForTests()));
 
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
@@ -193,12 +184,7 @@ public class CustomTabFromChromeExternalNavigationTest {
     }
 
     private void showAppMenuAndAssertMenuShown(final AppMenuHandler appMenuHandler) {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                appMenuHandler.showAppMenu(null, false);
-            }
-        });
+        ThreadUtils.runOnUiThread((Runnable) () -> appMenuHandler.showAppMenu(null, false));
         CriteriaHelper.pollUiThread(new Criteria("AppMenu did not show") {
             @Override
             public boolean isSatisfied() {
