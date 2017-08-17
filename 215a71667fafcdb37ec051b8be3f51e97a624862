@@ -87,6 +87,24 @@
       "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea976c8_c871952f",
+        "filename": "ui/base/ime/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-17T15:37:40Z",
+      "side": 1,
+      "message": "Ok, thanks for the pointer. I\u0027ve removed the dependency adding a new ui::ImeTextSpanThickness enum.",
+      "parentUuid": "f358a4c0_75b92559",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
