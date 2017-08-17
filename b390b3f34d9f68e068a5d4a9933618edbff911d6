@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eea9fbce_79ac0194",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-17T23:45:50Z",
+      "side": 1,
+      "message": "While writing these tests, I realized this certificate actually had a different common name than I intended it to, so I ended up swapping it out. I added comments listing the common names above these certificates so we would remember what they are in the future.",
+      "revId": "b390b3f34d9f68e068a5d4a9933618edbff911d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
