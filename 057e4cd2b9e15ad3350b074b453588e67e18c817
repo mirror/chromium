@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4846ecaf_1272d5a1",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-17T05:10:48Z",
+      "side": 1,
+      "message": "\u003e Because it is referenced in the unit test. I can use friends instead, but anyway this name in not something we strive to hide from others.\n\nI suggest making it private and using a friend where appropriate.  You don\u0027t want other people in other classes thinking they might have a reason to write to this histogram.",
+      "parentUuid": "92b99704_f74bcc01",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "025a10fc_a4071925",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 1
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "ditto.",
       "parentUuid": "025a10fc_a4071925",
+      "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fef0ac2d_7ed397f0",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-17T05:10:48Z",
+      "side": 1,
+      "message": "\u003e ditto.\n\nditto :-)",
+      "parentUuid": "2a665c7b_719f1d27",
       "revId": "057e4cd2b9e15ad3350b074b453588e67e18c817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
