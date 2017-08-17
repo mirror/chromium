@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd77a6da_cbfc12ab",
+        "filename": "chrome/browser/ui/webui/browsing_history_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T18:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "015fada1_51d6db59",
+      "range": {
+        "startLine": 257,
+        "startChar": 21,
+        "endLine": 257,
+        "endChar": 49
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4af60f02_a4f27b22",
         "filename": "components/history/core/browser/browsing_history_service.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T13:03:58Z",
       "side": 1,
       "message": "This is a public method so can be called even if BrowsingHistoryService is created with a null value for local_history_. I think it should support local_history_ to be null (and not dereference a potentially null pointer).",
+      "range": {
+        "startLine": 155,
+        "startChar": 29,
+        "endLine": 155,
+        "endChar": 41
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042c65ee_22472fd1",
+        "filename": "components/history/core/browser/browsing_history_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T18:51:43Z",
+      "side": 1,
+      "message": "Ugh, you\u0027re right. Added null checks all over this file. Would be nice if we could just DCHECK in the constructor that we have a real HistoryService instead, but it seems we get a nullptr if the database initialization fails.",
+      "parentUuid": "4af60f02_a4f27b22",
       "range": {
         "startLine": 155,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "28a70d6f_3af476d5",
+        "filename": "components/history/core/browser/browsing_history_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T18:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ebad536_3e3fc148",
+      "range": {
+        "startLine": 230,
+        "startChar": 29,
+        "endLine": 230,
+        "endChar": 41
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b08200ed_421dc0b8",
         "filename": "components/history/core/browser/browsing_history_service_handler.h",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dbceebbe_bb7b2649",
+        "filename": "components/history/core/browser/browsing_history_service_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T18:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08200ed_421dc0b8",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d11ca883_95f05f37",
         "filename": "components/history/core/browser/browsing_history_service_handler.h",
         "patchSetId": 6
@@ -105,6 +201,24 @@
       "writtenOn": "2017-08-17T13:03:58Z",
       "side": 1,
       "message": "It looks like this class does two things:\n1. expose some callbacks that embedder may be interested in listening to,\n2. expose API that embedder needs to implement to have a working BrowsingHistoryService.\n\nShould they be two separates interfaces?",
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb8c010_eab7ad40",
+        "filename": "components/history/core/browser/browsing_history_service_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-17T18:51:43Z",
+      "side": 1,
+      "message": "We could, and it would allow us to use composition instead of inheritance for the differences between android and desktop, which sounds nice. But, what would the classes be called?\n\nIt also seems like the common pattern for FooDriver classes is to have information flowing in both directions in the same interface, like AutofillDriver and PasswordManagerDriver.",
+      "parentUuid": "d11ca883_95f05f37",
       "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
