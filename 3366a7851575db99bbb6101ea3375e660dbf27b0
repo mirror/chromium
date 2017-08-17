@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e516e22_e230ccd8",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7185,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-17T19:25:22Z",
+      "side": 1,
+      "message": "The natural type of these is size_t. (And for `free_size`, below.) I see `GetFreeSize` returns unsigned int, but it will also always safely cast up to size_t. (Which is also why this comment is mostly just a nit.)",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18928ca_ee79a43b",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7204,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-17T19:25:22Z",
+      "side": 1,
+      "message": "Do you need to check that `memory + written_bytes` does not go beyond the range of `memory`? (And on line 7214.)",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7098dfa4_8fec028a",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7219,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-17T19:25:22Z",
+      "side": 1,
+      "message": "Are there possibilities for integer over/underflow here and on 7220? base::CheckedNumeric might help here.",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf8990cf_476174aa",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 11
