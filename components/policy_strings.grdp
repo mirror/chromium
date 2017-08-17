@@ -228,6 +228,9 @@
   <message name="IDS_POLICY_TITLE" desc="Page title and the title of the section that lists policies.">
     Policies
   </message>
+  <message name="IDS_POLICY_ADMIN_TITLE" desc="Admin page title and the title of the section that lists policies">
+    Policy management
+  </message>
   <message name="IDS_POLICY_FILTER_PLACEHOLDER" desc="Placeholder for the input field that lets the user filter policies by name.">
     Filter policies by name
   </message>
@@ -236,6 +239,18 @@
   </message>
   <message name="IDS_EXPORT_POLICIES_JSON" desc="Label for the button that exports policies in JSON format.">
     Export to JSON
+  </message>
+  <message name="IDS_POLICY_ADMIN_EDIT" desc="Label for the button to change policy value in current session">
+    Edit
+  </message>
+  <message name="IDS_POLICY_ADMIN_SAVE" desc="Label for the button to save policy value after editing it">
+    Save
+  </message>
+  <message name="IDS_POLICY_ADMIN_LOAD_SESSION" desc="Label for the button that loads specified session.">
+    Load session
+  </message>
+  <message name="IDS_POLICY_ADMIN_SESSION_NAME_PLACEHOLDER" desc="Placeholder for the input field that lets the user change policy management sessions">
+    Session name
   </message>
   <message name="IDS_POLICY_CHROME_FOR_WORK" desc="Title of the link to the chrome for work website.">
     Using Chrome at work? Businesses can manage Chrome settings for their employees. Learn more
