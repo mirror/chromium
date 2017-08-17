@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f760ed1_54d90615",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T17:30:09Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026 h",
+      "range": {
+        "startLine": 453,
+        "startChar": 11,
+        "endLine": 453,
+        "endChar": 12
+      },
+      "revId": "775668eda8858b58f237684023d7c57cf8ae9b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa1306b_67db8ace",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T17:30:09Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 206,
+        "startChar": 17,
+        "endLine": 206,
+        "endChar": 26
+      },
+      "revId": "775668eda8858b58f237684023d7c57cf8ae9b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6ea318_5a86133b",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-17T17:30:09Z",
+      "side": 1,
+      "message": "Nit: GetKnownHistograms().",
+      "revId": "775668eda8858b58f237684023d7c57cf8ae9b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
