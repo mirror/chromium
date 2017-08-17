@@ -94,6 +94,30 @@
       "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e6f31e_e6ed397e",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-17T19:47:08Z",
+      "side": 1,
+      "message": "I see. So you might land the UI part first and the C++ part after? (Otherwise one CL should have the other as its upstream to avoid confusion like this.)",
+      "parentUuid": "a6db0aba_e2eeaa45",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
