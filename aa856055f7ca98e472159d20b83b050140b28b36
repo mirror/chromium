@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "090d25bc_a4449aa0",
+        "filename": "chrome/common/child_process_logging_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-17T21:52:24Z",
+      "side": 1,
+      "message": "If I was being nitpicky, I would say this is \"implemented in \" or \"exported from ... by way of chrome_elf.def\" or some such.",
+      "revId": "aa856055f7ca98e472159d20b83b050140b28b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a8bfb9_31c7817c",
+        "filename": "chrome_elf/chrome_elf.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-17T21:52:24Z",
+      "side": 1,
+      "message": "If we keep both, I\u0027d rather name these as ClearCrashKeyValueImplW and ClearCrashKeyValueImplA",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "aa856055f7ca98e472159d20b83b050140b28b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
