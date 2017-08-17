@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b4c4fd5_21469eaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-17T18:07:24Z",
+      "side": 1,
+      "message": "properly?",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dda3f69_f61be534",
+        "filename": "remoting/base/service_urls.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-17T18:07:24Z",
+      "side": 1,
+      "message": "This change doesn\u0027t seem to be mentioned in the CL description. Can it be split out or is it part of bug 756277?",
+      "range": {
+        "startLine": 45,
+        "startChar": 58,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a6373d_1b80b0a1",
+        "filename": "remoting/base/service_urls.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-17T18:07:24Z",
+      "side": 1,
+      "message": "Nit: Comment indentation and capitalization.",
+      "range": {
+        "startLine": 48,
+        "startChar": 46,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16302855_78e1e030",
+        "filename": "remoting/signaling/signaling_address.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-17T18:07:24Z",
+      "side": 1,
+      "message": "I think you can simplify this to:\n\nif (SplitJidResource(address, \u0026bare_jid, \u0026resource) \u0026\u0026\n    base::Base64Decode(resource, \u0026decoded_resource) \u0026\u0026\n    decoded_resource.find(\"chromoting_lcs\") !\u003d std::string::npos) {\n  return SignalingAddress::Channel::LCS;\n}\n\nreturn SignalingAddress::Channel::XMPP;\n\nIn other words: if we can split the resource, and decode it as base64, and after doing so it contains chromoting_lcs, then use LCR. The early returns just complicate the code IMO. It\u0027s a bit subjective though, so ignore me if you disagree.",
+      "range": {
+        "startLine": 50,
+        "startChar": 63,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
