@@ -34,6 +34,24 @@
       "revId": "e8f59eac56c6d7441bf6f3ec1fc38bdfbcd3b203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f39e5f99_f0f075c5",
+        "filename": "build/android/findbugs_filter/findbugs_exclude.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-17T22:10:30Z",
+      "side": 1,
+      "message": "Reverted back to having separate filters, as findbugs doesn\u0027t seem to properly deal with interfaces (RuleChain implements TestRule, but ignoring unused TestRules still results in Rulechains being counted as unused).",
+      "parentUuid": "1de9649f_28ae0be1",
+      "revId": "e8f59eac56c6d7441bf6f3ec1fc38bdfbcd3b203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
