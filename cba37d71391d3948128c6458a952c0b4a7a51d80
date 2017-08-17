@@ -22,6 +22,30 @@
       "revId": "cba37d71391d3948128c6458a952c0b4a7a51d80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42520390_993f0d43",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-17T22:40:01Z",
+      "side": 1,
+      "message": "we want to throw out either. mouse events from touch or synthesized mouse events (they are generated when the cursor changes)",
+      "parentUuid": "f6ed7782_28f8eec0",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 45
+      },
+      "revId": "cba37d71391d3948128c6458a952c0b4a7a51d80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
