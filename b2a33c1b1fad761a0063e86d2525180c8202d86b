@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b011003e_04eebd73",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-17T00:29:08Z",
+      "side": 1,
+      "message": "Group check for opinion here: If the user presses escape should we clear the permission to silently relock?  I think it\u0027s OK as coded in this patch, the silent permission remains so long as the bubble was shown long enough the first time.  But, if others didn\u0027t think about it, please do.",
+      "range": {
+        "startLine": 109,
+        "startChar": 26,
+        "endLine": 109,
+        "endChar": 49
+      },
+      "revId": "b2a33c1b1fad761a0063e86d2525180c8202d86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd86fcc_361717d2",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-17T00:29:08Z",
+      "side": 1,
+      "message": "Comment suggestion:\n  Optionally a WebContents instance that is granted permission to silently\n  lock the mouse. This is granted only if the WebContents instance has\n  previously locked and displayed the permission bubble until the bubble\n  time out has expired.\n\nMember name suggestion:\n  web_contents_granted_silent_mouse_lock_permission_",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "b2a33c1b1fad761a0063e86d2525180c8202d86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
