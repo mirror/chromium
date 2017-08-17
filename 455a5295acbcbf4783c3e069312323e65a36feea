@@ -16,6 +16,24 @@
       "revId": "455a5295acbcbf4783c3e069312323e65a36feea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6240b2c8_1afbb01a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-17T06:32:19Z",
+      "side": 1,
+      "message": "Not that I can remember. We did add a bool to the CSSParserLocalContext about whether it\u0027s an alias or not, is that what you\u0027re thinking of?",
+      "parentUuid": "b725192a_15e74332",
+      "revId": "455a5295acbcbf4783c3e069312323e65a36feea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
