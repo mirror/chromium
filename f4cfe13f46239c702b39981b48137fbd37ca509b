@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccbefe65_652c530b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "nit: add a TODO dummy data here?",
+      "range": {
+        "startLine": 159,
+        "startChar": 12,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a391d049_749b8648",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "don\u0027t reuse the arrays built from the native side, we don\u0027t know which size they have, if they are less than 4 items long, you would crash. same for whitelisticonpaths and sources",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 32
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d045d9_dee4a160",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "what\u0027s this number? Use the constant instead?",
+      "range": {
+        "startLine": 184,
+        "startChar": 34,
+        "endLine": 184,
+        "endChar": 35
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1fee2d_17871d5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "I don\u0027t know if @Nullable carries over, just in doubt, add it here too? (or don\u0027t if it works as intended already)",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb9ae34_9cd3f3f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "no need to override then",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202efc16_f59d90f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "@CallSuper",
+      "range": {
+        "startLine": 29,
+        "startChar": 16,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ca3c3c_76f6bf9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9e0405_7a9afe4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteSectionViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "nit: method order: public before protected",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b902cfd1_134d1023",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "delete new line",
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734906c8_018c7a87",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "remove added space",
+      "range": {
+        "startLine": 76,
+        "startChar": 3,
+        "endLine": 76,
+        "endChar": 4
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e558a0_1dea5ed1",
+        "filename": "ui/android/java/strings/android_ui_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "revert",
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb66e1ac_e8c142ac",
+        "filename": "ui/android/java/strings/android_ui_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "format and cleanup spacing",
+      "range": {
+        "startLine": 181,
+        "startChar": 133,
+        "endLine": 181,
+        "endChar": 141
+      },
+      "revId": "f4cfe13f46239c702b39981b48137fbd37ca509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

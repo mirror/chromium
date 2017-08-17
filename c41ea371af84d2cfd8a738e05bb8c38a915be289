@@ -235,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "dba57d00_e42ba7c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-17T16:30:04Z",
+      "side": 1,
+      "message": "you\u0027re right that should be safe.",
+      "parentUuid": "473bf281_d8275a57",
+      "range": {
+        "startLine": 163,
+        "startChar": 24,
+        "endLine": 163,
+        "endChar": 59
+      },
+      "revId": "c41ea371af84d2cfd8a738e05bb8c38a915be289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf20d0b_9da94611",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 3
