@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bcc2d55_fde49068",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-17T19:56:58Z",
+      "side": 1,
+      "message": "if the target is *not* a Node, why does this return false? (if it\u0027s |window| then isn\u0027t it unrelated?)",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "bca53376c43fa9e1344d3836468aeeeb8c238ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
