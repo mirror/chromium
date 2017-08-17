@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2062d47_39d535ab",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions_test_runner/ExtensionsAuditsTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-17T20:45:19Z",
+      "side": 1,
+      "message": "I think I do need to wait so it delays the resolution of the implicit promise returned, otherwise I don\u0027t know when this evaluateInPagePromise function is done inside initAsync (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?q\u003dtestrunner.js\u0026sq\u003dpackage:chromium\u0026l\u003d168)",
+      "parentUuid": "8724a60b_4d9f41da",
+      "revId": "f8a87314e69c2ad485a36bd57db8d8418b82351b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d4ade23_f9791bd4",
         "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/migrate_helpers.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f8a87314e69c2ad485a36bd57db8d8418b82351b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd3e3bf_a02ec79d",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/migrate_helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-17T20:45:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d4ade23_f9791bd4",
+      "revId": "f8a87314e69c2ad485a36bd57db8d8418b82351b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
