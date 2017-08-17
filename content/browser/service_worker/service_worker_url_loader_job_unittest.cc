@@ -47,7 +47,19 @@ class Helper : public EmbeddedWorkerTestHelper {
     blob_size_ = blob_size;
   }
 
+  // Tells this helper to respond to fetch events with the specified stream.
+  void RespondWithStream(
+      blink::mojom::ServiceWorkerStreamCallbackRequest callback_request,
+      mojo::ScopedDataPipeConsumerHandle consumer_handle) {
+    response_mode_ = ResponseMode::kStream;
+    EXPECT_TRUE(stream_handle_.is_null());
+    stream_handle_ = blink::mojom::ServiceWorkerStreamHandle::New();
+    stream_handle_->callback_request = std::move(callback_request);
+    stream_handle_->stream = std::move(consumer_handle);
+  }
+
  protected:
+  blink::mojom::ServiceWorkerStreamHandlePtr stream_handle_;
   void OnFetchEvent(
       int embedded_worker_id,
       int fetch_event_id,
@@ -77,12 +89,27 @@ class Helper : public EmbeddedWorkerTestHelper {
             base::Time::Now());
         std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
         return;
+      case ResponseMode::kStream:
+        response_callback->OnResponseStream(
+            ServiceWorkerResponse(
+                base::MakeUnique<std::vector<GURL>>(), 200, "OK",
+                network::mojom::FetchResponseType::kDefault,
+                base::MakeUnique<ServiceWorkerHeaderMap>(), "", 0,
+                nullptr /* blob */,
+                blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+                false /* response_is_in_cache_storage */,
+                std::string() /* response_cache_storage_cache_name */,
+                base::MakeUnique<
+                    ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            std::move(stream_handle_), base::Time::Now());
+        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        return;
     }
     NOTREACHED();
   }
 
  private:
-  enum class ResponseMode { kDefault, kBlob };
+  enum class ResponseMode { kDefault, kBlob, kStream };
   ResponseMode response_mode_ = ResponseMode::kDefault;
 
   // For ResponseMode::kBlob.
@@ -244,5 +271,55 @@ TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
 
 // TODO(falken): Add tests for stream response, network fallback, etc. Basically
 // everything in ServiceWorkerURLRequestJobTest.
+
+// NavPreloadMetrics_WorkerAlreadyStarted_MainFrame
+// NavPreloadMetrics_WorkerFirst_MainFrame
+// NavPreloadMetrics_NavPreloadFirst_MainFrame
+// avPreloadMetrics_WorkerFirst_SubFrame
+// NavPreloadMetrics_NavPreloadFirst_SubFrame
+// CustomTimeout
+// DeletedProviderHostOnFetchEvent
+// DeletedProviderHostBeforeFetchEvent
+// NonExistentBlobUUIDResponse
+// StreamResponse_ConsecutiveRead
+// StreamResponseAndCancel
+// StreamResponse_Abort
+// treamResponse_AbortBeforeData
+// StreamResponse_AbortAfterData
+// StreamResponse_ConsecutiveReadAndAbort
+// FailFetchDispatch
+// FailToActivate_MainResource
+// FailToActivate_Subresource
+// EarlyResponse
+// CancelRequest
+// StreamResponse
+TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse) {
+  // Constract the Stream to respond with.
+  const char kResponseBody[] = "Here is sample text for the Stream.";
+  blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
+  mojo::DataPipe data_pipe;
+  helper_->RespondWithStream(mojo::MakeRequest(&stream_callback),
+                             std::move(data_pipe.consumer_handle));
+  uint32_t written_bytes = sizeof(kResponseBody) - 1;
+  MojoResult result = data_pipe.producer_handle->WriteData(
+      kResponseBody, &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+  ASSERT_EQ(MOJO_RESULT_OK, result);
+  EXPECT_EQ(sizeof(kResponseBody) - 1, written_bytes);
+  stream_callback->OnCompleted();
+  data_pipe.producer_handle.reset();
+
+  // Perform the request.
+  TestRequest();
+  const ResourceResponseHead& info = client_.response_head();
+  EXPECT_EQ(200, info.headers->response_code());
+  ExpectFetchedViaServiceWorker(info);
+
+  // Test the body.
+  std::string response;
+  EXPECT_TRUE(client_.response_body().is_valid());
+  EXPECT_TRUE(mojo::common::BlockingCopyToString(
+      client_.response_body_release(), &response));
+  EXPECT_EQ(kResponseBody, response);
+}
 
 }  // namespace content
