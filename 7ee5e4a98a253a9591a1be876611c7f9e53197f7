@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "61423518_5358d877",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-17T21:00:38Z",
+      "side": 1,
+      "message": "The reason the layout tests don\u0027t work is because, in them, the disposition is classified as NEW_FOREGROUND_TAB. We might need to switch to adding those. Experimenting; will get back to you.",
+      "parentUuid": "ae414943_03e58c92",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df933f4_1a907885",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -191,6 +209,24 @@
       "side": 1,
       "message": "I\u0027m curious how things go wrong if we always exited fullscreen in the CreateNewWindow. Is there a user-visible difference?\n\nAFAIK, the blink message loop doesn\u0027t run between the IPCs that trigger CreateNewWindow, and the one that triggers ShowCreatedWindow -- they\u0027re part of the same operation, just at different points in the stack. I used to think there was a delay in these two operations, but my current understanding is that they arrive back-to-back.",
       "parentUuid": "5858ac9f_00cb3817",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b050a034_30bb7c92",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-17T21:00:38Z",
+      "side": 1,
+      "message": "Probably no change.\n\nI\u0027ll give that a try in the next version of the CL.",
+      "parentUuid": "fb4e4876_3ecca6aa",
       "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
