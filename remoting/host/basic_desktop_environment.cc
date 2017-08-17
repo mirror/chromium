@@ -76,6 +76,11 @@ BasicDesktopEnvironment::CreateVideoCapturer() {
   return std::move(result);
 }
 
+std::unique_ptr<ProcessStatsAgent>
+BasicDesktopEnvironment::StartProcessStatsAgent() {
+  return nullptr;
+}
+
 BasicDesktopEnvironment::BasicDesktopEnvironment(
     scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
@@ -109,6 +114,11 @@ bool BasicDesktopEnvironmentFactory::SupportsAudioCapture() const {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 
   return AudioCapturer::IsSupported();
+}
+
+std::unique_ptr<ProcessStatsAgent>
+BasicDesktopEnvironmentFactory::StartProcessStatsAgent() {
+  return nullptr;
 }
 
 }  // namespace remoting

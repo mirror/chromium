@@ -17,6 +17,7 @@
 #include "ipc/ipc_channel_handle.h"
 #include "remoting/host/desktop_environment.h"
 #include "remoting/host/desktop_session_connector.h"
+#include "remoting/host/ipc_process_stats_connector.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -59,6 +60,9 @@ class IpcDesktopEnvironment : public DesktopEnvironment {
   void SetCapabilities(const std::string& capabilities) override;
   uint32_t GetDesktopSessionId() const override;
 
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
+
  private:
   scoped_refptr<DesktopSessionProxy> desktop_session_proxy_;
 
@@ -99,6 +103,9 @@ class IpcDesktopEnvironmentFactory
       const IPC::ChannelHandle& desktop_pipe) override;
   void OnTerminalDisconnected(int terminal_id) override;
 
+  // ProcessStatsConnector implementation.
+  std::unique_ptr<ProcessStatsAgent> StartProcessStatsAgent() override;
+
  private:
   // Used to run the audio capturer.
   scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner_;
@@ -121,6 +128,8 @@ class IpcDesktopEnvironmentFactory
   // This gives us more than 67 years of unique IDs assuming a new ID is
   // allocated every second.
   int next_id_ = 0;
+
+  IpcProcessStatsConnector process_stats_connector_;
 
   // Factory for weak pointers to DesktopSessionConnector interface.
   base::WeakPtrFactory<DesktopSessionConnector> connector_factory_;

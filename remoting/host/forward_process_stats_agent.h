@@ -16,12 +16,15 @@ namespace remoting {
 // one. All public functions, not including constructor and destructor, of the
 // object of ForwardProcessStatsAgent are expected to be called in a same
 // thread.
-class ForwardProcessStatsAgent final : public ProcessStatsAgent {
+class ForwardProcessStatsAgent : public ProcessStatsAgent {
  public:
   ForwardProcessStatsAgent();
   ~ForwardProcessStatsAgent() override;
 
   void OnProcessStats(const protocol::ProcessResourceUsage& usage);
+
+  // Clears the |usage_| to the default value.
+  void Clear();
 
   // ProcessStatsAgent implementation.
   protocol::ProcessResourceUsage GetResourceUsage() override;

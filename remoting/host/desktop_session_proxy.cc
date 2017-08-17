@@ -173,6 +173,11 @@ void DesktopSessionProxy::SetCapabilities(const std::string& capabilities) {
   }
 }
 
+std::unique_ptr<ProcessStatsAgent>
+DesktopSessionProxy::StartProcessStatsAgent() {
+  return process_stats_connector_.StartProcessStatsAgent();
+}
+
 bool DesktopSessionProxy::OnMessageReceived(const IPC::Message& message) {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 
@@ -192,6 +197,8 @@ bool DesktopSessionProxy::OnMessageReceived(const IPC::Message& message) {
                         OnInjectClipboardEvent)
     IPC_MESSAGE_HANDLER(ChromotingDesktopNetworkMsg_DisconnectSession,
                         DisconnectSession);
+    IPC_MESSAGE_HANDLER(ChromotingAnyToNetworkMsg_ReportProcessStats,
+                        OnDesktopProcessStats);
   IPC_END_MESSAGE_MAP()
 
   CHECK(handled) << "Received unexpected IPC type: " << message.type();
@@ -225,6 +232,8 @@ bool DesktopSessionProxy::AttachToDesktop(
   desktop_channel_ = IPC::ChannelProxy::Create(desktop_pipe,
                                                IPC::Channel::MODE_CLIENT, this,
                                                io_task_runner_.get());
+
+  process_stats_connector_.set_ipc_sender(&desktop_channel_);
 
   // Pass ID of the client (which is authenticated at this point) to the desktop
   // session agent and start the agent.
@@ -515,6 +524,11 @@ void DesktopSessionProxy::OnInjectClipboardEvent(
 
     client_clipboard_->InjectClipboardEvent(event);
   }
+}
+
+void DesktopSessionProxy::OnDesktopProcessStats(
+    const protocol::AggregatedProcessResourceUsage& usage) {
+  process_stats_connector_.OnProcessStats(usage);
 }
 
 void DesktopSessionProxy::SendToDesktop(IPC::Message* message) {
