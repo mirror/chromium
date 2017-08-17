@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c05900ca_03b4a254",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "944d8e08_e5563480",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c5bf2ef_40d494f0",
         "filename": "docs/webui_infrastructure.md",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T17:54:13Z",
       "side": 1,
       "message": "Start with the brief motivation about why the user needs to read this instead of following https://www.chromium.org/developers/webui\n\nAlso, link to your real CL so that the reader can figure out the details from the code directly, if they wish to.",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45692ba_8c30b690",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "The structure of the WebUI for chrome://safe-browsing has changed from my first cl on creating the webui (mainly the message handling part), so I think linking to chrome://safe-browsing would be better, what do you think?",
+      "parentUuid": "8c5bf2ef_40d494f0",
       "range": {
         "startLine": 18,
         "startChar": 9,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "0eee9d2b_12dd395a",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "217317ba_0305275a",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 10
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "558ee84d_2c27695f",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89170e49_3c3afdb1",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 157
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17288e22_430b1c21",
         "filename": "docs/webui_infrastructure.md",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750bb25a_5f79aee4",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17288e22_430b1c21",
+      "range": {
+        "startLine": 87,
+        "startChar": 24,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "41f600c6_49f4671f",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b50bc2b_a406dfad",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 47
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d22d7831_080485fc",
         "filename": "docs/webui_infrastructure.md",
         "patchSetId": 8
@@ -160,6 +304,30 @@
       "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bf939a_9f50110e",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22d7831_080485fc",
+      "range": {
+        "startLine": 129,
+        "startChar": 1,
+        "endLine": 129,
+        "endChar": 2
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "80950715_3144026a",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dd6af31_61c2efa7",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 49
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6447e114_18588228",
         "filename": "docs/webui_infrastructure.md",
         "patchSetId": 8
@@ -206,6 +398,30 @@
       "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e469cd_711ad32b",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6447e114_18588228",
+      "range": {
+        "startLine": 188,
+        "startChar": 80,
+        "endLine": 188,
+        "endChar": 92
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1b32c2be_00f0730e",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df35659a_bfe8cb06",
+      "range": {
+        "startLine": 193,
+        "startChar": 3,
+        "endLine": 193,
+        "endChar": 14
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1341e72_25937064",
         "filename": "docs/webui_infrastructure.md",
         "patchSetId": 8
@@ -252,6 +492,30 @@
       "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5721f363_ab862a3c",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-17T19:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1341e72_25937064",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 161
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
