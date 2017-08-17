@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc34fd7c_0423c91d",
+        "filename": "net/nqe/weighted_observation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-17T22:49:32Z",
+      "side": 1,
+      "message": "looks like this is not needed either.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "9c20465f60a2ca56e0c5eb925bc72cc248a0f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
