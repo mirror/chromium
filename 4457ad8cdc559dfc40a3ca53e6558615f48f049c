@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6e124439_c1b7d344",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T14:33:29Z",
+      "side": 1,
+      "message": "\u003e \u003e I think this will introduce a static initializer, which is not allowed in Chromium. (There should be a bot that complains about this.)\n\u003e \n\u003e Tried running trybots on this patchset, we\u0027ll see.\n\nIt\u0027s also possible that this is one of the bots that\u0027s only on the waterfall, not on the CQ. But even if no bot catches it, static initializers are still outlawed. (This essentially means you can only have global variables of \"simple\" types - built-in types like int or pointers are safe, but little else is.)\n\n\u003e \u003e Some options:\n\u003e \u003e - Create at first use in AddNonWildcardDomainNonPortScheme.\n\u003e \n\u003e Will do this for now.\n\nThis introduces a memory leak though, which will likely also make some bots unhappy.\n\n\u003e \u003e - Use base/memory/singleton.h.\n\u003e \u003e - Find some other solution that doesn\u0027t rely on global variables?\n\u003e \u003e - Pass all the schemes in at once as a char**, then you can statically define an array with all of them where SetNonWildcardDomainNonPortScheme is called.\n\u003e \n\u003e Don\u0027t really have an opinion on the other options, can\u0027t tell which one would be most appropriate.\n\nSingleton might take care about suppressing the memleak automatically, but is otherwise not really any better.\nchar** is close to the current state, and avoids the memleak. Unless we can think of something smarter, I\u0027d probably go with that.\n\nThe owners might also have an opinion :)",
+      "parentUuid": "d2d87a48_85c06df1",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "038091b5_71dd981f",
         "filename": "components/content_settings/core/common/content_settings_pattern.h",
         "patchSetId": 8
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "Add suggests to me that the semantics are vector-like, not set-like as in the case of put. I\u0027m open to other suggestions though, or even going with \"Add\" if you think it makes more sense. Maybe \"Insert\"?",
       "parentUuid": "bb1854dc_3e0ef1d0",
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52097dc7_15e2c375",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-17T14:33:29Z",
+      "side": 1,
+      "message": "To me, \"Add\" doesn\u0027t really suggest std::vector/ordering. \"Append\" would :)\nAnyway, \"Insert\" is fine too (and feels more C++-ey than \"Put\"). Or maybe this will become obsolete anyway, depending on the other comment thread.",
+      "parentUuid": "8af85b89_58e52042",
       "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
