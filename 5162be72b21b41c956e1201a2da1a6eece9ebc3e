@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "54f7e9cc_815abc46",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-17T22:00:29Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right 108 should be indented 2 spaces",
+      "parentUuid": "7e583b20_4327df47",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "5162be72b21b41c956e1201a2da1a6eece9ebc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ce65bf8_c345f598",
         "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The styling should not necessarily be a settings-box. Also, I\u0027d like to avoid adding styling from code.",
       "parentUuid": "3ce65bf8_c345f598",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "5162be72b21b41c956e1201a2da1a6eece9ebc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d453d7_17173fea",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-17T22:00:29Z",
+      "side": 1,
+      "message": "Agreed that adding style form code is weird b/c the style is defined outside the element. It is something that\u0027s repeated everywhere, so it seems like a candidate to move into this element. WDYT?",
+      "parentUuid": "8ec723fb_9dc47624",
       "range": {
         "startLine": 10,
         "startChar": 7,
