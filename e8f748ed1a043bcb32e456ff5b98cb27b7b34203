@@ -46,6 +46,30 @@
       "revId": "e8f748ed1a043bcb32e456ff5b98cb27b7b34203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fed324e_118817fd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-17T17:31:32Z",
+      "side": 1,
+      "message": "I think this thread sniffing in the actual code (not DCHECK) is not a good practice. So I am not really sure what\u0027s the right thing to do.",
+      "parentUuid": "892f9666_b0f20eec",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "e8f748ed1a043bcb32e456ff5b98cb27b7b34203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
