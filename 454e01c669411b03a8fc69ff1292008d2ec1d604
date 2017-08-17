@@ -16,6 +16,24 @@
       "revId": "454e01c669411b03a8fc69ff1292008d2ec1d604",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353b3a31_9125cf84",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-17T17:34:26Z",
+      "side": 1,
+      "message": "Now explicitly initialized to 0 in the constructor, since that was reserved for uninitialized IDs.",
+      "parentUuid": "012f57d0_1c361ad4",
+      "revId": "454e01c669411b03a8fc69ff1292008d2ec1d604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
