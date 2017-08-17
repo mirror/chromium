@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac922a64_9e8c63d1",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T04:51:31Z",
+      "side": 1,
+      "message": "I assume it\u0027s always OK to call this?",
+      "revId": "308e686692368c62d13f948486ccc15e8e28f979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
