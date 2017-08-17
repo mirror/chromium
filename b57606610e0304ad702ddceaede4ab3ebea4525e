@@ -246,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "48e60ea7_1623db96",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done. (as in: implemented it)",
+      "parentUuid": "d9aae6ab_85ea42f6",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5b4d5c_e8c3d180",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 1
@@ -386,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "a71f2d63_91ec3e0e",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23fa5586_48958843",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5880026_cc3158ff",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -456,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "2a53c709_66e149a2",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6fc4138_88b4ce27",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2bcd0e_f7d9e7fb",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -509,6 +563,24 @@
     },
     {
       "key": {
+        "uuid": "850c655c_baea6d7d",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done. (Since the set is always non-empty at this point, I changed it to implement a true \u0027max\u0027 over the elements. There is no need for a \"magic\" minimum initializer.)",
+      "parentUuid": "dc39e62b_ab6ab271",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c781f5b7_4011e35d",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
         "patchSetId": 1
@@ -523,6 +595,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c169640_b91d6615",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c781f5b7_4011e35d",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -912,6 +1002,24 @@
     },
     {
       "key": {
+        "uuid": "2ea96dd2_a28737f4",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5189154a_8ead9dad",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e25eccc_a0d2d240",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
         "patchSetId": 1
@@ -944,6 +1052,24 @@
       "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d342c5_5cd5b3cb",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e89b64f_0b1cdfc5",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

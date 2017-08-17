@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a8e088e9_1b3c4976",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8081c740_3af4d0f1",
+      "revId": "03eac62a7b8871abb64fd60eca4562ea318e5136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b51ae84_24a10a49",
         "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
         "patchSetId": 8
@@ -67,6 +85,24 @@
       "revId": "03eac62a7b8871abb64fd60eca4562ea318e5136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cba572e_f3df387e",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-17T16:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b51ae84_24a10a49",
+      "revId": "03eac62a7b8871abb64fd60eca4562ea318e5136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
