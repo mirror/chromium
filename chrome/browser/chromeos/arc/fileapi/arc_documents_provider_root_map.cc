@@ -47,10 +47,12 @@ ArcDocumentsProviderRootMap::GetForArcBrowserContext() {
 
 ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(IsArcAllowedForProfile(profile));  // Already checked in the factory.
 
   ArcFileSystemOperationRunner* runner =
       ArcFileSystemOperationRunner::GetForBrowserContext(profile);
+  // ArcDocumentsProviderRootMap is created only for the profile with ARC
+  // in ArcDocumentsProviderRootMapFactory.
+  DCHECK(runner);
 
   for (auto spec : kDocumentsProviderWhitelist) {
     map_[Key(spec.authority, spec.root_document_id)] =
