@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8955041_f6cc1449",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/cache-storage/cache-live-update-cache-content.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-17T02:36:55Z",
+      "side": 1,
+      "message": "nit: our style guide says to do it like this:\nawait new Promise(resolve \u003d\u003e InspectorTest.waitForCacheRefresh(resolve));\n\nbut it\u0027s a test, so not super important.",
+      "revId": "b8154958c96fae362bbf45ce996e8b69e8f2542d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
