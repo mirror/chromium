@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4e20aebe_b9f0dc62",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:14:03Z",
+      "side": 1,
+      "message": "Can you add some comments to document what you just wrote in this reply? I have actually read the other message pump implementations in the past, but it was never that fun reverse-engineering the code to figure out what it did. This reply would help alleviate that \u003d)",
+      "parentUuid": "4e4d068d_8c4b69bb",
+      "revId": "66478c97d6229597b66cfbd9ac837fd75d6649e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80b967a7_9397636d",
         "filename": "base/message_loop/message_pump_android.cc",
         "patchSetId": 13
