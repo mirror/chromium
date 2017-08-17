@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da870c21_aa9fee6b",
+        "filename": "chrome/browser/accessibility/accessibility_permission_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T05:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457bf42d_09ba7c20",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1242a532_a830d154",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T13:49:38Z",
       "side": 1,
       "message": "Where is this called? I\u0027m a bit worried about sync methods returning async info.",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b0c73e_e54c98f5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T05:25:34Z",
+      "side": 1,
+      "message": "It\u0027s only called from AXObject::DispatchEventToAOMEventListeners.\n\nMy concern was that we need to check the permission every time\nthere\u0027s an accessibility event dispatch, because the feature\nwe\u0027re trying to protect is the ability for the app to capture\naccessibility events, since that definitively identifies the\nuser as a person using assistive technology.\n\nWouldn\u0027t it add a lot of latency to make an asynchronous\ncall to check the permission on every input event? Would\nit ever block?\n\nI don\u0027t want it to block, if it prompts the user I want it\nto just keep going as if the permission was denied, then we\u0027ll\ncatch the next event.\n\nAnd I don\u0027t want it to add any latency 99% of the time.\n\nIf I\u0027m wrong and the permission check should be instant the\nvast majority of the time but only have a bit of latency the\nfirst time, then I could probably simplify this code by just\nhaving it call permission_service_-\u003eGetPermission() every\ntime.",
+      "parentUuid": "1242a532_a830d154",
       "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "081db596_68a19516",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T05:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1fa9c4d_11d1dac4",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25bf906_4445c330",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e173258_914bbedb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T05:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25bf906_4445c330",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +170,24 @@
       "writtenOn": "2017-08-16T13:49:38Z",
       "side": 1,
       "message": "Could you do like the device permissions above and reject with a TypeError when the feature isn\u0027t enabled?",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5945b593_a5b2ee7e",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-17T05:25:34Z",
+      "side": 1,
+      "message": "Yes, that works great, thanks. Done.",
+      "parentUuid": "c9aa4937_cab6da7a",
       "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
