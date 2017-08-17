@@ -94,6 +94,29 @@
       "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92bedee_9b4ea452",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-17T16:36:46Z",
+      "side": 1,
+      "message": "nit: remove this function? Seems pointless now.",
+      "range": {
+        "startLine": 799,
+        "startChar": 31,
+        "endLine": 799,
+        "endChar": 51
+      },
+      "revId": "9fd19ac2d88482f27928e147ab5c597acf0acfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
