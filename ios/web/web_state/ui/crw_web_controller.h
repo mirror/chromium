@@ -185,9 +185,6 @@ class WebStateImpl;
 // used when deliberately pre-triggering a load without displaying.
 - (void)triggerPendingLoad;
 
-// Navigates to the item at the given |index|.
-- (void)goToItemAtIndex:(int)index;
-
 // Executes |script| in the web view, registering user interaction.
 - (void)executeUserJavaScript:(NSString*)script
             completionHandler:(web::JavaScriptResultBlock)completion;
@@ -211,6 +208,15 @@ class WebStateImpl;
 // TODO(stuartmorgan): This is public only temporarily; once refactoring is
 // complete it will be handled internally.
 - (void)restoreStateFromHistory;
+
+// Updates the HTML5 history state of the page using the current NavigationItem.
+// For same-document navigations and navigations affected by
+// window.history.[push/replace]State(), the URL and serialized state object
+// will be updated to the current NavigationItem's values.  A popState event
+// will be triggered for all same-document navigations.  Additionally, a
+// hashchange event will be triggered for same-document navigations where the
+// only difference between the current and previous URL is the fragment.
+- (void)updateHTML5HistoryState;
 
 // Notifies the CRWWebController that it has been shown.
 - (void)wasShown;
