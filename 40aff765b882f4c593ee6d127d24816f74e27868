@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89fa1bb7_22214025",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-17T01:03:56Z",
+      "side": 1,
+      "message": "I saw your response earlier, but base::android::ConvertJavaStringToUTF8(jfile_path) when jfile_path is const base::android::JavaParamRef\u003cjstring\u003e\u0026 should give you an std::string, no?\n\nThat particular method (ConvertJavaStringToUTF8) has \"all the options\" basically:\n\nSee: https://cs.chromium.org/chromium/src/base/android/jni_string.h?type\u003dcs\u0026q\u003dConvertJavaStringToUTF8\u0026sq\u003dpackage:chromium\u0026l\u003d18\n\nSo I still think jfile_path should be const JavaParamRef\u003cjstring\u003e\u0026.",
+      "range": {
+        "startLine": 178,
+        "startChar": 45,
+        "endLine": 178,
+        "endChar": 60
+      },
+      "revId": "40aff765b882f4c593ee6d127d24816f74e27868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
