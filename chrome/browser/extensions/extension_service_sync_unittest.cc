@@ -28,6 +28,7 @@
 #include "chrome/browser/extensions/extension_sync_service.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/scripting_permissions_modifier.h"
+#include "chrome/browser/extensions/test_blacklist.h"
 #include "chrome/browser/extensions/updater/extension_updater.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/themes/theme_service.h"
@@ -2667,4 +2668,155 @@ TEST_F(ExtensionServiceSyncTest, AppToExtension) {
   // Make sure there is one extension, and there are no more apps.
   EXPECT_EQ(1u, extensions_processor.data().size());
   EXPECT_TRUE(apps_processor.data().empty());
+}
+
+class BlacklistedExtensionSyncServiceTest : public ExtensionServiceSyncTest {
+ public:
+  void SetUp() override {
+    ExtensionServiceSyncTest::SetUp();
+
+    InitializeEmptyExtensionService();
+
+    // Enable sync.
+    browser_sync::ProfileSyncService* sync_service =
+        ProfileSyncServiceFactory::GetForProfile(profile());
+    sync_service->SetFirstSetupComplete();
+
+    test_blacklist.Attach(service()->blacklist_);
+    service()->Init();
+
+    // Load up a simple extension.
+    extensions::ChromeTestExtensionLoader extension_loader(profile());
+    extension_loader.set_pack_extension(true);
+    extension = extension_loader.LoadExtension(
+        data_dir().AppendASCII("simple_with_file"));
+    ASSERT_TRUE(extension);
+    extension_id = extension->id();
+    ASSERT_TRUE(registry()->enabled_extensions().GetByID(extension_id));
+
+    {
+      auto processor = base::MakeUnique<syncer::FakeSyncChangeProcessor>();
+      processor_raw = processor.get();
+      extension_sync_service()->MergeDataAndStartSyncing(
+          syncer::EXTENSIONS, syncer::SyncDataList(), std::move(processor),
+          base::MakeUnique<syncer::SyncErrorFactoryMock>());
+    }
+    processor_raw->changes().clear();
+  }
+
+  void ForceBlacklistUpdate() {
+    service()->OnBlacklistUpdated();
+    content::RunAllBlockingPoolTasksUntilIdle();
+  }
+
+  syncer::FakeSyncChangeProcessor* processor_raw;
+  scoped_refptr<const Extension> extension;
+  std::string extension_id;
+  extensions::TestBlacklist test_blacklist;
+};
+
+// Test that sync cannot enable blacklisted extensions.
+TEST_F(BlacklistedExtensionSyncServiceTest, SyncBlacklistedExtension) {
+  // Blacklist the extension.
+  test_blacklist.SetBlacklistState(extension_id,
+                                   extensions::BLACKLISTED_MALWARE, true);
+  ForceBlacklistUpdate();
+
+  // Try enabling the extension via sync.
+  EnableExtensionFromSync(*extension);
+
+  // The extension should not be enabled.
+  EXPECT_FALSE(registry()->enabled_extensions().GetByID(extension_id));
+  EXPECT_TRUE(processor_raw->changes().empty());
+
+  // Blacklisted extensions can't be enabled or disabled by the user. Manually
+  // force-enable the extension to verify that Sync doesn't allow it to be
+  // reported as enabled.
+  ExtensionPrefs* extension_prefs = ExtensionPrefs::Get(profile());
+  extension_prefs->SetExtensionEnabled(extension_id);
+  registry()->AddEnabled(extension);
+  service()->NotifyExtensionLoaded(extension.get());
+
+  EXPECT_TRUE(registry()->enabled_extensions().GetByID(extension_id));
+  {
+    ASSERT_EQ(1u, processor_raw->changes().size());
+    const SyncChange& change = processor_raw->changes()[0];
+    EXPECT_EQ(SyncChange::ACTION_UPDATE, change.change_type());
+    std::unique_ptr<ExtensionSyncData> data =
+        ExtensionSyncData::CreateFromSyncData(change.sync_data());
+    EXPECT_EQ(extension_id, data->id());
+    EXPECT_EQ(0, data->disable_reasons());
+    EXPECT_FALSE(data->enabled());
+  }
+}
+
+// Test that some greylisted extensions can be enabled through sync.
+TEST_F(BlacklistedExtensionSyncServiceTest, SyncAllowedGreylistedExtension) {
+  // Greylist the extension.
+  test_blacklist.SetBlacklistState(
+      extension_id, extensions::BLACKLISTED_POTENTIALLY_UNWANTED, true);
+  ForceBlacklistUpdate();
+
+  EXPECT_FALSE(registry()->enabled_extensions().GetByID(extension_id));
+  {
+    ASSERT_EQ(1u, processor_raw->changes().size());
+    const SyncChange& change = processor_raw->changes()[0];
+    EXPECT_EQ(SyncChange::ACTION_UPDATE, change.change_type());
+    std::unique_ptr<ExtensionSyncData> data =
+        ExtensionSyncData::CreateFromSyncData(change.sync_data());
+    EXPECT_EQ(extension_id, data->id());
+    EXPECT_EQ(Extension::DISABLE_GREYLIST, data->disable_reasons());
+    EXPECT_FALSE(data->enabled());
+  }
+  processor_raw->changes().clear();
+
+  // Manually re-enabling the extension should work.
+  service()->EnableExtension(extension_id);
+  EXPECT_TRUE(registry()->enabled_extensions().GetByID(extension_id));
+  {
+    ASSERT_EQ(1u, processor_raw->changes().size());
+    const SyncChange& change = processor_raw->changes()[0];
+    EXPECT_EQ(SyncChange::ACTION_UPDATE, change.change_type());
+    std::unique_ptr<ExtensionSyncData> data =
+        ExtensionSyncData::CreateFromSyncData(change.sync_data());
+    EXPECT_EQ(extension_id, data->id());
+    EXPECT_EQ(0, data->disable_reasons());
+    EXPECT_TRUE(data->enabled());
+  }
+  processor_raw->changes().clear();
+}
+
+// Test that some greylisted extensions can't be enabled through sync.
+TEST_F(BlacklistedExtensionSyncServiceTest, SyncDisallowedGreylistedExtension) {
+  // Greylist the extension with a blacklist reason which sync doesn't allow.
+  test_blacklist.SetBlacklistState(
+      extension_id, extensions::BLACKLISTED_SECURITY_VULNERABILITY, true);
+  ForceBlacklistUpdate();
+
+  EXPECT_FALSE(registry()->enabled_extensions().GetByID(extension_id));
+  {
+    ASSERT_EQ(1u, processor_raw->changes().size());
+    const SyncChange& change = processor_raw->changes()[0];
+    EXPECT_EQ(SyncChange::ACTION_UPDATE, change.change_type());
+    std::unique_ptr<ExtensionSyncData> data =
+        ExtensionSyncData::CreateFromSyncData(change.sync_data());
+    EXPECT_EQ(extension_id, data->id());
+    EXPECT_EQ(Extension::DISABLE_GREYLIST, data->disable_reasons());
+    EXPECT_FALSE(data->enabled());
+  }
+  processor_raw->changes().clear();
+
+  // Manually re-enabling the extension should work locally, but not sync.
+  service()->EnableExtension(extension_id);
+  EXPECT_TRUE(registry()->enabled_extensions().GetByID(extension_id));
+  {
+    ASSERT_EQ(1u, processor_raw->changes().size());
+    const SyncChange& change = processor_raw->changes()[0];
+    EXPECT_EQ(SyncChange::ACTION_UPDATE, change.change_type());
+    std::unique_ptr<ExtensionSyncData> data =
+        ExtensionSyncData::CreateFromSyncData(change.sync_data());
+    EXPECT_EQ(extension_id, data->id());
+    EXPECT_EQ(0, data->disable_reasons());
+    EXPECT_FALSE(data->enabled());
+  }
 }
