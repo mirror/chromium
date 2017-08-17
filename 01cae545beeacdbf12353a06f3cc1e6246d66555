@@ -22,6 +22,30 @@
       "revId": "01cae545beeacdbf12353a06f3cc1e6246d66555",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bde61e4_21873b6a",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-17T13:11:36Z",
+      "side": 1,
+      "message": "Yes, IsIPadIdiom is still used.",
+      "parentUuid": "d05c130f_7f42e2fb",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "01cae545beeacdbf12353a06f3cc1e6246d66555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
