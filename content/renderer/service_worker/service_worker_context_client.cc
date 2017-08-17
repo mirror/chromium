@@ -626,7 +626,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
   // we can observe its requests.
   pending_network_provider_ = ServiceWorkerNetworkProvider::CreateForController(
       std::move(provider_info));
-  provider_context_ = pending_network_provider_->context();
+  pending_provider_context_ = pending_network_provider_->context();
 
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker",
                                     "ServiceWorkerContextClient", this,
@@ -762,9 +762,13 @@ void ServiceWorkerContextClient::WorkerContextStarted(
 
   ServiceWorkerRegistrationObjectInfo registration_info;
   ServiceWorkerVersionAttributes version_attrs;
-  provider_context_->GetRegistration(&registration_info, &version_attrs);
+  pending_provider_context_->GetRegistration(&registration_info,
+                                             &version_attrs);
   DCHECK_NE(registration_info.registration_id,
             kInvalidServiceWorkerRegistrationId);
+  // No need to keep |pending_provider_context_| during service worker is
+  // running.
+  pending_provider_context_ = nullptr;
 
   DCHECK(pending_dispatcher_request_.is_pending());
   DCHECK(!context_->event_dispatcher_binding.is_bound());
@@ -1205,6 +1209,7 @@ std::unique_ptr<blink::WebWorkerFetchContext>
 ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  DCHECK(pending_provider_context_);
   mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
   RenderThreadImpl::current()
       ->blink_platform_impl()
@@ -1214,17 +1219,17 @@ ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<ServiceWorkerFetchContextImpl>(
       script_url_, worker_url_loader_factory_provider.PassInterface(),
-      provider_context_->provider_id());
+      pending_provider_context_->provider_id());
 }
 
 std::unique_ptr<blink::WebServiceWorkerProvider>
 ServiceWorkerContextClient::CreateServiceWorkerProvider() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
-  DCHECK(provider_context_);
+  DCHECK(pending_provider_context_);
 
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<WebServiceWorkerProviderImpl>(
-      sender_.get(), provider_context_.get());
+      sender_.get(), pending_provider_context_.get());
 }
 
 void ServiceWorkerContextClient::PostMessageToClient(

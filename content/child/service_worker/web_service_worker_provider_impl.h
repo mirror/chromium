@@ -27,8 +27,9 @@ class ThreadSafeSender;
 // JS context (i.e. navigator.serviceWorker).
 class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
  public:
-  WebServiceWorkerProviderImpl(ThreadSafeSender* thread_safe_sender,
-                               ServiceWorkerProviderContext* context);
+  WebServiceWorkerProviderImpl(
+      ThreadSafeSender* thread_safe_sender,
+      scoped_refptr<ServiceWorkerProviderContext> context);
   ~WebServiceWorkerProviderImpl() override;
 
   void SetClient(blink::WebServiceWorkerProviderClient* client) override;
