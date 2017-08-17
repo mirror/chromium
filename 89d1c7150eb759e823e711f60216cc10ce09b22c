@@ -16,6 +16,24 @@
       "revId": "89d1c7150eb759e823e711f60216cc10ce09b22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89db5d0c_e182eb95",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-17T23:30:00Z",
+      "side": 1,
+      "message": "Created a new PrefetchConfiguration interface implemented by a new ChromePrefetchConfiguration class. The latter now hold the needed pointer to the preferences service.",
+      "parentUuid": "ad07c136_6452cae7",
+      "revId": "89d1c7150eb759e823e711f60216cc10ce09b22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
