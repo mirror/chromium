@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "717b821b_9d2ac7fc",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-17T17:28:05Z",
+      "side": 0,
+      "message": "Why do you need to change this code? Can\u0027t you continue to use accelerators, and just make sure the ActivationEventHandler routes KeyEvents correctly? Basically what I\u0027m saying is the pre target EventHandler installed by TrayBubbleView should route KeyEvents to the widget so that accelerators just work without changing these signatures.",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
