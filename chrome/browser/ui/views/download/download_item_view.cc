@@ -33,6 +33,7 @@
 #include "chrome/browser/safe_browsing/download_protection/download_feedback_service.h"
 #include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/safe_browsing_util.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/views/download/download_feedback_dialog_view.h"
 #include "chrome/browser/ui/views/download/download_shelf_context_menu_view.h"
@@ -909,7 +910,7 @@ void DownloadItemView::SetMode(Mode mode) {
 
 void DownloadItemView::ToggleWarningDialog() {
   if (model_.IsDangerous())
-    ShowWarningDialog();
+    MaybeShowWarningDialog();
   else
     ClearWarningDialog();
 
@@ -949,8 +950,12 @@ void DownloadItemView::ClearWarningDialog() {
   dropdown_button_->SetVisible(true);
 }
 
-void DownloadItemView::ShowWarningDialog() {
+void DownloadItemView::MaybeShowWarningDialog() {
   DCHECK(!IsShowingWarningDialog());
+  // Avoids showing warning in this case.
+  if (download()->GetDangerType() == DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT &&
+      IsPrivateIPAddress(download()->GetRemoteAddress()))
+    return;
   time_download_warning_shown_ = base::Time::Now();
   content::DownloadDangerType danger_type = download()->GetDangerType();
   RecordDangerousDownloadWarningShown(danger_type);

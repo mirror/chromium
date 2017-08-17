@@ -210,8 +210,9 @@ class DownloadItemView : public views::InkDropHostView,
   void ClearWarningDialog();
 
   // Starts displaying the dangerous download warning or the malicious download
-  // warning.
-  void ShowWarningDialog();
+  // warning, except for when download was uncommon and came from a server on
+  // the internal network.
+  void MaybeShowWarningDialog();
 
   // Returns the current warning icon (should only be called when the view is
   // actually showing a warning).

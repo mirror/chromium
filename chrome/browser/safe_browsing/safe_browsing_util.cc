@@ -9,6 +9,7 @@
 #include "base/strings/string_util.h"
 #include "chrome/browser/safe_browsing/chunk.pb.h"
 #include "components/google/core/browser/google_util.h"
+#include "net/base/ip_address.h"
 
 namespace safe_browsing {
 
@@ -133,5 +134,16 @@ SBChunkDelete::SBChunkDelete() : is_sub_del(false) {}
 SBChunkDelete::SBChunkDelete(const SBChunkDelete& other) = default;
 
 SBChunkDelete::~SBChunkDelete() {}
+
+bool IsPrivateIPAddress(const std::string& ip_address) {
+  net::IPAddress address;
+  if (!address.AssignFromIPLiteral(ip_address)) {
+    DVLOG(2) << "Unable to parse IP address: '" << ip_address << "'";
+    // Err on the side of safety and assume this might be private.
+    return true;
+  }
+
+  return address.IsReserved();
+}
 
 }  // namespace safe_browsing

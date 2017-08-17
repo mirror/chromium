@@ -1785,6 +1785,87 @@ TEST_F(DownloadProtectionServiceTest,
   run_loop.Run();
 }
 
+// todo(mortonm): add comment.
+TEST_F(DownloadProtectionServiceTest,
+       CheckClientDownloadUncommonOnLocalNetwork) {
+  net::TestURLFetcherFactory factory;
+
+#if defined(OS_MACOSX)
+  std::string download_file_path("ftp://www.google.com/bla.dmg");
+#else
+  std::string download_file_path("ftp://www.google.com/bla.exe");
+#endif  // OS_MACOSX
+
+  NiceMockDownloadItem item;
+#if defined(OS_MACOSX)
+  PrepareBasicDownloadItem(
+      &item, {"http://www.google.com/", download_file_path},  // url_chain
+      "http://www.google.com/",                               // referrer
+      FILE_PATH_LITERAL("bla.tmp"),                           // tmp_path
+      FILE_PATH_LITERAL("bla.dmg"));                          // final_path
+#else
+  PrepareBasicDownloadItem(
+      &item, {"http://www.google.com/", download_file_path},  // url_chain
+      "http://www.google.com/",                               // referrer
+      FILE_PATH_LITERAL("bla.tmp"),                           // tmp_path
+      FILE_PATH_LITERAL("bla.exe"));                          // final_path
+#endif  // OS_MACOSX
+
+  std::string local_address = "10.0.0.0";
+  EXPECT_CALL(item, GetRemoteAddress()).WillRepeatedly(Return(local_address));
+  EXPECT_CALL(*sb_service_->mock_database_manager(),
+              MatchDownloadWhitelistUrl(_))
+      .WillRepeatedly(Return(false));
+#if !defined(OS_MACOSX)
+  EXPECT_CALL(*binary_feature_extractor_.get(), CheckSignature(tmp_path_, _));
+  EXPECT_CALL(*binary_feature_extractor_.get(),
+              ExtractImageFeatures(
+                  tmp_path_, BinaryFeatureExtractor::kDefaultOptions, _, _));
+#endif  // OS_MACOSX
+
+  RunLoop run_loop;
+  download_service_->CheckClientDownload(
+      &item, base::Bind(&DownloadProtectionServiceTest::CheckDoneCallback,
+                        base::Unretained(this), run_loop.QuitClosure()));
+
+  // Run the message loop(s) until SendRequest is called.
+  FlushThreadMessageLoops();
+  EXPECT_TRUE(HasClientDownloadRequest());
+  ClearClientDownloadRequest();
+  net::TestURLFetcher* fetcher = factory.GetFetcherByID(0);
+  ASSERT_TRUE(fetcher);
+  ClientDownloadRequest request;
+  EXPECT_TRUE(request.ParseFromString(fetcher->upload_data()));
+  EXPECT_EQ(download_file_path, request.url());
+  EXPECT_EQ(hash_, request.digests().sha256());
+  EXPECT_EQ(item.GetReceivedBytes(), request.length());
+  EXPECT_EQ(item.HasUserGesture(), request.user_initiated());
+  EXPECT_EQ(2, request.resources_size());
+  EXPECT_TRUE(RequestContainsResource(request,
+                                      ClientDownloadRequest::DOWNLOAD_REDIRECT,
+                                      "http://www.google.com/", ""));
+  EXPECT_TRUE(RequestContainsResource(request,
+                                      ClientDownloadRequest::DOWNLOAD_URL,
+                                      download_file_path, referrer_.spec()));
+  EXPECT_TRUE(request.has_signature());
+  EXPECT_EQ(0, request.signature().certificate_chain_size());
+
+  // Set the verdict coming from the server to be "UNCOMMON" download.
+  fetcher->set_response_code(200);
+  ClientDownloadResponse response = ClientDownloadResponse::default_instance();
+  response.set_verdict(ClientDownloadResponse::UNCOMMON);
+  std::string response_string;
+  response.AppendToString(&response_string);
+  fetcher->SetResponseString(response_string);
+
+  // Simulate the request finishing.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DownloadProtectionServiceTest::SendURLFetchComplete,
+                     base::Unretained(this), fetcher));
+  run_loop.Run();
+}
+
 // Similar to above, but with tab history.
 TEST_F(DownloadProtectionServiceTest,
        CheckClientDownloadValidateRequestTabHistory) {
