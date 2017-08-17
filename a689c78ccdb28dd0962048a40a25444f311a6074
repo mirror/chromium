@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84c5c7e5_c9b682c0",
+        "filename": "content/browser/renderer_host/pepper/pepper_file_system_browser_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T17:23:45Z",
+      "side": 1,
+      "message": "Could we use BindOnce here too?",
+      "range": {
+        "startLine": 382,
+        "startChar": 27,
+        "endLine": 382,
+        "endChar": 31
+      },
+      "revId": "a689c78ccdb28dd0962048a40a25444f311a6074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcec4ae_82219234",
+        "filename": "content/renderer/pepper/pepper_audio_encoder_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-17T17:23:45Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 444,
+        "startChar": 28,
+        "endLine": 444,
+        "endChar": 45
+      },
+      "revId": "a689c78ccdb28dd0962048a40a25444f311a6074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
