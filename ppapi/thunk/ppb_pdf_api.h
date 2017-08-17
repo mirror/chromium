@@ -24,6 +24,7 @@ class PPB_PDF_API {
   virtual void UserMetricsRecordAction(const PP_Var& action) = 0;
   virtual void HasUnsupportedFeature() = 0;
   virtual void SaveAs() = 0;
+  virtual void SaveAttachmentAs(const PP_Var& url) = 0;
   virtual PP_Bool IsFeatureEnabled(PP_PDFFeature feature) = 0;
   virtual void Print() = 0;
   virtual void SetSelectedText(const char* selected_text) = 0;

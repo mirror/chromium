@@ -85,6 +85,8 @@ int32_t PepperPDFHost::OnResourceMessageReceived(
     PPAPI_DISPATCH_HOST_RESOURCE_CALL_0(PpapiHostMsg_PDF_Print, OnHostMsgPrint)
     PPAPI_DISPATCH_HOST_RESOURCE_CALL_0(PpapiHostMsg_PDF_SaveAs,
                                         OnHostMsgSaveAs)
+    PPAPI_DISPATCH_HOST_RESOURCE_CALL(PpapiHostMsg_PDF_SaveAttachmentAs,
+                                      OnHostMsgSaveAttachmentAs)
     PPAPI_DISPATCH_HOST_RESOURCE_CALL(PpapiHostMsg_PDF_SetSelectedText,
                                       OnHostMsgSetSelectedText)
     PPAPI_DISPATCH_HOST_RESOURCE_CALL(PpapiHostMsg_PDF_SetLinkUnderCursor,
@@ -179,6 +181,23 @@ int32_t PepperPDFHost::OnHostMsgSaveAs(
     return PP_ERROR_FAILED;
 
   service->SaveUrlAs(url, referrer);
+  return PP_OK;
+}
+
+int32_t PepperPDFHost::OnHostMsgSaveAttachmentAs(
+    ppapi::host::HostMessageContext* context,
+    const std::string& url) {
+  GURL gurl(url);
+  content::Referrer referrer;
+  referrer.url = gurl;
+  referrer.policy = blink::kWebReferrerPolicyDefault;
+  referrer = content::Referrer::SanitizeForRequest(gurl, referrer);
+
+  mojom::PdfService* service = GetRemotePdfService();
+  if (!service)
+    return PP_ERROR_FAILED;
+
+  service->SaveUrlAs(gurl, referrer);
   return PP_OK;
 }
 

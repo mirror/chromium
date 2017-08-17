@@ -61,12 +61,15 @@ Polymer({
   },
 
   toggleDropdown: function() {
-    this.dropdownOpen = !this.dropdownOpen;
-    if (this.dropdownOpen) {
+    if (!this.dropdownOpen) {
+      // Close any other open dropdowns.
+      this.fire('hide-dropdowns');
+
       this.$.dropdown.style.display = 'block';
       if (!this.maxHeightValid_)
         this.updateMaxHeight();
     }
+    this.dropdownOpen = !this.dropdownOpen;
     this.cancelAnimation_();
     this.playAnimation_(this.dropdownOpen);
   },

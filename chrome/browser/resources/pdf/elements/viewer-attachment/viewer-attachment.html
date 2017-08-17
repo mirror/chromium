@@ -1,0 +1,38 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-ripple/paper-ripple.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
+
+<dom-module id="viewer-attachment" attributes="attachment">
+  <template>
+    <style>
+      #item {
+        @apply(--layout-center);
+        @apply(--layout-horizontal);
+        cursor: pointer;
+        height: 30px;
+        position: relative;
+      }
+
+      #item:hover {
+        background-color: rgb(237, 237, 237);
+      }
+
+      paper-ripple {
+        pointer-events: auto;
+      }
+
+      #title {
+        margin: 0 28px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
+    <div id="item" on-click="onClick">
+      <paper-ripple></paper-ripple>
+      <span id="title" tabindex="0">{{attachment.title}}</span>
+    </div>
+  </template>
+  <script src="viewer-attachment.js"></script>
+</dom-module>

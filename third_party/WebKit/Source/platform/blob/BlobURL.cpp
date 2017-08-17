@@ -41,7 +41,13 @@ const char BlobURL::kBlobProtocol[] = "blob";
 
 KURL BlobURL::CreatePublicURL(SecurityOrigin* security_origin) {
   DCHECK(security_origin);
-  return CreateBlobURL(security_origin->ToString());
+  return CreateBlobURL(security_origin->ToString(), String());
+}
+
+KURL BlobURL::CreatePublicURL(SecurityOrigin* security_origin,
+                              const String& file_name) {
+  DCHECK(security_origin);
+  return CreateBlobURL(security_origin->ToString(), file_name);
 }
 
 String BlobURL::GetOrigin(const KURL& url) {
@@ -53,13 +59,17 @@ String BlobURL::GetOrigin(const KURL& url) {
 }
 
 KURL BlobURL::CreateInternalStreamURL() {
-  return CreateBlobURL("blobinternal://");
+  return CreateBlobURL("blobinternal://", String());
 }
 
-KURL BlobURL::CreateBlobURL(const String& origin_string) {
+KURL BlobURL::CreateBlobURL(const String& origin_string,
+                            const String& file_name) {
   DCHECK(!origin_string.IsEmpty());
   String url_string =
       "blob:" + origin_string + '/' + CreateCanonicalUUIDString();
+  if (!file_name.IsEmpty())
+    url_string = url_string + '/' + file_name;
+
   return KURL::CreateIsolated(kParsedURLString, url_string);
 }
 

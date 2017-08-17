@@ -85,6 +85,7 @@ const char kJSPreviewLoadedType[] = "printPreviewLoaded";
 // Metadata
 const char kJSMetadataType[] = "metadata";
 const char kJSBookmarks[] = "bookmarks";
+const char kJSAttachments[] = "attachments";
 const char kJSTitle[] = "title";
 // Get password (Plugin -> Page)
 const char kJSGetPasswordType[] = "getPassword";
@@ -95,6 +96,9 @@ const char kJSPassword[] = "password";
 const char kJSPrintType[] = "print";
 // Save (Page -> Plugin)
 const char kJSSaveType[] = "save";
+// Save an attachment (Page -> Plugin)
+const char kJSSaveAttachmentType[] = "saveAttachment";
+const char kJSSaveAttachmentUrl[] = "url";
 // Go to page (Plugin -> Page)
 const char kJSGoToPageType[] = "goToPage";
 const char kJSPageNumber[] = "page";
@@ -583,6 +587,10 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
     Print();
   } else if (type == kJSSaveType) {
     pp::PDF::SaveAs(this);
+  } else if (type == kJSSaveAttachmentType &&
+             dict.Get(pp::Var(kJSSaveAttachmentUrl)).is_string()) {
+    pp::PDF::SaveAttachmentAs(
+        this, dict.Get(pp::Var(kJSSaveAttachmentUrl)).AsString());
   } else if (type == kJSRotateClockwiseType) {
     RotateClockwise();
   } else if (type == kJSRotateCounterclockwiseType) {
@@ -1460,6 +1468,9 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   metadata_message.Set(pp::Var(kJSBookmarks), bookmarks);
   if (bookmarks.GetLength() > 0)
     HistogramEnumeration("PDF.DocumentFeature", HAS_BOOKMARKS, FEATURES_COUNT);
+
+  pp::VarArray attachments = engine_->GetAttachments();
+  metadata_message.Set(pp::Var(kJSAttachments), attachments);
   PostMessage(metadata_message);
 
   pp::VarDictionary progress_message;

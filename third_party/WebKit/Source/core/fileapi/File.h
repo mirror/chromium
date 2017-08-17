@@ -158,6 +158,7 @@ class CORE_EXPORT File final : public Blob {
   void close(ScriptState*, ExceptionState&) override;
 
   bool IsFile() const override { return true; }
+  File* AsFile() override { return this; }
   bool HasBackingFile() const override { return has_backing_file_; }
 
   void AppendTo(BlobData&) const override;

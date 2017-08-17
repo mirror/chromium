@@ -48,6 +48,7 @@ namespace blink {
 class BlobPropertyBag;
 class ExceptionState;
 class ExecutionContext;
+class File;
 class ScriptState;
 
 class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
@@ -106,6 +107,7 @@ class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
   RefPtr<BlobDataHandle> GetBlobDataHandle() const { return blob_data_handle_; }
   // True for all File instances, including the user-built ones.
   virtual bool IsFile() const { return false; }
+  virtual File* AsFile() { return nullptr; }
   // Only true for File instances that are backed by platform files.
   virtual bool HasBackingFile() const { return false; }
   bool isClosed() const { return is_closed_; }

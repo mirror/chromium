@@ -119,6 +119,9 @@ struct PPB_PDF {
   // Invoke SaveAs... dialog, similar to the right-click or wrench menu.
   void (*SaveAs)(PP_Instance instance);
 
+  // Invoke SaveAs... dialog for an attachment.
+  void (*SaveAttachmentAs)(PP_Instance instance, struct PP_Var url);
+
   // Invoke Print dialog for plugin.
   void (*Print)(PP_Instance instance);
 

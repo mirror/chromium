@@ -3283,6 +3283,16 @@ void WebContentsImpl::SaveFrameWithHeaders(const GURL& url,
   if (delegate_ && delegate_->SaveFrame(url, referrer))
     return;
 
+  SaveFrameWithHeadersSkipDelegate(url, referrer, headers);
+}
+
+void WebContentsImpl::SaveFrameWithHeadersSkipDelegate(
+    const GURL& url,
+    const Referrer& referrer,
+    const std::string& headers) {
+  if (!GetLastCommittedURL().is_valid())
+    return;
+
   // TODO(nasko): This check for main frame is incorrect and should be fixed
   // by explicitly passing in which frame this method should target. This would
   // indicate whether it's the main frame, and also tell us the frame pointer

@@ -293,13 +293,18 @@ class PDFEngine {
   // Returns true if all the pages are the same size.
   virtual bool GetPageSizeAndUniformity(pp::Size* size) = 0;
 
-  // Returns a VarArray of Bookmarks, each a VarDictionary containing the
+  // Returns a VarArray of Bookmarks, each VarDictionary containing the
   // following key/values:
   // - "title" - a string Var.
   // - "page" - an int Var.
   // - "children" - a VarArray(), with each entry containing a VarDictionary of
   //   the same structure.
   virtual pp::VarArray GetBookmarks() = 0;
+  // Returns a VarArray of Attachment, each VarDictionary containing the
+  // following key/values:
+  // - "title" - a string Var.
+  // - "file" - a var array buffer.
+  virtual pp::VarArray GetAttachments() = 0;
 
   // Append blank pages to make a 1-page document to a |num_pages| document.
   // Always retain the first page data.

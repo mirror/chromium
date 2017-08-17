@@ -139,6 +139,12 @@ void PDFResource::SaveAs() {
   Post(RENDERER, PpapiHostMsg_PDF_SaveAs());
 }
 
+void PDFResource::SaveAttachmentAs(const PP_Var& url) {
+  scoped_refptr<ppapi::StringVar> url_str(ppapi::StringVar::FromPPVar(url));
+  if (url_str.get())
+    Post(RENDERER, PpapiHostMsg_PDF_SaveAttachmentAs(url_str->value()));
+}
+
 PP_Bool PDFResource::IsFeatureEnabled(PP_PDFFeature feature) {
   PP_Bool result = PP_FALSE;
   switch (feature) {

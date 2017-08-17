@@ -7,6 +7,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/Blob.h"
+#include "core/fileapi/File.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/PublicURLManager.h"
 #include "core/url/DOMURL.h"
@@ -32,6 +33,11 @@ String URLFileAPI::createObjectURL(ScriptState* script_state,
   }
 
   UseCounter::Count(execution_context, WebFeature::kCreateObjectURLBlob);
+  if (blob->IsFile() && !blob->AsFile()->name().IsEmpty()) {
+    return DOMURL::CreatePublicURL(execution_context, blob, blob->Uuid(),
+                                   blob->AsFile()->name());
+  }
+
   return DOMURL::CreatePublicURL(execution_context, blob, blob->Uuid());
 }
 

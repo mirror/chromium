@@ -92,6 +92,8 @@ class PepperPDFHost : public ppapi::host::ResourceHost,
       ppapi::host::HostMessageContext* context);
   int32_t OnHostMsgPrint(ppapi::host::HostMessageContext* context);
   int32_t OnHostMsgSaveAs(ppapi::host::HostMessageContext* context);
+  int32_t OnHostMsgSaveAttachmentAs(ppapi::host::HostMessageContext* context,
+                                    const std::string& url);
   int32_t OnHostMsgSetSelectedText(ppapi::host::HostMessageContext* context,
                                    const base::string16& selected_text);
   int32_t OnHostMsgSetLinkUnderCursor(ppapi::host::HostMessageContext* context,
