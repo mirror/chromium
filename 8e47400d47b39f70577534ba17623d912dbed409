@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a02cfda4_22653b7f",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-17T18:40:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ebdcd9_4c52533d",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "8e47400d47b39f70577534ba17623d912dbed409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bab70bc_1aeecc1f",
         "filename": "ash/system/palette/tools/metalayer_unittest.cc",
         "patchSetId": 13
@@ -39,6 +63,24 @@
       "revId": "8e47400d47b39f70577534ba17623d912dbed409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6505fc68_fdbfff44",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-17T18:40:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bab70bc_1aeecc1f",
+      "revId": "8e47400d47b39f70577534ba17623d912dbed409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
