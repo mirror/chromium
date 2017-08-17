@@ -16,6 +16,24 @@
       "revId": "6e4072298023ab9a086a82a3c751e87e22c207ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b05ce8e_6b0f030a",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 0,
+      "message": "Correct, I\u0027m passing it into the base class constructor now. There\u0027s no complex usage in the ctor, so assigning the raw pointer during construction should be fine.",
+      "parentUuid": "7bfe1491_eb39b16e",
+      "revId": "6e4072298023ab9a086a82a3c751e87e22c207ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "b486f32f_20d9fa7a",
+        "filename": "ash/public/cpp/shelf_item_delegate.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 1,
+      "message": "Ack, I\u0027m open to a rename or some other solution in a followup.",
+      "parentUuid": "b5905db6_db99de59",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54152a18_293999ed",
         "filename": "ash/public/interfaces/shelf.mojom",
         "patchSetId": 34
@@ -64,6 +82,24 @@
       "writtenOn": "2017-08-16T19:54:52Z",
       "side": 1,
       "message": "Aside: Weird that this got reformatted.",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8394f15_a459ae8f",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 34
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 1,
+      "message": "Reverted; this was from adding a new entry, which I\u0027ve since removed.",
+      "parentUuid": "54152a18_293999ed",
       "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "67b3ffb8_841c4355",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d81ae9c3_13e3f5dc",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b25ac86d_6584c556",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 34
@@ -101,6 +155,24 @@
       "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc24dbb7_b1789b40",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b25ac86d_6584c556",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "d2a94e1e_77540dfb",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 1,
+      "message": "I believe my new shelf_context_menu_model_unittest.cc covers that sufficiently.",
+      "parentUuid": "3e03fd46_374334ba",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db89e0f1_fca69a19",
         "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
         "patchSetId": 34
@@ -135,6 +225,24 @@
       "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1302e4e_c6b96bee",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-17T02:45:10Z",
+      "side": 1,
+      "message": "Done (calling Close, and *not* marking |window_| null there). Close itself posts a task via Widget::Close or runs an async Shell::window_manager_client()-\u003eRequestClose(window) method, neither of which synchronously invalidates |window_| nor deletes this delegate object. ShelfWindowWatcher itself observe the window closing and destroys this delegate later on. I could invalidate |window_| in close, but I figure the request might not go through, so maybe we shouldn\u0027t cripple the delegate in that case, to allow repeated close attempts or similar? I dunno.",
+      "parentUuid": "db89e0f1_fca69a19",
+      "revId": "3827cb946ab1ddae363eaac7134b281aa49399fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
