@@ -247,6 +247,11 @@ class GLES2DecoderPassthroughImpl : public GLES2Decoder {
   const ContextState* GetContextState() override;
   scoped_refptr<ShaderTranslatorInterface> GetTranslator(GLenum type) override;
 
+  void BindImage(uint32_t client_texture_id,
+                 uint32_t texture_target,
+                 gl::GLImage* image,
+                 bool can_bind_to_sampler) override;
+
  private:
   const char* GetCommandName(unsigned int command_id) const;
 

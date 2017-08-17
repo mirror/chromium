@@ -27,6 +27,7 @@
 namespace gl {
 class GLContext;
 class GLSurface;
+class GLImage;
 }
 
 namespace gfx {
@@ -329,6 +330,11 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder, public AsyncAPIInterface {
   virtual const ContextState* GetContextState() = 0;
   virtual scoped_refptr<ShaderTranslatorInterface> GetTranslator(
       unsigned int type) = 0;
+
+  virtual void BindImage(uint32_t client_texture_id,
+                         uint32_t texture_target,
+                         gl::GLImage* image,
+                         bool can_bind_to_sampler) = 0;
 
  protected:
   explicit GLES2Decoder(CommandBufferServiceBase* command_buffer_service);
