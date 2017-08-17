@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "067adc7b_7b6ae059",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T00:32:13Z",
+      "side": 1,
+      "message": "...when a connection to the active host is lost.",
+      "range": {
+        "startLine": 11,
+        "startChar": 67,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "ab2f8e7ff13dd102022a7926a37ca0850c072438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab88282_92194da3",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T00:32:13Z",
+      "side": 1,
+      "message": "Your class should be able to support multiple concurrent requests. Instead of using one unique_ptr\u003cDisconnectTetheringOperation\u003e, please use a map from RemoteDevice to unique_ptr\u003cDisconnectTetheringOperation\u003e.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "ab2f8e7ff13dd102022a7926a37ca0850c072438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ce56ac_e10330dd",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T00:32:13Z",
+      "side": 1,
+      "message": "Let\u0027s name this DisconnectTetheringRequestSender.\n\nAlso, nit: Please add description.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "ab2f8e7ff13dd102022a7926a37ca0850c072438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94fc8b3_f45770fa",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T00:32:13Z",
+      "side": 1,
+      "message": "Take a const ref, not a pointer.",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 61
+      },
+      "revId": "ab2f8e7ff13dd102022a7926a37ca0850c072438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1612edc_bb6f27d1",
+        "filename": "chromeos/components/tether/tether_disconnector_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T00:32:13Z",
+      "side": 1,
+      "message": "Please remove - we already have logs below for all possible situations.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "ab2f8e7ff13dd102022a7926a37ca0850c072438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce224cb_634b13dd",
+        "filename": "chromeos/components/tether/tether_disconnector_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-17T00:32:13Z",
+      "side": 1,
+      "message": "Just pass *tether_host when you change to a const ref.",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 23
+      },
+      "revId": "ab2f8e7ff13dd102022a7926a37ca0850c072438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
