@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "cd6288d3_331d271d",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ece84541_1d245440",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "596e9755_a484fcd2",
         "filename": "base/cbor/cbor_writer.cc",
         "patchSetId": 1

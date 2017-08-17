@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c36d7f4_6da606c3",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Ah, thanks for catching that.",
+      "parentUuid": "3a8e552a_0aaacb4b",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff2eb38b_e7454d68",
         "filename": "base/cbor/cbor_writer.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8587e911_4441dfb8",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Nope, I apparently like to do things the hard way.",
+      "parentUuid": "ff2eb38b_e7454d68",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5f237796_75185414",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Good point, thx.",
+      "parentUuid": "b972dce1_0076c01d",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61d45de_3b9359c4",
         "filename": "base/cbor/cbor_writer.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463d8b77_1f677d12",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "I should have thought of that in the first place. I also updated my terminology based on what you\u0027ve presented so-far, let me know if you still want me to re-word or if further decisions are made on that front.",
+      "parentUuid": "b61d45de_3b9359c4",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "70026425_5c18291f",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda842a4_efc722d3",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 5
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "caea048b_f7cb0635",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Yeah, I kind of caveat the simplistic checking in the comment above WriteMap. I\u0027m sure more checking can be done, and likely good to add when more people start using the library.",
+      "parentUuid": "692e7b1d_21d10fc6",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b0f805_4b98dd3e",
         "filename": "base/cbor/cbor_writer_unittest.cc",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d071f97_e6d854e7",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-17T23:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b0f805_4b98dd3e",
+      "range": {
+        "startLine": 113,
+        "startChar": 50,
+        "endLine": 113,
+        "endChar": 73
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
