@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "370ecf45_7177c604",
+        "filename": "content/browser/appcache/appcache_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T01:23:37Z",
+      "side": 1,
+      "message": "another option is to only check for AsURLLoaderRequest() and to not check the feature flag",
+      "parentUuid": "e7b1efa0_ae47a498",
+      "revId": "b7eeca8d5feb7a509ae53c508d8a7977de0a1517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98827aec_9ce84d68",
         "filename": "content/browser/appcache/appcache_request.h",
         "patchSetId": 2

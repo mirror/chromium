@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c45f2b7_218950cb",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T01:23:37Z",
+      "side": 1,
+      "message": "I think I see a way to eliminate the special case here. The AppCacheSubresourceURLFactory can call a different method to load subresources specifically.\n\nurlloader_job \u003d MaybeCreateLoaderForSubresource(\n    default_url_loader_factory_getter_.get()\n    std::move(subresource_load_info))\n\nThat new method could be responsible for a lot of what AppCacheSubresourceURLFactory::CreateLoaderAndStart is currently doing and we could eliminate some other api surface area on the \u0027handler\u0027. I think we could remove the set_network_url_loader_factory_getter() and  SetSubresourceRequestLoadInfo() methods, and get rid of some of the branching down in ::CreateJob() method.",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e76e0a_b531d6d7",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T01:23:37Z",
+      "side": 1,
+      "message": "its surprising that this flag is only for the URLLOADER case, does it hurt to have it set in both modes?",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7069ce74_e2282724",
+        "filename": "content/browser/appcache/appcache_request_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-17T01:23:37Z",
+      "side": 1,
+      "message": "we can use \u0026delegate_ here, we\u0027ve got a MockURLRequestDelegate datamember",
+      "revId": "4e7d28f29bcad4ef59efe369f1b487449cc5d0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
