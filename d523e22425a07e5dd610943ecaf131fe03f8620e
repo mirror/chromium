@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4633a04f_85114de5",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-17T00:07:03Z",
+      "side": 1,
+      "message": "ShouldAllowPreview?",
+      "range": {
+        "startLine": 991,
+        "startChar": 26,
+        "endLine": 991,
+        "endChar": 47
+      },
+      "revId": "d523e22425a07e5dd610943ecaf131fe03f8620e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
