@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8066df2_9826b95e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSwitches.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "nit: variable name should match string value",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8766d96_0347b138",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce2803f_3375bdcd",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "I don\u0027t see the security issue I mentioned on tony\u0027s code review being addressed in anyway? Pasting over comment from tony\u0027s code review:\n\nwill definitely need a security check here that this is in fact from AwVariationsSeedFetchService, otherwise a malicious app can set is own seed data and whatnot for all other apps on the device\n\nI don\u0027t know if it\u0027s possible to do with the messenger pattern (which I assume is asynchronous), but with aidl, can check with inside a synchronous call with https://developer.android.com/reference/android/os/Binder.html#getCallingPid(), and check in this case that it matches our pid.\n\nOr more hacky solution: job binds to service to make sure it\u0027s started, and then directly set a static variable since both job and service are in the same process, and then send a message to service to handle the new data",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5915ffec_0c76c83a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "else assert false",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf216a4_b2091e61",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "this lock is not needed either? all on one thread? in fact, sIsScheduling isn\u0027t used at all afaict?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c54baf6_06245f85",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "this can happen when seed is expired, and a job is pending, but in that case, we don\u0027t have valid data to send back?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d5126d_b7f40813",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "umm...but if task is not finished, we *should* reschedule the job?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac935e4_e4142553",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "you only need to hold the lock for rename, not the entire copy paste operation?\n\nalso rename should probably come after closing the out file?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0047cb0_38c110f0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "do a try/finally just for the recursivelyDeleteFile call. disable before, and enable again after. and add a comment this needs to be fixed before shipping to production",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9f7bac_9c9668bb",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "maybe leave a clean up, this feels kinda dangerous, doing serialization ourselves, eg relying on Boolean.toString and parseBoolean.\n\nmight be easier if we pick an existing library that supports structured data, eg json?",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c36fa49_0c904de3",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-17T17:54:27Z",
+      "side": 1,
+      "message": "close before unlock",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
