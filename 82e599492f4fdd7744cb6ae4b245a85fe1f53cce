@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "59adec80_26d6b769",
+        "filename": "chrome/browser/ui/certificate_dialogs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-17T23:27:46Z",
+      "side": 1,
+      "message": "Yeah, for a little while there was a x509_certificate_model_openssl, but it hasn\u0027t actually been platform independent for a while.\n\nI think we\u0027ll want to make it some of this UI not depend on NSS in the future, but I don\u0027t think the current x509_certificate_model really fits well with use_byte_certs where oscerthandle is just a bunch of bytes and each x509_certificate_model call would need to reparse from scratch. So when we get around to that it\u0027ll likely make more sense to do a deeper rewrite rather than try to shoehorn it into the same model.",
+      "parentUuid": "9205a505_0b3be294",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f5b0247_4f6c07d3",
         "filename": "chrome/common/net/BUILD.gn",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe6f06b_a4dd57bc",
+        "filename": "chrome/common/net/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-17T23:27:46Z",
+      "side": 1,
+      "message": "Done.\n\n(Don\u0027t know if it matters practically, but it seems right.)",
+      "parentUuid": "3f5b0247_4f6c07d3",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "2608a8f7_6cafdddf",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-17T23:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "250a32e3_78753556",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d238f723_1a9eb73d",
         "filename": "net/test/cert_test_util_nss.cc",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "6050b869_d94ce1b8",
+        "filename": "net/test/cert_test_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-17T23:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d238f723_1a9eb73d",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "210ef16b_c4b39eef",
         "filename": "net/test/cert_test_util_nss.cc",
         "patchSetId": 2
@@ -101,6 +173,24 @@
       "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b11eac3_4f36573f",
+        "filename": "net/test/cert_test_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-17T23:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "210ef16b_c4b39eef",
+      "revId": "82e599492f4fdd7744cb6ae4b245a85fe1f53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
