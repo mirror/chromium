@@ -12,7 +12,6 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "chromeos/components/tether/disconnect_tethering_operation.h"
 #include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/network/network_handler_callbacks.h"
 
@@ -31,14 +30,13 @@ class NetworkStateHandler;
 namespace tether {
 
 class ActiveHost;
-class BleConnectionManager;
 class DeviceIdTetherNetworkGuidMap;
+class DisconnectTetheringOperationDelegate;
 class NetworkConfigurationRemover;
 class TetherConnector;
 class TetherHostFetcher;
 
-class TetherDisconnectorImpl : public TetherDisconnector,
-                               public DisconnectTetheringOperation::Observer {
+class TetherDisconnectorImpl : public TetherDisconnector {
  public:
   // Registers the prefs used by this class to the given |registry|.
   static void RegisterPrefs(PrefRegistrySimple* registry);
@@ -47,7 +45,8 @@ class TetherDisconnectorImpl : public TetherDisconnector,
       NetworkConnectionHandler* network_connection_handler,
       NetworkStateHandler* network_state_handler,
       ActiveHost* active_host,
-      BleConnectionManager* ble_connection_manager,
+      DisconnectTetheringOperationDelegate*
+          disconnect_tethering_operation_delegate_,
       NetworkConfigurationRemover* network_configuration_remover,
       TetherConnector* tether_connector,
       DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
@@ -59,9 +58,6 @@ class TetherDisconnectorImpl : public TetherDisconnector,
       const std::string& tether_network_guid,
       const base::Closure& success_callback,
       const network_handler::StringResultCallback& error_callback) override;
-
-  // DisconnectTetheringOperation::Observer:
-  void OnOperationFinished(const std::string& device_id, bool success) override;
 
  private:
   friend class TetherDisconnectorImplTest;
@@ -93,14 +89,14 @@ class TetherDisconnectorImpl : public TetherDisconnector,
   NetworkConnectionHandler* network_connection_handler_;
   NetworkStateHandler* network_state_handler_;
   ActiveHost* active_host_;
-  BleConnectionManager* ble_connection_manager_;
+  DisconnectTetheringOperationDelegate*
+      disconnect_tethering_operation_delegate_;
   NetworkConfigurationRemover* network_configuration_remover_;
   TetherConnector* tether_connector_;
   DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map_;
   TetherHostFetcher* tether_host_fetcher_;
   PrefService* pref_service_;
 
-  std::unique_ptr<DisconnectTetheringOperation> disconnect_tethering_operation_;
   base::WeakPtrFactory<TetherDisconnectorImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TetherDisconnectorImpl);

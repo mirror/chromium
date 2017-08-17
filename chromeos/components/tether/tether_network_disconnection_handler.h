@@ -15,6 +15,7 @@ class NetworkStateHandler;
 
 namespace tether {
 
+class DisconnectTetheringOperationDelegate;
 class NetworkConfigurationRemover;
 
 class ActiveHost;
@@ -29,7 +30,10 @@ class TetherNetworkDisconnectionHandler : public NetworkStateHandlerObserver {
   TetherNetworkDisconnectionHandler(
       ActiveHost* active_host,
       NetworkStateHandler* network_state_handler,
-      NetworkConfigurationRemover* network_configuration_remover);
+      NetworkConfigurationRemover* network_configuration_remover,
+      TetherHostFetcher* tether_host_fetcher,
+      DisconnectTetheringOperationDelegate*
+          disconnect_tethering_operation_delegate);
   ~TetherNetworkDisconnectionHandler() override;
 
   // NetworkStateHandlerObserver:
@@ -38,9 +42,18 @@ class TetherNetworkDisconnectionHandler : public NetworkStateHandlerObserver {
  private:
   friend class TetherNetworkDisconnectionHandlerTest;
 
+  void OnTetherHostFetched(
+      const std::string& device_id,
+      std::unique_ptr<cryptauth::RemoteDevice> tether_host);
+
   ActiveHost* active_host_;
   NetworkStateHandler* network_state_handler_;
   NetworkConfigurationRemover* network_configuration_remover_;
+  TetherHostFetcher* tether_host_fetcher_;
+  DisconnectTetheringOperationDelegate*
+      disconnect_tethering_operation_delegate_;
+
+  base::WeakPtrFactory<TetherNetworkDisconnectionHandler> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TetherNetworkDisconnectionHandler);
 };

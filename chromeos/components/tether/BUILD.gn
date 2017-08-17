@@ -30,6 +30,8 @@ static_library("tether") {
     "device_status_util.h",
     "disconnect_tethering_operation.cc",
     "disconnect_tethering_operation.h",
+    "disconnect_tethering_operation_delegate.cc",
+    "disconnect_tethering_operation_delegate.h",
     "host_connection_metrics_logger.cc",
     "host_connection_metrics_logger.h",
     "host_scan_cache.cc",
