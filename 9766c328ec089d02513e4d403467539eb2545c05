@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68e0c67_f7eb8b86",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-17T15:06:39Z",
+      "side": 1,
+      "message": "What do we set SurfaceInfo::device_scale_factor_ to for renderers in high-dpi?",
+      "revId": "9766c328ec089d02513e4d403467539eb2545c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
