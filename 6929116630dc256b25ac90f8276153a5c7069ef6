@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b26a2da_30122e51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-17T22:14:24Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 475,
+        "startChar": 44,
+        "endLine": 475,
+        "endChar": 52
+      },
+      "revId": "6929116630dc256b25ac90f8276153a5c7069ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
