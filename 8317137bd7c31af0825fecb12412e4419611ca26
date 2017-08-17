@@ -111,6 +111,23 @@
       "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416bbd5f_534914be",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-17T22:16:20Z",
+      "side": 1,
+      "message": "I thought you wanted 512 MiB? (256 is fine by me; just curious.)",
+      "revId": "8317137bd7c31af0825fecb12412e4419611ca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
