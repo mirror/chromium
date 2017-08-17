@@ -363,7 +363,7 @@ void HandleShowKeyboardOverlay() {
   Shell::Get()->new_window_controller()->ShowKeyboardOverlay();
 }
 
-bool CanHandleShowMessageCenterBubble() {
+bool CanHandleToggleMessageCenterBubble() {
   aura::Window* target_root = Shell::GetRootWindowForNewWindows();
   StatusAreaWidget* status_area_widget =
       Shelf::ForWindow(target_root)->shelf_widget()->status_area_widget();
@@ -371,17 +371,21 @@ bool CanHandleShowMessageCenterBubble() {
          status_area_widget->web_notification_tray()->visible();
 }
 
-void HandleShowMessageCenterBubble() {
-  base::RecordAction(UserMetricsAction("Accel_Show_Message_Center_Bubble"));
+void HandleToggleMessageCenterBubble() {
+  base::RecordAction(UserMetricsAction("Accel_Toggle_Message_Center_Bubble"));
   aura::Window* target_root = Shell::GetRootWindowForNewWindows();
   StatusAreaWidget* status_area_widget =
       Shelf::ForWindow(target_root)->shelf_widget()->status_area_widget();
-  if (status_area_widget) {
-    WebNotificationTray* notification_tray =
-        status_area_widget->web_notification_tray();
-    if (notification_tray->visible())
-      notification_tray->ShowBubble();
-  }
+  if (!status_area_widget)
+    return;
+  WebNotificationTray* notification_tray =
+      status_area_widget->web_notification_tray();
+  if (!notification_tray->visible())
+    return;
+  if (notification_tray->IsMessageCenterBubbleVisible())
+    notification_tray->CloseBubble();
+  else
+    notification_tray->ShowBubble();
 }
 
 void HandleToggleSystemTrayBubble() {
@@ -1001,8 +1005,8 @@ bool AcceleratorController::CanPerformAction(
     case SCALE_UI_RESET:
     case SCALE_UI_UP:
       return accelerators::IsInternalDisplayZoomEnabled();
-    case SHOW_MESSAGE_CENTER_BUBBLE:
-      return CanHandleShowMessageCenterBubble();
+    case TOGGLE_MESSAGE_CENTER_BUBBLE:
+      return CanHandleToggleMessageCenterBubble();
     case SHOW_STYLUS_TOOLS:
       return CanHandleShowStylusTools();
     case START_VOICE_INTERACTION:
@@ -1251,8 +1255,8 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case SHOW_KEYBOARD_OVERLAY:
       HandleShowKeyboardOverlay();
       break;
-    case SHOW_MESSAGE_CENTER_BUBBLE:
-      HandleShowMessageCenterBubble();
+    case TOGGLE_MESSAGE_CENTER_BUBBLE:
+      HandleToggleMessageCenterBubble();
       break;
     case SHOW_STYLUS_TOOLS:
       HandleShowStylusTools();

@@ -130,7 +130,7 @@ bool AcceleratorControllerDelegateClassic::HandlesAction(
     case MAGNIFY_SCREEN_ZOOM_OUT:
     case POWER_PRESSED:
     case POWER_RELEASED:
-    case SHOW_MESSAGE_CENTER_BUBBLE:
+    case TOGGLE_MESSAGE_CENTER_BUBBLE:
     case TAKE_PARTIAL_SCREENSHOT:
     case TAKE_SCREENSHOT:
     case TAKE_WINDOW_SCREENSHOT:
