@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "381e8a98_d66fe801",
+        "filename": "components/spellcheck/common/spellcheck.typemap",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-17T08:43:42Z",
+      "side": 1,
+      "message": "We don\u0027t actually map Decoration. But I\u0027m wondering if we can just use the Mojo struct directly rather than typemapping it?",
+      "revId": "5002247964340849cbc5c235ed4a1ab4fae6e2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
