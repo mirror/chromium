@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e0e8f29_680c7f1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-17T17:52:36Z",
+      "side": 1,
+      "message": "This is not completely true because hit testing should hit the alt text. Can you update this to say something along the lines of \"hit tests should not hit internal details of the image fallback shadow dom\"?",
+      "revId": "2fc4e4ae4a40108b1e4aa4801f037b801016a7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
