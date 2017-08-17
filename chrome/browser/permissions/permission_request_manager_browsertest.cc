@@ -389,6 +389,59 @@ IN_PROC_BROWSER_TEST_F(PermissionRequestManagerBrowserTest, InPageNavigation) {
   EXPECT_EQ(1, bubble_factory()->TotalRequestCount());
 }
 
+// Tabs are only shown for active tabs and hidden on tab switching (on Desktop)
+IN_PROC_BROWSER_TEST_F(PermissionRequestManagerBrowserTest, MultipleTabs) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(
+      browser(), embedded_test_server()->GetURL("/empty.html"), 1);
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), embedded_test_server()->GetURL("/empty.html"),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  // SetUp() only creates a mock prompt factory for the first tab.
+  MockPermissionPromptFactory* bubble_factory_0 = bubble_factory();
+  std::unique_ptr<MockPermissionPromptFactory> bubble_factory_1(
+      base::MakeUnique<MockPermissionPromptFactory>(
+          GetPermissionRequestManager()));
+
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+  ASSERT_EQ(2, tab_strip_model->count());
+  ASSERT_EQ(1, tab_strip_model->active_index());
+
+  // Request geolocation in foreground tab, prompt should be shown.
+  ExecuteScriptAndGetValue(
+      browser()->tab_strip_model()->GetWebContentsAt(1)->GetMainFrame(),
+      "navigator.geolocation.getCurrentPosition(function(){});");
+  EXPECT_EQ(1, bubble_factory_1->show_count());
+  EXPECT_FALSE(bubble_factory_0->is_visible());
+  EXPECT_TRUE(bubble_factory_1->is_visible());
+
+  tab_strip_model->ActivateTabAt(0, false);
+  EXPECT_FALSE(bubble_factory_0->is_visible());
+  EXPECT_FALSE(bubble_factory_1->is_visible());
+
+  tab_strip_model->ActivateTabAt(1, false);
+  EXPECT_EQ(2, bubble_factory_1->show_count());
+  EXPECT_FALSE(bubble_factory_0->is_visible());
+  EXPECT_TRUE(bubble_factory_1->is_visible());
+
+  // Request notification in background tab. No prompt is shown until the tab
+  // itself is activated.
+  ExecuteScriptAndGetValue(
+      browser()->tab_strip_model()->GetWebContentsAt(0)->GetMainFrame(),
+      "Notification.requestPermission()");
+  EXPECT_FALSE(bubble_factory_0->is_visible());
+  EXPECT_EQ(2, bubble_factory_1->show_count());
+
+  tab_strip_model->ActivateTabAt(0, false);
+  EXPECT_TRUE(bubble_factory_0->is_visible());
+  EXPECT_EQ(1, bubble_factory_0->show_count());
+  EXPECT_EQ(2, bubble_factory_1->show_count());
+}
+
 // Bubble requests should not be shown when the killswitch is on.
 IN_PROC_BROWSER_TEST_F(PermissionRequestManagerBrowserTest,
                        KillSwitchGeolocation) {
