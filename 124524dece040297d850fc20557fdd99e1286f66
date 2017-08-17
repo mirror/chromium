@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d292382_cb8d5762",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4027,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-17T10:52:41Z",
+      "side": 1,
+      "message": "nit: s/install/installed/",
+      "range": {
+        "startLine": 4027,
+        "startChar": 164,
+        "endLine": 4027,
+        "endChar": 171
+      },
+      "revId": "124524dece040297d850fc20557fdd99e1286f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
