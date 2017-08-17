@@ -16,6 +16,24 @@
       "revId": "dbbb30f4546e4a31e97d1796c8ce8f845da0eadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c116f6_bd992818",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-17T03:45:53Z",
+      "side": 1,
+      "message": "Indeed.\n\nI think this case could be handled with ((len - i) \u003c n).",
+      "parentUuid": "85fe2bcc_c60418dd",
+      "revId": "dbbb30f4546e4a31e97d1796c8ce8f845da0eadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

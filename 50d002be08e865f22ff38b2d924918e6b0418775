@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1bf94dee_a21b8103",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-17T03:45:53Z",
+      "side": 1,
+      "message": "Indeed, it is an amazing tool.",
+      "parentUuid": "0fe015ee_fd644e6b",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e89ec9c_ff79c5a1",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -140,6 +158,24 @@
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cee86a_726a02f7",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-17T03:45:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4017d42_6365e708",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "e4a8da88_adbe3331",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-17T03:45:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88546e63_e3ffc2f7",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00954fc6_fa1d0908",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -319,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "5f06cd82_8153357f",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-17T03:45:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2970435e_4464dfb6",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b258551c_76a74e73",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 1
@@ -366,6 +438,24 @@
       "side": 1,
       "message": "\u003e Nopes, because it may be passed along to the function from a previous computation.\n\u003e\n\u003e That would require to change the public function interface (e.g. the NEON implementation must be a drop-in replacement) as also call sites in zlib (and maybe client code in libpng).\n\nThe calculation only uses the lower 2 bytes of that \"previous computation\",\nand ignores the rest.\n\nNEON_adler32 is an internal detail (or should be). The public interface is adler32(), which what clients like zlib / libpng call.\n\nBrings up another point.  adler32_z() is also on the public interface too, but for some reason you did not update that path with NEON support.",
       "parentUuid": "97ccaeea_960aa2d6",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21191a7_4ba1b920",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-17T03:45:53Z",
+      "side": 1,
+      "message": "The function adler32_z() was only recently introduced starting with zlib 1.2.11 (I started this optimization work on version 1.2.8) (https://github.com/madler/zlib/commit/b9ae6f0079099c1b2e26abbb434725c4cf62d6b2).\n\nOne alternative instead of adding the hook in both functions to the NEON code would be instead to add it only in adler32_z() (since it is used by adler32).\n\nFor PNG use case, the patch is correct because they use adler32():\nhttps://cs.chromium.org/chromium/src/third_party/libpng/png.c?type\u003dcs\u0026l\u003d2327\n\nI have one concern though that size_t can be an integer of 64bits in AArch64.",
+      "parentUuid": "9e49699d_bcab589e",
       "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
