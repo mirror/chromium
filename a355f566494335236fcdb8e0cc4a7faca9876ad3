@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c59bb868_7068f10b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-17T21:16:51Z",
+      "side": 1,
+      "message": "Hmm... isn\u0027t it possible for us to be in session restore, and for the user to also open background tabs? In which case the session restore loader won\u0027t control the loading of these new tabs. We should be checking to see if the associated web_contents was created by session restore or not, and throttling those that aren\u0027t created by session restore...",
+      "range": {
+        "startLine": 1142,
+        "startChar": 6,
+        "endLine": 1142,
+        "endChar": 33
+      },
+      "revId": "a355f566494335236fcdb8e0cc4a7faca9876ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a149a545_f6eb13e5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-17T21:16:51Z",
+      "side": 1,
+      "message": "We may decide to stop loading tabs, so this definition should take that into account (like the session restore definition).",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "a355f566494335236fcdb8e0cc4a7faca9876ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
