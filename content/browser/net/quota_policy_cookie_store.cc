@@ -24,6 +24,14 @@
 #include "storage/browser/quota/special_storage_policy.h"
 #include "url/gurl.h"
 
+namespace {
+
+void SwallowCookieList(const net::CookieList& cookies) {
+  VLOG(0) << "Loaded " << cookies.size() << " cookies.";
+}
+
+}  // namespace
+
 namespace content {
 
 QuotaPolicyCookieStore::QuotaPolicyCookieStore(
@@ -163,7 +171,7 @@ std::unique_ptr<net::CookieStore> CreateCookieStore(
 
     if (!background_task_runner.get()) {
       background_task_runner = base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
            base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
     }
 
@@ -191,6 +199,8 @@ std::unique_ptr<net::CookieStore> CreateCookieStore(
       cookie_monster->SetPersistSessionCookies(true);
     }
   }
+  // Eagerly fetch all cookies from the store.
+  cookie_monster->GetAllCookiesAsync(base::BindOnce(&SwallowCookieList));
 
   if (!config.cookieable_schemes.empty())
     cookie_monster->SetCookieableSchemes(config.cookieable_schemes);
