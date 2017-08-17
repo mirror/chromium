@@ -1,0 +1,10 @@
+include_rules = [
+  "+base",
+  "+content/public/browser",
+  "+content/public/common",
+  "+content/public/network",
+  "+content/public/test",
+  "+gtest",
+  "+mojo/public",
+  "+net",
+]
