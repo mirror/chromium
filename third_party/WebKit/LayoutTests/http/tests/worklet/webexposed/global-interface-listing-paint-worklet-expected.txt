@@ -7,34 +7,14 @@ CONSOLE MESSAGE: line 147:     getter intrinsicHeight
 CONSOLE MESSAGE: line 147:     getter intrinsicRatio
 CONSOLE MESSAGE: line 147:     getter intrinsicWidth
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface CSSKeywordValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter value
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMatrixComponent : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter matrix
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter matrix
-CONSOLE MESSAGE: line 147: interface CSSNumericValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     method add
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method div
-CONSOLE MESSAGE: line 147:     method mul
-CONSOLE MESSAGE: line 147:     method sub
-CONSOLE MESSAGE: line 147:     method to
 CONSOLE MESSAGE: line 147: interface CSSPerspective : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter length
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter length
-CONSOLE MESSAGE: line 147: interface CSSPositionValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter x
-CONSOLE MESSAGE: line 147:     getter y
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter x
-CONSOLE MESSAGE: line 147:     setter y
-CONSOLE MESSAGE: line 147: interface CSSResourceValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter state
-CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface CSSRotation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter angle
 CONSOLE MESSAGE: line 147:     getter x
@@ -67,15 +47,6 @@ CONSOLE MESSAGE: line 147:     getter is2D
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method toString
 CONSOLE MESSAGE: line 147:     setter is2D
-CONSOLE MESSAGE: line 147: interface CSSTransformValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter is2D
-CONSOLE MESSAGE: line 147:     getter length
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method entries
-CONSOLE MESSAGE: line 147:     method forEach
-CONSOLE MESSAGE: line 147:     method keys
-CONSOLE MESSAGE: line 147:     method toMatrix
-CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
@@ -94,13 +65,6 @@ CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter unit
 CONSOLE MESSAGE: line 147:     setter value
-CONSOLE MESSAGE: line 147: interface CSSUnparsedValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter length
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method entries
-CONSOLE MESSAGE: line 147:     method forEach
-CONSOLE MESSAGE: line 147:     method keys
-CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSVariableReferenceValue
 CONSOLE MESSAGE: line 147:     getter fallback
 CONSOLE MESSAGE: line 147:     getter variable
@@ -263,34 +227,14 @@ CONSOLE MESSAGE: line 147:     getter intrinsicHeight
 CONSOLE MESSAGE: line 147:     getter intrinsicRatio
 CONSOLE MESSAGE: line 147:     getter intrinsicWidth
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface CSSKeywordValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter value
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMatrixComponent : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter matrix
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter matrix
-CONSOLE MESSAGE: line 147: interface CSSNumericValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     method add
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method div
-CONSOLE MESSAGE: line 147:     method mul
-CONSOLE MESSAGE: line 147:     method sub
-CONSOLE MESSAGE: line 147:     method to
 CONSOLE MESSAGE: line 147: interface CSSPerspective : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter length
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter length
-CONSOLE MESSAGE: line 147: interface CSSPositionValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter x
-CONSOLE MESSAGE: line 147:     getter y
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter x
-CONSOLE MESSAGE: line 147:     setter y
-CONSOLE MESSAGE: line 147: interface CSSResourceValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter state
-CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface CSSRotation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter angle
 CONSOLE MESSAGE: line 147:     getter x
@@ -323,15 +267,6 @@ CONSOLE MESSAGE: line 147:     getter is2D
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method toString
 CONSOLE MESSAGE: line 147:     setter is2D
-CONSOLE MESSAGE: line 147: interface CSSTransformValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter is2D
-CONSOLE MESSAGE: line 147:     getter length
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method entries
-CONSOLE MESSAGE: line 147:     method forEach
-CONSOLE MESSAGE: line 147:     method keys
-CONSOLE MESSAGE: line 147:     method toMatrix
-CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
@@ -350,13 +285,6 @@ CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter unit
 CONSOLE MESSAGE: line 147:     setter value
-CONSOLE MESSAGE: line 147: interface CSSUnparsedValue : CSSStyleValue
-CONSOLE MESSAGE: line 147:     getter length
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method entries
-CONSOLE MESSAGE: line 147:     method forEach
-CONSOLE MESSAGE: line 147:     method keys
-CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSVariableReferenceValue
 CONSOLE MESSAGE: line 147:     getter fallback
 CONSOLE MESSAGE: line 147:     getter variable
