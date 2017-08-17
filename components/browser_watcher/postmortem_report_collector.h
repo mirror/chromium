@@ -28,23 +28,14 @@
 
 namespace browser_watcher {
 
-// Deletes stability files.
-class PostmortemDeleter {
- public:
-  PostmortemDeleter() = default;
-  ~PostmortemDeleter() = default;
-
-  void Process(const std::vector<base::FilePath>& stability_files);
-};
-
-// Handles postmortem report collection by establishing the set of stability
-// files to collect, then for each file:
-//   - extracting a report protocol buffer
-//   - registering a crash report with the crash database
-//   - writing a minidump file for the report
-// TODO(manzagop): throttling, graceful handling of accumulating data.
+// Performs postmortem stability data analysis and collection.
 class PostmortemReportCollector {
  public:
+  // Creates a postmortem report collector. The |product_name|, |version_number|
+  // and |channel_name| are used to set reporter information in postmortem
+  // crash reports. If |report_database| is set, postmortem crash reports are
+  // generated and registered against it. If |analyzer| is set, it used to
+  // analyze the containing system session.
   PostmortemReportCollector(const std::string& product_name,
                             const std::string& version_number,
                             const std::string& channel_name,
@@ -52,8 +43,8 @@ class PostmortemReportCollector {
                             SystemSessionAnalyzer* analyzer);
   ~PostmortemReportCollector();
 
-  // Collects postmortem stability reports from |stability_files|. Reports are
-  // then wrapped in Crashpad reports and registered with the crash database.
+  // Analyzes |stability_files|, logs postmortem user metrics and optionally
+  // generates postmortem crash reports.
   void Process(const std::vector<base::FilePath>& stability_files);
 
   const std::string& product_name() const { return product_name_; }
@@ -83,8 +74,8 @@ class PostmortemReportCollector {
       PostmortemReportCollectorCollectionFromGlobalTrackerTest,
       SystemStateTest);
 
-  // Collects a stability file, generates a report and registers it with the
-  // database.
+  // Collects a stability file, optionally generating a report and registering
+  // it with the database.
   void CollectAndSubmitOneReport(const crashpad::UUID& client_id,
                                  const base::FilePath& file);
 
@@ -95,6 +86,9 @@ class PostmortemReportCollector {
   void SetReporterDetails(StabilityReport* report) const;
 
   void RecordSystemShutdownState(StabilityReport* report) const;
+
+  void GenerateCrashReport(const crashpad::UUID& client_id,
+                           StabilityReport* report_proto);
 
   virtual bool WriteReportToMinidump(StabilityReport* report,
                                      const crashpad::UUID& client_id,
