@@ -118,6 +118,30 @@
       "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be4e7a4_c3d2bbf1",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-17T04:02:04Z",
+      "side": 1,
+      "message": "If SWContextClient could extend the lifetime of provider context I don\u0027t think SW client (i.e. provider host)\u0027s lifetime should be tied to that, it means we\u0027re explosing GC behavior at API surface.",
+      "parentUuid": "6725dd97_71e40866",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "f206e3450aee5a5ab53822a051135c42357f74c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
