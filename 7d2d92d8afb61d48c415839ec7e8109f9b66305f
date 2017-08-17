@@ -22,6 +22,30 @@
       "revId": "7d2d92d8afb61d48c415839ec7e8109f9b66305f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fd246b_8cfcaa77",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-17T16:53:58Z",
+      "side": 1,
+      "message": "The real fix is in the other file in this CL (early bail out if |profile_| is null). The change in this file is defensive/speculative: this handler is supposed to handle only pen events, so I am making sure that it is not doing anything at all for other events.",
+      "parentUuid": "c2b5eff0_6724da38",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 75
+      },
+      "revId": "7d2d92d8afb61d48c415839ec7e8109f9b66305f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
