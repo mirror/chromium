@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ecf3c7f_c7407a2e",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-17T19:46:42Z",
+      "side": 1,
+      "message": "Can we move this method to content\\common\\loader_util.h? It\u0027s meant to be the place to avoid duplication between browser \u0026 network service.",
+      "revId": "5d03b51f59466695c6304a8990eaefd0481fd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
