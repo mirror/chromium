@@ -22,6 +22,30 @@
       "revId": "8df4feceb62a9a58735c3135078f66a267b11540",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce1bd74_2bec294f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2980,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-08-17T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9b6858c_2c159a8a",
+      "range": {
+        "startLine": 2980,
+        "startChar": 41,
+        "endLine": 2980,
+        "endChar": 0
+      },
+      "revId": "8df4feceb62a9a58735c3135078f66a267b11540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
