@@ -16,6 +16,47 @@
       "revId": "88ad1c240c08eb61ed61e05a4d1c174667045e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4ad810_ae8ec87e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-08-17T11:33:32Z",
+      "side": 1,
+      "message": "Yes right. As you mentioned it, if object cannot be the root object, it does not necessary the null check for o. I will update it on next patch-set.",
+      "parentUuid": "08770b31_47e8ba41",
+      "revId": "88ad1c240c08eb61ed61e05a4d1c174667045e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d3032d_2933da69",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-08-17T11:33:32Z",
+      "side": 1,
+      "message": "I have one more question about this line.\n\nShould all LayoutViews have absolute-positioned?\nIf it can be the absolute-positioned or not,\nwe need to change to this as below.\n\nif (o-\u003eIsLayoutView() \u0026\u0026 o-\u003eStyle()-\u003eGetPosition() \u003d\u003d EPosition::kAbsolute)",
+      "range": {
+        "startLine": 700,
+        "startChar": 0,
+        "endLine": 701,
+        "endChar": 29
+      },
+      "revId": "88ad1c240c08eb61ed61e05a4d1c174667045e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
