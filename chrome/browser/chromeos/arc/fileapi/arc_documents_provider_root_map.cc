@@ -47,7 +47,6 @@ ArcDocumentsProviderRootMap::GetForArcBrowserContext() {
 
 ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(IsArcAllowedForProfile(profile));  // Already checked in the factory.
 
   ArcFileSystemOperationRunner* runner =
       ArcFileSystemOperationRunner::GetForBrowserContext(profile);
