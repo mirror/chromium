@@ -74,6 +74,7 @@ class TestNavigationManagerDelegate : public NavigationManagerDelegate {
   MOCK_METHOD2(WillLoadCurrentItemWithParams,
                void(const NavigationManager::WebLoadParams&, bool));
   MOCK_METHOD0(LoadCurrentItem, void());
+  MOCK_METHOD0(LoadIfNecessary, void());
   MOCK_METHOD0(Reload, void());
   MOCK_METHOD1(OnNavigationItemsPruned, void(size_t));
   MOCK_METHOD0(OnNavigationItemChanged, void());
@@ -2182,6 +2183,11 @@ TEST_P(NavigationManagerTest,
   ASSERT_EQ(1, navigation_manager()->GetItemCount());
   EXPECT_EQ("http://www.url.com/",
             navigation_manager()->GetItemAtIndex(0)->GetURL().spec());
+}
+
+TEST_P(NavigationManagerTest, LoadIfNecessary) {
+  EXPECT_CALL(navigation_manager_delegate(), LoadIfNecessary()).Times(1);
+  navigation_manager()->LoadIfNecessary();
 }
 
 INSTANTIATE_TEST_CASE_P(

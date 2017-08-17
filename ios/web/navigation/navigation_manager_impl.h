@@ -142,6 +142,7 @@ class NavigationManagerImpl : public NavigationManager {
   void LoadURLWithParams(const NavigationManager::WebLoadParams&) final;
   void AddTransientURLRewriter(BrowserURLRewriter::URLRewriter rewriter) final;
   void Reload(ReloadType reload_type, bool check_for_reposts) final;
+  void LoadIfNecessary() final;
 
  protected:
   // The SessionStorageBuilder functions require access to private variables of

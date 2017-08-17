@@ -1853,6 +1853,14 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 }
 
+- (void)loadCurrentURLIfNecessary {
+  if (_webProcessCrashed) {
+    [self loadCurrentURL];
+  } else {
+    [self triggerPendingLoad];
+  }
+}
+
 - (GURL)webURLWithTrustLevel:(web::URLVerificationTrustLevel*)trustLevel {
   DCHECK(trustLevel);
   *trustLevel = web::URLVerificationTrustLevel::kAbsolute;
