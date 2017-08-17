@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255e76ed_00baf034",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "odd -\u003e unusual (so it\u0027s not confused with odd/even)\nOr perhaps just remove \"Because empty menus are odd, \". -\u003e i.e. \"This inserts...\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 68,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db076f3c_8a631963",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "an -\u003e a",
+      "range": {
+        "startLine": 48,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e2bbee_3299b1a2",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "nit: flip the condition and if blocks to avoid a negation.\n\nor even\n\n// If there are visible items, recursively build the submenu.\nNSMenu* submenu \u003d MenuHasVisibleItems(submenuModel)\n    ? [self menuFromModel:submenuModel]\n    : MakeEmptySubmenu();",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982bec5a_8d23a814",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "these don\u0027t need to be member functions / instance methods. In such cases we usually prefer anonymous helper functions. I.e., at the top of the file,\n\n  namespace {\n\n  NSMenu* MakeEmptySubmenu() {\n    ...\n  }\n\n  bool MenuHasVisibleItems(const ui::MenuModel* model) {\n    ...\n  }\n\n  }  // namespace",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaef3644_8ad2bcff",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "nit:\n // SimpleMenuModel:",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf22860_e7ed987e",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "using",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee18aa9a_adae404b",
+        "filename": "ui/views/controls/menu/submenu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-17T07:39:21Z",
+      "side": 1,
+      "message": "hm - this repeated implementation is not ideal. I think it does belong on MenuModel, it just shouldn\u0027t be declared virtual. This is per sky\u0027s comment at https://chromium-review.googlesource.com/c/616100/3/ui/base/models/menu_model.h#104\n\n(in which case, adjust my earlier comments accordingly :).",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
