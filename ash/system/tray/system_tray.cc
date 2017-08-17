@@ -603,16 +603,12 @@ void SystemTray::OnMouseExitedView() {
     system_bubble_->bubble()->RestartAutoCloseTimer();
 }
 
-void SystemTray::RegisterAccelerators(
-    const std::vector<ui::Accelerator>& accelerators,
-    views::TrayBubbleView* tray_bubble_view) {
-  Shell::Get()->accelerator_controller()->Register(accelerators,
-                                                   tray_bubble_view);
+void SystemTray::RegisterPreTargetHandler(ui::EventHandler* event_handler) {
+  Shell::Get()->AddPreTargetHandler(event_handler);
 }
 
-void SystemTray::UnregisterAllAccelerators(
-    views::TrayBubbleView* tray_bubble_view) {
-  Shell::Get()->accelerator_controller()->UnregisterAll(tray_bubble_view);
+void SystemTray::UnregisterPreTargetHandler(ui::EventHandler* event_handler) {
+  Shell::Get()->RemovePreTargetHandler(event_handler);
 }
 
 base::string16 SystemTray::GetAccessibleNameForBubble() {
