@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "944d8e08_e5563480",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "The title should make it clear that it is for components/",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5bf2ef_40d494f0",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "Start with the brief motivation about why the user needs to read this instead of following https://www.chromium.org/developers/webui\n\nAlso, link to your real CL so that the reader can figure out the details from the code directly, if they wish to.",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89170e49_3c3afdb1",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "I\u0027d re-write this as:\n\nResource files are specified in a `.grdp` file. Here\u0027s our\n`components/resources/hello_world_resources.grdp`:",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 157
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217317ba_0305275a",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "Resource. drop the \u0027s\u0027",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 10
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17288e22_430b1c21",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "for the new",
+      "range": {
+        "startLine": 87,
+        "startChar": 24,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b50bc2b_a406dfad",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "I\u0027d prefer .h file before .cc",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 47
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22d7831_080485fc",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "extra whitespace at the beginning",
+      "range": {
+        "startLine": 129,
+        "startChar": 1,
+        "endLine": 129,
+        "endChar": 2
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd6af31_61c2efa7",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "incorrect header",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 49
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6447e114_18588228",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "BUILD.gn",
+      "range": {
+        "startLine": 188,
+        "startChar": 80,
+        "endLine": 188,
+        "endChar": 92
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df35659a_bfe8cb06",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "should be \"hello_world_ui.c\" and \"hello_world_ui.h\" since the BUILD.gn file is under components/hello_world/\n\nI would rewrite as:\nIn order for your new class to be built and linked, you need to update the `BUILD.gn` and DEPS files. Create `src/components/hello_world/BUILD.gn`:\n```\n```\nand `src/components/hello_world/DEPS`:\n```\n```",
+      "range": {
+        "startLine": 193,
+        "startChar": 3,
+        "endLine": 193,
+        "endChar": 14
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1341e72_25937064",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-17T17:54:13Z",
+      "side": 1,
+      "message": "What does the WebUI dialog do? Inform the reader why they should read up about it.",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 161
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
