@@ -10,6 +10,7 @@
 #endif
 
 #include <stddef.h>
+#include <windows.h>
 
 namespace blacklist {
 
@@ -74,6 +75,18 @@ extern "C" void BlockedDll(size_t blocked_index);
 // initialization will take place even if a beacon is present. This is useful
 // for tests.
 bool Initialize(bool force);
+
+using GenerateCrashDumpFunction =
+    int (*)(EXCEPTION_POINTERS* exception_pointers);
+
+// Provides a function that can be used to generate a crashdump without
+// crashing the process. This is used to report exceptions that happen in the
+// intercepts and might otherwise be swallowed by the systems exception
+// handlers.
+void SetCrashdumpFunction(GenerateCrashDumpFunction crashdump_function);
+
+// Calls the function provided to SetCrashdumpFunction, if any.
+int CallGenerateCrashdumpFunction(EXCEPTION_POINTERS* exception_pointers);
 
 }  // namespace blacklist
 

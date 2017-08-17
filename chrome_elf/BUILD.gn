@@ -52,6 +52,7 @@ shared_library("chrome_elf") {
     "//build/config:exe_and_shlib_deps",
     "//chrome/install_static:install_static_util",
     "//chrome/install_static:primary_module",
+    "//components/crash/content/app:export_thunks",
   ]
   configs += [ "//build/config/win:windowed" ]
   configs -= [ "//build/config/win:console" ]
@@ -146,7 +147,8 @@ static_library("blacklist") {
   ]
   deps = [
     ":constants",
-    ":crash",
+
+    ##    ":crash",
     ":hook_util",
     ":nt_registry",
     "//base:base_static",  # pe_image
@@ -167,12 +169,12 @@ static_library("crash") {
     "//base",  # This needs to go.  DEP of app, crash_keys, client.
     "//base:base_static",  # pe_image
     "//chrome/install_static:install_static_util",
-    "//components/crash/content/app:app",
+    "//components/crash/content/app",
     "//components/crash/core/common",  # crash_keys
     "//components/version_info:channel",
     "//content/public/common:result_codes",
     "//gpu/config:crash_keys",
-    "//third_party/crashpad/crashpad/client:client",  # DumpWithoutCrash
+    "//third_party/crashpad/crashpad/client",  # DumpWithoutCrash
   ]
 }
 
