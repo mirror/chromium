@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "05dcbf94_53f1b3a4",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-17T14:24:19Z",
+      "side": 1,
+      "message": "The client redirect is added only if the frame navigates itself by JS before it has seen the DOMContentLoaded event. If you wait for the page load to complete, the client redirect should not be added. Are you seeing it attached even after page load completes?",
+      "parentUuid": "b3543c80_2087bdd5",
+      "range": {
+        "startLine": 715,
+        "startChar": 35,
+        "endLine": 715,
+        "endChar": 70
+      },
+      "revId": "9143943d0b9f60fafe156b76bab7d3ea44f31722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41c53010_877b433d",
         "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
         "patchSetId": 23
