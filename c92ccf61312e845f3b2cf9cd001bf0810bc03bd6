@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a850efd_69c2fc6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-17T20:30:08Z",
+      "side": 1,
+      "message": "typo: plumbs",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739d1bd9_018256a8",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-17T20:30:08Z",
+      "side": 1,
+      "message": "nit: Could you please add some details to this comment as well? I feel it\u0027d be important to point out who calls this, why, and when.",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56aba8b_0e0cda2e",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-17T20:30:08Z",
+      "side": 1,
+      "message": "Please add a unit test to exercise the multi-domain-reuse scenario.",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "479fc183_129de3f9",
         "filename": "components/password_manager/core/browser/password_reuse_detector.cc",
         "patchSetId": 2
@@ -13,6 +70,29 @@
       "writtenOn": "2017-08-17T17:02:31Z",
       "side": 1,
       "message": "nit: Shall we add some UMA stats to track the size of matching_domains?  Either here of some where downstream.  Feel free to do this in a follow-up CL.",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910543d8_2dc23625",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-17T20:30:08Z",
+      "side": 1,
+      "message": "nit: This sounds really large. Can we make this, like, 10?",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 34
+      },
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
