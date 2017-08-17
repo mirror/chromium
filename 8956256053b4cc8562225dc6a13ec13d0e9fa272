@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba79bb8_7b3a6fd6",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert_list_infinite_loop2.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-17T05:23:27Z",
+      "side": 0,
+      "message": "We don\u0027t need to rename the file since differences of old and new names are \"-\" and \"_\" and ease of checking git log.",
+      "revId": "8956256053b4cc8562225dc6a13ec13d0e9fa272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
