@@ -124,6 +124,7 @@ class CORE_EXPORT HTMLPlugInElement
   KURL loaded_url_;
   Member<HTMLImageLoader> image_loader_;
   bool is_delaying_load_event_;
+  bool did_override_url_;
 
  private:
   // EventTarget overrides:
