@@ -88,6 +88,24 @@
       "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35f0026_d5bd4fa0",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-17T00:42:32Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "06d13599_2146b8bd",
+      "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
