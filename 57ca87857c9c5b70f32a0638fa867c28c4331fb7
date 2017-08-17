@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2319c9a5_5696d808",
+        "filename": "content/public/test/content_test_suite_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-17T17:15:47Z",
+      "side": 0,
+      "message": "This was just never used.",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "57ca87857c9c5b70f32a0638fa867c28c4331fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
