@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "656a2c70_f8da3b9e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Yea, maybe we should do that...\n\nI\u0027ll create a separate CL for the signature change since it touches wider files.",
+      "parentUuid": "16f87f56_e959aaf6",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c258b92_daad400d",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf4ab62_8a023a8e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Sure. Split to three CLs:\n\nhttps://chromium-review.googlesource.com/c/618728\nhttps://chromium-review.googlesource.com/c/618409",
+      "parentUuid": "8c258b92_daad400d",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e6bb0f6_42500c6e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "That\u0027s absolutely right and actually I was aware of it, but I was too lazy to update all usages :)\n\nBut it\u0027s time to do it.",
+      "parentUuid": "9f2e8c4b_7fe3960b",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d432a2c_e8cf791c",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ba0f61_9eeec14c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d432a2c_e8cf791c",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "e2747575_9923a88f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Sorry for lack of comments, I added more.",
+      "parentUuid": "f7549fff_f1fe99ea",
+      "range": {
+        "startLine": 140,
+        "startChar": 27,
+        "endLine": 140,
+        "endChar": 35
+      },
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b419d12_9053b15e",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 6
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "13274bb4_0f2baab7",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Added comments. As you know, we can\u0027t obtain document paths as of Android N.",
+      "parentUuid": "4b419d12_9053b15e",
+      "range": {
+        "startLine": 154,
+        "startChar": 22,
+        "endLine": 154,
+        "endChar": 30
+      },
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8939dec_5036a8cb",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 6
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "c99cd1de_aa36930a",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Thanks, good to know.",
+      "parentUuid": "a8939dec_5036a8cb",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2deff517_b0904c3a",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 6
@@ -147,6 +285,24 @@
       "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc4f6d6_5f49dc9c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "I decided to take max (because empty base::FilePath is min).",
+      "parentUuid": "2deff517_b0904c3a",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "78172d06_734ddacc",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Using auto for (const char*) is not very fun in Chromium because of chromium-style compiler errors:\n\n../../chrome/browser/chromeos/fileapi/recent_arc_media_source.cc:279:8: error: [chromium-style] auto variable type must not deduce to a raw pointer type.\n  for (auto root_id : kMediaDocumentsProviderRootIds)\n       ^~~~\n       auto*",
+      "parentUuid": "35fa4144_47daa9be",
+      "range": {
+        "startLine": 245,
+        "startChar": 13,
+        "endLine": 245,
+        "endChar": 17
+      },
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ea0439a_09d33439",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 6
@@ -187,6 +367,24 @@
       "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0598cd0_e929cffe",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "That\u0027s a thing. Done.",
+      "parentUuid": "9ea0439a_09d33439",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "d86532df_444cb845",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c688e28b_43fa9126",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f8f4a5_251a3ae2",
         "filename": "components/arc/test/fake_file_system_instance.cc",
         "patchSetId": 6
@@ -221,6 +437,24 @@
       "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c5e10e_5c31ccbd",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-17T10:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62f8f4a5_251a3ae2",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
