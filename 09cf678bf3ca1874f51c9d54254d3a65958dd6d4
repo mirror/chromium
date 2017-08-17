@@ -93,6 +93,30 @@
       "revId": "09cf678bf3ca1874f51c9d54254d3a65958dd6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946b4cd4_d318fc9d",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-17T16:32:46Z",
+      "side": 1,
+      "message": "Observing navigations and scroll events will not be trivial in this class. Let\u0027s land this change as it is and see it it goes.",
+      "parentUuid": "97d3ab82_95290639",
+      "range": {
+        "startLine": 269,
+        "startChar": 10,
+        "endLine": 269,
+        "endChar": 25
+      },
+      "revId": "09cf678bf3ca1874f51c9d54254d3a65958dd6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
