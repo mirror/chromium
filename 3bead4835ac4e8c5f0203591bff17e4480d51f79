@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "801d5c53_a5674775",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-17T07:52:30Z",
+      "side": 1,
+      "message": "I think it\u0027s better if SendMessage is done after the worker is promoted to active... otherwise we might as well just resolve the promise on the renderer-side without waiting for the ping-pong from the browser.\n\nI.e., when we do promote the worker to .active, we should resolve the promise after doing that; and when the worker is already .active, we should resolve already. (Actually in this case maybe we should just be resolving on the renderer side without sending the SkipWaiting IPC message?)\n\nAccording to the spec, the promise is supposed to resolve after updating registration and worker state. I.e,. skipWaiting().then(() \u003d\u003e // self.registration.active should be this worker). Are there no tests for that now?\n\nAlso reading over the spec, I think there is some strangeness: the skipWaiting() promise isn\u0027t really useful. When we *couldn\u0027t* immediately activate the worker (Try Activate returns early), we resolve skipWaiting() immediately, and when we do activate the worker, we wait until activation finishes before resolving skipWaiting(). It seems there\u0027s little guarantees about the skiPWaiting() promsie and I don\u0027t think that was intended. I\u0027ll write a spec issue.",
+      "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
