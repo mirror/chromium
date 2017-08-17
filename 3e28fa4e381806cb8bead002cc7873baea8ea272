@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "61659f70_35797724",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-17T00:26:52Z",
+      "side": 1,
+      "message": "The object is collected after the dialog is closed.  But a user could click on multiple printers before deciding on one.",
+      "parentUuid": "eda8a7c4_5b53cc81",
+      "range": {
+        "startLine": 161,
+        "startChar": 30,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "3e28fa4e381806cb8bead002cc7873baea8ea272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf6b804b_70f9a110",
         "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yeah, that crossed my mind too.  I think this is better because it\u0027s about the same amount of code either way and this way is less black-magic?  \n\nCould easily be talked into doing it the other way though.  It may be more black magic, but safer for having consistent behavior at other callsites of PrinterInstalled().  Pick your poison.  :)",
       "parentUuid": "cf6b804b_70f9a110",
+      "range": {
+        "startLine": 166,
+        "startChar": 27,
+        "endLine": 166,
+        "endChar": 43
+      },
+      "revId": "3e28fa4e381806cb8bead002cc7873baea8ea272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3047369_934fd82a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-17T00:26:52Z",
+      "side": 1,
+      "message": "I think we should push it into the PrintersManager.  This class shouldn\u0027t need to know or care about what type of printer it\u0027s dealing with. It is a bit magical to have PrinterInstalled reclassify a printer but I don\u0027t think it\u0027s less magical than UpdateConfiguredPrinter removing the printer from the automatic list.",
+      "parentUuid": "941a38e6_547ea138",
       "range": {
         "startLine": 166,
         "startChar": 27,
