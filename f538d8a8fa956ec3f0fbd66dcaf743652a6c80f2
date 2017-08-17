@@ -190,6 +190,30 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53471b0b_a025c2f4",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-17T19:10:06Z",
+      "side": 1,
+      "message": "The set of users of Chrome\u0027s Task Manager is much larger than what we would normally call \u0027developers\u0027. Tech enthusiasts and other people who pay attention to their computers might bring up Task Manager to understand why their computer or Chrome is being slow. It\u0027s definitely less visible UX than, say, the omnibox, and I do think this change will be an improvement, but the discrepancy between previous Chrome versions and the OS Task Manager and the behavior documented on chrome-hacking sites.\n\nI still think this change is a good idea, and maybe UX review is overkill.",
+      "parentUuid": "d41438c8_ec03c164",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
