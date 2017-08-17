@@ -22,6 +22,30 @@
       "revId": "0b08bf2eaee22458d459ef824e644d4493b29c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bebe403_82f9189e",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-17T16:57:05Z",
+      "side": 1,
+      "message": "If PathExists() takes O(seconds) to complete that\u0027s problematic (but I feel the whole system will suck profoundly at that point...).\n\nIf CreateDiretory() takes O(seconds) to complete that\u0027s not really bad. This is already done synchronously on startup, so the async path is only when creating a new profile which is an operation done *very* seldomly by a small subset of the population. I think it\u0027s worth O(seconds) there in the odd case to avoid having a hard-to-get-around race in profile code (I looked at BrowserContext::GetPath() callers and there are hundreds which all use their own sequences per being independent from each other except for the directory creation. Synchronizing all of those would be a nightmare. I think the tradeoff is worth it.",
+      "parentUuid": "8385a6b1_1062f68a",
+      "range": {
+        "startLine": 228,
+        "startChar": 78,
+        "endLine": 228,
+        "endChar": 0
+      },
+      "revId": "0b08bf2eaee22458d459ef824e644d4493b29c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
