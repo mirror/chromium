@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32d1124c_7e90f7ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "Make this an @IntDef?",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae39472_a626b1bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "Oh, hmph. This is where this particular model starts to break down -- the list here contains either 0 or 1 elements, so something simpler like a plain @Nullable object reference might be easier, but that doesn\u0027t work with |mSections| above... Could you add a comment here about this invariant?\n\n(FWIW, for content suggestions we came up with https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/TreeNode.java for this.)",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482e3920_1ebfdc3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "Assert that `section.size() \u003d\u003d 1`? The `assert section !\u003d null` is probably not necessary, as this is inside the branch for `section \u003d\u003d mPromoHeaderSection`, and |mPromoHeaderSection| is final and non-null.",
+      "range": {
+        "startLine": 181,
+        "startChar": 39,
+        "endLine": 181,
+        "endChar": 56
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db9a75c_08e082df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "You can use a Java 8 lambda for this now :)",
+      "range": {
+        "startLine": 246,
+        "startChar": 43,
+        "endLine": 246,
+        "endChar": 57
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d5001c_7c541822",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "Hm, if we were not showing the promo before and are not showing it afterwards, would we still want to notify about a changed item?",
+      "range": {
+        "startLine": 263,
+        "startChar": 20,
+        "endLine": 263,
+        "endChar": 41
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1584b22_a9dd3927",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "Optional: an alternative to clearing the section and adding items would be to make it non-final and set it to either Collections.emptyList() or Collections.singletonList(...), so the _contents_ of the list would be immutable.",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 39
+      },
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6bccdd_ab12cb55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-17T13:54:33Z",
+      "side": 1,
+      "message": "Make this final? Actually, there seems to be a bunch of members you could make final.",
+      "revId": "769d264bd210f591a7853b8031e30b2d7d8b398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
