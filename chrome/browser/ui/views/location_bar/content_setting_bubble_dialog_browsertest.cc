@@ -8,6 +8,7 @@
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/download/download_request_limiter.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/content_settings/content_setting_image_model.h"
@@ -16,7 +17,9 @@
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "chrome/test/base/ui_test_utils.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "content/public/test/browser_test_utils.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
 #include "ui/views/view.h"
@@ -61,6 +64,17 @@ void ContentSettingBubbleDialogTest::ShowDialogBubble(
           ->SetDownloadStatusAndNotify(
               DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED);
       break;
+    case CONTENT_SETTINGS_TYPE_POPUPS: {
+      GURL url(
+          embedded_test_server()->GetURL("/popup_blocker/popup-many-10.html"));
+      ui_test_utils::NavigateToURL(browser(), url);
+      CHECK(content::ExecuteScript(web_contents, std::string()));
+      PopupBlockerTabHelper* helper =
+          PopupBlockerTabHelper::FromWebContents(web_contents);
+      ASSERT_EQ(10u, helper->GetBlockedPopupsCount());
+      break;
+    }
+
     default:
       // For all other content_types passed in, mark them as blocked.
       content_settings->OnContentBlocked(content_type);
@@ -120,6 +134,7 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleDialogTest, InvokeDialog_plugins) {
 }
 
 IN_PROC_BROWSER_TEST_F(ContentSettingBubbleDialogTest, InvokeDialog_popups) {
+  CHECK(embedded_test_server()->Start());
   RunDialog();
 }
 
