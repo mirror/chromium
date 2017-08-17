@@ -16,6 +16,24 @@
       "revId": "5002247964340849cbc5c235ed4a1ab4fae6e2c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dde411_64f8b274",
+        "filename": "components/spellcheck/common/spellcheck.typemap",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-17T17:42:20Z",
+      "side": 1,
+      "message": "Thanks for catching that. Have added Decoration to mapping.\n\nI think at this stage we can\u0027t use the Mojo struct directly, because there are IPC code paths (to be migrated in the future), for which we still need the native struct.\n\nMaybe we\u0027ll switch to the Mojo struct in all code paths when the migration is done.",
+      "parentUuid": "381e8a98_d66fe801",
+      "revId": "5002247964340849cbc5c235ed4a1ab4fae6e2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
