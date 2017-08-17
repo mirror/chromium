@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a35de91_73f1f19b",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-17T21:47:55Z",
+      "side": 0,
+      "message": "The reason for this PostTask is to disallow reentrancy into functions that call GetDevices since now it will sometimes be called synchronously and sometimes asynchronously. That makes it more difficult for callers.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "db1c9d4dcb35ed27e7c5b7c0b7deafb1fe701adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
