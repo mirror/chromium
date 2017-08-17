@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16f87f56_e959aaf6",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "TBH, I\u0027m not a big fan of \"Extra\" ;-).\n\nCan this be merged into ReadDirectory (or I\u0027d say replace ReadDirectory by ReadDirectoryExtra implementation)?\nIn Arc*AsyncUtil, EntryList can be constructed from vector\u003cFileInfo\u003e IIUC.",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c258b92_daad400d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "This file change looks independent from other changes.\nCould you kindly split this into another CL to make my code review life easier?",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2e8c4b_7fe3960b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "I think run_loop-\u003eQuit() is needed even this fails here.\nSo, maybe moving it to the top of this function? (Ditto for other existing tests...)",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d432a2c_e8cf791c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "const auto\u0026 ?",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8939dec_5036a8cb",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "You can make this slightly more efficient and simpler.\n\nif (unknown_document_ids_.erase(document_id) \u003e 0)\n  files_.emplace_back(...);",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2deff517_b0904c3a",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "As chatted offline, in theory, subpath can be changed call-by-call because the scanning is run in parallel. So, could you either;\n- comment it should not be problematic practically. Or,\n- canonicalize the path (like taking min)?",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c688e28b_43fa9126",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "optional: BindOnce?",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f8f4a5_251a3ae2",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-17T07:45:24Z",
+      "side": 1,
+      "message": "Ditto, then you don\u0027t need base::Passed.",
+      "revId": "afdec6feca58f6fdd3721223d44229fa3ca0b39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
