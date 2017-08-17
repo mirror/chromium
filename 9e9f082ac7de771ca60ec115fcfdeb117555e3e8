@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c5ddab6_d8656e1d",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb243e5c_1eb4b8ba",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1babc26_0b131561",
         "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "222b2410_50565a5c",
+        "filename": "chrome/android/java/res/layout/content_suggestions_action_card_modern.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1babc26_0b131561",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4d165b3_7a991eb6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T09:55:49Z",
       "side": 1,
       "message": "so... I thought we needed to show this somehow?",
+      "range": {
+        "startLine": 121,
+        "startChar": 12,
+        "endLine": 121,
+        "endChar": 19
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3989f694_f3e65be3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "It\u0027s been discussed, we can get rid of it (it may be put in the context menu).",
+      "parentUuid": "f4d165b3_7a991eb6",
       "range": {
         "startLine": 121,
         "startChar": 12,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a36df16c_aa84dc37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6ca871_416676f0",
+      "range": {
+        "startLine": 251,
+        "startChar": 15,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d29b8727_3226a5e9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "32483180_87dda1bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d29b8727_3226a5e9",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 266,
+        "endChar": 27
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e99191d5_f64729a2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-17T09:55:49Z",
       "side": 1,
       "message": "hum not completely sure about this... maybe remove the listener when detaching the adapter instead? If we care about memory etc, we are still letting the recycler view have a reference to the adapter through this listener. But maybe we still have some anyway or don\u0027t care about that so the current code is fine?",
+      "range": {
+        "startLine": 316,
+        "startChar": 26,
+        "endLine": 316,
+        "endChar": 45
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389f95e0_a6f49371",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "I\u0027m assuming the RecyclerView and Adapter are pretty tied together lifetimes-wise already.",
+      "parentUuid": "e99191d5_f64729a2",
       "range": {
         "startLine": 316,
         "startChar": 26,
@@ -183,6 +327,30 @@
       "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0dc1af_4091e9c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ScrollToLoadListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ef5c26_179f2711",
+      "range": {
+        "startLine": 44,
+        "startChar": 43,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +459,30 @@
       "writtenOn": "2017-08-17T09:55:49Z",
       "side": 1,
       "message": "aren\u0027t set enabled and visible the same?",
+      "range": {
+        "startLine": 476,
+        "startChar": 20,
+        "endLine": 476,
+        "endChar": 30
+      },
+      "revId": "9e9f082ac7de771ca60ec115fcfdeb117555e3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1680c88b_ea045743",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-17T10:33:32Z",
+      "side": 1,
+      "message": "No - enabled means the clicking the button does something (it\u0027s not actually Android\u0027s Button.isEnabled, but it\u0027s similar).\n\nThis should be simplified anyway with https://chromium-review.googlesource.com/c/618628/ .",
+      "parentUuid": "5d4a52bc_cd773dbe",
       "range": {
         "startLine": 476,
         "startChar": 20,
