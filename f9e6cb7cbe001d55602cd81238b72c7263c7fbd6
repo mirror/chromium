@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd5c487_d686c2c9",
+        "filename": "content/public/test/test_browser_thread_bundle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-17T22:25:53Z",
+      "side": 1,
+      "message": "Could you make a oneliner bug for supporting death tests on Fuchsia and tag it in the Bug: line?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "f9e6cb7cbe001d55602cd81238b72c7263c7fbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ac4c64_5243085b",
+        "filename": "tools/variations/fieldtrial_to_struct.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-17T22:25:53Z",
+      "side": 1,
+      "message": "Put this between \u0027chromeos\u0027 and \u0027ios\u0027 since it was sorted before we got here.",
+      "range": {
+        "startLine": 120,
+        "startChar": 25,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "f9e6cb7cbe001d55602cd81238b72c7263c7fbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
