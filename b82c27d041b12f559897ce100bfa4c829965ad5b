@@ -49,6 +49,52 @@
     },
     {
       "key": {
+        "uuid": "0a36aa57_d471810e",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T20:01:48Z",
+      "side": 1,
+      "message": "How about just making this |else if|? Then it\u0027s clear there\u0027s something more than early returns going on.",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 8
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991be0da_e632205b",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T20:01:48Z",
+      "side": 1,
+      "message": "Ditto for |else if|",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 8
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62d3e6ab_bdd0b2fd",
         "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
         "patchSetId": 4
