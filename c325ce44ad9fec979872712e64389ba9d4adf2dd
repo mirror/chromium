@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "a3feb8fd_567b52fe",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T17:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d65317_72fef889",
+      "revId": "c325ce44ad9fec979872712e64389ba9d4adf2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1458c24_f41bd0fb",
         "filename": "chrome/installer/zucchini/zucchini_gen.h",
         "patchSetId": 8
