@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ce29434a_682ddfba",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-18T22:04:28Z",
+      "side": 1,
+      "message": "We want to make sure this is larger than the timeout for a single attempt to open a channel to a given sink, to help prevent overlapping attempts to open multiple channels to the same device.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "952aeda1_f4973aa8",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -59,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "1e08fa2a_c48262af",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-18T22:04:28Z",
+      "side": 1,
+      "message": "Having a single map would simplify this code (you don\u0027t have to look up in two different maps).",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a89bf2cc_d5269e6a",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -76,6 +110,23 @@
         "endLine": 205,
         "endChar": 60
       },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623c6d5f_f0628910",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-18T22:04:28Z",
+      "side": 1,
+      "message": "Where do you prevent multiple simultaneous OpenChannel() calls to the same sink?",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -271,6 +322,23 @@
     },
     {
       "key": {
+        "uuid": "d421d428_25776b6a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-18T22:04:28Z",
+      "side": 1,
+      "message": "Is this a parameter that sets the total number of attempts?  Or is is the current attempt #?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05a9205c_75411a94",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 1
@@ -305,6 +373,23 @@
       "writtenOn": "2017-08-18T04:43:19Z",
       "side": 1,
       "message": "Would it be better to key this by sink id?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1655224_d8b8991c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-18T22:04:28Z",
+      "side": 1,
+      "message": "It seems like we already maps below for media sinks that are keyed by net::IPAddress.\n\nIt might be simpler to have a single map that keeps track of the sink for a given net::IPEndPoint and has extra data like the current connection status, whether it was discovered by mDNS or DIAL, etc.\n\nThat doesn\u0027t have to be done in this change though.  Just something to think about.",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
