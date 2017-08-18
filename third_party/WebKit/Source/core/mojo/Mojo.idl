@@ -34,5 +34,5 @@ typedef unsigned long MojoResult;
     static MojoCreateDataPipeResult createDataPipe(MojoCreateDataPipeOptions options);
     static MojoCreateSharedBufferResult createSharedBuffer(unsigned long numBytes);
 
-    [CallWith=ScriptState] static void bindInterface(DOMString interfaceName, MojoHandle request_handle);
+    [CallWith=ScriptState] static void bindInterface(MojoBindInterfaceOptions options);
 };

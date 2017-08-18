@@ -417,8 +417,10 @@ var browserProxy = null;
 
 function initializeProxies() {
   browserProxy = new mojom.OmniboxPageHandlerPtr;
-  Mojo.bindInterface(
-      mojom.OmniboxPageHandler.name, mojo.makeRequest(browserProxy).handle);
+  Mojo.bindInterface({
+    interfaceName: mojom.OmniboxPageHandler.name,
+    handle: mojo.makeRequest(browserProxy).handle
+  });
 
   /** @constructor */
   var OmniboxPageImpl = function(request) {

@@ -6,8 +6,8 @@ class MojoLayoutTestHelper {
   constructor() {
     this.bindingSet_ = new mojo.BindingSet(
         content.mojom.MojoLayoutTestHelper);
-    this.interceptor_ = new MojoInterfaceInterceptor(
-        content.mojom.MojoLayoutTestHelper.name);
+    this.interceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: content.mojom.MojoLayoutTestHelper.name});
     this.interceptor_.oninterfacerequest =
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();
@@ -27,8 +27,8 @@ let mojoLayoutTestHelperImpl = new MojoLayoutTestHelper;
 
 onmessage = async () => {
   let helper = new content.mojom.MojoLayoutTestHelperPtr;
-  Mojo.bindInterface(content.mojom.MojoLayoutTestHelper.name,
-                     mojo.makeRequest(helper).handle);
+  Mojo.bindInterface({ interfaceName: content.mojom.MojoLayoutTestHelper.name,
+                       handle: mojo.makeRequest(helper).handle });
 
   let response = await helper.reverse('the string');
   assert_equals(response.reversed, 'gnirts eht');
