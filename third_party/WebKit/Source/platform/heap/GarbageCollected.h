@@ -14,6 +14,8 @@ namespace blink {
 
 template <typename T>
 class GarbageCollected;
+class HeapObjectHeader;
+class ScriptWrappableVisitor;
 
 // GC_PLUGIN_IGNORE is used to make the plugin ignore a particular class or
 // field when checking for proper usage.  When using GC_PLUGIN_IGNORE
@@ -71,7 +73,8 @@ class PLATFORM_EXPORT GarbageCollectedMixin {
   typedef int IsGarbageCollectedMixinMarker;
   virtual void AdjustAndMark(Visitor*) const = 0;
   virtual void Trace(Visitor*) {}
-  virtual bool IsHeapObjectAlive() const = 0;
+  virtual HeapObjectHeader* GetHeapObjectHeader() const = 0;
+  virtual void AdjustAndTraceMarkedWrapper(ScriptWrappableVisitor*) const = 0;
 };
 
 #define DEFINE_GARBAGE_COLLECTED_MIXIN_METHODS(VISITOR, TYPE)                 \
@@ -90,6 +93,16 @@ class PLATFORM_EXPORT GarbageCollectedMixin {
     }                                                                         \
     visitor->Mark(static_cast<const TYPE*>(this),                             \
                   &blink::TraceTrait<TYPE>::Trace);                           \
+  }                                                                           \
+                                                                              \
+  void AdjustAndTraceMarkedWrapper(ScriptWrappableVisitor* visitor)           \
+      const override {                                                        \
+    const TYPE* base = static_cast<const TYPE*>(this);                        \
+    TraceTrait<TYPE>::TraceMarkedWrapper(visitor, base);                      \
+  }                                                                           \
+                                                                              \
+  HeapObjectHeader* GetHeapObjectHeader() const override {                    \
+    return HeapObjectHeader::FromPayload(static_cast<const TYPE*>(this));     \
   }                                                                           \
                                                                               \
  private:
@@ -151,13 +164,7 @@ class PLATFORM_EXPORT GarbageCollectedMixin {
 #define USING_GARBAGE_COLLECTED_MIXIN(TYPE)                     \
   IS_GARBAGE_COLLECTED_TYPE();                                  \
   DEFINE_GARBAGE_COLLECTED_MIXIN_METHODS(blink::Visitor*, TYPE) \
-  DEFINE_GARBAGE_COLLECTED_MIXIN_CONSTRUCTOR_MARKER(TYPE)       \
- public:                                                        \
-  bool IsHeapObjectAlive() const override {                     \
-    return ThreadHeap::IsHeapObjectAlive(this);                 \
-  }                                                             \
-                                                                \
- private:
+  DEFINE_GARBAGE_COLLECTED_MIXIN_CONSTRUCTOR_MARKER(TYPE)
 
 // An empty class with a constructor that's arranged invoked when all derived
 // constructors of a mixin instance have completed and it is safe to allow GCs
