@@ -390,6 +390,9 @@ public class ArticleSnippetsTest {
         }
 
         @Override
+        public void removeThumbnailsFromDisk(String contentId) {}
+
+        @Override
         public void cancelRetrieval(ThumbnailRequest request) {
             boolean removed = mRequests.remove(request);
             Assert.assertTrue(
