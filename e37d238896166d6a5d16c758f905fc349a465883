@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6174d928_59bddbbf",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-18T03:36:16Z",
+      "side": 1,
+      "message": "Then it\u0027s ok",
+      "parentUuid": "e91ae2f7_1c53a346",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd24f538_d0dc375a",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I added the code in the patch 12. The name needs to be \"ChromeArc\" because it is used in the following code.\ncs/chromeos_public/src/third_party/autotest/files/client/cros/video/constants.py?rcl\u003dc87e1fb55b38126984a1e363660f14149381a59d\u0026l\u003d32\n\nShould I change the name \"GpuArc\" with changing ChromiumOS code?",
       "parentUuid": "7638a1f0_0bb904fb",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 46
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e726b6fe_3840e313",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-08-18T03:36:16Z",
+      "side": 1,
+      "message": "Yes, you need to change \"ChromeArc\" to \"GpuArc\". Owen has experience for changing its name, maybe you should ask him where else you need to change at once.",
+      "parentUuid": "f0a37ca8_036173ee",
       "range": {
         "startLine": 230,
         "startChar": 0,
