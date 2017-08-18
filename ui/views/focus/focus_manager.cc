@@ -486,6 +486,12 @@ bool FocusManager::ProcessAccelerator(const ui::Accelerator& accelerator) {
   return delegate_ && delegate_->ProcessAccelerator(accelerator);
 }
 
+int FocusManager::GetAcceleratorId(const ui::Accelerator& accelerator) const {
+  // ash::AcceleratorController does not support GetAcceleratorId() function
+  // anyway. So we do not need to involve |delegate_| here.
+  return accelerator_manager_.GetAcceleratorId(accelerator);
+}
+
 bool FocusManager::HasPriorityHandler(
     const ui::Accelerator& accelerator) const {
   return accelerator_manager_.HasPriorityHandler(accelerator);
