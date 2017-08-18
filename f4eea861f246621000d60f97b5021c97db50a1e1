@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa6ef00_1176c9a3",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-18T18:50:06Z",
+      "side": 1,
+      "message": "500 ms -\u003e \"a duration controlled by kTimeDelayForPendingTask\"",
+      "revId": "f4eea861f246621000d60f97b5021c97db50a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05a75c4_105c47e9",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-18T18:50:06Z",
+      "side": 1,
+      "message": "remove the substring \"invalidate the weak_ptr so we can \". I think it suffices to say that a WeakPtrFactory lets us cancel tasks.",
+      "revId": "f4eea861f246621000d60f97b5021c97db50a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bbb665_dd726344",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-18T18:50:06Z",
+      "side": 1,
+      "message": "Make this a TimeDelta?",
+      "revId": "f4eea861f246621000d60f97b5021c97db50a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
