@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca3ac0b_3943153c",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-18T18:18:24Z",
+      "side": 1,
+      "message": "nit: This one is not needed because:\n\n- Most SpellChecker functions already assume clean layout\n- MarkSpellingsAfterReplaceSelectionCommand() is in a deprecated code path, and will be removed in M63.",
+      "revId": "aae102b578793484fbb574da14d94c7fa92c8a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
