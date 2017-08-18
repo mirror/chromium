@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c765bd52_712f4386",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-18T19:41:43Z",
+      "side": 1,
+      "message": "Where\u0027s the span proposal that you\u0027re reading btw? It\u0027s a bit weird that they require you removing cv, since most std:: containers have value_type \u003d T;\n\nAs an aside, this caused me to discover\nstd::vector\u003cconst int\u003e v; fails to compile :P same with list and set, but I guess there can still be a type that matches the container things we need (data/size) that can allow const value_type.",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
