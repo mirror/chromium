@@ -42,6 +42,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "net/base/filename_util.h"
 #include "ui/base/accelerators/accelerator.h"
+#include "ui/display/display_switches.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
 #if defined(OS_WIN)
@@ -66,11 +67,16 @@ const char kTooFewMatchesPage[] = "bug_1155639.html";
 const char kLongTextareaPage[] = "large_textarea.html";
 const char kPrematureEnd[] = "premature_end.html";
 const char kMoveIfOver[] = "move_if_obscuring.html";
+const char kMoveIfOverPrecise[] = "move_if_obscuring_precise.html";
 const char kBitstackCrash[] = "crash_14491.html";
 const char kSelectChangesOrdinal[] = "select_changes_ordinal.html";
 const char kStartAfterSelection[] = "start_after_selection.html";
 const char kSimple[] = "simple.html";
 const char kLinkPage[] = "link.html";
+
+const float kScaleFactors[] = {1.0, 1.25};
+
+const int kExpectedShift = 76;
 
 const bool kBack = false;
 const bool kFwd = true;
@@ -1567,4 +1573,68 @@ IN_PROC_BROWSER_TEST_F(FindInPageControllerTest, IncognitoFindNextShared) {
   observer.Wait();
   EXPECT_EQ(ASCIIToUTF16("bar"),
             GetFindBarTextForBrowser(browser_incognito));
+}
+
+class FindInPageDPITest : public FindInPageControllerTest,
+                          public testing::WithParamInterface<float> {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    FindInPageControllerTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kForceDeviceScaleFactor,
+                                    base::StringPrintf("%f", GetParam()));
+  }
+};
+
+INSTANTIATE_TEST_CASE_P(, FindInPageDPITest, testing::ValuesIn(kScaleFactors));
+
+// Make sure Find box moves out of the way if it is obscuring the active match.
+IN_PROC_BROWSER_TEST_P(FindInPageDPITest, FindMovesWhenObscuring) {
+  GURL url = GetURL(kMoveIfOverPrecise);
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  chrome::ShowFindBar(browser());
+
+  // This is needed on GTK because the reposition operation is asynchronous.
+  base::RunLoop().RunUntilIdle();
+
+  gfx::Point start_position;
+  gfx::Point position;
+  bool fully_visible = false;
+  int ordinal = 0;
+
+  // Make sure it is open.
+  EXPECT_TRUE(GetFindBarWindowInfo(&start_position, &fully_visible));
+  EXPECT_TRUE(fully_visible);
+
+  WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  int moved_x_coord =
+      FindInPageTillBoxMoves(web_contents, start_position.x(), "Obscured", 1);
+  // The find box should have moved.
+  EXPECT_TRUE(kExpectedShift <= start_position.x() - moved_x_coord);
+  // Search for something guaranteed not to be obscured by the Find box.
+  EXPECT_EQ(
+      1, FindInPageASCII(web_contents, "Visible", kFwd, kIgnoreCase, &ordinal));
+  // Check the position.
+  EXPECT_TRUE(GetFindBarWindowInfo(&position, &fully_visible));
+  EXPECT_TRUE(fully_visible);
+
+  // Make sure Find box has moved back to its original location.
+  EXPECT_EQ(position.x(), start_position.x());
+
+  // Move the find box again.
+  moved_x_coord =
+      FindInPageTillBoxMoves(web_contents, start_position.x(), "Obscured", 1);
+  EXPECT_TRUE(kExpectedShift <= start_position.x() - moved_x_coord);
+  // Search for an invalid string.
+  EXPECT_EQ(0, FindInPageASCII(web_contents, "WeirdSearchString", kFwd,
+                               kIgnoreCase, &ordinal));
+
+  // Check the position.
+  EXPECT_TRUE(GetFindBarWindowInfo(&position, &fully_visible));
+  EXPECT_TRUE(fully_visible);
+
+  // Make sure Find box has moved back to its original location.
+  EXPECT_EQ(position.x(), start_position.x());
 }
