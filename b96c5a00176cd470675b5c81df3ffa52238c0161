@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c986dcc_6f745b57",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T21:29:34Z",
+      "side": 1,
+      "message": "Don\u0027t need this now that you use std::make_unique.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "b96c5a00176cd470675b5c81df3ffa52238c0161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6bf6ff_345ee507",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T21:29:34Z",
+      "side": 1,
+      "message": "Move this to test bodies. Will let you use one class for all tests in this file (no need for TaskSchedulerWorkerPoolTestBeforeStart).",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "b96c5a00176cd470675b5c81df3ffa52238c0161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f59cbf_cb2568e1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T21:29:34Z",
+      "side": 1,
+      "message": "You don\u0027t need SignalEvent(). You can write BindOnce(\u0026WaitableEvent::Signal, Unretained(TaskSchedulerWorkerPoolTestBeforeStart))",
+      "range": {
+        "startLine": 320,
+        "startChar": 24,
+        "endLine": 320,
+        "endChar": 79
+      },
+      "revId": "b96c5a00176cd470675b5c81df3ffa52238c0161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d150c0_b3be8257",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T21:29:34Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 322,
+        "startChar": 24,
+        "endLine": 322,
+        "endChar": 79
+      },
+      "revId": "b96c5a00176cd470675b5c81df3ffa52238c0161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d256e8b9_8fece9e2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T21:29:34Z",
+      "side": 1,
+      "message": "Add TODO to handle priorities with SetThreadpoolCallbackPriority.",
+      "revId": "b96c5a00176cd470675b5c81df3ffa52238c0161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
