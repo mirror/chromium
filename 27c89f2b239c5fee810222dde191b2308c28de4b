@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ffdb73b_3bb54800",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-18T15:23:34Z",
+      "side": 1,
+      "message": "Hmmm... OK. I think I see how that could work and still allow for dynamic updates to the list. Check the next patch.",
+      "parentUuid": "602a1cca_f6a443bb",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae113961_2d1a4264",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T22:17:41Z",
       "side": 1,
       "message": "If you\u0027re going to close the widget when cancel is clicked why don\u0027t you return true and remove this line?",
+      "range": {
+        "startLine": 578,
+        "startChar": 2,
+        "endLine": 578,
+        "endChar": 23
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727faa77_771b6a9b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-18T15:23:34Z",
+      "side": 1,
+      "message": "The intent here was to match the behavior in LinkClicked(), which closes the dialog before OnManageLinkClicked() is invoked, which may bring up another dialog.",
+      "parentUuid": "ae113961_2d1a4264",
       "range": {
         "startLine": 578,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b7b60aa0_ba46c4b4",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-18T15:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c34e1900_daab2b9b",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 65
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80aabf88_bed34fc9",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b17cb2c0_8fe32492",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-18T15:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80aabf88_bed34fc9",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "374a9e37_4cffb17b",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e11305a_6b0243af",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-18T15:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "374a9e37_4cffb17b",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 41
+      },
+      "revId": "27c89f2b239c5fee810222dde191b2308c28de4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
