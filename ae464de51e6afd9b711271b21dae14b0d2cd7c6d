@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "8ba17738_0460f2c0",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-18T15:53:47Z",
+      "side": 1,
+      "message": "Moving Parse methods to public does not address the problem of building backdoors, but also it makes CredentialManager\u0027s interface unnecessary complex. If methods are only called by implementation, they should not be public, that\u0027s the whole point of encapsulation. \n\nMy suggestion is to test CredentialManager via public interface: \n - execute JavaScript on the page\n - verify that credentials were passed to the page\n\nIf that\u0027s not possible, then it means that CredentialManager is not designed in a testable way and needs a refactoring.",
+      "parentUuid": "9bf094b8_f7daa420",
+      "range": {
+        "startLine": 55,
+        "startChar": 50,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe548da_ce68a45f",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 4
