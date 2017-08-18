@@ -923,15 +923,19 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
+                          bool minimal_migration,
+                          const std::vector<std::string>& user_paths_blacklist,
                           VoidDBusMethodCallback callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
-                                 cryptohome::kCryptohomeMigrateToDircrypto);
+                                 "MigrateToDircryptoEx");
 
     cryptohome::AccountIdentifier id_proto;
     FillIdentificationProtobuf(cryptohome_id, &id_proto);
 
     dbus::MessageWriter writer(&method_call);
     writer.AppendProtoAsArrayOfBytes(id_proto);
+    writer.AppendBool(minimal_migration);
+    writer.AppendArrayOfStrings(user_paths_blacklist);
 
     // The migration progress takes unpredicatable time depending on the
     // user file size and the number. Setting the time limit to infinite.
