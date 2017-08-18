@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0eb540f_61d97c34",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "We can\u0027t distinguish between same-origin iframes and top-level at this point. Anyhow, not relevant anymore.",
+      "parentUuid": "5ec55e09_d1b1d196",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9cf163d_f995e8cb",
         "filename": "chrome/browser/notifications/notification_permission_context.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T18:08:05Z",
       "side": 1,
       "message": "Ooh, merging these permissions is tantalizingly close.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 14
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2b96156_435de1ff",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f9cf163d_f995e8cb",
       "range": {
         "startLine": 255,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98449b25_513fb384",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "No, because if permission was granted for |requesting_origin| we\u0027d still want to return that. We only require top-level or same-origin for requesting permission. Not communicating ASK to the developer is more of a Blink-level concern, internally we differentiate between ASK and BLOCK.",
+      "parentUuid": "a25762ef_c284aa98",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 31
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ccca761_9fbe581a",
         "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27916ebb_b08558e0",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ccca761_9fbe581a",
+      "range": {
+        "startLine": 209,
+        "startChar": 39,
+        "endLine": 209,
+        "endChar": 54
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "95026a4f_74e3f4e9",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "No. Why? requestPermission() has that.",
+      "parentUuid": "88c37acc_1f0d8872",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 71
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73323c9_52e9f23e",
         "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "859adf42_a940a78a",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "A DocumentFragment is a Node, not a Document. I\u0027ve flipped over the check.",
+      "parentUuid": "f73323c9_52e9f23e",
+      "range": {
+        "startLine": 362,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c322f8f_0d39b542",
         "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68557cc_1eb199eb",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T15:51:03Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "0c322f8f_0d39b542",
+      "range": {
+        "startLine": 415,
+        "startChar": 8,
+        "endLine": 415,
+        "endChar": 13
+      },
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
