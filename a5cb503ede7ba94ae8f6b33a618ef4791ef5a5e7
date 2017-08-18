@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1558923f_23625b05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-18T23:46:55Z",
+      "side": 1,
+      "message": "Right now thumbnails for images aren\u0027t cached. I think it might have to do with the icon size that\u0027s added/retrieved from disk. It retrieves favicons but doesn\u0027t cache them properly because the size stored in cache is the minimumSize used to retrieve favicon from LargeIconBridge instead of the requestedIconSize. The reason we pass both sizes to LargeIconBridge is so that the callback will return the requestedIconSize but the actual favicon fetch will use the minimumSize (since most favicons are not as big as the requested size, the code right now allows retrieval of favicons at least as big as 60% of the requested size. We pass in the modified minimumSize because LargeIconService only retrieves favicons that are at least as big).",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 92
+      },
+      "revId": "a5cb503ede7ba94ae8f6b33a618ef4791ef5a5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719ab012_869c1780",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-18T23:46:55Z",
+      "side": 1,
+      "message": "Right now the favicon can be fetched but it\u0027s not cached properly. The onLargeIconAvailable call is supposed to pass the requested icon size, but instead is passing the minimumIconSize, which is used to fetch the favicon from LargeIconBridge. LargeIconService will only fetch favicons if its size is at least the minimimIconSize, which is why we pass both the requestIconSize and minimumIconSize (we say retrieve favicon if it\u0027s at least 60% the size of requestedIconSize) to LargeIconBridge, intentding requestedIconSize to be used for callback and minimumIconSize for favicon retrieval from LargeIconService.",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 93
+      },
+      "revId": "44310bf5ad6ade688e98f9a67a53d4bd6a7cbdc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
