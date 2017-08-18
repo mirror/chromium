@@ -7,6 +7,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request_util.h"
+#import "ios/chrome/browser/ui/payments/cells/accessibility_util.h"
 #import "ios/chrome/browser/ui/payments/payment_request_egtest_base.h"
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
@@ -40,12 +41,13 @@ id<GREYMatcher> ShippingAddressCellMatcher(autofill::AutofillProfile* profile) {
   NSString* email_label = nil;
   NSString* notification_label = nil;
 
-  return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@, %@, %@",
-                       GetNameLabelFromAutofillProfile(*profile),
-                       GetShippingAddressLabelFromAutofillProfile(*profile),
-                       GetPhoneNumberLabelFromAutofillProfile(*profile),
-                       email_label, notification_label]);
+  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
+  [builder append:GetNameLabelFromAutofillProfile(*profile)];
+  [builder append:GetShippingAddressLabelFromAutofillProfile(*profile)];
+  [builder append:GetPhoneNumberLabelFromAutofillProfile(*profile)];
+  [builder append:email_label];
+  [builder append:notification_label];
+  return chrome_test_util::ButtonWithAccessibilityLabel([builder build]);
 }
 
 // Finds the payment method cell on the Payment Summary page.
@@ -53,29 +55,34 @@ id<GREYMatcher> PaymentMethodCellMatcher(autofill::CreditCard* credit_card) {
   NSString* billing_address_label = nil;
   NSString* notification_label = nil;
 
-  return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@, %@",
-                       base::SysUTF16ToNSString(
-                           credit_card->NetworkAndLastFourDigits()),
-                       base::SysUTF16ToNSString(credit_card->GetRawInfo(
-                           autofill::CREDIT_CARD_NAME_FULL)),
-                       billing_address_label, notification_label]);
+  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
+  [builder
+      append:base::SysUTF16ToNSString(credit_card->NetworkAndLastFourDigits())];
+  [builder append:base::SysUTF16ToNSString(credit_card->GetRawInfo(
+                      autofill::CREDIT_CARD_NAME_FULL))];
+  [builder append:billing_address_label];
+  [builder append:notification_label];
+  return chrome_test_util::ButtonWithAccessibilityLabel([builder build]);
 }
 
 // Finds the order summary cell on the Payment Summary page.
 id<GREYMatcher> PriceCellMatcher(NSString* main_label, NSString* price_label) {
   NSString* notification_label = nil;
 
-  return chrome_test_util::ButtonWithAccessibilityLabel(
-      [NSString stringWithFormat:@"%@, %@, %@", main_label, notification_label,
-                                 price_label]);
+  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
+  [builder append:main_label];
+  [builder append:notification_label];
+  [builder append:price_label];
+  return chrome_test_util::ButtonWithAccessibilityLabel([builder build]);
 }
 
 // Finds the shipping option cell on the Payment Summary page.
 id<GREYMatcher> ShippingOptionCellMatcher(NSString* main_label,
                                           NSString* detail_label) {
-  return chrome_test_util::ButtonWithAccessibilityLabel(
-      [NSString stringWithFormat:@"%@, %@", main_label, detail_label]);
+  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
+  [builder append:main_label];
+  [builder append:detail_label];
+  return chrome_test_util::ButtonWithAccessibilityLabel([builder build]);
 }
 
 // Finds the contact info cell on the Payment Summary page.
@@ -83,12 +90,13 @@ id<GREYMatcher> ContactInfoCellMatcher(autofill::AutofillProfile* profile) {
   NSString* address_label = nil;
   NSString* notification_label = nil;
 
-  return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@, %@, %@",
-                       GetNameLabelFromAutofillProfile(*profile), address_label,
-                       GetPhoneNumberLabelFromAutofillProfile(*profile),
-                       GetEmailLabelFromAutofillProfile(*profile),
-                       notification_label]);
+  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
+  [builder append:GetNameLabelFromAutofillProfile(*profile)];
+  [builder append:address_label];
+  [builder append:GetPhoneNumberLabelFromAutofillProfile(*profile)];
+  [builder append:GetEmailLabelFromAutofillProfile(*profile)];
+  [builder append:notification_label];
+  return chrome_test_util::ButtonWithAccessibilityLabel([builder build]);
 }
 
 // Finds a required field that has a Button accessibility trait, and has a label

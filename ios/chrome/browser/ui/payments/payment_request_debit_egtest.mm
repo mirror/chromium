@@ -14,6 +14,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request_util.h"
 #include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
+#import "ios/chrome/browser/ui/payments/cells/accessibility_util.h"
 #import "ios/chrome/browser/ui/payments/payment_request_egtest_base.h"
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
@@ -48,13 +49,14 @@ id<GREYMatcher> PaymentMethodCellMatcher(
   NSString* billing_address_label =
       GetBillingAddressLabelFromAutofillProfile(billing_profile);
   NSString* notification_label = nil;
-  return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@, %@",
-                       base::SysUTF16ToNSString(
-                           credit_card.NetworkAndLastFourDigits()),
-                       base::SysUTF16ToNSString(credit_card.GetRawInfo(
-                           autofill::CREDIT_CARD_NAME_FULL)),
-                       billing_address_label, notification_label]);
+  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
+  [builder
+      append:base::SysUTF16ToNSString(credit_card.NetworkAndLastFourDigits())];
+  [builder append:base::SysUTF16ToNSString(
+                      credit_card.GetRawInfo(autofill::CREDIT_CARD_NAME_FULL))];
+  [builder append:billing_address_label];
+  [builder append:notification_label];
+  return chrome_test_util::ButtonWithAccessibilityLabel([builder build]);
 }
 
 }  // namepsace
