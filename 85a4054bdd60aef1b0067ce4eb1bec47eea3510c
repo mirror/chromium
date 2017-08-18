@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcbdfe61_aab05730",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-18T14:57:40Z",
+      "side": 1,
+      "message": "Subclasses will be moved to separate files and will be integrated into showcase.",
+      "revId": "85a4054bdd60aef1b0067ce4eb1bec47eea3510c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
