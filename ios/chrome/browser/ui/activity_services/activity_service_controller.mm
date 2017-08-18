@@ -328,6 +328,10 @@
     case ShareTo::SHARE_SUCCESS: {
       PasswordController* passwordController =
           [passwordProvider_ currentPasswordController];
+      // Captures this provider for use in the asynchronously executed
+      // completion block.
+      __weak id<ActivityServiceSnackbar> snackbarProvider = snackbarProvider_;
+      // Flag to limit the snackbar with the message to be displayed just once.
       __block BOOL shown = NO;
       [passwordController findAndFillPasswordForms:username
                                           password:password
@@ -336,7 +340,7 @@
                                      return;
                                    TriggerHapticFeedbackForNotification(
                                        UINotificationFeedbackTypeSuccess);
-                                   [snackbarProvider_ showSnackbar:message];
+                                   [snackbarProvider showSnackbar:message];
                                    shown = YES;
                                  }];
       break;
