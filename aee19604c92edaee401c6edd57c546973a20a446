@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "b5930f96_7e42118d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-18T21:58:42Z",
+      "side": 0,
+      "message": "I think %N$ just silently does the wrong thing almost everywhere now. But we should either check for this globally or not at all, doing it at the blink level seems weird. It\u0027s also fairly rare.",
+      "parentUuid": "ee04459c_190685e0",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d0b4053_bf9744eb",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
@@ -405,6 +423,24 @@
       "side": 0,
       "message": "This is to protect about static initializers, right? I\u0027m not sure but it still might be useful to have a presubmit to catch this right?",
       "parentUuid": "74e98b15_f871074a",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3b4656_fbca1f89",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2582,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-18T21:58:42Z",
+      "side": 0,
+      "message": "No, it\u0027s just if strings end up in .rodata or get a dynamic pointer. Again, this should be either global or shouldn\u0027t exist. I think it\u0027s not super critical to have a presubmit check for this.",
+      "parentUuid": "07a2fd53_a0002487",
       "revId": "aee19604c92edaee401c6edd57c546973a20a446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
