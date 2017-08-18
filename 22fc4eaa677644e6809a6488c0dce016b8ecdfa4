@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e13bf3_9531ab77",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-18T23:58:46Z",
+      "side": 1,
+      "message": "Found the case when clicking fast on shelf button to hide/show notification. ::Display observer may be called twice, without OnNotificationUpdated call/",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "22fc4eaa677644e6809a6488c0dce016b8ecdfa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
