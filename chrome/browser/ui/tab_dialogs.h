@@ -17,6 +17,11 @@
 class Browser;
 class Profile;
 
+namespace autofill {
+class SaveCardBubbleController;
+class SaveCardBubbleView;
+}  // namespace autofill
+
 namespace content {
 class WebContents;
 struct WebContentsUnresponsiveState;
@@ -70,6 +75,11 @@ class TabDialogs : public base::SupportsUserData::Data {
       const gfx::Rect& anchor_in_root_view,
       const base::string16& main_text,
       const base::string16& sub_text) = 0;
+
+  // Returns ownership of a new SaveCardBubbleView controlled by |controller|.
+  virtual autofill::SaveCardBubbleView* ShowSaveCardBubble(
+      autofill::SaveCardBubbleController* controller,
+      bool user_gesture) = 0;
 
  protected:
   static const void* UserDataKey();

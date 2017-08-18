@@ -28,7 +28,6 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window_state.h"
-#import "chrome/browser/ui/cocoa/autofill/save_card_bubble_view_bridge.h"
 #import "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/browser_window_utils.h"
@@ -499,13 +498,6 @@ void BrowserWindowCocoa::ShowBookmarkBubble(const GURL& url,
                                             bool already_bookmarked) {
   [controller_ showBookmarkBubbleForURL:url
                       alreadyBookmarked:(already_bookmarked ? YES : NO)];
-}
-
-autofill::SaveCardBubbleView* BrowserWindowCocoa::ShowSaveCreditCardBubble(
-    content::WebContents* web_contents,
-    autofill::SaveCardBubbleController* controller,
-    bool user_gesture) {
-  return new autofill::SaveCardBubbleViewBridge(controller, controller_);
 }
 
 ShowTranslateBubbleResult BrowserWindowCocoa::ShowTranslateBubble(

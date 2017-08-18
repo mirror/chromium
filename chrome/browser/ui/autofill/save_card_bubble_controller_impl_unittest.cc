@@ -15,7 +15,9 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/values.h"
 #include "chrome/browser/ui/autofill/save_card_bubble_view.h"
+#include "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/test_tab_dialogs.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/autofill/core/browser/autofill_experiments.h"
@@ -32,6 +34,37 @@ using base::Bucket;
 using testing::ElementsAre;
 
 namespace autofill {
+
+namespace {
+
+class SaveCardTestTabDialogs : public TestTabDialogs {
+ public:
+  SaveCardTestTabDialogs() {}
+  ~SaveCardTestTabDialogs() override {}
+
+  SaveCardBubbleView* ShowSaveCardBubble(SaveCardBubbleController* controller,
+                                         bool user_gesture) override {
+    if (!save_card_bubble_view_)
+      save_card_bubble_view_ = base::MakeUnique<TestSaveCardBubbleView>();
+    return save_card_bubble_view_.get();
+  }
+
+ private:
+  // This is a do-nothing implementation of the SaveCardBubbleView abstract
+  // class.
+  class TestSaveCardBubbleView : public SaveCardBubbleView {
+   public:
+    // SaveCardBubbleView:
+    void Hide() override {}
+  };
+
+ private:
+  std::unique_ptr<TestSaveCardBubbleView> save_card_bubble_view_;
+
+  DISALLOW_COPY_AND_ASSIGN(SaveCardTestTabDialogs);
+};
+
+}  // namespace
 
 class TestSaveCardBubbleControllerImpl : public SaveCardBubbleControllerImpl {
  public:
@@ -70,15 +103,13 @@ class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
     AddTab(browser(), GURL("about:blank"));
     content::WebContents* web_contents =
         browser()->tab_strip_model()->GetActiveWebContents();
+    TestTabDialogs::Install(base::MakeUnique<SaveCardTestTabDialogs>(),
+                            web_contents);
     TestSaveCardBubbleControllerImpl::CreateForTesting(web_contents);
     user_prefs::UserPrefs::Get(web_contents->GetBrowserContext())
         ->SetInteger(
             prefs::kAutofillAcceptSaveCreditCardPromptState,
             prefs::PREVIOUS_SAVE_CREDIT_CARD_PROMPT_USER_DECISION_NONE);
-  }
-
-  BrowserWindow* CreateBrowserWindow() override {
-    return new SaveCardBubbleTestBrowserWindow();
   }
 
   void SetLegalMessage(const std::string& message_json,
@@ -124,25 +155,6 @@ class SaveCardBubbleControllerImplTest : public BrowserWithTestWindowTest {
   }
 
  private:
-  class TestSaveCardBubbleView : public SaveCardBubbleView {
-    void Hide() override {}
-  };
-
-  class SaveCardBubbleTestBrowserWindow : public TestBrowserWindow {
-   public:
-    SaveCardBubbleView* ShowSaveCreditCardBubble(
-        content::WebContents* contents,
-        SaveCardBubbleController* controller,
-        bool user_gesture) override {
-      if (!save_card_bubble_view_)
-        save_card_bubble_view_.reset(new TestSaveCardBubbleView());
-      return save_card_bubble_view_.get();
-    }
-
-   private:
-    std::unique_ptr<TestSaveCardBubbleView> save_card_bubble_view_;
-  };
-
   static void SaveCardCallback() {}
 
   DISALLOW_COPY_AND_ASSIGN(SaveCardBubbleControllerImplTest);

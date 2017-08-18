@@ -1,18 +1,23 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_UI_VIEWS_TAB_DIALOGS_VIEWS_H_
-#define CHROME_BROWSER_UI_VIEWS_TAB_DIALOGS_VIEWS_H_
+#ifndef CHROME_BROWSER_UI_TEST_TAB_DIALOGS_H_
+#define CHROME_BROWSER_UI_TEST_TAB_DIALOGS_H_
 
 #include "base/macros.h"
 #include "chrome/browser/ui/tab_dialogs.h"
 
-// Views implementation of TabDialogs interface.
-class TabDialogsViews : public TabDialogs {
+// Testing subclass of TabDialogs. This class provides empty implementations of
+// all of TabDialogs' methods. It also installs itself as the TabDialogs
+// implementation when constructed, replacing any existing implementation.
+class TestTabDialogs : public TabDialogs {
  public:
-  explicit TabDialogsViews(content::WebContents* contents);
-  ~TabDialogsViews() override;
+  TestTabDialogs();
+  ~TestTabDialogs() override;
+
+  static void Install(std::unique_ptr<TestTabDialogs> tab_dialogs,
+                      content::WebContents* web_contents);
 
   // TabDialogs:
   gfx::NativeView GetDialogParentView() const override;
@@ -36,9 +41,7 @@ class TabDialogsViews : public TabDialogs {
       bool user_gesture) override;
 
  private:
-  content::WebContents* web_contents_;  // Weak. Owns this.
-
-  DISALLOW_COPY_AND_ASSIGN(TabDialogsViews);
+  DISALLOW_COPY_AND_ASSIGN(TestTabDialogs);
 };
 
-#endif  // CHROME_BROWSER_UI_VIEWS_TAB_DIALOGS_VIEWS_H_
+#endif  // CHROME_BROWSER_UI_TEST_TAB_DIALOGS_H_

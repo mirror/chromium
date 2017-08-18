@@ -155,13 +155,6 @@ ShowTranslateBubbleResult TestBrowserWindow::ShowTranslateBubble(
   return ShowTranslateBubbleResult::SUCCESS;
 }
 
-autofill::SaveCardBubbleView* TestBrowserWindow::ShowSaveCreditCardBubble(
-    content::WebContents* contents,
-    autofill::SaveCardBubbleController* controller,
-    bool user_gesture) {
-  return nullptr;
-}
-
 bool TestBrowserWindow::IsDownloadShelfVisible() const {
   return false;
 }
