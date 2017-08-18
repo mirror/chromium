@@ -16,6 +16,24 @@
       "revId": "777c357d72eb4a8b89ba658f9cc58893c547fd75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9cd303_3b46c0f2",
+        "filename": "components/viz/service/display_embedder/display_output_surface_ozone.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-18T02:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2cd8c23_38ef062d",
+      "revId": "777c357d72eb4a8b89ba658f9cc58893c547fd75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
