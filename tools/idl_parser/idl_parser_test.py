@@ -173,6 +173,154 @@ class TestEnums(unittest.TestCase):
     self.assertEqual('Unexpected identifier "somename" after "{".',
       error_message)
 
+class TestExtendedAttribute(unittest.TestCase):
+  def setUp(self):
+    self.parser = IDLParser(IDLLexer(), mute_error=True)
+
+  def _ParseExtendedAttribute(self, idl_text):
+    filenode = self.parser.ParseText(filename='', data=idl_text)
+    self.assertEqual(1, len(filenode.GetChildren()))
+    return filenode.GetChildren()[0]
+
+  def testNoArg(self):
+    idl_text = '[Replacable] enum MealType { "rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    children = node.GetChildren()
+    self.assertEqual( 'Enum', node.GetClass())
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    attributes = children[1]
+    self.assertEqual('ExtAttributes', attributes.GetClass())
+    self.assertEqual(1, len( attributes.GetChildren() ) )
+    attr = attributes.GetChildren()[0]
+    self.assertEqual('ExtAttribute', attr.GetClass())
+    self.assertEqual('Replacable', attr.GetName())
+
+  def testArgList(self):
+    idl_text ='[Constructor(double x, double y)] enum MealType {"rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    children = node.GetChildren()
+    self.assertEqual( 'Enum', node.GetClass())
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    attributes = children[1]
+    self.assertEqual('ExtAttributes', attributes.GetClass())
+    self.assertEqual(1,len( attributes.GetChildren()))
+    attribute = attributes.GetChildren()[0]
+    self.assertEqual('ExtAttribute', attribute.GetClass())
+    self.assertEqual('Constructor', attribute.GetName())
+    self.assertEqual('Arguments',
+      attribute.GetChildren()[0].GetClass())
+    arguments = attributes.GetChildren()[0].GetChildren()[0]
+    self.assertEqual(2,len(arguments.GetChildren()))
+    self.assertEqual('Argument',
+      arguments.GetChildren()[0].GetClass())
+    self.assertEqual('x',
+      arguments.GetChildren()[0].GetName())
+    self.assertEqual('Argument',
+      arguments.GetChildren()[1].GetClass())
+    self.assertEqual('y',
+      arguments.GetChildren()[1].GetName())
+
+  def testNamedArgList(self):
+    idl_text = '[NamedConstructor=Image(DOMString src)] enum MealType {"rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    self.assertEqual( 'Enum', node.GetClass())
+    children = node.GetChildren()
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    self.assertEqual('ExtAttributes', children[1].GetClass())
+    self.assertEqual(1,len( children[1].GetChildren()))
+    attribute = children[1].GetChildren()[0]
+    self.assertEqual('ExtAttribute', attribute.GetClass())
+    self.assertEqual('NamedConstructor',attribute.GetName())
+    self.assertEqual(1,len( attribute.GetChildren()))
+    self.assertEqual('Call',attribute.GetChildren()[0].GetClass())
+    self.assertEqual('Image',attribute.GetChildren()[0].GetName())
+    arguments = attribute.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('Arguments',arguments.GetClass())
+    self.assertEqual(1,len(arguments.GetChildren()))
+    self.assertEqual('Argument',
+      arguments.GetChildren()[0].GetClass())
+    self.assertEqual('src',arguments.GetChildren()[0].GetName())
+    argument = arguments.GetChildren()[0]
+    self.assertEqual(1,len( argument.GetChildren()))
+    self.assertEqual('Type',argument.GetChildren()[0].GetClass())
+    arg = argument.GetChildren()[0]
+    self.assertEqual(1,len(arg.GetChildren()))
+    argType = arg.GetChildren()[0]
+    self.assertEqual('StringType',argType.GetClass())
+    self.assertEqual('DOMString',argType.GetName())
+
+  def testIdent(self):
+    idl_text = '[PutForwards=name] enum MealType {"rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    children = node.GetChildren()
+    self.assertEqual( 'Enum', node.GetClass())
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    self.assertEqual('ExtAttributes', children[1].GetClass())
+    self.assertEqual(1,len( children[1].GetChildren()))
+    attribute = children[1].GetChildren()[0]
+    self.assertEqual('ExtAttribute', attribute.GetClass())
+    self.assertEqual('PutForwards', attribute.GetName())
+    self.assertEqual('name', attribute.GetProperties()['VALUE'])
+
+  def testIdentList(self):
+    idl_text = '[Exposed=(Window,Worker)] enum MealType {"rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    children = node.GetChildren()
+    self.assertEqual( 'Enum', node.GetClass())
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    self.assertEqual('ExtAttributes', children[1].GetClass())
+    self.assertEqual(1,len( children[1].GetChildren()))
+    attribute = children[1].GetChildren()[0]
+    self.assertEqual('ExtAttribute',attribute.GetClass())
+    self.assertEqual('Exposed',attribute.GetName())
+    identList = attribute.GetProperties()['VALUE']
+    self.assertEqual(2,len(identList))
+    self.assertEqual('Window',identList[0])
+    self.assertEqual('Worker',identList[1])
+
+  def testPair(self):
+    idl_text = '[Replacable, Exposed=(Window,Worker)] enum MealType {"rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    children = node.GetChildren()
+    self.assertEqual( 'Enum', node.GetClass())
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    attributes = children[1]
+    self.assertEqual('ExtAttributes', attributes.GetClass())
+    self.assertEqual(2,len(attributes.GetChildren()))
+    attribute0 = attributes.GetChildren()[0]
+    self.assertEqual('ExtAttribute', attribute0.GetClass())
+    self.assertEqual('Replacable', attribute0.GetName())
+    attribute1 = attributes.GetChildren()[1]
+    self.assertEqual('ExtAttribute', attribute1.GetClass())
+    self.assertEqual('Exposed', attribute1.GetName())
+    self.assertEqual(2, len(attribute1.GetProperties()['VALUE']))
+    self.assertEqual('Window', attribute1.GetProperties()['VALUE'][0])
+    self.assertEqual('Worker', attribute1.GetProperties()['VALUE'][1])
+
+  def testErrorTrailingComma(self):
+    idl_text = '[Replacable, Exposed=(Window,Worker),] enum MealType {"rice"};'
+    node = self._ParseExtendedAttribute(idl_text)
+    children = node.GetChildren()
+    self.assertEqual(2, len(children))
+    self.assertEqual('EnumItem', children[0].GetClass())
+    self.assertEqual('rice', children[0].GetName())
+    error = children[1]
+    self.assertEqual('Error', error.GetClass())
+    error_message = error.GetName()
+    self.assertEqual('Unexpected "]" after ",".', error_message)
+    self.assertEqual('ExtendedAttributeList', error.GetProperties()['PROD'])
 
 if __name__ == '__main__':
   unittest.main(verbosity=2)
