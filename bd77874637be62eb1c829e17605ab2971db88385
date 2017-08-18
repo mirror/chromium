@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f14cd798_6b905f26",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-18T13:10:29Z",
+      "side": 1,
+      "message": "Reverted back to the original plus /\u0027s",
+      "parentUuid": "ab215c29_9ac15d23",
+      "range": {
+        "startLine": 172,
+        "startChar": 39,
+        "endLine": 172,
+        "endChar": 45
+      },
+      "revId": "bd77874637be62eb1c829e17605ab2971db88385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1853ad1b_616d4b98",
         "filename": "WATCHLISTS",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "275ab8e6_12c37388",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-18T13:10:29Z",
+      "side": 1,
+      "message": "Reverted back to the original plus /\u0027s, this removes false positives for files like appcache_storage.h without having to list every directory.",
+      "parentUuid": "1853ad1b_616d4b98",
+      "revId": "bd77874637be62eb1c829e17605ab2971db88385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0168ee69_5c2139d9",
         "filename": "WATCHLISTS",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-17T17:03:26Z",
       "side": 1,
       "message": "Same question:\n\n1) third_party/WebKit/LayoutTests/external/wpt/netinfo\n2) third_party/WebKit/LayoutTests/netinfo",
+      "revId": "bd77874637be62eb1c829e17605ab2971db88385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c98c8fc_47e6117d",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-18T13:10:29Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "0168ee69_5c2139d9",
       "revId": "bd77874637be62eb1c829e17605ab2971db88385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
