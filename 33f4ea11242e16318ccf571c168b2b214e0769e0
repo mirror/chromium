@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3b7de93_b35ff125",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ebfa684_518352c6",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "189d7ecc_31f6d5b5",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fe54451b_8726a17b",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189d7ecc_31f6d5b5",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b997b1e_e01d95d6",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 14
@@ -50,6 +86,24 @@
       "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c895f112_2d000ba2",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "Changed to 400.",
+      "parentUuid": "7b997b1e_e01d95d6",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "963e2c61_7302db1c",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "581796d3_a9a0281d",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b3ae949_98c78e22",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 14
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-18T01:47:25Z",
       "side": 1,
       "message": "Since dialog frames can have their width increased, so it\u0027s usually necessary to have at least one flexible column. E.g.\n\n::USE_PREF, 0, kMinTextWidth",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31244c83_23f3f9ac",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "When I used  (... views::GridLayout::USE_PREF, 0, kMinTextWidth) and remove the \"message_body_label-\u003eSizeToFit(kTextWidth);\" line, the dialog become a very wide one with the dialog text showing in a single line.\nscreenshot: https://screenshot.googleplex.com/bCp1swqFRcq.png\n\nDid I miss anything here?",
+      "parentUuid": "1b3ae949_98c78e22",
       "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "21a4f42d_90f8aa00",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7d4996_ccc6f71f",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45675af0_3273e1ad",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 14
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "9cab83c3_7d1909c9",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "If I don\u0027t specify the icon size in CreateVectorIcon, the resulting icon is very large.\nMoved icon_size here.",
+      "parentUuid": "45675af0_3273e1ad",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd9cc08f_ded4121f",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 14
@@ -141,6 +273,24 @@
       "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4447b39d_f9a4d2c0",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T17:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9cc08f_ded4121f",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
