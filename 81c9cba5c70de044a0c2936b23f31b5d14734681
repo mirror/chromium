@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4ec6dd0_9249de85",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-18T23:19:45Z",
+      "side": 1,
+      "message": "Used let.\n\nI tried \"const\" before and I got a presubmit error that I needed to replace it with\n  /** @const */ var row\nwhich I think is ridiculous. You can see I removed that in this patch.",
+      "parentUuid": "b44d0d26_b91bccdf",
+      "revId": "81c9cba5c70de044a0c2936b23f31b5d14734681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c92debfe_9a61246c",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 2
