@@ -4,12 +4,16 @@
 
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 
-#include "chrome/browser/plugins/chrome_plugin_service_filter.h"
+#include "build/build_config.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/navigation_handle.h"
-#include "content/public/browser/plugin_service.h"
 #include "net/http/http_util.h"
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+#include "chrome/browser/plugins/chrome_plugin_service_filter.h"
+#include "content/public/browser/plugin_service.h"
+#endif
 
 namespace {
 
@@ -44,11 +48,13 @@ class PDFIFrameNavigationThrottleTest : public ChromeRenderViewHostTestHarness {
 
     content::PluginService::GetInstance()->Init();
 
+#if BUILDFLAG(ENABLE_PLUGINS)
     // Load plugins.
     base::RunLoop run_loop;
     content::PluginService::GetInstance()->GetPlugins(
         base::BindOnce(&PluginsLoadedCallback, run_loop.QuitClosure()));
     run_loop.Run();
+#endif
 
     content::RenderFrameHostTester::For(main_rfh())
         ->InitializeRenderFrameIfNeeded();
@@ -60,10 +66,12 @@ class PDFIFrameNavigationThrottleTest : public ChromeRenderViewHostTestHarness {
 };
 
 TEST_F(PDFIFrameNavigationThrottleTest, OnlyCreateThrottleForSubframes) {
+#if BUILDFLAG(ENABLE_PLUGINS)
   // Disable the PDF plugin to test main vs. subframes.
   SetAlwaysOpenPdfExternallyForTests(true);
   ChromePluginServiceFilter* filter = ChromePluginServiceFilter::GetInstance();
   filter->RegisterResourceContext(profile(), profile()->GetResourceContext());
+#endif
 
   // Never create throttle for main frames.
   std::unique_ptr<content::NavigationHandle> handle =
@@ -90,9 +98,11 @@ TEST_F(PDFIFrameNavigationThrottleTest, OnlyCreateThrottleForSubframes) {
 
 TEST_F(PDFIFrameNavigationThrottleTest, InterceptPDFOnly) {
   // Setup
+#if BUILDFLAG(ENABLE_PLUGINS)
   SetAlwaysOpenPdfExternallyForTests(true);
   ChromePluginServiceFilter* filter = ChromePluginServiceFilter::GetInstance();
   filter->RegisterResourceContext(profile(), profile()->GetResourceContext());
+#endif
 
   std::unique_ptr<content::NavigationHandle> handle =
       content::NavigationHandle::CreateNavigationHandleForTesting(
@@ -147,6 +157,7 @@ TEST_F(PDFIFrameNavigationThrottleTest, InterceptPDFOnly) {
             throttle->WillProcessResponse());
 }
 
+#if BUILDFLAG(ENABLE_PLUGINS)
 TEST_F(PDFIFrameNavigationThrottleTest, CancelOnlyIfPDFViewerIsDisabled) {
   // Setup
   std::unique_ptr<content::NavigationHandle> handle =
@@ -178,3 +189,4 @@ TEST_F(PDFIFrameNavigationThrottleTest, CancelOnlyIfPDFViewerIsDisabled) {
   ASSERT_EQ(content::NavigationThrottle::CANCEL_AND_IGNORE,
             throttle->WillProcessResponse());
 }
+#endif
