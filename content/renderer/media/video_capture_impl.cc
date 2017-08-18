@@ -331,10 +331,41 @@ void VideoCaptureImpl::OnBufferReady(int32_t buffer_id,
 
   frame->metadata()->MergeInternalValuesFrom(*info->metadata);
 
-  // TODO(qiangchen): Dive into the full code path to let frame metadata hold
-  // reference time rather than using an extra parameter.
-  for (const auto& client : clients_)
-    client.second.deliver_frame_cb.Run(frame, reference_time);
+  if ((info->timestamp == timestamp_of_last_frame_received_) &&
+      stashed_color_frame_ &&
+      info->coded_size == stashed_color_frame_->coded_size()) {
+    // This is the second frame of a color + alpha pair.
+    scoped_refptr<media::VideoFrame> combined_frame =
+        media::VideoFrame::WrapExternalYuvaData(
+            media::PIXEL_FORMAT_YV12A, info->coded_size, info->visible_rect,
+            info->visible_rect.size(), stashed_color_frame_->stride(0),
+            stashed_color_frame_->stride(1), stashed_color_frame_->stride(2),
+            frame->stride(0), stashed_color_frame_->data(0),
+            stashed_color_frame_->data(1), stashed_color_frame_->data(2),
+            frame->data(0), info->timestamp);
+    // Move-attach ownership of the two individual frames to |combined_frame|.
+    combined_frame->AddDestructionObserver(
+        base::Bind([](scoped_refptr<media::VideoFrame>,
+                      scoped_refptr<media::VideoFrame>) {},
+                   std::move(stashed_color_frame_), std::move(frame)));
+    for (const auto& client : clients_)
+      client.second.deliver_frame_cb.Run(combined_frame, reference_time);
+  } else {
+    if (stashed_color_frame_) {
+      // We have stashed the previous frame, but it does not match as a pair
+      // with the current frame. This indicates that the previous frame was not
+      // part of a pair. Send it to clients now.
+      for (const auto& client : clients_)
+        client.second.deliver_frame_cb.Run(stashed_color_frame_,
+                                           reference_time);
+    }
+    // This frame may be the first of a pair of frames representing
+    // color + alpha. Stash it and check if the next frame we receive has the
+    // same timestamp. If it does treat the current one as color and the
+    // subsequent one as alpha.
+    stashed_color_frame_ = frame;
+  }
+  timestamp_of_last_frame_received_ = info->timestamp;
 }
 
 void VideoCaptureImpl::OnBufferDestroyed(int32_t buffer_id) {
