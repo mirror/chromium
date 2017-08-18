@@ -63,6 +63,24 @@
       "revId": "7428da11fdc8dca46b765d3917a04e5024d216e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0487d40b_80b0c373",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "patched_new_buffer is initialized with size new_file.length, so they are the same size. Note that \nASSERT_EQ(new_file.length(), patch_reader-\u003eheader().new_size);\nchecks new_size expectation.",
+      "parentUuid": "2f595c9f_e097bced",
+      "revId": "7428da11fdc8dca46b765d3917a04e5024d216e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

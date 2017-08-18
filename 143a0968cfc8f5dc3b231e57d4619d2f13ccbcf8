@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "373761f1_e7b85223",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "While I only plan on setting up zucchini_integration_test on windows buildbots, the gn target is built and can be executed on all platforms, so I think it makes sense to pull testdata as well.",
+      "parentUuid": "df280703_6024b014",
+      "revId": "143a0968cfc8f5dc3b231e57d4619d2f13ccbcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f968bdb0_8bd597ac",
         "filename": "chrome/installer/zucchini/integration_test.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T20:14:23Z",
       "side": 1,
       "message": "why wouldn\u0027t we try to do all combinations? e.g. setup1.exe -\u003e chrome64_1.exe\n\netc.",
+      "revId": "143a0968cfc8f5dc3b231e57d4619d2f13ccbcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14291293_4e9a9888",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "It takes a bit of time in debug (~5-10sec per test), so I wouldn\u0027t want to abuse. \nAdding setup1.exe -\u003e chrome64_1.exe make sense though.",
+      "parentUuid": "f968bdb0_8bd597ac",
       "revId": "143a0968cfc8f5dc3b231e57d4619d2f13ccbcf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

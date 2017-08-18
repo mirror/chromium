@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f5b85c9_432d1b4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b548c8ce_42f96153",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6f38089_66adcc6c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92caa02d_ef17755a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f38089_66adcc6c",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5483d192_51822987",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "This is removed now.",
+      "parentUuid": "9a9aff39_eecd377a",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69e7a91_c01c0003",
         "filename": "chrome/installer/zucchini/integration_test.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-18T20:14:23Z",
       "side": 1,
       "message": "Please use the type in place of auto.",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af23162_e42834e5",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "Urgh, \nstatus::Code (*generate)(ConstBufferView, ConstBufferView, EnsemblePatchWriter*)\nis not so pretty. I\u0027m changing the call a bit to avoid that.",
+      "parentUuid": "c69e7a91_c01c0003",
       "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +162,30 @@
       "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d064da5_009aaa17",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T21:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45bf373d_62459277",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
