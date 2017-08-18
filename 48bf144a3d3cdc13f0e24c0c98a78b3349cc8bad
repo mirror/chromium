@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "43933d44_b9f20e40",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "nit: whether. Same in the rest.",
+      "range": {
+        "startLine": 227,
+        "startChar": 13,
+        "endLine": 227,
+        "endChar": 15
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00468164_a11b968d",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
         "patchSetId": 11
@@ -13,6 +36,75 @@
       "writtenOn": "2017-08-17T08:02:06Z",
       "side": 1,
       "message": "I do not think it is reasonable to have inline methods just to avoid compile errors.\nCan it be added when it is actually needed?",
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea218371_268d2101",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "Also, drop the \u0027inline\u0027. The compiler can make this choice by itself.",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 8
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ec61af_5efe4567",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "nit: depend",
+      "range": {
+        "startLine": 232,
+        "startChar": 35,
+        "endLine": 232,
+        "endChar": 42
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4d17bf_45e5296a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "Please add a comment explaining why this is safe to do (in other words, how is it guaranteed that |this| will always outlive the message loop in which GetRoots() is executed).",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 52
+      },
       "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "707cae50_fbb572be",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "We shouldn\u0027t.",
+      "parentUuid": "75f0b860_385eaf10",
+      "range": {
+        "startLine": 73,
+        "startChar": 22,
+        "endLine": 73,
+        "endChar": 23
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b376fdc3_56449b36",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 11
@@ -92,6 +208,121 @@
         "startChar": 14,
         "endLine": 9,
         "endChar": 26
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63db91a6_42bab9ef",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "nit: all flags should be uint64",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf35c272_da76509b",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "nit: authority",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed1e580_0b6e0c99",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "All the other images sent through mojo are either png/jpegs stored in an array\u003cuint8\u003e. Can this be the same? It would result in less overhead.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b817e128_570ec878",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "nit: uint64",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a342fdd_2c6528cf",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T15:45:25Z",
+      "side": 1,
+      "message": "What, semantically, is the difference between an empty array and null? Is it the fact that it\u0027s empty if at least one Documents Provider exist? If so, please update this comment to reflect that fact.",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 52
       },
       "revId": "48bf144a3d3cdc13f0e24c0c98a78b3349cc8bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
