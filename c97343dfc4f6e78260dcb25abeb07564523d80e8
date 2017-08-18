@@ -22,6 +22,30 @@
       "revId": "c97343dfc4f6e78260dcb25abeb07564523d80e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3ab64d_9ce54aad",
+        "filename": "chrome/common/net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-18T04:54:11Z",
+      "side": 1,
+      "message": "Done. The gn style guide supports your suggestion so I\u0027ll change it to that.\n\n(I think I had heard in the past that it was preferred to subtract sources, as when generating project files for tools like visual studio it would use the initial full list of sources to list the source files in the code editor, and that allowed more easily selecting files that aren\u0027t used on the current platform. I don\u0027t if I\u0027m misremembering or if that\u0027s just not relevant anymore.)",
+      "parentUuid": "9e906cab_d380052a",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 13
+      },
+      "revId": "c97343dfc4f6e78260dcb25abeb07564523d80e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
