@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8875ce1d_18893bad",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-18T02:16:47Z",
+      "side": 1,
+      "message": "The garbage collector starts from Persistent handles so there\u0027s no way for it to know about your WeakMember here. I think it needs to be a member of an object pointed to by a Persistent. The Member probably doesn\u0027t but I did it anyway for completeness:\n\nstruct Temp : public GarbageCollected\u003cTemp\u003e {\n  WeakMember\u003cPaintLayerScrollableArea\u003e plsa_;\n\n  DEFINE_INLINE_TRACE() { visitor-\u003eTrace(plsa_); }\n};\n\nTEST_F(PaintLayerScrollableAreaTest, WeakMembers) {\n  using PLSA \u003d PaintLayerScrollableArea;\n\n  ThreadState::Current()-\u003eCollectGarbage(BlinkGC::kNoHeapPointersOnStack,\n                                         BlinkGC::kGCWithoutSweep,\n                                         BlinkGC::kForcedGC);\n  Persistent\u003cTemp\u003e temp \u003d new Temp();\n  {\n      Persistent\u003cPLSA\u003e member \u003d PLSA::Create(*GetLayoutView().Layer());\n      LOG(INFO) \u003c\u003c \"created @ \" \u003c\u003c member.Get();\n\n      temp-\u003eplsa_ \u003d member.Get();\n      ASSERT_EQ(member.Get(), temp-\u003eplsa_.Get());\n\n      member-\u003eDispose();\n      member.Release();\n  }\n\n  ThreadState::Current()-\u003eCollectGarbage(BlinkGC::kNoHeapPointersOnStack,\n                                         BlinkGC::kGCWithoutSweep,\n                                         BlinkGC::kForcedGC);\n\n  ASSERT_EQ(nullptr, temp-\u003eplsa_.Get());  // Works\n}",
+      "range": {
+        "startLine": 809,
+        "startChar": 38,
+        "endLine": 809,
+        "endChar": 57
+      },
+      "revId": "a4d40898f37a00ecdb52264657866f36b0f7ebb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
