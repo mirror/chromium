@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f94cb6b_c107b7dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T09:49:43Z",
+      "side": 1,
+      "message": "Could you make an @IntDef for these values and annotate |mPromoHeaderSection| and getItemViewType() with it?",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d56fb1_7dddbc24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T09:49:43Z",
+      "side": 1,
+      "message": "Move this into calculatePromoState()?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 42
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e68ace9_e0f7e2dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T09:49:43Z",
+      "side": 1,
+      "message": "Is the space necessary? I would expect no space here (as there are no spaces when calling methods or accessing members), but method references are new territory for me, so I genuinely don\u0027t know :)",
+      "range": {
+        "startLine": 167,
+        "startChar": 50,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e18871e_8cc45b67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T09:49:43Z",
+      "side": 1,
+      "message": "Nit: force... maybe, to make it clear that this will always take precedence over any other state (as opposed to modifying the state now but allowing it to be reset)?",
+      "range": {
+        "startLine": 324,
+        "startChar": 23,
+        "endLine": 324,
+        "endChar": 26
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
