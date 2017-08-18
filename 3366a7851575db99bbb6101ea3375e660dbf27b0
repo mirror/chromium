@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6a181d7_0dccff71",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7185,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-18T21:40:41Z",
+      "side": 1,
+      "message": "Yeah, this was keeping in line with the types that TransferBuffer was returning.  I can follow up and change all these types to size_t here and in that class.  I left a TODO for this.",
+      "parentUuid": "0e516e22_e230ccd8",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a18928ca_ee79a43b",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b891a16_551cd73a",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7204,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-18T21:40:41Z",
+      "side": 1,
+      "message": "I\u0027ll add an assert here and below, but I think this can\u0027t happen.  written_bytes + free_bytes \u003d\u003d buffer.size().  PaintOp::Serialize will write up to free bytes (which is the range of memory) and so will not write past what is valid.\n\nIf PaintOp::Serialize succeeds and returns some amount of bytes written, then those bytes are \u003c\u003d free_bytes.  So, there\u0027s no chance at underflow or overflow below either.",
+      "parentUuid": "a18928ca_ee79a43b",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7098dfa4_8fec028a",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T19:25:22Z",
       "side": 1,
       "message": "Are there possibilities for integer over/underflow here and on 7220? base::CheckedNumeric might help here.",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7397c4f7_39059aa2",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7219,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-18T21:40:41Z",
+      "side": 1,
+      "message": "See comments above.",
+      "parentUuid": "7098dfa4_8fec028a",
       "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +138,24 @@
       "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f5d785_a4aab047",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20000,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-18T21:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2a37769_64eb74b3",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +258,24 @@
       "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f813cdf_ed12bd4d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20072,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-18T21:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df37cb69_765ee4ed",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
