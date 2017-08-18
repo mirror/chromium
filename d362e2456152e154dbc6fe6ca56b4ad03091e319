@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf4d4efa_2d5efcee",
+        "filename": "build/android/pylib/local/local_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T00:51:06Z",
+      "side": 1,
+      "message": "nit: add a comment that refers to //net/test/spawned_test_server/test_server_config.h, please.",
+      "revId": "d362e2456152e154dbc6fe6ca56b4ad03091e319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08af9ffb_4531a715",
+        "filename": "build/android/pylib/local/local_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T00:51:06Z",
+      "side": 1,
+      "message": "Will fuchsia be doing something similar? If so, should the code be shared somewhere?",
+      "revId": "d362e2456152e154dbc6fe6ca56b4ad03091e319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
