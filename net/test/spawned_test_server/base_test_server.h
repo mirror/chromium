@@ -358,9 +358,6 @@ class BaseTestServer {
   // whether it's available (server started) or not.
   uint16_t GetPort();
 
-  // Sets |port| as the actual port used by Python based test server.
-  void SetPort(uint16_t port);
-
   // Set up internal status when the server is started.
   bool SetupWhenServerStarted() WARN_UNUSED_RESULT;
 
@@ -386,7 +383,7 @@ class BaseTestServer {
       base::DictionaryValue* arguments) const WARN_UNUSED_RESULT;
 
  private:
-  void Init(const std::string& host);
+  void Init();
 
   // Document root of the test server.
   base::FilePath document_root_;
