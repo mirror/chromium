@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7390fed7_3321891e",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "move this next to BeginFrame() and elsewhere as well",
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b310fec3_f397e5f8",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "don\u0027t think this is needed.\nspec for buffering + performance observer has not settled. let\u0027s omit this for now",
+      "range": {
+        "startLine": 132,
+        "startChar": 46,
+        "endLine": 132,
+        "endChar": 47
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb931b17_8a1efa0b",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "remove this for now (i.e. only support getEntriesByType)",
+      "range": {
+        "startLine": 237,
+        "startChar": 72,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee82fd8_2e412e27",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "Yes",
+      "range": {
+        "startLine": 407,
+        "startChar": 63,
+        "endLine": 407,
+        "endChar": 0
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0e3a3e_cd83aaba",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "need max buffer size (maybe start with 50)",
+      "range": {
+        "startLine": 180,
+        "startChar": 47,
+        "endLine": 180,
+        "endChar": 48
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd932b67_2de8b6a8",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "this should probably have an attribute \"elementType\" which is set to \"text\" for this case",
+      "range": {
+        "startLine": 6,
+        "startChar": 56,
+        "endLine": 6,
+        "endChar": 57
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55108254_a06a0ea3",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "if (!performance) return early ?",
+      "range": {
+        "startLine": 89,
+        "startChar": 64,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea488e45_c8cbfc4b",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T19:34:21Z",
+      "side": 1,
+      "message": "I think we should keep the trace event",
+      "range": {
+        "startLine": 94,
+        "startChar": 39,
+        "endLine": 94,
+        "endChar": 40
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
