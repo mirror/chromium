@@ -22,6 +22,30 @@
       "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c125111a_f3b0f130",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/Path2D.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-18T14:26:01Z",
+      "side": 1,
+      "message": "Seems like this should be enabled on the same conditions as for other scopes. Out of curiosity why is this ExperimentalCanvasFeatures on Worker but StableBlinkFeatures on Window?",
+      "parentUuid": "3ea04021_69fe17c4",
+      "range": {
+        "startLine": 35,
+        "startChar": 75,
+        "endLine": 35,
+        "endChar": 115
+      },
+      "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
