@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "149f84f4_5cf65e7e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56cb7689_04026cf3",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "583d8f9d_86ad93af",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/get-response-body.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ad5f36_7f823773",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/get-response-body.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583d8f9d_86ad93af",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1cc84643_25f9428b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Because EncodingEnum is just another namespace and not an individual type, it seems like it\u0027s needed.",
+      "parentUuid": "9d9b159a_1fffbaf1",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20edc74f_7d6c514b",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a345b3f4_2c27b9bc",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20edc74f_7d6c514b",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5c174c1d_b2a1ba14",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97472c27_ae5d5356",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72f5de4e_b3efef5e",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d089c2_f8d08000",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72f5de4e_b3efef5e",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e501dd97_09234dbc",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e07fbc_2dabaa2e",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7978fa_b8fd238e",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074bfe2a_080744e6",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7978fa_b8fd238e",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "eb88851e_207438ac",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Probably not :D I stole it from another part of Chrome where maybe it was safe? Done",
+      "parentUuid": "bb96b75c_cdd5231b",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcfdeff2_5c3684e2",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e27beb_57317316",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcfdeff2_5c3684e2",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "d0636199_81017f8b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f728d6_e795cbd7",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7ed359_4bd348c7",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
         "patchSetId": 3
@@ -203,6 +401,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a6a893_d429f1a2",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7ed359_4bd348c7",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "3dc8f0d0_a9bc641e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b02e7f1b_a5d3855a",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0de49b7_b57315d2",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
         "patchSetId": 3
@@ -237,6 +471,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497b859b_56180583",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Nope, fixed.",
+      "parentUuid": "c0de49b7_b57315d2",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "e6b691ed_9be84146",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bcfa243_01690b10",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9bcc1c_c7d310ef",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.h",
         "patchSetId": 3
@@ -271,6 +541,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a2aa98_d871fc64",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc9bcc1c_c7d310ef",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "479f4f03_888972c7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147c7dee_6b30e0ee",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d97755b_f5eb3cdf",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -302,6 +608,24 @@
       "writtenOn": "2017-08-18T17:05:52Z",
       "side": 1,
       "message": "This is so inherently specific to images that I guess it should rather be getEncodedImageResponse, or perhaps event just encodeImage?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17f72b6_c2746eae",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Had the same discussion with dgozman, the eventual plan is to add gzip here for text-based resources so rather than churn the name, just added a note in the description that it only applies to images right now.",
+      "parentUuid": "9d97755b_f5eb3cdf",
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -322,6 +646,24 @@
       "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba341d9c_8531d983",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T18:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcda29c7_58c6706e",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
