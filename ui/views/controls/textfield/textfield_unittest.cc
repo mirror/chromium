@@ -266,10 +266,11 @@ void MockInputMethod::ClearComposition() {
 class TestTextfield : public views::Textfield {
  public:
   TestTextfield()
-     : Textfield(),
-       key_handled_(false),
-       key_received_(false),
-       weak_ptr_factory_(this) {}
+      : Textfield(),
+        key_handled_(false),
+        key_received_(false),
+        event_flags_(0),
+        weak_ptr_factory_(this) {}
 
   // ui::TextInputClient overrides:
   void InsertChar(const ui::KeyEvent& e) override {
@@ -283,13 +284,18 @@ class TestTextfield : public views::Textfield {
 
   bool key_handled() const { return key_handled_; }
   bool key_received() const { return key_received_; }
+  int event_flags() const { return event_flags_; }
 
-  void clear() { key_received_ = key_handled_ = false; }
+  void clear() {
+    key_received_ = key_handled_ = false;
+    event_flags_ = 0;
+  }
 
  private:
   // views::View override:
   void OnKeyEvent(ui::KeyEvent* event) override {
     key_received_ = true;
+    event_flags_ = event->flags();
 
     // Since Textfield::OnKeyPressed() might destroy |this|, get a weak pointer
     // and verify it isn't null before writing the bool value to key_handled_.
@@ -308,6 +314,7 @@ class TestTextfield : public views::Textfield {
 
   bool key_handled_;
   bool key_received_;
+  int event_flags_;
 
   base::WeakPtrFactory<TestTextfield> weak_ptr_factory_;
 
@@ -3315,6 +3322,24 @@ TEST_F(TextfieldTest, FocusChangesScrollToStart) {
   EXPECT_EQ(1U, textfield_->GetCursorPosition());
   textfield_->OnBlur();
   EXPECT_EQ(0U, textfield_->GetCursorPosition());
+}
+
+TEST_F(TextfieldTest, SendingDeleteKeepsFlags) {
+  struct {
+    int flag;
+    base::StringPiece name;
+  } flags_with_names[] = {{ui::EF_SHIFT_DOWN, "shift"},
+                          {ui::EF_CONTROL_DOWN, "control"},
+                          {ui::EF_ALT_DOWN, "alt"},
+                          {ui::EF_COMMAND_DOWN, "command"}};
+
+  InitTextfield();
+  for (const auto& flag_and_name : flags_with_names) {
+    SendKeyPress(ui::VKEY_DELETE, flag_and_name.flag);
+    EXPECT_TRUE(textfield_->event_flags() & flag_and_name.flag)
+        << flag_and_name.name;
+    textfield_->clear();
+  }
 }
 
 }  // namespace views

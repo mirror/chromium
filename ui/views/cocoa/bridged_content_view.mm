@@ -467,6 +467,11 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
     return;
 
   // Generate a synthetic event with the keycode toolkit-views expects.
+  // If the event was generated from the native one - propagate all the flags
+  // we might have missed.
+  if (keyDownEvent_)
+    eventFlags |= ui::EventFlagsFromNative(keyDownEvent_);
+
   ui::KeyEvent event(ui::ET_KEY_PRESSED, keyCode, domCode, eventFlags);
 
   if (DispatchEventToMenu([self activeMenuController], &event))
