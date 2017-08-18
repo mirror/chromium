@@ -34,6 +34,24 @@
       "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c763c83_fda4cfff",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T22:44:17Z",
+      "side": 1,
+      "message": "David\u0027s comment doesn\u0027t really help me understand why this is beneficial? (I\u0027m a cc n00b)\n\nAntoine signed off with this, so I\u0027m fine. But please add a comment (in the code) as to why this is explicitly done here.\n\nI would still like an answer to my question though. Why not do this for all animations in this file?",
+      "parentUuid": "016cbdf8_e74c57d0",
+      "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
