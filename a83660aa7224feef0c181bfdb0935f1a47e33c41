@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9f0044d_02574b02",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Could I keep these for now but remove later? These are still useful at least to me while developing and it looks having them is fine with our coding style too.  (If you rather feel strongly I can remove them too, for sure)",
+      "parentUuid": "587a19b8_5c296db0",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0d1f87e_e764f8f7",
         "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9879f8_5fea0fc6",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d1f87e_e764f8f7",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "fd253a0f_e746381b",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99074f61_12528273",
+      "range": {
+        "startLine": 95,
+        "startChar": 39,
+        "endLine": 95,
+        "endChar": 57
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dbac918_fab5ec64",
         "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
         "patchSetId": 14
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "can we do the new BindOnce thing here? then we don\u0027t need base::Passed?\n\nditto throgohout this patch",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0531a24_2e76de3d",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "No, we first need to turn RunAfterStartWorker takes OnceClosure in order to do so. (Filed the bug as you\u0027ve seen)",
+      "parentUuid": "1dbac918_fab5ec64",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4a8f2e16_0ed736cf",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b97d76a_b3321c29",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c59301e_80c418ee",
         "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
         "patchSetId": 14
@@ -104,6 +200,24 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "Can you add a comment about why\u0027s it OK to ignore the error from StartRequest? (or TODO if it\u0027s just not done in this patch yet)?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4e0461_124a766b",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This code was copied from SWFetchDispatcher, but anyway I did my best in explaining why.",
+      "parentUuid": "1c59301e_80c418ee",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "59140c24_08489bd0",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Made it generic / not specific to FetchEvent.",
+      "parentUuid": "e246a9d9_a0bbfa5e",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e685b07_4825a8df",
         "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
         "patchSetId": 14
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "3631c306_b088c673",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "I re-organized these callbacks a bit, I realized my usage for {Start,Finish}Request was a bit wrong",
+      "parentUuid": "2e685b07_4825a8df",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "faad2168_c9ef1fc8",
         "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h",
         "patchSetId": 14
@@ -155,6 +305,24 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "we\u0027ve usually been using TimeTicks in existing code for dispatch event timing, any reason to prefer Time instead?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfba019e_0959e98c",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This is implementing mojom::EventDispatcher\u0027s DispatchFetchEventCallback which uses mojo.common.mojom.Time, which is mapped to base::Time\n\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/content/common/service_worker/service_worker_event_dispatcher.mojom.h?sq\u003dpackage:chromium\u0026l\u003d228",
+      "parentUuid": "faad2168_c9ef1fc8",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -207,6 +375,54 @@
     },
     {
       "key": {
+        "uuid": "ea380b9a_e61147b7",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d56740b_013867e9",
+      "range": {
+        "startLine": 128,
+        "startChar": 44,
+        "endLine": 128,
+        "endChar": 68
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5472055e_eca68e44",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f02f50_7f197935",
+      "range": {
+        "startLine": 128,
+        "startChar": 11,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2c1c811_03000081",
         "filename": "content/child/service_worker/service_worker_network_provider.cc",
         "patchSetId": 14
@@ -221,6 +437,24 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5c1c6c_0e1ed808",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c1c811_03000081",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "c99d3a7b_943cf8b2",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "061e3b43_9e59fdf9",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f46a3b_850dc18b",
         "filename": "content/child/service_worker/service_worker_network_provider.cc",
         "patchSetId": 14
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "b450a152_50f6738f",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Added some comments.",
+      "parentUuid": "87f46a3b_850dc18b",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54fc9b50_dd3f6366",
         "filename": "content/child/service_worker/service_worker_network_provider.h",
         "patchSetId": 14
@@ -269,6 +539,24 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "Can we just fix the tests to have a mock object, or have a TODO to do so? I\u0027ve found the \"null in tests\" thing tends to complicate the code and mask real bugs.",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad86596_9a3298e8",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This could be nullptr not only in tests, changed the wording.",
+      "parentUuid": "54fc9b50_dd3f6366",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -315,6 +603,30 @@
     },
     {
       "key": {
+        "uuid": "c730e084_4e35be99",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This method takes a param \u0027controller\u0027, so we need the disambiguation. (This code\u0027s gone now anyways)",
+      "parentUuid": "52416153_404ba4b7",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 14
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd3d74ed_b8db5008",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 14
@@ -332,6 +644,24 @@
     },
     {
       "key": {
+        "uuid": "d58627d9_446d38ea",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3d74ed_b8db5008",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f14aa853_f7f81871",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 14
@@ -343,6 +673,24 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "should this be part of lines 133-136? This |loader_factory_container| is used to make |subresource_loader_factory| right? (Might be worth calling it |subresource_loader_factory_container| to make clear its role, otherwise it looks like a different thing)",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c01beb_14104251",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Added more comments.",
+      "parentUuid": "f14aa853_f7f81871",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -372,6 +720,30 @@
     },
     {
       "key": {
+        "uuid": "97b2a542_507ef1f7",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Merged this into SWSubresourceLoader.",
+      "parentUuid": "1483c95b_7f4f97c1",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2bc882b_194c3fa3",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -389,6 +761,24 @@
     },
     {
       "key": {
+        "uuid": "b086d585_c67a79ce",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2bc882b_194c3fa3",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b6ecc98_3faa5dae",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -400,6 +790,24 @@
       "writtenOn": "2017-08-15T06:38:16Z",
       "side": 1,
       "message": "DCHECK(event_dispatcher_)",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a3203b_bf696f28",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "We fail on the next line otherwise (which produces the same stack trace), maybe not that useful?",
+      "parentUuid": "1b6ecc98_3faa5dae",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -429,6 +837,30 @@
     },
     {
       "key": {
+        "uuid": "ac68d049_64f53e9a",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e45aca64_85ecf8ce",
+      "range": {
+        "startLine": 180,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 29
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f9fdbda_845481e8",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -440,6 +872,24 @@
       "writtenOn": "2017-08-15T08:28:25Z",
       "side": 1,
       "message": "I\u0027m a little confused since response.blob doesn\u0027t seem used. When kMojoBlobs is on, does the code still work... i.e., is response.blob_uuid still set?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c3ede0_ccbda963",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "blob_uuid should be set in both cases at least in the current code. response.blob is only for making sure the blob is kept alive.  Added some more comments",
+      "parentUuid": "8f9fdbda_845481e8",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -480,6 +930,24 @@
     },
     {
       "key": {
+        "uuid": "b323943d_60e870a0",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This is not for fallback case, if a redirect is returned from a SW I think we\u0027ll need to keep handling the request?  Added some more comments there.",
+      "parentUuid": "f29dc84a_9baee182",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66afcf8d_f8f94b51",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -491,6 +959,24 @@
       "writtenOn": "2017-08-15T06:38:16Z",
       "side": 1,
       "message": "This patch has already implemented the basic path, so why don\u0027t you consider making simplest unittest like the following?\n1: calling CreateAndBind with passing mocked mojom::SWEventDispatcher, 2: calling CreateLoaderAndStart 3: checking the param passed to the mocked SWEventDispatcher.",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d223e02_469a0182",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Sounds good. (Let me follow up this later)",
+      "parentUuid": "66afcf8d_f8f94b51",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -514,6 +1000,24 @@
     },
     {
       "key": {
+        "uuid": "315e895f_0a62b20f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Changed to use \u003ddefault, but we need this in .cc as this has complex members",
+      "parentUuid": "74af40b7_2b9ebb48",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1feeaae_1dd0a013",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 14
@@ -528,6 +1032,24 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d2bafd_dcc4932d",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "I changed this to refptr",
+      "parentUuid": "c1feeaae_1dd0a013",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -566,6 +1088,24 @@
     },
     {
       "key": {
+        "uuid": "61e89d3e_f1e3a2ee",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "In fallback case we unbind the request, destruct this loader and pass the request to the Network Factory. Making it self-destruct looked simplest to achieve that. I added some comments.",
+      "parentUuid": "b1d30207_a7ebbd8b",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9a53b53_af78ac1a",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -580,6 +1120,24 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07f4ebf_513b4421",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a53b53_af78ac1a",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -606,6 +1164,30 @@
     },
     {
       "key": {
+        "uuid": "5858beaa_57cb825b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57207cf2_04f1e8c7",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf6063ae_d62ededc",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -617,6 +1199,24 @@
       "writtenOn": "2017-08-15T06:58:44Z",
       "side": 1,
       "message": "Is it worth adding a comment that all the params up to here are for URLLoaderFactory::CreateLoaderAndStart, or is that too obvious?",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ae1bbd_91cebf44",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "They\u0027re the common params for CreateLoaderAndStart, I don\u0027t feel it\u0027s too useful to comment each of these.",
+      "parentUuid": "bf6063ae_d62ededc",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -670,6 +1270,30 @@
     },
     {
       "key": {
+        "uuid": "099c0328_b67ab038",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Currently these methods are kept consistent with ServiceWorkerURLLoaderJob, I\u0027d like to cleanup them together later.",
+      "parentUuid": "a03d216a_81a7afe5",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c11e613f_b3784f46",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -690,6 +1314,30 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fa1312_7062fa6c",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c11e613f_b3784f46",
+      "range": {
+        "startLine": 70,
+        "startChar": 30,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -716,6 +1364,30 @@
     },
     {
       "key": {
+        "uuid": "2d82e2a7_dac59a8d",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32be8de9_18db9c22",
+      "range": {
+        "startLine": 74,
+        "startChar": 31,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdbb25c4_694d4a90",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -736,6 +1408,30 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5036435_32350e37",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdbb25c4_694d4a90",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 31
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -785,6 +1481,54 @@
     },
     {
       "key": {
+        "uuid": "86e7c403_b21f6cb3",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44894e17_169a763d",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bf0ad48_fa6810e3",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd2f91b_b4262efc",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 11
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1c74f73_e47bb700",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -802,6 +1546,24 @@
     },
     {
       "key": {
+        "uuid": "ab9d7ad9_f21a6e19",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "These are initialized by the only ctor, made it const instead",
+      "parentUuid": "c1c74f73_e47bb700",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc09be84_d059e607",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -813,6 +1575,30 @@
       "writtenOn": "2017-08-15T08:28:25Z",
       "side": 1,
       "message": "This seems not part of \"To load a blob\" as it\u0027s used in FallbackToNetwork()?",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4faa71_6beec528",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This is also used to get blob_loader_factory, but anyways I reorganized things a bit.",
+      "parentUuid": "bc09be84_d059e607",
       "range": {
         "startLine": 117,
         "startChar": 42,
@@ -848,6 +1634,30 @@
     },
     {
       "key": {
+        "uuid": "b4167b08_9b11843b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "This is currently kept consistent with SWURLLoaderJob, let me clean it together in a separate follow-up.",
+      "parentUuid": "717c3408_f15d8229",
+      "range": {
+        "startLine": 124,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 19
+      },
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7790ef07_19990fb2",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 14
@@ -862,6 +1672,24 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1564c5b_d03924d1",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7790ef07_19990fb2",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -882,6 +1710,24 @@
     },
     {
       "key": {
+        "uuid": "219665bc_60cd6513",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b25a82fe_2b5a5544",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e62e856e_8f70334f",
         "filename": "content/child/url_loader_factory_container.h",
         "patchSetId": 14
@@ -893,6 +1739,24 @@
       "writtenOn": "2017-08-15T08:28:25Z",
       "side": 1,
       "message": "Why do we need WeakPtrs? Also, I think SupportsWeakPtr is somewhat deprecated, see https://groups.google.com/a/chromium.org/d/msg/chromium-dev/99pKNd2kCcg/jxou0_0SCQAJ",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ef34ca_fe2c3e57",
+        "filename": "content/child/url_loader_factory_container.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "I split out this into another CL (as well as made it RefCounted)\n\n(Btw reg: SupportsWeakPtr deprecation I don\u0027t feel it\u0027s our official stance, it\u0027s not written in the code, the discussion is very old and multiple senior people expressed both positive and negative comments on it)",
+      "parentUuid": "e62e856e_8f70334f",
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -916,6 +1780,24 @@
     },
     {
       "key": {
+        "uuid": "215ab9a6_ecaff625",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "(This is now moved out in a separate CL)",
+      "parentUuid": "deef8d14_3b5dae15",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcf7865f_d97d6a7b",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 14
@@ -930,6 +1812,24 @@
       "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3dc1c5_a5404e9f",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T08:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf7865f_d97d6a7b",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
