@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c5e2d8b_0acfb529",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/selectstart-by-drag-stylus.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-18T15:56:23Z",
+      "side": 1,
+      "message": "Supernit: is this pink because of a space?",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "ae8d83a4b36ece8e9460544952b38dc770aee770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
