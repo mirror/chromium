@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "701b30c5_711a7a53",
+        "filename": "chrome/common/extensions/api/automation_internal.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-18T05:01:02Z",
+      "side": 1,
+      "message": "Comment that -1 is used for unknown or not relevant?\nOr maybe just use 0 for that?",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa67f4e3_ff08f2fc",
         "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
         "patchSetId": 7
@@ -93,6 +110,29 @@
       "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3a10eb1_738fc07e",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-18T05:01:02Z",
+      "side": 1,
+      "message": "nit: extra space before comma",
+      "range": {
+        "startLine": 710,
+        "startChar": 51,
+        "endLine": 710,
+        "endChar": 61
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -187,6 +227,57 @@
       "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62b17c87_efb40ba7",
+        "filename": "ui/accessibility/ax_action_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-18T05:01:02Z",
+      "side": 1,
+      "message": "Comment a little bit more about that this is for tracking\nwhether an action succeeded or failed. Also comment that -1\nmeans none, or else just use 0 for none",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7f2493_0272785e",
+        "filename": "ui/accessibility/ax_action_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-18T05:01:02Z",
+      "side": 1,
+      "message": "Comment a little bit more about that this is for tracking\nwhether an action succeeded or failed. Also comment that -1\nmeans none, or else just use 0 for none",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7091526_230e33bd",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-18T05:01:02Z",
+      "side": 1,
+      "message": "still needs comment that this is per page",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
