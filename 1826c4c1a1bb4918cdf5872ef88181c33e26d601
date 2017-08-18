@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd1bae3_5a6d28cc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T19:19:17Z",
+      "side": 1,
+      "message": "Remove empty line.",
+      "revId": "1826c4c1a1bb4918cdf5872ef88181c33e26d601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61132b6_6426e602",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T19:19:17Z",
+      "side": 1,
+      "message": "Add braces since the condition doesn\u0027t fit on one line (it\u0027s just a convention that we have).",
+      "range": {
+        "startLine": 576,
+        "startChar": 52,
+        "endLine": 577,
+        "endChar": 17
+      },
+      "revId": "1826c4c1a1bb4918cdf5872ef88181c33e26d601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
