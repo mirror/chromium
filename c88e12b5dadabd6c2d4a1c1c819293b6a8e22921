@@ -16,6 +16,24 @@
       "revId": "c88e12b5dadabd6c2d4a1c1c819293b6a8e22921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8ffdcb_bb191e1d",
+        "filename": "third_party/WebKit/Source/core/editing/ImeTextSpan.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-08-18T16:36:04Z",
+      "side": 1,
+      "message": "I realized I was not using these methods, only \"Thickness()\", so I\u0027ve removed them.\n\nIn StyleableMarker I think the methods make more sense, but we can think in better names if needed.",
+      "parentUuid": "162303bc_4c7a7a7f",
+      "revId": "c88e12b5dadabd6c2d4a1c1c819293b6a8e22921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
