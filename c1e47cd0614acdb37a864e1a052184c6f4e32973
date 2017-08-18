@@ -22,6 +22,30 @@
       "revId": "c1e47cd0614acdb37a864e1a052184c6f4e32973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a370971f_ea66bc93",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:15:04Z",
+      "side": 1,
+      "message": "Ah, sorry. I removed the wrong canvas method call. Thanks for catching this.",
+      "parentUuid": "c8bd9c82_a6ec0ef7",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "c1e47cd0614acdb37a864e1a052184c6f4e32973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

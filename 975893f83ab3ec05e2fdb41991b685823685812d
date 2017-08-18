@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c17ee1f7_f01a88ae",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:15:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30c41ce4_3f78ce66",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "975893f83ab3ec05e2fdb41991b685823685812d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "265b6d2e_d66d7fb6",
         "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T18:08:06Z",
       "side": 1,
       "message": "I\u0027m not totally sure, but we used to have another \"return 0;\" inside of an |if {}|. I guess it makes some sense for coverage, so it wouldn\u0027t harm to have it here as well, e.g. https://cs.chromium.org/chromium/src/testing/libfuzzer/fuzzers/zlib_uncompress_fuzzer.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d18",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 3
+      },
+      "revId": "975893f83ab3ec05e2fdb41991b685823685812d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b25c4dd_89e8776c",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:15:04Z",
+      "side": 1,
+      "message": "Interesting. I would\u0027ve thought that this doesn\u0027t affect the coverage at all, because the compiler would optimize these into a single return. That said, I guess it can\u0027t hurt to add it.",
+      "parentUuid": "265b6d2e_d66d7fb6",
       "range": {
         "startLine": 51,
         "startChar": 2,
