@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12236bb2_a85a1f76",
+        "filename": "chrome/browser/renderer_host/chrome_render_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-18T13:45:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we check that NetworkPredictions are enabled every time? If the user turns this option down, should it take effect immediately?",
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
