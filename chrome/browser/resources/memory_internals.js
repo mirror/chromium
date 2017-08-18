@@ -12,25 +12,59 @@ function dumpProcess(pid) {
   chrome.send('dumpProcess', [pid]);
 }
 
-function returnProcessList(processList) {
-  var proclist = $('proclist');
-  proclist.innerText = '';
-  for (let proc of processList) {
-    /** @const */ var row = document.createElement('div');
-    row.className = 'procrow';
+// celltype should either be "td" or "th". The contents of the |cols| will be
+// added as children of each table cell if they are non-null.
+function addListRow(table, celltype, cols) {
+  var tr = document.createElement('tr');
+  for (let col of cols) {
+    var cell = document.createElement(celltype);
+    if (col)
+      cell.appendChild(col);
+    tr.appendChild(cell);
+  }
+  table.appendChild(tr);
+}
 
-    var description = document.createTextNode(proc[1] + ' ');
-    row.appendChild(description);
+function returnProcessList(data) {
+  $('message').innerText = data['message'];
+
+  var proclist = $('proclist');
+  proclist.innerText = '';  // Clear existing contents.
+
+  var processes = data['processes'];
+  if (processes.length == 0)
+    return;  // No processes to dump, don't make the table and refresh button.
+
+  // Add the refresh button.
+  var refreshDiv = document.createElement('div');
+  refreshDiv.className = 'refresh';
+  var refreshButton = document.createElement('button');
+  refreshButton.innerText = '\u21ba Refresh process list';
+  refreshButton.onclick = () => requestProcessList();
+  refreshDiv.appendChild(refreshButton);
+  proclist.appendChild(refreshDiv);
+
+  var table = document.createElement('table');
+
+  // Heading.
+  addListRow(table, 'th', [
+    null, document.createTextNode('Process ID'), document.createTextNode('Name')
+  ]);
+
+  for (let proc of processes) {
+    let procId = proc[0];
 
     var button = document.createElement('button');
-    button.innerText = '[dump]';
-    button.className = 'button';
-    let proc_id = proc[0];
-    button.onclick = () => dumpProcess(proc_id);
-    row.appendChild(button);
+    button.innerText = '\u21e9 Save dump';
+    button.onclick = () => dumpProcess(procId);
 
-    proclist.appendChild(row);
+    var procIdText = document.createTextNode(procId.toString());
+    var description = document.createTextNode(proc[1]);
+
+    addListRow(table, 'td', [button, procIdText, description]);
   }
+
+  proclist.appendChild(table);
 }
 
 // Get data and have it displayed upon loading.
