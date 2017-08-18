@@ -265,6 +265,8 @@ interface MyExtendedAttributeInterface {
   [Attr, MethodIdentList=(Foo, Bar)] void method();
 };
 
+
+
 /** TREE
  *Interface(MyIfacePromise)
  *  Operation(method1)
