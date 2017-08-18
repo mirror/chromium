@@ -71,6 +71,30 @@
       "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3b0b14_b32ffe77",
+        "filename": "base/files/file_path.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-18T22:04:21Z",
+      "side": 1,
+      "message": "I added the operator\u003c\u003c in May 2017 (https://chromium-review.googlesource.com/c/499013), but the PrintTo I believe has been here since 2015",
+      "parentUuid": "3584dcfa_80b2ebc0",
+      "range": {
+        "startLine": 454,
+        "startChar": 16,
+        "endLine": 454,
+        "endChar": 33
+      },
+      "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
