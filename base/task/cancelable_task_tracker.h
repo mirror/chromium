@@ -85,7 +85,7 @@ class BASE_EXPORT CancelableTaskTracker {
                                     const tracked_objects::Location& from_here,
                                     OnceCallback<TaskReturnType()> task,
                                     OnceCallback<void(ReplyArgType)> reply) {
-    TaskReturnType* result = new TaskReturnType();
+    base::Optional<TaskReturnType>* result = new base::Optional<TaskReturnType>;
     return PostTaskAndReply(
         task_runner, from_here,
         BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>,

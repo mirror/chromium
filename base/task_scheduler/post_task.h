@@ -155,7 +155,7 @@ void PostTaskWithTraitsAndReplyWithResult(
     const TaskTraits& traits,
     OnceCallback<TaskReturnType()> task,
     OnceCallback<void(ReplyArgType)> reply) {
-  TaskReturnType* result = new TaskReturnType();
+  base::Optional<TaskReturnType>* result = new base::Optional<TaskReturnType>;
   return PostTaskWithTraitsAndReply(
       from_here, traits,
       BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task),

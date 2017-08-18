@@ -37,7 +37,7 @@ bool PostTaskAndReplyWithResult(TaskRunner* task_runner,
                                 OnceCallback<void(ReplyArgType)> reply) {
   DCHECK(task);
   DCHECK(reply);
-  TaskReturnType* result = new TaskReturnType();
+  base::Optional<TaskReturnType>* result = new base::Optional<TaskReturnType>;
   return task_runner->PostTaskAndReply(
       from_here,
       BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task),

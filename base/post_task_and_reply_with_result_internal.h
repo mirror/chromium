@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/callback.h"
+#include "base/optional.h"
 
 namespace base {
 
@@ -16,15 +17,18 @@ namespace internal {
 // Adapts a function that produces a result via a return value to
 // one that returns via an output parameter.
 template <typename ReturnType>
-void ReturnAsParamAdapter(OnceCallback<ReturnType()> func, ReturnType* result) {
-  *result = std::move(func).Run();
+void ReturnAsParamAdapter(OnceCallback<ReturnType()> func,
+                          base::Optional<ReturnType>* result) {
+  DCHECK(!result->has_value());
+  result->emplace(std::move(func).Run());
 }
 
 // Adapts a T* result to a callblack that expects a T.
 template <typename TaskReturnType, typename ReplyArgType>
 void ReplyAdapter(OnceCallback<void(ReplyArgType)> callback,
-                  TaskReturnType* result) {
-  std::move(callback).Run(std::move(*result));
+                  base::Optional<TaskReturnType>* result) {
+  DCHECK(result->has_value());
+  std::move(callback).Run(std::move(*result).value());
 }
 
 }  // namespace internal
