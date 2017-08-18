@@ -22,6 +22,30 @@
       "revId": "3aa48345ed2122e0b03388c1813e76eb08307c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fabcaf8_7a1ddfa3",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T16:34:57Z",
+      "side": 1,
+      "message": "Yeah, I considered doing base::Optional\u003cGURL\u003e but lightly preferred this method. However, I think you\u0027ve convinced me, so I\u0027ve done it.",
+      "parentUuid": "ea3dce2d_6e90c991",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "3aa48345ed2122e0b03388c1813e76eb08307c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
