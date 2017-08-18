@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+  #content {
+    font-size: 50px;
+    padding: 10px;
+  }
+</style>
+<span id="content">hello</span>
+<script>
+var span = document.getElementById('content');
+span.focus();
+
+test(function() {
+  eventSender.dragMode = false;
+  var y = span.offsetTop + span.offsetHeight / 2; 
+  eventSender.mouseMoveTo(span.offsetLeft + 5, y, "", "pen");
+  eventSender.mouseDown(2, "", "pen");
+  eventSender.mouseMoveTo(span.offsetLeft + 50, y, "", "pen");
+  assert_equals(false, document.getSelection().isCollapsed);
+}, "Selection caused by barrel button");
+
+</script>
