@@ -890,6 +890,23 @@ void StyleEngine::ScheduleTypeRuleSetInvalidations(
                                                         node);
   DCHECK(invalidation_lists.siblings.IsEmpty());
   style_invalidator_.ScheduleInvalidationSetsForNode(invalidation_lists, node);
+
+  if (!node.IsShadowRoot())
+    return;
+
+  Element& host = ToShadowRoot(node).host();
+  if (host.NeedsStyleRecalc())
+    return;
+
+  const AtomicString& tag_name = host.localName();
+  for (auto& invalidation_set : invalidation_lists.descendants) {
+    if (invalidation_set->InvalidatesTagName(tag_name)) {
+      host.SetNeedsStyleRecalc(kLocalStyleChange,
+                               StyleChangeReasonForTracing::Create(
+                                   StyleChangeReason::kStyleSheetChange));
+      return;
+    }
+  }
 }
 
 void StyleEngine::InvalidateSlottedElements(HTMLSlotElement& slot) {

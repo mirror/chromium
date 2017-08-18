@@ -123,6 +123,10 @@ class CORE_EXPORT InvalidationSet {
   void SetInvalidatesSlotted() { invalidates_slotted_ = true; }
   bool InvalidatesSlotted() const { return invalidates_slotted_; }
 
+  bool InvalidatesTagName(const AtomicString& tag_name) const {
+    return tag_names_ && tag_names_->Contains(tag_name);
+  }
+
   bool IsEmpty() const {
     return !classes_ && !ids_ && !tag_names_ && !attributes_ &&
            !custom_pseudo_invalid_ && !insertion_point_crossing_ &&
