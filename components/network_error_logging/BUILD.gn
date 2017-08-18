@@ -21,9 +21,15 @@ component("network_error_logging") {
 source_set("unit_tests") {
   testonly = true
 
-  sources = []
+  sources = [
+    "network_error_logging_service_unittest.cc",
+  ]
 
   deps = [
     ":network_error_logging",
+    "//base",
+    "//net",
+    "//testing/gtest",
+    "//url",
   ]
 }
