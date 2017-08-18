@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5755b5ce_5ba4a5a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T10:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d9c770_efafbc96",
+      "range": {
+        "startLine": 158,
+        "startChar": 30,
+        "endLine": 158,
+        "endChar": 39
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c160d6_1b23dcc9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
         "patchSetId": 1
@@ -140,6 +164,30 @@
       "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad2f76c_5d79363e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T10:44:09Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "8a7428bb_2336d286",
+      "range": {
+        "startLine": 221,
+        "startChar": 29,
+        "endLine": 221,
+        "endChar": 42
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

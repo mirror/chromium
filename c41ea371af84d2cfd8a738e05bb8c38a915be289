@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "456a3afe_0b81f329",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T10:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "384bae37_2db613d8",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "c41ea371af84d2cfd8a738e05bb8c38a915be289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e88b3f_e8f4e970",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 3
@@ -153,6 +177,30 @@
       "writtenOn": "2017-08-17T11:21:48Z",
       "side": 1,
       "message": "you could make these two sparse arrays a simple ArrayList of whatever type that has the layout, the sectionId and the list of tiles. We don\u0027t have to look up as much by section Id here, right?",
+      "range": {
+        "startLine": 76,
+        "startChar": 33,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "c41ea371af84d2cfd8a738e05bb8c38a915be289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594807e1_cdd542c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T10:44:09Z",
+      "side": 1,
+      "message": "For the mTileSectionLayouts, we actually look up quite a lot by key. Because that\u0027s how we identify which layouts are shown. At any one time we will only have at most three layouts there and it could be any three. Having the keys is essential to identifying which three exactly, so that we can update the correct ones.\n\nFor the mLatestTileSections, it is just easier to put the input array from updateTiles() in the mLatestTileSections variable, instead of having to copy all elements over. SparseArray doesnt have a getValues() method, so it would be an ugly for loop to copy these over. \n\nIs this what you meant, or was your idea different?",
+      "parentUuid": "f9e88b3f_e8f4e970",
       "range": {
         "startLine": 76,
         "startChar": 33,
@@ -185,6 +233,30 @@
       "revId": "c41ea371af84d2cfd8a738e05bb8c38a915be289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d362dd63_30a6c2e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T10:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebd87d55_0ed7998e",
+      "range": {
+        "startLine": 158,
+        "startChar": 34,
+        "endLine": 158,
+        "endChar": 51
+      },
+      "revId": "c41ea371af84d2cfd8a738e05bb8c38a915be289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
