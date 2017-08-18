@@ -23,20 +23,21 @@ void* StructTraits<common::mojom::String16DataView, WTF::String>::SetUpContext(
 }
 
 // static
-ConstCArray<uint16_t> StructTraits<common::mojom::String16DataView,
-                                   WTF::String>::data(const WTF::String& input,
-                                                      void* context) {
+base::Span<const uint16_t>
+StructTraits<common::mojom::String16DataView, WTF::String>::data(
+    const WTF::String& input,
+    void* context) {
   auto contextObject = static_cast<base::string16*>(context);
   DCHECK_EQ(input.Is8Bit(), !!contextObject);
 
   if (contextObject) {
-    return ConstCArray<uint16_t>(
+    return base::MakeSpan(
         reinterpret_cast<const uint16_t*>(contextObject->data()),
         contextObject->size());
   }
 
-  return ConstCArray<uint16_t>(
-      reinterpret_cast<const uint16_t*>(input.Characters16()), input.length());
+  return base::MakeSpan(reinterpret_cast<const uint16_t*>(input.Characters16()),
+                        input.length());
 }
 
 // static
