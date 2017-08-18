@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3a13ae3_3d2c0b6a",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-18T13:12:21Z",
+      "side": 1,
+      "message": "Once again: I don\u0027t think this\u0027ll fly, because static initializers. Basically, global variables of non-primitive types aren\u0027t allowed (with a few exceptions, e.g. just below).\n\nSomething like this should work:\nconst char* const kSchemes[] \u003d { extensions::kExtensionScheme, chrome::kChromeSearchScheme };\nYou can get the size of the array with arraysize(kSchemes).\n\nnit: Since it\u0027s a constant, this should use kConstantStyle.",
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57c5b6b_52162267",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-18T13:12:21Z",
+      "side": 1,
+      "message": "Can we just use an empty set/array here now?",
+      "range": {
+        "startLine": 157,
+        "startChar": 46,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
