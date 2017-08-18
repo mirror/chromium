@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d30678b4_914c0ee2",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T01:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da5989c9_3bc8f807",
+      "revId": "039decdcab0f83624d5412b16c84dabf246af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad87469_bc8ec914",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "039decdcab0f83624d5412b16c84dabf246af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4945eb_c58d21cd",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T01:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad87469_bc8ec914",
+      "revId": "039decdcab0f83624d5412b16c84dabf246af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

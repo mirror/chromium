@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "be262eee_3733a5f6",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-18T01:07:05Z",
+      "side": 1,
+      "message": "Thanks!  I like the ShouldAlignContentToTitle() approach. \nFor now, I\u0027ll do the default alignment and add a TODO to remind myself that message body should align with title (and hope when I come back for it, there\u0027s a ShouldAlignContentToTitle() function ready to override :-P).",
+      "parentUuid": "dd713d31_af2ac950",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92a367b9_9630b926",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 12
