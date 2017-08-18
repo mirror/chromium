@@ -9,6 +9,8 @@ package org.chromium.content_public.common;
  * originating frame. This corresponds to native content/public/common/referrer.h.
  */
 public class Referrer {
+    // TODO(yusufo): Remove these constants now that org.chromium.blink_public.web.WebReferrerPolicy
+    // exists.
     /** @see blink::WebReferrerPolicyAlways */
     public static final int REFERRER_POLICY_ALWAYS = 0;
 

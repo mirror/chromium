@@ -257,6 +257,26 @@ public class CustomTabActivity extends ChromeActivity {
     }
 
     /**
+     * Checks whether the given referer can be used as valid within the Activity launched by the
+     * given intent. For this to be true, the intent should be for a {@link CustomTabsSessionToken}
+     * that is the currently active content and also the related client should have a verified
+     * relationship with the referer origin. This can only be true for https:// origins.
+     * @param intent The intent that was used to launch the Activity in question.
+     * @param referer The referer url that is to be used.
+     * @return Whether the given referer is a valid first party url to the client that launched
+     *         the activity.
+     */
+    public static boolean canActiveContentHandlerUseReferer(Intent intent, Uri referer) {
+        if (sActiveContentHandler == null) return false;
+        CustomTabsSessionToken session = CustomTabsSessionToken.getSessionTokenFromIntent(intent);
+        if (session == null || !session.equals(sActiveContentHandler.getSession())) return false;
+        String packageName =
+                CustomTabsConnection.getInstance().getClientPackageNameForSession(session);
+        if (TextUtils.isEmpty(packageName)) return false;
+        return OriginVerifier.isValidOrigin(packageName, referer);
+    }
+
+    /**
      * Checks whether the active {@link CustomTabContentHandler} belongs to the given session, and
      * if true, update toolbar's custom button.
      * @param session     The {@link IBinder} that the calling client represents.
