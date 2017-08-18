@@ -46,6 +46,30 @@
       "revId": "255cbe5b5cadd58333c9b6a612faf8037993ea62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34640d8c_ea7d975f",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2017-08-18T09:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075f723a_42edd666",
+      "range": {
+        "startLine": 627,
+        "startChar": 170,
+        "endLine": 627,
+        "endChar": 181
+      },
+      "revId": "255cbe5b5cadd58333c9b6a612faf8037993ea62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
