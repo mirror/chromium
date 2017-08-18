@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43e5c83c_4e0ca198",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:42:29Z",
+      "side": 1,
+      "message": "Nit: I\u0027ve been going with TabHistoryLegacyCoordinator instead.",
+      "revId": "d833b80c469005d8fc01d191f1bebe73f7ef66b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd60b479_bf71da38",
+        "filename": "ios/chrome/browser/ui/history_popup/legacy_tab_history_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:42:29Z",
+      "side": 1,
+      "message": "How can we avoid exposing an actual view here?  Could the position provider give us a point in window coordinates instead, so we don\u0027t need an actual view for the conversion?",
+      "revId": "d833b80c469005d8fc01d191f1bebe73f7ef66b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d354f4ef_6bd96baa",
+        "filename": "ios/chrome/browser/ui/history_popup/legacy_tab_history_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:42:29Z",
+      "side": 1,
+      "message": "Ideally we would refactor this so that the parent (presentationProvider) actually adds the child as a subview.  This way the child never needs an explicit pointer to the superview and we can remove it from the presentationProvider protocol.\n\nIn general, I want to avoid passing around UIViews, because that\u0027s a huge API surface that will eventually be abused.",
+      "revId": "d833b80c469005d8fc01d191f1bebe73f7ef66b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
