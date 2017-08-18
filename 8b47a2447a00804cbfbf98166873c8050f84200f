@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d15946e5_58b4cd0f",
+        "filename": "components/password_manager/core/browser/password_store_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T06:26:49Z",
+      "side": 1,
+      "message": "nit: Do we need to make this explicit here?",
+      "range": {
+        "startLine": 899,
+        "startChar": 23,
+        "endLine": 899,
+        "endChar": 47
+      },
+      "revId": "8b47a2447a00804cbfbf98166873c8050f84200f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb474ed_2cc0efbd",
+        "filename": "components/safe_browsing/password_protection/password_protection_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T06:26:49Z",
+      "side": 1,
+      "message": "nit: Should this be {}? Or std::vector\u003cstd::string\u003e() if the former does not compile on Win.",
+      "range": {
+        "startLine": 198,
+        "startChar": 43,
+        "endLine": 198,
+        "endChar": 58
+      },
+      "revId": "8b47a2447a00804cbfbf98166873c8050f84200f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

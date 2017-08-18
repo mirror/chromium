@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "631c12a7_d4c99c0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T06:26:49Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "c186d44f_af47f442",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739d1bd9_018256a8",
         "filename": "components/password_manager/core/browser/password_manager_client.h",
         "patchSetId": 2
@@ -113,6 +137,24 @@
       "side": 1,
       "message": "There are tests with single and multiple domains in password_reuse_detector_unittest.cc -- Is that sufficient?  The test here just to verify it doesn\u0027t get called repeatedly, not to verify its results.",
       "parentUuid": "e56aba8b_0e0cda2e",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5332159e_86129ef3",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T06:26:49Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "c655a85c_35f24216",
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -201,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "c61d1a2c_fafd65e9",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T06:26:49Z",
+      "side": 1,
+      "message": "Fine by me if you believe there is value in collecting so many.",
+      "parentUuid": "4eae7d09_19c527d8",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb0ed7e_d8dbd297",
         "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
         "patchSetId": 2
@@ -245,6 +311,23 @@
       "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d60fd6dd_1837e75f",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T06:26:49Z",
+      "side": 1,
+      "message": "Do we have a unit test that verifies this? If not, let\u0027s add one.",
+      "revId": "c92ccf61312e845f3b2cf9cd001bf0810bc03bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
