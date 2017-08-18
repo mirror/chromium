@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c60534a_d9d506f3",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "I think you hit this in the case of the RootView. If I have that right, then don\u0027t you need the device_scale_factor to come from the widget in that case?",
+      "range": {
+        "startLine": 1593,
+        "startChar": 11,
+        "endLine": 1593,
+        "endChar": 28
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5a633a_197f957f",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "Why do you want the scale factor of this layer, vs the scale factor of the first ancestors layer?",
+      "range": {
+        "startLine": 1721,
+        "startChar": 32,
+        "endLine": 1721,
+        "endChar": 79
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8b747e_22952b14",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "Why do you need this instead of looking for the first ancestor with a layer?",
+      "range": {
+        "startLine": 1726,
+        "startChar": 29,
+        "endLine": 1726,
+        "endChar": 73
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c549dff_31464f4f",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 2263,
+        "startChar": 54,
+        "endLine": 2263,
+        "endChar": 58
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2ce197_f391c97e",
+        "filename": "ui/views/view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "You need more comments here. It isn\u0027t at all obvious why you need this logic and it isn\u0027t at all clear from the descriptions how offset and total_subpixel_offset relate to each other and when you want one vs the other.",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 206,
+        "endChar": 80
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bba6c9_84af17a7",
+        "filename": "ui/views/view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "Aren\u0027t these both totals? That you\u0027ve named the later total implies the first one isn\u0027t a total, but that isn\u0027t the case. Maybe offset_ and rounded_pixel_offset_? I\u0027m ok with total if you want, but it should be in both names, e.g. total_offset and total_rounded_pixel_offset.",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 42
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b297dcb3_1ac0db52",
+        "filename": "ui/views/view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:52:52Z",
+      "side": 1,
+      "message": "If you\u0027re going to move things, please move this and SetLayerBounds to Accelerated Painting grouping of functions.",
+      "range": {
+        "startLine": 1454,
+        "startChar": 7,
+        "endLine": 1454,
+        "endChar": 31
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
