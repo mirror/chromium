@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "141b518f_aeeb78a4",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-18T15:52:36Z",
+      "side": 1,
+      "message": "It\u0027s using this runner (https://cs.chromium.org/chromium/src/base/threading/sequenced_task_runner_handle.cc?type\u003dcs\u0026l\u003d25). Added \"for the thread this call is made on\" in the comment.",
+      "parentUuid": "aa0799fc_64953271",
+      "revId": "5083ea64a4732d4bbd2f08a14668ab7bd50d7d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b6de196_f984264d",
         "filename": "services/ui/ws/event_dispatcher_unittest.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T15:32:10Z",
       "side": 1,
       "message": "Why this change? Add a comment if the order is important here.",
+      "revId": "5083ea64a4732d4bbd2f08a14668ab7bd50d7d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b639f7_385473e0",
+        "filename": "services/ui/ws/event_dispatcher_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-18T15:52:36Z",
+      "side": 1,
+      "message": "ServerWindowDelegate should outlive ServerWindow, right? Added a comment.",
+      "parentUuid": "6b6de196_f984264d",
       "revId": "5083ea64a4732d4bbd2f08a14668ab7bd50d7d56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
