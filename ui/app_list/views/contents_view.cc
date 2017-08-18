@@ -76,10 +76,18 @@ void ContentsView::Init(AppListModel* model) {
                     AppListModel::STATE_CUSTOM_LAUNCHER_PAGE);
   }
 
-  // Start page.
-  start_page_view_ =
-      new StartPageView(app_list_main_view_, view_delegate, app_list_view_);
-  AddLauncherPage(start_page_view_, AppListModel::STATE_START);
+  apps_container_view_ = new AppsContainerView(app_list_main_view_, model);
+
+  // Start page is only for non-fullscreen app list.
+  if (is_fullscreen_app_list_enabled_) {
+    // Add |apps_container_view_| as STATE_START corresponding page for
+    // fullscreen app list.
+    AddLauncherPage(apps_container_view_, AppListModel::STATE_START);
+  } else {
+    start_page_view_ =
+        new StartPageView(app_list_main_view_, view_delegate, app_list_view_);
+    AddLauncherPage(start_page_view_, AppListModel::STATE_START);
+  }
 
   // Search results UI.
   search_results_page_view_ = new SearchResultPageView();
@@ -100,8 +108,6 @@ void ContentsView::Init(AppListModel* model) {
                    GetSearchBoxView()->search_box(), view_delegate));
   AddLauncherPage(search_results_page_view_,
                   AppListModel::STATE_SEARCH_RESULTS);
-
-  apps_container_view_ = new AppsContainerView(app_list_main_view_, model);
 
   AddLauncherPage(apps_container_view_, AppListModel::STATE_APPS);
 
@@ -218,8 +224,6 @@ void ContentsView::ActivePageChanged() {
 
   app_list_main_view_->model()->SetState(state);
 
-  DCHECK(start_page_view_);
-
   // Set the visibility of the search box's back button.
   const bool folder_active = state == AppListModel::STATE_APPS &&
                              apps_container_view_->IsInFolderView();
@@ -288,6 +292,13 @@ void ContentsView::UpdatePageBounds() {
   for (AppListPage* page : app_list_pages_) {
     gfx::Rect to_rect = page->GetPageBoundsForState(target_state);
     gfx::Rect from_rect = page->GetPageBoundsForState(current_state);
+    if (is_fullscreen_app_list_enabled_ &&
+        ((current_state == AppListModel::STATE_START &&
+          target_state == AppListModel::STATE_APPS) ||
+         (current_state == AppListModel::STATE_APPS &&
+          target_state == AppListModel::STATE_START))) {
+      apps_container_view()->apps_grid_view()->Layout();
+    }
     if (from_rect == to_rect)
       continue;
 
@@ -398,7 +409,7 @@ gfx::Rect ContentsView::GetDefaultSearchBoxBounds() const {
 gfx::Rect ContentsView::GetSearchBoxBoundsForState(
     AppListModel::State state) const {
   AppListPage* page = GetPageView(GetPageIndexForState(state));
-  return page->GetSearchBoxBounds();
+  return page->GetSearchBoxBoundsForState(state);
 }
 
 gfx::Rect ContentsView::GetDefaultContentsBounds() const {
