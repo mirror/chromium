@@ -50,6 +50,8 @@
 #include "ui/views/view_model_utils.h"
 #include "ui/views/widget/widget.h"
 
+#include "base/metrics/histogram_macros.h"
+
 namespace app_list {
 
 namespace {
@@ -376,9 +378,13 @@ void AppsGridView::SetLayout(int cols, int rows_per_page) {
 
 // static
 gfx::Size AppsGridView::GetTotalTileSize() {
-  gfx::Rect rect(GetTileViewSize());
-  rect.Inset(GetTilePadding());
-  return rect.size();
+  static gfx::Size rect_size = gfx::Size();
+  if (rect_size == gfx::Size()) {
+    gfx::Rect rect(GetTileViewSize());
+    rect.Inset(GetTilePadding());
+    rect_size = rect.size();
+  }
+  return rect_size;
 }
 
 void AppsGridView::ResetForShowApps() {
