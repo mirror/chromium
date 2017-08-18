@@ -156,8 +156,7 @@ void MemoryInternalsDOMHandler::ReturnProcessListOnUIThread(
   base::ProcessId browser_pid = base::GetCurrentProcId();
   result_list.push_back(MakeProcessInfo(
       browser_pid, base::StringPrintf("Process %lld [Browser]",
-                                      static_cast<long long>(browser_pid))
-                       .c_str()));
+                                      static_cast<long long>(browser_pid))));
 
   // Append renderer processes.
   auto iter = content::RenderProcessHost::AllHostsIterator();
@@ -168,9 +167,9 @@ void MemoryInternalsDOMHandler::ReturnProcessListOnUIThread(
       // TODO(brettw) make a better description of the process, maybe see
       // what TaskManager does.
       result_list.push_back(MakeProcessInfo(
-          renderer_pid, base::StringPrintf("Process %lld [Renderer]",
-                                           static_cast<long long>(renderer_pid))
-                            .c_str()));
+          renderer_pid,
+          base::StringPrintf("Process %lld [Renderer]",
+                             static_cast<long long>(renderer_pid))));
     }
     iter.Advance();
   }
