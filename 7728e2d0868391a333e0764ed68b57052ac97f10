@@ -45,6 +45,30 @@
       "revId": "7728e2d0868391a333e0764ed68b57052ac97f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e25919_c9312b79",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-18T17:19:34Z",
+      "side": 1,
+      "message": "Done (here and all other places).",
+      "parentUuid": "fcdad812_fe4540d7",
+      "range": {
+        "startLine": 57,
+        "startChar": 36,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "7728e2d0868391a333e0764ed68b57052ac97f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
