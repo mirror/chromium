@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a6b22e55_4de2629f",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-18T21:47:32Z",
+      "side": 1,
+      "message": "I don\u0027t think so. For example, we have the code that badges the Chrome app icons with a Chrome logo when its corresponding ARC app is available exists in c/b/chromeos/extensions/gfx_utils.cc: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/gfx_utils.cc?type\u003dcs\u0026q\u003df:gfx_utils.cc\u0026l\u003d31\n\nAlso the extension IDs are available in \"chrome/common/extensions/extension_constants.h\".",
+      "parentUuid": "8f3dd907_1d0cea67",
+      "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0390b0e7_f7dbba70",
         "filename": "chrome/browser/extensions/external_provider_impl.cc",
         "patchSetId": 3
@@ -77,6 +95,24 @@
       "writtenOn": "2017-08-18T20:50:16Z",
       "side": 1,
       "message": "This is the first I\u0027ve seen of this project, so this might be a silly question, but are we worried about losing any user data?  Or about needing to roll this back (which is much harder once the items are gone)?",
+      "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140aaed5_1cd7c68c",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-18T21:47:32Z",
+      "side": 1,
+      "message": "Honestly, I don\u0027t know. The above three Chrome apps are replaced by their Android equivalents. So, assuming that these apps store user data in the cloud rather than locally, the same data should exist in the android versions?",
+      "parentUuid": "0390b0e7_f7dbba70",
       "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
