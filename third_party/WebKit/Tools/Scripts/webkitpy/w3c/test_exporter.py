@@ -5,8 +5,8 @@
 import logging
 
 from webkitpy.w3c.local_wpt import LocalWPT
+from webkitpy.w3c.chromium_exportable_commits import exportable_commits_over_last_n_commits
 from webkitpy.w3c.common import (
-    exportable_commits_over_last_n_commits,
     WPT_GH_URL,
     WPT_REVISION_FOOTER,
     EXPORT_PR_LABEL,
