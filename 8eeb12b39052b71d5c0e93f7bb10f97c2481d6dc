@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a707dd51_f8fbe55c",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T22:24:01Z",
+      "side": 1,
+      "message": "can be simply EXPECT_EQ(item, store_item);",
+      "revId": "8eeb12b39052b71d5c0e93f7bb10f97c2481d6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
