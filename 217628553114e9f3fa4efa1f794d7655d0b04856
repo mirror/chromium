@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd986552_84546350",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPerformanceAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-18T18:49:33Z",
+      "side": 1,
+      "message": "can I get cpu time as well though?",
+      "revId": "217628553114e9f3fa4efa1f794d7655d0b04856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
