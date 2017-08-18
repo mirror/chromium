@@ -42,6 +42,9 @@ cr.define('cr.ui', function() {
      * Initializes the menu button.
      */
     decorate: function() {
+      // Listen to the touch events on the document so that we can handle it
+      // before cancelled by other UI components.
+      this.ownerDocument.addEventListener('touchstart', this);
       this.addEventListener('mousedown', this);
       this.addEventListener('keydown', this);
       this.addEventListener('dblclick', this);
@@ -89,6 +92,17 @@ cr.define('cr.ui', function() {
     respondToArrowKeys: true,
 
     /**
+     * Whether the event is targeted to the neither the menu nor the button.
+     * @param {Event} e The event object.
+     * @return {boolean}
+     * @private
+     */
+    shouldDismissMenu_: function(e) {
+      return e.target instanceof Node && !this.contains(e.target) &&
+          !this.menu.contains(e.target);
+    },
+
+    /**
      * Handles event callbacks.
      * @param {Event} e The event object.
      */
@@ -97,10 +111,16 @@ cr.define('cr.ui', function() {
         return;
 
       switch (e.type) {
+        case 'touchstart':
+          // Touch on the menu button itself is ignored to avoid that the menu
+          // opened again by the mousedown event following the touch events.
+          if (this.shouldDismissMenu_(e)) {
+            this.hideMenu();
+          }
+          break;
         case 'mousedown':
           if (e.currentTarget == this.ownerDocument) {
-            if (e.target instanceof Node && !this.contains(e.target) &&
-                !this.menu.contains(e.target)) {
+            if (this.shouldDismissMenu_(e)) {
               this.hideMenu();
             } else {
               e.preventDefault();
@@ -133,8 +153,7 @@ cr.define('cr.ui', function() {
           this.classList.remove('using-mouse');
           break;
         case 'focus':
-          if (e.target instanceof Node && !this.contains(e.target) &&
-              !this.menu.contains(e.target)) {
+          if (this.shouldDismissMenu_(e)) {
             this.hideMenu();
             // Show the focus ring on focus - if it's come from a mouse event,
             // the focus ring will be hidden in the mousedown event handler,
