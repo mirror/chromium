@@ -88,7 +88,7 @@ bool CSSPaintImageGeneratorImpl::HasAlpha() const {
     return false;
   DocumentPaintDefinition* definition =
       paint_worklet_->GetDocumentDefinitionMap().at(name_);
-  return definition && definition->HasAlpha();
+  return definition && definition->GetContextAttributes().alpha();
 }
 
 const Vector<CSSSyntaxDescriptor>&

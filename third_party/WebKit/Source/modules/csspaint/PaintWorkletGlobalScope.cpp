@@ -198,10 +198,12 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
 
   v8::Local<v8::Function> paint = v8::Local<v8::Function>::Cast(paint_value);
 
+  ContextAttributes context_attributes;
+  context_attributes.setAlpha(has_alpha);
   CSSPaintDefinition* definition = CSSPaintDefinition::Create(
       ScriptController()->GetScriptState(), constructor, paint,
       native_invalidation_properties, custom_invalidation_properties,
-      input_argument_types, has_alpha);
+      input_argument_types, context_attributes);
   paint_definitions_.Set(name, definition);
 
   // TODO(xidachen): the following steps should be done with a postTask when

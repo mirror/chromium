@@ -8,6 +8,7 @@
 #include <memory>
 #include "modules/ModulesExport.h"
 #include "modules/canvas2d/BaseRenderingContext2D.h"
+#include "modules/csspaint/ContextAttributes.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/graphics/ImageBuffer.h"
 
@@ -27,10 +28,10 @@ class MODULES_EXPORT PaintRenderingContext2D
  public:
   static PaintRenderingContext2D* Create(
       std::unique_ptr<ImageBuffer> image_buffer,
-      bool has_alpha,
+      const ContextAttributes& context_attributes,
       float zoom) {
-    return new PaintRenderingContext2D(std::move(image_buffer), has_alpha,
-                                       zoom);
+    return new PaintRenderingContext2D(std::move(image_buffer),
+                                       context_attributes, zoom);
   }
 
   // BaseRenderingContext2D
@@ -65,18 +66,18 @@ class MODULES_EXPORT PaintRenderingContext2D
 
   void ValidateStateStack() const final;
 
-  bool HasAlpha() const final { return has_alpha_; }
+  bool HasAlpha() const final { return context_attributes_.alpha(); }
 
   // PaintRenderingContext2D cannot lose it's context.
   bool isContextLost() const final { return false; }
 
  private:
   PaintRenderingContext2D(std::unique_ptr<ImageBuffer>,
-                          bool has_alpha,
+                          const ContextAttributes&,
                           float zoom);
 
   std::unique_ptr<ImageBuffer> image_buffer_;
-  bool has_alpha_;
+  ContextAttributes context_attributes_;
 };
 
 }  // namespace blink
