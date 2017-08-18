@@ -46,6 +46,30 @@
       "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071a0add_a33352db",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T22:33:01Z",
+      "side": 1,
+      "message": "Hi sky@, if we plan to do some big refactor to change the reporter, would that be ok I do it in another cl?\n\nWe plan to merge this cl to M61, so that we can use the UMA to evaluate how much performance improvement we can achieve by caching render surface in hiding window animation, another cl you are reviewing (https://chromium-review.googlesource.com/c/620132)",
+      "parentUuid": "fbe7c438_a641b68f",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 73
+      },
+      "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
