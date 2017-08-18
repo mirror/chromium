@@ -63,6 +63,47 @@
       "revId": "cced2b3858379451482f469030367e51fce274f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa48e5fe_21f68332",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T17:11:31Z",
+      "side": 1,
+      "message": "I\u0027d prefer that we actually had a subclass of MouseEvent that was the context menu event that stored the WebContextMenuData (and not an unsigned event_data) and the WebMenuSourceType.",
+      "parentUuid": "ce2cd891_9443ad72",
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99f81e7_c4d0bde8",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T17:11:31Z",
+      "side": 1,
+      "message": "I\u0027d just create the context menu event here and dispatch it. I don\u0027t think it needs to call into the MouseEventManager; then you don\u0027t need to change the MouseEventManager to take a field about context menus.",
+      "range": {
+        "startLine": 1780,
+        "startChar": 9,
+        "endLine": 1780,
+        "endChar": 29
+      },
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
