@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd30b6d6_91e86c52",
+        "filename": "chrome/browser/profiles/avatar_menu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T22:38:20Z",
+      "side": 1,
+      "message": "How about adding MAX \u003d PROFILE_DELETED? That way switch statements don\u0027t need to deal with MAX and code like you have in browser_non_client_frame_view is more likely to remain correct if someone adds a new value.",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 19
+      },
+      "revId": "3dd6d7e01365cf7c2e9d731faef4b60779b7bce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
