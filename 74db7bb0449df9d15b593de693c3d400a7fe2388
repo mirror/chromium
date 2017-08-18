@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "892d6910_babb065e",
+        "filename": "chrome/tools/test/experiment_tool_win.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T20:40:43Z",
+      "side": 1,
+      "message": "Oh yeah, looks like I was distracted by something shiny while writing that. I don\u0027t think the \"In particular:\" bit was going to add anything that a user of the tool would really need to know, so I\u0027ve removed it.",
+      "parentUuid": "c41b6a4d_b0f23325",
+      "revId": "74db7bb0449df9d15b593de693c3d400a7fe2388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ff0b3f2_807ccf42",
         "filename": "chrome/tools/test/experiment_tool_win.py",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-18T14:16:29Z",
       "side": 1,
       "message": "Nit: slightly more pythonic would be:\n\n  path \u003d r\u0027%s\\ClientState%s\\%s\u0027 % (ChromeState._GOOGLE_UPDATE_PATH, medium, self._config[\u0027guid\u0027]",
+      "range": {
+        "startLine": 111,
+        "startChar": 11,
+        "endLine": 111,
+        "endChar": 12
+      },
+      "revId": "74db7bb0449df9d15b593de693c3d400a7fe2388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28dee56f_24162567",
+        "filename": "chrome/tools/test/experiment_tool_win.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T20:40:43Z",
+      "side": 1,
+      "message": "Thanks for the tip. Done here and in other similar places.",
+      "parentUuid": "2ff0b3f2_807ccf42",
       "range": {
         "startLine": 111,
         "startChar": 11,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b258b417_a33d7892",
+        "filename": "chrome/tools/test/experiment_tool_win.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T20:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c91a36f1_679eb6d1",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "74db7bb0449df9d15b593de693c3d400a7fe2388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "951d7315_5f016ed7",
         "filename": "chrome/tools/test/experiment_tool_win.py",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2b98b53e_87484166",
+        "filename": "chrome/tools/test/experiment_tool_win.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T20:40:43Z",
+      "side": 1,
+      "message": "Explanatory comment added.",
+      "parentUuid": "951d7315_5f016ed7",
+      "range": {
+        "startLine": 256,
+        "startChar": 51,
+        "endLine": 256,
+        "endChar": 54
+      },
+      "revId": "74db7bb0449df9d15b593de693c3d400a7fe2388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b14f4b6f_7633fa1b",
         "filename": "chrome/tools/test/experiment_tool_win.py",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-08-18T14:16:29Z",
       "side": 1,
       "message": "Why 10?",
+      "range": {
+        "startLine": 258,
+        "startChar": 43,
+        "endLine": 258,
+        "endChar": 45
+      },
+      "revId": "74db7bb0449df9d15b593de693c3d400a7fe2388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fcb33a2_1ad2e71f",
+        "filename": "chrome/tools/test/experiment_tool_win.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T20:40:43Z",
+      "side": 1,
+      "message": "Comment added.",
+      "parentUuid": "b14f4b6f_7633fa1b",
       "range": {
         "startLine": 258,
         "startChar": 43,
