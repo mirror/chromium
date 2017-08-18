@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80aeaf59_1bf366ae",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-08-18T19:58:16Z",
+      "side": 1,
+      "message": "Just realized I forgot to comment on these. This comment is redundant, given the naming of the event itself. Also, no need to prefix the event with Sync. And for consistency purposes, you can keep \"event\" out of the message name.\n\nSo it would just be:\nPasswordReuse password_reuse_event \u003d 104;\n\nMind making these changes in a follow up CL?",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "062f8ade01ff3eb9103a5d2c8fea87cd02c2b532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
