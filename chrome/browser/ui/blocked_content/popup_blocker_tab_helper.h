@@ -44,25 +44,29 @@ class PopupBlockerTabHelper
     virtual ~Observer() = default;
   };
 
-  // Returns true if a popup with |user_gesture| should be considered for
-  // blocking from |web_contents|.
-  static bool ConsiderForPopupBlocking(
-      content::WebContents* web_contents,
-      bool user_gesture,
-      const content::OpenURLParams* open_url_params);
-
   ~PopupBlockerTabHelper() override;
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Returns true if the popup request defined by |params| should be blocked.
-  // In that case, it is also added to the |blocked_popups_| container.
-  bool MaybeBlockPopup(const chrome::NavigateParams& params,
-                       const blink::mojom::WindowFeatures& window_features);
+  // A page can't spawn popups (or do anything else, either) until its load
+  // commits, so when we reach here, the popup was spawned by the
+  // NavigationController's last committed entry, not the active entry.  For
+  // example, if a page opens a popup in an onunload() handler, then the
+  // active entry is the page to be loaded as we navigate away from the
+  // unloading page.  For this reason, we can't use GetURL() to get the opener
+  // URL, because it returns the active entry.
+  static GURL GetOpenerUrlForCurrentPage(content::WebContents* web_contents);
 
-  // Adds a popup request to the |blocked_popups_| container.
-  void AddBlockedPopup(const BlockedWindowParams& params);
+  // Returns true if the popup request defined by |params| and the optional
+  // |open_url_params| should be blocked. In that case, it is also added to the
+  // |blocked_popups_| container.
+  static bool MaybeBlockPopup(
+      content::WebContents* web_contents,
+      const GURL& opener_url,
+      const chrome::NavigateParams& params,
+      const content::OpenURLParams* open_url_params,
+      const blink::mojom::WindowFeatures& window_features);
 
   // Creates the blocked popup with |popup_id| in given |dispostion|.
   // Note that if |disposition| is WindowOpenDisposition::CURRENT_TAB,
