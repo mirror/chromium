@@ -776,6 +776,33 @@ void NativeWidgetPrivate::ReparentNativeView(gfx::NativeView native_view,
 }
 
 // static
+void NativeWidgetPrivate::ReparentNativeWindow(gfx::NativeView native_view,
+                                               gfx::NativeView new_parent) {
+  DCHECK_NE(native_view, new_parent);
+  if (!new_parent) {
+    NOTREACHED();
+    return;
+  }
+
+  BridgedNativeWidget* bridge =
+      NativeWidgetMac::GetBridgeForNativeWindow([native_view window]);
+  BridgedNativeWidget* parent_bridge =
+      NativeWidgetMac::GetBridgeForNativeWindow([new_parent window]);
+  if (!bridge || bridge->parent() == parent_bridge)
+    return;
+
+  Widget::Widgets widgets;
+  GetAllChildWidgets(native_view, &widgets);
+  for (auto* child : widgets)
+    child->NotifyNativeViewHierarchyWillChange();
+
+  bridge->ChangeParentWidget(new_parent);
+
+  for (auto* child : widgets)
+    child->NotifyNativeViewHierarchyChanged();
+}
+
+// static
 bool NativeWidgetPrivate::IsMouseButtonDown() {
   return [NSEvent pressedMouseButtons] != 0;
 }

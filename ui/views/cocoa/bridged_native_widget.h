@@ -201,6 +201,9 @@ class VIEWS_EXPORT BridgedNativeWidget
     return child_windows_;
   }
 
+  // Change the parent widget to the widget owning the new_parent.
+  void ChangeParentWidget(NSView* new_parent);
+
   bool target_fullscreen_state() const { return target_fullscreen_state_; }
   bool window_visible() const { return window_visible_; }
   bool wants_to_be_visible() const { return wants_to_be_visible_; }

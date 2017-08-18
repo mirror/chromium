@@ -2422,9 +2422,13 @@ TEST_F(ViewTest, NativeViewHierarchyChanged) {
   child->SetContentsView(observer_view);
   EXPECT_EQ(toplevel1.get(), observer_view->toplevel());
 
-  Widget::ReparentNativeView(child->GetNativeView(),
-                             toplevel2->GetNativeView());
+  Widget::ReparentNativeWindow(child->GetNativeView(),
+                               toplevel2->GetNativeView());
   EXPECT_EQ(toplevel2.get(), observer_view->toplevel());
+
+  Widget::ReparentNativeView(child->GetNativeView(),
+                             toplevel1->GetNativeView());
+  EXPECT_EQ(toplevel1.get(), observer_view->toplevel());
 
   observer_view->parent()->RemoveChildView(observer_view);
   EXPECT_EQ(NULL, observer_view->toplevel());

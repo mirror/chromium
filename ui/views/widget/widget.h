@@ -359,9 +359,15 @@ class VIEWS_EXPORT Widget : public internal::NativeWidgetDelegate,
                                  Widgets* owned);
 
   // Re-parent a NativeView and notify all Widgets in |native_view|'s hierarchy
-  // of the change.
+  // of the change. Use ReparentNativeWindow() when the intention is to
+  // re-parent the widget of the native_view to another widget.
   static void ReparentNativeView(gfx::NativeView native_view,
                                  gfx::NativeView new_parent);
+
+  // Re-parent a NativeWindow of the |native_view|'s widget and notify all the
+  // child widgets of the change.
+  static void ReparentNativeWindow(gfx::NativeView native_view,
+                                   gfx::NativeView new_parent);
 
   // Returns the preferred size of the contents view of this window based on
   // its localized size data. The width in cols is held in a localized string

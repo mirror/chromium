@@ -266,6 +266,12 @@ void Widget::ReparentNativeView(gfx::NativeView native_view,
 }
 
 // static
+void Widget::ReparentNativeWindow(gfx::NativeView native_view,
+                                  gfx::NativeView new_parent) {
+  internal::NativeWidgetPrivate::ReparentNativeWindow(native_view, new_parent);
+}
+
+// static
 int Widget::GetLocalizedContentsWidth(int col_resource_id) {
   return ui::GetLocalizedContentsWidthForFont(
       col_resource_id, ResourceBundle::GetSharedInstance().GetFontWithDelta(

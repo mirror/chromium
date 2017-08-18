@@ -1081,6 +1081,25 @@ void BridgedNativeWidget::ReorderChildViews() {
   [bridged_view_ sortSubviewsUsingFunction:&SubviewSorter context:&rank];
 }
 
+void BridgedNativeWidget::ChangeParentWidget(NSView* new_parent) {
+  DCHECK([new_parent window]);
+  DCHECK(window_ && ![window_ isSheet]);
+  BridgedNativeWidget* bridged_native_widget_parent =
+      NativeWidgetMac::GetBridgeForNativeWindow([new_parent window]);
+
+  if (parent_)
+    parent_->RemoveChildWindow(this);
+
+  if (bridged_native_widget_parent) {
+    parent_ = bridged_native_widget_parent;
+    bridged_native_widget_parent->child_windows_.push_back(this);
+  } else {
+    parent_ = new WidgetOwnerNSWindowAdapter(this, new_parent);
+  }
+
+  [[new_parent window] addChildWindow:window_ ordered:NSWindowAbove];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // BridgedNativeWidget, internal::InputMethodDelegate:
 

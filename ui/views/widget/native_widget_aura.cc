@@ -1177,6 +1177,17 @@ void NativeWidgetPrivate::ReparentNativeView(gfx::NativeView native_view,
 }
 
 // static
+void NativeWidgetPrivate::ReparentNativeWindow(gfx::NativeView native_view,
+                                               gfx::NativeView new_parent) {
+  Widget* widget = Widget::GetWidgetForNativeView(native_view);
+  Widget* parent_widget = Widget::GetWidgetForNativeView(new_parent);
+  if (!widget || !parent_widget)
+    return;
+
+  ReparentNativeView(widget->GetNativeView(), parent_widget->GetNativeView());
+}
+
+// static
 bool NativeWidgetPrivate::IsMouseButtonDown() {
   return aura::Env::GetInstance()->IsMouseButtonDown();
 }

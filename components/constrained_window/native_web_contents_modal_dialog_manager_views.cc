@@ -179,8 +179,8 @@ void NativeWebContentsModalDialogManagerViews::HostChanged(
 
     for (std::set<views::Widget*>::iterator it = observed_widgets_.begin();
          it != observed_widgets_.end(); ++it) {
-      views::Widget::ReparentNativeView((*it)->GetNativeView(),
-                                        host_->GetHostView());
+      views::Widget::ReparentNativeWindow((*it)->GetNativeView(),
+                                          host_->GetHostView());
     }
 
     OnPositionRequiresUpdate();

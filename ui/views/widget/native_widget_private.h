@@ -67,6 +67,8 @@ class VIEWS_EXPORT NativeWidgetPrivate : public NativeWidget {
                                  Widget::Widgets* owned);
   static void ReparentNativeView(gfx::NativeView native_view,
                                  gfx::NativeView new_parent);
+  static void ReparentNativeWindow(gfx::NativeView native_view,
+                                   gfx::NativeView new_parent);
 
   // Returns true if any mouse button is currently down.
   static bool IsMouseButtonDown();
