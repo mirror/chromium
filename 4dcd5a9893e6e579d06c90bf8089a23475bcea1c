@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "766aa8a2_928678c5",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T16:45:28Z",
+      "side": 1,
+      "message": "Does RemoteSuggestionsProviderImpl ever dereference |prefetched_pages_tracker|?  Might be nice to have a comment there that nullptr is expected.",
+      "revId": "4dcd5a9893e6e579d06c90bf8089a23475bcea1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
