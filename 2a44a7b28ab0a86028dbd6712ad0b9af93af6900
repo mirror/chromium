@@ -46,6 +46,53 @@
       "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4922126c_bd8a3272",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-18T21:25:22Z",
+      "side": 1,
+      "message": "I see that it does say remove_cv but has an element type which is cv qualified. I find that part of the proposal a bit weird, since it\u0027s so inconsistent with the rest of the standard (most places that define a value_type have it as T). I guess it doesn\u0027t really matter in this case...\n\nDo you know how often that proposal is updated roughly? I kind of wonder if we should be pushing for implementing the proposal as written or more as we would use it in Chromium pending further changes. That\u0027s all a big nit though.",
+      "parentUuid": "6e6e8042_09832172",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1f990b_de9c3bdc",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-18T21:25:22Z",
+      "side": 1,
+      "message": "I\u0027m again a bit confused here. If this overload is disabled because T is not const, then wouldn\u0027t it still be able to resolve the first overload? I don\u0027t see what\u0027s different other than the constness of the container itself. Can you explain this a bit? Specifically what cases would this accept that would not otherwise be accepted and are there cases where this rejects because of the constness of T and doesn\u0027t work with the above overload.",
+      "range": {
+        "startLine": 243,
+        "startChar": 25,
+        "endLine": 243,
+        "endChar": 61
+      },
+      "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
