@@ -116,6 +116,24 @@
       "revId": "a0f025c79aa423d145817de598551d9bbe6a9c0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7750a4f_84b105ae",
+        "filename": "url/url_canon_etc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T07:41:35Z",
+      "side": 1,
+      "message": "Oh... I missed that this function is templated on CHAR...\n\nOK I guess this is the best way to do it \u003d/\n\nNormally I would say that the nice approach would be to use plumb through a BasicStringPiece, but even that would be tricky here (as the string literal would need to have both a 8-bit and 16-bit version)",
+      "parentUuid": "0f529819_ee325f2e",
+      "revId": "a0f025c79aa423d145817de598551d9bbe6a9c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
