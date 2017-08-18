@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f662b917_705d503d",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T14:09:27Z",
+      "side": 1,
+      "message": "//   resubmit |sequence| once it\u0027s done running the Task.",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 41
+      },
+      "revId": "44eed2c0d6712d40be97500975406a1d48bab008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd13af7b_3439c38c",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T14:09:27Z",
+      "side": 1,
+      "message": "I think this can be private.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 65
+      },
+      "revId": "44eed2c0d6712d40be97500975406a1d48bab008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ed4a75_4c3ccb70",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T14:09:27Z",
+      "side": 1,
+      "message": "To match terminology that I use in another CL that I\u0027m currently working on, change this to ScheduleSequence().",
+      "range": {
+        "startLine": 71,
+        "startChar": 15,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "44eed2c0d6712d40be97500975406a1d48bab008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
