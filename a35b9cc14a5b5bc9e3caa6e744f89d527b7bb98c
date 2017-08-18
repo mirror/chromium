@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48b71d6f_3880f0b1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T16:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626004b6_84faa844",
+      "revId": "a35b9cc14a5b5bc9e3caa6e744f89d527b7bb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee22130_b387788e",
         "filename": "chrome/browser/resources/snippets_internals.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a35b9cc14a5b5bc9e3caa6e744f89d527b7bb98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2eb6216_0a4b4304",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T16:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee22130_b387788e",
+      "revId": "a35b9cc14a5b5bc9e3caa6e744f89d527b7bb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "55fc18ac_614e570c",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T16:28:04Z",
+      "side": 1,
+      "message": "Done.\n\nFunny, I\u0027ve thought \"What does it take so long...\" :)",
+      "parentUuid": "1a81a693_34d48924",
+      "range": {
+        "startLine": 387,
+        "startChar": 50,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "a35b9cc14a5b5bc9e3caa6e744f89d527b7bb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ba3702_9d5db82b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "a35b9cc14a5b5bc9e3caa6e744f89d527b7bb98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe4d226_2da24d56",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T16:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ba3702_9d5db82b",
+      "revId": "a35b9cc14a5b5bc9e3caa6e744f89d527b7bb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
