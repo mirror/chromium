@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "dcb4c130_2cbe6a5d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-18T07:52:37Z",
+      "side": 1,
+      "message": "FYI, there was a bug that made the std::move required if you returned a subclass of the return type.\nThat may explain why the std::move was in your example.\nNow that the bug is fixed, it is better to not put it.",
+      "parentUuid": "f7f72d6b_b5993a84",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba260a4_b174bf5f",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "Sorry I don\u0027t get it.\nIf I have 0 incognito tab before the action, then 1 after the action it means it is a new incognito tab no?",
       "parentUuid": "9cb76dfc_bf237139",
+      "range": {
+        "startLine": 444,
+        "startChar": 18,
+        "endLine": 444,
+        "endChar": 42
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af916c1d_9391bc31",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-18T07:52:37Z",
+      "side": 1,
+      "message": "Yes, but your test is designed to be symmetrical between normal tabs and incognito tabs, \nGoing from 0 to 1 is different than going from 1 to 2.\nBut you can keep it that way.",
+      "parentUuid": "3ff9bcbe_65d2881e",
       "range": {
         "startLine": 444,
         "startChar": 18,
