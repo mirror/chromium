@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a530929_20ae05f1",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T20:56:21Z",
+      "side": 1,
+      "message": "Sorry that I\u0027m not as familiar with this code as I\u0027d like. Could ya tell me more about why the focus would be lost (I\u0027d like to suggest not using setTimeout if it can be avoided, but I don\u0027t know enough about this case to say if it can be avoided). \n\nMaybe I should say: please check to see if there is a way to avoid using a setTimeout and avoid using setTimeout if that\u0027s reasonable. If not, just tell me a bit more about why setTimeout is unavoidable.",
+      "revId": "0e917e8fe02216d2041d56e8f955ec888edfc44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73791586_ea08d6b9",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T20:56:21Z",
+      "side": 1,
+      "message": "tip: zero ms is the default (so it may be omitted, but if you prefer to have it I\u0027m fine with that too).",
+      "revId": "0e917e8fe02216d2041d56e8f955ec888edfc44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
