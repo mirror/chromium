@@ -33,7 +33,8 @@ ContextualSuggestionsService::ContextualSuggestionsService(
     net::URLRequestContextGetter* request_context)
     : request_context_(request_context),
       signin_manager_(signin_manager),
-      token_service_(token_service) {}
+      token_service_(token_service),
+      waiting_for_fetcher_(false) {}
 
 ContextualSuggestionsService::~ContextualSuggestionsService() {}
 
@@ -64,6 +65,7 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
     return;
   }
 
+  waiting_for_fetcher_ = true;
   // Create the oauth2 token fetcher.
   const OAuth2TokenService::ScopeSet scopes{
       "https://www.googleapis.com/auth/cusco-chrome-extension"};
@@ -74,6 +76,11 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
                      std::move(callback)));
 }
 
+void ContextualSuggestionsService::StopCreatingFetcher() {
+  DCHECK(waiting_for_fetcher_);
+  token_fetcher_.reset();
+  waiting_for_fetcher_ = false;
+}
 // static
 GURL ContextualSuggestionsService::ContextualSuggestionsUrl(
     const std::string& current_url,
@@ -250,6 +257,8 @@ void ContextualSuggestionsService::AccessTokenAvailable(
     ContextualSuggestionsCallback callback,
     const GoogleServiceAuthError& error,
     const std::string& access_token) {
+  if (!waiting_for_fetcher_)
+    return;
   DCHECK(token_fetcher_);
   token_fetcher_.reset();
 
