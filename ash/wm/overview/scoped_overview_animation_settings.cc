@@ -167,6 +167,7 @@ ScopedOverviewAnimationSettings::ScopedOverviewAnimationSettings(
       GetAnimationDuration(animation_type));
   animation_settings_->SetAnimationMetricsReporter(
       GetMetricsReporter(animation_type));
+  animation_settings_->CacheRenderSurface();
 }
 
 ScopedOverviewAnimationSettings::~ScopedOverviewAnimationSettings() {}
