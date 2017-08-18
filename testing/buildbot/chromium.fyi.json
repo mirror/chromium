@@ -10056,6 +10056,7 @@
   "Fuchsia (dbg)": {
     "additional_compile_targets": [
       "gl_unittests",
+      "headless_shell",
       "media_unittests",
       "net_unittests"
     ],
