@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047a85b6_17dbd06f",
+        "filename": "ui/aura/test/aura_test_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T17:53:03Z",
+      "side": 1,
+      "message": "I guess it is important to reset this before creating the TestScreen? Add a comment.",
+      "revId": "c6682f0f88b32105a54f42f59273b7c82764607d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1c006e_47211951",
+        "filename": "ui/aura/test/env_test_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T17:53:03Z",
+      "side": 1,
+      "message": "Alternatively, reset event_controller_-\u003etouch_ids_down_ \u003d 0;",
+      "revId": "c6682f0f88b32105a54f42f59273b7c82764607d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
