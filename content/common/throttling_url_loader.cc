@@ -167,6 +167,8 @@ void ThrottlingURLLoader::StartNow(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   mojom::URLLoaderClientPtr client;
   client_binding_.Bind(mojo::MakeRequest(&client), std::move(task_runner));
+  client_binding_.set_connection_error_handler(base::Bind(
+      &ThrottlingURLLoader::OnClientConnectionError, base::Unretained(this)));
 
   if (factory) {
     DCHECK(!start_loader_callback);
@@ -284,7 +286,15 @@ void ThrottlingURLLoader::OnComplete(
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!loader_cancelled_);
 
+  // This is the last expected message. Pipe closure before this is an error
+  // (see OnClientConnectionError). After this it is expected and should be
+  // ignored.
+  DisconnectClient();
   forwarding_client_->OnComplete(status);
+}
+
+void ThrottlingURLLoader::OnClientConnectionError() {
+  CancelWithError(net::ERR_FAILED);
 }
 
 void ThrottlingURLLoader::CancelWithError(int error_code) {

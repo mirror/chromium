@@ -114,6 +114,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
       mojo::ScopedDataPipeConsumerHandle body) override;
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
+  void OnClientConnectionError();
+
   // URLLoaderThrottle::Delegate:
   void CancelWithError(int error_code) override;
   void Resume() override;
