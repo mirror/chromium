@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "484aa3cf_55082a81",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-18T06:50:13Z",
+      "side": 1,
+      "message": "Understood! Hopefully, I\u0027ll get through the tests fast enough to have some time at the end to make adjustments like that.",
+      "parentUuid": "4bbf0502_d00b5b33",
+      "range": {
+        "startLine": 2,
+        "startChar": 26,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "f7c1b478f0bb7de3f4ccfbdc353fc4b069208d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2df6c0c2_8e521819",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
         "patchSetId": 2
