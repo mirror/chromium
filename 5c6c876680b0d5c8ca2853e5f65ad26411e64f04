@@ -206,6 +206,30 @@
       "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972aa349_7db4e266",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T03:21:41Z",
+      "side": 1,
+      "message": "\u003e It seems to me that if you need the browser this function makes more sense on BrowserWindow. Is there a reason you want to route it through TabDialogs rather than Browser/BrowserWindow?\n\nI think this can be said for most things in TabDialogs except perhaps hung renderers. I\u0027ve been leaning towards TabDialogs for dialogs that are conceptually bound to a WebContents* rather than a BrowserWindow*, which I think is the case here. BrowserView* is just used to find an anchor point (which should even be \"null\" in some cases - e.g. fullscreen, hosted/bookmark apps).\n\nAlso I think BrowserWindow is getting a bit cluttered and there\u0027s more coupling/plumbing required to show dialogs through that interface. (e.g. -hypothetically- if a WebContents wants a way to show a dialog over a packaged app window or a webui dialog, Browser* isn\u0027t the right thing to build the interface on, so we shouldn\u0027t couple dialog APIs to that).\n\n\u003e Also, how do you know you can look up the browser at this point? What if we end up here and web_contents_ isn\u0027t the active tab?\n\n(I think this is a valid point. Although this was just moved from SaveCardBubbleControllerImpl::ShowBubble(), and I don\u0027t think the paths leading up to it have changed. Probably the dialog will appear with the wrong tab showing, but getting into that situation should be hard for a user to achieve).",
+      "parentUuid": "fc3d08af_95ae5212",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
