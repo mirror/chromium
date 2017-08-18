@@ -805,6 +805,10 @@ static_library("headless_shell_lib") {
 if (is_fuchsia) {
   fuchsia_executable_runner("headless_shell_fuchsia") {
     exe_name = "headless_shell"
+    data = [
+      "$root_out_dir/natives_blob.bin",
+      "$root_out_dir/snapshot_blob.bin",
+    ]
   }
 }
 
