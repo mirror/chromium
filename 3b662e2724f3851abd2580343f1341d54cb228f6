@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "881122f7_f6f7dca7",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-18T15:52:04Z",
+      "side": 1,
+      "message": "Again, we can do things incrementally, but I envision this struct becoming a mojo struct.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0342100e_fa4c7863",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -36,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "d04b936e_30442b20",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-18T15:52:04Z",
+      "side": 1,
+      "message": "(probably kinuko@ should answer this)\n\nCan we remove the \"Web\" prefix?\n\nAlso seems cleaner if this just goes into WebKit/common now. Eventually everything should be going there.",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0094fc75_60b6d731",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -47,6 +93,23 @@
       "writtenOn": "2017-08-18T14:21:50Z",
       "side": 1,
       "message": "Should this follow kNone naming style?",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638562fc_cc1c15c5",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-18T15:52:04Z",
+      "side": 1,
+      "message": "Thinking aloud here... I know there\u0027s value in doing things incrementally, but I envision eventually content::ServiceWorkerStatusCode just becomes this mojo enum. I kinda wonder if we should just name this ServiceWorkerStatusCode now. Especially the None value seems to mean this should be named StatusCode, not ErrorType.\n\nBut probably for the first step we don\u0027t need that.",
       "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
