@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9d2cc322_5951d8bd",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T10:27:15Z",
+      "side": 1,
+      "message": "If you want to test CORS you should do that with something that does exist (and is cross-origin - implying an http/ test with the current infrastructure.) file: is rarely (if ever) a good choice for this.",
+      "parentUuid": "59df46bc_534f808e",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2ae31a3_7cd4c3a4",
         "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
         "patchSetId": 15
@@ -165,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "aa901a81_7ae3e244",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T10:27:15Z",
+      "side": 1,
+      "message": "If doing this adds too much complexity to this CL, then feel free to do it later - but in that case the RemoveAllCues() that was removed should probably be restored (and decorated with a TODO.)\nAs for tests, depends on what you end up doing I guess, but I think it would be ok just assert the current behavior for now (under the assumption that will fix it in quick succession, at which point the test will be fixed/updated as well.)",
+      "parentUuid": "101a4791_98f811b9",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "864c44b4_5f860813",
         "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
         "patchSetId": 15
@@ -200,6 +248,30 @@
       "side": 1,
       "message": "If we move this check and cues removing action below, this will not execute if CanLoadUrl() (e.g. CORS restrictions, URL is malformed or empty) is failed, will it?",
       "parentUuid": "864c44b4_5f860813",
+      "range": {
+        "startLine": 190,
+        "startChar": 6,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09661c66_ba582f11",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T10:27:15Z",
+      "side": 1,
+      "message": "Right, which is why we\u0027d need to reorder to:\n\nif (url \u003d\u003d url_)\n  ...\nurl_ \u003d url;\nif (track_)\n  ...\nif (!CanLoadUrl(url))\n  ...\n\nor so? (I think we could/should also move cors_mode \u003d ... down so that the url_ \u003d\u003d url check is right after the URL is resolved.) But as I said, this should be fine to do separately as a cleanup (theoretically I guess there\u0027s a slight change in behavior from doing so, for example for valid-url -\u003e invalid-url -\u003e (same) valid-url, so I guess we should make sure that\u0027s tested.)",
+      "parentUuid": "be598ce5_2bb73567",
       "range": {
         "startLine": 190,
         "startChar": 6,
