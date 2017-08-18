@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e70912a0_7b5b7b43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-18T21:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918b5cb7_f1e9e819",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "7041cff90588e5f5f5d898f511b7dc403be7f4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66d8525b_eb50cd68",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "7041cff90588e5f5f5d898f511b7dc403be7f4ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09507941_8dde0f8a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-18T21:47:27Z",
+      "side": 1,
+      "message": "Setting id for now",
+      "parentUuid": "66d8525b_eb50cd68",
+      "range": {
+        "startLine": 308,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 93
+      },
+      "revId": "7041cff90588e5f5f5d898f511b7dc403be7f4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
