@@ -62,6 +62,9 @@
 // coordinator.
 - (void)willBeRemovedFromParentCoordinator;
 
+// This is the best place to perform starting and initialization tasks.
+- (void)willStart;
+
 // Called when a child coordinator did start. This is a blank template method.
 // Subclasses can override this method when they need to know when their
 // children start.
