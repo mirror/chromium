@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc3a2b98_84e9c11e",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-18T02:37:55Z",
+      "side": 1,
+      "message": "thank you for the catch!",
+      "parentUuid": "907f13ac_84ffc706",
+      "range": {
+        "startLine": 78,
+        "startChar": 35,
+        "endLine": 78,
+        "endChar": 62
+      },
+      "revId": "607f097fb390e4f2eabbcd68169d199bfc775047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed35475f_a068c6d2",
         "filename": "components/translate/core/browser/translate_manager.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T02:15:59Z",
       "side": 1,
       "message": "metrics::TranslateEventProto::INITIALIZATION_ERROR + 1\nThe value of the histogram needs to be strictly less the max value:\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?rcl\u003d38e2b7aee1f91154d458ad07f38e0f09327fb873\u0026l\u003d39\n\nBut this is brittle. Next time we add an element in the enum, we might easily overlook updating this. Maybe you could add an EVENT_TYPE_MAX element at the end of the event_type enum? This seems to be the typical solution.",
+      "range": {
+        "startLine": 592,
+        "startChar": 36,
+        "endLine": 592,
+        "endChar": 56
+      },
+      "revId": "607f097fb390e4f2eabbcd68169d199bfc775047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea987ef5_c376546e",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-18T02:37:55Z",
+      "side": 1,
+      "message": "thank you for the suggestion!",
+      "parentUuid": "ed35475f_a068c6d2",
       "range": {
         "startLine": 592,
         "startChar": 36,
