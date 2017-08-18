@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71e0c191_670e54c8",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-18T09:51:36Z",
+      "side": 1,
+      "message": "Add the crbug number.",
+      "revId": "3fcfe2615ccf09880048528b18a17577e9e2b718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
