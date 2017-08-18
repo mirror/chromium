@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e323e98_f0c5cce0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T12:17:34Z",
+      "side": 1,
+      "message": "const CategoryContent\u0026 content \u003d it-\u003esecond; ?",
+      "range": {
+        "startLine": 1055,
+        "startChar": 4,
+        "endLine": 1055,
+        "endChar": 19
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4631b078_94b824e7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T12:17:34Z",
+      "side": 1,
+      "message": "this logic is now duplicated with ClearExpiredDismissedSuggestions().\nTo keep the patch minimally invasive, I\u0027d suggest not to have that logic in this method, but have it in the feature-flag protected block above.",
+      "range": {
+        "startLine": 1059,
+        "startChar": 18,
+        "endLine": 1059,
+        "endChar": 29
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbe81e7_10cbf402",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3638,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T12:17:34Z",
+      "side": 1,
+      "message": "i\u0027d drop this empty line and 3658, so that it\u0027s all one block. Otherwise, the block comment above is unclear.",
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca3c9ce_ee75d032",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3640,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T12:17:34Z",
+      "side": 1,
+      "message": "have the FetchedCategory as a variable instead of the builder? makes it easier to reason about the state and further usage.",
+      "range": {
+        "startLine": 3640,
+        "startChar": 31,
+        "endLine": 3640,
+        "endChar": 56
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b0bc15_a3c65b2e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3660,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T12:17:34Z",
+      "side": 1,
+      "message": "I believe there\u0027s no need to reuse the variable (again, hard to reason about state). rename the variable to |initial_categories| and build it inline instead:\nFetchTheseSuggestions(..., {articles_category});",
+      "range": {
+        "startLine": 3660,
+        "startChar": 66,
+        "endLine": 3660,
+        "endChar": 0
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd7421_1b962827",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3757,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T12:17:34Z",
+      "side": 1,
+      "message": "nit: \u0027Keep\u0027 instead of \u0027NotDelete\u0027? Less nots make it easier to read and understand (also applies to the other tests.",
+      "range": {
+        "startLine": 3757,
+        "startChar": 7,
+        "endLine": 3757,
+        "endChar": 60
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
