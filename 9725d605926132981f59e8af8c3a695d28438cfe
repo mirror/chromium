@@ -16,6 +16,24 @@
       "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74391e3e_d168c164",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-18T19:07:04Z",
+      "side": 1,
+      "message": "This state was actually not in the mock, so I just followed what Settings is doing. \n\nThe computed result comes out to be 15.6px (when 13px is 100%), but it seems kind of weird to say \"the intended size is 15.6\" (why the decimal?).\n\nThoughts?",
+      "parentUuid": "b0b68ac1_24f4a677",
+      "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
