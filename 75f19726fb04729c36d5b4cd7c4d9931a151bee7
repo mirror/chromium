@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "791e8dde_582fefb0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-18T15:17:24Z",
+      "side": 0,
+      "message": "It doesn\u0027t seem any worse, from what I can tell, although I\u0027m not a great VoiceOver user. Stil, the VoiceOver experience with trees seems pretty bad, even in Safari. In Chrome, VoiceOver doesn\u0027t announce \"expanded\" or \"collapsed\" events (even without this CL).\n\nI think we\u0027re going to need to spend some more time on the ARIA+VoiceOver experience overall.",
+      "parentUuid": "6cbddcb8_72ecabc9",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5812319a_dd34625a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 8
@@ -122,6 +140,24 @@
       "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3876c89_58955707",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-18T15:17:24Z",
+      "side": 0,
+      "message": "Implemented with kAncestorIsLeafNode",
+      "parentUuid": "faab303a_b40ad38d",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
