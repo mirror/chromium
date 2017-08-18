@@ -1026,7 +1026,7 @@ static_library("extensions") {
     ]
   }
 
-  if (is_chromeos && use_ozone) {
+  if (is_chromeos) {
     sources -= [ "global_shortcut_listener_chromeos.cc" ]
   }
   if (!use_ozone) {
