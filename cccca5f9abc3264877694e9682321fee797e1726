@@ -46,6 +46,30 @@
       "revId": "cccca5f9abc3264877694e9682321fee797e1726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708623eb_45acc46a",
+        "filename": "third_party/WebKit/Source/core/dom/NodeListsNodeData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-18T11:23:04Z",
+      "side": 1,
+      "message": "Working on this one currently. \n\nWe already have IsHeapObjectAlive on mixins. I am going to generalize this one to not return a bool but the HeapObjectHeader, so we can reuse it for wrapper tracing without introducing any virtual method overhead.",
+      "parentUuid": "117adbc2_ff7316d1",
+      "range": {
+        "startLine": 78,
+        "startChar": 22,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "cccca5f9abc3264877694e9682321fee797e1726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
