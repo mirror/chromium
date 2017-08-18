@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea770f74_5835f324",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-18T22:20:29Z",
+      "side": 1,
+      "message": "Could you comment that this only works on non-official build because of the ENABLE_WEBRTC_REMOTING_CLIENT macro?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 27
+      },
+      "revId": "5b16558b7b24475347c98231d8d26af5b8db9fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
