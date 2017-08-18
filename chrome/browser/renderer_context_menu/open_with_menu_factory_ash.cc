@@ -12,6 +12,7 @@
 
 #include "ash/link_handler_model.h"
 #include "ash/link_handler_model_factory.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -20,6 +21,8 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/renderer_context_menu/render_view_context_menu_proxy.h"
 #include "content/public/common/context_menu_params.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 
 const int OpenWithMenuObserver::kNumMainMenuCommands = 4;
@@ -49,6 +52,21 @@ OpenWithMenuObserver::OpenWithMenuObserver(RenderViewContextMenuProxy* proxy)
 OpenWithMenuObserver::~OpenWithMenuObserver() {}
 
 void OpenWithMenuObserver::InitMenu(const content::ContextMenuParams& params) {
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &link_handler_);
+
+  ash::mojom::LinkHandlerObserverAssociatedPtrInfo ptr_info;
+  observer_binding_.Bind(mojo::MakeRequest(&ptr_info));
+  link_handler_->ConnectModel(std::move(ptr_info), link_url_);
+
+  // Add placeholder items.
+  std::unique_ptr<ui::SimpleMenuModel> submenu(
+      new ui::SimpleMenuModel(&submenu_delegate_));
+  AddPlaceholderItems(proxy_, submenu.get());
+  submenu_ = std::move(submenu);
+#if 0
+  ash::mojom::
   if (!ash::Shell::HasInstance())
     return;
   ash::LinkHandlerModelFactory* factory =
@@ -68,6 +86,7 @@ void OpenWithMenuObserver::InitMenu(const content::ContextMenuParams& params) {
   submenu_ = std::move(submenu);
 
   menu_model_->AddObserver(this);
+#endif
 }
 
 bool OpenWithMenuObserver::IsCommandIdSupported(int command_id) {
@@ -89,11 +108,11 @@ void OpenWithMenuObserver::ExecuteCommand(int command_id) {
   const auto it = handlers_.find(command_id);
   if (it == handlers_.end())
     return;
-  menu_model_->OpenLinkWithHandler(link_url_, it->second.id);
+  link_handler_->OpenLinkWithHandler(link_url_, it->second.id);
 }
 
-void OpenWithMenuObserver::ModelChanged(
-    const std::vector<ash::LinkHandlerInfo>& handlers) {
+void OpenWithMenuObserver::OnLinkHandlerModelChanged(
+    std::vector<ash::mojom::LinkHandlerInfoPtr> handlers) {
   auto result = BuildHandlersMap(handlers);
   handlers_ = std::move(result.first);
   const int submenu_parent_id = result.second;
@@ -112,8 +131,8 @@ void OpenWithMenuObserver::ModelChanged(
           l10n_util::GetStringFUTF16(IDS_CONTENT_CONTEXT_OPEN_WITH_APP,
                                      base::UTF8ToUTF16(it->second.name));
       proxy_->UpdateMenuItem(command_id, true, false, label);
-      if (!it->second.icon.IsEmpty())
-        proxy_->UpdateMenuIcon(command_id, it->second.icon);
+      if (!it->second.icon.isNull())
+        proxy_->UpdateMenuIcon(command_id, gfx::Image(it->second.icon));
     }
   }
 }
@@ -124,11 +143,13 @@ void OpenWithMenuObserver::AddPlaceholderItemsForTesting(
   return AddPlaceholderItems(proxy, submenu);
 }
 
+#if 0
 std::pair<OpenWithMenuObserver::HandlerMap, int>
 OpenWithMenuObserver::BuildHandlersMapForTesting(
-    const std::vector<ash::LinkHandlerInfo>& handlers) {
+    const std::vector<ash::mojom::LinkHandlerInfo>& handlers) {
   return BuildHandlersMap(handlers);
 }
+#endif
 
 void OpenWithMenuObserver::AddPlaceholderItems(
     RenderViewContextMenuProxy* proxy,
@@ -148,7 +169,7 @@ void OpenWithMenuObserver::AddPlaceholderItems(
 
 std::pair<OpenWithMenuObserver::HandlerMap, int>
 OpenWithMenuObserver::BuildHandlersMap(
-    const std::vector<ash::LinkHandlerInfo>& handlers) {
+    const std::vector<ash::mojom::LinkHandlerInfoPtr>& handlers) {
   const int kInvalidCommandId = -1;
   const int submenu_id_start =
       IDC_CONTENT_CONTEXT_OPEN_WITH1 + kNumMainMenuCommands;
@@ -165,21 +186,21 @@ OpenWithMenuObserver::BuildHandlersMap(
     // All apps can be shown with the regular main menu items.
     for (int i = 0; i < num_apps; ++i) {
       handler_map[IDC_CONTENT_CONTEXT_OPEN_WITH1 + i] =
-          handlers[handlers_index++];
+          *handlers[handlers_index++];
     }
   } else {
     // Otherwise, use the submenu too. In this case, disable the last item of
     // the regular main menu (hence '-2').
     for (int i = 0; i < kNumMainMenuCommands - 2; ++i) {
       handler_map[IDC_CONTENT_CONTEXT_OPEN_WITH1 + i] =
-          handlers[handlers_index++];
+          *handlers[handlers_index++];
     }
     submenu_parent_command_id =
         IDC_CONTENT_CONTEXT_OPEN_WITH1 + kNumMainMenuCommands - 1;
     const int sub_items =
         std::min(num_apps - (kNumMainMenuCommands - 2), kNumSubMenuCommands);
     for (int i = 0; i < sub_items; ++i) {
-      handler_map[submenu_id_start + i] = handlers[handlers_index++];
+      handler_map[submenu_id_start + i] = *handlers[handlers_index++];
     }
   }
 

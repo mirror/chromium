@@ -10,6 +10,7 @@
 #include "ash/cast_config_controller.h"
 #include "ash/display/ash_display_controller.h"
 #include "ash/ime/ime_controller.h"
+#include "ash/link_handler_model_factory.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/media_controller.h"
 #include "ash/new_window_controller.h"
@@ -116,6 +117,11 @@ void BindWallpaperRequestOnMainThread(
   Shell::Get()->wallpaper_controller()->BindRequest(std::move(request));
 }
 
+void BindLinkHandlerControllerRequestOnMainThread(
+    mojom::LinkHandlerControllerRequest request) {
+  Shell::Get()->link_handler_model_factory()->BindRequest(std::move(request));
+}
+
 }  // namespace
 
 namespace mojo_interface_factory {
@@ -166,6 +172,9 @@ void RegisterInterfaces(
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindWallpaperRequestOnMainThread),
                          main_thread_task_runner);
+  registry->AddInterface(
+      base::Bind(&BindLinkHandlerControllerRequestOnMainThread),
+      main_thread_task_runner);
 }
 
 }  // namespace mojo_interface_factory

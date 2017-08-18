@@ -7,6 +7,7 @@
 #include <string>
 #include <utility>
 
+#include "ash/public/interfaces/link_handler.mojom.h"
 #include "base/bind.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
@@ -66,19 +67,14 @@ bool LinkHandlerModelImpl::Init(const GURL& url) {
   // a different (ARC) process, issue a mojo IPC request. Usually, the
   // callback function, OnUrlHandlerList, is called within a few milliseconds
   // even on the slowest Chromebook we support.
-  const GURL rewritten(RewriteUrlFromQueryIfAvailable(url));
+  url_ = RewriteUrlFromQueryIfAvailable(url);
   instance->RequestUrlHandlerList(
-      rewritten.spec(), base::Bind(&LinkHandlerModelImpl::OnUrlHandlerList,
-                                   weak_ptr_factory_.GetWeakPtr()));
+      url_.spec(), base::Bind(&LinkHandlerModelImpl::OnUrlHandlerList,
+                              weak_ptr_factory_.GetWeakPtr()));
   return true;
 }
 
-void LinkHandlerModelImpl::AddObserver(Observer* observer) {
-  observer_list_.AddObserver(observer);
-}
-
-void LinkHandlerModelImpl::OpenLinkWithHandler(const GURL& url,
-                                               uint32_t handler_id) {
+void LinkHandlerModelImpl::OpenLinkWithHandler(uint32_t handler_id) {
   auto* arc_service_manager = ArcServiceManager::Get();
   if (!arc_service_manager)
     return;
@@ -88,8 +84,7 @@ void LinkHandlerModelImpl::OpenLinkWithHandler(const GURL& url,
     return;
   if (handler_id >= handlers_.size())
     return;
-  const GURL rewritten(RewriteUrlFromQueryIfAvailable(url));
-  instance->HandleUrl(rewritten.spec(), handlers_[handler_id]->package_name);
+  instance->HandleUrl(url_.spec(), handlers_[handler_id]->package_name);
 }
 
 void LinkHandlerModelImpl::OnUrlHandlerList(
@@ -128,7 +123,7 @@ void LinkHandlerModelImpl::NotifyObserver(
     icons.reset();
   }
 
-  std::vector<ash::LinkHandlerInfo> handlers;
+  std::vector<ash::mojom::LinkHandlerInfoPtr> handlers;
   for (size_t i = 0; i < handlers_.size(); ++i) {
     gfx::Image icon;
     const ArcIntentHelperBridge::ActivityName activity(
@@ -137,11 +132,18 @@ void LinkHandlerModelImpl::NotifyObserver(
     if (it != icons_.end())
       icon = it->second.icon16;
     // Use the handler's index as an ID.
-    ash::LinkHandlerInfo handler = {handlers_[i]->name, icon, i};
-    handlers.push_back(handler);
+    ash::mojom::LinkHandlerInfoPtr handler = ash::mojom::LinkHandlerInfo::New();
+    handler->name = handlers_[i]->name;
+    handler->icon = icon.AsImageSkia();
+    handler->id = i;
+    handlers.push_back(std::move(handler));
   }
-  for (auto& observer : observer_list_)
-    observer.ModelChanged(handlers);
+
+  // FIXME for all??
+  observers()->ForAllPtrs(
+      [&handlers](ash::mojom::LinkHandlerObserver* observer) {
+        observer->OnLinkHandlerModelChanged(std::move(handlers));
+      });
 }
 
 // static

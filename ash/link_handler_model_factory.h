@@ -8,7 +8,9 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/link_handler.mojom.h"
 #include "base/macros.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 
 class GURL;
 
@@ -17,16 +19,25 @@ namespace ash {
 class LinkHandlerModel;
 
 // A class for creating a LinkHandlerModel object.
-class ASH_EXPORT LinkHandlerModelFactory {
+class ASH_EXPORT LinkHandlerModelFactory : public mojom::LinkHandlerController {
  public:
   LinkHandlerModelFactory();
-  virtual ~LinkHandlerModelFactory();
+  ~LinkHandlerModelFactory() override;
+
+  void BindRequest(mojom::LinkHandlerControllerRequest request);
+
+  // mojom::LinkHandlerController
+  void ConnectModel(mojom::LinkHandlerObserverAssociatedPtrInfo observer,
+                    const GURL& url) override;
+  void OpenLinkWithHandler(const GURL& url, uint32_t handler_id) override;
 
   // Returns a model for the |url|. When such a model for the |url| cannot be
   // created, returns nullptr.
   virtual std::unique_ptr<LinkHandlerModel> CreateModel(const GURL& url);
 
  private:
+  mojo::BindingSet<mojom::LinkHandlerController> bindings_;
+
   DISALLOW_COPY_AND_ASSIGN(LinkHandlerModelFactory);
 };
 
