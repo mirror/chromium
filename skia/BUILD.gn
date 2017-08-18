@@ -325,6 +325,8 @@ component("skia") {
     ]
   }
 
+  defines = [ "SK_LEGACY_FRAME_INFO_ALPHA_TYPE" ]
+
   # This and skia_opts are really the same conceptual target so share headers.
   allow_circular_includes_from = [ ":skia_opts" ]
 
