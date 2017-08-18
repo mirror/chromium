@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf52e42_f2cce567",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-18T23:12:33Z",
+      "side": 1,
+      "message": "Where is this handled in the case when HasSelfPaintingLayer() is true? Would that be the IsSelfPaintingLayer() codepaths in PaintLayer::HitTestLayer?\n\nCan you add a comment here about that?",
+      "revId": "8baf155d045e47fc4030e9e1f050169700965ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9121454_1204b066",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-18T23:12:33Z",
+      "side": 1,
+      "message": "Does this now handle both the self-painting and non-self painting hit tests? Can you refresh my memory about why we need the self-painting special-case for OverflowClipRect but don\u0027t for border radius?",
+      "revId": "8baf155d045e47fc4030e9e1f050169700965ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcfaa420_31dac7c0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-18T23:12:33Z",
+      "side": 1,
+      "message": "Can this TODO be removed?",
+      "revId": "8baf155d045e47fc4030e9e1f050169700965ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
