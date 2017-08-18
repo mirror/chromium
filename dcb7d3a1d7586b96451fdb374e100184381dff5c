@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "429b138a_52d4abe1",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "You are right, one of the cases that reaches this point in execution is RootView.\nUpdating the override for CalculateOffsetToAncestorWithLayer in RootView.\nDone",
+      "parentUuid": "3c60534a_d9d506f3",
+      "range": {
+        "startLine": 1593,
+        "startChar": 11,
+        "endLine": 1593,
+        "endChar": 28
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b5a633a_197f957f",
         "filename": "ui/views/view.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T17:52:52Z",
       "side": 1,
       "message": "Why do you want the scale factor of this layer, vs the scale factor of the first ancestors layer?",
+      "range": {
+        "startLine": 1721,
+        "startChar": 32,
+        "endLine": 1721,
+        "endChar": 79
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f699ac_30827409",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "I am assuming the scale factor for both of them would be the same.",
+      "parentUuid": "9b5a633a_197f957f",
       "range": {
         "startLine": 1721,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b92b65ce_cf5db44f",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "Ah! You are right. I can simply call CalculateOffsetToAncestorWithLayer()",
+      "parentUuid": "8e8b747e_22952b14",
+      "range": {
+        "startLine": 1726,
+        "startChar": 29,
+        "endLine": 1726,
+        "endChar": 73
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c549dff_31464f4f",
         "filename": "ui/views/view.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a71bfbd_6dc10e89",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c549dff_31464f4f",
+      "range": {
+        "startLine": 2263,
+        "startChar": 54,
+        "endLine": 2263,
+        "endChar": 58
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8455c334_d3d35f55",
+        "filename": "ui/views/view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2ce197_f391c97e",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 206,
+        "endChar": 80
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2bba6c9_84af17a7",
         "filename": "ui/views/view.h",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0881146c_4da0349e",
+        "filename": "ui/views/view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2bba6c9_84af17a7",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 42
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b297dcb3_1ac0db52",
         "filename": "ui/views/view.h",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f53a3c4_29380aaa",
+        "filename": "ui/views/view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T22:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b297dcb3_1ac0db52",
+      "range": {
+        "startLine": 1454,
+        "startChar": 7,
+        "endLine": 1454,
+        "endChar": 31
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
