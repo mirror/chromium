@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10896a4b_03fed449",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06f0cbe_e39d5710",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "// If not enough workers are idle, deny work to this worker.",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253e5ba4_2e4088f8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "I don\u0027t think CanCleanup() should have something to do with capacity.",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a17760_bbb3faab",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "Add TODO",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93a3ef0_cf0c4982",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "TODO",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb8dd53_227fe765",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "be consistent with the AutoLock\u0027s name",
+      "range": {
+        "startLine": 677,
+        "startChar": 20,
+        "endLine": 677,
+        "endChar": 34
+      },
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5262afea_6556fee5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:25:25Z",
+      "side": 1,
+      "message": "It\u0027s starting to become confusing which methods need to have the lock as a precondition. How about we suffix all of those with \"WithLock\" (and have the assertion as the first statement of all of them), instead of \"AssertLock\" in half of them. The will make callers more readable without having to lookup the call\u0027s definition.",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
