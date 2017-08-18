@@ -8,6 +8,8 @@ source_set("tab") {
     "tab_coordinator.mm",
     "tab_navigation_controller.h",
     "tab_navigation_controller.mm",
+    "tab_strip_tab_coordinator.h",
+    "tab_strip_tab_coordinator.mm",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
@@ -35,8 +37,11 @@ source_set("tab") {
 
 source_set("tab_ui") {
   sources = [
+    "tab_container_view_controller+internal.h",
     "tab_container_view_controller.h",
     "tab_container_view_controller.mm",
+    "tab_strip_tab_container_view_controller.h",
+    "tab_strip_tab_container_view_controller.mm",
   ]
   deps = [
     "//base",
