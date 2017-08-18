@@ -70,6 +70,30 @@
       "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ad277a_023f9297",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/Path2D.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-18T15:19:51Z",
+      "side": 1,
+      "message": "Makes sense. SG",
+      "parentUuid": "2fb54ad8_35a5f199",
+      "range": {
+        "startLine": 35,
+        "startChar": 75,
+        "endLine": 35,
+        "endChar": 115
+      },
+      "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
