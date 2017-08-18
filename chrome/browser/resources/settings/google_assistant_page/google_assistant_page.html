@@ -23,7 +23,7 @@
       </settings-toggle-button>
     </div>
     <template is="dom-if"
-        if="{{prefs.settings.voice_interaction.enabled.value}}">
+        if="[[prefs.settings.voice_interaction.enabled.value]]">
       <div class="settings-box continuation indented">
         <settings-toggle-button id="googleAssistantContextEnable" class="start"
             pref="{{prefs.settings.voice_interaction.context.enabled}}"
