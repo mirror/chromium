@@ -8,6 +8,8 @@ source_set("tab") {
     "tab_coordinator.mm",
     "tab_navigation_controller.h",
     "tab_navigation_controller.mm",
+    "tab_strip_tab_coordinator.h",
+    "tab_strip_tab_coordinator.mm",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
