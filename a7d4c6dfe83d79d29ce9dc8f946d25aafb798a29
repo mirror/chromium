@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7062fac_6711d29b",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T22:25:14Z",
+      "side": 1,
+      "message": "nit: Please add a comment saying what you\u0027re testing (a brief human-readable summary of the expectation you\u0027re trying to verify).",
+      "revId": "a7d4c6dfe83d79d29ce9dc8f946d25aafb798a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72fb078_6980024d",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T22:25:14Z",
+      "side": 1,
+      "message": "There are several tests that do this setup. Can it be moved into SetUp() or a shared helper function?",
+      "revId": "a7d4c6dfe83d79d29ce9dc8f946d25aafb798a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883d11d8_8d9b0b36",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T22:25:14Z",
+      "side": 1,
+      "message": "Does this compile?",
+      "revId": "a7d4c6dfe83d79d29ce9dc8f946d25aafb798a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce3f691_b6e195df",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T22:25:14Z",
+      "side": 1,
+      "message": "nit: \"crbug.com/757012\" so we know what tracker you mean",
+      "revId": "a7d4c6dfe83d79d29ce9dc8f946d25aafb798a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
