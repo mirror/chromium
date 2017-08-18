@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ebfa684_518352c6",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "comment like\n\n// Shows the platform-specific password reuse modal dialog.",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189d7ecc_31f6d5b5",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "The minimum width of the body text in the dialog.",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b997b1e_e01d95d6",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "kMinTextWidth. This can be moved into the constructor too. Also you probably want something smaller since this doesn\u0027t cater for margins. We\u0027re moving towards a consistent dialog width for all chrome dialogs -- one of 320,448 or 512. 450 would force the dialog to round up to the largest dialog size. Something like 400 is probably OK.",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581796d3_a9a0281d",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "aligned -\u003e align",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3ae949_98c78e22",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "Since dialog frames can have their width increased, so it\u0027s usually necessary to have at least one flexible column. E.g.\n\n::USE_PREF, 0, kMinTextWidth",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7d4996_ccc6f71f",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "this line shouldn\u0027t be necessary -- GridLayout will determine the best size, based on the dialog frame",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45675af0_3273e1ad",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "Can you use the 2-arg version of CreateVectorIcon(..) and remove kIconSize?  (otherwise move the constant in here and comment why not)",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9cc08f_ded4121f",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:47:25Z",
+      "side": 1,
+      "message": "nit: unused? (move to .cc?\")",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
