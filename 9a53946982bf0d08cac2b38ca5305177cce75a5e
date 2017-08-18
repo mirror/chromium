@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18a86c77_22729846",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-18T23:13:16Z",
+      "side": 1,
+      "message": "this type of assertions belong in layout-tests, although we might consider this if we cannot find a reasonable way to add layout tests for v8 compile",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 13
+      },
+      "revId": "9a53946982bf0d08cac2b38ca5305177cce75a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
