@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c57a2e01_041e46f4",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-18T22:09:43Z",
+      "side": 1,
+      "message": "mojo services have a concept of client library, which is helper code in services/foo/public/cpp. I think this should go there instead of a new component.\n\nSince the mojoms still depend on content/, this can temporarily go into content/public/common and then move to services/network once the mojoms are content free.",
+      "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908b2cdf_d1a01a3d",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-18T22:09:43Z",
+      "side": 1,
+      "message": "can the URLLoaderClient be put in the CC file, along with all private methods? That way someone wanting to use this class sees a very simple header",
+      "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
