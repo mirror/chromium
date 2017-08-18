@@ -426,6 +426,14 @@ _BANNED_CPP_FUNCTIONS = (
       ),
       True,
       (),
+    ),
+    (
+      'ScopedMockTimeMessageLoopTaskRunner',
+      (
+        'ScopedMockTimeMessageLoopTaskRunner is deprecated.',
+      ),
+      True,
+      (),
     )
 )
 
