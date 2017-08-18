@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d626b37a_37724c73",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_policy_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-18T16:25:44Z",
+      "side": 1,
+      "message": "Do we want this to be forced or decided by administrator?",
+      "range": {
+        "startLine": 85,
+        "startChar": 63,
+        "endLine": 85,
+        "endChar": 67
+      },
+      "revId": "5f6a67821687b9fa670cc0c794f4505be4c107cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
