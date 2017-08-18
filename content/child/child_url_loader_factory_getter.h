@@ -7,6 +7,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
+#include "content/common/content_export.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 
@@ -15,7 +16,7 @@ namespace content {
 // ChildProcess version's URLLoaderFactoryGetter, i.e. a getter that holds
 // on to URLLoaderFactory's for a given loading context (e.g. a frame)
 // and allows code to access them.
-class ChildURLLoaderFactoryGetter
+class CONTENT_EXPORT ChildURLLoaderFactoryGetter
     : public base::RefCounted<ChildURLLoaderFactoryGetter> {
  public:
   using PossiblyAssociatedURLLoaderFactory =
