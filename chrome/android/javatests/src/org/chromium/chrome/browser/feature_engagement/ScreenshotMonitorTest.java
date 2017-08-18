@@ -21,6 +21,8 @@ import java.io.File;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import chrome.android.java.src.org.chromium.chrome.browser.feature_engagement.String;
 /**
  * Tests ScreenshotMonitor.
  */
@@ -43,6 +45,10 @@ public class ScreenshotMonitorTest {
         // startWatching() and stopWatching() are called. It is modified on the UI thread and
         // accessed on the test thread.
         public final AtomicInteger watchingCount = new AtomicInteger();
+
+        public TestScreenshotMonitorFileObserver(String directoryPath) {
+            super(directoryPath);
+        }
 
         // Note: FileObserver's startWatching will have no effect if monitoring started already.
         @Override
@@ -67,6 +73,7 @@ public class ScreenshotMonitorTest {
         }
     }
 
+    // TODO(angelashao): update dir test method calls
     static String getTestFilePath() {
         return ScreenshotMonitor.ScreenshotMonitorFileObserver.getDirPath() + File.separator
                 + FILENAME;
