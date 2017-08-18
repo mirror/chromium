@@ -182,11 +182,25 @@ static LayoutVideo* FindFullscreenVideoLayoutObject(Document& document) {
 void PaintLayerCompositor::UpdateIfNeededRecursive(
     DocumentLifecycle::LifecycleState target_state) {
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
-  UpdateIfNeededRecursiveInternal(target_state);
+  CompositingReasonsAggregator compositing_reasons_aggregator;
+  UpdateIfNeededRecursiveInternal(target_state, compositing_reasons_aggregator);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Blink.Compositing.LayerPromotionCount.Overlap",
+                              compositing_reasons_aggregator.overlap_layers, 1,
+                              100, 1);
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      "Blink.Compositing.LayerPromotionCount.ActiveAnimation",
+      compositing_reasons_aggregator.active_animation_layers, 1, 100, 1);
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      "Blink.Compositing.LayerPromotionCount.AssumedOverlap",
+      compositing_reasons_aggregator.assumed_overlap_layers, 1, 100, 1);
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      "Blink.Compositing.LayerPromotionCount.IndirectComposited",
+      compositing_reasons_aggregator.indirect_composited_layers, 1, 100, 1);
 }
 
 void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
-    DocumentLifecycle::LifecycleState target_state) {
+    DocumentLifecycle::LifecycleState target_state,
+    CompositingReasonsAggregator& compositing_reasons_aggregator) {
   DCHECK(target_state >= DocumentLifecycle::kCompositingInputsClean);
 
   LocalFrameView* view = layout_view_.GetFrameView();
@@ -207,7 +221,8 @@ void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
         !local_frame->ContentLayoutItem().IsNull()) {
       local_frame->ContentLayoutItem()
           .Compositor()
-          ->UpdateIfNeededRecursiveInternal(target_state);
+          ->UpdateIfNeededRecursiveInternal(target_state,
+                                            compositing_reasons_aggregator);
     }
   }
 
@@ -226,7 +241,7 @@ void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
 
   layout_view_.CommitPendingSelection();
 
-  UpdateIfNeeded(target_state);
+  UpdateIfNeeded(target_state, compositing_reasons_aggregator);
   DCHECK(Lifecycle().GetState() == DocumentLifecycle::kCompositingInputsClean ||
          Lifecycle().GetState() == DocumentLifecycle::kCompositingClean);
   if (target_state == DocumentLifecycle::kCompositingInputsClean)
@@ -386,7 +401,8 @@ GraphicsLayer* PaintLayerCompositor::ParentForContentLayers() const {
 }
 
 void PaintLayerCompositor::UpdateIfNeeded(
-    DocumentLifecycle::LifecycleState target_state) {
+    DocumentLifecycle::LifecycleState target_state,
+    CompositingReasonsAggregator& compositing_reasons_aggregator) {
   DCHECK(target_state >= DocumentLifecycle::kCompositingInputsClean);
 
   Lifecycle().AdvanceTo(DocumentLifecycle::kInCompositingUpdate);
@@ -440,7 +456,7 @@ void PaintLayerCompositor::UpdateIfNeeded(
     }
 
     CompositingRequirementsUpdater(layout_view_, compositing_reason_finder_)
-        .Update(update_root);
+        .Update(update_root, compositing_reasons_aggregator);
 
     CompositingLayerAssigner layer_assigner(this);
     layer_assigner.Assign(update_root, layers_needing_paint_invalidation);
