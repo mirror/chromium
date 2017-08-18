@@ -7,8 +7,11 @@
 #include <stdint.h>
 
 #include "base/files/file_util.h"
+#include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
 #include "chrome/installer/util/lzma_util.h"
+#include "chrome/installer/zucchini/patch_reader.h"
+#include "chrome/installer/zucchini/zucchini.h"
 #include "courgette/courgette.h"
 #include "third_party/bspatch/mbspatch.h"
 
@@ -37,7 +40,7 @@ bool ArchivePatchHelper::UncompressAndPatch(
   ArchivePatchHelper instance(working_directory, compressed_archive,
                               patch_source, target, consumer);
   return (instance.Uncompress(NULL) &&
-          (instance.EnsemblePatch() || instance.BinaryPatch()));
+          (instance.CourgetteEnsemblePatch() || instance.BinaryPatch()));
 }
 
 bool ArchivePatchHelper::Uncompress(base::FilePath* last_uncompressed_file) {
@@ -60,7 +63,7 @@ bool ArchivePatchHelper::Uncompress(base::FilePath* last_uncompressed_file) {
   return true;
 }
 
-bool ArchivePatchHelper::EnsemblePatch() {
+bool ArchivePatchHelper::CourgetteEnsemblePatch() {
   if (last_uncompressed_file_.empty()) {
     LOG(ERROR) << "No patch file found in compressed archive.";
     return false;
@@ -83,6 +86,57 @@ bool ArchivePatchHelper::EnsemblePatch() {
   base::DeleteFile(target_, false);
 
   return false;
+}
+
+bool ArchivePatchHelper::ZucchiniEnsemblePatch() {
+  if (last_uncompressed_file_.empty()) {
+    LOG(ERROR) << "No patch file found in compressed archive.";
+    return false;
+  }
+
+  base::MemoryMappedFile patch_file;
+  if (!patch_file.Initialize(last_uncompressed_file_)) {
+    LOG(ERROR) << "Can't create file: " << last_uncompressed_file_.value();
+  }
+  zucchini::ConstBufferView patch_region(patch_file.data(),
+                                         patch_file.length());
+
+  auto patch_reader = zucchini::EnsemblePatchReader::Create(patch_region);
+  if (!patch_reader.has_value()) {
+    LOG(ERROR) << "Error reading patch header." << std::endl;
+    return false;
+  }
+  zucchini::PatchHeader header = patch_reader->header();
+
+  base::MemoryMappedFile old_file;
+  if (!old_file.Initialize(patch_source_)) {
+    LOG(ERROR) << "Can't read file: " << patch_source_.value();
+    return false;
+  }
+
+  base::MemoryMappedFile new_file;
+  if (!new_file.Initialize(base::File(target_, base::File::FLAG_CREATE_ALWAYS |
+                                                   base::File::FLAG_READ |
+                                                   base::File::FLAG_WRITE),
+                           {0, static_cast<int64_t>(header.new_size)},
+                           base::MemoryMappedFile::READ_WRITE_EXTEND)) {
+    LOG(ERROR) << "Can't create file: " << target_.value();
+    return false;
+  }
+
+  zucchini::ConstBufferView old_region(old_file.data(), old_file.length());
+  zucchini::MutableBufferView new_region(new_file.data(), new_file.length());
+
+  zucchini::status::Code result =
+      zucchini::Apply(old_region, *patch_reader, new_region);
+  if (result != zucchini::status::kStatusSuccess) {
+    LOG(ERROR) << "Fatal error encountered when generating patch. err="
+               << static_cast<uint32_t>(result);
+    // Ensure a partial output is not left behind.
+    base::DeleteFile(target_, false);
+    return false;
+  }
+  return true;
 }
 
 bool ArchivePatchHelper::BinaryPatch() {
