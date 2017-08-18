@@ -159,6 +159,7 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   autorun_file.write('#!/bin/sh\n')
   if int(os.environ.get('CHROME_HEADLESS', 0)) != 0:
     autorun_file.write('export CHROME_HEADLESS=1\n')
+  child_args.append('--gtest_list_tests')
   autorun_file.write('echo Executing ' + os.path.basename(bin_name) + ' ' +
                      ' '.join(child_args) + '\n')
 
@@ -309,7 +310,7 @@ def _ParallelSymbolizeBacktrace(backtrace, file_mapping):
   return symbolized
 
 
-def RunFuchsia(bootfs_and_manifest, use_device, dry_run, interactive):
+def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
   bootfs, bootfs_manifest = bootfs_and_manifest
   kernel_path = os.path.join(SDK_ROOT, 'kernel', 'magenta.bin')
 
@@ -335,16 +336,7 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run, interactive):
       '-netdev', 'user,id=net0,net=192.168.3.0/24,dhcpstart=192.168.3.9,' +
                  'host=192.168.3.2',
       '-device', 'e1000,netdev=net0',
-      ]
 
-  if interactive:
-    # TERM is passed through to make locally entered commands echo. With
-    # TERM=dumb what's typed isn't visible.
-    qemu_command.extend([
-      '-append', 'TERM=%s kernel.halt_on_panic=true' % os.environ.get('TERM'),
-    ])
-  else:
-    qemu_command.extend([
       # Use stdio for the guest OS only; don't attach the QEMU interactive
       # monitor.
       '-serial', 'stdio',
@@ -353,7 +345,7 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run, interactive):
       # TERM=dumb tells the guest OS to not emit ANSI commands that trigger
       # noisy ANSI spew from the user's terminal emulator.
       '-append', 'TERM=dumb kernel.halt_on_panic=true',
-    ])
+    ]
 
   if int(os.environ.get('CHROME_HEADLESS', 0)) == 0:
     qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
@@ -362,10 +354,6 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run, interactive):
 
   if dry_run:
     print 'Run:', ' '.join(qemu_command)
-    return 0
-
-  if interactive:
-    subprocess.check_call(qemu_command)
     return 0
 
   # Set up backtrace-parsing regexps.
