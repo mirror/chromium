@@ -107,6 +107,7 @@ void PermissionDialogDelegate::CreateMediaStreamDialog(
 
 // static
 bool PermissionDialogDelegate::ShouldShowDialog(bool has_user_gesture) {
+  return true;
   if (!base::FeatureList::IsEnabled(features::kModalPermissionPrompts))
     return false;
 
