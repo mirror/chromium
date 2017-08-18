@@ -5,200 +5,303 @@
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 
 #include <memory>
+#include <tuple>
+#include <utility>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/test/histogram_tester.h"
 #include "base/time/time.h"
-#include "chrome/browser/browser_process.h"
-#include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/web_contents.h"
 #include "content/test/test_web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "url/gurl.h"
 
 using WebContents = content::WebContents;
 
 namespace resource_coordinator {
 
-namespace {
-
-const char kDefaultUrl[] = "https://www.google.com";
-
-}  // namespace
-
-class NonResumingBackgroundTabNavigationThrottle
-    : public BackgroundTabNavigationThrottle {
- public:
-  explicit NonResumingBackgroundTabNavigationThrottle(
-      content::NavigationHandle* handle)
-      : BackgroundTabNavigationThrottle(handle) {}
-
-  void ResumeNavigation() override {}
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(NonResumingBackgroundTabNavigationThrottle);
-};
-
-class TabManagerStatsCollectorTest : public ChromeRenderViewHostTestHarness {
+class TabManagerStatsCollectorTest
+    : public ChromeRenderViewHostTestHarness,
+      public testing::WithParamInterface<
+          std::tuple<bool,   // should_test_session_restore
+                     bool>>  // should_test_background_tab_opening
+{
  protected:
+  TabManagerStatsCollectorTest() = default;
+  ~TabManagerStatsCollectorTest() override = default;
+
   WebContents* CreateWebContents() {
     return content::TestWebContents::Create(profile(), nullptr);
   }
 
-  std::unique_ptr<WebContents> CreateTabLoadingInBackground(
-      TabManager* tab_manager) {
-    std::unique_ptr<WebContents> contents(CreateTestWebContents());
-    contents->WasHidden();
-
-    std::unique_ptr<content::NavigationHandle> nav_handle(
-        content::NavigationHandle::CreateNavigationHandleForTesting(
-            GURL(kDefaultUrl), contents->GetMainFrame()));
-    std::unique_ptr<BackgroundTabNavigationThrottle> throttle =
-        base::MakeUnique<NonResumingBackgroundTabNavigationThrottle>(
-            nav_handle.get());
-    tab_manager->MaybeThrottleNavigation(throttle.get());
-
-    return contents;
+  TabManagerStatsCollector* GetTabManagerStatsCollector() {
+    return tab_manager_.tab_manager_stats_collector_.get();
   }
+
+  void StartSessionRestore() {
+    GetTabManagerStatsCollector()->OnSessionRestoreStartedLoadingTabs();
+  }
+
+  void FinishSessionRestore() {
+    GetTabManagerStatsCollector()->OnSessionRestoreFinishedLoadingTabs();
+  }
+
+  void StartBackgroundTabOpeningSession() {
+    GetTabManagerStatsCollector()->OnBackgroundTabOpeningSessionStarted();
+  }
+
+  void FinishBackgroundTabOpeningSession() {
+    GetTabManagerStatsCollector()->OnBackgroundTabOpeningSessionEnded();
+  }
+
+  TabManager::WebContentsData* GetWebContentsData(WebContents* contents) const {
+    return tab_manager_.GetWebContentsData(contents);
+  }
+
+  void SetUp() override {
+    std::tie(should_test_session_restore_,
+             should_test_background_tab_opening_) = GetParam();
+    ChromeRenderViewHostTestHarness::SetUp();
+  }
+
+ protected:
+  TabManager tab_manager_;
+  bool should_test_session_restore_;
+  bool should_test_background_tab_opening_;
 };
 
-TEST_F(TabManagerStatsCollectorTest, HistogramsSessionRestoreSwitchToTab) {
-  const char kHistogramName[] = "TabManager.SessionRestore.SwitchToTab";
+class TabManagerStatsCollectorTabSwitchTest
+    : public TabManagerStatsCollectorTest {
+ public:
+  TabManagerStatsCollectorTabSwitchTest() = default;
+  ~TabManagerStatsCollectorTabSwitchTest() override = default;
 
-  TabManager tab_manager;
-  std::unique_ptr<WebContents> tab(CreateWebContents());
+  void SetForegroundTabLoadingState(TabLoadingState state) {
+    GetWebContentsData(foreground_tab_)->SetTabLoadingState(state);
+  }
 
-  auto* data = tab_manager.GetWebContentsData(tab.get());
-  auto* stats_collector = tab_manager.tab_manager_stats_collector_.get();
+  void SetBackgroundTabLoadingState(TabLoadingState state) {
+    GetWebContentsData(background_tab_)->SetTabLoadingState(state);
+  }
+
+  // Creating and destroying the WebContentses need to be done in the test
+  // scope.
+  void SetForegroundAndBackgroundTabs(WebContents* foreground_tab,
+                                      WebContents* background_tab) {
+    foreground_tab_ = foreground_tab;
+    background_tab_ = background_tab;
+  }
+
+  void FinishLoadingForegroundTab() {
+    SetForegroundTabLoadingState(TAB_IS_LOADED);
+    GetTabManagerStatsCollector()->OnDidStopLoading(foreground_tab_);
+  }
+
+  void FinishLoadingBackgroundTab() {
+    SetBackgroundTabLoadingState(TAB_IS_LOADED);
+    GetTabManagerStatsCollector()->OnDidStopLoading(background_tab_);
+  }
+
+  void SwitchToBackgroundTab() {
+    GetTabManagerStatsCollector()->RecordSwitchToTab(foreground_tab_,
+                                                     background_tab_);
+    std::swap(foreground_tab_, background_tab_);
+  }
+
+ protected:
+  WebContents* foreground_tab_;
+  WebContents* background_tab_;
+};
+
+TEST_P(TabManagerStatsCollectorTabSwitchTest, HistogramsSwitchToTab) {
+  const char kSessionRestoreHistogramName[] =
+      "TabManager.SessionRestore.SwitchToTab";
+  const char kBackgroundTabOpeningHistogramName[] =
+      "TabManager.BackgroundTabOpening.SwitchToTab";
+
+  struct HistogramParameters {
+    const char* histogram_name;
+    bool enabled;
+  };
+  std::vector<HistogramParameters> histogram_parameters = {
+      HistogramParameters{kSessionRestoreHistogramName,
+                          should_test_session_restore_},
+      HistogramParameters{kBackgroundTabOpeningHistogramName,
+                          should_test_background_tab_opening_},
+  };
 
   base::HistogramTester histograms;
-  histograms.ExpectTotalCount(kHistogramName, 0);
+  histograms.ExpectTotalCount(kSessionRestoreHistogramName, 0);
+  histograms.ExpectTotalCount(kBackgroundTabOpeningHistogramName, 0);
 
-  data->SetTabLoadingState(TAB_IS_LOADING);
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
+  std::unique_ptr<WebContents> tab1(CreateWebContents());
+  std::unique_ptr<WebContents> tab2(CreateWebContents());
+  SetForegroundAndBackgroundTabs(tab1.get(), tab2.get());
 
-  // Nothing should happen until we're in a session restore.
-  histograms.ExpectTotalCount(kHistogramName, 0);
+  if (should_test_session_restore_)
+    StartSessionRestore();
+  if (should_test_background_tab_opening_)
+    StartBackgroundTabOpeningSession();
 
-  tab_manager.OnSessionRestoreStartedLoadingTabs();
+  SetBackgroundTabLoadingState(TAB_IS_NOT_LOADING);
+  SetForegroundTabLoadingState(TAB_IS_NOT_LOADING);
+  SwitchToBackgroundTab();
+  SwitchToBackgroundTab();
+  for (const auto& param : histogram_parameters) {
+    if (param.enabled) {
+      histograms.ExpectTotalCount(param.histogram_name, 2);
+      histograms.ExpectBucketCount(param.histogram_name, TAB_IS_NOT_LOADING, 2);
+    } else {
+      histograms.ExpectTotalCount(param.histogram_name, 0);
+    }
+  }
 
-  data->SetTabLoadingState(TAB_IS_NOT_LOADING);
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
-  histograms.ExpectTotalCount(kHistogramName, 2);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+  SetBackgroundTabLoadingState(TAB_IS_LOADING);
+  SetForegroundTabLoadingState(TAB_IS_LOADING);
+  SwitchToBackgroundTab();
+  SwitchToBackgroundTab();
+  SwitchToBackgroundTab();
+  for (const auto& param : histogram_parameters) {
+    if (param.enabled) {
+      histograms.ExpectTotalCount(param.histogram_name, 5);
+      histograms.ExpectBucketCount(param.histogram_name, TAB_IS_NOT_LOADING, 2);
+      histograms.ExpectBucketCount(param.histogram_name, TAB_IS_LOADING, 3);
+    } else {
+      histograms.ExpectTotalCount(param.histogram_name, 0);
+    }
+  }
 
-  data->SetTabLoadingState(TAB_IS_LOADING);
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
-
-  histograms.ExpectTotalCount(kHistogramName, 5);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
-
-  data->SetTabLoadingState(TAB_IS_LOADED);
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
-  stats_collector->RecordSwitchToTab(tab.get());
-
-  histograms.ExpectTotalCount(kHistogramName, 9);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADED, 4);
+  SetBackgroundTabLoadingState(TAB_IS_LOADED);
+  SetForegroundTabLoadingState(TAB_IS_LOADED);
+  SwitchToBackgroundTab();
+  SwitchToBackgroundTab();
+  SwitchToBackgroundTab();
+  SwitchToBackgroundTab();
+  for (const auto& param : histogram_parameters) {
+    if (param.enabled) {
+      histograms.ExpectTotalCount(param.histogram_name, 9);
+      histograms.ExpectBucketCount(param.histogram_name, TAB_IS_NOT_LOADING, 2);
+      histograms.ExpectBucketCount(param.histogram_name, TAB_IS_LOADING, 3);
+      histograms.ExpectBucketCount(param.histogram_name, TAB_IS_LOADED, 4);
+    } else {
+      histograms.ExpectTotalCount(param.histogram_name, 0);
+    }
+  }
 }
 
-TEST_F(TabManagerStatsCollectorTest,
-       HistogramSessionRestoreExpectedTaskQueueingDuration) {
-  TabManager tab_manager;
-  auto* stats_collector = tab_manager.tab_manager_stats_collector_.get();
+TEST_P(TabManagerStatsCollectorTabSwitchTest, HistogramsTabSwitchLoadTime) {
+  const char kSessionRestoreHistogramName[] =
+      "TabManager.Experimental.SessionRestore.TabSwitchLoadTime";
+  const char kBackgroundTabOpeningHistogramName[] =
+      "TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadTime";
+
+  base::HistogramTester histograms;
+  histograms.ExpectTotalCount(kSessionRestoreHistogramName, 0);
+  histograms.ExpectTotalCount(kBackgroundTabOpeningHistogramName, 0);
+
+  std::unique_ptr<WebContents> tab1(CreateWebContents());
+  std::unique_ptr<WebContents> tab2(CreateWebContents());
+  SetForegroundAndBackgroundTabs(tab1.get(), tab2.get());
+
+  if (should_test_session_restore_)
+    StartSessionRestore();
+  if (should_test_background_tab_opening_)
+    StartBackgroundTabOpeningSession();
+
+  SetBackgroundTabLoadingState(TAB_IS_NOT_LOADING);
+  SetForegroundTabLoadingState(TAB_IS_LOADED);
+  SwitchToBackgroundTab();
+  FinishLoadingForegroundTab();
+  histograms.ExpectTotalCount(kSessionRestoreHistogramName,
+                              should_test_session_restore_ ? 1 : 0);
+  histograms.ExpectTotalCount(kBackgroundTabOpeningHistogramName,
+                              should_test_background_tab_opening_ ? 1 : 0);
+
+  SetBackgroundTabLoadingState(TAB_IS_LOADING);
+  SwitchToBackgroundTab();
+  FinishLoadingForegroundTab();
+  histograms.ExpectTotalCount(kSessionRestoreHistogramName,
+                              should_test_session_restore_ ? 2 : 0);
+  histograms.ExpectTotalCount(kBackgroundTabOpeningHistogramName,
+                              should_test_background_tab_opening_ ? 2 : 0);
+
+  // Metrics aren't recorded when the foreground tab has not finished loading
+  // and the user switches to a different tab.
+  SetBackgroundTabLoadingState(TAB_IS_LOADING);
+  SetForegroundTabLoadingState(TAB_IS_LOADED);
+  SwitchToBackgroundTab();
+  // Foreground tab is currently loading and being tracked.
+  SwitchToBackgroundTab();
+  // The previous foreground tab is no longer tracked.
+  FinishLoadingBackgroundTab();
+  SwitchToBackgroundTab();
+  histograms.ExpectTotalCount(kSessionRestoreHistogramName,
+                              should_test_session_restore_ ? 2 : 0);
+  histograms.ExpectTotalCount(kBackgroundTabOpeningHistogramName,
+                              should_test_background_tab_opening_ ? 2 : 0);
+
+  // The count shouldn't change when we're no longer in a session restore or
+  // background tab opening.
+  if (should_test_session_restore_)
+    FinishSessionRestore();
+  if (should_test_background_tab_opening_)
+    FinishBackgroundTabOpeningSession();
+  SetBackgroundTabLoadingState(TAB_IS_NOT_LOADING);
+  SetForegroundTabLoadingState(TAB_IS_LOADED);
+  SwitchToBackgroundTab();
+  FinishLoadingForegroundTab();
+  histograms.ExpectTotalCount(kSessionRestoreHistogramName,
+                              should_test_session_restore_ ? 2 : 0);
+  histograms.ExpectTotalCount(kBackgroundTabOpeningHistogramName,
+                              should_test_background_tab_opening_ ? 2 : 0);
+}
+
+TEST_P(TabManagerStatsCollectorTest, HistogramsExpectedTaskQueueingDuration) {
+  auto* stats_collector = GetTabManagerStatsCollector();
 
   base::HistogramTester histograms;
   histograms.ExpectTotalCount(
       TabManagerStatsCollector::
           kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
+      0);
+  histograms.ExpectTotalCount(
+      TabManagerStatsCollector::
+          kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
       0);
 
   const base::TimeDelta kEQT = base::TimeDelta::FromMilliseconds(1);
   web_contents()->WasShown();
-  ASSERT_FALSE(tab_manager.IsSessionRestoreLoadingTabs());
 
-  // No metrics recorded because it is not in session restore.
+  // No metrics recorded because there is no session restore or background tab
+  // opening.
   stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
   histograms.ExpectTotalCount(
       TabManagerStatsCollector::
           kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
       0);
-
-  tab_manager.OnSessionRestoreStartedLoadingTabs();
-  ASSERT_TRUE(tab_manager.IsSessionRestoreLoadingTabs());
-
-  web_contents()->WasHidden();
-  // No metrics recorded because the tab is background.
-  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
-  histograms.ExpectTotalCount(
-      TabManagerStatsCollector::
-          kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
-      0);
-
-  web_contents()->WasShown();
-  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
-  histograms.ExpectTotalCount(
-      TabManagerStatsCollector::
-          kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
-      1);
-
-  tab_manager.OnSessionRestoreFinishedLoadingTabs();
-  ASSERT_FALSE(tab_manager.IsSessionRestoreLoadingTabs());
-
-  // No metrics recorded because it is not in session restore.
-  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
-  histograms.ExpectTotalCount(
-      TabManagerStatsCollector::
-          kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
-      1);
-}
-
-TEST_F(TabManagerStatsCollectorTest,
-       HistogramBackgroundTabOpeningExpectedTaskQueueingDuration) {
-  // Use the global TabManager because WebContentsData::DidStopLoading affects
-  // the global TabManager.
-  TabManager* tab_manager = g_browser_process->GetTabManager();
-  auto* stats_collector = tab_manager->tab_manager_stats_collector_.get();
-
-  base::HistogramTester histograms;
   histograms.ExpectTotalCount(
       TabManagerStatsCollector::
           kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
       0);
 
-  const base::TimeDelta kEQT = base::TimeDelta::FromMilliseconds(1);
-  web_contents()->WasShown();
-  ASSERT_FALSE(tab_manager->IsLoadingBackgroundTabs());
-
-  // No metrics recorded because there is no background tab loading.
-  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
-  histograms.ExpectTotalCount(
-      TabManagerStatsCollector::
-          kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
-      0);
-
-  // Create a tab loading in background.
-  std::unique_ptr<WebContents> contents =
-      CreateTabLoadingInBackground(tab_manager);
-  ASSERT_TRUE(tab_manager->IsLoadingBackgroundTabs());
+  if (should_test_session_restore_)
+    StartSessionRestore();
+  if (should_test_background_tab_opening_)
+    StartBackgroundTabOpeningSession();
 
   // No metrics recorded because the tab is background.
   web_contents()->WasHidden();
   stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
   histograms.ExpectTotalCount(
       TabManagerStatsCollector::
+          kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
+      0);
+  histograms.ExpectTotalCount(
+      TabManagerStatsCollector::
           kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
       0);
 
@@ -206,19 +309,46 @@ TEST_F(TabManagerStatsCollectorTest,
   stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
   histograms.ExpectTotalCount(
       TabManagerStatsCollector::
-          kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
-      1);
-
-  // Stop background tab loading.
-  tab_manager->GetWebContentsData(contents.get())->DidStopLoading();
-  ASSERT_FALSE(tab_manager->IsLoadingBackgroundTabs());
-
-  // No metrics recorded because there is no background tab loading.
-  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
+          kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
+      should_test_session_restore_ ? 1 : 0);
   histograms.ExpectTotalCount(
       TabManagerStatsCollector::
           kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
-      1);
+      should_test_background_tab_opening_ ? 1 : 0);
+
+  if (should_test_session_restore_)
+    FinishSessionRestore();
+  if (should_test_background_tab_opening_)
+    FinishBackgroundTabOpeningSession();
+
+  // No metrics recorded because there is no session restore or background tab
+  // opening.
+  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
+  histograms.ExpectTotalCount(
+      TabManagerStatsCollector::
+          kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
+      should_test_session_restore_ ? 1 : 0);
+  histograms.ExpectTotalCount(
+      TabManagerStatsCollector::
+          kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
+      should_test_background_tab_opening_ ? 1 : 0);
 }
+
+INSTANTIATE_TEST_CASE_P(
+    ,
+    TabManagerStatsCollectorTabSwitchTest,
+    ::testing::Values(std::make_tuple(false,   // Session restore
+                                      false),  // Background tab opening
+                      std::make_tuple(true, false),
+                      std::make_tuple(false, true),
+                      std::make_tuple(true, true)));
+INSTANTIATE_TEST_CASE_P(
+    ,
+    TabManagerStatsCollectorTest,
+    ::testing::Values(std::make_tuple(false,   // Session restore
+                                      false),  // Background tab opening
+                      std::make_tuple(true, false),
+                      std::make_tuple(false, true),
+                      std::make_tuple(true, true)));
 
 }  // namespace resource_coordinator
