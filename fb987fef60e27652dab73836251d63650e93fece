@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "743de0ef_74876da3",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T20:17:56Z",
+      "side": 1,
+      "message": "True! Sorry about that.",
+      "parentUuid": "8e913b16_d40b2c99",
+      "revId": "fb987fef60e27652dab73836251d63650e93fece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abbaa4cb_44a8878a",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 15
@@ -68,6 +86,24 @@
       "revId": "fb987fef60e27652dab73836251d63650e93fece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b08c433_5e383afb",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T20:17:56Z",
+      "side": 1,
+      "message": "Great idea! Added.",
+      "parentUuid": "d8847a64_30529056",
+      "revId": "fb987fef60e27652dab73836251d63650e93fece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
