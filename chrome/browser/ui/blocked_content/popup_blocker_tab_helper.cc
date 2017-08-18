@@ -60,8 +60,7 @@ bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
   auto* driver_factory = subresource_filter::
       ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
   return driver_factory &&
-         driver_factory->throttle_manager()->ShouldDisallowNewWindow(
-             open_url_params);
+         driver_factory->ShouldDisallowNewWindow(open_url_params);
 }
 
 PopupBlockerTabHelper::PopupBlockerTabHelper(
