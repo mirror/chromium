@@ -147,7 +147,8 @@ void BattOrConnectionImpl::SendBytes(BattOrMessageType type,
 
   pending_write_length_ = data.size();
   io_handler_->Write(base::MakeUnique<device::SendBuffer>(
-      data, base::BindOnce(&BattOrConnectionImpl::OnBytesSent, AsWeakPtr())));
+      std::move(data),
+      base::BindOnce(&BattOrConnectionImpl::OnBytesSent, AsWeakPtr())));
 }
 
 void BattOrConnectionImpl::ReadMessage(BattOrMessageType type) {
