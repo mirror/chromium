@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7129f505_4d5090ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-18T23:24:34Z",
+      "side": 1,
+      "message": "Nit: Stray whitespace",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83c5043_346dfde4",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientServiceDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-18T23:24:34Z",
+      "side": 1,
+      "message": "Optional: In case it will be important in the future, maybe mention that this particular implementation only supports a single IBinder callback?",
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c098b1_ad1f8159",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-18T23:24:34Z",
+      "side": 1,
+      "message": "Nit: This implies that the first callback is the GPU callback. Is this requirement documented anywhere?",
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8948c6c4_be39bf44",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-18T23:24:34Z",
+      "side": 1,
+      "message": "Optional: Flip this for readability?",
+      "range": {
+        "startLine": 441,
+        "startChar": 31,
+        "endLine": 441,
+        "endChar": 33
+      },
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
