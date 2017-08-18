@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/optional.h"
 #include "content/browser/loader/navigation_url_loader_impl_core.h"
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/resource_loader.h"
@@ -21,7 +22,21 @@
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/resource_response.h"
 #include "net/base/net_errors.h"
+#include "net/http/transport_security_state.h"
+#include "net/ssl/ssl_info.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
+#include "url/gurl.h"
+
+namespace {
+
+bool ShouldSSLErrorsBeFatal(net::URLRequest* request) {
+  net::TransportSecurityState* state =
+      request->context()->transport_security_state();
+  return state->ShouldSSLErrorsBeFatal(request->url().host());
+}
+
+}  // namespace
 
 namespace content {
 
@@ -47,7 +62,8 @@ NavigationResourceHandler::NavigationResourceHandler(
 
 NavigationResourceHandler::~NavigationResourceHandler() {
   if (core_) {
-    core_->NotifyRequestFailed(false, net::ERR_ABORTED);
+    core_->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt,
+                               base::nullopt);
     DetachFromCore();
   }
 }
@@ -144,9 +160,18 @@ void NavigationResourceHandler::OnResponseCompleted(
     const net::URLRequestStatus& status,
     std::unique_ptr<ResourceController> controller) {
   if (core_) {
-    DCHECK_NE(net::OK, status.error());
-    core_->NotifyRequestFailed(request()->response_info().was_cached,
-                               status.error());
+    int net_error = status.error();
+    DCHECK_NE(net::OK, net_error);
+
+    base::Optional<net::SSLInfo> ssl_info;
+    base::Optional<bool> fatal_cert_error;
+    if (net::IsCertificateError(net_error)) {
+      ssl_info = request()->ssl_info();
+      fatal_cert_error = ShouldSSLErrorsBeFatal(request());
+    }
+
+    core_->NotifyRequestFailed(request()->response_info().was_cached, net_error,
+                               ssl_info, fatal_cert_error);
     DetachFromCore();
   }
   next_handler_->OnResponseCompleted(status, std::move(controller));

@@ -39,6 +39,8 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "net/base/load_flags.h"
+#include "net/base/net_errors.h"
+#include "net/http/transport_security_state.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -308,10 +310,18 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       if (MaybeCreateLoaderForResponse(ResourceResponseHead()))
         return;
     }
+
+    base::Optional<net::SSLInfo> ssl_info;
+    base::Optional<bool> fatal_cert_error;
+    if (net::IsCertificateError(completion_status.error_code)) {
+      ssl_info = completion_status.ssl_info;
+      fatal_cert_error = ShouldSSLErrorsBeFatal();
+    }
+
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnComplete, owner_,
-                       completion_status));
+                       completion_status, ssl_info, fatal_cert_error));
   }
 
   // Returns true if a handler wants to handle the response, i.e. return a
@@ -333,6 +343,13 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       }
     }
     return false;
+  }
+
+  bool ShouldSSLErrorsBeFatal() {
+    net::TransportSecurityState* state =
+        resource_context_->GetRequestContext()->transport_security_state();
+    const std::string host = resource_request_->url.host();
+    return state->ShouldSSLErrorsBeFatal(host);
   }
 
   // Called if we find a handler who delivers different content for the URL.
@@ -528,15 +545,18 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(
-    const ResourceRequestCompletionStatus& completion_status) {
+    const ResourceRequestCompletionStatus& completion_status,
+    base::Optional<net::SSLInfo> ssl_info,
+    base::Optional<bool> fatal_cert_error) {
   if (completion_status.error_code != net::OK) {
     TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted",
                            this, "&NavigationURLLoaderNetworkService", this,
                            "success", false);
-
-    delegate_->OnRequestFailed(completion_status.exists_in_cache,
-                               completion_status.error_code);
   }
+
+  delegate_->OnRequestFailed(completion_status.exists_in_cache,
+                             completion_status.error_code, ssl_info,
+                             fatal_cert_error);
 }
 
 }  // namespace content
