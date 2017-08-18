@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "6250496b_e657daf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-18T12:00:00Z",
+      "side": 1,
+      "message": "I changed the assert message and removed the null check.",
+      "parentUuid": "fc0e8fc9_bfa52ace",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 82
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52b14ae9_d6b83829",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 19
