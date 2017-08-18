@@ -116,21 +116,15 @@ class PathFinder(object):
     def path_from_layout_tests(self, *comps):
         return self._filesystem.join(self.layout_tests_dir(), *comps)
 
-    @memoized
     def depot_tools_base(self):
         """Returns the path to depot_tools, or None if not found.
 
-        This basically duplicates src/build/find_depot_tools.py without the
-        side effects of adding the directory to sys.path or importing breakpad.
+        Expects depot_tools to be //third_party/depot_tools.
+        src.git's DEPS defines depot_tools to be there.
         """
-        return (self._check_paths_for_depot_tools(self._sys_path) or
-                self._check_paths_for_depot_tools(self._env_path))
-
-    def _check_paths_for_depot_tools(self, paths):
-        for path in paths:
-            if path.rstrip(self._dirsep).endswith('depot_tools'):
-                return path
-        return None
+        third_party = self._filesystem.dirname(self._webkit_base())
+        depot_tools = self._filesystem.join(third_party, 'depot_tools')
+        return depot_tools if self._filesystem.isdir(depot_tools) else None
 
     def path_from_depot_tools_base(self, *comps):
         return self._filesystem.join(self.depot_tools_base(), *comps)
