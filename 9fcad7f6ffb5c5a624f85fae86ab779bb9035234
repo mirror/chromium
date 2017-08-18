@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fef17ff_367cefd1",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-18T02:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de3a5a5_58454c0a",
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61c2d28_c8a5fc00",
         "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_coordinator.mm",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-17T12:14:30Z",
       "side": 1,
       "message": "If it is a property, can it be @synthesized?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61632da_fab481af",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-18T02:16:31Z",
+      "side": 1,
+      "message": "Nope, it\u0027s declared in a category so it can\u0027t be synthesized.",
+      "parentUuid": "c61c2d28_c8a5fc00",
       "range": {
         "startLine": 22,
         "startChar": 2,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b1e3c7cd_f5378c92",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_overlay_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-18T02:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d594e14_f652263e",
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2de530ec_fbcf8f70",
         "filename": "ios/clean/chrome/browser/ui/web_contents/BUILD.gn",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f95d64_49604774",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-18T02:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de530ec_fbcf8f70",
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02eb906b_8a13b377",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-18T02:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f97f226_cb449692",
+      "range": {
+        "startLine": 124,
+        "startChar": 54,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "9fcad7f6ffb5c5a624f85fae86ab779bb9035234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
