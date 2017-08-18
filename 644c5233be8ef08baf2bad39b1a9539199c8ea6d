@@ -120,6 +120,24 @@
       "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192cbcc7_a6abc479",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T04:14:54Z",
+      "side": 1,
+      "message": "If the registration is not re-created in this case, the renderer-side registration\u0027s updateViaCache field needs to be updated in some way as falken@ mentioned in the first comment, but it looks like the Register/Update spec says nothing about it (spec issue?)",
+      "parentUuid": "e6bb7b7f_239e42ea",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
