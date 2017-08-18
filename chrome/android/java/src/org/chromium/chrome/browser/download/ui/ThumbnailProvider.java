@@ -24,11 +24,18 @@ public interface ThumbnailProvider {
         String getContentId();
 
         /** Called when a requested thumbnail is ready. */
-        void onThumbnailRetrieved(@NonNull String contentId, @Nullable Bitmap thumbnail);
+        void onThumbnailRetrieved(@NonNull String identifier, @Nullable Bitmap thumbnail);
 
         /** The requested size (maximum dimension (pixel) of the smaller side) of the thumbnail to
          * be retrieved. */
         int getIconSize();
+
+        /** The URL the file was downloaded from. */
+        @NonNull
+        String getUrl();
+
+        /** The file type. */
+        int getFileType();
     }
 
     /** Destroys the class. */
@@ -45,8 +52,9 @@ public interface ThumbnailProvider {
     /**
      * Removes the thumbnails (different sizes) with {@code contentId} from disk (if disk-cached).
      * @param contentId The content ID of the thumbnail to remove.
+     * @param fileType The file type (image or page) the thumbnail is for.
      */
-    void removeThumbnailsFromDisk(String contentId);
+    void removeThumbnailsFromDisk(String contentId, int filterType);
 
     /** Removes a particular request from the pending queue. */
     void cancelRetrieval(ThumbnailRequest request);

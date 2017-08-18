@@ -396,7 +396,7 @@ public class ArticleSnippetsTest {
         }
 
         @Override
-        public void removeThumbnailsFromDisk(String contentId) {}
+        public void removeThumbnailsFromDisk(String contentId, int fileType) {}
 
         @Override
         public void cancelRetrieval(ThumbnailRequest request) {
@@ -477,8 +477,8 @@ public class ArticleSnippetsTest {
             // Run the callback asynchronously in case the caller made that assumption.
             ThreadUtils.postOnUiThread(() -> {
                 // Return an arbitrary drawable.
-                callback.onLargeIconAvailable(
-                        getBitmap(R.drawable.star_green), largeIconSizePx, true);
+                callback.onLargeIconAvailable(getBitmap(R.drawable.star_green), largeIconSizePx,
+                        true, url, largeIconSizePx);
             });
         }
     }

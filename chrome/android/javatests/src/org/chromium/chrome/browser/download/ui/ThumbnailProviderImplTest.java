@@ -243,6 +243,16 @@ public class ThumbnailProviderImplTest {
             return mRequiredSize;
         }
 
+        @Override
+        public @NonNull String getUrl() {
+            return "";
+        }
+
+        @Override
+        public int getFileType() {
+            return DownloadFilter.FILTER_IMAGE;
+        }
+
         Bitmap getRetrievedThumbnail() {
             return mRetrievedThumbnail;
         }

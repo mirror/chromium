@@ -31,8 +31,11 @@ using base::android::ConvertJavaStringToUTF16;
 
 namespace {
 
-void OnLargeIconAvailable(const JavaRef<jobject>& j_callback,
-                          const favicon_base::LargeIconResult& result) {
+void OnLargeIconAvailable(
+    const JavaRef<jobject>& j_callback,
+    const base::android::ScopedJavaGlobalRef<jstring>& page_url,
+    jint min_source_size_px,
+    const favicon_base::LargeIconResult& result) {
   JNIEnv* env = AttachCurrentThread();
 
   // Convert the result to a Java Bitmap.
@@ -52,7 +55,7 @@ void OnLargeIconAvailable(const JavaRef<jobject>& j_callback,
 
   Java_LargeIconCallback_onLargeIconAvailable(
       env, j_callback, j_bitmap, fallback.background_color,
-      fallback.is_default_background_color);
+      fallback.is_default_background_color, page_url, min_source_size_px);
 }
 
 }  // namespace
@@ -88,7 +91,8 @@ jboolean LargeIconBridge::GetLargeIconForURL(
     return false;
 
   favicon_base::LargeIconCallback callback_runner = base::Bind(
-      &OnLargeIconAvailable, ScopedJavaGlobalRef<jobject>(env, j_callback));
+      &OnLargeIconAvailable, ScopedJavaGlobalRef<jobject>(env, j_callback),
+      ScopedJavaGlobalRef<jstring>(j_page_url), min_source_size_px);
 
   large_icon_service->GetLargeIconOrFallbackStyle(
       GURL(ConvertJavaStringToUTF16(env, j_page_url)),

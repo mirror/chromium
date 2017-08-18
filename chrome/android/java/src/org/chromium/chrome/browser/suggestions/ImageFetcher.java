@@ -14,6 +14,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.Promise;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.NativePageHost;
+import org.chromium.chrome.browser.download.ui.DownloadFilter;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
@@ -368,13 +369,23 @@ public class ImageFetcher {
         }
 
         @Override
-        public void onThumbnailRetrieved(@NonNull String contentId, @Nullable Bitmap thumbnail) {
+        public void onThumbnailRetrieved(@NonNull String identifier, @Nullable Bitmap thumbnail) {
             mThumbnailReceivedPromise.fulfill(thumbnail);
         }
 
         @Override
         public int getIconSize() {
             return mSize;
+        }
+
+        @Override
+        public @NonNull String getUrl() {
+            return mSuggestion.getUrl();
+        }
+
+        @Override
+        public int getFileType() {
+            return DownloadFilter.fromMimeType(mSuggestion.getAssetDownloadMimeType());
         }
 
         public void cancel() {

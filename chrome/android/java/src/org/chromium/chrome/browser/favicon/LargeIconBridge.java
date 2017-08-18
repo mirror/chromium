@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.favicon;
 
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.LruCache;
 
 import org.chromium.base.VisibleForTesting;
@@ -45,10 +46,12 @@ public class LargeIconBridge {
          *
          * @param icon The icon, or null if none is available.
          * @param fallbackColor The fallback color to use if icon is null.
+         * @param url The URL the icon is for.
+         * @param iconSizePx Requested size (minimum dimension) of the icon requested.
          */
         @CalledByNative("LargeIconCallback")
-        void onLargeIconAvailable(
-                @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault);
+        void onLargeIconAvailable(@Nullable Bitmap icon, int fallbackColor,
+                boolean isFallbackColorDefault, String url, int iconSizePx);
     }
 
     /**
@@ -123,22 +126,70 @@ public class LargeIconBridge {
         } else {
             CachedFavicon cached = mFaviconCache.get(pageUrl);
             if (cached != null) {
-                callback.onLargeIconAvailable(
-                        cached.icon, cached.fallbackColor, cached.isFallbackColorDefault);
+                callback.onLargeIconAvailable(cached.icon, cached.fallbackColor,
+                        cached.isFallbackColorDefault, pageUrl, desiredSizePx);
                 return true;
             }
 
             LargeIconCallback callbackWrapper = new LargeIconCallback() {
                 @Override
-                public void onLargeIconAvailable(
-                        Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
+                public void onLargeIconAvailable(Bitmap icon, int fallbackColor,
+                        boolean isFallbackColorDefault, String url, int iconSizePx) {
                     mFaviconCache.put(pageUrl,
                             new CachedFavicon(icon, fallbackColor, isFallbackColorDefault));
-                    callback.onLargeIconAvailable(icon, fallbackColor, isFallbackColorDefault);
+                    callback.onLargeIconAvailable(
+                            icon, fallbackColor, isFallbackColorDefault, pageUrl, desiredSizePx);
                 }
             };
             return nativeGetLargeIconForURL(mNativeLargeIconBridge, mProfile, pageUrl,
                     desiredSizePx, callbackWrapper);
+        }
+    }
+
+    /**
+     * Given a URL, returns a large icon for that URL if one is available (e.g. a favicon or
+     * touch icon). If none is available, a fallback color is returned, based on the dominant color
+     * of any small icons for the URL, or a default gray if no small icons are available. The icon
+     * and fallback color are returned synchronously(when it's from cache) or asynchronously to the
+     * given callback.
+     *
+     * @param pageUrl The URL of the page whose icon will be fetched.
+     * @param desiredSizePx The desired size of the icon in pixels (used for callback).
+     * @param minSizePx The minimum size of the icon in pixels to fetch.
+     * @param callback The method to call asynchronously when the result is available. This callback
+     *                 will not be called if this method returns false.
+     * @return True if a callback should be expected.
+     */
+    public boolean getLargeIconForUrl(final String pageUrl, int desiredSizePx, int minSizePx,
+            final LargeIconCallback callback) {
+        assert mNativeLargeIconBridge != 0;
+        assert callback != null;
+
+        if (mFaviconCache == null) {
+            return nativeGetLargeIconForURL(
+                    mNativeLargeIconBridge, mProfile, pageUrl, minSizePx, callback);
+        } else {
+            CachedFavicon cached = mFaviconCache.get(pageUrl);
+            if (cached != null) {
+                Log.i("Angela", "getLargeIconForUrl 1 " + desiredSizePx);
+                callback.onLargeIconAvailable(cached.icon, cached.fallbackColor,
+                        cached.isFallbackColorDefault, pageUrl, desiredSizePx);
+                return true;
+            }
+
+            LargeIconCallback callbackWrapper = new LargeIconCallback() {
+                @Override
+                public void onLargeIconAvailable(Bitmap icon, int fallbackColor,
+                        boolean isFallbackColorDefault, String url, int iconSizePx) {
+                    mFaviconCache.put(pageUrl,
+                            new CachedFavicon(icon, fallbackColor, isFallbackColorDefault));
+                    Log.i("Angela", "getLargeIconForUrl 2 " + desiredSizePx);
+                    callback.onLargeIconAvailable(
+                            icon, fallbackColor, isFallbackColorDefault, pageUrl, desiredSizePx);
+                }
+            };
+            return nativeGetLargeIconForURL(
+                    mNativeLargeIconBridge, mProfile, pageUrl, minSizePx, callbackWrapper);
         }
     }
 

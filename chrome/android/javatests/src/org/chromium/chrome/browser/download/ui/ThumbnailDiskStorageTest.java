@@ -42,6 +42,7 @@ public class ThumbnailDiskStorageTest {
     private static final Bitmap BITMAP2 = BitmapFactory.decodeFile(FILE_PATH2);
     private static final int ICON_WIDTH1 = 50;
     private static final int ICON_WIDTH2 = 70;
+    private static final int TYPE_IMG = DownloadFilter.FILTER_IMAGE;
 
     private static final long TIMEOUT_MS = 10000;
     private static final long INTERVAL_MS = 500;
@@ -75,6 +76,16 @@ public class ThumbnailDiskStorageTest {
         public int getIconSize() {
             return ICON_WIDTH1;
         }
+
+        @Override
+        public @NonNull String getUrl() {
+            return null;
+        }
+
+        @Override
+        public int getFileType() {
+            return TYPE_IMG;
+        }
     }
 
     private static class TestThumbnailStorageDelegate implements ThumbnailStorageDelegate {
@@ -105,9 +116,9 @@ public class ThumbnailDiskStorageTest {
         }
 
         @Override
-        public void removeFromDiskHelper(Pair<String, Integer> contentIdSizePair) {
+        public void removeFromDiskHelper(String identifier, int iconSizePx, int fileType) {
             removeCount.getAndIncrement();
-            super.removeFromDiskHelper(contentIdSizePair);
+            super.removeFromDiskHelper(identifier, iconSizePx, fileType);
         }
 
         /**
@@ -120,15 +131,17 @@ public class ThumbnailDiskStorageTest {
         public Pair<String, Integer> getOldestEntry() {
             if (getCacheCount() <= 0) return null;
 
-            return sDiskLruCache.iterator().next();
+            ThumbnailCacheEntry.ThumbnailEntry oldestEntry = sDiskLruCache.iterator().next();
+            return Pair.create(oldestEntry.identifier.id, oldestEntry.sizePx);
         }
 
         public Pair<String, Integer> getMostRecentEntry() {
             if (getCacheCount() <= 0) return null;
 
-            ArrayList<Pair<String, Integer>> list =
-                    new ArrayList<Pair<String, Integer>>(sDiskLruCache);
-            return list.get(list.size() - 1);
+            ArrayList<ThumbnailCacheEntry.ThumbnailEntry> list =
+                    new ArrayList<ThumbnailCacheEntry.ThumbnailEntry>(sDiskLruCache);
+            ThumbnailCacheEntry.ThumbnailEntry newestEntry = list.get(list.size() - 1);
+            return Pair.create(newestEntry.identifier.id, newestEntry.sizePx);
         }
     }
 
@@ -169,7 +182,7 @@ public class ThumbnailDiskStorageTest {
     public void testCanInsertAndGet() throws Throwable {
         Assert.assertEquals(0, mTestThumbnailDiskStorage.mSizeBytes);
 
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1, TYPE_IMG);
         Assert.assertEquals(1, mTestThumbnailDiskStorage.getCacheCount());
 
         TestThumbnailRequest request = new TestThumbnailRequest(CONTENT_ID1);
@@ -177,8 +190,7 @@ public class ThumbnailDiskStorageTest {
 
         // Ensure the thumbnail generator is not called.
         Assert.assertEquals(mTestThumbnailGenerator.generateCount.get(), 0);
-        Assert.assertTrue(
-                mTestThumbnailDiskStorage.getFromDisk(CONTENT_ID1, ICON_WIDTH1).sameAs(BITMAP1));
+        Assert.assertTrue(mTestThumbnailDiskStorage.getFromDisk(request).sameAs(BITMAP1));
 
         // Since retrieval re-adds an existing entry, remove was called once already.
         removeThumbnailAndExpectedCount(CONTENT_ID1, 2);
@@ -194,13 +206,13 @@ public class ThumbnailDiskStorageTest {
     public void testRepeatedInsertShouldBeUpdated() throws Throwable {
         Assert.assertEquals(0, mTestThumbnailDiskStorage.mSizeBytes);
 
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1);
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP2, ICON_WIDTH1);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1, TYPE_IMG);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP2, ICON_WIDTH1, TYPE_IMG);
 
         // Verify that the old entry is updated with the new
         Assert.assertEquals(1, mTestThumbnailDiskStorage.getCacheCount());
-        Assert.assertTrue(
-                mTestThumbnailDiskStorage.getFromDisk(CONTENT_ID1, ICON_WIDTH1).sameAs(BITMAP2));
+        TestThumbnailRequest request = new TestThumbnailRequest(CONTENT_ID1);
+        Assert.assertTrue(mTestThumbnailDiskStorage.getFromDisk(request).sameAs(BITMAP2));
 
         // Note: since an existing entry is re-added, remove was called once already
         removeThumbnailAndExpectedCount(CONTENT_ID1, 2);
@@ -215,9 +227,9 @@ public class ThumbnailDiskStorageTest {
     public void testRetrieveThumbnailShouldMakeEntryMostRecent() throws Throwable {
         Assert.assertEquals(0, mTestThumbnailDiskStorage.mSizeBytes);
 
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1);
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID2, BITMAP1, ICON_WIDTH1);
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID3, BITMAP1, ICON_WIDTH1);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1, TYPE_IMG);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID2, BITMAP1, ICON_WIDTH1, TYPE_IMG);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID3, BITMAP1, ICON_WIDTH1, TYPE_IMG);
         Assert.assertEquals(3, mTestThumbnailDiskStorage.getCacheCount());
 
         // Verify no trimming is done
@@ -251,7 +263,8 @@ public class ThumbnailDiskStorageTest {
         // Add thumbnails up to cache limit to get 1 entry trimmed
         int count = 0;
         while (mTestThumbnailDiskStorage.removeCount.get() == 0) {
-            mTestThumbnailDiskStorage.addToDisk("contentId" + count, BITMAP1, ICON_WIDTH1);
+            mTestThumbnailDiskStorage.addToDisk(
+                    "contentId" + count, BITMAP1, ICON_WIDTH1, TYPE_IMG);
             ++count;
         }
 
@@ -277,8 +290,8 @@ public class ThumbnailDiskStorageTest {
     public void testRemoveAllThumbnailsWithSameContentId() throws Throwable {
         Assert.assertEquals(0, mTestThumbnailDiskStorage.mSizeBytes);
 
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1);
-        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH2);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH1, TYPE_IMG);
+        mTestThumbnailDiskStorage.addToDisk(CONTENT_ID1, BITMAP1, ICON_WIDTH2, TYPE_IMG);
         Assert.assertEquals(2, mTestThumbnailDiskStorage.getCacheCount());
         Assert.assertEquals(2, getIconSizes(CONTENT_ID1).size());
 
@@ -289,6 +302,8 @@ public class ThumbnailDiskStorageTest {
 
         Assert.assertEquals(0, mTestThumbnailDiskStorage.mSizeBytes);
     }
+
+    // TODO(angelashao): add test for favicon
 
     /**
      * Retrieve thumbnail and assert that {@link ThumbnailStorageDelegate} has received it.
@@ -328,7 +343,7 @@ public class ThumbnailDiskStorageTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mTestThumbnailDiskStorage.removeFromDisk(contentId);
+                mTestThumbnailDiskStorage.removeFromDisk(contentId, TYPE_IMG);
             }
         });
 

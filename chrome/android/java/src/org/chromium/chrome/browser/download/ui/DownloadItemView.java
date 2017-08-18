@@ -123,9 +123,11 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     }
 
     @Override
-    public void onThumbnailRetrieved(@NonNull String contentId, @Nullable Bitmap thumbnail) {
-        if (TextUtils.equals(getContentId(), contentId) && thumbnail != null
-                && thumbnail.getWidth() > 0 && thumbnail.getHeight() > 0) {
+    public void onThumbnailRetrieved(@NonNull String identifier, @Nullable Bitmap thumbnail) {
+        if (TextUtils.equals(
+                    (getFileType() == DownloadFilter.FILTER_IMAGE) ? getContentId() : getUrl(),
+                    identifier)
+                && thumbnail != null && thumbnail.getWidth() > 0 && thumbnail.getHeight() > 0) {
             assert !thumbnail.isRecycled();
             setThumbnailBitmap(thumbnail);
         }
@@ -134,6 +136,16 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     @Override
     public int getIconSize() {
         return mIconSize;
+    }
+
+    @Override
+    public @NonNull String getUrl() {
+        return mItem.getUrl();
+    }
+
+    @Override
+    public int getFileType() {
+        return mItem.getFilterType();
     }
 
     /**
@@ -150,7 +162,7 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         ThumbnailProvider thumbnailProvider = provider.getThumbnailProvider();
         thumbnailProvider.cancelRetrieval(this);
 
-        int fileType = item.getFilterType();
+        int fileType = getFileType();
 
         // Pick what icon to display for the item.
         mIconResId = DownloadUtils.getIconResId(fileType, DownloadUtils.ICON_SIZE_24_DP);
@@ -159,10 +171,8 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         // immediately if the thumbnail is cached or asynchronously if it has to be fetched from a
         // remote source.
         mThumbnailBitmap = null;
-        if (fileType == DownloadFilter.FILTER_IMAGE && item.isComplete()) {
+        if (item.isComplete()) {
             thumbnailProvider.getThumbnail(this);
-        } else {
-            // TODO(dfalcantara): Get thumbnails for audio and video files when possible.
         }
 
         if (mThumbnailBitmap == null) updateIconView();
