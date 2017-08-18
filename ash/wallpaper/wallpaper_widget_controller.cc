@@ -121,15 +121,18 @@ void WallpaperWidgetController::OnWindowBoundsChanged(
 void WallpaperWidgetController::StartAnimating(
     RootWindowController* root_window_controller) {
   if (widget_) {
+    bool should_show_initial_animation =
+        Shell::Get()->wallpaper_delegate()->ShouldShowInitialAnimation();
     ui::ScopedLayerAnimationSettings settings(
         widget_->GetLayer()->GetAnimator());
     settings.AddObserver(new ShowWallpaperAnimationObserver(
-        root_window_controller, widget_,
-        Shell::Get()->wallpaper_delegate()->ShouldShowInitialAnimation()));
+        root_window_controller, widget_, should_show_initial_animation));
     // When |widget_| shows, AnimateShowWindowCommon() is called to do the
     // animation. Sets transition duration to 0 to avoid animating to the
-    // show animation's initial values.
-    settings.SetTransitionDuration(base::TimeDelta());
+    // show animation's initial values. However, we should still allow the boot
+    // animation.
+    if (!should_show_initial_animation)
+      settings.SetTransitionDuration(base::TimeDelta());
     widget_->Show();
   }
 }
