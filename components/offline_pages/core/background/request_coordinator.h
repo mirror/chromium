@@ -20,6 +20,7 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/offline_pages/core/background/connection_notifier.h"
 #include "components/offline_pages/core/background/device_conditions.h"
+#include "components/offline_pages/core/background/offline_pages_ukm_reporter.h"
 #include "components/offline_pages/core/background/request_coordinator_event_logger.h"
 #include "components/offline_pages/core/background/request_notifier.h"
 #include "components/offline_pages/core/background/request_queue.h"
@@ -34,6 +35,7 @@ class OfflinerPolicy;
 class Offliner;
 class SavePageRequest;
 class ClientPolicyController;
+class OfflinePagesUkmReporter;
 
 // Coordinates queueing and processing save page later requests.
 class RequestCoordinator : public KeyedService,
@@ -110,7 +112,8 @@ class RequestCoordinator : public KeyedService,
                      std::unique_ptr<RequestQueue> queue,
                      std::unique_ptr<Scheduler> scheduler,
                      net::NetworkQualityEstimator::NetworkQualityProvider*
-                         network_quality_estimator);
+                         network_quality_estimator,
+                     std::unique_ptr<OfflinePagesUkmReporter> ukm_reporter);
 
   ~RequestCoordinator() override;
 
@@ -447,6 +450,8 @@ class RequestCoordinator : public KeyedService,
   // Unowned pointer to the Network Quality Estimator.
   net::NetworkQualityEstimator::NetworkQualityProvider*
       network_quality_estimator_;
+  // Object that can record Url Keyed Metrics (UKM).
+  std::unique_ptr<OfflinePagesUkmReporter> ukm_reporter_;
   net::EffectiveConnectionType network_quality_at_request_start_;
   // Holds an ID of the currently active request.
   int64_t active_request_id_;

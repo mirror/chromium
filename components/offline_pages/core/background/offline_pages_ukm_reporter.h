@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef COMPONENTS_OFFLINE_PAGES_CORE_BACKGROUND_OFFLINE_PAGES_UKM_REPORTER_H_
+#define COMPONENTS_OFFLINE_PAGES_CORE_BACKGROUND_OFFLINE_PAGES_UKM_REPORTER_H_
+
+class GURL;
+
+namespace offline_pages {
+
+class OfflinePagesUkmReporter {
+ public:
+  virtual void ReportUrlOfflined(const GURL& gurl) = 0;
+};
+
+}  // namespace offline_pages
+
+#endif  // COMPONENTS_OFFLINE_PAGES_CORE_BACKGROUND_OFFLINE_PAGES_UKM_REPORTER_H_
