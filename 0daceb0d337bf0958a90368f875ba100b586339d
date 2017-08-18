@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef1c396_8fb8ecda",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "in GetWork() when a worker becomes idle.",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 22
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97cd4ff_df829e99",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "OnWorkerBecomesIdle",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 184,
+        "endChar": 31
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c1c3c1_a240e9ff",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "This comment is not needed. The header file already mentions that |lock_| synchronizes accesses to |workers_|.",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 46
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd7d016_b159ffba",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "DCHECK(idle_start_time_.is_null());\n\nSince this is called when a worker *becomes* idle, |idle_start_time_| should be nullptr (worker wasn\u0027t previously idle).",
+      "range": {
+        "startLine": 602,
+        "startChar": 2,
+        "endLine": 602,
+        "endChar": 33
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88a2c8e_6b126ec8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "Since WakeUpOneWorkerAssertLockAcquired() maintains one idle worker, this is only needed when no idle worker is woken up:\n\nelse\n  outer_-\u003eMaintainAtLeastOneIdleWorker();",
+      "range": {
+        "startLine": 659,
+        "startChar": 2,
+        "endLine": 659,
+        "endChar": 41
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec9c844_bf8cfb96",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "I think it\u0027s easier to understand what\u0027s going on with this code:\n\n// Ensure that there is one worker that can run tasks on top of the idle stack,\n// capacity permitting.\nMaintainAtLeastOneIdleWorker();\n\n// If the worker on top of the idle stack can run tasks, wake it up. \nif (NumberOfWorkersThatCantRunTasks() \u003c idle_workers_stack_.size()) {\n  SchedulerWorker* worker \u003d idle_workers_stack_.Pop();\n  if (worker) {\n    SchedulerWorkerDelegateImpl* delegate \u003d\n        static_cast\u003cSchedulerWorkerDelegateImpl*\u003e(worker-\u003edelegate());\n    delegate-\u003eUnsetIsOnIdleWorkersStack(worker);\n    worker-\u003eWakeUp();\n  }\n}\n\n// Ensure that there is one worker that can run tasks on top of the idle stack,\n// capacity permitting.\nMaintainAtLeastOneIdleWorker();",
+      "range": {
+        "startLine": 684,
+        "startChar": 2,
+        "endLine": 702,
+        "endChar": 33
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d321916_6f7ff181",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "It\u0027s hard to reason about the negative values returned by this method. I think the code would be more readable if this was:\n\nint SchedulerWorkerPoolImpl::NumberOfWorkersThatCantRunTasks() {\n  lock_.AssertAcquired();\n  return std::min(0, workers_.size() - worker_capacity_);\n}\n\nThen change:\n\nLine 505:\n\nif (outer_-\u003eNumberOfWorkersThatCantRunTasks() \u003c\n    outer_-\u003eidle_workers_stack_.size()) {\n\nLine 568 - 570:\n\nif (!outer_-\u003eCanWorkerCleanupForTesting())\n  return false;\n\n// Keep one idle worker that can run tasks alive, capacity permitting.\nif (worker \u003d\u003d outer_-\u003ePeekAtIdleWorkersStack() \u0026\u0026\n    outer_-\u003eidle_workers_stack_.size() \u003e\n       outer_-\u003eNumberOfWorkersThatCantRunTasks()) {\n  return false;\n}\n\nreturn true;\n\nLine 687:\nSee other comment on this line.",
+      "range": {
+        "startLine": 774,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 1
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f092774_21f82748",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "EXPECT_EQ\n\nOnly use ASSERT when it\u0027s guaranteed that the test fails if the condition is not met. ASSERT exits the test and prevents us from knowing if the rest of the test passes.",
+      "range": {
+        "startLine": 921,
+        "startChar": 2,
+        "endLine": 921,
+        "endChar": 11
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46364ee1_5f9fec14",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "It would be nice to have a test where you verify that workers are created for tasks posted before ScopedWillBlock. E.g.\n\nRepeat |worker_capacity| times:\n  Post task:\n    Signal waitable_event_1;\n    Wait on waitable_event_2;\n    ScopedWillBlock scoped_will_block;\n    Wait on waitable_event_3;\n  Wait on waitable_event_1\n\n// All workers are occupied. They haven\u0027t entered ScopedWillBlock yet.\n\nPost task:\n  Signal waitable_event_4\n\n// Allow tasks to enter ScopedWillBlock. A worker should be created\n// for the task posted at the previous line.\nSignal waitable_event_1;\n\n// Should not block forever.\nWait on waitable_event_4;\n\n// Allow tasks to exit ScopedWillBlock.\nSignal waitable_event_3;",
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be70591f_890f21c3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "kWorkerCapacity\nhttps://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "range": {
+        "startLine": 1009,
+        "startChar": 19,
+        "endLine": 1009,
+        "endChar": 34
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf37763_002fe81d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "Could this be\nSchedulerWorkerPoolImpl worker_pool(\"OverWorkerCapacityTestWorkerPool\", ...);\n?\n\nA variable on the stack is always preferred to a heap allocation.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 1,
+        "endLine": 1016,
+        "endChar": 29
+      },
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ce1539_fa497492",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T13:55:30Z",
+      "side": 1,
+      "message": "Also check the worker capacity.\nEXPECT_EQ(worker_capacity * 2, worker_pool-\u003eGetWorkerCapacityForTesting());",
+      "revId": "0daceb0d337bf0958a90368f875ba100b586339d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
