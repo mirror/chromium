@@ -258,6 +258,7 @@ void Performance::ReportLongTask(
     const SubTaskAttribution::EntriesVector& sub_task_attributions) {
   if (!GetFrame())
     return;
+  printf("Have Frame\n");
   std::pair<String, DOMWindow*> attribution = Performance::SanitizedAttribution(
       task_context, has_multiple_contexts, GetFrame());
   DOMWindow* culprit_dom_window = attribution.second;

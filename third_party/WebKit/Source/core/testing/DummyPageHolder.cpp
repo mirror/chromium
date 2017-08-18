@@ -80,6 +80,7 @@ DummyPageHolder::DummyPageHolder(
     local_frame_client_ = EmptyLocalFrameClient::Create();
 
   frame_ = LocalFrame::Create(local_frame_client_.Get(), *page_, nullptr);
+  printf("!frame = %d\n", !frame_);
   frame_->SetView(LocalFrameView::Create(*frame_, initial_view_size));
   frame_->View()->GetPage()->GetVisualViewport().SetSize(initial_view_size);
   frame_->Init();

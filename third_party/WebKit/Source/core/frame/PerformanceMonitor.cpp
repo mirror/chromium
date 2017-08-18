@@ -289,9 +289,12 @@ void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
 
   double task_time = end_time - start_time;
   if (thresholds_[kLongTask] && task_time > thresholds_[kLongTask]) {
+    printf("Capture long task\n");
     ClientThresholds* client_thresholds = subscriptions_.at(kLongTask);
     for (const auto& it : *client_thresholds) {
+       printf("Pass threshold\n");
       if (it.value < task_time) {
+         printf("Report long task\n");
         it.key->ReportLongTask(
             start_time, end_time,
             task_has_multiple_contexts_ ? nullptr : task_execution_context_,

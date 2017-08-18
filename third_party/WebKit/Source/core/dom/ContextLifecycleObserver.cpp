@@ -42,13 +42,17 @@ DOMWindowClient::DOMWindowClient(LocalDOMWindow* window)
     : dom_window_(window) {}
 
 DOMWindowClient::DOMWindowClient(LocalFrame* frame)
-    : dom_window_(frame ? frame->DomWindow() : nullptr) {}
+    : dom_window_(frame ? frame->DomWindow() : nullptr) {
+      printf("!frame->DomWindow()=%d\n", !frame->DomWindow());
+    }
 
 LocalDOMWindow* DOMWindowClient::DomWindow() const {
   return dom_window_ && dom_window_->GetFrame() ? dom_window_ : nullptr;
 }
 
 LocalFrame* DOMWindowClient::GetFrame() const {
+  printf("!dom_window_=%d\n", !dom_window_);
+  printf("!dom_window_->GetFrame()=%d\n", !dom_window_->GetFrame());
   return dom_window_ ? dom_window_->GetFrame() : nullptr;
 }
 
