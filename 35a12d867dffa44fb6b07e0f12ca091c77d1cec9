@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899623b6_7ca77d0b",
+        "filename": "ios/chrome/browser/ui/history/history_panel_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:01:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this class convenience init provides any value at all, does it? Just get rid of it and change the call site to use alloc/init.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "35a12d867dffa44fb6b07e0f12ca091c77d1cec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

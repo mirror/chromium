@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29a7c271_1e5a5e81",
+        "filename": "ios/chrome/browser/ui/show_privacy_settings_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:01:18Z",
+      "side": 0,
+      "message": "Good riddance!",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "14046430017dd8f6eaee236e1096786724db590c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
