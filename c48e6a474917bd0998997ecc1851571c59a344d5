@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8b85684_c88c3484",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-18T12:58:10Z",
+      "side": 1,
+      "message": "ShouldShowManualFallbackSuggestion takes care of element.IsPasswordField\nSetAuofilled is mentioned in the tests, because I;m making sure that \"typing\" case is tested.",
+      "parentUuid": "e33c056a_51e89c23",
+      "range": {
+        "startLine": 1759,
+        "startChar": 7,
+        "endLine": 1759,
+        "endChar": 32
+      },
+      "revId": "c48e6a474917bd0998997ecc1851571c59a344d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "588044f8_9552a7a6",
         "filename": "components/autofill/content/renderer/password_autofill_agent.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c48e6a474917bd0998997ecc1851571c59a344d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2bf4fb_a5fc2823",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-18T12:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "588044f8_9552a7a6",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "c48e6a474917bd0998997ecc1851571c59a344d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
