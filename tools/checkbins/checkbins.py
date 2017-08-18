@@ -21,10 +21,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..',
 import pefile
 
 PE_FILE_EXTENSIONS = ['.exe', '.dll']
-DYNAMICBASE_FLAG = 0x0040
-NXCOMPAT_FLAG = 0x0100
-NO_SEH_FLAG = 0x0400
-MACHINE_TYPE_AMD64 = 0x8664
+
+# Any flags not currently defined in pefile.py:
+IMAGE_GUARD_CF_INSTRUMENTED = 0x0100
 
 # Please do not add your file here without confirming that it indeed doesn't
 # require /NXCOMPAT and /DYNAMICBASE.  Contact cpu@chromium.org or your local
@@ -32,6 +31,9 @@ MACHINE_TYPE_AMD64 = 0x8664
 EXCLUDED_FILES = ['mini_installer.exe',
                   'next_version_mini_installer.exe'
                   ]
+# Executables that we do not build, or that do not go on client, may need to be
+# excluded from CFG checks.
+EXCLUDED_CFG_EXES = ['pgosweep.exe']
 
 def IsPEFile(path):
   return (os.path.isfile(path) and
@@ -40,6 +42,7 @@ def IsPEFile(path):
 
 def main(options, args):
   directory = args[0]
+  build = args[1]
   pe_total = 0
   pe_passed = 0
 
@@ -56,7 +59,8 @@ def main(options, args):
     success = True
 
     # Check for /DYNAMICBASE.
-    if pe.OPTIONAL_HEADER.DllCharacteristics & DYNAMICBASE_FLAG:
+    if (pe.OPTIONAL_HEADER.DllCharacteristics &
+        pefile.DLL_CHARACTERISTICS['IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE']):
       if options.verbose:
         print "Checking %s for /DYNAMICBASE... PASS" % path
     else:
@@ -64,7 +68,8 @@ def main(options, args):
       print "Checking %s for /DYNAMICBASE... FAIL" % path
 
     # Check for /NXCOMPAT.
-    if pe.OPTIONAL_HEADER.DllCharacteristics & NXCOMPAT_FLAG:
+    if (pe.OPTIONAL_HEADER.DllCharacteristics &
+        pefile.DLL_CHARACTERISTICS['IMAGE_DLLCHARACTERISTICS_NX_COMPAT']):
       if options.verbose:
         print "Checking %s for /NXCOMPAT... PASS" % path
     else:
@@ -79,11 +84,13 @@ def main(options, args):
     #
     # Refer to the following MSDN article for more information:
     # http://msdn.microsoft.com/en-us/library/9a89h429.aspx
-    if (pe.OPTIONAL_HEADER.DllCharacteristics & NO_SEH_FLAG or
+    if ((pe.OPTIONAL_HEADER.DllCharacteristics &
+         pefile.DLL_CHARACTERISTICS['IMAGE_DLLCHARACTERISTICS_NO_SEH']) or
+        (pe.FILE_HEADER.Machine ==
+         pefile.MACHINE_TYPE['IMAGE_FILE_MACHINE_AMD64']) or
         (hasattr(pe, "DIRECTORY_ENTRY_LOAD_CONFIG") and
          pe.DIRECTORY_ENTRY_LOAD_CONFIG.struct.SEHandlerCount > 0 and
-         pe.DIRECTORY_ENTRY_LOAD_CONFIG.struct.SEHandlerTable != 0) or
-        pe.FILE_HEADER.Machine == MACHINE_TYPE_AMD64):
+         pe.DIRECTORY_ENTRY_LOAD_CONFIG.struct.SEHandlerTable != 0)):
       if options.verbose:
         print "Checking %s for /SAFESEH... PASS" % path
     else:
@@ -92,7 +99,8 @@ def main(options, args):
 
     # ASLR is weakened on Windows 64-bit when the ImageBase is below 4GB
     # (because the loader will never be rebase the image above 4GB).
-    if pe.FILE_HEADER.Machine == MACHINE_TYPE_AMD64:
+    if (pe.FILE_HEADER.Machine ==
+        pefile.MACHINE_TYPE['IMAGE_FILE_MACHINE_AMD64']):
       if pe.OPTIONAL_HEADER.ImageBase <= 0xFFFFFFFF:
         print("Checking %s ImageBase (0x%X < 4GB)... FAIL" %
               (path, pe.OPTIONAL_HEADER.ImageBase))
@@ -100,6 +108,31 @@ def main(options, args):
       elif options.verbose:
         print("Checking %s ImageBase (0x%X > 4GB)... PASS" %
               (path, pe.OPTIONAL_HEADER.ImageBase))
+
+    # Check that CFG is enabled in release executables.
+    # Note: This ensures support for any CFG checks compiled into any DLLs
+    #       mapped into the process (e.g. Microsoft system DLLs).  The EXE
+    #       itself may not have CFG instrumentation compiled in.
+    if (build == 'Release' and
+        path.lower().endswith('.exe') and
+        os.path.basename(path) not in EXCLUDED_CFG_EXES and
+        hasattr(pe, "DIRECTORY_ENTRY_LOAD_CONFIG")):
+      if not(pe.OPTIONAL_HEADER.DllCharacteristics &
+             pefile.DLL_CHARACTERISTICS['IMAGE_DLLCHARACTERISTICS_GUARD_CF']):
+        success = False
+        print("Checking %s DllCharacteristics for CFG (/GUARD) support... " \
+              "FAIL" % path)
+      elif not(pe.DIRECTORY_ENTRY_LOAD_CONFIG.struct.GuardFlags &
+               IMAGE_GUARD_CF_INSTRUMENTED):
+        success = False
+        print("Checking %s GuardFlags for CFG (/GUARD) support... FAIL" % path)
+      elif pe.DIRECTORY_ENTRY_LOAD_CONFIG.struct.GuardCFFunctionCount == 0:
+        success = False
+        print("Checking %s GuardCFFunctionCount for CFG (/GUARD) support... " \
+              "FAIL" % path)
+      else:
+        if options.verbose:
+          print "Checking %s for CFG (/GUARD) support... PASS" % path
 
     # Update tally.
     if success:
