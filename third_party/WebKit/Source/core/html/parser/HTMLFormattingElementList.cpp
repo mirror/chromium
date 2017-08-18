@@ -98,7 +98,7 @@ void HTMLFormattingElementList::Append(HTMLStackItem* item) {
 void HTMLFormattingElementList::Remove(Element* element) {
   size_t index = entries_.ReverseFind(element);
   if (index != kNotFound)
-    entries_.erase(index);
+    entries_.eraseAtIndex(index);
 }
 
 void HTMLFormattingElementList::AppendMarker() {
