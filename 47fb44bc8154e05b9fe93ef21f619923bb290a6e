@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29a5b0ea_a780cbdd",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T22:52:18Z",
+      "side": 1,
+      "message": "nit: The currently code works mathematically. But I think we should flip the two. The pass-in args are in the view\u0027s coordinates. Theoretically, we should convert them to widget\u0027s coordinates, which is the same as the underlying aura::Window\u0027s coordinates. Then convert them to root coordinates.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 71
+      },
+      "revId": "47fb44bc8154e05b9fe93ef21f619923bb290a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
