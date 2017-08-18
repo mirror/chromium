@@ -22,6 +22,30 @@
       "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40782ff4_c2846037",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-18T17:31:33Z",
+      "side": 1,
+      "message": "Both ForwardWheelEvent function which is normally called and RenderWidgetHostView*::ProcessMouseWheelEvent are calling host_-\u003eForwardWheelEventWithLatencyInfo(event, latency) function to add the wheel event to mouse_wheel_event_queue. So, the two of them will be the same till one of the function bodies changes.\n\nThis solution here is a short term one anyways, the ideal correction will be decoupling The generating of WebInputEvent from nativeEvents and routing(as well as phase handling) of the generated WebInputEvents. This would also address oopif cases since instead of directly forwarding the events DispatchMouseEvent will be able to call the routing function. I already filed a bug for this (crbug.com/756573).\n\nYes, we can, but it would break the scroll latching behavior since every wheel event will cause a sequence of GSB, GSU, and GSE. I don\u0027t think the timer might cause an issue but if you prefer not to deal with it here I can change it.",
+      "parentUuid": "7f71aa47_762254a8",
+      "range": {
+        "startLine": 283,
+        "startChar": 37,
+        "endLine": 283,
+        "endChar": 76
+      },
+      "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
