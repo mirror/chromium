@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33ded360_b7dc48bf",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-18T23:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bfa8763_bda45d48",
+      "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d010198_0659d1cc",
         "filename": "chrome/browser/media/platform_verification_impl.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1b2f629d_22734079",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-18T23:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d010198_0659d1cc",
+      "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c990bbf1_1e1277ff",
         "filename": "chrome/browser/media/platform_verification_impl.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T08:29:33Z",
       "side": 1,
       "message": "I would personally prefer to see this interface method added to the mojom with the CL that actually implements it, if that\u0027s possible.",
+      "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9025fd_ecce4e31",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-18T23:25:30Z",
+      "side": 1,
+      "message": "It\u0027s still being implemented for pepper, so this will be connected once that\u0027s done. https://chromium-review.googlesource.com/c/587828 is part of it.",
+      "parentUuid": "c990bbf1_1e1277ff",
       "revId": "89a523ae362d014a6a2905bd83eb2da739206e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
