@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82e2ad2_dee51abc",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/list-wrapping-image-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "Please use input text after execCommand(\u0027insertImage\u0027) to make\ntester parameter of |assert_selection()| to \u0027insertOrderedList\u0027 only.",
+      "revId": "0fa05b26ffb1e308f9806628a4b0af65be895c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
