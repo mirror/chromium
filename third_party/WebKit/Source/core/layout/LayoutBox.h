@@ -1104,7 +1104,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // Returns whether content which overflows should be clipped. This is not just
   // because of overflow clip, but other types of clip as well, such as
   // control clips or contain: paint.
-  virtual bool ShouldClipOverflow() const;
+  virtual bool ShouldClipOverflow() const {
+    return HasOverflowClip() || StyleRef().ContainsPaint() || HasControlClip();
+  }
 
   // Returns the intersection of all overflow clips which apply.
   virtual LayoutRect OverflowClipRect(
@@ -1192,7 +1194,16 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutUnit OffsetTop(const Element*) const override;
 
   LayoutPoint FlipForWritingModeForChild(const LayoutBox* child,
-                                         const LayoutPoint&) const;
+                                         const LayoutPoint& point) const {
+    if (!Style()->IsFlippedBlocksWritingMode())
+      return point;
+
+    // The child is going to add in its x(), so we have to make sure it ends up
+    // in the right place.
+    return LayoutPoint(point.X() + Size().Width() - child->Size().Width() -
+                           (2 * child->Location().X()),
+                       point.Y());
+  }
   WARN_UNUSED_RESULT LayoutUnit FlipForWritingMode(LayoutUnit position) const {
     // The offset is in the block direction (y for horizontal writing modes, x
     // for vertical writing modes).

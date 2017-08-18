@@ -164,7 +164,11 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
   virtual int PixelSnappedOffsetWidth(const Element*) const;
   virtual int PixelSnappedOffsetHeight(const Element*) const;
 
-  bool HasSelfPaintingLayer() const;
+  ALWAYS_INLINE bool HasSelfPaintingLayer() const {
+    if (!GetRarePaintData())
+      return false;
+    return HasSelfPaintingLayerSlow();
+  }
   PaintLayer* Layer() const {
     return GetRarePaintData() ? GetRarePaintData()->Layer() : nullptr;
   }
@@ -531,6 +535,7 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
                               bool full_remove_insert = false);
 
  private:
+  bool HasSelfPaintingLayerSlow() const;
   void CreateLayerAfterStyleChange();
 
   LayoutUnit ComputedCSSPadding(const Length&) const;

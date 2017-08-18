@@ -385,7 +385,12 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   LayoutTableCell* CellFollowing(const LayoutTableCell&) const;
 
   void InvalidateCollapsedBorders();
-  void InvalidateCollapsedBordersForAllCellsIfNeeded();
+  ALWAYS_INLINE void InvalidateCollapsedBordersForAllCellsIfNeeded() {
+    DCHECK(ShouldCollapseBorders());
+    if (!needs_invalidate_collapsed_borders_for_all_cells_)
+      return;
+    InvalidateCollapsedBordersForAllCells();
+  }
 
   bool HasCollapsedBorders() const {
     DCHECK(collapsed_borders_valid_);
@@ -465,6 +470,8 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
 
  private:
+  void InvalidateCollapsedBordersForAllCells();
+
   bool IsOfType(LayoutObjectType type) const override {
     return type == kLayoutObjectTable || LayoutBlock::IsOfType(type);
   }

@@ -5465,19 +5465,6 @@ LayoutUnit LayoutBox::OffsetTop(const Element* parent) const {
   return AdjustedPositionRelativeTo(PhysicalLocation(), parent).Y();
 }
 
-LayoutPoint LayoutBox::FlipForWritingModeForChild(
-    const LayoutBox* child,
-    const LayoutPoint& point) const {
-  if (!Style()->IsFlippedBlocksWritingMode())
-    return point;
-
-  // The child is going to add in its x(), so we have to make sure it ends up in
-  // the right place.
-  return LayoutPoint(point.X() + Size().Width() - child->Size().Width() -
-                         (2 * child->Location().X()),
-                     point.Y());
-}
-
 LayoutBox* LayoutBox::LocationContainer() const {
   // Location of a non-root SVG object derived from LayoutBox should not be
   // affected by writing-mode of the containing box (SVGRoot).
@@ -5957,10 +5944,6 @@ LayoutRect LayoutBox::DebugRect() const {
     block->AdjustChildDebugRect(rect);
 
   return rect;
-}
-
-bool LayoutBox::ShouldClipOverflow() const {
-  return HasOverflowClip() || StyleRef().ContainsPaint() || HasControlClip();
 }
 
 void LayoutBox::MutableForPainting::

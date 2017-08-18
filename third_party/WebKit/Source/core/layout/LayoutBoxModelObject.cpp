@@ -477,7 +477,7 @@ void LayoutBoxModelObject::DestroyLayer() {
   GetRarePaintData()->SetLayer(nullptr);
 }
 
-bool LayoutBoxModelObject::HasSelfPaintingLayer() const {
+bool LayoutBoxModelObject::HasSelfPaintingLayerSlow() const {
   return Layer() && Layer()->IsSelfPaintingLayer();
 }
 
