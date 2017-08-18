@@ -229,7 +229,7 @@ int ImportUserCert(CERTCertificate* cert) {
 }
 
 // Based on nsNSSCertificateDB::SetCertTrust.
-bool SetCertTrust(CERTCertificate* nsscert,
+bool SetCertTrust(CERTCertificate* cert,
                   net::CertType type,
                   net::NSSCertDatabase::TrustBits trustBits) {
   const unsigned kSSLTrustBits = net::NSSCertDatabase::TRUSTED_SSL |
@@ -269,11 +269,11 @@ bool SetCertTrust(CERTCertificate* nsscert,
     else if (trustBits & net::NSSCertDatabase::TRUSTED_OBJ_SIGN)
       trust.objectSigningFlags |= CERTDB_TRUSTED_CA | CERTDB_TRUSTED_CLIENT_CA;
 
-    srv = CERT_ChangeCertTrust(CERT_GetDefaultCertDB(), nsscert, &trust);
+    srv = CERT_ChangeCertTrust(CERT_GetDefaultCertDB(), cert, &trust);
   } else if (type == net::SERVER_CERT) {
     CERTCertTrust trust = {0};
     // We only modify the sslFlags, so copy the other flags.
-    CERT_GetCertTrust(nsscert, &trust);
+    CERT_GetCertTrust(cert, &trust);
     trust.sslFlags = 0;
 
     if (trustBits & net::NSSCertDatabase::DISTRUSTED_SSL)
@@ -281,7 +281,7 @@ bool SetCertTrust(CERTCertificate* nsscert,
     else if (trustBits & net::NSSCertDatabase::TRUSTED_SSL)
       trust.sslFlags |= CERTDB_TRUSTED | CERTDB_TERMINAL_RECORD;
 
-    srv = CERT_ChangeCertTrust(CERT_GetDefaultCertDB(), nsscert, &trust);
+    srv = CERT_ChangeCertTrust(CERT_GetDefaultCertDB(), cert, &trust);
   } else {
     // ignore user and email/unknown certs
     return true;
