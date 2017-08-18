@@ -94,6 +94,30 @@
       "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7f1c3d_f9d3a146",
+        "filename": "cc/tiles/checker_image_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-18T21:02:09Z",
+      "side": 1,
+      "message": "\u003e I think you can infer that from ForcedDisabled veto type.\n\u003e \n\u003e Tile manager only know about gpu rasterization to pass it to the raster task, which is only used for tracking metrics. So, I think I\u0027d rather thing about removing that rather than adding more uses.\n\nI think its also being used to decide whether to run raster on the non-concurrent thread (for the worker context).\n\n\u003e \n\u003e Maybe LTHI can make this decision when we decide whether or not to use gpu raster and then set \"SetCheckerImagingForcedDisabled()\" or something like that on tile manager which can pass that to the checker tracker (unless LTHI can access the checker tracker directly)\n\nDone.",
+      "parentUuid": "d9514131_9cd50a9b",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
