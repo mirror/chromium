@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3f62d5a_0a019a2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/OmniboxUrlEmphasizer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-18T14:56:23Z",
+      "side": 0,
+      "message": "Why did you delete this part of the comment?",
+      "range": {
+        "startLine": 199,
+        "startChar": 88,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "148ce9fd71f2aa0fa421b25821dbf36299d4e6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
