@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "components/offline_pages/core/offline_page_archiver.h"
+#include "components/offline_pages/core/offline_page_model.h"
 #include "content/public/common/page_type.h"
 
 namespace base {
@@ -43,6 +44,11 @@ namespace offline_pages {
 //   }
 class OfflinePageMHTMLArchiver : public OfflinePageArchiver {
  public:
+  // Creates a file name for the archive file based on url and title.
+  // Public for testing only.
+  static base::FilePath GenerateFileName(const base::FilePath& archives_dir,
+                                         const GURL& url,
+                                         const std::string& title);
 
   explicit OfflinePageMHTMLArchiver(content::WebContents* web_contents);
   ~OfflinePageMHTMLArchiver() override;
@@ -60,6 +66,12 @@ class OfflinePageMHTMLArchiver : public OfflinePageArchiver {
   // Might be overridden for testing purpose.
   virtual void GenerateMHTML(const base::FilePath& archives_dir,
                              const CreateArchiveParams& create_archive_params);
+
+  // The callback for generating an available file name.
+  void OnGenerateFileNameDone(const GURL& url,
+                              const base::string16& title,
+                              const CreateArchiveParams& create_archive_params,
+                              const base::FilePath& file_path);
 
   // Callback for Generating MHTML.
   void OnGenerateMHTMLDone(const GURL& url,

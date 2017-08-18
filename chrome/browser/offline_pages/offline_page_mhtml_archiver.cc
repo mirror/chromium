@@ -12,6 +12,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
@@ -24,7 +25,12 @@
 
 namespace offline_pages {
 namespace {
+const int kTitleLengthMax = 40;
+const int kMaxUniqueFiles = 100;
+const char kFileNameComponentsSeparator[] = "-";
 const base::FilePath::CharType kMHTMLExtension[] = FILE_PATH_LITERAL("mhtml");
+const char kReplaceChars[] = " ";
+const char kReplaceWith[] = "_";
 
 void DeleteFileOnFileThread(const base::FilePath& file_path,
                             const base::Closure& callback) {
@@ -37,6 +43,32 @@ void DeleteFileOnFileThread(const base::FilePath& file_path,
 }  // namespace
 
 // static
+base::FilePath OfflinePageMHTMLArchiver::GenerateFileName(
+    const base::FilePath& archives_dir,
+    const GURL& url,
+    const std::string& title) {
+  base::FilePath::StringType title_part;
+  base::TruncateUTF8ToByteSize(title, kTitleLengthMax, &title_part);
+  std::string suggested_name(url.host() + kFileNameComponentsSeparator +
+                             title_part);
+  base::ReplaceChars(suggested_name, kReplaceChars, kReplaceWith,
+                     &suggested_name);
+  base::FilePath path_to_check(
+      archives_dir.Append(suggested_name).AddExtension(kMHTMLExtension));
+
+  // Make sure there's no duplicate filenames.
+  if (base::PathExists(path_to_check)) {
+    for (int uniquifier = 1; uniquifier < kMaxUniqueFiles; ++uniquifier) {
+      std::string suffix(base::StringPrintf(" (%d)", uniquifier));
+      base::FilePath path_with_suffix =
+          path_to_check.InsertBeforeExtensionASCII(suffix);
+      if (!base::PathExists(path_with_suffix))
+        return path_with_suffix;
+    }
+  }
+  return path_to_check;
+}
+
 OfflinePageMHTMLArchiver::OfflinePageMHTMLArchiver(
     content::WebContents* web_contents)
     : web_contents_(web_contents),
@@ -106,8 +138,30 @@ void OfflinePageMHTMLArchiver::GenerateMHTML(
 
   GURL url(web_contents_->GetLastCommittedURL());
   base::string16 title(web_contents_->GetTitle());
-  base::FilePath file_path(
-      archives_dir.Append(base::GenerateGUID()).AddExtension(kMHTMLExtension));
+
+  if (create_archive_params.use_random_guid_names) {
+    base::FilePath file_path(archives_dir.Append(base::GenerateGUID())
+                                 .AddExtension(kMHTMLExtension));
+    OnGenerateFileNameDone(url, title, create_archive_params, file_path);
+  } else {
+    // During the generation of the file name, there are some operations that
+    // need to run on file thread. So posting the job and getting the generated
+    // file name for next steps.
+    base::PostTaskWithTraitsAndReplyWithResult(
+        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+        base::BindOnce(&GenerateFileName, archives_dir, url,
+                       base::UTF16ToUTF8(title)),
+        base::BindOnce(&OfflinePageMHTMLArchiver::OnGenerateFileNameDone,
+                       weak_ptr_factory_.GetWeakPtr(), url, title,
+                       create_archive_params));
+  }
+}
+
+void OfflinePageMHTMLArchiver::OnGenerateFileNameDone(
+    const GURL& url,
+    const base::string16& title,
+    const CreateArchiveParams& create_archive_params,
+    const base::FilePath& file_path) {
   content::MHTMLGenerationParams params(file_path);
   params.use_binary_encoding = true;
   params.remove_popup_overlay = create_archive_params.remove_popup_overlay;
