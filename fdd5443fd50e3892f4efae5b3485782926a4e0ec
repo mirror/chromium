@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9213916b_f6b6396d",
+        "filename": "mojo/public/js/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-18T19:02:54Z",
+      "side": 1,
+      "message": "It would be nice if we also mention interfaces_js_data_deps and the difference.\n\nYou could take a look at the comment in this file.\nhttps://cs.chromium.org/chromium/src/mojo/public/tools/bindings/mojom.gni?rcl\u003df0c095cbf8c70225083b275ce56644174e4cfd8e\u0026l\u003d112",
+      "revId": "fdd5443fd50e3892f4efae5b3485782926a4e0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
