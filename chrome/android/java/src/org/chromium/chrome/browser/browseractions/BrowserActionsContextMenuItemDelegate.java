@@ -16,9 +16,11 @@ import android.provider.Browser;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Log;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.browseractions.BrowserActionsTabCreatorManager.BrowserActionsTabCreator;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.share.ShareParams;
@@ -39,6 +41,7 @@ public class BrowserActionsContextMenuItemDelegate {
 
     private final Activity mActivity;
     private final String mSourcePackageName;
+    private final BrowserActionsTabCreatorManager mTabCreatorManager;
 
     /**
      * Builds a {@link BrowserActionsContextMenuItemDelegate} instance.
@@ -48,6 +51,7 @@ public class BrowserActionsContextMenuItemDelegate {
     public BrowserActionsContextMenuItemDelegate(Activity activity, String sourcePackageName) {
         mActivity = activity;
         mSourcePackageName = sourcePackageName;
+        mTabCreatorManager = new BrowserActionsTabCreatorManager();
     }
 
     private int openTabInBackground(String linkUrl) {
@@ -66,7 +70,24 @@ public class BrowserActionsContextMenuItemDelegate {
                 return tab.getId();
             }
         }
+        BrowserActionsTabModelSelector selector =
+                BrowserActionsTabModelSelector.getInstance(mActivity, mTabCreatorManager);
+        if (!selector.isActiveState()) {
+            selector.initializeSelector();
+            ((BrowserActionsTabCreator) mTabCreatorManager.getTabCreator(false))
+                    .setTabModel(selector.getCurrentModel());
+            selector.loadState(true);
+            selector.restoreTabs(false);
+        }
+        Tab tab =
+                selector.openNewTab(loadUrlParams, TabLaunchType.FROM_BROWSER_ACTIONS, null, false);
+        if (tab != null) return tab.getId();
         return Tab.INVALID_TAB_ID;
+    }
+
+    @VisibleForTesting
+    BrowserActionsTabCreatorManager getTabCreatorManager() {
+        return mTabCreatorManager;
     }
 
     /**
@@ -107,19 +128,11 @@ public class BrowserActionsContextMenuItemDelegate {
         int tabId = openTabInBackground(linkUrl);
         if (tabId != Tab.INVALID_TAB_ID) {
             BrowserActionsService.sendIntent(
-                    BrowserActionsService.ACTION_TAB_CREATION_UPDATE, tabId);
-            Toast.makeText(mActivity, R.string.browser_actions_open_in_background_toast_message,
-                         Toast.LENGTH_SHORT)
-                    .show();
-        } else {
-            BrowserActionsService.sendIntent(
-                    BrowserActionsService.ACTION_TAB_CREATION_FINISH, Tab.INVALID_TAB_ID);
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setClass(mActivity, ChromeLauncherActivity.class);
-            intent.putExtra(ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
-            IntentUtils.safeStartActivity(mActivity, intent);
+                    BrowserActionsService.ACTION_TAB_CREATION_UPDATE, Tab.INVALID_TAB_ID);
         }
+        Toast.makeText(mActivity, R.string.browser_actions_open_in_background_toast_message,
+                     Toast.LENGTH_SHORT)
+                .show();
     }
 
     /**

@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.tabmodel;
 
 import org.chromium.base.ObserverList;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
@@ -241,5 +242,12 @@ public abstract class TabModelSelectorBase implements TabModelSelector {
         for (TabModelSelectorObserver listener : mObservers) {
             listener.onNewTabCreated(tab);
         }
+    }
+
+    @VisibleForTesting
+    protected void clearData() {
+        mTabModels = Collections.emptyList();
+        mActiveModelIndex = NORMAL_TAB_MODEL_INDEX;
+        mTabStateInitialized = false;
     }
 }

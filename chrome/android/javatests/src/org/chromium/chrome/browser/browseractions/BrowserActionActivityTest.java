@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.customtabs.browseractions.BrowserActionsIntent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
@@ -48,6 +49,7 @@ import org.chromium.ui.base.DeviceFormFactor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Instrumentation tests for context menu of a {@link BrowserActionActivity}.
@@ -70,6 +72,7 @@ public class BrowserActionActivityTest {
     private ProgressDialog mProgressDialog;
     private TestDelegate mTestDelegate;
     private EmbeddedTestServer mTestServer;
+    private StrictMode.ThreadPolicy mOldPolicy;
     private String mTestPage;
     private String mTestPage2;
     private String mTestPage3;
@@ -123,6 +126,12 @@ public class BrowserActionActivityTest {
         mTestPage = mTestServer.getURL(TEST_PAGE);
         mTestPage2 = mTestServer.getURL(TEST_PAGE_2);
         mTestPage3 = mTestServer.getURL(TEST_PAGE_3);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mOldPolicy = StrictMode.allowThreadDiskWrites();
+            }
+        });
     }
 
     @After
@@ -134,6 +143,12 @@ public class BrowserActionActivityTest {
             }
         });
         mTestServer.stopAndDestroyServer();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                StrictMode.setThreadPolicy(mOldPolicy);
+            }
+        });
     }
 
     @Test
@@ -324,6 +339,124 @@ public class BrowserActionActivityTest {
         } else {
             Assert.assertTrue(mActivityTestRule.getActivity().getLayoutManager().overviewVisible());
         }
+    }
+
+    @Test
+    @SmallTest
+    public void testOpenSingleTabInBackgroundWhenChromeNotAvailable() throws Exception {
+        // Load Browser Actions menu completely.
+        final BrowserActionActivity activity = startBrowserActionActivity(mTestPage);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(0);
+        mOnFinishNativeInitializationCallback.waitForCallback(0);
+        // No notification should be shown.
+        Assert.assertFalse(BrowserActionsService.hasBrowserActionsNotification());
+
+        final BrowserActionsTabCreatorManager manager = mMenuItemDelegate.getTabCreatorManager();
+        final BrowserActionsTabModelSelector selector =
+                ThreadUtils.runOnUiThreadBlocking(new Callable<BrowserActionsTabModelSelector>() {
+                    @Override
+                    public BrowserActionsTabModelSelector call() {
+                        return BrowserActionsTabModelSelector.getInstance(activity, manager);
+                    }
+                });
+        Assert.assertFalse(selector.isActiveState());
+        // Open a tab in the background.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                activity.getHelperForTesting().onItemSelected(
+                        R.id.browser_actions_open_in_background);
+            }
+        });
+
+        // Notification for single tab should be shown.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return BrowserActionsService.hasBrowserActionsNotification();
+            }
+        });
+        Assert.assertEquals(R.string.browser_actions_single_link_open_notification_title,
+                BrowserActionsService.getTitleRestId());
+        // New tab should be added to the BrowserActionTabModelSelector.
+        Assert.assertEquals(1, selector.getCurrentModel().getCount());
+        CriteriaHelper.pollUiThread(Criteria.equals(mTestPage, new Callable<String>() {
+            @Override
+            public String call() {
+                return selector.getCurrentModel().getTabAt(0).getUrl();
+            }
+        }));
+    }
+
+    @Test
+    @SmallTest
+    public void testOpenMultipleTabsInBackgroundWhenChromeNotAvailable() throws Exception {
+        // Load Browser Actions menu completely and open a tab in the background.
+        final BrowserActionActivity activity1 = startBrowserActionActivity(mTestPage);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(0);
+        mOnFinishNativeInitializationCallback.waitForCallback(0);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                activity1.getHelperForTesting().onItemSelected(
+                        R.id.browser_actions_open_in_background);
+            }
+        });
+        // Preferences should update a Tab is created and notification title should be for single
+        // tab.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return BrowserActionsService.hasBrowserActionsNotification();
+            }
+        });
+        Assert.assertEquals(R.string.browser_actions_single_link_open_notification_title,
+                BrowserActionsService.getTitleRestId());
+
+        // Load Browser Actions menu again and open another tab in the background.
+        final BrowserActionActivity activity2 = startBrowserActionActivity(mTestPage2, 1);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(1);
+        mOnFinishNativeInitializationCallback.waitForCallback(1);
+        final BrowserActionsTabCreatorManager manager = mMenuItemDelegate.getTabCreatorManager();
+        final BrowserActionsTabModelSelector selector =
+                ThreadUtils.runOnUiThreadBlocking(new Callable<BrowserActionsTabModelSelector>() {
+                    @Override
+                    public BrowserActionsTabModelSelector call() {
+                        return BrowserActionsTabModelSelector.getInstance(activity2, manager);
+                    }
+                });
+        // BrowserActionsTabModelSelector should already been initialized and have one tab.
+        Assert.assertTrue(selector.isActiveState());
+        Assert.assertEquals(1, selector.getCurrentModel().getCount());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                activity2.getHelperForTesting().onItemSelected(
+                        R.id.browser_actions_open_in_background);
+            }
+        });
+        // Notification title should be shown for multiple tabs.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return R.string.browser_actions_multi_links_open_notification_title
+                        == BrowserActionsService.getTitleRestId();
+            }
+        });
+        // BrowserActionTabModelSelector should have two tabs and tabs should be added sequentially.
+        Assert.assertEquals(2, selector.getCurrentModel().getCount());
+        CriteriaHelper.pollUiThread(Criteria.equals(mTestPage, new Callable<String>() {
+            @Override
+            public String call() {
+                return selector.getCurrentModel().getTabAt(0).getUrl();
+            }
+        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(mTestPage2, new Callable<String>() {
+            @Override
+            public String call() {
+                return selector.getCurrentModel().getTabAt(1).getUrl();
+            }
+        }));
     }
 
     private BrowserActionActivity startBrowserActionActivity(String url) throws Exception {

@@ -1308,7 +1308,6 @@ public class Tab
             } else {
                 setContentViewCore(contentViewCore);
             }
-
             mContentViewCore.addImeEventObserver(new ImeEventObserver() {
                 @Override
                 public void onImeEvent() {
@@ -1328,7 +1327,6 @@ public class Tab
             if (!creatingWebContents && webContents.isLoadingToDifferentDocument()) {
                 didStartPageLoad(webContents.getVisibleUrl(), false);
             }
-
             getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
         } finally {
             if (mTimestampMillis == INVALID_TIMESTAMP) {
