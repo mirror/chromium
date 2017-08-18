@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c37feae_c184987a",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-18T22:34:17Z",
+      "side": 1,
+      "message": "Does this pass \u0027git cl format\u0027?",
+      "revId": "825b577b3396098692b5940c8d49a20b9b775b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
