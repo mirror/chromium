@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2c821d8e_a2e54657",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T10:22:47Z",
+      "side": 1,
+      "message": "It\u0027s not as explicit, but you would get a NullPointerException when unboxing the Integer value.",
+      "parentUuid": "357b6431_3fac9778",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 82
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b14ae9_d6b83829",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 19
