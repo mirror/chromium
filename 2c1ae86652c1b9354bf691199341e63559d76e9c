@@ -22,6 +22,30 @@
       "revId": "2c1ae86652c1b9354bf691199341e63559d76e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c67fb8_b1671eee",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-08-18T18:08:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bc5a7804_f8c05285",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 24
+      },
+      "revId": "2c1ae86652c1b9354bf691199341e63559d76e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
