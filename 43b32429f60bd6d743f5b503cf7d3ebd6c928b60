@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ebfad65_e3354b29",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-18T02:28:48Z",
+      "side": 1,
+      "message": "Please check if the subject of the sentence is consistent.\nFor example, \"to be set back to |disks_| by OnRenameCompleted\" or\n\"so that OnRenameCompleted can set it back to |disks_|...\"",
+      "range": {
+        "startLine": 299,
+        "startChar": 27,
+        "endLine": 299,
+        "endChar": 66
+      },
+      "revId": "43b32429f60bd6d743f5b503cf7d3ebd6c928b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8418c47_d0104397",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-18T02:28:48Z",
+      "side": 1,
+      "message": "nit: Does \"synchronize\" mean more than \"set it back\"? If not, I feel it is redundant.",
+      "revId": "43b32429f60bd6d743f5b503cf7d3ebd6c928b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
