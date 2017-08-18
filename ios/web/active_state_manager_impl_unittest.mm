@@ -21,7 +21,15 @@ namespace web {
 namespace {
 
 // A test fixture to test ActiveStateManagerImpl.
-typedef WebTest ActiveStateManagerImplTest;
+class ActiveStateManagerImplTest : public WebTest {
+ protected:
+  ActiveStateManagerImplTest() {
+    BrowserState::GetActiveStateManager(GetBrowserState())->SetActive(true);
+  }
+  ~ActiveStateManagerImplTest() override {
+    BrowserState::GetActiveStateManager(GetBrowserState())->SetActive(false);
+  }
+};
 
 // An ActiveStateManager::Observer used for testing purposes.
 class ActiveStateManagerObserver : public ActiveStateManager::Observer {
