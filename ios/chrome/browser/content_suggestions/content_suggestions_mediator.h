@@ -57,6 +57,8 @@ initWithContentService:
 @property(nonatomic, weak, nullable) id<ContentSuggestionsHeaderProvider>
     headerProvider;
 
+@property(nonatomic, assign) BOOL forceNextReadingListUpdate;
+
 // The notification promo owned by this mediator.
 - (nonnull NotificationPromoWhatsNew*)notificationPromo;
 

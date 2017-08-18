@@ -14,9 +14,11 @@
 @protocol ContentSuggestionsDataSink
 
 // Notifies the Data Sink that new data is available for the section identified
-// by |sectionInfo|.
+// by |sectionInfo|. If |forceReload| is YES, the section is reloaded with the
+// new suggestions.
 - (void)dataAvailableForSection:
-    (ContentSuggestionsSectionInformation*)sectionInfo;
+            (ContentSuggestionsSectionInformation*)sectionInfo
+                    forceReload:(BOOL)forceReload;
 
 // The suggestion associated with |suggestionIdentifier| has been invalidated by
 // the backend data source and should be cleared now. This is why this method is
