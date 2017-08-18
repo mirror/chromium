@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "62277b5e_ca4c808f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T05:42:12Z",
+      "side": 1,
+      "message": "Let say\n(A) is setButtonStyle:(style) forUIButton:(UIButton)\n(B) is setButtonStyle:(style) forButton:(ContextBarButton\n\n(A) is used privately by initWithFrame and used by (B).\n(B) is used by public. as the public cannot access the UIButton directly.",
+      "parentUuid": "710fe06d_deb7b6d4",
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec841d8b_c3c342cf",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 4
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "88131ff5_17c369c8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T05:42:12Z",
+      "side": 1,
+      "message": "verified they are not overlapping.",
+      "parentUuid": "ec841d8b_c3c342cf",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 48
+      },
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "277ca6c2_bae55bd6",
         "filename": "ios/chrome/browser/ui/history/clear_browsing_bar.mm",
         "patchSetId": 4
@@ -80,6 +122,30 @@
       "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d15968_f5cb3cdb",
+        "filename": "ios/chrome/browser/ui/history/clear_browsing_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T05:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "277ca6c2_bae55bd6",
+      "range": {
+        "startLine": 113,
+        "startChar": 12,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
