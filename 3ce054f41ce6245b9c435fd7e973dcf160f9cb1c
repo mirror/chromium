@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f36bf80_344ac517",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-18T14:20:25Z",
+      "side": 1,
+      "message": "How do you know the difference between it not having been set and it having been set to auto? If it has already been set does that mean that we might think we still have the previous effective touch action as well?",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e314179f_f1309458",
         "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
         "patchSetId": 14
@@ -13,6 +30,40 @@
       "writtenOn": "2017-08-18T11:46:22Z",
       "side": 1,
       "message": "Change to white_listed_touch_action_set()",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd4f287_6900addf",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-18T14:20:25Z",
+      "side": 1,
+      "message": "Why is the allowed touch action set if neither of them have been set?",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e80342_79654d78",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-18T14:20:25Z",
+      "side": 1,
+      "message": "Doesn\u0027t this prevent us from figuring out whether we should suppress manipulation events when we have some delta since we think it\u0027s already set?",
       "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +104,23 @@
       "writtenOn": "2017-08-18T11:46:22Z",
       "side": 1,
       "message": "Will implement and call when reset.",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667f32ed_593a50c9",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-18T14:20:25Z",
+      "side": 1,
+      "message": "Having values which may or may not be set seems like a case we should use base::Optional. See https://cs.chromium.org/chromium/src/base/optional.h?q\u003dfile:base%5C/+optional\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d104\n\ni.e.\nbase::Optional\u003ccc::TouchAction\u003e allowed_touch_action_;\n\nThis will internally have a struct of a bool for whether it has been set as well as the cc::TouchAction value.",
       "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
