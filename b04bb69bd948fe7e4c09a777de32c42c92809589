@@ -34,6 +34,24 @@
       "revId": "b04bb69bd948fe7e4c09a777de32c42c92809589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65102347_2128c7cb",
+        "filename": "ui/events/devices/device_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T15:30:36Z",
+      "side": 1,
+      "message": "std::array is stack allocated so swap() can\u0027t switch the data pointers the way std::vector swap() does it. Maybe there are other optimizations in std::array swap() though.\n\nGood point about the performance, probably better to have constant time access to elements here for the bit of memory it costs.",
+      "parentUuid": "d01ee789_561c553e",
+      "revId": "b04bb69bd948fe7e4c09a777de32c42c92809589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
