@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49c83d5e_877f26ce",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eecaa2b_ca855cd4",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab247dcc_9eab24f4",
         "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T22:06:50Z",
       "side": 1,
       "message": "This is a bit weird... when and why would we want to use |invariant|?  It seems like each place we do this would benefit more from a comment explaining why, and just passing undefined as the expected initiator instead.  Ditto for below.\n\nAdditionally, this means that with PlzNavigate (Browser-side navigation), 90%ish of these checks are checking that the initiator is undefined.  PlzNavigate is close to launching; does that mean that this behavior won\u0027t be that useful, since most initiators will be hidden?",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3ceaf3_0a8122e8",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "The same browser tests are run multiple times and one of those runs adds the argument \u0027--enable-browser-side-navigation\u0027. The |invariant| parameter is used when browser-side-navigation (PlzNavigate) doesn\u0027t affect the initiator. For example, if a webpage initiates an XHR request this will always have an initiator.\n\nA fair number of the navigation in tests are done to setup a test. Most of these are done with APIs like chrome.tabs.update which has no initiator when run with browser side navigation. If we were to put \u0027initiator: undefined\u0027 in these instances the tests would pass when run with browser side navigation but fail when the tests are run without it.\n\n\nWe don\u0027t really care about things like users typing in a domain to the omnibar, or navigating via bookmark. We\u0027re more interested in things like XHR requests, javascript loading via \u003cscript\u003e tags, form posts, or navigation via href links. The reason we\u0027re more concerned about these is because they are potentially attacker controlled.",
+      "parentUuid": "ab247dcc_9eab24f4",
       "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "471e01c7_dd566743",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d1429e_79f84231",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e639f7_8f5ffb37",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4349ad41_2f5e3651",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e639f7_8f5ffb37",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5753d71b_df5e181e",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-17T22:06:50Z",
       "side": 1,
       "message": "when is host null?",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa08261_2745d674",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Host is undefined when we don\u0027t expect an initiator to be present. This is used in the third test \u0027crossDomainInvisible\u0027.\n\nIf we\u0027re on a website that the extension doesn\u0027t have a permission for, and the site makes an XHR request to a site the extension does have permission for we withhold the initiator.",
+      "parentUuid": "5753d71b_df5e181e",
       "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "9a3101cc_a8e92a17",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d19670_974e3034",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b81bf81_84102a2a",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5404a2f8_ecaec440",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b81bf81_84102a2a",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "149edf25_14fbb3a4",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b708b0e_88c430b0",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68f495a9_43f0e2ab",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
@@ -152,6 +296,24 @@
       "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b6737f_8cdd9900",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-18T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f495a9_43f0e2ab",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
