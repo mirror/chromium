@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ce2f11b_b7628299",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T22:39:13Z",
+      "side": 1,
+      "message": "Modified the logic a little and added a bunch of comments. Should be more readable now.",
+      "parentUuid": "78bd3f0f_b13be0ac",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 52
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a36aa57_d471810e",
         "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d39c42_bf6c4f06",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T22:39:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a36aa57_d471810e",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 8
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "92bd0a65_59085f0a",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T22:39:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "991be0da_e632205b",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 8
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62d3e6ab_bdd0b2fd",
         "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
         "patchSetId": 4
@@ -106,6 +178,30 @@
       "writtenOn": "2017-08-17T19:52:26Z",
       "side": 1,
       "message": "if this will always be CrOnc.Type.CELLULAR, maybe change uninitializedCellular to something like \"@param {boolean} hasUninitializedCellular\" to simplify the string of function call[back]s.",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 40
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2edd84_67a2605e",
+        "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T22:39:13Z",
+      "side": 1,
+      "message": "I considered that but this somehow seemed more clear to me. Also, at some point we might want to provide more/better state information from the device info.",
+      "parentUuid": "62d3e6ab_bdd0b2fd",
       "range": {
         "startLine": 157,
         "startChar": 14,
