@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1576ced0_1dacfe94",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "Add comment about overriding for visibility purposes.",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3504dde_18c76036",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "Try dropping just in case.",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f952724_17937569",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "Just access field directly.",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1943dd5_818f0804",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "s/expected_metrics/expected",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508f86fd_44bb32c8",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "s/actual_metric/actual",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94fa307_91be0233",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "No need for unique_ptr, and can get rid of constructor initialization.",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdedb9c_728daa5c",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "Should go together with the Populate..., and alternating (so grouping together the Browser things).",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b43b332_8dad2331",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "Try simple local variable first.",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9f3368_fd9c60a3",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-08-18T02:11:48Z",
+      "side": 1,
+      "message": "Try dropping, just in case.",
+      "revId": "fc15bacd474ce637a680f9f3cbb0e98d4d570c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
