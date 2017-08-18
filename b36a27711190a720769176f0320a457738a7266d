@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51341d6a_79b178d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/net/spdyproxy/DataReductionProxySettings.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-08-18T02:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0727bf1_66a85864",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3551ecd_0975cd56",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "b36a27711190a720769176f0320a457738a7266d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc710cb_d1592f3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-08-18T02:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3551ecd_0975cd56",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "42a3bb02_41a5c7dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-08-18T02:08:14Z",
+      "side": 1,
+      "message": "It\u0027s initialized to zero with the pref registry and will stay as the last update time until it is updated again.",
+      "parentUuid": "36fb0558_88f8e874",
+      "range": {
+        "startLine": 88,
+        "startChar": 67,
+        "endLine": 88,
+        "endChar": 97
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d130176c_9f2e1c3e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
         "patchSetId": 7
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "09f8752e_64738c4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-08-18T02:08:14Z",
+      "side": 1,
+      "message": "Changed lastTimeInChart to timeChartCanBeShown since lastTimeInChart sounds like lastUpdate, not the value plus 30 days.",
+      "parentUuid": "d130176c_9f2e1c3e",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19e3c0ca_9023413a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
         "patchSetId": 7
@@ -161,6 +257,30 @@
       "revId": "b36a27711190a720769176f0320a457738a7266d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b037a9fd_3139785d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-08-18T02:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19e3c0ca_9023413a",
+      "range": {
+        "startLine": 252,
+        "startChar": 38,
+        "endLine": 252,
+        "endChar": 61
+      },
+      "revId": "b36a27711190a720769176f0320a457738a7266d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
