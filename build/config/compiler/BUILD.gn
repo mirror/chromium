@@ -460,7 +460,7 @@ config("compiler") {
     # TODO(thakis): Eventually switch this to c++11 instead,
     # http://crbug.com/427584
     cflags_c += [ "-std=gnu11" ]
-    if (use_cxx11) {
+    if (use_cxx11 && !is_android) {
       # Override Chromium's default for projects that wish to stay on C++11.
       cflags_cc += [ "-std=gnu++11" ]
     } else {
@@ -472,7 +472,7 @@ config("compiler") {
     # are still a few buildbots using it, so until those are turned off
     # we need the !is_nacl clause and the (is_nacl && is_clang) clause, above.
     cflags_c += [ "-std=c11" ]
-    if (use_cxx11) {
+    if (use_cxx11 && !is_android) {
       cflags_cc += [ "-std=c++11" ]
     } else {
       cflags_cc += [ "-std=c++14" ]
