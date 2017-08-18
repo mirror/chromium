@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0cba313f_06806543",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-18T04:29:43Z",
+      "side": 1,
+      "message": "The violation events can be processed within NotifyFinished() in success/error cases, as the current PatchSet does, right?\nThen I think we can (and should) avoid adding a new callback in ResourceClient to avoid ordering dependencies/problems.\n\nAnother problem with report-only cases is the violation data is reused across frames.\nFor example:\n1. a Resource is loaded in Frame A -\u003e CSP causes violation data to be set, but doesn\u0027t cause load failure. The events are fired in Frame A.\n2. The Resource is reused from Frame B -\u003e the violation data is also reused, and the events are fired in Frame B, which is wrong.\n\nyhirano@ suggested a solution: make DetermineRevalidationPolicy() to return kReload if a non-empty violation data is set (perhaps by modifying Resource::CanReuse()?).\n\nHowever, this is not completely correct, because CSP result with \"no violation to report\" is wrongly shared across frames.\nFor example:\n1. a Resource is loaded in Frame A -\u003e CSP causes no violation data to be set. Load succeeds, and no CSP violation events are fired in Frame A.\n2. The Resource is reused from Frame B -\u003e the violation data is also reused, and thus any CSP violation events are NOT fired in Frame B. This is wrong if the CSP setting should cause violation events to be reported (but doesn\u0027t cause the loading to fail).\n\nThis stems from the existing problem in resource loading and cross-frame Resource sharing.\nBecause CSP results are frame-specific and Resource can be shared across frames (via MemoryCache), there are many subtle issues around there.\nCurrently, CSP correctness is achieved by calling FetchContext::CheckCSPForRequest/CanAccess() everytime, even when the Resources are reused.\nHowever, this scheme currently doesn\u0027t support cases where \"Load succeeds, but something frame-specific is left\", because if these checks pass, Resource is shared across frames.\n\nAn alternative is to notify of violation events immediately after CheckCSPForRequest()/CanAccess() without caching the violation data in Resource (which is like the initial patch set of this CL).\nBut I prefer to manage to fix the issue above with keeping the scheme of the latest patch set (process events in NotifyFinished()) and keeping ResourceClient untouched, because the new notification (perhaps synchronously within FooResource::Fetch()?) is more problematic.",
+      "parentUuid": "f8c750be_e60d176a",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed4a108d_04083ae6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 6
