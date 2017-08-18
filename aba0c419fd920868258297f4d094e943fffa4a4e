@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e3dfa8_ac2395d9",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T16:28:58Z",
+      "side": 1,
+      "message": "Out of curiosity, why do the tests require that? Or what part of the spec triggers this expectation? Probably, this is not a question to you Tomasz but to Mike.",
+      "range": {
+        "startLine": 182,
+        "startChar": 43,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "aba0c419fd920868258297f4d094e943fffa4a4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
