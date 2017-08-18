@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd49f1f_c81f73e8",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-18T12:33:58Z",
+      "side": 1,
+      "message": "The unit tests fail on my Intel Kabylake device. After the RGB -\u003e YUV conversion on CPU and YUV -\u003e RGB conversion on GPU the resulting R is 0x0F.\n\nJust out of curiosity, why do need these values? Since the YUV -\u003e RGB conversion is done by the GPU, are we trying to test the GPU hardware or the GL library? The unit tests pass if kRed is used as the input color.",
+      "revId": "efcdee97a51b15dd36276aed3674007620580098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
