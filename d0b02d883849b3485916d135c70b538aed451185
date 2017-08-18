@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d66286ef_caa2473a",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T01:04:59Z",
+      "side": 1,
+      "message": "I think we just need to update this comment, and add a line like\n\nif (keyDownEvent_)\n  eventFlags |\u003d ui::EventFlagsFromNative(keyDownEvent_);",
+      "revId": "d0b02d883849b3485916d135c70b538aed451185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
