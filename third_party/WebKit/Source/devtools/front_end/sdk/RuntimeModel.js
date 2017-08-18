@@ -133,9 +133,10 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
    * @param {!Protocol.Runtime.ExecutionContextDescription} context
    */
   _executionContextCreated(context) {
-    var data = context.auxData || {isDefault: true};
-    var executionContext =
-        new SDK.ExecutionContext(this, context.id, context.name, context.origin, data['isDefault'], data['frameId']);
+    var data = context.auxData || {type: 'default'};
+    var executionContext = new SDK.ExecutionContext(
+        this, context.id, context.name, context.origin, data['isDefault'] || data['type'] === 'default',
+        data['frameId']);
     this._executionContextById.set(executionContext.id, executionContext);
     this.dispatchEventToListeners(SDK.RuntimeModel.Events.ExecutionContextCreated, executionContext);
   }
