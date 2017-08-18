@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -52,6 +53,21 @@ public final class AwBrowserProcess {
     private static RandomAccessFile sLockFile;
     private static FileLock sExclusiveFileLock;
     private static String sWebViewPackageName;
+
+
+    private static class CleanUpTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... unused) {
+            File extraPaksDir = new File(PathUtils.getDataDirectory(), "paks");
+            if (extraPaksDir.exists()) {
+                for (File pakFile: extraPaksDir.listFiles()) {
+                    pakFile.delete();
+                }
+                extraPaksDir.delete();
+            }
+            return null;
+        }
+    }
 
     /**
      * Loads the native library, and performs basic static construction of objects needed
@@ -115,6 +131,21 @@ public final class AwBrowserProcess {
                 throw new RuntimeException("Cannot initialize WebView", e);
             }
         });
+
+        // Only run cleanup task on N+ since on earlier versions there are no extra pak files.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // Cleanup task to remove unnecessary extra pak files (crbug.com/752510).
+            // TODO(zpeng): Remove cleanup code after at least M64 (crbug.com/756580).
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
+                File extraPaksDir = new File(PathUtils.getDataDirectory(), "paks");
+                if (extraPaksDir.exists()) {
+                    for (File pakFile: extraPaksDir.listFiles()) {
+                        pakFile.delete();
+                    }
+                    extraPaksDir.delete();
+                }
+            });
+        }
     }
 
     private static void tryObtainingDataDirLock(Context context) {
