@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82308d81_aed9d5dd",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:24:26Z",
+      "side": 1,
+      "message": "maybe return early to not next the for loop unnecessarily?",
+      "revId": "ef427c1fc9c6b2b72d0f468c5f181074cf962507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37fa047_00320a31",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:24:26Z",
+      "side": 1,
+      "message": "file_number/duplicate_number?",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "ef427c1fc9c6b2b72d0f468c5f181074cf962507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8187a202_77ac5265",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:24:26Z",
+      "side": 1,
+      "message": "Is this reasonable in case we didn\u0027t find any file name available?\nIs there a way to fail gracefully here?",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "ef427c1fc9c6b2b72d0f468c5f181074cf962507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1bc80f_1aebad67",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:24:26Z",
+      "side": 1,
+      "message": "use",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 11
+      },
+      "revId": "ef427c1fc9c6b2b72d0f468c5f181074cf962507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e16af8f_3dbb8671",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:24:26Z",
+      "side": 1,
+      "message": "will consist of hostname...",
+      "range": {
+        "startLine": 392,
+        "startChar": 48,
+        "endLine": 392,
+        "endChar": 49
+      },
+      "revId": "ef427c1fc9c6b2b72d0f468c5f181074cf962507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
