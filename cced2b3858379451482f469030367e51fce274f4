@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "62d38f63_9d22a0ff",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T01:09:32Z",
+      "side": 1,
+      "message": "I don\u0027t really care for this name, nor this being opaque data. Do you have a design doc documenting the flow of this field? I\u0027m not seeing in this change where the field actually is generated. Likewise most user-agent bits can actually be set on the WebMouseEvent (and we can actually clone that field on the DOM event, although for the default mouse event it isn\u0027t right now)",
+      "range": {
+        "startLine": 61,
+        "startChar": 37,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce2cd891_9443ad72",
         "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
         "patchSetId": 3
