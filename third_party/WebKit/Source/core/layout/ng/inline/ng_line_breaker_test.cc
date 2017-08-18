@@ -42,9 +42,11 @@ class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
         node, &node.Style(), space->WritingMode(), space->Direction());
     container_builder.SetBfcOffset(NGLogicalOffset{LayoutUnit(), LayoutUnit()});
 
+    NGExclusionSpace exclusion_space;
+
     Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
-    NGLineBreaker line_breaker(node, space.Get(), &container_builder,
-                               &unpositioned_floats);
+    NGLineBreaker line_breaker(node, *space, &exclusion_space,
+                               &container_builder, &unpositioned_floats);
 
     Vector<NGInlineItemResults> lines;
     NGLineInfo line_info;
