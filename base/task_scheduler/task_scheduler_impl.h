@@ -52,10 +52,14 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
 
   // |name| is used to label threads and histograms. |task_tracker| can be used
   // for tests that need more execution control. By default, the production
-  // TaskTracker is used.
-  explicit TaskSchedulerImpl(StringPiece name,
-                             std::unique_ptr<TaskTrackerImpl> task_tracker =
-                                 MakeUnique<TaskTrackerImpl>());
+  // TaskTracker is used. If |run_all_tasks_with_user_blocking_priority| is
+  // true, all tasks will be handled as if their TaskTraits contained
+  // TaskPriority::USER_BLOCKING.
+  explicit TaskSchedulerImpl(
+      StringPiece name,
+      std::unique_ptr<TaskTrackerImpl> task_tracker =
+          MakeUnique<TaskTrackerImpl>(),
+      bool run_all_tasks_with_user_blocking_priority = false);
   ~TaskSchedulerImpl() override;
 
   // TaskScheduler:
@@ -88,11 +92,18 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
   SchedulerWorkerPoolImpl* GetWorkerPoolForTraits(
       const TaskTraits& traits) const;
 
+  // Sets the priority in |traits| to TaskPriority::USER_BLOCKING if
+  // |run_all_tasks_with_user_blocking_priority_|.
+  TaskTraits SetUserBlockingPriorityInTaskTraitsIfNeeded(
+      const TaskTraits& traits) const;
+
   const std::string name_;
   Thread service_thread_;
   const std::unique_ptr<TaskTrackerImpl> task_tracker_;
   DelayedTaskManager delayed_task_manager_;
   SchedulerSingleThreadTaskRunnerManager single_thread_task_runner_manager_;
+
+  const bool run_all_tasks_with_user_blocking_priority_;
 
   // There are 4 SchedulerWorkerPoolImpl in this array to match the 4
   // SchedulerWorkerPoolParams in TaskScheduler::InitParams.

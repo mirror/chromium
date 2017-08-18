@@ -18,6 +18,7 @@
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
+#include "base/task_scheduler/task_tracker.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/task_scheduler/test_task_factory.h"
 #include "base/test/test_timeouts.h"
@@ -48,13 +49,18 @@ namespace internal {
 
 namespace {
 
-struct TraitsExecutionModePair {
-  TraitsExecutionModePair(const TaskTraits& traits,
-                          test::ExecutionMode execution_mode)
-      : traits(traits), execution_mode(execution_mode) {}
+struct TaskSchedulerImplTestParams {
+  TaskSchedulerImplTestParams(const TaskTraits& traits,
+                              test::ExecutionMode execution_mode,
+                              bool run_all_tasks_with_user_blocking_priority)
+      : traits(traits),
+        execution_mode(execution_mode),
+        run_all_tasks_with_user_blocking_priority(
+            run_all_tasks_with_user_blocking_priority) {}
 
   TaskTraits traits;
   test::ExecutionMode execution_mode;
+  bool run_all_tasks_with_user_blocking_priority;
 };
 
 #if DCHECK_IS_ON()
@@ -74,7 +80,7 @@ void VerifyTaskEnvironment(const TaskTraits& traits) {
       Lock::HandlesMultipleThreadPriorities() &&
       PlatformThread::CanIncreaseCurrentThreadPriority();
 
-  EXPECT_EQ(supports_background_priority &&
+  DCHECK_EQ(supports_background_priority &&
                     traits.priority() == TaskPriority::BACKGROUND
                 ? ThreadPriority::BACKGROUND
                 : ThreadPriority::NORMAL,
@@ -131,17 +137,226 @@ scoped_refptr<TaskRunner> CreateTaskRunnerWithTraitsAndExecutionMode(
   return nullptr;
 }
 
+// Returns a vector with a TaskSchedulerImplTestParams for each valid
+// combination of {ExecutionMode, TaskPriority, MayBlock(),
+// run_all_tasks_with_user_blocking_priority}.
+std::vector<TaskSchedulerImplTestParams> GetTaskSchedulerImplTestParams() {
+  std::vector<TaskSchedulerImplTestParams> params;
+
+  const test::ExecutionMode execution_modes[] = {
+      test::ExecutionMode::PARALLEL, test::ExecutionMode::SEQUENCED,
+      test::ExecutionMode::SINGLE_THREADED};
+  const bool run_all_tasks_with_user_blocking_priority_options[] = {false,
+                                                                    true};
+
+  for (test::ExecutionMode execution_mode : execution_modes) {
+    for (size_t priority_index = static_cast<size_t>(TaskPriority::LOWEST);
+         priority_index <= static_cast<size_t>(TaskPriority::HIGHEST);
+         ++priority_index) {
+      for (bool run_all_tasks_with_user_blocking_priority :
+           run_all_tasks_with_user_blocking_priority_options) {
+        const TaskPriority priority = static_cast<TaskPriority>(priority_index);
+        params.push_back(TaskSchedulerImplTestParams(
+            {priority}, execution_mode,
+            run_all_tasks_with_user_blocking_priority));
+        params.push_back(TaskSchedulerImplTestParams(
+            {MayBlock(), priority}, execution_mode,
+            run_all_tasks_with_user_blocking_priority));
+      }
+    }
+  }
+
+  return params;
+}
+
+void StartTaskScheduler(TaskSchedulerImpl* scheduler) {
+  constexpr TimeDelta kSuggestedReclaimTime = TimeDelta::FromSeconds(30);
+  constexpr int kMaxNumBackgroundThreads = 1;
+  constexpr int kMaxNumBackgroundBlockingThreads = 3;
+  constexpr int kMaxNumForegroundThreads = 4;
+  constexpr int kMaxNumForegroundBlockingThreads = 12;
+
+  scheduler->Start({{kMaxNumBackgroundThreads, kSuggestedReclaimTime},
+                    {kMaxNumBackgroundBlockingThreads, kSuggestedReclaimTime},
+                    {kMaxNumForegroundThreads, kSuggestedReclaimTime},
+                    {kMaxNumForegroundBlockingThreads, kSuggestedReclaimTime}});
+  }
+
+  TaskTraits GetExpectedTraitsInEnvironment(
+      TaskSchedulerImplTestParams params) {
+    return params.run_all_tasks_with_user_blocking_priority
+               ? TaskTraits::Override(params.traits,
+                                      TaskPriority::USER_BLOCKING)
+               : params.traits;
+  }
+
+  class TaskSchedulerImplParameterizedTest
+      : public testing::TestWithParam<TaskSchedulerImplTestParams> {
+   protected:
+    TaskSchedulerImplParameterizedTest()
+        : scheduler_("Test",
+                     std::make_unique<TaskTracker>(),
+                     GetParam().run_all_tasks_with_user_blocking_priority) {}
+
+    void TearDown() override {
+      scheduler_.FlushForTesting();
+      scheduler_.JoinForTesting();
+    }
+
+    TaskSchedulerImpl scheduler_;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(TaskSchedulerImplParameterizedTest);
+};
+
+}  // namespace
+
+// Verifies that a Task posted via PostDelayedTaskWithTraits with parameterized
+// TaskTraits and no delay runs on a thread with the expected priority and I/O
+// restrictions. The ExecutionMode parameter is ignored by this test.
+TEST_P(TaskSchedulerImplParameterizedTest, PostDelayedTaskWithTraitsNoDelay) {
+  StartTaskScheduler(&scheduler_);
+  WaitableEvent task_ran(WaitableEvent::ResetPolicy::MANUAL,
+                         WaitableEvent::InitialState::NOT_SIGNALED);
+  scheduler_.PostDelayedTaskWithTraits(
+      FROM_HERE, GetParam().traits,
+      BindOnce(&VerifyTaskEnvironmentAndSignalEvent,
+               GetExpectedTraitsInEnvironment(GetParam()),
+               Unretained(&task_ran)),
+      TimeDelta());
+  task_ran.Wait();
+}
+
+// Verifies that a Task posted via PostDelayedTaskWithTraits with parameterized
+// TaskTraits and a non-zero delay runs on a thread with the expected priority
+// and I/O restrictions after the delay expires. The ExecutionMode parameter is
+// ignored by this test.
+TEST_P(TaskSchedulerImplParameterizedTest, PostDelayedTaskWithTraitsWithDelay) {
+  StartTaskScheduler(&scheduler_);
+  WaitableEvent task_ran(WaitableEvent::ResetPolicy::MANUAL,
+                         WaitableEvent::InitialState::NOT_SIGNALED);
+  scheduler_.PostDelayedTaskWithTraits(
+      FROM_HERE, GetParam().traits,
+      BindOnce(&VerifyTimeAndTaskEnvironmentAndSignalEvent,
+               GetExpectedTraitsInEnvironment(GetParam()),
+               TimeTicks::Now() + TestTimeouts::tiny_timeout(),
+               Unretained(&task_ran)),
+      TestTimeouts::tiny_timeout());
+  task_ran.Wait();
+}
+
+// Verifies that Tasks posted via a TaskRunner with parameterized TaskTraits and
+// ExecutionMode run on a thread with the expected priority and I/O restrictions
+// and respect the characteristics of their ExecutionMode.
+TEST_P(TaskSchedulerImplParameterizedTest, PostTasksViaTaskRunner) {
+  StartTaskScheduler(&scheduler_);
+  test::TestTaskFactory factory(
+      CreateTaskRunnerWithTraitsAndExecutionMode(&scheduler_, GetParam().traits,
+                                                 GetParam().execution_mode),
+      GetParam().execution_mode);
+  EXPECT_FALSE(factory.task_runner()->RunsTasksInCurrentSequence());
+
+  const size_t kNumTasksPerTest = 150;
+  for (size_t i = 0; i < kNumTasksPerTest; ++i) {
+    factory.PostTask(test::TestTaskFactory::PostNestedTask::NO,
+                     Bind(&VerifyTaskEnvironment,
+                          GetExpectedTraitsInEnvironment(GetParam())));
+  }
+
+  factory.WaitForAllTasksToRun();
+}
+
+// Verifies that a task posted via PostDelayedTaskWithTraits without a delay
+// doesn't run before Start() is called.
+TEST_P(TaskSchedulerImplParameterizedTest,
+       PostDelayedTaskWithTraitsNoDelayBeforeStart) {
+  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
+                             WaitableEvent::InitialState::NOT_SIGNALED);
+  scheduler_.PostDelayedTaskWithTraits(
+      FROM_HERE, GetParam().traits,
+      BindOnce(&VerifyTaskEnvironmentAndSignalEvent,
+               GetExpectedTraitsInEnvironment(GetParam()),
+               Unretained(&task_running)),
+      TimeDelta());
+
+  // Wait a little bit to make sure that the task isn't scheduled before
+  // Start(). Note: This test won't catch a case where the task runs just after
+  // the check and before Start(). However, we expect the test to be flaky if
+  // the tested code allows that to happen.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(task_running.IsSignaled());
+
+  StartTaskScheduler(&scheduler_);
+  task_running.Wait();
+}
+
+// Verifies that a task posted via PostDelayedTaskWithTraits with a delay
+// doesn't run before Start() is called.
+TEST_P(TaskSchedulerImplParameterizedTest,
+       PostDelayedTaskWithTraitsWithDelayBeforeStart) {
+  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
+                             WaitableEvent::InitialState::NOT_SIGNALED);
+  scheduler_.PostDelayedTaskWithTraits(
+      FROM_HERE, GetParam().traits,
+      BindOnce(&VerifyTimeAndTaskEnvironmentAndSignalEvent,
+               GetExpectedTraitsInEnvironment(GetParam()),
+               TimeTicks::Now() + TestTimeouts::tiny_timeout(),
+               Unretained(&task_running)),
+      TestTimeouts::tiny_timeout());
+
+  // Wait a little bit to make sure that the task isn't scheduled before
+  // Start(). Note: This test won't catch a case where the task runs just after
+  // the check and before Start(). However, we expect the test to be flaky if
+  // the tested code allows that to happen.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(task_running.IsSignaled());
+
+  StartTaskScheduler(&scheduler_);
+  task_running.Wait();
+}
+
+// Verifies that a task posted via a TaskRunner doesn't run before Start() is
+// called.
+TEST_P(TaskSchedulerImplParameterizedTest, PostTaskViaTaskRunnerBeforeStart) {
+  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
+                             WaitableEvent::InitialState::NOT_SIGNALED);
+  CreateTaskRunnerWithTraitsAndExecutionMode(&scheduler_, GetParam().traits,
+                                             GetParam().execution_mode)
+      ->PostTask(FROM_HERE, BindOnce(&VerifyTaskEnvironmentAndSignalEvent,
+                                     GetExpectedTraitsInEnvironment(GetParam()),
+                                     Unretained(&task_running)));
+
+  // Wait a little bit to make sure that the task isn't scheduled before
+  // Start(). Note: This test won't catch a case where the task runs just after
+  // the check and before Start(). However, we expect the test to be flaky if
+  // the tested code allows that to happen.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(task_running.IsSignaled());
+
+  StartTaskScheduler(&scheduler_);
+
+  // This should not hang if the task is scheduled after Start().
+  task_running.Wait();
+}
+
+INSTANTIATE_TEST_CASE_P(OneTaskSchedulerImplTestParams,
+                        TaskSchedulerImplParameterizedTest,
+                        ::testing::ValuesIn(GetTaskSchedulerImplTestParams()));
+
+namespace {
+
 class ThreadPostingTasks : public SimpleThread {
  public:
   // Creates a thread that posts Tasks to |scheduler| with |traits| and
   // |execution_mode|.
   ThreadPostingTasks(TaskSchedulerImpl* scheduler,
-                     const TaskTraits& traits,
+                     const TaskTraits& posting_traits,
+                     const TaskTraits& expected_traits_in_environment,
                      test::ExecutionMode execution_mode)
       : SimpleThread("ThreadPostingTasks"),
-        traits_(traits),
+        expected_traits_in_environment_(expected_traits_in_environment),
         factory_(CreateTaskRunnerWithTraitsAndExecutionMode(scheduler,
-                                                            traits,
+                                                            posting_traits,
                                                             execution_mode),
                  execution_mode) {}
 
@@ -153,57 +368,21 @@ class ThreadPostingTasks : public SimpleThread {
 
     const size_t kNumTasksPerThread = 150;
     for (size_t i = 0; i < kNumTasksPerThread; ++i) {
-      factory_.PostTask(test::TestTaskFactory::PostNestedTask::NO,
-                        Bind(&VerifyTaskEnvironment, traits_));
+      factory_.PostTask(
+          test::TestTaskFactory::PostNestedTask::NO,
+          Bind(&VerifyTaskEnvironment, expected_traits_in_environment_));
     }
   }
 
-  const TaskTraits traits_;
+  const TaskTraits expected_traits_in_environment_;
   test::TestTaskFactory factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadPostingTasks);
 };
 
-// Returns a vector with a TraitsExecutionModePair for each valid
-// combination of {ExecutionMode, TaskPriority, MayBlock()}.
-std::vector<TraitsExecutionModePair> GetTraitsExecutionModePairs() {
-  std::vector<TraitsExecutionModePair> params;
-
-  const test::ExecutionMode execution_modes[] = {
-      test::ExecutionMode::PARALLEL, test::ExecutionMode::SEQUENCED,
-      test::ExecutionMode::SINGLE_THREADED};
-
-  for (test::ExecutionMode execution_mode : execution_modes) {
-    for (size_t priority_index = static_cast<size_t>(TaskPriority::LOWEST);
-         priority_index <= static_cast<size_t>(TaskPriority::HIGHEST);
-         ++priority_index) {
-      const TaskPriority priority = static_cast<TaskPriority>(priority_index);
-      params.push_back(TraitsExecutionModePair({priority}, execution_mode));
-      params.push_back(TraitsExecutionModePair({MayBlock()}, execution_mode));
-    }
-  }
-
-  return params;
-}
-
-class TaskSchedulerImplTest
-    : public testing::TestWithParam<TraitsExecutionModePair> {
+class TaskSchedulerImplTest : public testing::Test {
  protected:
   TaskSchedulerImplTest() : scheduler_("Test") {}
-
-  void StartTaskScheduler() {
-    constexpr TimeDelta kSuggestedReclaimTime = TimeDelta::FromSeconds(30);
-    constexpr int kMaxNumBackgroundThreads = 1;
-    constexpr int kMaxNumBackgroundBlockingThreads = 3;
-    constexpr int kMaxNumForegroundThreads = 4;
-    constexpr int kMaxNumForegroundBlockingThreads = 12;
-
-    scheduler_.Start(
-        {{kMaxNumBackgroundThreads, kSuggestedReclaimTime},
-         {kMaxNumBackgroundBlockingThreads, kSuggestedReclaimTime},
-         {kMaxNumForegroundThreads, kSuggestedReclaimTime},
-         {kMaxNumForegroundBlockingThreads, kSuggestedReclaimTime}});
-  }
 
   void TearDown() override {
     scheduler_.FlushForTesting();
@@ -218,142 +397,17 @@ class TaskSchedulerImplTest
 
 }  // namespace
 
-// Verifies that a Task posted via PostDelayedTaskWithTraits with parameterized
-// TaskTraits and no delay runs on a thread with the expected priority and I/O
-// restrictions. The ExecutionMode parameter is ignored by this test.
-TEST_P(TaskSchedulerImplTest, PostDelayedTaskWithTraitsNoDelay) {
-  StartTaskScheduler();
-  WaitableEvent task_ran(WaitableEvent::ResetPolicy::MANUAL,
-                         WaitableEvent::InitialState::NOT_SIGNALED);
-  scheduler_.PostDelayedTaskWithTraits(
-      FROM_HERE, GetParam().traits,
-      BindOnce(&VerifyTaskEnvironmentAndSignalEvent, GetParam().traits,
-               Unretained(&task_ran)),
-      TimeDelta());
-  task_ran.Wait();
-}
-
-// Verifies that a Task posted via PostDelayedTaskWithTraits with parameterized
-// TaskTraits and a non-zero delay runs on a thread with the expected priority
-// and I/O restrictions after the delay expires. The ExecutionMode parameter is
-// ignored by this test.
-TEST_P(TaskSchedulerImplTest, PostDelayedTaskWithTraitsWithDelay) {
-  StartTaskScheduler();
-  WaitableEvent task_ran(WaitableEvent::ResetPolicy::MANUAL,
-                         WaitableEvent::InitialState::NOT_SIGNALED);
-  scheduler_.PostDelayedTaskWithTraits(
-      FROM_HERE, GetParam().traits,
-      BindOnce(&VerifyTimeAndTaskEnvironmentAndSignalEvent, GetParam().traits,
-               TimeTicks::Now() + TestTimeouts::tiny_timeout(),
-               Unretained(&task_ran)),
-      TestTimeouts::tiny_timeout());
-  task_ran.Wait();
-}
-
-// Verifies that Tasks posted via a TaskRunner with parameterized TaskTraits and
-// ExecutionMode run on a thread with the expected priority and I/O restrictions
-// and respect the characteristics of their ExecutionMode.
-TEST_P(TaskSchedulerImplTest, PostTasksViaTaskRunner) {
-  StartTaskScheduler();
-  test::TestTaskFactory factory(
-      CreateTaskRunnerWithTraitsAndExecutionMode(&scheduler_, GetParam().traits,
-                                                 GetParam().execution_mode),
-      GetParam().execution_mode);
-  EXPECT_FALSE(factory.task_runner()->RunsTasksInCurrentSequence());
-
-  const size_t kNumTasksPerTest = 150;
-  for (size_t i = 0; i < kNumTasksPerTest; ++i) {
-    factory.PostTask(test::TestTaskFactory::PostNestedTask::NO,
-                     Bind(&VerifyTaskEnvironment, GetParam().traits));
-  }
-
-  factory.WaitForAllTasksToRun();
-}
-
-// Verifies that a task posted via PostDelayedTaskWithTraits without a delay
-// doesn't run before Start() is called.
-TEST_P(TaskSchedulerImplTest, PostDelayedTaskWithTraitsNoDelayBeforeStart) {
-  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
-                             WaitableEvent::InitialState::NOT_SIGNALED);
-  scheduler_.PostDelayedTaskWithTraits(
-      FROM_HERE, GetParam().traits,
-      BindOnce(&VerifyTaskEnvironmentAndSignalEvent, GetParam().traits,
-               Unretained(&task_running)),
-      TimeDelta());
-
-  // Wait a little bit to make sure that the task isn't scheduled before
-  // Start(). Note: This test won't catch a case where the task runs just after
-  // the check and before Start(). However, we expect the test to be flaky if
-  // the tested code allows that to happen.
-  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
-  EXPECT_FALSE(task_running.IsSignaled());
-
-  StartTaskScheduler();
-  task_running.Wait();
-}
-
-// Verifies that a task posted via PostDelayedTaskWithTraits with a delay
-// doesn't run before Start() is called.
-TEST_P(TaskSchedulerImplTest, PostDelayedTaskWithTraitsWithDelayBeforeStart) {
-  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
-                             WaitableEvent::InitialState::NOT_SIGNALED);
-  scheduler_.PostDelayedTaskWithTraits(
-      FROM_HERE, GetParam().traits,
-      BindOnce(&VerifyTimeAndTaskEnvironmentAndSignalEvent, GetParam().traits,
-               TimeTicks::Now() + TestTimeouts::tiny_timeout(),
-               Unretained(&task_running)),
-      TestTimeouts::tiny_timeout());
-
-  // Wait a little bit to make sure that the task isn't scheduled before
-  // Start(). Note: This test won't catch a case where the task runs just after
-  // the check and before Start(). However, we expect the test to be flaky if
-  // the tested code allows that to happen.
-  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
-  EXPECT_FALSE(task_running.IsSignaled());
-
-  StartTaskScheduler();
-  task_running.Wait();
-}
-
-// Verifies that a task posted via a TaskRunner doesn't run before Start() is
-// called.
-TEST_P(TaskSchedulerImplTest, PostTaskViaTaskRunnerBeforeStart) {
-  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
-                             WaitableEvent::InitialState::NOT_SIGNALED);
-  CreateTaskRunnerWithTraitsAndExecutionMode(&scheduler_, GetParam().traits,
-                                             GetParam().execution_mode)
-      ->PostTask(FROM_HERE,
-                 BindOnce(&VerifyTaskEnvironmentAndSignalEvent,
-                          GetParam().traits, Unretained(&task_running)));
-
-  // Wait a little bit to make sure that the task isn't scheduled before
-  // Start(). Note: This test won't catch a case where the task runs just after
-  // the check and before Start(). However, we expect the test to be flaky if
-  // the tested code allows that to happen.
-  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
-  EXPECT_FALSE(task_running.IsSignaled());
-
-  StartTaskScheduler();
-
-  // This should not hang if the task is scheduled after Start().
-  task_running.Wait();
-}
-
-INSTANTIATE_TEST_CASE_P(OneTraitsExecutionModePair,
-                        TaskSchedulerImplTest,
-                        ::testing::ValuesIn(GetTraitsExecutionModePairs()));
-
 // Spawns threads that simultaneously post Tasks to TaskRunners with various
 // TaskTraits and ExecutionModes. Verifies that each Task runs on a thread with
 // the expected priority and I/O restrictions and respects the characteristics
 // of its ExecutionMode.
-TEST_F(TaskSchedulerImplTest, MultipleTraitsExecutionModePairs) {
-  StartTaskScheduler();
+TEST_F(TaskSchedulerImplTest, MultipleTaskSchedulerImplTestParams) {
+  StartTaskScheduler(&scheduler_);
   std::vector<std::unique_ptr<ThreadPostingTasks>> threads_posting_tasks;
-  for (const auto& traits_execution_mode_pair : GetTraitsExecutionModePairs()) {
-    threads_posting_tasks.push_back(WrapUnique(
-        new ThreadPostingTasks(&scheduler_, traits_execution_mode_pair.traits,
-                               traits_execution_mode_pair.execution_mode)));
+  for (const auto& params : GetTaskSchedulerImplTestParams()) {
+    // This test ignores |params.run_all_tasks_with_user_blocking_priority|.
+    threads_posting_tasks.push_back(std::make_unique<ThreadPostingTasks>(
+        &scheduler_, params.traits, params.traits, params.execution_mode));
     threads_posting_tasks.back()->Start();
   }
 
@@ -364,7 +418,7 @@ TEST_F(TaskSchedulerImplTest, MultipleTraitsExecutionModePairs) {
 }
 
 TEST_F(TaskSchedulerImplTest, GetMaxConcurrentTasksWithTraitsDeprecated) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
   EXPECT_EQ(1, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                    {TaskPriority::BACKGROUND}));
   EXPECT_EQ(3, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
@@ -382,7 +436,7 @@ TEST_F(TaskSchedulerImplTest, GetMaxConcurrentTasksWithTraitsDeprecated) {
 // Verify that the RunsTasksInCurrentSequence() method of a SequencedTaskRunner
 // returns false when called from a task that isn't part of the sequence.
 TEST_F(TaskSchedulerImplTest, SequencedRunsTasksInCurrentSequence) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
   auto single_thread_task_runner =
       scheduler_.CreateSingleThreadTaskRunnerWithTraits(
           TaskTraits(), SingleThreadTaskRunnerThreadMode::SHARED);
@@ -407,7 +461,7 @@ TEST_F(TaskSchedulerImplTest, SequencedRunsTasksInCurrentSequence) {
 // SingleThreadTaskRunner returns false when called from a task that isn't part
 // of the sequence.
 TEST_F(TaskSchedulerImplTest, SingleThreadRunsTasksInCurrentSequence) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
   auto sequenced_task_runner =
       scheduler_.CreateSequencedTaskRunnerWithTraits(TaskTraits());
   auto single_thread_task_runner =
@@ -431,7 +485,7 @@ TEST_F(TaskSchedulerImplTest, SingleThreadRunsTasksInCurrentSequence) {
 
 #if defined(OS_WIN)
 TEST_F(TaskSchedulerImplTest, COMSTATaskRunnersRunWithCOMSTA) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
   auto com_sta_task_runner = scheduler_.CreateCOMSTATaskRunnerWithTraits(
       TaskTraits(), SingleThreadTaskRunnerThreadMode::SHARED);
 
@@ -449,7 +503,7 @@ TEST_F(TaskSchedulerImplTest, COMSTATaskRunnersRunWithCOMSTA) {
 #endif  // defined(OS_WIN)
 
 TEST_F(TaskSchedulerImplTest, DelayedTasksNotRunAfterShutdown) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
   // As with delayed tasks in general, this is racy. If the task does happen to
   // run after Shutdown within the timeout, it will fail this test.
   //
@@ -472,7 +526,7 @@ TEST_F(TaskSchedulerImplTest, DelayedTasksNotRunAfterShutdown) {
 #if defined(OS_POSIX)
 
 TEST_F(TaskSchedulerImplTest, FileDescriptorWatcherNoOpsAfterShutdown) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
 
   int pipes[2];
   ASSERT_EQ(0, pipe(pipes));
@@ -519,7 +573,7 @@ TEST_F(TaskSchedulerImplTest, FileDescriptorWatcherNoOpsAfterShutdown) {
 // Verify that tasks posted on the same sequence access the same values on
 // SequenceLocalStorage, and tasks on different sequences see different values.
 TEST_F(TaskSchedulerImplTest, SequenceLocalStorage) {
-  StartTaskScheduler();
+  StartTaskScheduler(&scheduler_);
 
   SequenceLocalStorageSlot<int> slot;
   auto sequenced_task_runner1 =
