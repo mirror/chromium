@@ -473,9 +473,9 @@ void ThreadDebugger::cancelTimer(void* data) {
   for (size_t index = 0; index < timer_data_.size(); ++index) {
     if (timer_data_[index] == data) {
       timers_[index]->Stop();
-      timer_callbacks_.erase(index);
-      timers_.erase(index);
-      timer_data_.erase(index);
+      timer_callbacks_.eraseAtIndex(index);
+      timers_.eraseAtIndex(index);
+      timer_data_.eraseAtIndex(index);
       return;
     }
   }

@@ -417,7 +417,7 @@ void NGInlineItemsBuilderTemplate<
       if (item.Length() == 1) {
         DCHECK_EQ(item.StartOffset(), index);
         DCHECK_EQ(item.Type(), NGInlineItem::kText);
-        items_->erase(i);
+        items_->eraseAtIndex(i);
       } else {
         item.SetEndOffset(item.EndOffset() - 1);
       }

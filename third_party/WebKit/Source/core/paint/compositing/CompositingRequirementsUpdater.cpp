@@ -352,7 +352,7 @@ void CompositingRequirementsUpdater::UpdateRecursive(
     // Remove irrelevant unclipped descendants in reverse order so our stored
     // indices remain valid.
     for (size_t i = 0; i < unclipped_descendants_to_remove.size(); i++) {
-      unclipped_descendants.erase(unclipped_descendants_to_remove.at(
+      unclipped_descendants.eraseAtIndex(unclipped_descendants_to_remove.at(
           unclipped_descendants_to_remove.size() - i - 1));
     }
 

@@ -301,7 +301,7 @@ void KeyframeEffectModelBase::PropertySpecificKeyframeGroup::
         keyframes_[i + 1]->Offset() == offset;
     if (has_same_offset_as_previous_neighbor &&
         has_same_offset_as_next_neighbor)
-      keyframes_.erase(i);
+      keyframes_.eraseAtIndex(i);
   }
   DCHECK_GE(keyframes_.size(), 2U);
 }

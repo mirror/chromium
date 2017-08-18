@@ -239,12 +239,12 @@ void MediaStream::removeTrack(MediaStreamTrack* track,
     case MediaStreamSource::kTypeAudio:
       pos = audio_tracks_.Find(track);
       if (pos != kNotFound)
-        audio_tracks_.erase(pos);
+        audio_tracks_.eraseAtIndex(pos);
       break;
     case MediaStreamSource::kTypeVideo:
       pos = video_tracks_.Find(track);
       if (pos != kNotFound)
-        video_tracks_.erase(pos);
+        video_tracks_.eraseAtIndex(pos);
       break;
   }
 
@@ -402,7 +402,7 @@ void MediaStream::RemoveTrackByComponent(MediaStreamComponent* component) {
 
   MediaStreamTrack* track = (*tracks)[index];
   track->UnregisterMediaStream(this);
-  tracks->erase(index);
+  tracks->eraseAtIndex(index);
   ScheduleDispatchEvent(
       MediaStreamTrackEvent::Create(EventTypeNames::removetrack, track));
 

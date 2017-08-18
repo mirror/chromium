@@ -330,7 +330,7 @@ void StyleRuleGroup::WrapperInsertRule(unsigned index, StyleRuleBase* rule) {
 }
 
 void StyleRuleGroup::WrapperRemoveRule(unsigned index) {
-  child_rules_.erase(index);
+  child_rules_.eraseAtIndex(index);
 }
 
 DEFINE_TRACE_AFTER_DISPATCH(StyleRuleGroup) {

@@ -2288,7 +2288,7 @@ void LayoutObject::LocalToAncestorRects(Vector<LayoutRect>& rects,
         LocalToAncestorQuad(FloatQuad(FloatRect(rect)), ancestor);
     LayoutRect container_rect = LayoutRect(container_quad.BoundingBox());
     if (container_rect.IsEmpty()) {
-      rects.erase(i--);
+      rects.eraseAtIndex(i--);
       continue;
     }
     container_rect.MoveBy(post_offset);
