@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e314179f_f1309458",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T11:46:22Z",
+      "side": 1,
+      "message": "Change to white_listed_touch_action_set()",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fb4d3e_692bbebd",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T11:46:22Z",
+      "side": 1,
+      "message": "Removing.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 78
+      },
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b711e3_df60ed03",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T11:46:22Z",
+      "side": 1,
+      "message": "Will implement and call when reset.",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03e447b_f22713a6",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T11:46:22Z",
+      "side": 1,
+      "message": "Removing.",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
