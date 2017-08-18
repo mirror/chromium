@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8563fd_de53010c",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10061,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:20:00Z",
+      "side": 1,
+      "message": "Down here too, if it compiles in component (hopefully?)",
+      "revId": "eb12fb17e0c66a3ea77e8a4cf90545ce44c77df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
