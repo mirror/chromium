@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "20b34dd1_9e50932f",
+        "filename": "content/browser/tracing/background_memory_tracing_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T20:54:16Z",
+      "side": 1,
+      "message": "added dcheck and added OnScenarioAborted. Thanks!",
+      "parentUuid": "c22599fd_be306768",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ffef203_5addeee7",
         "filename": "content/browser/tracing/background_memory_tracing_observer.h",
         "patchSetId": 1
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Not exactly sure tbh, but I guess it\u0027s treated like an rvalue reference rather than an lvalue?",
       "parentUuid": "28f323d9_c51ce8e1",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd04ab6_87d23960",
+        "filename": "content/browser/tracing/background_tracing_rule.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T20:54:16Z",
+      "side": 1,
+      "message": "Yeah I do not understand what std::make_unique does when passed the const reference to the class. I will experiment this later.",
+      "parentUuid": "b6159308_8ec03000",
       "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
