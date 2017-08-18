@@ -16,6 +16,24 @@
       "revId": "24bbbc15af34d05e0103230cfd139fc84c4bf8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71edbfd_f35a3768",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIWebkitMaskRepeat.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-18T06:28:55Z",
+      "side": 1,
+      "message": "It seems like we accept it as a property but we don\u0027t accept any values O.o\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-mask-repeat-x",
+      "parentUuid": "8fe3cec0_d8bb4345",
+      "revId": "24bbbc15af34d05e0103230cfd139fc84c4bf8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
