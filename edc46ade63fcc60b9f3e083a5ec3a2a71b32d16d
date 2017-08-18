@@ -142,6 +142,30 @@
       "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df1c8f80_da6c4f28",
+        "filename": "cc/tiles/checker_image_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-18T21:41:11Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e I think you can infer that from ForcedDisabled veto type.\n\u003e \u003e \u003e \n\u003e \u003e \u003e Tile manager only know about gpu rasterization to pass it to the raster task, which is only used for tracking metrics. So, I think I\u0027d rather thing about removing that rather than adding more uses.\n\u003e \u003e \n\u003e \u003e I think its also being used to decide whether to run raster on the non-concurrent thread (for the worker context).\n\u003e \n\u003e No that\u0027s being done in LTHI I think. TileManager just gets the worker pool to use, but it\u0027s unaware of what type it is. This is similar to the image cache and other things. I feel like TileManager should remain agnostic to the type of rasterization being used.\n\nI meant here: https://cs.chromium.org/chromium/src/cc/tiles/tile_manager.cc?l\u003d97. !is_gpu_rasterization is used to set |supports_concurrent_execution_| to decide whether the task needs to be run on the raster thread with the worker context. I agree that TileManager should be agnostic to it, image caches/raster buffer provider interfaces hide this for all other use-cases.\n\n\u003e \u003e \n\u003e \u003e \u003e \n\u003e \u003e \u003e Maybe LTHI can make this decision when we decide whether or not to use gpu raster and then set \"SetCheckerImagingForcedDisabled()\" or something like that on tile manager which can pass that to the checker tracker (unless LTHI can access the checker tracker directly)\n\u003e \u003e \n\u003e \u003e Done.",
+      "parentUuid": "75527dfc_e8ad6621",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
