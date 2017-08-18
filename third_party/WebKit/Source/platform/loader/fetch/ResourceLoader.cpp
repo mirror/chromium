@@ -274,11 +274,10 @@ bool ResourceLoader::WillFollowRedirect(
       if (!source_origin.Get())
         source_origin = Context().GetSecurityOrigin();
       WebSecurityOrigin source_web_origin(source_origin.Get());
-      WrappedResourceRequest new_request_wrapper(new_request);
       WebString cors_error_msg;
       if (!WebCORS::HandleRedirect(
-              source_web_origin, new_request_wrapper, redirect_response.Url(),
-              redirect_response.HttpStatusCode(),
+              source_web_origin, new_url, new_request.GetRequestContext(),
+              redirect_response.Url(), redirect_response.HttpStatusCode(),
               redirect_response.HttpHeaderFields(), fetch_credentials_mode,
               resource_->MutableOptions(), cors_error_msg)) {
         resource_->SetCORSStatus(CORSStatus::kFailed);
