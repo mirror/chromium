@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c80d2505_34d20641",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T14:01:03Z",
+      "side": 1,
+      "message": "if (!(reasons_to_composite \u0026 kCompositingReasonComboAllDirectReasons))\n\nor does that cause problems?",
+      "revId": "e119249620730317892340cdbb75b7f937bb7db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d2b955_5fa54efb",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T14:01:03Z",
+      "side": 1,
+      "message": "In general, if something cannot be null we prefer to pass by reference. I would prefer you to change it here and at the other call sites.",
+      "revId": "e119249620730317892340cdbb75b7f937bb7db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
