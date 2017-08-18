@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72aff53e_45ca1907",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 6236,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-18T12:58:37Z",
+      "side": 1,
+      "message": "As it happens, this is exactly the change will be needed when also adding fullscreen elements to top layer.",
+      "range": {
+        "startLine": 6236,
+        "startChar": 15,
+        "endLine": 6236,
+        "endChar": 16
+      },
+      "revId": "006e08ad790fe649ffacc2c13cbc5e750b15dd5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
