@@ -19,6 +19,8 @@ class WebContentsCoordinationUnitImpl;
 
 extern const char kTabFromBackgroundedToFirstAudioStartsUMA[];
 extern const char kTabFromBackgroundedToFirstTitleUpdatedUMA[];
+extern const char
+    kTabFromBackgroundedToFirstNonPersistentNotificationCreatedUMA[];
 
 // A MetricsCollector observes changes happened inside CoordinationUnit Graph,
 // and reports UMA/UKM.
@@ -38,6 +40,8 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
       const WebContentsCoordinationUnitImpl* web_contents_cu,
       const mojom::PropertyType property_type,
       int64_t value) override;
+  void OnFrameEventReceived(const FrameCoordinationUnitImpl* frame_cu,
+                            const mojom::Event event) override;
   void OnWebContentsEventReceived(
       const WebContentsCoordinationUnitImpl* web_contents_cu,
       const mojom::Event event) override;
@@ -50,6 +54,7 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
     void Reset();
     bool first_audible_after_backgrounded_reported;
     bool first_title_updated_after_backgrounded_reported;
+    bool first_non_persistent_notification_created_after_backgrounded_reported;
   };
 
   struct FrameData {
