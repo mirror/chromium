@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf0e6cea_a91148cb",
+        "filename": "chrome/browser/resources/plugin_metadata/plugins_win.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:34:04Z",
+      "side": 1,
+      "message": "What is the difference between \"Chrome PDF Plugin\" and \"Chrome PDF Viewer\" and do we still need both listed here? Is one deprecated now? I read the bug but it didn\u0027t explain where the new plugin came from...?",
+      "range": {
+        "startLine": 372,
+        "startChar": 13,
+        "endLine": 372,
+        "endChar": 30
+      },
+      "revId": "76c156868255519292007432846b24d01371bf6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
