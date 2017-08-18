@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd260ea0_88a79a09",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-18T18:55:38Z",
+      "side": 1,
+      "message": "Aside: in GLES2DecoderHelperImpl, we operate on TextureRefs and have no client texture IDs. However, to get a TexureRef in the first place we use TextureRef::Create(), which takes a texture manager. Later we make calls through the texture manager interface to manipulate private Texture state.\n\nIs this a path towards supporting that differently, or are you only concerned with the current GpuVideoDecoder implementation?",
+      "range": {
+        "startLine": 334,
+        "startChar": 34,
+        "endLine": 334,
+        "endChar": 51
+      },
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa540540_62579af7",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 4
