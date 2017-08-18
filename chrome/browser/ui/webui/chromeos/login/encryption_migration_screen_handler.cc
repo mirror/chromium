@@ -18,6 +18,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/timer/elapsed_timer.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/arc/arc_migration_constants.h"
 #include "chrome/browser/chromeos/login/ui/login_feedback.h"
@@ -57,6 +58,10 @@ constexpr char kJsApiRequestRestartOnLowStorage[] =
 constexpr char kJsApiRequestRestartOnFailure[] = "requestRestartOnFailure";
 constexpr char kJsApiOpenFeedbackDialog[] = "openFeedbackDialog";
 
+// If minimal migration takes this threshold or longer (in seconds), we
+// will ask the user to re-enter their password.
+constexpr int64_t kMinimalMigrationReenterPasswordThreshold = 45;
+
 // UMA names.
 constexpr char kUmaNameFirstScreen[] = "Cryptohome.MigrationUI.FirstScreen";
 constexpr char kUmaNameUserChoice[] = "Cryptohome.MigrationUI.UserChoice";
@@ -77,6 +82,8 @@ enum class FirstScreen {
   FIRST_SCREEN_LOW_STORAGE = 2,
   FIRST_SCREEN_ARC_KIOSK = 3,
   FIRST_SCREEN_START_AUTOMATICALLY = 4,
+  FIRST_SCREEN_RESUME_MINIMAL = 5,
+  FIRST_SCREEN_START_AUTOMATICALLY_MINIMAL = 6,
   FIRST_SCREEN_COUNT
 };
 
@@ -228,8 +235,12 @@ FirstScreen GetFirstScreenForMode(chromeos::EncryptionMigrationMode mode) {
       return FirstScreen::FIRST_SCREEN_READY;
     case chromeos::EncryptionMigrationMode::START_MIGRATION:
       return FirstScreen::FIRST_SCREEN_START_AUTOMATICALLY;
+    case chromeos::EncryptionMigrationMode::START_MINIMAL_MIGRATION:
+      return FirstScreen::FIRST_SCREEN_START_AUTOMATICALLY_MINIMAL;
     case chromeos::EncryptionMigrationMode::RESUME_MIGRATION:
       return FirstScreen::FIRST_SCREEN_RESUME;
+    case chromeos::EncryptionMigrationMode::RESUME_MINIMAL_MIGRATION:
+      return FirstScreen::FIRST_SCREEN_RESUME_MINIMAL;
     default:
       NOTREACHED();
   }
@@ -410,7 +421,7 @@ void EncryptionMigrationScreenHandler::HandleSkipMigration() {
   // asked to do the migration again in the next log-in attempt.
   if (!continue_login_callback_.is_null()) {
     user_context_.SetIsForcingDircrypto(false);
-    std::move(continue_login_callback_).Run(user_context_);
+    std::move(continue_login_callback_).Run(user_context_, false);
   }
 }
 
@@ -540,6 +551,14 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
     return;
   }
 
+  bool minimal_migration =
+      (mode_ == EncryptionMigrationMode::START_MINIMAL_MIGRATION);
+  if (minimal_migration) {
+    // Start a timer which will measure how long migration took, so we can
+    // require a re sign-in if it took too long.
+    minimal_migration_timer_ = base::MakeUnique<base::ElapsedTimer>();
+  }
+
   DBusThreadManager::Get()
       ->GetCryptohomeClient()
       ->SetDircryptoMigrationProgressHandler(
@@ -547,6 +566,7 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
                      weak_ptr_factory_.GetWeakPtr()));
   cryptohome::HomedirMethods::GetInstance()->MigrateToDircrypto(
       cryptohome::Identification(user_context_.GetAccountId()),
+      minimal_migration,
       base::Bind(&EncryptionMigrationScreenHandler::OnMigrationRequested,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -647,8 +667,19 @@ void EncryptionMigrationScreenHandler::OnMigrationProgress(
             static_cast<int>(std::round(initial_battery_percent_ -
                                         *current_battery_percent_)));
       }
-      // Restart immediately after successful migration.
-      DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();
+      if (IsMinimalMigration() && !continue_login_callback_.is_null()) {
+        // If minimal migration was fast enough, continue with same sign-in
+        // data.
+        bool require_password_reentry =
+            !minimal_migration_timer_ ||
+            (minimal_migration_timer_->Elapsed().InSeconds() >
+             kMinimalMigrationReenterPasswordThreshold);
+        std::move(continue_login_callback_)
+            .Run(user_context_, require_password_reentry);
+      } else {
+        // Restart immediately after successful full migration.
+        DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();
+      }
       break;
     case cryptohome::DIRCRYPTO_MIGRATION_FAILED:
       RecordMigrationResultGeneralFailure(IsResumingIncompleteMigration(),
@@ -691,7 +722,14 @@ bool EncryptionMigrationScreenHandler::IsResumingIncompleteMigration() {
 
 bool EncryptionMigrationScreenHandler::IsStartImmediately() {
   return mode_ == EncryptionMigrationMode::START_MIGRATION ||
-         mode_ == EncryptionMigrationMode::RESUME_MIGRATION;
+         mode_ == EncryptionMigrationMode::START_MINIMAL_MIGRATION ||
+         mode_ == EncryptionMigrationMode::RESUME_MIGRATION ||
+         mode_ == EncryptionMigrationMode::RESUME_MINIMAL_MIGRATION;
+}
+
+bool EncryptionMigrationScreenHandler::IsMinimalMigration() {
+  return mode_ == EncryptionMigrationMode::START_MINIMAL_MIGRATION ||
+         mode_ == EncryptionMigrationMode::RESUME_MINIMAL_MIGRATION;
 }
 
 }  // namespace chromeos
