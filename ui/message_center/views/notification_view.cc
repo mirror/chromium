@@ -403,7 +403,7 @@ void NotificationView::CreateOrUpdateTitleView(
       views::Label().font_list().DeriveWithSizeDelta(2);
 
   int title_character_limit =
-      kNotificationWidth * kMaxTitleLines / kMinPixelsPerTitleCharacter;
+      GetNotificationWidth() * kMaxTitleLines / kMinPixelsPerTitleCharacter;
 
   base::string16 title = gfx::TruncateString(notification.title(),
                                              title_character_limit,
@@ -434,9 +434,8 @@ void NotificationView::CreateOrUpdateMessageView(
 
   DCHECK(top_view_ != NULL);
 
-  base::string16 text = gfx::TruncateString(notification.message(),
-                                            kMessageCharacterLimit,
-                                            gfx::WORD_BREAK);
+  base::string16 text = gfx::TruncateString(
+      notification.message(), GetMessageCharacterLimit(), gfx::WORD_BREAK);
   if (!message_view_) {
     int padding = kMessageLineHeight - views::Label().font_list().GetHeight();
     message_view_ = new BoundedLabel(text);
@@ -460,11 +459,13 @@ base::string16 NotificationView::FormatContextMessage(
     return gfx::ElideText(
         url_formatter::FormatUrlForSecurityDisplay(
             url, url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS),
-        views::Label().font_list(), kContextMessageViewWidth, gfx::ELIDE_HEAD);
+        views::Label().font_list(), GetContextMessageViewWidth(),
+        gfx::ELIDE_HEAD);
   }
 
   return gfx::TruncateString(notification.context_message(),
-                             kContextMessageCharacterLimit, gfx::WORD_BREAK);
+                             GetContextMessageCharacterLimit(),
+                             gfx::WORD_BREAK);
 }
 
 void NotificationView::CreateOrUpdateContextMessageView(

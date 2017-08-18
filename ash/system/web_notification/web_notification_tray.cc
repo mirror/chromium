@@ -87,7 +87,7 @@ class WebNotificationBubbleWrapper {
     init_params.parent_window = anchor_tray->GetBubbleWindowContainer();
     init_params.anchor_view = anchor_tray->GetBubbleAnchor();
     init_params.anchor_alignment = tray->GetAnchorAlignment();
-    const int width = message_center::kNotificationWidth +
+    const int width = message_center::GetNotificationWidth() +
                       message_center::kMarginBetweenItems * 2;
     init_params.min_width = width;
     init_params.max_width = width;

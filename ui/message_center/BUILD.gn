@@ -120,6 +120,7 @@ component("message_center") {
         "notification_delegate_views.cc",
         "views/bounded_label.cc",
         "views/bounded_label.h",
+        "views/constants.cc",
         "views/constants.h",
         "views/desktop_popup_alignment_delegate.cc",
         "views/desktop_popup_alignment_delegate.h",

@@ -50,7 +50,7 @@ const char ToastContentsView::kViewClassName[] = "ToastContentsView";
 
 // static
 gfx::Size ToastContentsView::GetToastSizeForView(const views::View* view) {
-  int width = kNotificationWidth + view->GetInsets().width();
+  int width = GetNotificationWidth() + view->GetInsets().width();
   return gfx::Size(width, view->GetHeightForWidth(width));
 }
 

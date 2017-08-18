@@ -79,9 +79,10 @@ constexpr int kCompactTitleMessageViewSpacing = 12;
 
 constexpr int kProgressBarHeight = 4;
 
-constexpr int kMessageViewWidth =
-    message_center::kNotificationWidth - kIconViewSize.width() -
-    kContentRowPadding.left() - kContentRowPadding.right();
+int GetMessageViewWidth() {
+  return GetNotificationWidth() - kIconViewSize.width() -
+         kContentRowPadding.left() - kContentRowPadding.right();
+}
 
 // ItemView ////////////////////////////////////////////////////////////////////
 
@@ -592,7 +593,7 @@ void NotificationViewMD::CreateOrUpdateTitleView(
       1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
 
   int title_character_limit =
-      kNotificationWidth * kMaxTitleLines / kMinPixelsPerTitleCharacter;
+      GetNotificationWidth() * kMaxTitleLines / kMinPixelsPerTitleCharacter;
 
   base::string16 title = gfx::TruncateString(
       notification.title(), title_character_limit, gfx::WORD_BREAK);
@@ -618,7 +619,7 @@ void NotificationViewMD::CreateOrUpdateMessageView(
   }
 
   base::string16 text = gfx::TruncateString(
-      notification.message(), kMessageCharacterLimit, gfx::WORD_BREAK);
+      notification.message(), GetMessageCharacterLimit(), gfx::WORD_BREAK);
 
   const gfx::FontList& font_list = views::Label().font_list().Derive(
       1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
@@ -635,7 +636,7 @@ void NotificationViewMD::CreateOrUpdateMessageView(
     // solution for the bug according to https://crbug.com/678337#c7, we should
     // ensure that the change won't break any of the users of BoxLayout class.
     DCHECK(right_content_);
-    message_view_->SizeToFit(kMessageViewWidth);
+    message_view_->SizeToFit(GetMessageViewWidth());
 
     left_content_->AddChildView(message_view_);
   } else {

@@ -36,7 +36,7 @@ const size_t kMaxVisibleMessageCenterNotifications = 100;
 const size_t kMaxVisiblePopupNotifications = 3;
 
 // DIP dimension; H size of the whole card.
-const int kNotificationWidth = 360;
+MESSAGE_CENTER_EXPORT int GetNotificationWidth();
 const int kMinScrollViewHeight = 77;
 
 // Colors.
@@ -70,8 +70,7 @@ const int kIconBottomPadding = 16;  // Minimum non-zero V space between icon
 // H space between the context message and the end of the card.
 const int kTextRightPadding = 23;
 const int kTextLeftPadding = kNotificationIconSize + kIconToTextPadding;
-const int kContextMessageViewWidth =
-    kNotificationWidth - kTextLeftPadding - kTextRightPadding;
+int GetContextMessageViewWidth();
 // space between buttons and frame.
 const int kControlButtonPadding = 2;
 const int kControlButtonBorderSize = 6;

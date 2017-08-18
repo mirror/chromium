@@ -388,10 +388,11 @@ void ArcNotificationContentView::UpdatePreferredSize() {
   if (preferred_size.IsEmpty())
     return;
 
-  if (preferred_size.width() != message_center::kNotificationWidth) {
-    const float scale = static_cast<float>(message_center::kNotificationWidth) /
-                        preferred_size.width();
-    preferred_size.SetSize(message_center::kNotificationWidth,
+  if (preferred_size.width() != message_center::GetNotificationWidth()) {
+    const float scale =
+        static_cast<float>(message_center::GetNotificationWidth()) /
+        preferred_size.width();
+    preferred_size.SetSize(message_center::GetNotificationWidth(),
                            preferred_size.height() * scale);
   }
 

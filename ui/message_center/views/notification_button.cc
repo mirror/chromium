@@ -72,7 +72,7 @@ void NotificationButton::SetTitle(const base::string16& title) {
 }
 
 gfx::Size NotificationButton::CalculatePreferredSize() const {
-  return gfx::Size(message_center::kNotificationWidth,
+  return gfx::Size(message_center::GetNotificationWidth(),
                    message_center::kButtonHeight);
 }
 

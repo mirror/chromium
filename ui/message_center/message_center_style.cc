@@ -9,9 +9,22 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/message_center/message_center.h"
 #include "ui/message_center/vector_icons.h"
 
 namespace message_center {
+
+int GetNotificationWidth() {
+  if (MessageCenter::IsNewStyleNotificationEnabled()) {
+    return 352;
+  } else {
+    return 360;
+  }
+}
+
+int GetContextMessageViewWidth() {
+  return GetNotificationWidth() - kTextLeftPadding - kTextRightPadding;
+}
 
 // Within a notification ///////////////////////////////////////////////////////
 

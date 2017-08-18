@@ -114,9 +114,9 @@ void ArcNotificationView::OnSlideChanged() {
 gfx::Size ArcNotificationView::CalculatePreferredSize() const {
   const gfx::Insets insets = GetInsets();
   const int contents_width =
-      message_center::kNotificationWidth - insets.width();
+      message_center::GetNotificationWidth() - insets.width();
   const int contents_height = contents_view_->GetHeightForWidth(contents_width);
-  return gfx::Size(message_center::kNotificationWidth,
+  return gfx::Size(message_center::GetNotificationWidth(),
                    contents_height + insets.height());
 }
 
