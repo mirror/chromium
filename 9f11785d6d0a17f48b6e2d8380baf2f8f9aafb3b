@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e31bf2e_7e78a0c5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/OriginVerifierTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-18T16:19:25Z",
+      "side": 1,
+      "message": "nit: The tests would be more concise and faster using a Semaphore, I believe.\n\nSomething like, as instance variable:\n\nprivate Semaphore mVerificationResultSemaphore;\n\nin setUp():\n\nmVerificationResultSemaphore \u003d new Semaphore(0);\n\nIn onOriginVerified():\n\nmVerificationResultSemaphore.release();\n\nAnd then you don\u0027t need to poll, just:\n\nAssert.assertTrue(mVerificationResultSemaphore.tryAcquire());\nAssert.assertFalse(mLastVerified);\n...\n\n\nAlso, to be 100% in the clear, the mLastVerified, etc... variables should be volatile.",
+      "revId": "9f11785d6d0a17f48b6e2d8380baf2f8f9aafb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a45416_e477857d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/OriginVerifierTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-18T16:19:25Z",
+      "side": 1,
+      "message": "nit:\nNow that we have lambdas, what about:\nThreadUtils.postOnUiThread(() -\u003e mHandleAllUrlsVerifier.start(Uri.parse(\"LOL\")));",
+      "revId": "9f11785d6d0a17f48b6e2d8380baf2f8f9aafb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
