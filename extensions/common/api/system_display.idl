@@ -133,6 +133,11 @@ namespace system.display {
     // for $(ref:enableUnifiedDesktop).
     boolean isUnified;
 
+    // True when the display is in maximize mode. This is enabled for touch
+    // devices with auto rotation. It is only set if hasAccelerometerSupport
+    // is true. The default value is false.
+    boolean? isMaximizeMode;
+
     // The number of pixels per inch along the x-axis.
     double dpiX;
 
@@ -164,6 +169,9 @@ namespace system.display {
 
     // True if this display has a touch input device associated with it.
     boolean hasTouchSupport;
+
+    // True if this display has an accelerometer associated with it.
+    boolean hasAccelerometerSupport;
   };
 
   dictionary DisplayProperties {
