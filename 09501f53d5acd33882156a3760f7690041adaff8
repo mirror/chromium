@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68f7237e_3476dce3",
+        "filename": "components/history/core/browser/browsing_history_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d04d3e8_f7bc4305",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46637b87_ee52fc88",
         "filename": "components/history/core/browser/browsing_history_service.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "09501f53d5acd33882156a3760f7690041adaff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d3bcdc_48026a5f",
+        "filename": "components/history/core/browser/browsing_history_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Updated, avoided the word database though.",
+      "parentUuid": "46637b87_ee52fc88",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d097c7c8_d0bacc4e",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "890bce49_556fc6c0",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 42
+      },
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6771d2_e82b00eb",
         "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "09501f53d5acd33882156a3760f7690041adaff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b018ce88_f92443aa",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6771d2_e82b00eb",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "abffd703_a9cb0eff",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb9896e0_17c1d068",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "174e410a_a0f83437",
         "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "09501f53d5acd33882156a3760f7690041adaff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250be5bb_67a670b9",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "174e410a_a0f83437",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "ded1915f_159d996b",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "177821a0_d74a9f92",
+      "range": {
+        "startLine": 81,
+        "startChar": 11,
+        "endLine": 81,
+        "endChar": 66
+      },
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3152cde1_2b4fba96",
         "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
         "patchSetId": 6
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "517b6d97_3c517bfe",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Looks like it\u0027s for managed devices via policy and supervised users [1]. Updating the comment.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d449",
+      "parentUuid": "3152cde1_2b4fba96",
+      "range": {
+        "startLine": 81,
+        "startChar": 68,
+        "endLine": 82,
+        "endChar": 63
+      },
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dda6364c_7a6e1922",
         "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver_delegate.h",
         "patchSetId": 6
@@ -170,6 +332,24 @@
       "revId": "09501f53d5acd33882156a3760f7690041adaff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d375bbe3_54b06d32",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-18T23:14:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "dda6364c_7a6e1922",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
