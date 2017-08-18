@@ -30,4 +30,8 @@ class WebState;
 
 @end
 
+// A tab coordinator that also has a tab strip.
+@interface TabStripTabCoordinator : TabCoordinator
+@end
+
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TAB_TAB_COORDINATOR_H_

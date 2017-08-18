@@ -42,6 +42,11 @@
 @property(nonatomic, weak) WebCoordinator* webCoordinator;
 @property(nonatomic, weak) ToolbarCoordinator* toolbarCoordinator;
 @property(nonatomic, strong) TabNavigationController* navigationController;
+
+// Creates and returns a new view controller for use as a tab container.
+// Subclasses may override this method with a custom layout view controller.
+- (TabContainerViewController*)newTabContainer;
+
 @end
 
 @implementation TabCoordinator {
@@ -69,8 +74,10 @@
 
 #pragma mark - BrowserCoordinator
 
-- (void)start {
+- (void)coordinatorWillStart {
+  [super coordinatorWillStart];
   self.viewController = [self newTabContainer];
+  self.viewController.usesBottomToolbar = [self usesBottomToolbar];
   self.transitionController = [[ZoomTransitionController alloc] init];
   self.transitionController.presentationKey = self.presentationKey;
   self.viewController.transitioningDelegate = self.transitionController;
@@ -84,16 +91,8 @@
       _webStateListObserver.get());
   _scopedWebStateListObserver->Add(&self.browser->web_state_list());
 
-  [self.browser->broadcaster()
-      broadcastValue:@"tabStripVisible"
-            ofObject:self.viewController
-            selector:@selector(broadcastTabStripVisible:)];
-
-  CommandDispatcher* dispatcher = self.browser->dispatcher();
-  // Register Commands
-  [dispatcher startDispatchingToTarget:self forSelector:@selector(loadURL:)];
-  [dispatcher startDispatchingToTarget:self
-                           forSelector:@selector(showTabStrip)];
+  [self.browser->dispatcher() startDispatchingToTarget:self
+                                           forSelector:@selector(loadURL:)];
 
   // NavigationController will handle all the dispatcher navigation calls.
   self.navigationController = [[TabNavigationController alloc]
@@ -107,20 +106,16 @@
   self.webCoordinator = webCoordinator;
 
   ToolbarCoordinator* toolbarCoordinator = [[ToolbarCoordinator alloc] init];
+  self.toolbarCoordinator = toolbarCoordinator;
   toolbarCoordinator.webState = self.webState;
   [self addChildCoordinator:toolbarCoordinator];
   [toolbarCoordinator start];
-  self.toolbarCoordinator = toolbarCoordinator;
 
   // Create the FindInPage coordinator but do not start it.  It will be started
   // when a find in page operation is invoked.
   FindInPageCoordinator* findInPageCoordinator =
       [[FindInPageCoordinator alloc] init];
   [self addChildCoordinator:findInPageCoordinator];
-
-  TabStripCoordinator* tabStripCoordinator = [[TabStripCoordinator alloc] init];
-  [self addChildCoordinator:tabStripCoordinator];
-  [tabStripCoordinator start];
 
   // PLACEHOLDER: Fix the order of events here. The ntpCoordinator was already
   // created above when |webCoordinator.webState = self.webState;| triggers
@@ -130,8 +125,6 @@
     self.viewController.contentViewController =
         self.ntpCoordinator.viewController;
   }
-
-  [super start];
 }
 
 - (void)stop {
@@ -139,8 +132,6 @@
   for (BrowserCoordinator* child in self.children) {
     [self removeChildCoordinator:child];
   }
-  [self.browser->broadcaster()
-      stopBroadcastingForSelector:@selector(broadcastTabStripVisible:)];
   _webStateObserver.reset();
   [self.browser->dispatcher() stopDispatchingToTarget:self];
   [self.navigationController stop];
@@ -152,9 +143,6 @@
   } else if ([childCoordinator isKindOfClass:[WebCoordinator class]] ||
              [childCoordinator isKindOfClass:[NTPCoordinator class]]) {
     self.viewController.contentViewController = childCoordinator.viewController;
-  } else if ([childCoordinator isKindOfClass:[TabStripCoordinator class]]) {
-    self.viewController.tabStripViewController =
-        childCoordinator.viewController;
   } else if ([childCoordinator isKindOfClass:[FindInPageCoordinator class]]) {
     self.viewController.findBarViewController = childCoordinator.viewController;
   }
@@ -176,6 +164,7 @@
 
 #pragma mark - Experiment support
 
+// Returns whether the experimental setting for bottom toolbar has been set.
 - (BOOL)usesBottomToolbar {
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   NSString* bottomToolbarPreference =
@@ -183,14 +172,10 @@
   return [bottomToolbarPreference isEqualToString:@"Enabled"];
 }
 
-// Creates and returns a new view controller for use as a tab container;
-// experimental configurations determine which subclass of
-// TabContainerViewController to return.
+#pragma mark - Methods for subclasses to override
+
 - (TabContainerViewController*)newTabContainer {
-  if ([self usesBottomToolbar]) {
-    return [[BottomToolbarTabViewController alloc] init];
-  }
-  return [[TopToolbarTabViewController alloc] init];
+  return [[BasicTabContainerViewController alloc] init];
 }
 
 #pragma mark - CRWWebStateObserver
@@ -257,6 +242,59 @@
 
 - (void)loadURL:(web::NavigationManager::WebLoadParams)params {
   self.webState->GetNavigationManager()->LoadURLWithParams(params);
+}
+
+@end
+
+@interface TabStripTabCoordinator ()
+// Redefine |viewController| with a subclass.
+@property(nonatomic, strong) TabStripTabContainerViewController* viewController;
+@end
+
+@implementation TabStripTabCoordinator
+@dynamic viewController;
+
+#pragma mark - TabCoordinator overrides
+
+// Return a tab container with a tab strip.
+- (TabContainerViewController*)newTabContainer {
+  return [[TabStripTabContainerViewController alloc] init];
+}
+
+#pragma mark - BrowserCoordinator
+
+- (void)coordinatorWillStart {
+  [super coordinatorWillStart];
+  [self.browser->broadcaster()
+      broadcastValue:@"tabStripVisible"
+            ofObject:self.viewController
+            selector:@selector(broadcastTabStripVisible:)];
+  [self.browser->dispatcher() startDispatchingToTarget:self
+                                           forSelector:@selector(showTabStrip)];
+  TabStripCoordinator* tabStripCoordinator = [[TabStripCoordinator alloc] init];
+  [self addChildCoordinator:tabStripCoordinator];
+  [tabStripCoordinator start];
+}
+
+- (void)stop {
+  [super stop];
+  [self.browser->broadcaster()
+      stopBroadcastingForSelector:@selector(broadcastTabStripVisible:)];
+}
+
+- (void)childCoordinatorWillStart:(BrowserCoordinator*)childCoordinator {
+  [super childCoordinatorWillStart:childCoordinator];
+  if ([childCoordinator isKindOfClass:[ToolbarCoordinator class]]) {
+    self.toolbarCoordinator.usesTabStrip = YES;
+  }
+}
+
+- (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
+  [super childCoordinatorDidStart:childCoordinator];
+  if ([childCoordinator isKindOfClass:[TabStripCoordinator class]]) {
+    self.viewController.tabStripViewController =
+        childCoordinator.viewController;
+  }
 }
 
 #pragma mark - TabStripCommands
