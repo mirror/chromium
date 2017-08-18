@@ -869,13 +869,18 @@ bool TestLauncher::Init() {
     std::vector<std::string> filter_lines = SplitString(
         filter, "\n", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
     for (const std::string& filter_line : filter_lines) {
-      if (filter_line.empty() || filter_line[0] == '#')
+      size_t hash_pos = filter_line.find('#');
+      std::string trimmed_line =
+          TrimWhitespaceASCII(filter_line.substr(0, hash_pos), TRIM_ALL)
+              .as_string();
+
+      if (trimmed_line.empty())
         continue;
 
-      if (filter_line[0] == '-')
-        negative_test_filter_.push_back(filter_line.substr(1));
+      if (trimmed_line[0] == '-')
+        negative_test_filter_.push_back(trimmed_line.substr(1));
       else
-        positive_file_filter.push_back(filter_line);
+        positive_file_filter.push_back(trimmed_line);
     }
   }
   // Split --gtest_filter at '-', if there is one, to separate into
