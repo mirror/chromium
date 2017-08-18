@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b30055_b12b7dc9",
+        "filename": "media/capture/video/chromeos/camera_buffer_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-18T06:57:54Z",
+      "side": 1,
+      "message": "Move this to the start of function.",
+      "revId": "8f216faddcf5b42d31d218a73e116d2b15c10045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8082647_4156cf37",
+        "filename": "media/capture/video/chromeos/local_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-18T06:57:54Z",
+      "side": 1,
+      "message": "I realize this is for testing but reveman@ would be the right owner to review GMB impl.",
+      "revId": "8f216faddcf5b42d31d218a73e116d2b15c10045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
