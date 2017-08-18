@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c06194_62363237",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-18T20:54:59Z",
+      "side": 0,
+      "message": "What a shame, this observer is duplicated, SendJsFullscreenShortcutAndWait() has covered the notification already.",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 56
+      },
+      "revId": "3aae9a05d87b8e658fe6a3f956c17344b1bee7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
