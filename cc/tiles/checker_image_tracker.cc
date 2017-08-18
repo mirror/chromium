@@ -33,6 +33,9 @@ enum class CheckerImagingDecision {
   kVetoedSmallerThanCheckeringSize = 7,
   kVetoedLargerThanCacheSize = 8,
 
+  // Vetoed because checkering of images has been disabled.
+  kVetoedForceDisable = 9,
+
   kCheckerImagingDecisionCount,
 };
 
@@ -299,6 +302,11 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
     CheckerImagingDecision decision = GetCheckerImagingDecision(
         image, draw_image.src_rect(), min_image_bytes_to_checker_,
         image_controller_->image_cache_max_limit_bytes());
+    if (decision == CheckerImagingDecision::kCanChecker && force_disable_) {
+      // UMA the images we would have checkered if it was not disabled.
+      decision = CheckerImagingDecision::kVetoedForceDisable;
+    }
+
     it->second.policy = decision == CheckerImagingDecision::kCanChecker
                             ? DecodePolicy::ASYNC
                             : DecodePolicy::SYNC;

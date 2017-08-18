@@ -92,6 +92,8 @@ class CC_EXPORT CheckerImageTracker {
   // raster.
   void DisallowCheckeringForImage(const PaintImage& image);
 
+  void set_force_disable(bool force_disable) { force_disable_ = force_disable; }
+
   bool has_locked_decodes_for_testing() const {
     return !image_id_to_decode_.empty();
   }
@@ -157,6 +159,10 @@ class CC_EXPORT CheckerImageTracker {
   CheckerImageTrackerClient* client_;
   const bool enable_checker_imaging_;
   const size_t min_image_bytes_to_checker_;
+
+  // Disables checkering of all images if set. As opposed to
+  // |enable_checker_imaging_|, this setting can be toggled.
+  bool force_disable_ = false;
 
   // A set of images which have been decoded and are pending invalidation for
   // raster on the checkered tiles.
