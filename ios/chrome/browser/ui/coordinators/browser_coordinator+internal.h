@@ -62,6 +62,14 @@
 // coordinator.
 - (void)willBeRemovedFromParentCoordinator;
 
+// This is the best place to perform starting and initialization tasks.
+- (void)coordinatorWillStart;
+
+// Called when a child coordinator will start. This is a blank template method.
+// Subclasses can override this method when they need to know that their
+// children have been added but have not started.
+- (void)childCoordinatorWillStart:(BrowserCoordinator*)childCoordinator;
+
 // Called when a child coordinator did start. This is a blank template method.
 // Subclasses can override this method when they need to know when their
 // children start.

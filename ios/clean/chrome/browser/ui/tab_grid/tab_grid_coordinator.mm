@@ -160,7 +160,7 @@
   // on its own.
   [self.activeTabCoordinator stop];
   [self removeChildCoordinator:self.activeTabCoordinator];
-  TabCoordinator* tabCoordinator = [[TabCoordinator alloc] init];
+  TabCoordinator* tabCoordinator = [self newTabCoordinator];
   self.activeTabCoordinator = tabCoordinator;
   tabCoordinator.webState = self.webStateList.GetWebStateAt(index);
   tabCoordinator.presentationKey =
@@ -281,6 +281,23 @@
       stopDispatchingForSelector:@selector(showToolsMenu)];
   [self.browser->dispatcher()
       stopDispatchingForSelector:@selector(closeToolsMenu)];
+}
+
+#pragma mark - Experiment support
+
+// Returns whether the experimental setting for tab strip has been set.
+- (BOOL)usesTabStrip {
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  NSString* tabStripPreference = [defaults stringForKey:@"EnableTabStrip"];
+  return [tabStripPreference isEqualToString:@"Enabled"];
+}
+
+// Creates and returns a tab coordinator based on experimental settings.
+- (TabCoordinator*)newTabCoordinator {
+  if ([self usesTabStrip]) {
+    return [[TabStripTabCoordinator alloc] init];
+  }
+  return [[TabCoordinator alloc] init];
 }
 
 @end
