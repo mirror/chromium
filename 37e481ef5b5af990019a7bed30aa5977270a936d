@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf28194f_25a4a826",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50128,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-18T17:46:50Z",
+      "side": 1,
+      "message": "Either:\n(1) Put a big warning here that the semantics changed in version X, and that before that (d) was not included in the timing.\nor\n(2) Rename the histogram for a clean semantic break and mark the old name as obsolete.\n\nDownsides of (1): we\u0027ll be getting alerts on this histogram continuous as that milestone rollout and is promoted to various channels and platforms about this histogram regressing.  Annoying, and it may hide real alerts.\n\nDownsides of (2): requires updating various internal documentation about system health to refer to the new histogram.",
+      "range": {
+        "startLine": 50128,
+        "startChar": 49,
+        "endLine": 50128,
+        "endChar": 0
+      },
+      "revId": "37e481ef5b5af990019a7bed30aa5977270a936d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9c6aa6_22b4313d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-18T17:46:50Z",
+      "side": 1,
+      "message": "It appears you forgot to write/update this description.",
+      "revId": "37e481ef5b5af990019a7bed30aa5977270a936d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
