@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9150cbba_204ad0d0",
+        "filename": "components/offline_pages/core/prefetch/task_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T02:00:52Z",
+      "side": 1,
+      "message": "Add forward declaration of PrefetchItem.",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "3fefd9578ed18de5ad32e5778c2eb9c1643f4612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
