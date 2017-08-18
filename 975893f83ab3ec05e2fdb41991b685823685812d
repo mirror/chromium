@@ -93,6 +93,30 @@
       "revId": "975893f83ab3ec05e2fdb41991b685823685812d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5d4b5d_edc0d15c",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-18T18:19:28Z",
+      "side": 1,
+      "message": "I talked to Kostya, and it looks like that\u0027s a bad pattern we have in some old fuzz target. Thus, I\u0027m calling my suggestion off. Sorry for the noise!",
+      "parentUuid": "1b25c4dd_89e8776c",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 3
+      },
+      "revId": "975893f83ab3ec05e2fdb41991b685823685812d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
