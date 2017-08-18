@@ -70,6 +70,47 @@
       "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e95740_bd42c54c",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-18T23:46:48Z",
+      "side": 1,
+      "message": "RenderSurface (RS) technically flattens a hierarchy of layers into a texture. That texture is then used for drawing to the output instead of the hierarchy of layers.\n\nIf a RS is more efficient than drawing the layers directly depends on a number of things. How complicated is the hierarchy of layers, does some of the layers use complicated effects like blur, etc.\n\nSome compositor operations (e.g. opacity for a hierarchy of layers) requires that a RS is created to produce correct output. In these cases our choice is easy. Caching is always a benefit as we need a RS anyhow and it just avoids having to recreate it from the hierarchy of layers each frame of the animation. And we know when the animation has ended and the cache can be removed.\n\nTo start with we\u0027re enabling this in cases where we know it\u0027s useful. It can also be used to improve other animations but that will require a more careful analysis as it\u0027s not as clear cut as the hide animation where we know it\u0027s always a benefit.",
+      "parentUuid": "88aafb0e_4383c92b",
+      "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7a2d79_209f85a5",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-18T23:46:48Z",
+      "side": 1,
+      "message": "Btw, can you make this call conditional on |window| containing more than one layer? RS is not going to provide a benefit when animating the opacity of a single layer.",
+      "range": {
+        "startLine": 304,
+        "startChar": 46,
+        "endLine": 304,
+        "endChar": 66
+      },
+      "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
