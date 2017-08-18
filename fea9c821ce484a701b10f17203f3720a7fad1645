@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8e93c7b_6cf65954",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:45:57Z",
+      "side": 1,
+      "message": "If we keep |pending_provider_context_|, I think we can pass by using std::move() like\nSetRegistrationInServiceWorkerGlobalScope(std::move(pending_provider_context_));",
+      "range": {
+        "startLine": 777,
+        "startChar": 44,
+        "endLine": 777,
+        "endChar": 45
+      },
+      "revId": "fea9c821ce484a701b10f17203f3720a7fad1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1f7b2e_b4bbbb0c",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:45:57Z",
+      "side": 1,
+      "message": "Hmm, I prefer having the instance to having its id since just having id doesn\u0027t tell about the lifetime of the object.\nHow about renaming |provider_context_| to |pending_provider_context_| to indicate that this is only for starting up, and releasing the reference in WorkerContextStarted()? I assume the code would be simpler if we use |provider_context_| than having each parameter.",
+      "revId": "fea9c821ce484a701b10f17203f3720a7fad1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
