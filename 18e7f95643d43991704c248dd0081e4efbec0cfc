@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b84a2a42_dfb2c4bb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-18T02:16:01Z",
+      "side": 1,
+      "message": "Done and done",
+      "parentUuid": "9fef038e_afbfd2a4",
+      "range": {
+        "startLine": 947,
+        "startChar": 20,
+        "endLine": 948,
+        "endChar": 41
+      },
+      "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a04b5373_aa9dd08c",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "76666709_c371bb57",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-18T02:16:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a04b5373_aa9dd08c",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5405d1d8_3512e946",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
         "patchSetId": 5
@@ -83,6 +131,24 @@
       "writtenOn": "2017-08-17T12:36:51Z",
       "side": 1,
       "message": "Probably not worth doing now but we could always introduce a DOM element for the \"/\". It will come with pros (no need for this special casing) and cons (need to hide it when duration is hidden) so probably not worth doing in this CL.",
+      "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a7efcb_d1014be6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-18T02:16:01Z",
+      "side": 1,
+      "message": "Ack. Should I create a bug?",
+      "parentUuid": "5405d1d8_3512e946",
       "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -109,6 +175,30 @@
       "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f79b5f_26a35e63",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimeDisplayElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-18T02:16:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e99eefc2_5037b489",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "18e7f95643d43991704c248dd0081e4efbec0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
