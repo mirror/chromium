@@ -251,6 +251,9 @@ class VIEWS_EXPORT FocusManager : public ViewObserver {
   // Returns true if an accelerator was activated.
   bool ProcessAccelerator(const ui::Accelerator& accelerator);
 
+  // Returns the accelerator id from AcceleratorManager.
+  int GetAcceleratorId(const ui::Accelerator& accelerator) const;
+
   // Resets menu key state if |event| is not menu key release.
   // This is effective only on x11.
   void MaybeResetMenuKeyState(const ui::KeyEvent& key);
