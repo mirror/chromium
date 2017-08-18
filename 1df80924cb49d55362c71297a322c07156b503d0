@@ -105,6 +105,24 @@
       "revId": "1df80924cb49d55362c71297a322c07156b503d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a1010cd_a4bfe92f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T08:57:06Z",
+      "side": 1,
+      "message": "I\u0027d rather collect the categories to delete in a variable and extract a common method from ClearExpiredDismissedSuggestions(), like\n\nvoid RemoveCategories() {\n  for (Category category : categories_to_erase) {\n    UpdateCategoryStatus(category, CategoryStatus::NOT_PROVIDED);\n    category_contents_.erase(category);\n  }\n}",
+      "parentUuid": "50a979c2_ac789702",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
