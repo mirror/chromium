@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f20a3de5_12ccbf47",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-18T20:30:50Z",
+      "side": 1,
+      "message": "Will remove.",
+      "parentUuid": "9682e69d_c7f16ce6",
+      "range": {
+        "startLine": 135,
+        "startChar": 24,
+        "endLine": 135,
+        "endChar": 42
+      },
+      "revId": "c7d157ac225810ad633e83d1098359aec825ced9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b77086e3_d634cfd3",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T18:47:40Z",
       "side": 1,
       "message": "Why do you store this as a string as opposite to Common.Color ?",
+      "range": {
+        "startLine": 244,
+        "startChar": 9,
+        "endLine": 244,
+        "endChar": 31
+      },
+      "revId": "c7d157ac225810ad633e83d1098359aec825ced9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364bea12_299f94e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-18T20:30:50Z",
+      "side": 1,
+      "message": "Because all I want to do with it is compare for exact equality on line 358.",
+      "parentUuid": "b77086e3_d634cfd3",
       "range": {
         "startLine": 244,
         "startChar": 9,
