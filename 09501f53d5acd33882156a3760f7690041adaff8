@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d04d3e8_f7bc4305",
+        "filename": "components/history/core/browser/browsing_history_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "maybe: of the database → of the local database",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46637b87_ee52fc88",
+        "filename": "components/history/core/browser/browsing_history_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "maybe: of the database → of the synced database",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890bce49_556fc6c0",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "I would call this protocol BrowsingHistoryDriverDelegate (see for example ios_crome_password_manager_driver.h that uses the same pattern).",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 42
+      },
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6771d2_e82b00eb",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "As -IOSBrowsingHistoryDriverOnQueryComplete:results:query_results_info: is not in an @optional part of the @protocol, it is required (i.e. @protocol defaults to @required) and there is no need to check whether the method is implemented (the compilation fails if a class implements a protocol but does not implement some @required methods).\n\nJust remove the check and directly call the method on delegate_.",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9896e0_17c1d068",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "ditto, no need for -respondsToSelector:",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174e410a_a0f83437",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "ditto, no need for -respondsToSelect:",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177821a0_d74a9f92",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "I think this sentence miss a word or two (should it be \"which was to never gate HistoryDeletions based on policy\"?).",
+      "range": {
+        "startLine": 81,
+        "startChar": 11,
+        "endLine": 81,
+        "endChar": 66
+      },
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3152cde1_2b4fba96",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "Is this \"policy\" in the sense of administrator policy? Then yes, Chrome on iOS does not implement administrator policy.",
+      "range": {
+        "startLine": 81,
+        "startChar": 68,
+        "endLine": 82,
+        "endChar": 63
+      },
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda6364c_7a6e1922",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:31:53Z",
+      "side": 1,
+      "message": "I know that by convention the first parameter of each method of a \"Delegate\" in Objective-C is supposed to be the delegating object, but it is never used in the implementation and this makes for ugly method name.\n\nI would recommend instead breaking this convention and to have the following methods:\n\n  - (void)onQueryCompleteWithResults:(const std::vector\u003cBrowserHistoryService::HistoryEntry\u003e\u0026)\n                        results\n                    queryResultsInfo:(const BrowsingHistoryService::QueryResultsInfo\u0026)\n                        queryResultsInfo;\n\n  - (void)didObserverHistoryDeletion;\n\n  - (void)shouldShowNoticeAboutOtherFormsOfBrowsingHistory:(BOOL)shouldShowNotice;\n\nIf we want to keep the delegated object as first parameter, then I would use the following names instead:\n\n  - (void)browsingHistoryDriverQueryComplete:(BrowsingHistoryDriver*)driver\n                                     results:(...)results\n                            queryResultsInfo:(...)queryResultsInfo;\n\n  - (void)browsingHistoryDriverDidObserveHistoryDeletion:(BrowsingHistoryDriver*)driver;\n\n  - (void)browsingHistoryDriver:(BrowsingHistoryDriver*)driver\n    shouldShowNoticeAboutOtherFormsOfBrowingHistory:(BOOL)shouldShowNotice;",
+      "revId": "09501f53d5acd33882156a3760f7690041adaff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
