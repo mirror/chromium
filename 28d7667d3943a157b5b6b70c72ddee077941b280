@@ -16,6 +16,24 @@
       "revId": "28d7667d3943a157b5b6b70c72ddee077941b280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e282404_159f9f07",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-18T21:20:21Z",
+      "side": 1,
+      "message": "That\u0027s the default value.",
+      "parentUuid": "979c9c09_0e784696",
+      "revId": "28d7667d3943a157b5b6b70c72ddee077941b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
