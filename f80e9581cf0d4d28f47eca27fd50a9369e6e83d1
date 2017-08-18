@@ -123,6 +123,24 @@
       "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c81a41_5b8f7a24",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-18T18:03:46Z",
+      "side": 1,
+      "message": "Can\u0027t we check if net_error is a certificate error in NavigationResourceHandler before we call NotifyRequestFailed, and pass ssl_info/fatal if so?",
+      "parentUuid": "a8882754_da8284e8",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
