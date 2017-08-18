@@ -93,6 +93,7 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
   void EndScrollIfNecessary(const GestureEventDataPacket& packet);
   void PopGestureSequence();
   void SendAckedEvents();
+
   GestureSequence& Head();
   GestureSequence& Tail();
 

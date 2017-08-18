@@ -1065,7 +1065,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
           event_listener_type ==
           cc::InputHandler::TouchStartOrMoveEventListenerType::
               HANDLER_ON_SCROLLING_LAYER;
-      result = DID_NOT_HANDLE;
+      if (!white_listed_touch_action ||
+          *white_listed_touch_action == cc::kTouchActionNone)
+        result = DID_NOT_HANDLE;
       break;
     }
   }
