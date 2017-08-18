@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844751f6_b002b945",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-18T15:21:30Z",
+      "side": 1,
+      "message": "Are render surfaces always required for these animations? It\u0027s not obvious as there\u0027s no opacity transition. We need to be careful to not force render surface use when not needed. It should be easy to check using \"Show UI composited layer borders\" set to RenderPass, \"Partial swap\" set to disabled and \"Slow UI animations\" turned on in about:flags.\n\nI suspect that the render surface requirement is conditional on how the window caption is removed from the window. If we enable cache here then we need to make sure it\u0027s only used on layers that already require a render surface.\n\nFyi, I\u0027d like to see us enable trilinear filtering for overview mode in the near future to make down scaling look better and then it will likely make sense to use render surface caching for all layers.\n\nAlso, does this only enable it during the transition or keep it turned on until we exit overview mode?",
+      "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
