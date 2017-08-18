@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20da6883_7cb36e77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "was is?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece6a63c_2a9373cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "could add 751809 here maybe?",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde90542_d65371a9",
+        "filename": "sandbox/win/src/heap_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "\"Avoid defining macros, especially in headers; prefer inline functions, enums, and const variables. Name macros with a project-specific prefix. Do not use macros to define pieces of a C++ API.\"  https://google.github.io/styleguide/cppguide.html#Preprocessor_Macros\n\nI know we have a load here already but this adds a load more. can the two structures just be defined wrapped in #if defined(_WIN64) using const values for the offsets?",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4eaf5d_9aee4038",
+        "filename": "sandbox/win/src/heap_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "lev",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c23e7d_9112c682",
+        "filename": "sandbox/win/src/heap_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "nit: single line if statements do not use braces",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc51e8d0_794b51db",
+        "filename": "sandbox/win/src/heap_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "nit: empty line before end namespace.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 1
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e4af0d_ec7c7b43",
+        "filename": "sandbox/win/src/lpc_policy_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "no braces for single line if statements",
+      "range": {
+        "startLine": 29,
+        "startChar": 58,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8616f4b3_5a62b3fe",
+        "filename": "sandbox/win/src/lpc_policy_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "use base apis not windows apis for this -\n\ne.g.\n\nif (base::win::OSInfo::GetInstance()-\u003ewow64_status() \u003d\u003d base::win::OSInfo::WOW64_ENABLED)",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 21
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bde33c_2249eab4",
+        "filename": "sandbox/win/src/lpc_policy_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "nit: we don\u0027t do pronouns but use active e.g.\n\n\"This function failed, so do not support CSRSS disconnect.\"\n\n(yes this is a real nitty nit but it\u0027s the standard, sorry)",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae99817e_473df041",
+        "filename": "sandbox/win/src/lpc_policy_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T20:50:56Z",
+      "side": 1,
+      "message": "remove comment if it\u0027s fixed.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 33
+      },
+      "revId": "d8fac9d66e9b56fbe83fd12ac722c610794f3bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
