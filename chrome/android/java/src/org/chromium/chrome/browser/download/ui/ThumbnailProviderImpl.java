@@ -38,9 +38,10 @@ public class ThumbnailProviderImpl implements ThumbnailProvider, ThumbnailStorag
 
     /**
      *  Weakly referenced cache containing thumbnails that can be deleted under memory pressure.
-     *  Key in the cache is a pair of the content ID and the requested size (maximum dimension of
-     *  the smaller side) of the thumbnail. Value is a pair of the thumbnail and its byte size.
-     * */
+     *  Key in the cache is a pair of the content ID and the requested size (if image, maximum
+     *  required dimension (pixel) of the smaller side; if page, minimum dimension) of the
+     *  thumbnail. Value is a pair of the thumbnail and its byte size.
+     */
     private static WeakReference<LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>>>
             sBitmapCache = new WeakReference<>(null);
 
@@ -77,9 +78,15 @@ public class ThumbnailProviderImpl implements ThumbnailProvider, ThumbnailStorag
      * @param request Parameters that describe the thumbnail being retrieved.
      */
     @Override
-    public void getThumbnail(ThumbnailRequest request) {
-        if (TextUtils.isEmpty(request.getFilePath()) || TextUtils.isEmpty(request.getContentId())) {
-            return;
+    public void getThumbnail(
+            org.chromium.chrome.browser.download.ui.ThumbnailProvider.ThumbnailRequest request) {
+        if (request.getFileType() == DownloadFilter.FILTER_IMAGE) {
+            if (TextUtils.isEmpty(request.getFilePath())
+                    || TextUtils.isEmpty(request.getContentId())) {
+                return;
+            }
+        } else if (request.getFileType() == DownloadFilter.FILTER_PAGE) {
+            if (TextUtils.isEmpty(request.getUrl())) return;
         }
 
         Bitmap cachedBitmap = getBitmapFromCache(request.getContentId(), request.getIconSize());
@@ -99,12 +106,14 @@ public class ThumbnailProviderImpl implements ThumbnailProvider, ThumbnailStorag
     }
 
     /**
-     * Removes the thumbnails (different sizes) with {@code contentId} from disk.
+     * Removes the thumbnails (different sizes) with {@code identifier} (content ID for image or URL
+     * for page) from disk.
      * @param contentId The content ID of the thumbnail to remove.
+     * @param fileType The file type (image or page) the thumbnail is for.
      */
     @Override
-    public void removeThumbnailsFromDisk(String contentId) {
-        mStorage.removeFromDisk(contentId);
+    public void removeThumbnailsFromDisk(String identifier, int fileType) {
+        mStorage.removeFromDisk(identifier, fileType);
     }
 
     private void processQueue() {

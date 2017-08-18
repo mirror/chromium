@@ -104,7 +104,8 @@ public class NewTabPageLoadTest {
                 @Override
                 public void run() {
                     callback.onLargeIconAvailable(
-                            Bitmap.createBitmap(148, 148, Bitmap.Config.ALPHA_8), 0, false);
+                            Bitmap.createBitmap(148, 148, Bitmap.Config.ALPHA_8), 0, false, pageUrl,
+                            desiredSizePx);
                 }
             }, 0);
 

@@ -153,8 +153,8 @@ public class NtpUiCaptureTestData {
                 ThreadUtils.postOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onLargeIconAvailable(
-                                iconMap.get(pageUrl), colorMap.get(pageUrl), true);
+                        callback.onLargeIconAvailable(iconMap.get(pageUrl), colorMap.get(pageUrl),
+                                true, pageUrl, desiredSizePx);
                     }
                 });
                 return true;

@@ -153,8 +153,8 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
     }
 
     @Override
-    public void onLargeIconAvailable(Bitmap icon, int fallbackColor,
-            boolean isFallbackColorDefault) {
+    public void onLargeIconAvailable(Bitmap icon, int fallbackColor, boolean isFallbackColorDefault,
+            String url, int iconSizePx) {
         // TODO(twellington): move this somewhere that can be shared with bookmarks.
         if (icon == null) {
             mIconGenerator.setBackgroundColor(fallbackColor);

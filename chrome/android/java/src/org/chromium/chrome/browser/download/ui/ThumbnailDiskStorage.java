@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.AtomicFile;
-import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
 import com.google.protobuf.nano.MessageNano;
@@ -21,8 +20,10 @@ import org.chromium.base.Log;
 import org.chromium.base.StreamUtil;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.download.ui.ThumbnailCacheEntry.ContentId;
+import org.chromium.chrome.browser.download.ui.ThumbnailCacheEntry.Identifier;
 import org.chromium.chrome.browser.download.ui.ThumbnailCacheEntry.ThumbnailEntry;
+import org.chromium.chrome.browser.favicon.LargeIconBridge;
+import org.chromium.chrome.browser.profiles.Profile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -47,27 +48,30 @@ import java.util.LinkedHashSet;
  * on restart (when initDiskCache is called) and trim to sync to disk if file was removed
  * elsewhere (e.g. manually from disk).
  */
-public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
+public class ThumbnailDiskStorage
+        implements ThumbnailGeneratorCallback, LargeIconBridge.LargeIconCallback {
     private static final String TAG = "ThumbnailStorage";
     private static final int MAX_CACHE_BYTES = 1024 * 1024;  // Max disk cache size is 1MB.
 
-    // LRU cache of a pair of thumbnail's contentID and size. The order is based on the sequence of
-    // add and get with the most recent at the end. The order at initialization (i.e. browser
-    // restart) is based on the order of files in the directory. It is accessed only on the
-    // background thread.
-    // It is static because cached thumbnails are shared across all instances of the class.
+    // LRU cache of {@link ThumbnailEntry} excluding actual the actual thumbnail. The order is based
+    // on the sequence of add and get with the most recent at the end. The order at initialization
+    // (i.e. browser restart) is based on the order of files in the directory. It is accessed only
+    // on the background thread. It is static because cached thumbnails are shared across all
+    // instances of the class.
     @VisibleForTesting
-    static final LinkedHashSet<Pair<String, Integer>> sDiskLruCache =
-            new LinkedHashSet<Pair<String, Integer>>();
+    static final LinkedHashSet<ThumbnailEntry> sDiskLruCache = new LinkedHashSet<ThumbnailEntry>();
 
-    // Maps content ID to a set of the requested sizes (maximum required dimension of the smaller
-    // side) of the thumbnail with that ID.
+    // Maps either content ID (for images) or URL (for pages) to a set of the requested sizes
+    // (if image, maximum required dimension of the smaller side; if page, minimum dimension) of the
+    // thumbnail for the file with that ID or URL.
     @VisibleForTesting
     static final HashMap<String, HashSet<Integer>> sIconSizesMap =
             new HashMap<String, HashSet<Integer>>();
 
     @VisibleForTesting
     final ThumbnailGenerator mThumbnailGenerator;
+
+    private LargeIconBridge mLargeIconBridge;
 
     // This should be initialized once.
     private File mDirectory;
@@ -93,16 +97,18 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
         private final String mContentId;
         private final Bitmap mBitmap;
         private final int mIconSizePx;
+        private final int mFileType;
 
-        public CacheThumbnailTask(String contentId, Bitmap bitmap, int iconSizePx) {
+        public CacheThumbnailTask(String contentId, Bitmap bitmap, int iconSizePx, int fileType) {
             mContentId = contentId;
             mBitmap = bitmap;
             mIconSizePx = iconSizePx;
+            mFileType = fileType;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            addToDisk(mContentId, mBitmap, mIconSizePx);
+            addToDisk(mContentId, mBitmap, mIconSizePx, mFileType);
             return null;
         }
     }
@@ -119,9 +125,9 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
 
         @Override
         protected Bitmap doInBackground(Void... params) {
-            if (sDiskLruCache.contains(
-                        Pair.create(mRequest.getContentId(), mRequest.getIconSize()))) {
-                return getFromDisk(mRequest.getContentId(), mRequest.getIconSize());
+            if (sDiskLruCache.contains(createEntry(identifierFromFileType(mRequest),
+                        mRequest.getIconSize(), mRequest.getFileType()))) {
+                return getFromDisk(mRequest);
             }
             return null;
         }
@@ -129,34 +135,56 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null) {
-                onThumbnailRetrieved(mRequest.getContentId(), bitmap, mRequest.getIconSize());
+                onThumbnailRetrieved(
+                        identifierFromFileType(mRequest), bitmap, mRequest.getIconSize());
                 return;
             }
-            // Asynchronously process the file to make a thumbnail.
-            mThumbnailGenerator.retrieveThumbnail(mRequest, ThumbnailDiskStorage.this);
+
+            if (mRequest.getFileType() == DownloadFilter.FILTER_IMAGE) {
+                // Asynchronously process the file to make a thumbnail.
+                mThumbnailGenerator.retrieveThumbnail(mRequest, ThumbnailDiskStorage.this);
+            } else if (mRequest.getFileType() == DownloadFilter.FILTER_PAGE) {
+                // Fetch favicon who's dimension is at least |minimumFaviconSize|
+                int minimumFaviconSize = (int) Math.round(mRequest.getIconSize() * 0.6);
+                mLargeIconBridge.getLargeIconForUrl(mRequest.getUrl(), mRequest.getIconSize(),
+                        minimumFaviconSize, ThumbnailDiskStorage.this);
+            } else {
+                // TODO(dfalcantara): Get thumbnails for audio and video files when possible.
+            }
         }
+    }
+
+    private @NonNull String identifierFromFileType(ThumbnailProvider.ThumbnailRequest request) {
+        if (request.getFileType() == DownloadFilter.FILTER_IMAGE) {
+            return request.getContentId();
+        }
+        // If file type is a page
+        return request.getUrl();
+        // TODO: Get identifier for audio and video files.
     }
 
     /**
      * Removes thumbnails with the given contentId from disk cache.
      */
     private class RemoveThumbnailTask extends AsyncTask<Void, Void, Void> {
-        private final String mContentId;
+        private final String mIdentifier;
+        private final int mFileType;
 
-        public RemoveThumbnailTask(String contentId) {
-            mContentId = contentId;
+        public RemoveThumbnailTask(String identifier, int fileType) {
+            mIdentifier = identifier;
+            mFileType = fileType;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            // Check again if thumbnails with the specified content ID still exists
-            if (!sIconSizesMap.containsKey(mContentId)) return null;
+            // Check again if thumbnails with the specified identifier still exists
+            if (!sIconSizesMap.containsKey(mIdentifier)) return null;
 
             // Create a copy of the set of icon sizes because they can't be removed from the set
             // while iterating through the set
-            ArrayList<Integer> iconSizes = new ArrayList<Integer>(sIconSizesMap.get(mContentId));
+            ArrayList<Integer> iconSizes = new ArrayList<Integer>(sIconSizesMap.get(mIdentifier));
             for (int iconSize : iconSizes) {
-                removeFromDiskHelper(Pair.create(mContentId, iconSize));
+                removeFromDiskHelper(mIdentifier, iconSize, mFileType);
             }
             return null;
         }
@@ -167,6 +195,7 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
         ThreadUtils.assertOnUiThread();
         mDelegate = delegate;
         mThumbnailGenerator = thumbnailGenerator;
+        mLargeIconBridge = new LargeIconBridge(Profile.getLastUsedProfile().getOriginalProfile());
         new InitTask().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
@@ -185,6 +214,7 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
      */
     public void destroy() {
         mThumbnailGenerator.destroy();
+        mLargeIconBridge.destroy();
     }
 
     /**
@@ -211,10 +241,29 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
             @NonNull String contentId, @Nullable Bitmap bitmap, int iconSizePx) {
         ThreadUtils.assertOnUiThread();
         if (bitmap != null && !TextUtils.isEmpty(contentId)) {
-            new CacheThumbnailTask(contentId, bitmap, iconSizePx)
+            new CacheThumbnailTask(contentId, bitmap, iconSizePx, DownloadFilter.FILTER_IMAGE)
                     .executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         }
         mDelegate.onThumbnailRetrieved(contentId, bitmap);
+    }
+
+    /**
+     * Callback for use with GetLargeIconForUrl().
+     * @param icon The icon, or null if none with size at least |iconSizePx| is available.
+     * @param fallbackColor The fallback color to use if icon is null.
+     * @param isFallbackColorDefault
+     * @param url
+     * @param iconSizePx Requested size (minimum dimension) of the icon requested.
+     */
+    @Override
+    public void onLargeIconAvailable(@Nullable Bitmap icon, int fallbackColor,
+            boolean isFallbackColorDefault, String url, int iconSizePx) {
+        ThreadUtils.assertOnUiThread();
+        if (icon != null && !TextUtils.isEmpty(url)) {
+            new CacheThumbnailTask(url, icon, iconSizePx, DownloadFilter.FILTER_PAGE)
+                    .executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        }
+        mDelegate.onThumbnailRetrieved(url, (icon == null) ? icon : icon);
     }
 
     /**
@@ -242,21 +291,21 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
             try {
                 ThumbnailEntry entry =
                         MessageNano.mergeFrom(new ThumbnailEntry(), atomicFile.readFully());
-                if (entry.contentId == null) continue;
+                if (entry.identifier == null) continue;
 
-                String contentId = entry.contentId.id;
+                String identifier = entry.identifier.id;
                 if (entry.sizePx == null) continue;
 
                 int iconSizePx = entry.sizePx;
 
                 // Update internal cache state.
-                sDiskLruCache.add(Pair.create(contentId, iconSizePx));
-                if (sIconSizesMap.containsKey(contentId)) {
-                    sIconSizesMap.get(contentId).add(iconSizePx);
+                sDiskLruCache.add(createEntry(identifier, iconSizePx, entry.fileType));
+                if (sIconSizesMap.containsKey(identifier)) {
+                    sIconSizesMap.get(identifier).add(iconSizePx);
                 } else {
                     HashSet<Integer> iconSizes = new HashSet<Integer>();
                     iconSizes.add(iconSizePx);
-                    sIconSizesMap.put(contentId, iconSizes);
+                    sIconSizesMap.put(identifier, iconSizes);
                 }
                 mSizeBytes += file.length();
             } catch (IOException e) {
@@ -268,20 +317,21 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
     /**
      * Adds thumbnail to disk as most recent. Thumbnail with an existing content ID in cache will be
      * replaced by the newly added. Invoked on background thread.
-     * @param contentId Content ID for the thumbnail to cache to disk.
+     * @param identifier Content ID (for image) or URL (for page) of the file the thumbnail is for.
      * @param bitmap The thumbnail to cache.
-     * @param iconSizePx Requested size (maximum required dimension (pixel) of the smaller side) of
-     * the thumbnail.
+     * @param iconSizePx Requested size (if image, maximum required dimension (pixel) of the smaller
+     * side; if page, minimum dimension) of the thumbnail.
+     * @param fileType The file type (image or page) the thumbnail is for.
      *
      * TODO(angelashao): Use a DB to store thumbnail-related data. (crbug.com/747555)
      */
     @VisibleForTesting
-    void addToDisk(String contentId, Bitmap bitmap, int iconSizePx) {
+    void addToDisk(String identifier, Bitmap bitmap, int iconSizePx, int fileType) {
         ThreadUtils.assertOnBackgroundThread();
         if (!isInitialized()) return;
 
-        if (sDiskLruCache.contains(Pair.create(contentId, iconSizePx))) {
-            removeFromDiskHelper(Pair.create(contentId, iconSizePx));
+        if (sDiskLruCache.contains(createEntry(identifier, iconSizePx, fileType))) {
+            removeFromDiskHelper(identifier, iconSizePx, fileType);
         }
 
         FileOutputStream fos = null;
@@ -294,26 +344,29 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
 
             // Construct proto.
             ThumbnailEntry newEntry = new ThumbnailEntry();
-            newEntry.contentId = new ContentId();
-            newEntry.contentId.id = contentId;
+            newEntry.identifier = new Identifier();
+            newEntry.identifier.id = identifier;
             newEntry.sizePx = iconSizePx;
             newEntry.compressedPng = compressedBitmapBytes;
+            // TODO(angelashao): set file type
+            newEntry.fileType = (fileType == DownloadFilter.FILTER_IMAGE) ? ThumbnailEntry.IMAGE
+                                                                          : ThumbnailEntry.PAGE;
 
             // Write proto to disk.
-            File newFile = new File(getThumbnailFilePath(contentId, iconSizePx));
+            File newFile = new File(getThumbnailFilePath(identifier, iconSizePx, fileType));
             atomicFile = new AtomicFile(newFile);
             fos = atomicFile.startWrite();
             fos.write(MessageNano.toByteArray(newEntry));
             atomicFile.finishWrite(fos);
 
             // Update internal cache state.
-            sDiskLruCache.add(Pair.create(contentId, iconSizePx));
-            if (sIconSizesMap.containsKey(contentId)) {
-                sIconSizesMap.get(contentId).add(iconSizePx);
+            sDiskLruCache.add(createEntry(identifier, iconSizePx, fileType));
+            if (sIconSizesMap.containsKey(identifier)) {
+                sIconSizesMap.get(identifier).add(iconSizePx);
             } else {
                 HashSet<Integer> iconSizes = new HashSet<Integer>();
                 iconSizes.add(iconSizePx);
-                sIconSizesMap.put(contentId, iconSizes);
+                sIconSizesMap.put(identifier, iconSizes);
             }
             mSizeBytes += newFile.length();
 
@@ -331,23 +384,26 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
     /**
      * Retrieves bitmap with {@code contentId} and {@code iconSizePx} from cache. Invoked on
      * background thread.
-     * @param contentId The content ID of the requested thumbnail.
-     * @param iconSizePx Requested size (maximum required dimension (pixel) of the smaller side) of
-     * the requested thumbnail.
+     * @param request The request for thumbnail.
      * @return Bitmap If thumbnail is not cached to disk, this is null.
      */
     @VisibleForTesting
     @Nullable
-    Bitmap getFromDisk(String contentId, int iconSizePx) {
+    Bitmap getFromDisk(ThumbnailProvider.ThumbnailRequest request) {
         ThreadUtils.assertOnBackgroundThread();
         if (!isInitialized()) return null;
 
-        if (!sDiskLruCache.contains(Pair.create(contentId, iconSizePx))) return null;
+        String identifier = identifierFromFileType(request);
+        if (!sDiskLruCache.contains(
+                    createEntry(identifier, request.getIconSize(), request.getFileType()))) {
+            return null;
+        }
 
         Bitmap bitmap = null;
         FileInputStream fis = null;
         try {
-            String thumbnailFilePath = getThumbnailFilePath(contentId, iconSizePx);
+            String thumbnailFilePath =
+                    getThumbnailFilePath(identifier, request.getIconSize(), request.getFileType());
             File file = new File(thumbnailFilePath);
             // If file doesn't exist, {@link mSizeBytes} cannot be updated to account for the
             // removal but this is fine in the long-run when trim happens.
@@ -366,7 +422,6 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
         } finally {
             StreamUtil.closeQuietly(fis);
         }
-
         return bitmap;
     }
 
@@ -377,23 +432,24 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
     void trim() {
         ThreadUtils.assertOnBackgroundThread();
         while (mSizeBytes > MAX_CACHE_BYTES) {
-            removeFromDiskHelper(sDiskLruCache.iterator().next());
+            ThumbnailEntry oldestEntry = sDiskLruCache.iterator().next();
+            removeFromDiskHelper(
+                    oldestEntry.identifier.id, oldestEntry.sizePx, oldestEntry.fileType);
         }
     }
 
     /**
      * Remove thumbnail identified by {@code contentIdSizePair}. If out of sync with disk, rely on
      * restart or trim (in the long-run) to be in sync.
-     * @param contentIdSizePair Pair of the content ID and requested size (maximum required
-     * dimension of the smaller side) of the thumbnail to remove.
+     * @param entryToRemove The {@link ThumbnailEntry} to remove from cache.
+     * @return File path.
      */
     @VisibleForTesting
-    void removeFromDiskHelper(Pair<String, Integer> contentIdSizePair) {
+    void removeFromDiskHelper(String identifier, int iconSizePx, int fileType) {
         ThreadUtils.assertOnBackgroundThread();
+        if (identifier == null) return;
 
-        String contentId = contentIdSizePair.first;
-        int iconSizePx = contentIdSizePair.second;
-        File file = new File(getThumbnailFilePath(contentId, iconSizePx));
+        File file = new File(getThumbnailFilePath(identifier, iconSizePx, fileType));
         if (!file.exists()) {
             Log.e(TAG, "Error while removing from disk. File does not exist.");
             return;
@@ -409,36 +465,47 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
         atomicFile.delete();
 
         // Update internal cache state.
-        sDiskLruCache.remove(contentIdSizePair);
-        sIconSizesMap.get(contentId).remove(iconSizePx);
-        if (sIconSizesMap.get(contentId).size() == 0) {
-            sIconSizesMap.remove(contentId);
+        sDiskLruCache.remove(createEntry(identifier, iconSizePx, fileType));
+        sIconSizesMap.get(identifier).remove(iconSizePx);
+        if (sIconSizesMap.get(identifier).size() == 0) {
+            sIconSizesMap.remove(identifier);
         }
         mSizeBytes -= fileSizeBytes;
     }
 
     /**
-     * Remove thumbnails with the {@code contentId} from disk.
-     * @param contentId Content ID for the thumbnail.
+     * Remove thumbnails with the {@code identifier} from disk.
+     * @param identifier Content ID (for image) or URL (for page) of the file the thumbnail is for.
+     * @param fileType The type (image or page) of the file the thumbnail is for.
+     * @return File path.
      */
-    public void removeFromDisk(String contentId) {
+    public void removeFromDisk(String identifier, int fileType) {
         ThreadUtils.assertOnUiThread();
         if (!isInitialized()) return;
 
-        if (!sIconSizesMap.containsKey(contentId)) return;
+        if (!sIconSizesMap.containsKey(identifier)) return;
 
-        new RemoveThumbnailTask(contentId).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new RemoveThumbnailTask(identifier, fileType).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
     /**
      * Gets the file path for a thumbnail with the given content ID and size.
-     * @param contentId Content ID for the thumbnail.
-     * @param iconSizePx Requested size (maximum dimension (pixel) of the smaller side) of
-     * thumbnail.
+     * @param identifier Content ID (for image) or URL (for page) of the file the thumbnail is for.
+     * @param iconSizePx Requested size (if image, maximum required dimension (pixel) of the smaller
+     * side; if page, minimum dimension) of thumbnail.
+     * @param fileType The type (image or page) of the file the thumbnail is for.
      * @return File path.
      */
-    private String getThumbnailFilePath(String contentId, int iconSizePx) {
-        return mDirectory.getPath() + File.separator + contentId + iconSizePx + ".entry";
+    private String getThumbnailFilePath(String identifier, int iconSizePx, int fileType) {
+        String fileName = "";
+        if (fileType == DownloadFilter.FILTER_IMAGE) {
+            fileName = identifier + iconSizePx;
+        } else if (fileType == DownloadFilter.FILTER_PAGE) {
+            fileName = identifier;
+        } else {
+            // TODO: Get file path for thumbnails for audio or video files.
+        }
+        return mDirectory.getPath() + File.separator + fileName + ".entry";
     }
 
     /**
@@ -450,5 +517,17 @@ public class ThumbnailDiskStorage implements ThumbnailGeneratorCallback {
      */
     private static File getDiskCacheDir(Context context, String thumbnailDirName) {
         return new File(context.getCacheDir().getPath() + File.separator + thumbnailDirName);
+    }
+
+    /**
+     * Constructs a proto.
+     */
+    private ThumbnailEntry createEntry(String identifier, int iconSizePx, int fileType) {
+        ThumbnailEntry entry = new ThumbnailEntry();
+        entry.identifier = new Identifier();
+        entry.identifier.id = identifier;
+        entry.sizePx = iconSizePx;
+        entry.fileType = fileType;
+        return entry;
     }
 }

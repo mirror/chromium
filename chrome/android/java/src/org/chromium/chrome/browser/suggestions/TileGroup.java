@@ -473,8 +473,8 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
 
         @Override
-        public void onLargeIconAvailable(
-                @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
+        public void onLargeIconAvailable(@Nullable Bitmap icon, int fallbackColor,
+                boolean isFallbackColorDefault, String url, int iconSizePx) {
             Tile tile = findTile(mSiteData);
             if (tile != null) { // Do nothing if the tile was removed.
                 if (icon == null) {
