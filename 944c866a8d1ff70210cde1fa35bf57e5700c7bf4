@@ -81,6 +81,24 @@
       "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb9bc4f_940ac4ae",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1786,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T05:27:26Z",
+      "side": 1,
+      "message": "I wanted to find out what is wrong with the current impl and thanks for the clarification.\n\nCan we find one proper view in the hierarchy to achieve this?",
+      "parentUuid": "296b3a20_763ed543",
+      "revId": "944c866a8d1ff70210cde1fa35bf57e5700c7bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
