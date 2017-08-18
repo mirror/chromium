@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "211f667d_54ead2e9",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-18T15:48:28Z",
+      "side": 0,
+      "message": "Yay for deleting, too many of these remain as stable...",
+      "range": {
+        "startLine": 824,
+        "startChar": 28,
+        "endLine": 824,
+        "endChar": 29
+      },
+      "revId": "754f7c3f91dd9c947ae7c999c646c9bbd0dc950d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
