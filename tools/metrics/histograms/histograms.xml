@@ -7223,6 +7223,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="BrowserRenderProcessHost.KeepAliveDuration" units="ms">
+  <owner>horo@chromium.org</owner>
+  <summary>
+    How long a render process is kept alive by additional customers such as
+    shared workers and service workers.
+  </summary>
+</histogram>
+
 <histogram name="Bubbles.Close.Accepted" enum="BubbleType">
   <owner>hcarmona@chromium.org</owner>
   <summary>An open bubble was closed because the user accepted it.</summary>
@@ -73329,14 +73337,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The time spent making a new region of shared, anonymous memory. This metric
     is not emitted if the shared memory region is read only.
-  </summary>
-</histogram>
-
-<histogram name="SharedWorker.RendererSurviveForWorkerTime" units="ms">
-  <owner>horo@chromium.org</owner>
-  <summary>
-    A survival time of RenderProcessHostImpl for the In-renderer Shared Worker
-    from when FastShutdownIfPossible() is called.
   </summary>
 </histogram>
 
