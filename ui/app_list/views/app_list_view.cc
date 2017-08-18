@@ -547,7 +547,6 @@ void AppListView::EndDrag(const gfx::Point& location) {
   if (app_list_state_ == CLOSED)
     return;
 
-  DraggingLayout();
   // Change the app list state based on where the drag ended. If fling velocity
   // was over the threshold, snap to the next state in the direction of the
   // fling.
@@ -660,6 +659,8 @@ void AppListView::EndDrag(const gfx::Point& location) {
         break;
     }
   }
+
+  DraggingLayout();
 }
 
 display::Display AppListView::GetDisplayNearestView() const {
@@ -923,15 +924,11 @@ void AppListView::SetState(AppListState new_state) {
     case PEEKING: {
       switch (app_list_state_) {
         case HALF:
+        case PEEKING:
         case FULLSCREEN_ALL_APPS:
           app_list_main_view_->contents_view()->SetActiveState(
               AppListModel::STATE_START);
           break;
-        case PEEKING: {
-          app_list_main_view_->contents_view()->SetActiveState(
-              AppListModel::STATE_START);
-          break;
-        }
         case FULLSCREEN_SEARCH:
         case CLOSED:
           NOTREACHED();
@@ -1139,15 +1136,10 @@ void AppListView::DraggingLayout() {
       is_in_drag_ ? background_opacity_ : kAppListOpacity);
 
   // Updates the opacity of the items in the app list.
-  search_box_view_->UpdateOpacity(app_list_y_position_in_screen_);
-  GetAppsGridView()->UpdateOpacity(app_list_y_position_in_screen_);
+  search_box_view_->UpdateOpacity();
+  GetAppsGridView()->UpdateOpacity();
 
-  app_list_main_view_->contents_view()->Layout();
-
-  if (app_list_state_ == PEEKING) {
-    app_list_main_view_->contents_view()->start_page_view()->UpdateOpacity(
-        work_area_bottom_, !is_in_drag_);
-  }
+  Layout();
 }
 
 float AppListView::GetAppListBackgroundOpacityDuringDragging() {
