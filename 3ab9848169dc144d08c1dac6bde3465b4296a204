@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "2751d2e1_cd25cd7c",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-18T20:29:37Z",
+      "side": 1,
+      "message": "OK, I can\u0027t explain that :) Hopefully Scott can.\n\nIt seems that an interstitial is one example of a virtual URL. If I understand correctly, the page behind the interstitial is the virtual URL in the omnibox, whereas the real URL is the local one where the interstitial is hosted. Now the question is - if a safebrowsing interstitial decided to show popups (which it won\u0027t), whom should they be attributed? Apparently to the website behind the interstitial.\n\nBut pragmatically, if this code used virtual url and you now rewrite it to last committed, which seems to be the same thing, you\u0027re not breaking anything. You might be propagating an existing bug if the raw URL is the correct one, but I don\u0027t think so; as I said, PermissionManager also uses last committed.",
+      "parentUuid": "ca2d9219_db543390",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9508f56c_7257a467",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
