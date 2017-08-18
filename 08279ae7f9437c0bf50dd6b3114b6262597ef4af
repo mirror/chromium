@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "40752d02_604dfc38",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-18T01:58:08Z",
+      "side": 1,
+      "message": "If you want to conversion from EphemeralRangeTemplate to SelectionTemplate,\n could you define just as EphemeralRangeTemplate::ToForward/BackwardSelection()?",
+      "revId": "08279ae7f9437c0bf50dd6b3114b6262597ef4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d67d23d8_5068afc8",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
         "patchSetId": 5
