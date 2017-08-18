@@ -130,6 +130,7 @@ void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
     display::Screen* screen = display::Screen::GetScreen();
     gfx::Size host_size(screen ? screen->GetPrimaryDisplay().GetSizeInPixel()
                                : gfx::Size(800, 600));
+    display::Display::ResetForceDeviceScaleFactorForTesting();
     test_screen_.reset(TestScreen::Create(host_size));
     if (!screen)
       display::Screen::SetScreenInstance(test_screen_.get());
