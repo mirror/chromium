@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee66592_6c7e6b70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-18T00:07:26Z",
+      "side": 1,
+      "message": "End of line shows a pink character, not sure what it means (unprintable character?)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "a32444bd78e705018cc341c53d613337e1ed7540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c98ffea_5982c34f",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-18T00:07:26Z",
+      "side": 1,
+      "message": "base.c? is the c a spurious character?",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "a32444bd78e705018cc341c53d613337e1ed7540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
