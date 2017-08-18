@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7e777ae0_50b87199",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "A command",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 13
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf03b76_b43c9eb1",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "If it\u0027s an out parameter then it should be CredentialMediationRequirement*. Applicable everywhere",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 54
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "162f2953_8d7fa678",
         "filename": "ios/chrome/browser/passwords/credential_manager.h",
         "patchSetId": 4
@@ -18,6 +64,168 @@
         "startChar": 50,
         "endLine": 55,
         "endChar": 75
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d3665a_7c0f0528",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "We want to write an integration unit test for this class. Because soon it will depend on the JS injection and WebState for a secure web context. There are no public methods. HandleScriptCommand is semi public.\n\nI think testing those parsing functions is useful because\n- it\u0027s mostly what the class does\n- many things can go wrong because it\u0027s non-trusted input.\n\nI\u0027d move them to public if you agree. They are kind of library helpers, not implementation details because the format of the message is defined by the JS code.",
+      "parentUuid": "162f2953_8d7fa678",
+      "range": {
+        "startLine": 55,
+        "startChar": 50,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe548da_ce68a45f",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "I\u0027d just skip it. Maybe there will be some special URLs in the future understood only by some platforms and/or newer implementations.",
+      "range": {
+        "startLine": 146,
+        "startChar": 13,
+        "endLine": 146,
+        "endChar": 18
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b5b8e3_b973d201",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "All your other methods don\u0027t care about the output if they return false. Please be consistent.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 17
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b76810_b3bb1a39",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "That confuses me. Name can definitely be empty. Verify that if is allowed.",
+      "range": {
+        "startLine": 180,
+        "startChar": 17,
+        "endLine": 180,
+        "endChar": 25
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d890f8d_f00c1ea9",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "!iconURL.empty()",
+      "range": {
+        "startLine": 184,
+        "startChar": 53,
+        "endLine": 184,
+        "endChar": 55
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d75c72_dead5e86",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "and it should not be empty",
+      "range": {
+        "startLine": 197,
+        "startChar": 10,
+        "endLine": 197,
+        "endChar": 18
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b76651e_9260dac2",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "private:\n DISALLOW_COPY_AND_ASSIGN(CredentialManagerTest);",
+      "range": {
+        "startLine": 55,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 0
       },
       "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -48,6 +256,53 @@
     },
     {
       "key": {
+        "uuid": "39dff8f9_ba7a4cc2",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "to true because later you check it\u0027s false",
+      "parentUuid": "24b703dd_17e775b4",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5e1e54_ff092153",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "Swap the arguments",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4507e7ed_e7023a8b",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 4
@@ -59,6 +314,75 @@
       "writtenOn": "2017-08-17T18:33:27Z",
       "side": 1,
       "message": "nit: EXPECT_EQ takes first argument as expected value and second as actual value. Please fix everywhere in this file.",
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c999d9a1_7d29cc60",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "As I pointed out somewhere, it\u0027s not true. Check the desktop version.",
+      "range": {
+        "startLine": 160,
+        "startChar": 21,
+        "endLine": 160,
+        "endChar": 29
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c9aa8e_bbbd5460",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "There are other members in Origin. How about testing it as a whole by either comparing to an Origin or GURL?",
+      "range": {
+        "startLine": 210,
+        "startChar": 23,
+        "endLine": 210,
+        "endChar": 33
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09c7d7e_80bd8c18",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "Seems controversial. Check with mkwst@ for his opinion.",
+      "range": {
+        "startLine": 240,
+        "startChar": 72,
+        "endLine": 240,
+        "endChar": 77
+      },
       "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

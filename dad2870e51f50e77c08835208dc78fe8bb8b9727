@@ -1125,6 +1125,30 @@
     },
     {
       "key": {
+        "uuid": "899a1aac_a34d385f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-18T01:26:15Z",
+      "side": 1,
+      "message": "You have to override that method otherwise nothing will work. You can create a simple getter like password_store(). It\u0027s useful if you actually need a pointer to TestingPasswordStore, the getter can return it.",
+      "parentUuid": "40fbc1c1_60b21424",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "dad2870e51f50e77c08835208dc78fe8bb8b9727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73fc9e8_873c7456",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 3
