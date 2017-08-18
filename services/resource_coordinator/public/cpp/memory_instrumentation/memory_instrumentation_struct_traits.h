@@ -7,6 +7,7 @@
 
 #include "base/process/process_handle.h"
 #include "base/trace_event/memory_dump_request_args.h"
+#include "base/trace_event/process_memory_dump.h"
 #include "mojo/common/common_custom_types_struct_traits.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
@@ -51,6 +52,85 @@ struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
   }
   static bool Read(memory_instrumentation::mojom::RequestArgsDataView input,
                    base::trace_event::MemoryDumpRequestArgs* out);
+};
+
+template <>
+struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
+    StructTraits<memory_instrumentation::mojom::ArgsDataView,
+                 base::trace_event::MemoryDumpArgs> {
+  static base::trace_event::MemoryDumpLevelOfDetail level_of_detail(
+      const base::trace_event::MemoryDumpArgs& args) {
+    return args.level_of_detail;
+  }
+  static bool Read(memory_instrumentation::mojom::ArgsDataView input,
+                   base::trace_event::MemoryDumpArgs* out);
+};
+
+template <>
+struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
+    StructTraits<memory_instrumentation::mojom::AllocatorDumpGuidDataView,
+                 base::trace_event::MemoryAllocatorDumpGuid> {
+  static uint64_t guid(const base::trace_event::MemoryAllocatorDumpGuid& pmd) {
+    return pmd.ToUint64();
+  }
+
+  static bool Read(
+      memory_instrumentation::mojom::AllocatorDumpGuidDataView input,
+      base::trace_event::MemoryAllocatorDumpGuid* out);
+};
+
+template <>
+struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT StructTraits<
+    memory_instrumentation::mojom::AllocatorDumpEdgeDataView,
+    base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge> {
+  static base::trace_event::MemoryAllocatorDumpGuid source(
+      const base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge&
+          edge) {
+    return edge.source;
+  }
+  static base::trace_event::MemoryAllocatorDumpGuid target(
+      const base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge&
+          edge) {
+    return edge.target;
+  }
+
+  static int64_t importance(
+      const base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge&
+          edge) {
+    return edge.importance;
+  }
+
+  static bool overridable(
+      const base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge&
+          edge) {
+    return edge.overridable;
+  }
+
+  static bool Read(
+      memory_instrumentation::mojom::AllocatorDumpEdgeDataView input,
+      base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge* out);
+};
+
+template <>
+struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
+    StructTraits<memory_instrumentation::mojom::RawProcessMemoryDumpDataView,
+                 base::trace_event::ProcessMemoryDump> {
+  static base::trace_event::MemoryDumpArgs dump_args(
+      const base::trace_event::ProcessMemoryDump& pmd) {
+    return pmd.dump_args();
+  }
+
+  static std::vector<
+      base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge>
+  allocator_dump_edges(const base::trace_event::ProcessMemoryDump& pmd);
+
+  static std::unordered_map<std::string,
+                            memory_instrumentation::mojom::AllocatorDumpPtr>
+  allocator_dumps(const base::trace_event::ProcessMemoryDump& pmd);
+
+  static bool Read(
+      memory_instrumentation::mojom::RawProcessMemoryDumpDataView input,
+      base::trace_event::ProcessMemoryDump* out);
 };
 
 }  // namespace mojo

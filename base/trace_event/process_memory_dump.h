@@ -10,6 +10,7 @@
 #include <map>
 #include <unordered_map>
 #include <vector>
+#include "mojo/public/cpp/bindings/struct_traits.h"
 
 #include "base/base_export.h"
 #include "base/macros.h"
@@ -19,6 +20,12 @@
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "build/build_config.h"
+
+namespace memory_instrumentation {
+namespace mojom {
+class RawProcessMemoryDumpDataView;
+}  // namespace mojom
+}  // namespace memory_instrumentation
 
 // Define COUNT_RESIDENT_BYTES_SUPPORTED if platform supports counting of the
 // resident memory.
@@ -79,10 +86,14 @@ class BASE_EXPORT ProcessMemoryDump {
       const SharedMemory& shared_memory);
 #endif
 
+  ProcessMemoryDump();
   ProcessMemoryDump(scoped_refptr<HeapProfilerSerializationState>
                         heap_profiler_serialization_state,
                     const MemoryDumpArgs& dump_args);
+  ProcessMemoryDump(ProcessMemoryDump&&);
   ~ProcessMemoryDump();
+
+  ProcessMemoryDump& operator=(ProcessMemoryDump&&);
 
   // Creates a new MemoryAllocatorDump with the given name and returns the
   // empty object back to the caller.
@@ -219,6 +230,9 @@ class BASE_EXPORT ProcessMemoryDump {
   const MemoryDumpArgs& dump_args() const { return dump_args_; }
 
  private:
+  friend struct mojo::StructTraits<
+      memory_instrumentation::mojom::RawProcessMemoryDumpDataView,
+      ProcessMemoryDump>;
   FRIEND_TEST_ALL_PREFIXES(ProcessMemoryDumpTest, BackgroundModeTest);
 
   MemoryAllocatorDump* AddAllocatorDumpInternal(
@@ -244,7 +258,7 @@ class BASE_EXPORT ProcessMemoryDump {
   AllocatorDumpEdgesMap allocator_dumps_edges_;
 
   // Level of detail of the current dump.
-  const MemoryDumpArgs dump_args_;
+  MemoryDumpArgs dump_args_;
 
   // This allocator dump is returned when an invalid dump is created in
   // background mode. The attributes of the dump are ignored and not added to
