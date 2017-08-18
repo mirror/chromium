@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b3015a0_0f3b8972",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-18T06:21:58Z",
+      "side": 1,
+      "message": "I only see internal Consume here, need to update the comment?\nAlso, is it really necessary to disallow reading past start/end blocks for Unchecked*? I thought the point was that they don\u0027t do checks like that... but I may be misunderstanding...",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5220fc_cfc6528e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-18T06:21:58Z",
+      "side": 1,
+      "message": "What does this do?",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de39933e_ebc83f8c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-18T06:21:58Z",
+      "side": 1,
+      "message": "The naming of this subtly threw me off - the Ensure* idiom in blink usually seems to refer to making sure something is initialized. Looking at usages, perhaps something like NextTokenIsEOF would work well?",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
