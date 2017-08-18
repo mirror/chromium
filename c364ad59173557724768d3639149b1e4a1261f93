@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "469e3aa6_35775903",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:51:43Z",
+      "side": 1,
+      "message": "No, I am expecting that the service will handle all of this in future. Right now this only adds in-process enabling (MDM can only do that).",
+      "parentUuid": "0e1d6286_c10e7db1",
+      "revId": "c364ad59173557724768d3639149b1e4a1261f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9175949_8437ddda",
         "filename": "base/trace_event/malloc_dump_provider.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8e59e1e1_88b2e93a",
+        "filename": "base/trace_event/malloc_dump_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9175949_8437ddda",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 42
+      },
+      "revId": "c364ad59173557724768d3639149b1e4a1261f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917d13c1_3e5ec02f",
         "filename": "base/trace_event/memory_dump_manager.h",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "c364ad59173557724768d3639149b1e4a1261f93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a4a7f6_e28f4bff",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:51:43Z",
+      "side": 1,
+      "message": "I actually wanted to keep it Background because in future i was expecting background mode to contain stacks. But I can rename it later when needed.",
+      "parentUuid": "917d13c1_3e5ec02f",
+      "revId": "c364ad59173557724768d3639149b1e4a1261f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
