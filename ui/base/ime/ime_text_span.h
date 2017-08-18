@@ -27,19 +27,25 @@ struct UI_BASE_IME_EXPORT ImeTextSpan {
     kSuggestion,
   };
 
+  enum class Thickness {
+    kNone,
+    kThin,
+    kThick,
+  };
+
   // The default constructor is used by generated Mojo code.
   ImeTextSpan();
   // TODO(huangs): remove this constructor.
   ImeTextSpan(uint32_t start_offset,
               uint32_t end_offset,
               SkColor underline_color,
-              bool thick);
+              Thickness thickness);
   ImeTextSpan(
       Type type,
       uint32_t start_offset,
       uint32_t end_offset,
       SkColor underline_color,
-      bool thick,
+      Thickness Thickness,
       SkColor background_color,
       SkColor suggestion_highlight_color = SK_ColorTRANSPARENT,
       const std::vector<std::string>& suggestions = std::vector<std::string>());
@@ -53,7 +59,7 @@ struct UI_BASE_IME_EXPORT ImeTextSpan {
            (this->start_offset == rhs.start_offset) &&
            (this->end_offset == rhs.end_offset) &&
            (this->underline_color == rhs.underline_color) &&
-           (this->thick == rhs.thick) &&
+           (this->thickness == rhs.thickness) &&
            (this->background_color == rhs.background_color) &&
            (this->suggestion_highlight_color ==
             rhs.suggestion_highlight_color) &&
@@ -66,7 +72,7 @@ struct UI_BASE_IME_EXPORT ImeTextSpan {
   uint32_t start_offset;
   uint32_t end_offset;
   SkColor underline_color;
-  bool thick;
+  Thickness thickness;
   SkColor background_color;
   SkColor suggestion_highlight_color;
   std::vector<std::string> suggestions;
