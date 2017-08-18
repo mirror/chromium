@@ -490,7 +490,7 @@ TEST_F(ImageDataTest, TestCropRect) {
             index =
                 row_index * cropped_image_data->Size().Width() * 4 + m * 4 + n;
             expected_value =
-                (k + crop_rect.X() + 1) * (m + crop_rect.Y() + 1) * (n + 1);
+                (k + crop_rect.Y() + 1) * (m + crop_rect.X() + 1) * (n + 1);
             if (image_data_storage_formats[i] ==
                 kUint8ClampedArrayStorageFormat)
               expected_value %= 255;
