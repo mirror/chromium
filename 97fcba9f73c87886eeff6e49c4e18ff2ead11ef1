@@ -22,6 +22,30 @@
       "revId": "97fcba9f73c87886eeff6e49c4e18ff2ead11ef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2950d07_0f3b6d91",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/input/synthesizeScrollGesture-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T22:30:30Z",
+      "side": 1,
+      "message": "Is this a hdpi conversion thing I suspect no?",
+      "parentUuid": "00086857_8f777ee1",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "97fcba9f73c87886eeff6e49c4e18ff2ead11ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
