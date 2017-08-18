@@ -14,6 +14,8 @@
 
 namespace net {
 
+class X509Certificate;
+
 // On ChromeOS each user has separate NSS databases, which are loaded
 // simultaneously when multiple users are logged in at the same time. NSS
 // doesn't have built-in support to partition databases into separate groups, so
@@ -41,6 +43,7 @@ class NET_EXPORT NSSProfileFilterChromeOS {
 
   bool IsModuleAllowed(PK11SlotInfo* slot) const;
   bool IsCertAllowed(CERTCertificate* cert) const;
+  bool IsCertAllowed(const X509Certificate* cert) const;
 
   class CertNotAllowedForProfilePredicate {
    public:
