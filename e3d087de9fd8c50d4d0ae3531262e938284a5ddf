@@ -16,6 +16,24 @@
       "revId": "e3d087de9fd8c50d4d0ae3531262e938284a5ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddc86b3_004a3644",
+        "filename": "content/common/font_list_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T18:45:11Z",
+      "side": 1,
+      "message": "I think it\u0027s unnecessary; I followed the _android file here, which also doesn\u0027t return anything.",
+      "parentUuid": "559cd83f_a8bafd77",
+      "revId": "e3d087de9fd8c50d4d0ae3531262e938284a5ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
