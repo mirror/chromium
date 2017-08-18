@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c08db1_f5d9d31f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "Do you need to set this again here?",
+      "revId": "ead85df340346d801e27f273125d222967954c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5977de_f5b08f43",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "base::WrapUnique\u003c\u003e",
+      "revId": "ead85df340346d801e27f273125d222967954c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9c8381_2705517b",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "What happens if you don\u0027t set the font here? (I think the default font here should be good enough, and we shouldn\u0027t need to set a font here)",
+      "revId": "ead85df340346d801e27f273125d222967954c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7785557e_57b0de99",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "It would probably be good if we set some text-shadow here (see RenderText::set_shadows()). Not needed in this CL, but something to look into/experiment with.",
+      "revId": "ead85df340346d801e27f273125d222967954c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5262acee_f4a51396",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "This is leaking the gfx::RenderText instance created. Use unique_ptr\u003c\u003e, so that setting it to nullptr here actually destroys the instance.",
+      "revId": "ead85df340346d801e27f273125d222967954c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ffa05b_a2fb3ddf",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T06:05:51Z",
+      "side": 1,
+      "message": "Use std::unique_ptr\u003c\u003e",
+      "revId": "ead85df340346d801e27f273125d222967954c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
