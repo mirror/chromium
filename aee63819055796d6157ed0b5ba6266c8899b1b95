@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "004d99b6_8967ec70",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:41:56Z",
+      "side": 1,
+      "message": "Are the observers ever going to be anything other than the receiver\u0027s parent? If not, I\u0027d prefer that instead of observation, these just be additions to the childDidStart/willStop APIs in +Internal.\n\nI\u0027m also reluctant to expand the public API of coordinators. Generally most manipulation of coordinators should happen inside other coordinators, where the internal API is available.",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab968a0b_9910516b",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:41:56Z",
+      "side": 1,
+      "message": "#pragma mark - private?",
+      "range": {
+        "startLine": 113,
+        "startChar": 13,
+        "endLine": 113,
+        "endChar": 14
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bf8a93_21554215",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:41:56Z",
+      "side": 1,
+      "message": "I\u0027d rather not pass around blocks. This seems like a simple state machine whose next state may by triggered asynchronously. So how about a state enum (not started, starting but waiting on VC, started, stopping but waiting on VC, stopped) and a next-state ivar, and instead of calling block(), this method calls a method that either updates the state to the next state, and then calls parent or observer notification methods. Or something like that.",
+      "range": {
+        "startLine": 115,
+        "startChar": 48,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61abca69_08eeb9df",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:41:56Z",
+      "side": 1,
+      "message": "Under ARC, we really shouldn\u0027t care about when things are destroyed, right? Owning code should decide when child objects are no longer relevant, and disconnect them from other objects at that point.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
