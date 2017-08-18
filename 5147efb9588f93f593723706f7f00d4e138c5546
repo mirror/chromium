@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c247c81_2e410c9a",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T17:02:40Z",
+      "side": 1,
+      "message": "maybe -willStart is a more consistent name with -start and -stop?",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "5147efb9588f93f593723706f7f00d4e138c5546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7932c59_0376ff06",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T17:02:40Z",
+      "side": 1,
+      "message": "Don\u0027t include UI implementation details in the coordinator header.\n\nI\u0027m actually not wild about this property, but I don\u0027t have a better solution (subclassing this class also seems excessive).",
+      "range": {
+        "startLine": 21,
+        "startChar": 23,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "5147efb9588f93f593723706f7f00d4e138c5546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c8685c_0d88cf34",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T17:02:40Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to use -coordinatorWillStart instead of just -start when we don\u0027t need to, do we?",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "5147efb9588f93f593723706f7f00d4e138c5546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

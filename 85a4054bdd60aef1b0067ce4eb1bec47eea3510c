@@ -16,6 +16,29 @@
       "revId": "85a4054bdd60aef1b0067ce4eb1bec47eea3510c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed903369_bed629ed",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T17:02:40Z",
+      "side": 1,
+      "message": "Factor this into a free C function and put it somewhere like clean/chrome/browser/experiment_support.h/.mm. Sooner rather than later we should just use the same mechanisms (and code) that the old architecture is using for this -- noyau@ is refactoring and cleaning this up.",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 289,
+        "endChar": 20
+      },
+      "revId": "85a4054bdd60aef1b0067ce4eb1bec47eea3510c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
