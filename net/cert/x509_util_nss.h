@@ -53,6 +53,17 @@ CreateCERTCertificateListFromX509Certificate(const X509Certificate* cert);
 NET_EXPORT ScopedCERTCertificateList
 CreateCERTCertificateListFromBytes(const char* data, size_t length, int format);
 
+// Returns a reference to a pre-existing CERTCertificate object matching the
+// DER-encoded representation. If a matching CERTCertificate does not already
+// exist, returns NULL.
+NET_EXPORT ScopedCERTCertificate
+FindCERTCertificateFromBytes(const uint8_t* data, size_t length);
+
+// Returns a reference to a pre-existing CERTCertificate object matching
+// |cert|. If a matching CERTCertificate does not already exist, returns NULL.
+NET_EXPORT ScopedCERTCertificate
+FindCERTCertificateFromX509Certificate(const X509Certificate* cert);
+
 // Increments the refcount of |cert| and returns a handle for that reference.
 NET_EXPORT ScopedCERTCertificate
 DupCERTCertificate(const ScopedCERTCertificate& cert);
