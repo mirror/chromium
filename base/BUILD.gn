@@ -2087,6 +2087,7 @@ test("base_unittests") {
     "native_library_unittest.cc",
     "observer_list_unittest.cc",
     "optional_unittest.cc",
+    "optional_unittest_mac.mm",
     "os_compat_android_unittest.cc",
     "path_service_unittest.cc",
     "pending_task_unittest.cc",
