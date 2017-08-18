@@ -45,6 +45,30 @@
       "revId": "fe58a31246250070a557db66265bfd192fe61282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273bfd9d_ad66824e",
+        "filename": "ui/shell_dialogs/select_file_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-18T17:30:05Z",
+      "side": 1,
+      "message": "Turns out none of the create implementations ever return null (phew!) so I removed the null check for the return dialog.",
+      "parentUuid": "2ec852a1_879b8d64",
+      "range": {
+        "startLine": 71,
+        "startChar": 42,
+        "endLine": 71,
+        "endChar": 59
+      },
+      "revId": "fe58a31246250070a557db66265bfd192fe61282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
