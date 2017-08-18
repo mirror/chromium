@@ -16,6 +16,24 @@
       "revId": "80a311aa4fe767b685217119dca47240f81f8d2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8667c85b_2e37e0b7",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-18T13:38:08Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "1bdd7e24_7edebc79",
+      "revId": "80a311aa4fe767b685217119dca47240f81f8d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
