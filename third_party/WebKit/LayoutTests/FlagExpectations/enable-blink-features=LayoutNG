@@ -12333,7 +12333,6 @@ crbug.com/591099 http/tests/xmlhttprequest/access-control-and-redirects-async.ht
 crbug.com/591099 http/tests/xmlhttprequest/access-control-basic-denied-preflight-cache.html [ Crash Failure ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-basic-post-success-no-content-type.html [ Failure ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-preflight-credential-async.html [ Failure ]
-crbug.com/591099 http/tests/xmlhttprequest/access-control-preflight-credential-sync.html [ Failure ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-preflight-data-saver.html [ Failure Timeout ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-preflight-headers-async.html [ Failure ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-preflight-headers-sync.html [ Failure ]
