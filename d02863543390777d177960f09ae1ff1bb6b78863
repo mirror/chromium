@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b018a3_f181b3e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T16:06:43Z",
+      "side": 1,
+      "message": "Could you invert this condition (but keep the early return)?",
+      "range": {
+        "startLine": 366,
+        "startChar": 16,
+        "endLine": 368,
+        "endChar": 49
+      },
+      "revId": "d02863543390777d177960f09ae1ff1bb6b78863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
