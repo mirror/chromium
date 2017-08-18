@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b86a4e_1d10a7c3",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "You\u0027ll need to change the runners of this script I guess?",
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe2da47_c8c0db19",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "Reorder these comments to match the now-reordered code.",
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f86f541_b7d1ac6b",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "build \u003d\u003d Release is a bit hokey. I guess we have certain things disabled in certain configs? I think you can probably just not have this check (which avoids needing to change the callers of this script too) since it won\u0027t run on anything but Release builds already, I think.",
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e552ac4_a7c965f6",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "Do we want to fail if there\u0027s no LOAD_CONFIG?",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 50
+      },
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7590aa_a58888c4",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "nit; space between not and parenthesized expression.",
+      "range": {
+        "startLine": 120,
+        "startChar": 12,
+        "endLine": 120,
+        "endChar": 13
+      },
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cceec498_e61f4f7f",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "And here.",
+      "range": {
+        "startLine": 125,
+        "startChar": 14,
+        "endLine": 125,
+        "endChar": 15
+      },
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cfa3b8_a2fcb5af",
+        "filename": "tools/checkbins/checkbins.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "I don\u0027t really understand any of this, but just to confirm you mean to have these be elif\u0027s, not 3 separate checks, right?",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 10
+      },
+      "revId": "3c4a663cc9aaa474bcb3dcdf9e52bf7d75a3235b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

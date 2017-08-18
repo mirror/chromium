@@ -63,6 +63,30 @@
       "revId": "331402c7bd98adafeee518f18a5bebbffa404dcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cb9c9d_6cac477c",
+        "filename": "sandbox/win/tests/integration_tests/cfi_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T17:11:06Z",
+      "side": 1,
+      "message": "Wow, I\u0027ve never seen that either. So ugly!",
+      "parentUuid": "7c3f083e_ef3bb52f",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "331402c7bd98adafeee518f18a5bebbffa404dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
