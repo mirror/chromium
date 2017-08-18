@@ -22,6 +22,30 @@
       "revId": "eaedf620735bcbdef9f3a4b5ce077e883d0978b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0db3fdf_d69e8de5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-18T15:10:37Z",
+      "side": 1,
+      "message": "Hmm... If input gets restarted before batch edit ends, the value may be non-zero in the next IME operation. I\u0027ve moved line 489 into 491 to make sure that it\u0027s always reset.",
+      "parentUuid": "5f5ac30b_b8e1c312",
+      "range": {
+        "startLine": 499,
+        "startChar": 33,
+        "endLine": 499,
+        "endChar": 39
+      },
+      "revId": "eaedf620735bcbdef9f3a4b5ce077e883d0978b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
