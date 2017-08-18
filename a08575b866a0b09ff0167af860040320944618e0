@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "250efda9_c2431084",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T14:00:46Z",
+      "side": 1,
+      "message": "Object.defineProperty(window, \u0027PasswordCredential\u0027, {enumerable:false}) did fix this assert, but only if I drop the current constructor. I don\u0027t know how to have working defineProperty(...) lines, and constructor which can be annotated in JSDoc as \u0027extends{Credential}\u0027.",
+      "parentUuid": "15d12246_b77d0d83",
+      "revId": "a08575b866a0b09ff0167af860040320944618e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa65a17_e78fae40",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T23:37:02Z",
       "side": 1,
       "message": "I wonder if these two lines might contribute to the failure of the two \"FederatedCredential interface: attribute\" test cases, with the error message:\n\nassert_true: The prototype object must have a property XXX expected true got false\n\nHave you tried defining the provider and protocol property using Object.defineProperty() function?",
+      "revId": "a08575b866a0b09ff0167af860040320944618e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2966978_5cd5f601",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T14:00:46Z",
+      "side": 1,
+      "message": "Object.defineProperty() indeed fixes those assertions. However, then another assert in the same test case is failing with a message:\n\nassert_throws: getting property on prototype object must throw TypeError function \"function () { [native code] }\" did not throw\nhttps://w3c-test.org/resources/idlharness.js:1656:34\n[native code]\nstep@https://w3c-test.org/resources/testharness.js:1451:30\ntest_member_attribute@https://w3c-test.org/resources/idlharness.js:1601:16\ntest_members@https://w3c-test.org/resources/idlharness.js:2005:43\ntest@https://w3c-test.org/resources/idlharness.js:1056:22\ntest@https://w3c-test.org/resources/idlharness.js:542:32\nglobal code@https://w3c-test.org/credential-management/idl.https.html:102:19\n\nI tried doing the following:\nObject.defineProperty(FederatedCredential.prototype, \u0027provider\u0027, {get: function() { throw new TypeError(\u0027attempting to get a property on prototype\u0027); }});\nThis indeed fixed the test, however it is also wrong: getting the property on object will also throw the error. Do you know how to solve this issue? Should I somehow override the getter in constructor or detect inside the getter whether it is called on prototype or not?",
+      "parentUuid": "6fa65a17_e78fae40",
       "revId": "a08575b866a0b09ff0167af860040320944618e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
