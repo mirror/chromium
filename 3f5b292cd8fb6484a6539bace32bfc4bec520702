@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd3c6f08_3911257c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-18T14:39:17Z",
+      "side": 1,
+      "message": "Nit: I think PromoState could be a better name for this enum (PROMO_NONE isn\u0027t actually a promo type).",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "3f5b292cd8fb6484a6539bace32bfc4bec520702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dec2558_6ac4ef3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-18T14:39:17Z",
+      "side": 1,
+      "message": "Can you please replace this ternary operator with\n\nif (...) {\n    return ...;\n}\nreturn ...;\n\nthe same way you did it in https://chromium-review.googlesource.com/c/601974?",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 33
+      },
+      "revId": "3f5b292cd8fb6484a6539bace32bfc4bec520702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8470d8_57813ee6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-18T14:39:17Z",
+      "side": 1,
+      "message": "Nit: could you please mark this parameter as @Nullable in SigninAndSyncView and add assert in ctor that null is passed iff access point is Recent Tabs?",
+      "range": {
+        "startLine": 423,
+        "startChar": 63,
+        "endLine": 423,
+        "endChar": 67
+      },
+      "revId": "3f5b292cd8fb6484a6539bace32bfc4bec520702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
