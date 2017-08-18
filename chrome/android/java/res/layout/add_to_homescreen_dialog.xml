@@ -28,4 +28,26 @@
         android:paddingTop="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="48dp" />
+    <LinearLayout
+        android:id="@+id/read_only_text"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="0dp"
+        android:visibility="gone" >
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/infobar_text_size" />
+        <TextView
+            android:id="@+id/origin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/infobar_descriptive_text_color"
+            android:textSize="@dimen/infobar_descriptive_text_size" />
+    </LinearLayout>
 </FrameLayout>
