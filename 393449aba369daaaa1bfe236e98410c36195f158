@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "261a5461_b8db30c1",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T08:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c0d1f2_53b1bcae",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fbea4a1_a4e8f591",
         "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
         "patchSetId": 8
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "78181db8_b744ba6d",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T08:09:33Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll upload a patch to simplify them soon. Added TODO comment for now.",
+      "parentUuid": "a261fcc8_ae2e4afb",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c04ce4d7_a5e364d5",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 8
@@ -68,6 +104,24 @@
       "revId": "393449aba369daaaa1bfe236e98410c36195f158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac5d9d6_9041614b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T08:09:33Z",
+      "side": 1,
+      "message": "I think switch-cases isn\u0027t good here since it needs to fall through.",
+      "parentUuid": "c04ce4d7_a5e364d5",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
