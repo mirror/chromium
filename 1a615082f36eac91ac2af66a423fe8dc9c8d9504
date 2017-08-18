@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e23b0e6_52a1caf6",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T05:37:42Z",
+      "side": 1,
+      "message": "IIUC, EmitLoginPromptVisibleCalled is once per process, right?\nIf so, having a global flag to check it might be more straightforward?\nWDYT?",
+      "revId": "1a615082f36eac91ac2af66a423fe8dc9c8d9504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
