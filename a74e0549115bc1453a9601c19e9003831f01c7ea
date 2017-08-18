@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "189beb8d_042beb38",
+        "filename": "components/crash/content/browser/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-18T01:18:22Z",
+      "side": 1,
+      "message": "Can you re-evaluate and see if these are still needed?",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b603e77_e7c1c4a0",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-18T01:18:22Z",
+      "side": 1,
+      "message": "If you change ProcessMinidumpFileFromChild() to return a bool, and combine that with some form of PostTaskAndReplyWithResult(), then you don\u0027t need this anymore.",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1deec4_ad19ac67",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-18T01:18:22Z",
+      "side": 1,
+      "message": "So instead of doing this here, have you considered putting this somewhere else, then base::Bind() it, and pass it in as a base::RepeatingCallback\u003cvoid(bool increase_crash_count)\u003e to ChildProcessCrashObserver? That way, the crash code can just run the callback when appropriate, and it won\u0027t be directly tied to prefs / metrics code.",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b544ce04_9258c320",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-18T01:18:22Z",
+      "side": 1,
+      "message": "Style issues:\n1) Use C++ naming convention in C++ code: IncreaseCrashCount(bool* is_increase_crash_count)\n2) Functions go above member variables, and DISALLOW_COPY_AND_ASSIGN() is (almost?) always last.",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c073a9_074347ea",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-18T01:18:22Z",
+      "side": 1,
+      "message": "If all you are doing with |pref_service| is checking to see if it\u0027s a nullptr or not, why not just pass in a bool, instead of the pointer?",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
