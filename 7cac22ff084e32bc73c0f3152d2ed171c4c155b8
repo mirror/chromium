@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44557728_8260dfa0",
+        "filename": "WATCHLISTS",
+        "patchSetId": 2
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-18T16:47:30Z",
+      "side": 1,
+      "message": "What about using /cache.storage/ to also pick up the hyphens:\n\nthird_party/WebKit/LayoutTests/http/tests/inspector/cache-storage\nthird_party/WebKit/LayoutTests/external/wpt/service-workers/cache-storage",
+      "range": {
+        "startLine": 632,
+        "startChar": 20,
+        "endLine": 632,
+        "endChar": 33
+      },
+      "revId": "7cac22ff084e32bc73c0f3152d2ed171c4c155b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
