@@ -27,13 +27,15 @@ TaskScheduler::InitParams::InitParams(
     const SchedulerWorkerPoolParams& background_worker_pool_params_in,
     const SchedulerWorkerPoolParams& background_blocking_worker_pool_params_in,
     const SchedulerWorkerPoolParams& foreground_worker_pool_params_in,
-    const SchedulerWorkerPoolParams& foreground_blocking_worker_pool_params_in)
+    const SchedulerWorkerPoolParams& foreground_blocking_worker_pool_params_in,
+    bool all_tasks_are_user_blocking_in)
     : background_worker_pool_params(background_worker_pool_params_in),
       background_blocking_worker_pool_params(
           background_blocking_worker_pool_params_in),
       foreground_worker_pool_params(foreground_worker_pool_params_in),
       foreground_blocking_worker_pool_params(
-          foreground_blocking_worker_pool_params_in) {}
+          foreground_blocking_worker_pool_params_in),
+      all_tasks_are_user_blocking(all_tasks_are_user_blocking_in) {}
 
 TaskScheduler::InitParams::~InitParams() = default;
 
