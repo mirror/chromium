@@ -26,14 +26,16 @@ namespace {
 
 bool CsrssDisconnectSupported() {
   // This functionality has not been verified on versions before Win10.
-  if (base::win::GetVersion() < base::win::VERSION_WIN10)
+  if (base::win::GetVersion() < base::win::VERSION_WIN10) {
     return false;
-#if !defined(_WIN64)
-  // Does not work on 32-bit. See crbug.com/751809.
-  return false;
-#else   // !defined(_WIN64)
-  return true;
-#endif  // !defined(_WIN64)
+  }
+  BOOL is_wow = false;
+  // Does not work on 32-bit on x64. See crbug.com/751809.
+  if (!IsWow64Process(GetCurrentProcess(), &is_wow)) {
+    // This function failed, so lets not support CSRSS disconnect.
+    return false;
+  }
+  return !is_wow;
 }
 
 }  // namespace
@@ -195,7 +197,7 @@ SBOX_TESTS_COMMAND int Lpc_TestValidProcessHeaps(int argc, wchar_t** argv) {
 }
 
 // Disabled see crbug.com/751809.
-TEST(LpcPolicyTest, DISABLED_TestValidProcessHeaps) {
+TEST(LpcPolicyTest, TestValidProcessHeaps) {
   TestRunner runner;
   EXPECT_EQ(SBOX_TEST_SUCCEEDED, runner.RunTest(L"Lpc_TestValidProcessHeaps"));
 }

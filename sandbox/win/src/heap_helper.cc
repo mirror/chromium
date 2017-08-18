@@ -10,17 +10,69 @@
 #include "base/win/windows_version.h"
 
 namespace sandbox {
+namespace {
+#pragma pack(1)
 
 // These are undocumented, but readily found on the internet.
 #define HEAP_CLASS_8 0x00008000  // CSR port heap
 #define HEAP_CLASS_MASK 0x0000f000
 
-// This structure is not documented, but the flags field is the only relevant
-// field.
+#define HEAP_SEGMENT_SIGNATURE 0xffeeffee
+#define HEAP_SIGNATURE 0xeeffeeff
+
+typedef struct _HEAP_ENTRY {
+  PVOID Data1;
+  PVOID Data2;
+} HEAP_ENTRY, *PHEAP_ENTRY;
+
+// The _HEAP struct varies between Win32 and Win64. These are the offsets in the
+// structure that are revelant.
+#define FLAGS_OFFSET_32 0x40
+#define FLAGS_OFFSET_64 0x70
+#define HEADER_SIGNATURE_OFFSET_32 0x60
+#define HEADER_SIGNATURE_OFFSET_64 0x98
+
+#if defined(_WIN64)
+#define FLAGS_OFFSET FLAGS_OFFSET_64
+#define HEADER_SIGNATURE_OFFSET HEADER_SIGNATURE_OFFSET_64
+#else  // defined(_WIN64)
+#define FLAGS_OFFSET FLAGS_OFFSET_32
+#define HEADER_SIGNATURE_OFFSET HEADER_SIGNATURE_OFFSET_32
+#endif  // defined(_WIN64)
+
+// Thes structure is not documented, so only define the fields that are
+// relevant.
+typedef struct _HEAP_SEGMENT {
+  HEAP_ENTRY HeapEntry;
+  DWORD SegmentSignature;
+  DWORD SegmentFlags;
+  LIST_ENTRY SegmentListEntry;
+  struct _HEAP* Heap;
+} HEAP_SEGMENT, *PHEAP_SEGMENT;
+
 struct _HEAP {
-  char reserved[0x70];
-  DWORD flags;
+  _HEAP_SEGMENT HeapSegment;
+  char Reserved0[FLAGS_OFFSET - sizeof(_HEAP_SEGMENT)];
+  DWORD Flags;
+  char Reserved1[HEADER_SIGNATURE_OFFSET - (FLAGS_OFFSET + sizeof(Flags))];
+  DWORD Signature;
+  // Other stuff that is not relevant.
 };
+
+bool ValidateHeap(_HEAP* heap) {
+  _HEAP_SEGMENT* heap_segment = &heap->HeapSegment;
+  if (heap_segment->SegmentSignature != HEAP_SEGMENT_SIGNATURE) {
+    return false;
+  }
+  if (heap_segment->Heap != heap) {
+    return false;
+  }
+  if (heap->Signature != HEAP_SIGNATURE) {
+    return false;
+  }
+  return true;
+}
+}  // namespace
 
 bool HeapFlags(HANDLE handle, DWORD* flags) {
   if (!handle || !flags) {
@@ -28,7 +80,11 @@ bool HeapFlags(HANDLE handle, DWORD* flags) {
     return false;
   }
   _HEAP* heap = reinterpret_cast<_HEAP*>(handle);
-  *flags = heap->flags;
+  if (!ValidateHeap(heap)) {
+    DLOG(ERROR) << "unable to validate heap";
+    return false;
+  }
+  *flags = heap->Flags;
   return true;
 }
 
