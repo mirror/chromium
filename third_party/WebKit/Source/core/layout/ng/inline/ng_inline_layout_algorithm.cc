@@ -63,7 +63,9 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           TextDirection::kLtr,
           break_token),
       is_horizontal_writing_mode_(
-          blink::IsHorizontalWritingMode(space->WritingMode())) {
+          blink::IsHorizontalWritingMode(space->WritingMode())),
+      exclusion_space_(
+          WTF::WrapUnique(new NGExclusionSpace(space->ExclusionSpace()))) {
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
 
   if (!is_horizontal_writing_mode_)
@@ -84,8 +86,9 @@ bool NGInlineLayoutAlgorithm::CreateLine(
   if (container_builder_.BfcOffset()) {
     NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(origin_point.block_offset, &container_builder_,
-                          &unpositioned_floats_, MutableConstraintSpace());
+    PositionPendingFloats(ConstraintSpace(), origin_point.block_offset,
+                          &container_builder_, &unpositioned_floats_,
+                          exclusion_space_.get());
   }
 
   return true;
@@ -397,7 +400,8 @@ LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
   if (layout_object && layout_object->IsBR()) {
     NGLogicalOffset bfc_offset =
         ContainerBfcOffset() + NGLogicalOffset(LayoutUnit(), content_size);
-    AdjustToClearance(ConstraintSpace().ExclusionSpace()->ClearanceOffset(
+    // TODO FIX
+    AdjustToClearance(ConstraintSpace().ExclusionSpace().ClearanceOffset(
                           item.Style()->Clear()),
                       &bfc_offset);
     content_size = bfc_offset.block_offset - ContainerBfcOffset().block_offset;
@@ -474,8 +478,9 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     }
   }
 
-  NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
-                             &unpositioned_floats_, BreakToken());
+  NGLineBreaker line_breaker(Node(), *constraint_space_, exclusion_space_.get(),
+                             &container_builder_, &unpositioned_floats_,
+                             BreakToken());
   NGLineInfo line_info;
   while (line_breaker.NextLine(&line_info, {LayoutUnit(), content_size_}))
     CreateLine(&line_info, line_breaker.CreateBreakToken());
@@ -487,8 +492,9 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   if (container_builder_.BfcOffset()) {
     NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(origin_point.block_offset, &container_builder_,
-                          &unpositioned_floats_, MutableConstraintSpace());
+    PositionPendingFloats(ConstraintSpace(), origin_point.block_offset,
+                          &container_builder_, &unpositioned_floats_,
+                          exclusion_space_.get());
   }
 
   // TODO(kojii): Check if the line box width should be content or available.
@@ -510,6 +516,8 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     DCHECK(!container_builder_.BfcOffset());
     container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
   }
+
+  container_builder_.SetExclusionSpace(std::move(exclusion_space_));
 
   PropagateBaselinesFromChildren();
 

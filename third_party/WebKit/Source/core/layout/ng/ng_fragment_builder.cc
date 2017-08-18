@@ -203,14 +203,15 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
 
   return AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
-      bfc_offset_, end_margin_strut_, NGLayoutResult::kSuccess));
+      std::move(exclusion_space_), bfc_offset_, end_margin_strut_,
+      NGLayoutResult::kSuccess));
 }
 
 RefPtr<NGLayoutResult> NGFragmentBuilder::Abort(
     NGLayoutResult::NGLayoutResultStatus status) {
   return AdoptRef(new NGLayoutResult(
       nullptr, Vector<NGOutOfFlowPositionedDescendant>(), unpositioned_floats_,
-      bfc_offset_, end_margin_strut_, status));
+      nullptr, bfc_offset_, end_margin_strut_, status));
 }
 
 }  // namespace blink

@@ -28,14 +28,16 @@ class NGFragmentBuilder;
 // This class measures each NGInlineItem and determines items to form a line,
 // so that NGInlineLayoutAlgorithm can build a line box from the output.
 class CORE_EXPORT NGLineBreaker {
+  STACK_ALLOCATED();
+
  public:
   NGLineBreaker(NGInlineNode,
-                NGConstraintSpace*,
+                const NGConstraintSpace&,
+                NGExclusionSpace*,
                 NGFragmentBuilder*,
                 Vector<RefPtr<NGUnpositionedFloat>>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
-  STACK_ALLOCATED();
 
   // Compute the next line break point and produces NGInlineItemResults for
   // the line.
@@ -127,7 +129,8 @@ class CORE_EXPORT NGLineBreaker {
 
   LineData line_;
   NGInlineNode node_;
-  NGConstraintSpace* constraint_space_;
+  const NGConstraintSpace& constraint_space_;
+  NGExclusionSpace* exclusion_space_;
   NGFragmentBuilder* container_builder_;
   Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats_;
   unsigned item_index_ = 0;
