@@ -177,27 +177,28 @@
 #pragma mark - SettingsCommands
 
 - (void)showSettings {
-  CommandDispatcher* dispatcher = self.browser->dispatcher();
-  [dispatcher startDispatchingToTarget:self
-                           forSelector:@selector(closeSettings)];
   SettingsCoordinator* settingsCoordinator = [[SettingsCoordinator alloc] init];
-  [self addOverlayCoordinator:settingsCoordinator];
+  BrowserCoordinator* parent =
+      self.activeTabCoordinator ? self.activeTabCoordinator : self;
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->ShowOverlayForBrowser(settingsCoordinator, parent, self.browser);
   self.settingsCoordinator = settingsCoordinator;
-  [settingsCoordinator start];
 }
 
 - (void)closeSettings {
-  CommandDispatcher* dispatcher = self.browser->dispatcher();
-  [dispatcher stopDispatchingForSelector:@selector(closeSettings)];
+  DCHECK(self.settingsCoordinator.started);
   [self.settingsCoordinator stop];
-  [self.settingsCoordinator.parentCoordinator
-      removeChildCoordinator:self.settingsCoordinator];
-  // self.settingsCoordinator should be presumed to be nil after this point.
+  // |settingsCoordinator| is weak, so it is presumed nil after being stopped.
 }
 
 #pragma mark - TabGridCommands
 
 - (void)showTabGridTabAtIndex:(int)index {
+  if (index == self.webStateList.active_index() &&
+      self.activeTabCoordinator.started) {
+    return;
+  }
   self.webStateList.ActivateWebStateAt(index);
   // PLACEHOLDER: The tab coordinator should be able to get the active webState
   // on its own.
@@ -243,20 +244,21 @@
 
 - (void)showToolsMenu {
   ToolsCoordinator* toolsCoordinator = [[ToolsCoordinator alloc] init];
-  [self addChildCoordinator:toolsCoordinator];
   ToolsMenuConfiguration* menuConfiguration =
       [[ToolsMenuConfiguration alloc] initWithDisplayView:nil];
   menuConfiguration.inTabSwitcher = YES;
   menuConfiguration.noOpenedTabs = self.browser->web_state_list().empty();
   menuConfiguration.inNewTabPage = NO;
   toolsCoordinator.toolsMenuConfiguration = menuConfiguration;
-  [toolsCoordinator start];
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->ShowOverlayForBrowser(toolsCoordinator, self, self.browser);
   self.toolsMenuCoordinator = toolsCoordinator;
 }
 
 - (void)closeToolsMenu {
   [self.toolsMenuCoordinator stop];
-  [self removeChildCoordinator:self.toolsMenuCoordinator];
+  // |toolsMenuCoordinator| is weak, so it is presumed nil after being stopped.
 }
 
 #pragma mark - URLOpening
@@ -265,8 +267,9 @@
   if (self.webStateList.active_index() == WebStateList::kInvalidIndex) {
     return;
   }
-  [self.overlayCoordinator stop];
-  [self removeOverlayCoordinator];
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->CancelOverlays();
   web::WebState* activeWebState = self.webStateList.GetActiveWebState();
   web::NavigationManager::WebLoadParams params(net::GURLWithNSURL(URL));
   params.transition_type = ui::PAGE_TRANSITION_LINK;
@@ -292,22 +295,15 @@
 }
 
 - (void)registerForSettingsCommands {
-  [self.browser->dispatcher() startDispatchingToTarget:self
-                                           forSelector:@selector(showSettings)];
+  [self.browser->dispatcher()
+      startDispatchingToTarget:self
+                   forProtocol:@protocol(SettingsCommands)];
 }
 
 - (void)registerForTabGridCommands {
-  [self.browser->dispatcher() startDispatchingToTarget:self
-                                           forSelector:@selector(showTabGrid)];
   [self.browser->dispatcher()
       startDispatchingToTarget:self
-                   forSelector:@selector(showTabGridTabAtIndex:)];
-  [self.browser->dispatcher()
-      startDispatchingToTarget:self
-                   forSelector:@selector(closeTabGridTabAtIndex:)];
-  [self.browser->dispatcher()
-      startDispatchingToTarget:self
-                   forSelector:@selector(createAndShowNewTabInTabGrid)];
+                   forProtocol:@protocol(TabGridCommands)];
 }
 
 - (void)registerForToolsMenuCommands {

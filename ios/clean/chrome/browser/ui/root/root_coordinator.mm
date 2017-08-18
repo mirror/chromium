@@ -56,10 +56,6 @@
   self.viewController.contentViewController = nil;
 }
 
-- (BOOL)canAddOverlayCoordinator:(BrowserCoordinator*)overlayCoordinator {
-  return YES;
-}
-
 #pragma mark - URLOpening
 
 - (void)openURL:(NSURL*)URL {

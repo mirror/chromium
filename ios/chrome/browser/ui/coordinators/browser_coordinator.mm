@@ -37,7 +37,6 @@
 // Parent coordinator of this object, if any.
 @property(nonatomic, readwrite, weak) BrowserCoordinator* parentCoordinator;
 @property(nonatomic, readwrite) BOOL started;
-@property(nonatomic, readwrite) BOOL overlaying;
 
 // Performs |block| after the transition animation for its view controller is
 // finished, or immediately if there is no animation taking place.
@@ -51,7 +50,6 @@
 @synthesize childCoordinators = _childCoordinators;
 @synthesize parentCoordinator = _parentCoordinator;
 @synthesize started = _started;
-@synthesize overlaying = _overlaying;
 
 - (instancetype)init {
   if (self = [super init]) {
@@ -144,51 +142,6 @@
   childCoordinator.parentCoordinator = self;
   childCoordinator.browser = self.browser;
   [childCoordinator wasAddedToParentCoordinator:self];
-}
-
-- (BrowserCoordinator*)overlayCoordinator {
-  if (self.overlaying)
-    return self;
-  for (BrowserCoordinator* child in self.children) {
-    BrowserCoordinator* overlay = child.overlayCoordinator;
-    if (overlay)
-      return overlay;
-  }
-  return nil;
-}
-
-- (void)addOverlayCoordinator:(BrowserCoordinator*)overlayCoordinator {
-  // If this object has no children, then add |overlayCoordinator| as a child
-  // and mark it as such.
-  if ([self canAddOverlayCoordinator:overlayCoordinator]) {
-    [self addChildCoordinator:overlayCoordinator];
-    overlayCoordinator.overlaying = YES;
-  } else if (self.childCoordinators.count == 1) {
-    [[self.childCoordinators anyObject]
-        addOverlayCoordinator:overlayCoordinator];
-  } else if (self.childCoordinators.count > 1) {
-    CHECK(NO) << "Coordinators with multiple children must explicitly "
-              << "handle -addOverlayCoordinator: or return NO to "
-              << "-canAddOverlayCoordinator:";
-  }
-  // If control reaches here, the terminal child of the coordinator hierarchy
-  // has returned NO to -canAddOverlayCoordinator, so no overlay can be added.
-  // This is by default a silent no-op.
-}
-
-- (void)removeOverlayCoordinator {
-  BrowserCoordinator* overlay = self.overlayCoordinator;
-  [overlay.parentCoordinator removeChildCoordinator:overlay];
-  overlay.overlaying = NO;
-}
-
-- (BOOL)canAddOverlayCoordinator:(BrowserCoordinator*)overlayCoordinator {
-  // By default, a hierarchy with an overlay can't add a new one.
-  // By default, coordinators with parents can't be added as overlays.
-  // By default, coordinators with no other children can add an overlay.
-  return self.overlayCoordinator == nil &&
-         overlayCoordinator.parentCoordinator == nil &&
-         self.childCoordinators.count == 0;
 }
 
 - (void)removeChildCoordinator:(BrowserCoordinator*)childCoordinator {

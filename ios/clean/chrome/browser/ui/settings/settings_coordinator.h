@@ -7,12 +7,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ios/chrome/browser/ui/coordinators/browser_coordinator.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h"
 
 // A coordinator for the Settings UI, which is usually presented modally
 // on top of whatever other UI is currently active.
 // The Browser of this coordinator must be non-incognito.
-@interface SettingsCoordinator : BrowserCoordinator
+@interface SettingsCoordinator : OverlayCoordinator
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_SETTINGS_SETTINGS_COORDINATOR_H_
