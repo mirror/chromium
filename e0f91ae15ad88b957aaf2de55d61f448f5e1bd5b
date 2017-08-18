@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "22d58d16_6892a174",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-18T00:24:06Z",
+      "side": 1,
+      "message": "I think CloseAllBindings() ensures that |bindings_| is empty. Therefore, if (!bindings_.empty()) check would fail in OnConnectionError() thereby calling CancelAlRequests() at l.165.\nDo we really need another method here other than just renaming OnConnectionError()?\nPlease correct me if my understanding is not right here.",
+      "parentUuid": "9a7dcb47_c41ad299",
+      "revId": "e0f91ae15ad88b957aaf2de55d61f448f5e1bd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61ee5227_1968dd0f",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
         "patchSetId": 6
