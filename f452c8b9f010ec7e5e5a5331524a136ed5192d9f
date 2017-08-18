@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "31f4a056_213ac242",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-18T06:47:57Z",
+      "side": 1,
+      "message": "Thank you for your support, it is most appreciated! \n\nRegarding the suggested changes, I want to make sure I do understand them correctly. So I would replace platform/network/HTTPHeaderMap with some std:: container in the interface and only use std:: types (i.e. std::string) in those containers. \n\nHowever, I would keep the rest of the interfaces as is, in particular would still use WebString as parameters in methods (not in containers)? Or should I replace WebString with std::string everywhere in the headers? I also assume I will keep using Web* types like WebURL. \n\nAnd I would use the pimpl pattern only if it helps to achieve the above stated with regards to the interface, therefore assuming all private fields/methods rely on std::/base:: types only, I would not make use of the pimpl pattern, correct? \n\nThose changes indeed don\u0027t sound like too much work. Lets see how far I get and maybe I\u0027ll ping you if I get stuck.",
+      "parentUuid": "6aa8eb77_9450314c",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5b883a_dc6fe362",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
