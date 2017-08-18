@@ -24,6 +24,7 @@ const int kMaxNumTiles = 12;
 const char kHistogramClientName[] = "client";
 const char kHistogramServerName[] = "server";
 const char kHistogramPopularName[] = "popular";
+const char kHistogramBakedInName[] = "baked_in";
 const char kHistogramWhitelistName[] = "whitelist";
 const char kHistogramHomepageName[] = "homepage";
 
@@ -51,6 +52,8 @@ std::string GetSourceHistogramName(TileSource source) {
   switch (source) {
     case TileSource::TOP_SITES:
       return kHistogramClientName;
+    case TileSource::BAKED_IN_SITE:
+      return kHistogramBakedInName;
     case TileSource::POPULAR:
       return kHistogramPopularName;
     case TileSource::WHITELIST:
