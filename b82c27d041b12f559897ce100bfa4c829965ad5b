@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78bd3f0f_b13be0ac",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T16:06:13Z",
+      "side": 1,
+      "message": "The logic is correct. Would it look more clear to duplicate the \u003d\u003d CELLULAR test so that 79 and 81 each look like 84/85?",
+      "parentUuid": "85fdab09_7f089ecb",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 52
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62d3e6ab_bdd0b2fd",
         "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
         "patchSetId": 4
