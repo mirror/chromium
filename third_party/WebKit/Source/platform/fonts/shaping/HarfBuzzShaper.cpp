@@ -555,7 +555,7 @@ void CapsFeatureSettingsScopedOverlay::PrependCounting(
 }
 
 CapsFeatureSettingsScopedOverlay::~CapsFeatureSettingsScopedOverlay() {
-  features_->erase(0, count_features_);
+  features_->eraseAtIndex(0, count_features_);
 }
 
 }  // namespace

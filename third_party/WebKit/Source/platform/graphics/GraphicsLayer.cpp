@@ -247,7 +247,7 @@ void GraphicsLayer::RemoveAllChildren() {
 void GraphicsLayer::RemoveFromParent() {
   if (parent_) {
     // We use reverseFind so that removeAllChildren() isn't n^2.
-    parent_->children_.erase(parent_->children_.ReverseFind(this));
+    parent_->children_.eraseAtIndex(parent_->children_.ReverseFind(this));
     SetParent(0);
   }
 
@@ -1134,7 +1134,7 @@ void GraphicsLayer::AddLinkHighlight(LinkHighlight* link_highlight) {
 }
 
 void GraphicsLayer::RemoveLinkHighlight(LinkHighlight* link_highlight) {
-  link_highlights_.erase(link_highlights_.Find(link_highlight));
+  link_highlights_.eraseAtIndex(link_highlights_.Find(link_highlight));
   UpdateChildList();
 }
 

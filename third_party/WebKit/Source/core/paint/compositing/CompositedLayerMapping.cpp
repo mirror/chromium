@@ -3548,7 +3548,7 @@ void CompositedLayerMapping::RemoveLayerFromSquashingGraphicsLayer(
   if (layer_index == squashed_layers_.size())
     return;
 
-  squashed_layers_.erase(layer_index);
+  squashed_layers_.eraseAtIndex(layer_index);
 }
 
 #if DCHECK_IS_ON()
@@ -3582,8 +3582,9 @@ void CompositedLayerMapping::FinishAccumulatingSquashingLayers(
           squashed_layers_[i].paint_layer);
     }
 
-    squashed_layers_.erase(next_squashed_layer_index,
-                           squashed_layers_.size() - next_squashed_layer_index);
+    squashed_layers_.eraseAtIndex(
+        next_squashed_layer_index,
+        squashed_layers_.size() - next_squashed_layer_index);
   }
 }
 

@@ -2831,7 +2831,7 @@ void HTMLMediaElement::DidRemoveTrackElement(HTMLTrackElement* track_element) {
 
   size_t index = text_tracks_when_resource_selection_began_.Find(text_track);
   if (index != kNotFound)
-    text_tracks_when_resource_selection_began_.erase(index);
+    text_tracks_when_resource_selection_began_.eraseAtIndex(index);
 }
 
 void HTMLMediaElement::HonorUserPreferencesForAutomaticTextTrackSelection() {
