@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb04214_8ae36bd6",
+        "filename": "components/crash/content/app/export_thunks.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-18T21:11:34Z",
+      "side": 1,
+      "message": "This is exactly the same as the comment in the .h. Get rid of this copy.",
+      "revId": "9b059cfee28b58faaeb45f47c8a8bbe5b7885596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49061583_007211e2",
+        "filename": "components/crash/content/app/export_thunks.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-18T21:11:34Z",
+      "side": 1,
+      "message": "1. This isn’t thread-safe.\n2. I can’t think of a good reason to “leak” this (I know it’s not a leak in that it’s still reachable and will be replaced on the next call, but it’s a bit porcine to waste this memory after the list of reports is no longer useful, which it will become almost immediately after returning.)\n3. It’s also not legal by our own decree against static destructors.\n\nEither the storage should come from the caller (but you’d have to provide a way to size it), or the storage can be provided here, non-static and dynamically allocated, along with a companion “free” function so that the deallocation can happen in the same module that did the allocation.",
+      "revId": "9b059cfee28b58faaeb45f47c8a8bbe5b7885596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a085282_aec804d0",
+        "filename": "components/crash/content/app/export_thunks.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-18T21:11:34Z",
+      "side": 1,
+      "message": "Maybe this should eschew the C++ types too. You don’t have the [re]alloc problem like you would for GetCrashReportsImpl() below, but there’s still a risk of C++ runtime shear across modules, right?\n\nIf you don’t think that’s a problem worth worrying about, at least #include \u003cstring\u003e.",
+      "revId": "9b059cfee28b58faaeb45f47c8a8bbe5b7885596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21abf9e_d4290b8f",
+        "filename": "components/crash/content/app/export_thunks.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-18T21:11:34Z",
+      "side": 1,
+      "message": "\u003cstddef.h\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "9b059cfee28b58faaeb45f47c8a8bbe5b7885596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
