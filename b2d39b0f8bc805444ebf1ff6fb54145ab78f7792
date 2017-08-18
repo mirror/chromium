@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43fc5847_e24db1e4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T09:30:43Z",
+      "side": 1,
+      "message": "This can be a sync test.",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584fdfa7_111f5735",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T09:30:43Z",
+      "side": 1,
+      "message": "This can be checked after L24 because this is a sync xhr.",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9b04e2_5c9c38d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-auth-basic.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T09:30:43Z",
+      "side": 1,
+      "message": "Can you tell me the intention of this line?",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
