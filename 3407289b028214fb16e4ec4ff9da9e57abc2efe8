@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6053c7f_2bfb493a",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-18T22:04:12Z",
+      "side": 1,
+      "message": "I can revert this piece of codes back, but I think the remaining change in this CL still makes sense. I can consistently repro what I described in comment#15 in the bug. The reason is in lock/login screen, we call WallpaperManagerBase::CacheUsersWallpapers() to cache all users\u0027 (except the current active user) wallpapers and if we can\u0027t find (in WallpaperManagerBase::GetCustomWallpaperInternal()) or decode (in WallpaperManager::OnWallpaperDecoded()) the custom wallpaper for one of the users, we just set the default wallpaper directly on lock/login screen. In this case I think we should just cache the wallpaper but not update it.",
+      "parentUuid": "ce41a0db_5b15e240",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94789f1c_c646c0bb",
         "filename": "components/wallpaper/wallpaper_manager_base.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Is it a hash code? If so, we might be OK. If it contains email string, we shouldn\u0027t.\nMight worth checking with someone who knows more about privacy though.",
       "parentUuid": "94789f1c_c646c0bb",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7359aa26_78a394b2",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-18T22:04:12Z",
+      "side": 1,
+      "message": "No it\u0027s not hash code. It contains email string unfortunately. But seems it\u0027s also used elsewhere in many places in the code base. For example, https://cs.chromium.org/chromium/src/chrome/browser/signin/easy_unlock_service.cc?rcl\u003d2084d0274e99a6a5de25148fca67ded219682a2a\u0026l\u003d455 or https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/existing_user_controller.cc?rcl\u003d2084d0274e99a6a5de25148fca67ded219682a2a\u0026l\u003d1089",
+      "parentUuid": "00e5c3a4_79a36823",
       "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
