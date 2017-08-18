@@ -377,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "3a0ff6c8_a4799056",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T21:05:14Z",
+      "side": 1,
+      "message": "This is not required, but I believe count is not linear in a std::set, it knows there are exactly 0 or 1 item and does a find anyway.",
+      "parentUuid": "972e4019_807096c8",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9e81cf1_da9d21ab",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
