@@ -4,6 +4,7 @@
 
 #include "ash/shelf/app_list_button.h"
 
+#include "ash/public/cpp/voice_interaction_state.h"
 #include "ash/public/interfaces/session_controller.mojom.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
@@ -148,6 +149,30 @@ TEST_F(VoiceInteractionAppListButtonTest, LongPressGestureWithSecondaryUser) {
   UpdateSession(2u, "user2@test.com");
   std::vector<uint32_t> order = {2u, 1u};
   controller_->SetUserSessionOrder(order);
+
+  ui::GestureEvent long_press =
+      CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));
+  SendGestureEvent(&long_press);
+  RunAllPendingInMessageLoop();
+  EXPECT_EQ(0u, test_app_list_presenter.voice_session_count());
+}
+
+TEST_F(VoiceInteractionAppListButtonTest,
+       LongPressGestureWithSettingsDisabled) {
+  app_list::test::TestAppListPresenter test_app_list_presenter;
+  Shell::Get()->app_list()->SetAppListPresenter(
+      test_app_list_presenter.CreateInterfacePtrAndBind());
+
+  EXPECT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kEnableVoiceInteraction));
+
+  UpdateSession(1u, "user1@test.com");
+  UpdateSession(2u, "user2@test.com");
+  std::vector<uint32_t> order = {1u, 2u};
+  controller_->SetUserSessionOrder(order);
+
+  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
+      VoiceInteractionState::DISABLED);
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));
