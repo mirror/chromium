@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c72e8c0_0530c5d2",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T21:37:19Z",
+      "side": 1,
+      "message": "We\u0027ve decided to stop using foo(foo) in constructors, after being bitten by the following bug:\n\nstruct Bar {\n  Bar::Bar(int foo) : foo(foo) {\n    // Adjust |foo| because of some reason.\n    foo +\u003d 1;   // This modifies param |foo| instead of |this-\u003efoo|!\n  }\n  int foo;\n};\n\nI might raise the issue on Chromium dev.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
