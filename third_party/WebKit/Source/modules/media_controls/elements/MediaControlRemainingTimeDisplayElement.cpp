@@ -16,4 +16,12 @@ MediaControlRemainingTimeDisplayElement::
       AtomicString("-webkit-media-controls-time-remaining-display"));
 }
 
+String MediaControlRemainingTimeDisplayElement::FormatTime() const {
+  // For the duration display, we prepend a "/ " to deliminate the current time
+  // from the duration, e.g. "0:12 / 3:45".
+  String time("/ ");
+  time.append(MediaControlTimeDisplayElement::FormatTime());
+  return time;
+}
+
 }  // namespace blink
