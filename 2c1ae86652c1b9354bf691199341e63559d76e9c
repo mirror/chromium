@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc5a7804_f8c05285",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-18T18:05:33Z",
+      "side": 1,
+      "message": "This causes a pointer to the stack to be passed to a function that expects a heap pointer. You can pass in body.DeepCopy() instead, though that results in a copying that can be avoided. Better to allocate body in heap instead of on stack.",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 24
+      },
+      "revId": "2c1ae86652c1b9354bf691199341e63559d76e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
