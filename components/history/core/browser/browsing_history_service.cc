@@ -62,8 +62,7 @@ BrowsingHistoryService::HistoryEntry::HistoryEntry(
     const std::string& client_id,
     bool is_search_result,
     const base::string16& snippet,
-    bool blocked_visit,
-    base::Clock* clock) {
+    bool blocked_visit) {
   this->entry_type = entry_type;
   this->url = url;
   this->title = title;
@@ -73,7 +72,6 @@ BrowsingHistoryService::HistoryEntry::HistoryEntry(
   this->is_search_result = is_search_result;
   this->snippet = snippet;
   this->blocked_visit = blocked_visit;
-  this->clock = clock;
 }
 
 BrowsingHistoryService::HistoryEntry::HistoryEntry()
@@ -207,8 +205,7 @@ void BrowsingHistoryService::QueryHistory(const base::string16& search_text,
     web_history_request_ = web_history->QueryHistory(
         search_text, options,
         base::Bind(&BrowsingHistoryService::WebHistoryQueryComplete,
-                   base::Unretained(this), search_text, options,
-                   base::TimeTicks::Now()),
+                   base::Unretained(this), search_text, options, clock_->Now()),
         partial_traffic_annotation);
     // Start a timer so we know when to give up.
     web_history_timer_.Start(
@@ -384,10 +381,10 @@ void BrowsingHistoryService::QueryComplete(const base::string16& search_text,
   for (size_t i = 0; i < results->size(); ++i) {
     URLResult const& page = (*results)[i];
     // TODO(dubroy): Use sane time (crbug.com/146090) here when it's ready.
-    query_results_.push_back(HistoryEntry(
-        HistoryEntry::LOCAL_ENTRY, page.url(), page.title(), page.visit_time(),
-        std::string(), !search_text.empty(), page.snippet().text(),
-        page.blocked_visit(), clock_.get()));
+    query_results_.push_back(
+        HistoryEntry(HistoryEntry::LOCAL_ENTRY, page.url(), page.title(),
+                     page.visit_time(), std::string(), !search_text.empty(),
+                     page.snippet().text(), page.blocked_visit()));
   }
 
   query_results_info_.search_text = search_text;
@@ -399,7 +396,7 @@ void BrowsingHistoryService::QueryComplete(const base::string16& search_text,
     query_results_info_.end_time =
         options.end_time - base::TimeDelta::FromDays(1);
   } else {
-    query_results_info_.end_time = base::Time::Now();
+    query_results_info_.end_time = clock_->Now();
   }
 
   if (!web_history_timer_.IsRunning())
@@ -436,11 +433,11 @@ void BrowsingHistoryService::ReturnResultsToHandler() {
 
 void BrowsingHistoryService::WebHistoryQueryComplete(
     const base::string16& search_text,
-    const QueryOptions& options,
-    base::TimeTicks start_time,
+    const history::QueryOptions& options,
+    base::Time start_time,
     WebHistoryService::Request* request,
     const base::DictionaryValue* results_value) {
-  base::TimeDelta delta = base::TimeTicks::Now() - start_time;
+  base::TimeDelta delta = clock_->Now() - start_time;
   UMA_HISTOGRAM_TIMES("WebHistory.ResponseTime", delta);
 
   // If the response came in too late, do nothing.
@@ -507,7 +504,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
         web_history_query_results_.push_back(
             HistoryEntry(HistoryEntry::REMOTE_ENTRY, gurl, title, time,
                          client_id, !search_text.empty(), base::string16(),
-                         /* blocked_visit */ false, clock_.get()));
+                         /* blocked_visit */ false));
       }
     }
   }
