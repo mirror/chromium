@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9268dedb_4d4b4524",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "I hope each test focuses on what it wants to check.\nSo I suggest something like following;\n\n\ndef _ParseIdlWithExtendedAttributes(self, extended_attribute_text):\n    idl_test \u003d extended_attribute_text + \u0027 enum MealType {\"rice\"};\u0027\n    filenode \u003d self.parser.ParseText(filename\u003d\u0027\u0027, data\u003didl_text)\n    self.assertEqual(1, len(filenode.GetChildren()))\n    node \u003d filenode.GetChildren()[0]\n    self.assertEqual(\u0027Enum\u0027, node.GetClass())\n\n    children \u003d node.GetChildren()\n    self.assertEqual(2, len(children))\n    self.assertEqual(\u0027EnumItem\u0027, children[0].GetClass())\n    self.assertEqual(\u0027rice\u0027, children[0].GetName())\n    return children[1]\n\ndef testNoArg(self):\n    attributes \u003d self._ParseIdlWithExtendedAttributes(\u0027[Replacable]\u0027)\n    self.assertEqual(\u0027ExtAttributes\u0027, attributes.GetClass())\n    self.assertEqual(1, len(attributes.GetChildren()))\n    attr \u003d attributes.GetChildren()[0]\n    self.assertEqual(\u0027ExtAttribute\u0027, attr.GetClass())\n    self.assertEqual(\u0027Replacable\u0027, attr.GetName())",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21681ae9_729d1f85",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 3
@@ -19,6 +36,23 @@
         "endLine": 186,
         "endChar": 45
       },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1adbe9_63340e4e",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "nit: remove a space after \u0027(\u0027",
       "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +122,188 @@
     },
     {
       "key": {
+        "uuid": "6d5e9c2c_b77ec06f",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "put a space before \u0027,\u0027, and remove a space after \u0027(\u0027",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d48eb9a_a6847751",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "4 space indent, in case in a method call.",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30480874_3518df9a",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83354fa5_97cc7655",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30758674_fc334d92",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb205175_e78379c8",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a682dff_34780b1d",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "add space.\nditto for all lines in this test.",
+      "range": {
+        "startLine": 236,
+        "startChar": 22,
+        "endLine": 236,
+        "endChar": 23
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d84fb5b_d9cdf855",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "4 space indent",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad505ae_ddf76b18",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "\u0027Ident\u0027 is not clear.",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29193198_46e3d03a",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 28
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb06c2f1_32a9a5e3",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 3
@@ -104,6 +320,75 @@
         "startChar": 29,
         "endLine": 271,
         "endChar": 63
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef5db3f_3e55124d",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "\u0027Ident\u0027 is not clear",
+      "range": {
+        "startLine": 273,
+        "startChar": 10,
+        "endLine": 273,
+        "endChar": 15
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf260c4_fa2b36a0",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "ditto. also for other lines.",
+      "range": {
+        "startLine": 282,
+        "startChar": 22,
+        "endLine": 282,
+        "endChar": 23
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54bb64bc_5f4b8d17",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-18T05:10:23Z",
+      "side": 1,
+      "message": "What do you want to check in this test?\nDoes \u0027Pair\u0027 describes it?",
+      "range": {
+        "startLine": 291,
+        "startChar": 10,
+        "endLine": 291,
+        "endChar": 14
       },
       "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
