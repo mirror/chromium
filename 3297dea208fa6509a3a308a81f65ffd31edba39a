@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87493154_dee804f5",
+        "filename": "chrome/profiling/memlog_stream_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-08-18T17:46:03Z",
+      "side": 1,
+      "message": "nit: I\u0027m not a fan of the name \"l\". Ditto for below.\n\nI prefer \"lock\" or \"autolock\" or \"hold\".",
+      "revId": "3297dea208fa6509a3a308a81f65ffd31edba39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
