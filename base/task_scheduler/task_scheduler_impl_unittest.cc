@@ -179,7 +179,8 @@ std::vector<TraitsExecutionModePair> GetTraitsExecutionModePairs() {
          ++priority_index) {
       const TaskPriority priority = static_cast<TaskPriority>(priority_index);
       params.push_back(TraitsExecutionModePair({priority}, execution_mode));
-      params.push_back(TraitsExecutionModePair({MayBlock()}, execution_mode));
+      params.push_back(
+          TraitsExecutionModePair({priority, MayBlock()}, execution_mode));
     }
   }
 
@@ -349,15 +350,32 @@ INSTANTIATE_TEST_CASE_P(OneTraitsExecutionModePair,
 // of its ExecutionMode.
 TEST_F(TaskSchedulerImplTest, MultipleTraitsExecutionModePairs) {
   StartTaskScheduler();
-  std::vector<std::unique_ptr<ThreadPostingTasks>> threads_posting_tasks;
+
+  std::vector<std::unique_ptr<ThreadPostingTasks>>
+      threads_posting_foreground_tasks;
+  std::vector<std::unique_ptr<ThreadPostingTasks>>
+      threads_posting_background_tasks;
+
   for (const auto& traits_execution_mode_pair : GetTraitsExecutionModePairs()) {
-    threads_posting_tasks.push_back(WrapUnique(
-        new ThreadPostingTasks(&scheduler_, traits_execution_mode_pair.traits,
-                               traits_execution_mode_pair.execution_mode)));
-    threads_posting_tasks.back()->Start();
+    auto thread = MakeUnique<ThreadPostingTasks>(
+        &scheduler_, traits_execution_mode_pair.traits,
+        traits_execution_mode_pair.execution_mode);
+    thread->Start();
+    if (traits_execution_mode_pair.traits.priority() ==
+        TaskPriority::BACKGROUND) {
+      threads_posting_background_tasks.push_back(std::move(thread));
+    } else {
+      threads_posting_foreground_tasks.push_back(std::move(thread));
+    }
   }
 
-  for (const auto& thread : threads_posting_tasks) {
+  // It is important to wait for foreground tasks first, because background
+  // tasks can't run when there are pending foreground tasks.
+  for (const auto& thread : threads_posting_foreground_tasks) {
+    thread->WaitForAllTasksToRun();
+    thread->Join();
+  }
+  for (const auto& thread : threads_posting_background_tasks) {
     thread->WaitForAllTasksToRun();
     thread->Join();
   }
