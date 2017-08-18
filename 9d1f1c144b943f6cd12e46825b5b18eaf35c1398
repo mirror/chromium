@@ -22,6 +22,30 @@
       "revId": "9d1f1c144b943f6cd12e46825b5b18eaf35c1398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0bdc91_4329a1dd",
+        "filename": "third_party/webdriver/patch.diff",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-18T05:24:44Z",
+      "side": 1,
+      "message": "It\u0027s a \u003e\u003d comparison after the version string is parsed into its components and converted to numbers. It\u0027s a little unfortunate that the function name isn\u0027t very clear, but it\u0027s existing library code. (See https://github.com/SeleniumHQ/selenium/blob/381f815/third_party/closure/goog/useragent/product_isversion.js#L146 for definition of isVersion, and https://github.com/SeleniumHQ/selenium/blob/381f815/third_party/closure/goog/string/string.js#L1250 for the actual version comparison function.)",
+      "parentUuid": "968c1f29_f212a54b",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "9d1f1c144b943f6cd12e46825b5b18eaf35c1398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
