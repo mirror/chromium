@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4cecc82_09999640",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-18T18:54:20Z",
+      "side": 1,
+      "message": "nit: we\u0027re slightly inconsistent in Chromium (so I won\u0027t insist), but Google style suggests putting input parameters before output parameters",
+      "revId": "f6e5299c23599b64a5b255496965b32d73d30d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6026eff6_7bfb15ae",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-18T18:54:20Z",
+      "side": 1,
+      "message": "Macro is easy to avoid here; prefer function (or lambda). e.g.:\n\nnamespace {\n\n#if defined(OS_WIN)\nstd::string16 ToCommandLineString(base::StringPiece string) {\n  return base::ASCIIToUTF16(string);\n}\n\nstd::string FromCommandLineString(base::StringPiece16 string) {\n  return base::UTF16ToASCII(string);\n}\n#else  // defined(OS_WIN)\nstd::string ToCommandLineString(const std::string\u0026 string) {\n  return string;\n}\n\nstd::string FromCommandLineString(const std::string\u0026 string) {\n  return string;\n}\n#endif  // defined(OS_WIN)\n\n}  // namespace",
+      "revId": "f6e5299c23599b64a5b255496965b32d73d30d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a74c906_e2b8edb8",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-18T18:54:20Z",
+      "side": 1,
+      "message": "nit: this is a slightly subtle use of iterators, and BasicStringPiece::remove_prefix seems more explicit. WDYT of something like:\n\nfor (NativeStringPiece arg : command_line.argv()) {\n  // Switch names are case insensitive on Windows, but base::CommandLine has\n  // already made them lowercase when building argv().\n  if (!StartsWith(arg, prefix, base::CompareCase::SENSITIVE))\n    continue;\n  arg.remove_prefix(prefix.size());\n  // ...\n}\n\nI don\u0027t feel super strongly if you prefer this as-is.",
+      "revId": "f6e5299c23599b64a5b255496965b32d73d30d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39e503d_fbbecfd4",
+        "filename": "content/common/content_switches_internal_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-18T18:54:20Z",
+      "side": 1,
+      "message": "nit: up to you, but you can use gmock here to make this considerable more concise:\n\nusing testing::ElementsAre;\n\nEXPECT_THAT(features, ElementsAre(\"aaa\", \"bb\", \"cc\", \"dd\", \"eee\"));",
+      "revId": "f6e5299c23599b64a5b255496965b32d73d30d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
