@@ -3131,11 +3131,14 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
 
   if (scroll_node) {
     // Flash the overlay scrollbar even if the scroll dalta is 0.
-    ScrollbarAnimationController* animation_controller =
-        ScrollbarAnimationControllerForElementId(scroll_node->element_id);
-
-    if (animation_controller)
-      animation_controller->WillUpdateScroll();
+    if (settings_.scrollbar_flash_when_any_scroll_update) {
+      FlashAllScrollbars(false);
+    } else {
+      ScrollbarAnimationController* animation_controller =
+          ScrollbarAnimationControllerForElementId(scroll_node->element_id);
+      if (animation_controller)
+        animation_controller->WillUpdateScroll();
+    }
 
     gfx::Vector2dF delta = scroll_delta;
     if (!scroll_node->user_scrollable_horizontal)
@@ -3182,11 +3185,14 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
           viewport()->MainScrollLayer()->scroll_tree_index() == scroll_node->id;
       if (scrolls_main_viewport_scroll_layer) {
         // Flash the overlay scrollbar even if the scroll dalta is 0.
-        ScrollbarAnimationController* animation_controller =
-            ScrollbarAnimationControllerForElementId(scroll_node->element_id);
-
-        if (animation_controller)
-          animation_controller->WillUpdateScroll();
+        if (settings_.scrollbar_flash_when_any_scroll_update) {
+          FlashAllScrollbars(false);
+        } else {
+          ScrollbarAnimationController* animation_controller =
+              ScrollbarAnimationControllerForElementId(scroll_node->element_id);
+          if (animation_controller)
+            animation_controller->WillUpdateScroll();
+        }
 
         gfx::Vector2dF scrolled =
             viewport()->ScrollAnimated(pending_delta, delayed_by);
@@ -3526,11 +3532,14 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
   if (!scroll_node)
     return InputHandlerScrollResult();
 
-  ScrollbarAnimationController* animation_controller =
-      ScrollbarAnimationControllerForElementId(scroll_node->element_id);
-
-  if (animation_controller)
-    animation_controller->WillUpdateScroll();
+  if (settings_.scrollbar_flash_when_any_scroll_update) {
+    FlashAllScrollbars(false);
+  } else {
+    ScrollbarAnimationController* animation_controller =
+        ScrollbarAnimationControllerForElementId(scroll_node->element_id);
+    if (animation_controller)
+      animation_controller->WillUpdateScroll();
+  }
 
   float initial_top_controls_offset =
       browser_controls_offset_manager_->ControlsTopOffset();
@@ -3706,18 +3715,23 @@ void LayerTreeHostImpl::MouseMoveAt(const gfx::Point& viewport_point) {
       scroll_element_id = OuterViewportScrollLayer()->element_id();
   }
 
+  ScrollbarAnimationController* new_animation_controller =
+      ScrollbarAnimationControllerForElementId(scroll_element_id);
   if (scroll_element_id != scroll_element_id_mouse_currently_over_) {
     ScrollbarAnimationController* old_animation_controller =
         ScrollbarAnimationControllerForElementId(
             scroll_element_id_mouse_currently_over_);
-    if (old_animation_controller) {
+    if (old_animation_controller)
       old_animation_controller->DidMouseLeave();
-    }
+
     scroll_element_id_mouse_currently_over_ = scroll_element_id;
+
+    // Experiment: Enables will flash scorllbar when user move mouse enter a
+    // scrollable area.
+    if (settings_.scrollbar_flash_when_mouse_enter && new_animation_controller)
+      new_animation_controller->DidScrollUpdate();
   }
 
-  ScrollbarAnimationController* new_animation_controller =
-      ScrollbarAnimationControllerForElementId(scroll_element_id);
   if (!new_animation_controller)
     return;
 
@@ -3969,6 +3983,15 @@ LayerTreeHostImpl::ScrollbarAnimationControllerForElementId(
   if (i == scrollbar_animation_controllers_.end())
     return nullptr;
   return i->second.get();
+}
+
+void LayerTreeHostImpl::FlashAllScrollbars(bool did_scroll) {
+  for (auto& pair : scrollbar_animation_controllers_) {
+    if (did_scroll)
+      pair.second->DidScrollUpdate();
+    else
+      pair.second->WillUpdateScroll();
+  }
 }
 
 void LayerTreeHostImpl::PostDelayedScrollbarAnimationTask(
@@ -4481,6 +4504,10 @@ void LayerTreeHostImpl::UpdateScrollSourceInfo(bool is_wheel_scroll) {
 }
 
 void LayerTreeHostImpl::ShowScrollbarsForImplScroll(ElementId element_id) {
+  if (settings_.scrollbar_flash_when_any_scroll_update) {
+    FlashAllScrollbars(true);
+    return;
+  }
   if (!element_id)
     return;
   if (ScrollbarAnimationController* animation_controller =

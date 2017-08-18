@@ -529,6 +529,10 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.scrollbar_fade_duration = ui::kOverlayScrollbarFadeDuration;
     settings.scrollbar_thinning_duration =
         ui::kOverlayScrollbarThinningDuration;
+    settings.scrollbar_flash_when_any_scroll_update =
+        ui::OverlayScrollbarFlashWhenAnyScrollUpdate();
+    settings.scrollbar_flash_when_mouse_enter =
+        ui::OverlayScrollbarFlashWhenMouseEnter();
   }
 
   // On desktop, if there's over 4GB of memory on the machine, increase the

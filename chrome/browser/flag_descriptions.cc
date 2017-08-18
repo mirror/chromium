@@ -904,6 +904,18 @@ const char kOverlayScrollbarsDescription[] =
     "Enable the experimental overlay scrollbars implementation. You must also "
     "enable threaded compositing to have the scrollbars animate.";
 
+const char kOverlayScrollbarsFlashWhenAnyScrollUpdateName[] =
+    "Overlay Scrollbars Flash When Any Scroll Update";
+const char kOverlayScrollbarsFlashWhenAnyScrollUpdateDescription[] =
+    "Overlay Scrollbars flash when any scroll update happends in page. You must"
+    " also enable Overlay Scrollbars.";
+
+const char kOverlayScrollbarsFlashWhenMouseEnterName[] =
+    "Overlay Scrollbars Flash When Mouse Enter";
+const char kOverlayScrollbarsFlashWhenMouseEnterDescription[] =
+    "Overlay Scrollbars Flash When Mouse Enter a scrollable area. You must also"
+    " enable Overlay Scrollbars.";
+
 const char kOverscrollHistoryNavigationName[] = "Overscroll history navigation";
 const char kOverscrollHistoryNavigationDescription[] =
     "Experimental history navigation in response to horizontal overscroll.";
