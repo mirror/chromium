@@ -235,8 +235,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 
   ServiceWorkerProviderHostInfo host_info(
       browser_provider_id, route_id, provider_type, is_parent_frame_secure);
-  host_info.host_request = mojo::MakeRequest(&provider_host_);
-  mojom::ServiceWorkerProviderAssociatedRequest client_request =
+  host_info.host_request = mojo::MakeRequest(&container_host_);
+  mojom::ServiceWorkerContainerAssociatedRequest client_request =
       mojo::MakeRequest(&host_info.client_ptr_info);
   DCHECK(host_info.host_request.is_pending());
   DCHECK(host_info.host_request.handle().is_valid());
@@ -289,7 +289,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
         std::move(info->script_loader_factory_ptr_info));
   }
 
-  provider_host_.Bind(std::move(info->host_ptr_info));
+  container_host_.Bind(std::move(info->host_ptr_info));
 }
 
 }  // namespace content

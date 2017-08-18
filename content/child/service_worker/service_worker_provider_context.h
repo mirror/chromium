@@ -51,7 +51,7 @@ struct ServiceWorkerProviderContextDeleter;
 class CONTENT_EXPORT ServiceWorkerProviderContext
     : public base::RefCountedThreadSafe<ServiceWorkerProviderContext,
                                         ServiceWorkerProviderContextDeleter>,
-      public mojom::ServiceWorkerProvider {
+      public mojom::ServiceWorkerContainer {
  public:
   // |provider_id| is used to identify this provider in IPC messages to the
   // browser process. |request| is an endpoint which is connected to
@@ -61,7 +61,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
-      mojom::ServiceWorkerProviderAssociatedRequest request,
+      mojom::ServiceWorkerContainerAssociatedRequest request,
       ServiceWorkerDispatcher* dispatcher);
 
   int provider_id() const { return provider_id_; }
@@ -115,7 +115,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Mojo binding for the |request| passed to the constructor. This keeps the
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
-  mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
+  mojo::AssociatedBinding<mojom::ServiceWorkerContainer> binding_;
 
   // Either |controllee_state_| or |controller_state_| is non-null.
   std::unique_ptr<ControlleeState> controllee_state_;
