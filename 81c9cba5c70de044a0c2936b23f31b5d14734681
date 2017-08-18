@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b44d0d26_b91bccdf",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T22:06:39Z",
+      "side": 1,
+      "message": "s/var/let/g\n\nI believe there\u0027s no reason to use var in ES6. And switch to \u0027const\u0027 where applicable.",
+      "revId": "81c9cba5c70de044a0c2936b23f31b5d14734681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92debfe_9a61246c",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T22:06:39Z",
+      "side": 1,
+      "message": "append \"on windows\".",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "81c9cba5c70de044a0c2936b23f31b5d14734681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
