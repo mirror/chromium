@@ -232,26 +232,14 @@ void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
 
 void FixAccountConsistencyRequestHeader(net::URLRequest* request,
                                         const GURL& redirect_url,
-                                        ProfileIOData* io_data,
-                                        int child_id,
-                                        int route_id) {
+                                        ProfileIOData* io_data) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (io_data->IsOffTheRecord())
-    return;
+    return;  // Account consistency is disabled in incognito.
 
-#if !defined(OS_ANDROID)
-  extensions::WebViewRendererState::WebViewInfo webview_info;
-  bool is_guest = extensions::WebViewRendererState::GetInstance()->GetInfo(
-      child_id, route_id, &webview_info);
-  // Do not set the account consistency header on requests from a native signin
-  // webview, as identified by an empty extension id which means the webview is
-  // embedded in a webui page, otherwise user may end up with a blank page as
-  // gaia uses the header to decide whether it returns 204 for certain end
-  // points.
-  if (is_guest && webview_info.owner_host.empty())
-    return;
-#endif  // !defined(OS_ANDROID)
+  if (io_data->GetMainRequestContext() != request->context())
+    return;  // AccountReconcilor is only attached to the main request context.
 
   int profile_mode_mask = PROFILE_MODE_DEFAULT;
   if (io_data->incognito_availibility()->GetValue() ==

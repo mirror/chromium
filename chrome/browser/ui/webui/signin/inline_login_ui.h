@@ -19,6 +19,8 @@ class InlineLoginUI : public ui::WebDialogUI {
   ~InlineLoginUI() override;
 
  private:
+  // The ScopedGaiaAuthExtension causes the login to happen in an isolated
+  // request context, allowing to bypass account concistency and reconciliation.
   ScopedGaiaAuthExtension auth_extension_;
 
   DISALLOW_COPY_AND_ASSIGN(InlineLoginUI);
