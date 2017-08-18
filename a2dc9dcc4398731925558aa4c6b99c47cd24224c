@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5610f159_8df78bfa",
+        "filename": "sandbox/features.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:00:11Z",
+      "side": 1,
+      "message": "If you\u0027re changing the number of architectures below, you need to update the comment here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "a2dc9dcc4398731925558aa4c6b99c47cd24224c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e075c48_3b65f125",
+        "filename": "sandbox/linux/bpf_dsl/seccomp_macros.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:00:11Z",
+      "side": 1,
+      "message": "This should be \"MIPS\", I know this is not touched by your CL but probably a good time to fix it.",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 10
+      },
+      "revId": "a2dc9dcc4398731925558aa4c6b99c47cd24224c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c661756c_16730f7f",
+        "filename": "sandbox/linux/bpf_dsl/seccomp_macros.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:00:11Z",
+      "side": 1,
+      "message": "Same. \"MIPS\".",
+      "range": {
+        "startLine": 278,
+        "startChar": 6,
+        "endLine": 278,
+        "endChar": 10
+      },
+      "revId": "a2dc9dcc4398731925558aa4c6b99c47cd24224c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b759795_6bae6a7d",
+        "filename": "sandbox/linux/bpf_dsl/syscall_set.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:00:11Z",
+      "side": 1,
+      "message": "MIPS",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "a2dc9dcc4398731925558aa4c6b99c47cd24224c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
