@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "3cfe25cb_c54dfd0c",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-18T20:31:11Z",
+      "side": 1,
+      "message": "Update to explain my failure to confirm.  First of all, my confirmation was just to grab a weak pointer and dereference it in the destructor--I figured that would trigger the sequence checker on the IO thread, and things would go boom.  But there was no earth-shattering kaboom.  Follow on analysis:\n\n* Whenever a weak pointer is requested, the WeakReferenceOwner, which owns the flag, is asked for a weak reference to the flag via GetRef().  \n\n* GetRef() creates a new flag if !HasRefs() (this is the lazy creation I mentioned above)\n\n* HasRefs() is false if the currently existing flag has one ref.\n\n\u003d\u003d\u003e In our usage pattern, a new flag is created every time GetWeakPtr() is called.\n\nA moment\u0027s more thought suggests that if I just *access* the newly created weak pointer on the IO thread before shipping it to the UI thread, I should be able to generate the above desired earth-shattering kaboom.  Trying that and .... yes, a quite satisfying kaboom.\n\nOk, I\u0027m back to thinking I understand this, and I\u0027ll accept your stamp unless you retract it; you\u0027ll have a bit of time :-}.",
+      "parentUuid": "ef424f6d_3b12d3d1",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
