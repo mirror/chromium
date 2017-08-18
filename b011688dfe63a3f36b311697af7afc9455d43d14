@@ -222,6 +222,24 @@
       "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4691013_137fb8c0",
+        "filename": "components/history/core/browser/browsing_history_service_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "Looks like one of them could be called BrowsingHistoryServiceObserver while the other would be BrowsingHistoryDriver. But you\u0027re right, some other driver do implement both way of the communication.\n\nIf we find that there is need to split the interface, we can always do it later (just have sub-classes of current class sub-class the two new interfaces, and then split them). So not blocking this CL on that.",
+      "parentUuid": "bdb8c010_eab7ad40",
+      "revId": "b011688dfe63a3f36b311697af7afc9455d43d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

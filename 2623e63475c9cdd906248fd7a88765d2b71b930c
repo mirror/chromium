@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0643f8_6002da4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "BrowsingHistoryDriver",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915d07b6_e3ec173e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "ProfileBasedBrowsingHistoryDriver",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1476146_bb777e5c",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "This should eventually go in the \"history\" namespace (like everything in the history component). You can either do in the current CL or in a followup CL.",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090eb276_989065f3",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "IWYU: #include \"components/history/core/browser/history_types.h\"",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f2b9a8_d39480f3",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "nit: forward-declare GURL",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1954fe2c_f0f44d21",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "nit: forward-declare WebHistoryService",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe17453e_12b5d6b1",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "nit: forward-declare SyncService",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab562840_f9e45e40",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "IWYU: #include \"base/callback_forward.h\"",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843bf4e1_f7afbc4c",
+        "filename": "components/history/core/browser/browsing_history_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "IWYU: #include \"base/macros.h\"",
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d80dc2d_d1ebc8ae",
+        "filename": "components/history/core/browser/browsing_history_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T09:05:18Z",
+      "side": 1,
+      "message": "handler → driver (everywhere)",
+      "range": {
+        "startLine": 130,
+        "startChar": 48,
+        "endLine": 130,
+        "endChar": 55
+      },
+      "revId": "2623e63475c9cdd906248fd7a88765d2b71b930c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
