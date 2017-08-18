@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a3035c8_f5f3972a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-18T06:37:33Z",
+      "side": 1,
+      "message": "Yeah lol this is confusing. Unchecked means we don\u0027t check if we have a lookahead and just #yolo. However, only internal consume can read past a \u0027{\u0027. I\u0027ve been trying to think of a more elegant way of doing this patch. The only other option I can think of is to just allow consumes to read past \u0027{\u0027 (which I believe was allowed with ranges). For peek, we might be able to keep track of the current nesting level (to prevent returning EOF in a nested block).",
+      "parentUuid": "6b3015a0_0f3b8972",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af5220fc_cfc6528e",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ee4168aa_1ec75ab4",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-18T06:37:33Z",
+      "side": 1,
+      "message": "Making CSSParserTokenStream non copyable means we can\u0027t return it from a function, so we need a move constructor. I believe this just defines the default move constructor, so CSSParserTokenStream is a move-only type.",
+      "parentUuid": "af5220fc_cfc6528e",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de39933e_ebc83f8c",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-18T06:21:58Z",
       "side": 1,
       "message": "The naming of this subtly threw me off - the Ensure* idiom in blink usually seems to refer to making sure something is initialized. Looking at usages, perhaps something like NextTokenIsEOF would work well?",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e931de1_449ac0ea",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-18T06:37:33Z",
+      "side": 1,
+      "message": "Yeah it does both Ensure (ensuring that we have looked ahead) and also returns whether the next token is valid or not.\n\nI have another CL downstream which would remove a lot of the complexity in lookahead handling. Perhaps I should land the other patch first?",
+      "parentUuid": "de39933e_ebc83f8c",
       "revId": "eb82372e336a166b852d73182606c01084d95612",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
