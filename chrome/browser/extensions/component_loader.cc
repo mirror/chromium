@@ -48,6 +48,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/chromeos_switches.h"
+#include "components/arc/arc_util.h"
 #include "components/chrome_apps/grit/chrome_apps_resources.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/site_instance.h"
@@ -432,6 +433,9 @@ void ComponentLoader::AddKeyboardApp() {
 void ComponentLoader::AddWebStoreApp() {
 #if defined(OS_CHROMEOS)
   if (!IsNormalSession())
+    return;
+
+  if (!arc::IsWebstoreSearchEnabled())
     return;
 #endif
 

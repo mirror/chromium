@@ -822,6 +822,7 @@ static_library("extensions") {
     "//chrome/common/extensions/api:extensions_features",
     "//chrome/common/safe_browsing:proto",
     "//components/app_modal",
+    "//components/arc",
     "//components/autofill/content/browser",
     "//components/bookmarks/browser",
     "//components/bookmarks/managed",
