@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "9b17bbf9_0bcb6e93",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T07:39:45Z",
+      "side": 1,
+      "message": "Any reason not to just pass the args directly rather than wrapping it in a struct though?",
+      "parentUuid": "1c08c4a5_fee2b9df",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08893f58_6d387af6",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 3

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa2ba73_013b39a7",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T07:39:45Z",
+      "side": 1,
+      "message": "Nit: I would personally say \"by\" here",
+      "range": {
+        "startLine": 455,
+        "startChar": 30,
+        "endLine": 455,
+        "endChar": 32
+      },
+      "revId": "de19558074626f4c63fcd9a89eb42c3dddb409ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
