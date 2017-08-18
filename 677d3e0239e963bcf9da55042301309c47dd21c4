@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "e7a7dc2e_897616cd",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T02:05:42Z",
+      "side": 1,
+      "message": "Per our offline discussion, since MRC commands now go through EPRM, it is fine to create the mojo message pipes only in DoCreateMRC since queued request will be executed sequentially. I have removed the pending_* fields in the newest patchset.",
+      "parentUuid": "480ffb99_04924a05",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab2f805_f2d20753",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 10
