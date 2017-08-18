@@ -228,6 +228,40 @@ ScopedCERTCertificateList CreateCERTCertificateListFromBytes(const char* data,
   return nss_chain;
 }
 
+ScopedCERTCertificate FindCERTCertificateFromBytes(const uint8_t* data,
+                                                   size_t length) {
+  crypto::EnsureNSSInit();
+
+  SECItem der_cert;
+  der_cert.data = const_cast<uint8_t*>(data);
+  der_cert.len = base::checked_cast<unsigned>(length);
+  der_cert.type = siDERCertBuffer;
+  ScopedCERTCertificate nss_cert(
+      CERT_FindCertByDERCert(CERT_GetDefaultCertDB(), &der_cert));
+  if (!nss_cert)
+    return nullptr;
+
+  // CERT_FindCertByDERCert() actually matches on issuer + serial number.
+  // Compare the DER bytes to ensure it's actually the same cert.
+  if (nss_cert->derCert.len != length ||
+      memcmp(nss_cert->derCert.data, data, length) != 0) {
+    return nullptr;
+  }
+
+  return nss_cert;
+}
+
+ScopedCERTCertificate FindCERTCertificateFromX509Certificate(
+    const X509Certificate* cert) {
+#if BUILDFLAG(USE_BYTE_CERTS)
+  return FindCERTCertificateFromBytes(
+      CRYPTO_BUFFER_data(cert->os_cert_handle()),
+      CRYPTO_BUFFER_len(cert->os_cert_handle()));
+#else
+  return DupCERTCertificate(cert->os_cert_handle());
+#endif
+}
+
 ScopedCERTCertificate DupCERTCertificate(CERTCertificate* cert) {
   return ScopedCERTCertificate(CERT_DupCertificate(cert));
 }
