@@ -22,6 +22,30 @@
       "revId": "7401980fa6b6ad3f5cfea2648f8ccdf0d10a9894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67c1d29_495e08f1",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-18T21:38:40Z",
+      "side": 1,
+      "message": "I added this in another patch https://chromium-review.googlesource.com/c/614913, will land that one first.",
+      "parentUuid": "56b36d89_1880e8af",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "7401980fa6b6ad3f5cfea2648f8ccdf0d10a9894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
