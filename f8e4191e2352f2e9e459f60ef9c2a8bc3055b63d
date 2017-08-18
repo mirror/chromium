@@ -16,6 +16,24 @@
       "revId": "f8e4191e2352f2e9e459f60ef9c2a8bc3055b63d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4554ed9e_195aceca",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-18T02:37:27Z",
+      "side": 1,
+      "message": "this function calls TextureDrawQuad* CreateCandidateQuadAt, https://cs.chromium.org/chromium/src/cc/output/overlay_unittest.cc?gsn\u003dCreateFullscreenCandidateQuad\u0026l\u003d290 which is using a generic way to set rect, opaque_rect and visible_rect. Do you mean that I should re-write it and give a more specific implementation here or recall SetNew to set opaque_rect value? Thank you for detailed review again.",
+      "parentUuid": "97433fbb_bc6aed5a",
+      "revId": "f8e4191e2352f2e9e459f60ef9c2a8bc3055b63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
