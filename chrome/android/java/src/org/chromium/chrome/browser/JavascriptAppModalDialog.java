@@ -141,6 +141,7 @@ public class JavascriptAppModalDialog implements DialogInterface.OnClickListener
             layout.findViewById(R.id.js_modal_dialog_scroll_view)
                     .addOnLayoutChangeListener(
                             (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                                if (!(v instanceof ViewGroup)) return;
                                 boolean isScrollable =
                                         v.getMeasuredHeight() - v.getPaddingTop()
                                                 - v.getPaddingBottom()

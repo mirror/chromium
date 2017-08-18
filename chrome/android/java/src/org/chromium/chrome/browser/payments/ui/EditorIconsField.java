@@ -85,7 +85,8 @@ class EditorIconsField {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView iconView = (ImageView) convertView;
+            ImageView iconView = null;
+            if (convertView instanceof ImageView) iconView = (ImageView) convertView;
             if (iconView == null) iconView = new ImageView(mContext);
             iconView.setImageDrawable(
                     AppCompatResources.getDrawable(mContext, mIconResourceIds.get(position)));
