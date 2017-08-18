@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56cb7689_04026cf3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Also log result.body.length?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583d8f9d_86ad93af",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/get-response-body.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "s/Future/Promise/g",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9b159a_1fffbaf1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "s/namespace/using/?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20edc74f_7d6c514b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Drop it. If you need to express the width is in pixels, add it as a suffix to const name.",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97472c27_ae5d5356",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Not much of a const, is it? static const int... (or even statc constexpr int.)",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f5de4e_b3efef5e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "As above.",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e07fbc_2dabaa2e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "As above.",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7978fa_b8fd238e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb96b75c_cdd5231b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Wait, does this really work?! You can\u0027t just keep a ref to a temp object. What you can do, though, is just call GetSkBitmap() instantly.",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcfdeff2_5c3684e2",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "nit: drop redundant {}",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f728d6_e795cbd7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Make pixel_storage a Vecotr\u003cusnigned char\u003e straight away?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7ed359_4bd348c7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "nit: drop redundant {}",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02e7f1b_a5d3855a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "nit: I think this could be more descriptive, e.g. \"Failed to decode the original image\" or something.",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0de49b7_b57315d2",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Are you sure reinterpret_cast\u003c\u003e is still needed here?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcfa243_01690b10",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "nit: no {} here",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9bcc1c_c7d310ef",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAuditsAgent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147c7dee_6b30e0ee",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "Collapse into the condition above, i.e. if (resource_data-\u003eCachedResource() \u0026\u0026 InspectorPageAgent::CachedResourceContent(...))",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d97755b_f5eb3cdf",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "This is so inherently specific to images that I guess it should rather be getEncodedImageResponse, or perhaps event just encodeImage?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcda29c7_58c6706e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T17:05:52Z",
+      "side": 1,
+      "message": "nit: 0.8 is a somewhat unexpected value. Make it 1 perhaps?",
+      "revId": "ad4f65a125704acd6ed8ac955483fb3b4cc36b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
