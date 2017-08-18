@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac62f80_1d44c84a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-18T09:25:52Z",
+      "side": 1,
+      "message": "if this is a property that would be generally useful, for more than just SnippetArticles, declare it in the OfflinableSuggestion interface.",
+      "range": {
+        "startLine": 250,
+        "startChar": 16,
+        "endLine": 250,
+        "endChar": 31
+      },
+      "revId": "bde2c8a536d88e266dab6179945a41d074b552e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354302cf_7906f7aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-18T09:25:52Z",
+      "side": 1,
+      "message": "we don\u0027t do anything with it?",
+      "range": {
+        "startLine": 254,
+        "startChar": 19,
+        "endLine": 254,
+        "endChar": 31
+      },
+      "revId": "bde2c8a536d88e266dab6179945a41d074b552e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4e13c1_80a8ee9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-18T09:25:52Z",
+      "side": 1,
+      "message": "note: this also get called for tiles. So wouldn\u0027t propagating the offlineItem (or the client id or the namespace) to the item be a better way to detect if it\u0027s prefetched? That way you can support different namespaces for different types of suggestions. \n\nonSuggestionOfflineIdChanged(suggestion, offlinePageItem) sounds like it would do the trick.",
+      "range": {
+        "startLine": 83,
+        "startChar": 47,
+        "endLine": 83,
+        "endChar": 51
+      },
+      "revId": "bde2c8a536d88e266dab6179945a41d074b552e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
