@@ -102,6 +102,24 @@
       "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bb7b7f_239e42ea",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T03:35:14Z",
+      "side": 1,
+      "message": "\u003e Ah, what I wrote is not right. When you do register() with a different update-via-cache, the spec considers it a brand new registration.\n\nMaybe I\u0027m missing something but it looks like the Register spec requires to update the existing registration when a different updateViaCache flag is specified (the step 6 would be skipped in this case):\n\nhttps://w3c.github.io/ServiceWorker/v1/#register-algorithm\n\n5. If registration is not null, then:\n  1. If registration’s uninstalling flag is set, unset it.\n  2. Let newestWorker be the result of running the Get Newest Worker algorithm passing registration as the argument.\n  3. If newestWorker is not null, job’s script url equals newestWorker’s script url with the exclude fragments flag set, and job’s update via cache mode\u0027s value equals registration’s update via cache mode\u0027s value, then:\n    1. Invoke Resolve Job Promise with job and registration.\n    2. Invoke Finish Job with job and abort these steps.\n6. Else:\n  1. Invoke Set Registration algorithm with job’s scope url and job’s update via cache mode.\n7. Invoke Update algorithm passing job as the argument.",
+      "parentUuid": "b5ff17df_a823e025",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
