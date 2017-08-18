@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5a4eb5_b3028c3c",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-18T23:51:15Z",
+      "side": 1,
+      "message": "Can you use the new Value API? No more heap allocs or derived classes:\n\nbase::Value metadata_dict(base::Value::Type::DICTIONARY);\nmetadata_dict.SetKey(\"product-version\",\n    base::Value(version_info::GetProductNameAndVersionForUserAgent()));\n...",
+      "range": {
+        "startLine": 218,
+        "startChar": 24,
+        "endLine": 218,
+        "endChar": 39
+      },
+      "revId": "47653b4eea4c52f9e74420bc1fa4fe6be8e208c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
