@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0154e7_be47169a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-18T21:54:29Z",
+      "side": 1,
+      "message": "Note: Attribute docstrings aren\u0027t really used in other places in this codebase, but I think this seems fine here, and the explanations are helpful.",
+      "revId": "030d3d272c938b6bb790a6e2b1280f17151d2110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
