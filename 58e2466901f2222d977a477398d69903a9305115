@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a1ac07b_ba8d0186",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T16:51:57Z",
+      "side": 1,
+      "message": "Agreed. I removed the emphasis.",
+      "parentUuid": "c2a5287d_8d9ef841",
+      "range": {
+        "startLine": 221,
+        "startChar": 39,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "58e2466901f2222d977a477398d69903a9305115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e4262dd_7cc305f7",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "335be147_7feec8cd",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T16:51:57Z",
+      "side": 1,
+      "message": "Adapting on this. I\u0027m calling directly map::find instead of ContainsKey to reuse the result.\nInteresting to learn that initializer list cannot be used with ternary operator.",
+      "parentUuid": "0e4262dd_7cc305f7",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "58e2466901f2222d977a477398d69903a9305115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e633daea_64c71de9",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-18T12:46:29Z",
       "side": 1,
       "message": "extra_targets_[tag] since you don\u0027t want/need the range checking done by at()",
+      "range": {
+        "startLine": 231,
+        "startChar": 11,
+        "endLine": 231,
+        "endChar": 33
+      },
+      "revId": "58e2466901f2222d977a477398d69903a9305115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ee6552_1b5ce6e1",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T16:51:57Z",
+      "side": 1,
+      "message": "I don\u0027t think extra_targets_[tag] is suitable, because it tries to create a new object if key is not present (so it\u0027s a mutable method). I\u0027m using the result of map::find instead.",
+      "parentUuid": "e633daea_64c71de9",
       "range": {
         "startLine": 231,
         "startChar": 11,
