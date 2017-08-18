@@ -19,6 +19,70 @@
     },
     {
       "key": {
+        "uuid": "71416c02_f511998d",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T18:28:37Z",
+      "side": 1,
+      "message": "nit: Urls -\u003e URLs.",
+      "parentUuid": "eafdb9ca_599cf8c0",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99225ede_65cffadb",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T18:28:37Z",
+      "side": 1,
+      "message": "We\u0027ve been relying on copy elision and returning results by value for this kind of function that returns a collection to be immediately used and discarded. It makes the code simpler by removing the need for a smart pointer.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578cd172_89aab911",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T18:28:37Z",
+      "side": 1,
+      "message": "nit: you should be able to avoid one construction by removing the constructor and just passing its parameters directly to the |emplace_back| call.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "468083ca_07bf5920",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -121,6 +185,24 @@
     },
     {
       "key": {
+        "uuid": "943da8c8_94900d88",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T18:28:37Z",
+      "side": 1,
+      "message": "can even drop the \"\u003e 0\" :)",
+      "parentUuid": "0ba63132_65959910",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9e81cf1_da9d21ab",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -132,6 +214,29 @@
       "writtenOn": "2017-08-18T15:48:35Z",
       "side": 1,
       "message": "\u003d default",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a084e7_83e010eb",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T18:28:37Z",
+      "side": 1,
+      "message": "Are we not suffixing reconciler tasks with *Task?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 34
+      },
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -200,6 +305,23 @@
       "writtenOn": "2017-08-18T15:48:35Z",
       "side": 1,
       "message": "fyi: will need to rebase",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c7f5c1_6475f7e6",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T18:28:37Z",
+      "side": 1,
+      "message": "nit: either remove this newline or add newlines before entries.",
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
