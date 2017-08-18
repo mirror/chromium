@@ -16,6 +16,24 @@
       "revId": "eb12fb17e0c66a3ea77e8a4cf90545ce44c77df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f83b518_af6e32ae",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10061,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-18T17:45:23Z",
+      "side": 1,
+      "message": "Needs some fixing first.",
+      "parentUuid": "3d8563fd_de53010c",
+      "revId": "eb12fb17e0c66a3ea77e8a4cf90545ce44c77df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
