@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0fa96625_e4e9ed7c",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T22:11:57Z",
+      "side": 1,
+      "message": "I have no idea how to go about participating in the proposal process. I guess I\u0027ll ask around. FWIW, I think it\u0027s odd as well.",
+      "parentUuid": "4922126c_bd8a3272",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c1f990b_de9c3bdc",
         "filename": "base/containers/span.h",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "writtenOn": "2017-08-18T21:25:22Z",
       "side": 1,
       "message": "I\u0027m again a bit confused here. If this overload is disabled because T is not const, then wouldn\u0027t it still be able to resolve the first overload? I don\u0027t see what\u0027s different other than the constness of the container itself. Can you explain this a bit? Specifically what cases would this accept that would not otherwise be accepted and are there cases where this rejects because of the constness of T and doesn\u0027t work with the above overload.",
+      "range": {
+        "startLine": 243,
+        "startChar": 25,
+        "endLine": 243,
+        "endChar": 61
+      },
+      "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d60959_4daa57fe",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T22:11:57Z",
+      "side": 1,
+      "message": "Oops, I left out std::add_const_t by accident.\n\nPreviously, it was difficult to use MakeSpan with a const container: this overload makes it possible.\n\n(added a new test to ensure this as well)",
+      "parentUuid": "9c1f990b_de9c3bdc",
       "range": {
         "startLine": 243,
         "startChar": 25,
