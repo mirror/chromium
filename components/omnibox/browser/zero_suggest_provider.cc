@@ -396,6 +396,8 @@ void ZeroSuggestProvider::OnMostVisitedUrlsAvailable(
 
 void ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable(
     std::unique_ptr<net::URLFetcher> fetcher) {
+  if (done_)
+    return;
   fetcher_ = std::move(fetcher);
   fetcher_->Start();
   LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_SENT);
