@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "af302fe2_b03bbc77",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T00:03:06Z",
+      "side": 1,
+      "message": "Don\u0027t we need this kind of checks for setter and operations?",
+      "revId": "f826a247605385d5a93c508b90d920d387bac103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb54fc16_a698db94",
         "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterface.cpp",
         "patchSetId": 1
