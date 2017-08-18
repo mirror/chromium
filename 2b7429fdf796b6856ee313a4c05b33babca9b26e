@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0be8707_f4d8edde",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T21:20:13Z",
+      "side": 1,
+      "message": "This seems like a common thing to do want to do and it seems worth making it easier. Could client code (like used here) be something like:\n\nhiding_settings.layer_animation_settings()-\u003eSetAnimationMetricsReporter(\n  AnimationMetricsReporter::GetReporter(\"Ash.Window.AnimationSmoothness.Hide\"))?\n\nI\u0027m not implying the code needs to be exactly this, just that having to subclass and maintain a lazy instance is heavy. Can\u0027t it be easier?",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 73
+      },
+      "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
