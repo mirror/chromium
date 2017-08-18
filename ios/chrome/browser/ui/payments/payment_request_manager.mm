@@ -156,6 +156,10 @@ struct PendingPaymentResponse {
 // The payments::PaymentRequest instance currently showing, if any.
 @property(nonatomic, assign) payments::PaymentRequest* pendingPaymentRequest;
 
+// A block to be run when the |_paymentRequestCoordinator| stops.
+@property(nonatomic, strong, nullable)
+    ProceduralBlock coordinatorDidStopCallback;
+
 // Terminates the pending request with |errorMessage| and dismisses the UI.
 // Invokes the callback once the request has been terminated.
 - (void)terminatePendingRequestWithErrorMessage:(NSString*)errorMessage
@@ -234,6 +238,7 @@ struct PendingPaymentResponse {
 @synthesize paymentRequestCoordinator = _paymentRequestCoordinator;
 @synthesize paymentRequestJsManager = _paymentRequestJsManager;
 @synthesize pendingPaymentRequest = _pendingPaymentRequest;
+@synthesize coordinatorDidStopCallback = _coordinatorDidStopCallback;
 
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
                               browserState:
@@ -320,7 +325,6 @@ struct PendingPaymentResponse {
         rejectRequestPromiseWithErrorName:kAbortErrorName
                              errorMessage:errorMessage
                         completionHandler:callback];
-    weakSelf.paymentRequestCoordinator = nil;
   };
   [self dismissUIWithCallback:dismissUICallback];
 }
@@ -673,10 +677,8 @@ struct PendingPaymentResponse {
     ProceduralBlock dismissUICallback = ^() {
       [weakSelf.paymentRequestJsManager
           resolveResponsePromiseWithCompletionHandler:nil];
-      weakSelf.paymentRequestCoordinator = nil;
     };
     [weakSelf dismissUIWithCallback:dismissUICallback];
-
   };
 
   // Display UI indicating failure if the value of |result| is "fail".
@@ -744,9 +746,8 @@ struct PendingPaymentResponse {
 }
 
 - (void)dismissUIWithCallback:(ProceduralBlock)callback {
-  [_paymentRequestCoordinator stopWithCallback:callback];
-  if (!callback)
-    _paymentRequestCoordinator = nil;
+  _coordinatorDidStopCallback = callback;
+  [_paymentRequestCoordinator stop];
 }
 
 - (BOOL)webStateContentIsSecureHTML {
@@ -891,6 +892,17 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
                                completionHandler:nil];
   [self setUnblockEventQueueTimer];
   [self setUpdateEventTimeoutTimer];
+}
+
+- (void)paymentRequestCoordinatorDidStop:
+    (PaymentRequestCoordinator*)coordinator {
+  // The coordinator can now be safely set to nil.
+  _paymentRequestCoordinator = nil;
+
+  if (_coordinatorDidStopCallback) {
+    _coordinatorDidStopCallback();
+    _coordinatorDidStopCallback = nil;
+  }
 }
 
 #pragma mark - PaymentResponseHelperConsumer methods

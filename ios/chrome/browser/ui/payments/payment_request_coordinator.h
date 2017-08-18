@@ -67,6 +67,10 @@ class PaymentShippingOption;
           didSelectShippingOption:
               (const web::PaymentShippingOption&)shippingOption;
 
+// Notifies the delegate that the presenting view controller is dismissed.
+- (void)paymentRequestCoordinatorDidStop:
+    (PaymentRequestCoordinator*)coordinator;
+
 @end
 
 // Coordinator responsible for creating and presenting the PaymentRequest view
@@ -121,10 +125,6 @@ class PaymentShippingOption;
 
 // The delegate to be notified when the user confirms or cancels the request.
 @property(nonatomic, weak) id<PaymentRequestCoordinatorDelegate> delegate;
-
-// Dismisses the presenting view controller. Invokes |callback| when the view
-// controller is dismissed.
-- (void)stopWithCallback:(ProceduralBlock)callback;
 
 // Initiates the UI that will request card details from the user.
 - (void)

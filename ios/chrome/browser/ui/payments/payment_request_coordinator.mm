@@ -29,6 +29,15 @@ namespace {
 const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 }  // namespace
 
+@interface PaymentRequestCoordinator ()
+
+// A weak reference to self used in -stop. -stop gets called in the
+// ChromeCoordinator's -dealloc. It is not possible to create a weak reference
+// to self in the process of deallocation.
+@property(nonatomic, weak) PaymentRequestCoordinator* weakSelf;
+
+@end
+
 @implementation PaymentRequestCoordinator {
   UINavigationController* _navigationController;
   AddressEditCoordinator* _addressEditCoordinator;
@@ -65,8 +74,11 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 @synthesize pending = _pending;
 @synthesize cancellable = _cancellable;
 @synthesize delegate = _delegate;
+@synthesize weakSelf = _weakSelf;
 
 - (void)start {
+  _weakSelf = self;
+
   _mediator =
       [[PaymentRequestMediator alloc] initWithPaymentRequest:_paymentRequest];
 
@@ -95,15 +107,16 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 }
 
 - (void)stop {
-  [self stopWithCallback:nil];
-}
-
-- (void)stopWithCallback:(ProceduralBlock)callback {
   [_updatePaymentSummaryItemTimer invalidate];
 
+  __weak PaymentRequestCoordinator* weakSelf = self.weakSelf;
+  ProceduralBlock callback = ^() {
+    [weakSelf.delegate paymentRequestCoordinatorDidStop:weakSelf];
+  };
   [[_navigationController presentingViewController]
       dismissViewControllerAnimated:YES
                          completion:callback];
+
   [_addressEditCoordinator stop];
   _addressEditCoordinator = nil;
   [_creditCardEditCoordinator stop];
