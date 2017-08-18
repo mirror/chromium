@@ -126,8 +126,12 @@ void RequestSender::HandleResponse(int request_id,
 
   if (!request.get()) {
     // This can happen if a context is destroyed while a request is in flight.
+//    CHECK(0);
     return;
   }
+//  printf("RequestSender::HandleResponse, name = %s\n",
+//         request->name.c_str());
+
 
   // TODO(devlin): Would it be useful to partition this data based on
   // extension function once we have a suitable baseline? crbug.com/608561.

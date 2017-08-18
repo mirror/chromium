@@ -16,6 +16,7 @@ window.runServiceWorker = function() {
   });
 };
 
+var numWorkerReplyReceived = 0;
 window.testSendMessage = function() {
   if (worker == null) {
     chrome.test.sendMessage(FAILURE_MESSAGE);
@@ -24,10 +25,27 @@ window.testSendMessage = function() {
   var channel = new MessageChannel();
   channel.port1.onmessage = function(e) {
     if (e.data == 'Worker reply: Hello world') {
-      chrome.test.sendMessage('SUCCESS');
+      ++numWorkerReplyReceived;
+      if (numWorkerReplyReceived == 2) {
+        chrome.test.sendMessage('SUCCESS');
+      }
     } else {
       chrome.test.sendMessage(FAILURE_MESSAGE);
     }
   };
   worker.postMessage('sendMessageTest', [channel.port2]);
+};
+window.roundtripToWorker = function() {
+  if (worker == null) {
+    window.domAutomationController.send('roundtrip-failed');
+  }
+  var channel = new MessageChannel();
+  channel.port1.onmessage = function(e) {
+    if (e.data == 'roundtrip-response') {
+      window.domAutomationController.send('roundtrip-succeeded');
+    } else {
+      window.domAutomationController.send('roundtrip-failed');
+    }
+  };
+  worker.postMessage('roundtrip-request', [channel.port2]);
 };

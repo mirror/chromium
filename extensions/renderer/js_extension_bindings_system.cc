@@ -229,8 +229,11 @@ void JsExtensionBindingsSystem::HandleResponse(int request_id,
                                                bool success,
                                                const base::ListValue& response,
                                                const std::string& error) {
+//  printf("HandleResponse\n");
   request_sender_->HandleResponse(request_id, success, response, error);
+//  printf("-> request_sender_->HandleResponse\n");
   ipc_message_sender_->SendOnRequestResponseReceivedIPC(request_id);
+//  printf("-> ipc_message_sender_->SendOnRequestResponseReceivedIPC\n");
 }
 
 RequestSender* JsExtensionBindingsSystem::GetRequestSender() {

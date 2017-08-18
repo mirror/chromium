@@ -55,6 +55,7 @@ void ExtensionServiceWorkerMessageFilter::OnRequestWorker(
 void ExtensionServiceWorkerMessageFilter::OnIncrementServiceWorkerActivity(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  printf("OnIncrementServiceWorkerActivity\n");
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   // The worker might have already stopped before we got here, so the increment
   // below might fail legitimately. Therefore, we do not send bad_message to the
@@ -66,6 +67,7 @@ void ExtensionServiceWorkerMessageFilter::OnIncrementServiceWorkerActivity(
 void ExtensionServiceWorkerMessageFilter::OnDecrementServiceWorkerActivity(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  printf("OnDecrementServiceWorkerActivity\n");
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   bool status = service_worker_context_->FinishedExternalRequest(
       service_worker_version_id, request_uuid);
