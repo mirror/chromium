@@ -52,6 +52,24 @@
       "revId": "38403c44ee1360d4666053959523d120a505ce56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a87dda_0a68e036",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-18T12:25:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6d4de20_1c8a56f6",
+      "revId": "38403c44ee1360d4666053959523d120a505ce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
