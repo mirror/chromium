@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -102,13 +103,13 @@ public class TileRenderer {
         // Remove all views from the layout because even if they are reused later they'll have to be
         // added back in the correct order.
         parent.removeAllViews();
-
         for (Tile tile : sectionTiles) {
             TileView tileView = oldTileViews.get(tile.getData());
             if (tileView == null) {
                 tileView = buildTileView(tile, parent, setupDelegate);
             }
 
+            tileView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             parent.addView(tileView);
         }
     }
