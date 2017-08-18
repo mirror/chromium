@@ -15,6 +15,7 @@ namespace safe_browsing {
 
 enum class TriggerType {
   SECURITY_INTERSTITIAL = 1,
+  AD_SAMPLE = 2,
 };
 
 struct TriggerTypeHash {
@@ -36,7 +37,7 @@ class TriggerThrottler {
 
   // Check if the the specified |trigger_type| has quota available and is
   // allowed to fire at this time.
-  bool TriggerCanFire(const TriggerType trigger_type) const;
+  virtual bool TriggerCanFire(const TriggerType trigger_type) const;
 
   // Called to notify the throttler that a trigger has just fired and quota
   // should be updated.
