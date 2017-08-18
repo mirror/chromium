@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a89c5fb_85e517e1",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e777ae0_50b87199",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 13
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf03b76_b43c9eb1",
         "filename": "ios/chrome/browser/passwords/credential_manager.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac8ec5b_4ef58a44",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf03b76_b43c9eb1",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 54
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9bf094b8_f7daa420",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Moved Parse* methods to public.",
+      "parentUuid": "d4d3665a_7c0f0528",
+      "range": {
+        "startLine": 55,
+        "startChar": 50,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe548da_ce68a45f",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 4
@@ -115,6 +187,30 @@
       "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad31f81_48ce29df",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "https://w3c.github.io/webappsec-credential-management/#provider-identification\nCurrently the spec requires FederatedCredentialRequestOptions.providers to contain valid origins.\nTo quote mkwst@ (about this specific comment): \"Validating the value seems reasonable to me. I\u0027d do it.\", \"I think that if Chrome starts supporting a new scheme, we\u0027ll add it as a standard scheme, and the `IsValid` test will pass.\"\nHe also wrote that maybe you have some examples in mind which he may be missing. What do you think about leaving the validation here and ignoring invalid URLs (see comment at corresponding unit test)?",
+      "parentUuid": "ebe548da_ce68a45f",
+      "range": {
+        "startLine": 146,
+        "startChar": 13,
+        "endLine": 146,
+        "endChar": 18
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d820d175_70a86b9e",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b5b8e3_b973d201",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 17
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94b76810_b3bb1a39",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 4
@@ -152,6 +272,30 @@
       "writtenOn": "2017-08-18T01:26:15Z",
       "side": 1,
       "message": "That confuses me. Name can definitely be empty. Verify that if is allowed.",
+      "range": {
+        "startLine": 180,
+        "startChar": 17,
+        "endLine": 180,
+        "endChar": 25
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686e37dd_86771076",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done. It can be empty, deleted this check.",
+      "parentUuid": "94b76810_b3bb1a39",
       "range": {
         "startLine": 180,
         "startChar": 17,
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "873ffb29_d1b57eda",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d890f8d_f00c1ea9",
+      "range": {
+        "startLine": 184,
+        "startChar": 53,
+        "endLine": 184,
+        "endChar": 55
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d75c72_dead5e86",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 4
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "bb64665e_184ef3a8",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d75c72_dead5e86",
+      "range": {
+        "startLine": 197,
+        "startChar": 10,
+        "endLine": 197,
+        "endChar": 18
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b76651e_9260dac2",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 4
@@ -230,6 +422,30 @@
       "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b097d8c9_0784a35a",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b76651e_9260dac2",
+      "range": {
+        "startLine": 55,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "d0dc92e7_4c79ba78",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39dff8f9_ba7a4cc2",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5e1e54_ff092153",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 4
@@ -303,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "2a5c49eb_389affcf",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a5e1e54_ff092153",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4507e7ed_e7023a8b",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 4
@@ -317,6 +581,24 @@
       "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80b1cc7_93719e86",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4507e7ed_e7023a8b",
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +625,30 @@
     },
     {
       "key": {
+        "uuid": "579b0f08_ee26e78f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c999d9a1_7d29cc60",
+      "range": {
+        "startLine": 160,
+        "startChar": 21,
+        "endLine": 160,
+        "endChar": 29
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c9aa8e_bbbd5460",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 4
@@ -366,6 +672,30 @@
     },
     {
       "key": {
+        "uuid": "efcd4f9e_e9f1057f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c9aa8e_bbbd5460",
+      "range": {
+        "startLine": 210,
+        "startChar": 23,
+        "endLine": 210,
+        "endChar": 33
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a09c7d7e_80bd8c18",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 4
@@ -377,6 +707,30 @@
       "writtenOn": "2017-08-18T01:26:15Z",
       "side": 1,
       "message": "Seems controversial. Check with mkwst@ for his opinion.",
+      "range": {
+        "startLine": 240,
+        "startChar": 72,
+        "endLine": 240,
+        "endChar": 77
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe6a74a_7b12b227",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T13:42:45Z",
+      "side": 1,
+      "message": "Done, mkwst@ said invalid URLs should be ignored, I changed ParseCredential\u0027s behavior and this test accordingly.",
+      "parentUuid": "a09c7d7e_80bd8c18",
       "range": {
         "startLine": 240,
         "startChar": 72,
