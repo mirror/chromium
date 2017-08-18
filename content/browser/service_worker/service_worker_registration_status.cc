@@ -16,9 +16,9 @@ using blink::WebServiceWorkerError;
 void GetServiceWorkerRegistrationStatusResponse(
     ServiceWorkerStatusCode status,
     const std::string& status_message,
-    blink::WebServiceWorkerError::ErrorType* error_type,
+    blink::mojom::WebServiceWorkerErrorType* error_type,
     base::string16* message) {
-  *error_type = WebServiceWorkerError::kErrorTypeUnknown;
+  *error_type = blink::mojom::WebServiceWorkerErrorType::Unknown;
   if (!status_message.empty())
     *message = base::UTF8ToUTF16(status_message);
   else
@@ -33,31 +33,32 @@ void GetServiceWorkerRegistrationStatusResponse(
     case SERVICE_WORKER_ERROR_PROCESS_NOT_FOUND:
     case SERVICE_WORKER_ERROR_REDUNDANT:
     case SERVICE_WORKER_ERROR_DISALLOWED:
-      *error_type = WebServiceWorkerError::kErrorTypeInstall;
+      *error_type = blink::mojom::WebServiceWorkerErrorType::Install;
       return;
 
     case SERVICE_WORKER_ERROR_NOT_FOUND:
-      *error_type = WebServiceWorkerError::kErrorTypeNotFound;
+      *error_type = blink::mojom::WebServiceWorkerErrorType::NotFound;
       return;
 
     case SERVICE_WORKER_ERROR_NETWORK:
-      *error_type = WebServiceWorkerError::kErrorTypeNetwork;
+      *error_type = blink::mojom::WebServiceWorkerErrorType::Network;
       return;
 
     case SERVICE_WORKER_ERROR_SCRIPT_EVALUATE_FAILED:
-      *error_type = WebServiceWorkerError::kErrorTypeScriptEvaluateFailed;
+      *error_type =
+          blink::mojom::WebServiceWorkerErrorType::ScriptEvaluateFailed;
       return;
 
     case SERVICE_WORKER_ERROR_SECURITY:
-      *error_type = WebServiceWorkerError::kErrorTypeSecurity;
+      *error_type = blink::mojom::WebServiceWorkerErrorType::Security;
       return;
 
     case SERVICE_WORKER_ERROR_TIMEOUT:
-      *error_type = WebServiceWorkerError::kErrorTypeTimeout;
+      *error_type = blink::mojom::WebServiceWorkerErrorType::Timeout;
       return;
 
     case SERVICE_WORKER_ERROR_ABORT:
-      *error_type = WebServiceWorkerError::kErrorTypeAbort;
+      *error_type = blink::mojom::WebServiceWorkerErrorType::Abort;
       return;
 
     case SERVICE_WORKER_ERROR_ACTIVATE_WORKER_FAILED:

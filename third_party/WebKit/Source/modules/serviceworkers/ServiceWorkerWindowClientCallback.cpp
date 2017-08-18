@@ -27,7 +27,7 @@ void NavigateClientCallback::OnError(const WebServiceWorkerError& error) {
       resolver_->GetExecutionContext()->IsContextDestroyed())
     return;
 
-  if (error.error_type == WebServiceWorkerError::kErrorTypeNavigation) {
+  if (error.error_type == mojom::WebServiceWorkerErrorType::Navigation) {
     ScriptState::Scope scope(resolver_->GetScriptState());
     resolver_->Reject(V8ThrowException::CreateTypeError(
         resolver_->GetScriptState()->GetIsolate(), error.message));
