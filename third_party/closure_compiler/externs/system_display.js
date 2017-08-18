@@ -118,6 +118,7 @@ chrome.system.display.DisplayLayout;
  *   isInternal: boolean,
  *   isEnabled: boolean,
  *   isUnified: boolean,
+ *   isMaximizeMode: (boolean|undefined),
  *   dpiX: number,
  *   dpiY: number,
  *   rotation: number,
@@ -125,7 +126,8 @@ chrome.system.display.DisplayLayout;
  *   overscan: !chrome.system.display.Insets,
  *   workArea: !chrome.system.display.Bounds,
  *   modes: !Array<!chrome.system.display.DisplayMode>,
- *   hasTouchSupport: boolean
+ *   hasTouchSupport: boolean,
+ *   hasAccelerometerSupport: boolean
  * }}
  * @see https://developer.chrome.com/extensions/system.display#type-DisplayUnitInfo
  */
@@ -156,7 +158,7 @@ chrome.system.display.GetInfoFlags;
 
 /**
  * Requests the information for all attached display devices.
- * @param {!chrome.system.display.GetInfoFlags} flags Options affecting how the
+ * @param {!chrome.system.display.GetInfoFlags=} flags Options affecting how the
  *     information is returned.
  * @param {function(!Array<!chrome.system.display.DisplayUnitInfo>):void}
  *     callback The callback to invoke with the results.

@@ -403,6 +403,17 @@ Polymer({
   },
 
   /**
+   * Displays in maximize mode change the orientation when rotated. Manual
+   * rotation is disabled for such displays.
+   * @param {!chrome.system.display.DisplayUnitInfo} selectedDisplay
+   * @return {boolean}
+   * @private
+   */
+  enableSetOrientation_: function(selectedDisplay) {
+    return !selectedDisplay.isMaximizeMode;
+  },
+
+  /**
    * @param {!{detail: string}} e |e.detail| is the id of the selected display.
    * @private
    */
