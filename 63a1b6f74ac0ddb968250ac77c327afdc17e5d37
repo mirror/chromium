@@ -16,6 +16,24 @@
       "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc2c116_695b0ca3",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-18T23:35:37Z",
+      "side": 1,
+      "message": "I think once upon a time, get_daemon_proc looked at the full command-line, including the config path. I suspect it\u0027s been broken for some time. I can\u0027t think of any reason to limit users to one desktop, so perhaps we can just remove the check altogether? I don\u0027t remember why it was important.",
+      "parentUuid": "d406498e_7b042cd1",
+      "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
