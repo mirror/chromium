@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b07d539a_4928f98c",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d86c1b_96b5cfd9",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a25b32a5_d09b3a55",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d81d56_8d3d27d0",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a25b32a5_d09b3a55",
+      "range": {
+        "startLine": 76,
+        "startChar": 17,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f7f72d6b_b5993a84",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "I don\u0027t know, I followed the example given for using the net::test_server.\nI also think it is better without, so I removed it.",
+      "parentUuid": "3378e4e3_6b34c87a",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba260a4_b174bf5f",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c2e76f_ccad1cb3",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba260a4_b174bf5f",
+      "range": {
+        "startLine": 397,
+        "startChar": 14,
+        "endLine": 397,
+        "endChar": 20
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f8b49617_a9e3ba36",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d52cde_8c303666",
+      "range": {
+        "startLine": 400,
+        "startChar": 29,
+        "endLine": 400,
+        "endChar": 33
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1e75e04_ff2fa0b3",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa6e72e_3df7021e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "This is to make sure the number of tab is actually 1.",
+      "parentUuid": "b1e75e04_ff2fa0b3",
+      "range": {
+        "startLine": 403,
+        "startChar": 18,
+        "endLine": 403,
+        "endChar": 37
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "44b5da08_7dee491a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c71e5ed_ded354a1",
+      "range": {
+        "startLine": 431,
+        "startChar": 8,
+        "endLine": 431,
+        "endChar": 42
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cb76dfc_bf237139",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-17T16:26:38Z",
       "side": 1,
       "message": "this does not test that this is a *new* incognito tab.\nShould we have an existing incognito tab?",
+      "range": {
+        "startLine": 444,
+        "startChar": 18,
+        "endLine": 444,
+        "endChar": 42
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff9bcbe_65d2881e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t get it.\nIf I have 0 incognito tab before the action, then 1 after the action it means it is a new incognito tab no?",
+      "parentUuid": "9cb76dfc_bf237139",
       "range": {
         "startLine": 444,
         "startChar": 18,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "11066c08_c7f2ff18",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "272e7d03_eb9e4913",
+      "range": {
+        "startLine": 452,
+        "startChar": 18,
+        "endLine": 452,
+        "endChar": 37
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5cd896_099ecc1b",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6d9085_0262b255",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T07:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5cd896_099ecc1b",
+      "range": {
+        "startLine": 475,
+        "startChar": 5,
+        "endLine": 475,
+        "endChar": 9
+      },
+      "revId": "40a5fa667f09d7dfd0259d46bec375e8c84c2e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
