@@ -68,7 +68,7 @@ bool DOMStorageHost::ExtractAreaValues(
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  if (!area->IsLoadedInMemory()) {
+  if (area->IsMapReloadNeeded()) {
     DOMStorageNamespace* ns = GetNamespace(connection_id);
     DCHECK(ns);
     context_->PurgeMemory(DOMStorageContextImpl::PURGE_IF_NEEDED);
@@ -108,7 +108,7 @@ bool DOMStorageHost::SetAreaItem(int connection_id,
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  base::NullableString16 old_value;
+  base::NullableString16 old_value = client_old_value;
   if (!area->SetItem(key, value, &old_value))
     return false;
   if (old_value.is_null() || old_value.string() != value)
@@ -124,7 +124,8 @@ bool DOMStorageHost::RemoveAreaItem(
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  base::string16 old_value;
+  DCHECK(!client_old_value.is_null());
+  base::string16 old_value = client_old_value.string();
   if (!area->RemoveItem(key, &old_value))
     return false;
   context_->NotifyItemRemoved(area, key, old_value, page_url);
