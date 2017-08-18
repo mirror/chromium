@@ -3,6 +3,17 @@ Tests list of user metrics codes and invocations.
 recordActionTaken:
 {
     AnimationsPlaybackRateChanged : 11
+    ApplicationPanelApplicationCacheClicked : 41
+    ApplicationPanelCacheStorageClicked : 40
+    ApplicationPanelClearStorageClicked : 33
+    ApplicationPanelCookiesClicked : 39
+    ApplicationPanelDatabasesClicked : 38
+    ApplicationPanelIndexedDBIndexClicked : 37
+    ApplicationPanelIndexedDBObjectStoreClicked : 36
+    ApplicationPanelLocalStorageClicked : 34
+    ApplicationPanelManifestClicked : 31
+    ApplicationPanelServiceWorkersClicked : 32
+    ApplicationPanelSessionStorageClicked : 35
     Audits2Finished : 30
     Audits2Started : 29
     AuditsStarted : 7
