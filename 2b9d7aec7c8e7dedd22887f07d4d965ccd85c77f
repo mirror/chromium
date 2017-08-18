@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb96aea7_004d31e6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-18T20:20:43Z",
+      "side": 1,
+      "message": "Only PRs with \"do-not-merge-yet\" are created from Gerrit in-flight CLs (i.e. the CL/PR is \"provisional\"). And the issue we\u0027re trying to solve here only arises when PRs are created from Gerrit.\n\nThe other scenario is that the PR is created directly from Chromium git commit, in which case the \"do-not-merge-yet\" label will not be applied during creation of the PR, and we do not need to force an update before merging -- patches from git history are final.",
+      "parentUuid": "7bd7ae2b_4ac98020",
+      "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "895bda0a_11101a04",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T19:26:12Z",
       "side": 1,
       "message": "This method looks like it could potentially be refactored to be less deeply-nested by rearranging a few things, e.g.:\n\n - Loop body could be extracted\n - if/else could be converted to early returns.\n\n\n    def process_chromium_commits(self, exportable_commit):\n        for exportable_commit in exportable_commits:\n            self.process_single_commit(exportable_commit)\n\n    def process_single_commit(exportable_commit)\n        _log.info(\u0027Found exportable Chromium commit: %s %s\u0027,\n                  exportable_commit.subject(), exportable_commit.sha)\n\n        pull_request \u003d self.wpt_github.pr_for_chromium_commit(exportable_commit)\n        if not pull_request:\n            self.create_or_update_pull_request_from_commit(exportable_commit)\n            return\n\n        pr_url \u003d \u0027{}pull/{}\u0027.format(WPT_GH_URL, pull_request.number)\n        _log.info(\u0027In-flight PR found: %s\u0027, pr_url)\n\n        if pull_request.state !\u003d \u0027open\u0027:\n            _log.info(\u0027Pull request is %s. Skipping.\u0027, pull_request.state)\n            return\n\n\n        if PROVISIONAL_PR_LABEL in pull_request.labels:\n            _log.info(\u0027Updating PR with the final checked-in change...\u0027)\n            self.create_or_update_pull_request_from_commit(exportable_commit, pull_request)\n\n        # TODO(robertma): Assert the PR is identical with the commit.\n        self.merge_pull_request(pull_request)",
+      "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c93c14_4b398830",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-18T20:20:43Z",
+      "side": 1,
+      "message": "Good point. I simply extracted this part from the run() function, making it symmetric to process_gerrit_cls(). This is one other incremental improvement that helps the readability. Thanks.",
+      "parentUuid": "895bda0a_11101a04",
       "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
