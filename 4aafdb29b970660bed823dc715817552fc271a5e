@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6f376936_b80fe496",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2861,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T13:22:42Z",
+      "side": 1,
+      "message": "Ack, thanks Avi.",
+      "parentUuid": "3ee834d2_fe8d1a2a",
+      "revId": "4aafdb29b970660bed823dc715817552fc271a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "108375a3_f4533ce6",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "4aafdb29b970660bed823dc715817552fc271a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e269fcd_4a7a000d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5519,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T13:22:42Z",
+      "side": 1,
+      "message": "I just simplified OpenURL directly so it only needs a few params plus the |info|. Much nicer!",
+      "parentUuid": "108375a3_f4533ce6",
+      "revId": "4aafdb29b970660bed823dc715817552fc271a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
