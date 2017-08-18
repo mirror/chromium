@@ -16,6 +16,24 @@
       "revId": "1c0ef30edd0f513f9305bf1e043766c2fef47e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8e97d3_29e144f0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1868,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-18T05:02:49Z",
+      "side": 1,
+      "message": "A DCHECK sounds good, I don\u0027t want to break things\nin production since we know we have some bugs here and\nwe should degrade gracefully while we work on them.",
+      "parentUuid": "40a10ebf_d636f128",
+      "revId": "1c0ef30edd0f513f9305bf1e043766c2fef47e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
