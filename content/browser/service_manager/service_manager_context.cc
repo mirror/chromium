@@ -89,7 +89,8 @@ void StartServiceInUtilityProcess(
 
   service_manager::mojom::ServiceFactoryPtr service_factory;
   BindInterface(process_host, mojo::MakeRequest(&service_factory));
-  service_factory->CreateService(std::move(request), service_name);
+  service_factory->CreateService(std::move(request), service_name,
+                                 service_manager::Identity());
 }
 
 // Request service_manager::mojom::ServiceFactory from GPU process host. Must be
@@ -109,7 +110,8 @@ void StartServiceInGpuProcess(const std::string& service_name,
   // load requests through ServiceFactory will also fail. Make sure we handle
   // these cases correctly.
   BindInterfaceInGpuProcess(mojo::MakeRequest(&service_factory));
-  service_factory->CreateService(std::move(request), service_name);
+  service_factory->CreateService(std::move(request), service_name,
+                                 service_manager::Identity());
 }
 
 // A ManifestProvider which resolves application names to builtin manifest

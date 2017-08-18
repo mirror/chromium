@@ -83,6 +83,7 @@ class ConnectTestApp : public Service,
   void BindConnectTestServiceRequest(
       test::mojom::ConnectTestServiceRequest request,
       const BindSourceInfo& source_info) {
+    requestor_name_ = source_info.identity.name();
     bindings_.AddBinding(this, std::move(request));
     test::mojom::ConnectionStatePtr state(test::mojom::ConnectionState::New());
     state->connection_remote_name = source_info.identity.name();
@@ -115,6 +116,9 @@ class ConnectTestApp : public Service,
   }
   void GetInstance(GetInstanceCallback callback) override {
     std::move(callback).Run(context()->identity().instance());
+  }
+  void GetRequestor(GetRequestorCallback callback) override {
+    std::move(callback).Run(requestor_name_);
   }
 
   // test::mojom::StandaloneApp:
@@ -206,6 +210,7 @@ class ConnectTestApp : public Service,
       base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
+  std::string requestor_name_;
   BinderRegistryWithArgs<const BindSourceInfo&> registry_;
   mojo::BindingSet<test::mojom::ConnectTestService> bindings_;
   mojo::BindingSet<test::mojom::StandaloneApp> standalone_bindings_;

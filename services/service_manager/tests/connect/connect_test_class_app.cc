@@ -46,6 +46,8 @@ class ConnectTestClassApp : public Service,
   void OnBindInterface(const BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
+    if (interface_name == test::mojom::ConnectTestService::Name_)
+      requestor_name_ = source_info.identity.name();
     registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 
@@ -67,6 +69,9 @@ class ConnectTestClassApp : public Service,
   void GetInstance(GetInstanceCallback callback) override {
     std::move(callback).Run(context()->identity().instance());
   }
+  void GetRequestor(GetRequestorCallback callback) override {
+    std::move(callback).Run(requestor_name_);
+  }
 
   // test::mojom::ClassInterface:
   void Ping(PingCallback callback) override { std::move(callback).Run("PONG"); }
@@ -75,6 +80,7 @@ class ConnectTestClassApp : public Service,
 
   void HandleInterfaceClose() { refs_.pop_back(); }
 
+  std::string requestor_name_;
   BinderRegistry registry_;
   mojo::BindingSet<test::mojom::ConnectTestService> bindings_;
   mojo::BindingSet<test::mojom::ClassInterface> class_interface_bindings_;

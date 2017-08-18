@@ -9,6 +9,7 @@ import "services/service_manager/public/interfaces/connector.mojom";
 interface ConnectTestService {
   GetTitle() => (string title);
   GetInstance() => (string instance);
+  GetRequestor() => (string service_name);
 };
 
 interface ClassInterface {

@@ -58,7 +58,8 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
   void CreateService(service_manager::mojom::ServiceRequest request,
-                     const std::string& name) override {
+                     const std::string& name,
+                     const service_manager::Identity& source) override {
     if (name == prefs::mojom::kServiceName) {
       pref_service_context_.reset(new service_manager::ServiceContext(
           CreatePrefService(
