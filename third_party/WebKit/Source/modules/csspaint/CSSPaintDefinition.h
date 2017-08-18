@@ -8,6 +8,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSSyntaxDescriptor.h"
 #include "core/css/cssom/CSSStyleValue.h"
+#include "modules/csspaint/ContextAttributes.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"
@@ -35,7 +36,7 @@ class CSSPaintDefinition final
       const Vector<CSSPropertyID>&,
       const Vector<AtomicString>& custom_invalidation_properties,
       const Vector<CSSSyntaxDescriptor>& input_argument_types,
-      bool has_alpha);
+      ContextAttributes&);
   virtual ~CSSPaintDefinition();
 
   // Invokes the javascript 'paint' callback on an instance of the javascript
@@ -56,7 +57,7 @@ class CSSPaintDefinition final
   const Vector<CSSSyntaxDescriptor>& InputArgumentTypes() const {
     return input_argument_types_;
   }
-  bool HasAlpha() const { return has_alpha_; }
+  ContextAttributes GetContextAttributes() const { return context_attributes_; }
 
   ScriptState* GetScriptState() const { return script_state_.Get(); }
 
@@ -75,7 +76,7 @@ class CSSPaintDefinition final
       const Vector<CSSPropertyID>& native_invalidation_properties,
       const Vector<AtomicString>& custom_invalidation_properties,
       const Vector<CSSSyntaxDescriptor>& input_argument_types,
-      bool has_alpha);
+      ContextAttributes&);
 
   void MaybeCreatePaintInstance();
 
@@ -96,7 +97,7 @@ class CSSPaintDefinition final
   Vector<AtomicString> custom_invalidation_properties_;
   // Input argument types, if applicable.
   Vector<CSSSyntaxDescriptor> input_argument_types_;
-  bool has_alpha_;
+  ContextAttributes context_attributes_;
 };
 
 }  // namespace blink
