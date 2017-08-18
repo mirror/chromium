@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e4c5196_b02bffb6",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwTestBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T15:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a87e18d_bcadf1e2",
+      "revId": "2d45e688f5608131a85c95b9f48a469fad69f7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df7463a6_0c23dbe8",
         "filename": "android_webview/tools/automated_ui_tests/javatests/src/org/chromium/webview_ui_test/test/util/Actions.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T16:12:29Z",
       "side": 1,
       "message": "Is there a way to assert this instead of no-op\u0027ing it? I don\u0027t really care for test files like this, but the other fixes would probably cause errors to much more subtle if the wrong type was ever passed to the functions.",
+      "revId": "2d45e688f5608131a85c95b9f48a469fad69f7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0245ff16_b16c7079",
+        "filename": "android_webview/tools/automated_ui_tests/javatests/src/org/chromium/webview_ui_test/test/util/Actions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T15:21:04Z",
+      "side": 1,
+      "message": "I have no idea what kind of failure we\u0027d want to raise in a non-test scenario. Are you thinking something analogous to a CHECK failure?",
+      "parentUuid": "df7463a6_0c23dbe8",
       "revId": "2d45e688f5608131a85c95b9f48a469fad69f7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "2d45e688f5608131a85c95b9f48a469fad69f7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0f1a79_6af85553",
+        "filename": "build/android/pylib/constants/__init__.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T15:21:04Z",
+      "side": 1,
+      "message": "I believe you\u0027re suggesting something like this: https://codesearch.chromium.org/chromium/src/build/android/pylib/utils/findbugs.py?rcl\u003dd0c369d5a4f83c4d096b9765a1747abdf5a79d6a\u0026l\u003d114 :)\n\nDone.",
+      "parentUuid": "8ed31df0_c76df083",
+      "revId": "2d45e688f5608131a85c95b9f48a469fad69f7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
