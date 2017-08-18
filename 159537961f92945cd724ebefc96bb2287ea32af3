@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8ff259b7_34f13453",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "That is fine.",
+      "parentUuid": "07c56770_890f7a1a",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0947530b_4a1d8b13",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 8
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "We could definitely remove this flag. I was just trying to avoid doing too much things in this CL. Mind if I doing it in a follow up?",
       "parentUuid": "0947530b_4a1d8b13",
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20084259_2d2ea190",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Ok, sounds good. Can you file a bug for this and reference it here?",
+      "parentUuid": "e8bac49e_47dfbd2c",
       "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +173,64 @@
     },
     {
       "key": {
+        "uuid": "152025d5_116bffbd",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Maybe there was an error with the upload. It is still called AdjustPosition.",
+      "parentUuid": "1bfa9803_d85de6a4",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 29
+      },
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6102b8_565eba70",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Why can the ViewportAwareRoot not be the child of another element? Like the root root.",
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385a480e_41d5e857",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Remove this function? Why not let the children layout to anchors if they wish?",
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c81051c4_b6fba8c2",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
         "patchSetId": 8
@@ -166,6 +266,30 @@
       "side": 1,
       "message": "We probably don\u0027t want to animate rotation of these elements. What we want is probably opacity animation. So making it animateable is probably not going to be useful for us.\n \nWe would also have to recursively apply the rotation to all children and children\u0027s children. However, with this approach, we get this for free as LocalTransform is used in ApplyRecursiveTransforms, which happens after we set viewport_aware_rotation_. Not that it is a big deal, but I think the current way makes the code simpler.",
       "parentUuid": "c81051c4_b6fba8c2",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "159537961f92945cd724ebefc96bb2287ea32af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc06a9de_11bb69a8",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "I think the rotation is part of the LocalTransform already (https://cs.chromium.org/chromium/src/chrome/browser/vr/elements/ui_element.cc?rcl\u003d65c8da95cbc89501e08ba28cd3bc9d308f20a026\u0026l\u003d277). So, setting the rotation should be applied to the children. Reusing existing attributes probably works better with the rest of the code. Also, it would allow us to use the scale and position as well. And, we may not want to animate the rotation right now. But we would have the flexibility to do so.",
+      "parentUuid": "d3416c17_9bd383a9",
       "range": {
         "startLine": 38,
         "startChar": 9,

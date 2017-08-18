@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a29b36e8_a89494c5",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Give this and the following a more descriptive name? E.g. bounds_left, etc.",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9abec6_97af42c5",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: std::min({left_bottom.x(), left_top.x(), right_bottom.x(), right_top.x()})?\nAnd the same for below.",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 66
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e9217a_bb6cbf04",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: space",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6330884c_aa9a322e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: kFrameWebVrBrowserUiBuffer",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 47
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3afe957_2154c41b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: kWebVrBrowserUiSizeFactor",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20feebbd_741e156e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: kViewportListWebVrBrowserUiOffset",
+      "range": {
+        "startLine": 71,
+        "startChar": 21,
+        "endLine": 71,
+        "endChar": 54
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36907f4_fba9d326",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "As per recent group discussion, all classes should have a class comment.",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aaba3e1_9fdbc170",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Do we need to redefine the destructor?",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45452939_46bb6215",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: kThreshold",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815ca1fa_ed342d53",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Make this a constant and move it into //chrome/browser/vr/test/constants.h so that it can be used elsewhere? We have that a couple of times already.",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fa3342_6f16866d",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "Nit: yield",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e62844_55933c2f",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-18T20:32:31Z",
+      "side": 1,
+      "message": "I think it would be better to use EXPECT_FLOAT_EQ here and below.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
