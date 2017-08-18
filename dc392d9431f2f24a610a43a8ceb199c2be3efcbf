@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e8a592b_697fcda5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-18T17:30:36Z",
+      "side": 1,
+      "message": "Nit: s/a one/one/",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "dc392d9431f2f24a610a43a8ceb199c2be3efcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8dfa16_128bcb1f",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-18T17:30:36Z",
+      "side": 1,
+      "message": "It\u0027s a little odd that this returns BLOCK, yet GetPermissionStatus continues to return ASK. I wonder if NotificationPermissionContext::DecidePermission should instead return the current permission (ASK in this case) when `requesting_origin !\u003d embedding_origin`, rather than always returning BLOCK (since it being BLOCK is a blink-layer \"view\" on the data, which is still ASK within the chrome-layer)?",
+      "range": {
+        "startLine": 177,
+        "startChar": 20,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "dc392d9431f2f24a610a43a8ceb199c2be3efcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed619c9c_a5d5ae37",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/notifications/permission-behaviour.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-18T17:30:36Z",
+      "side": 1,
+      "message": "Nit: {} to clarify that this is just a statement, and you don\u0027t mean to return resolver here (it\u0027s less important below, since it\u0027s clearish that assert_equals is void; though in future it might be cleanest to use async/await).",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "dc392d9431f2f24a610a43a8ceb199c2be3efcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2116fe_b1bd416e",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-18T17:30:36Z",
+      "side": 1,
+      "message": "Nit: \"a cross-origin iframe\"?",
+      "range": {
+        "startLine": 428,
+        "startChar": 14,
+        "endLine": 428,
+        "endChar": 20
+      },
+      "revId": "dc392d9431f2f24a610a43a8ceb199c2be3efcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ea6a72_9b6f48ac",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-18T17:30:36Z",
+      "side": 1,
+      "message": "In some cases, this breakableLocation is now immediately followed by a sync IPC. Could that cause any problems?",
+      "range": {
+        "startLine": 395,
+        "startChar": 9,
+        "endLine": 395,
+        "endChar": 26
+      },
+      "revId": "dc392d9431f2f24a610a43a8ceb199c2be3efcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
