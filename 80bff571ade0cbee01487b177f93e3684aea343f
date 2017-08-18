@@ -69,6 +69,24 @@
       "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a604ffc2_58fc9f16",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-18T18:57:01Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to do this as a reverse finch experiment. That said, I\u0027m okay with doing this as a regular finch experiment but can we rename the experiment to mention that it only affects 2d and opacity compositor animations?\n\nI\u0027m thinking:\nTurnOff2DAndOpacityCompositorAnimationsEnabled\n\nIt\u0027s more verbose but I think it will prevent confusion.",
+      "parentUuid": "cb2a4c79_0b3451c3",
+      "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
