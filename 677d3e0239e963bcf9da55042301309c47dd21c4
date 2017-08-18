@@ -279,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "40e9c4b0_1e789b14",
+        "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "416fba19_07848521",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328cd521_fb753f1c",
         "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
         "patchSetId": 10
@@ -344,6 +362,24 @@
       "side": 1,
       "message": "I slightly prefer setting hangoutsExtraData separately as to not introduce new params to createRouteStatus().",
       "parentUuid": "2b1c9c08_53319dce",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49199f4d_941dbfca",
+        "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6154b73f_be07c668",
       "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

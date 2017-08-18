@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "5298bffa_f718cc62",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "We need to reset |hangouts_controller_| in the error callback as well, right?",
+      "range": {
+        "startLine": 174,
+        "startChar": 22,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96aae9a9_4c99899d",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Nit: |media_router_|",
+      "range": {
+        "startLine": 80,
+        "startChar": 31,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299ec6f1_18eb3295",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "It seems a bit unsafe to be able to override Invalidate() because |this| gets destroyed by it. Should we instead add an overridable helper method (InvalidateInternal() or something) instead?",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf8343c5_31c1e854",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 13
@@ -19,6 +82,98 @@
     },
     {
       "key": {
+        "uuid": "03f85303_8e47ac6f",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Nit: s/|type_|/type. It seems you no longer use a |type_| field.",
+      "range": {
+        "startLine": 173,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 12
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3426ecec_bd32988a",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Nit: HANGOUTS",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 23
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a094a_efd0c922",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Optional: I\u0027d name this mojo_hangouts_controller_ to distinguish it from the C++ class.",
+      "range": {
+        "startLine": 190,
+        "startChar": 41,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255dfaa9_18c59e7d",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Should we just say DoCreateMediaRouteController() here",
+      "range": {
+        "startLine": 100,
+        "startChar": 54,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32a28893_ed4dd979",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 13
@@ -30,6 +185,160 @@
       "writtenOn": "2017-08-18T17:45:49Z",
       "side": 1,
       "message": "Feels odd to be instantiating these in the \u0027GetRouteController\u0027 method.  I would have expected that to happen in the \u0027DoCreateMdiaRouteController\u0027 method instead.\n\nIt looks like the creation happens here, and the initialization happens in the DoCreate call.\n\nIs that right?  Maybe this is documented somewhere I wasn\u0027t paying attention to...",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a8460c_0b020048",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "I guess the confusing thing is that GetRouteController() and DoCreateMdiaRouteController() are referring to two different MediaRouteController classes. The former refers to the C++ class instantiated here, and the latter refers to the JS class implemented in the extension. Maybe we should rename DoCreateMdiaRouteController() to DoCreateMojoRouteController() or something.",
+      "parentUuid": "32a28893_ed4dd979",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078fb578_eb30784f",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b18d5f_aa017276",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abed53a_e0fa23b2",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Would you mind adding a function comment:\n\n  /**\n   * Sends a command to open a file dialog and allow the user to choose a local\n   * media file.\n   */",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78782d35_5847e67d",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Could you add a comment saying something like \"Sends a command to set whether the local present mode for the Cast session to Hangouts is enabled\"?",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bb6366_fe66bfbb",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Could you add a function comment?",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d78fca_c150303e",
+        "filename": "chrome/browser/resources/media_router/media_router_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Please add a comment for this, and mention that it\u0027s only set for routes to Hangouts.",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e26a13_9fd63ebc",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Nit: This line goes over 80 chars; please format.",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578012aa_3c05e6c7",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-18T18:59:38Z",
+      "side": 1,
+      "message": "Please comment on the interface.",
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
