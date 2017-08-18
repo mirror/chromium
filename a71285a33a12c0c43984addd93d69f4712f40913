@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "184fb216_d6f9355c",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-18T13:08:19Z",
+      "side": 1,
+      "message": "where are these referenced by reflection?  what error do you get when this line is removed?",
+      "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a120697c_e4160d78",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-18T13:08:19Z",
+      "side": 1,
+      "message": "why are these Assert rules needed?  I thought they were all called explicitly so proguard shouldn\u0027t delete them.  what error do you get when this line is removed?",
+      "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
