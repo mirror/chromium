@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2492ac1c_7288e523",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-18T23:28:59Z",
+      "side": 1,
+      "message": "nyquist@ - Should I have this block below isGooglePlayStoreAvailable?\nI see that FORCE_SHOW_UPDATE_MENU_BADGE is also finch configurable.",
+      "range": {
+        "startLine": 191,
+        "startChar": 1,
+        "endLine": 191,
+        "endChar": 2
+      },
+      "revId": "976dec06c8e6eefb5f466a4b84e1ca7488ee0d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
