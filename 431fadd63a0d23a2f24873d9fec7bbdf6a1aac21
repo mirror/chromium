@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9bfaa0c_3b5d7412",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-18T16:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc2f1b_409e7480",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66aef47b_98c69a98",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8319ee_7e59b299",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-18T16:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66aef47b_98c69a98",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "023c8513_24830894",
+        "filename": "ash/accelerators/accelerator_controller_delegate_classic.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-18T16:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d7fb76_da666a7f",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8003b8_a9a7bc9c",
         "filename": "ash/accelerators/accelerator_table.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e28ab3_660d3892",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-18T16:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e8003b8_a9a7bc9c",
+      "revId": "431fadd63a0d23a2f24873d9fec7bbdf6a1aac21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
