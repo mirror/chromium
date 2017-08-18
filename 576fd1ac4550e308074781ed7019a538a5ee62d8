@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8fc3f3_fd15f162",
+        "filename": "base/containers/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-18T20:38:30Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this the items in this section are trying to say.",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "576fd1ac4550e308074781ed7019a538a5ee62d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469aafd0_db09595c",
+        "filename": "base/containers/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-18T20:38:30Z",
+      "side": 1,
+      "message": "I don\u0027t understand what \"[span.cons]\" is (same below for the other ones).",
+      "revId": "576fd1ac4550e308074781ed7019a538a5ee62d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
