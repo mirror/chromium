@@ -67,6 +67,7 @@
 #include "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/device_disabling_manager.h"
+#include "chrome/browser/chromeos/system/timezone_resolver_manager.h"
 #include "chrome/browser/chromeos/system/timezone_util.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
@@ -955,6 +956,11 @@ void WizardController::StartOOBEUpdate() {
 }
 
 void WizardController::StartTimezoneResolve() {
+  if (!g_browser_process->platform_part()
+           ->GetTimezoneResolverManager()
+           ->TimeZoneResolverShouldBeRunning())
+    return;
+
   geolocation_provider_.reset(new SimpleGeolocationProvider(
       g_browser_process->system_request_context(),
       SimpleGeolocationProvider::DefaultGeolocationProviderURL()));
@@ -967,10 +973,14 @@ void WizardController::StartTimezoneResolve() {
 }
 
 void WizardController::PerformPostEulaActions() {
-  DelayNetworkCall(
-      base::TimeDelta::FromMilliseconds(kDefaultNetworkRetryDelayMS),
-      base::Bind(&WizardController::StartTimezoneResolve,
-                 weak_factory_.GetWeakPtr()));
+  if (g_browser_process->platform_part()
+          ->GetTimezoneResolverManager()
+          ->TimeZoneResolverShouldBeRunning()) {
+    DelayNetworkCall(
+        base::TimeDelta::FromMilliseconds(kDefaultNetworkRetryDelayMS),
+        base::Bind(&WizardController::StartTimezoneResolve,
+                   weak_factory_.GetWeakPtr()));
+  }
   DelayNetworkCall(
       base::TimeDelta::FromMilliseconds(kDefaultNetworkRetryDelayMS),
       ServicesCustomizationDocument::GetInstance()
@@ -1481,30 +1491,7 @@ void WizardController::OnTimezoneResolved(
 
   VLOG(1) << "Resolved local timezone={" << timezone->ToStringForDebug()
           << "}.";
-
-  if (timezone->status != TimeZoneResponseData::OK) {
-    LOG(WARNING) << "Resolve TimeZone: failed to resolve timezone.";
-    return;
-  }
-
-  policy::BrowserPolicyConnectorChromeOS* connector =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  if (connector->IsEnterpriseManaged()) {
-    std::string policy_timezone;
-    if (CrosSettings::Get()->GetString(kSystemTimezonePolicy,
-                                       &policy_timezone) &&
-        !policy_timezone.empty()) {
-      VLOG(1) << "Resolve TimeZone: TimeZone settings are overridden"
-              << " by DevicePolicy.";
-      return;
-    }
-  }
-
-  if (!timezone->timeZoneId.empty()) {
-    VLOG(1) << "Resolve TimeZone: setting timezone to '" << timezone->timeZoneId
-            << "'";
-    chromeos::system::SetSystemAndSigninScreenTimezone(timezone->timeZoneId);
-  }
+  chromeos::system::ApplyTimeZone(timezone.get());
 }
 
 TimeZoneProvider* WizardController::GetTimezoneProvider() {
@@ -1533,6 +1520,11 @@ void WizardController::OnLocationResolved(const Geoposition& position,
     return;
   }
 
+  if (!g_browser_process->platform_part()
+           ->GetTimezoneResolverManager()
+           ->TimeZoneResolverShouldBeRunning()) {
+    return;
+  }
   // WizardController owns TimezoneProvider, so timezone request is silently
   // cancelled on destruction.
   GetTimezoneProvider()->RequestTimezone(
