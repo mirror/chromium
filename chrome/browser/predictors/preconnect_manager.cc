@@ -37,10 +37,12 @@ PreconnectManager::PreconnectManager(
     scoped_refptr<net::URLRequestContextGetter> context_getter)
     : delegate_(std::move(delegate)),
       context_getter_(std::move(context_getter)),
+      detached_info_(base::MakeUnique<PreresolveInfo>(GURL(), 0)),
       inflight_preresolves_count_(0),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(context_getter_);
+  detached_info_->detached = true;
 }
 
 PreconnectManager::~PreconnectManager() {
@@ -65,6 +67,24 @@ void PreconnectManager::Start(const GURL& url,
   for (const GURL& host : preresolve_hosts)
     queued_jobs_.emplace_back(host, false, info);
 
+  TryToLaunchPreresolveJobs();
+}
+
+// It is called from an IPC message originating in the renderer. Thus these
+// requests have a higher priority than requests originated in the predictor.
+void PreconnectManager::StartDetached(
+    const std::vector<GURL>& preconnect_origins,
+    const std::vector<GURL>& preresolve_hosts) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  // Push jobs in front of the queue due to higher priority.
+  for (const GURL& host : preresolve_hosts)
+    queued_jobs_.emplace_front(host, false, detached_info_.get());
+
+  for (const GURL& origin : preconnect_origins)
+    queued_jobs_.emplace_front(origin, true, detached_info_.get());
+
+  detached_info_->queued_count +=
+      preconnect_origins.size() + preresolve_hosts.size();
   TryToLaunchPreresolveJobs();
 }
 

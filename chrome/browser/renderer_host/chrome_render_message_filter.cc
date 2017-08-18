@@ -18,6 +18,9 @@
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/net/predictor.h"
+#include "chrome/browser/predictors/loading_predictor.h"
+#include "chrome/browser/predictors/loading_predictor_factory.h"
+#include "chrome/browser/predictors/preconnect_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/render_messages.h"
@@ -44,6 +47,14 @@ const uint32_t kFilteredMessageClasses[] = {
     ChromeMsgStart, NetworkHintsMsgStart,
 };
 
+std::vector<GURL> ConvertHostnamesToURLs(
+    const std::vector<std::string>& hostnames) {
+  std::vector<GURL> urls;
+  for (const auto& hostname : hostnames)
+    urls.emplace_back("http://" + hostname + ":80");
+  return urls;
+}
+
 }  // namespace
 
 ChromeRenderMessageFilter::ChromeRenderMessageFilter(int render_process_id,
@@ -53,7 +64,14 @@ ChromeRenderMessageFilter::ChromeRenderMessageFilter(int render_process_id,
       render_process_id_(render_process_id),
       profile_(profile),
       predictor_(profile_->GetNetworkPredictor()),
-      cookie_settings_(CookieSettingsFactory::GetForProfile(profile)) {}
+      preconnect_manager_(nullptr),
+      cookie_settings_(CookieSettingsFactory::GetForProfile(profile)) {
+  auto* loading_predictor =
+      predictors::LoadingPredictorFactory::GetForProfile(profile);
+  if (loading_predictor) {
+    preconnect_manager_ = loading_predictor->preconnect_manager();
+  }
+}
 
 ChromeRenderMessageFilter::~ChromeRenderMessageFilter() {
 }
@@ -96,8 +114,14 @@ void ChromeRenderMessageFilter::OverrideThreadForMessage(
 
 void ChromeRenderMessageFilter::OnDnsPrefetch(
     const network_hints::LookupRequest& request) {
-  if (predictor_)
-    predictor_->DnsPrefetchList(request.hostname_list);
+  if (preconnect_manager_) {
+    preconnect_manager_->StartDetached(
+        {}, ConvertHostnamesToURLs(request.hostname_list));
+  } else if (predictor_) {
+    predictor_->DnsPrefetchMotivatedList(
+        ConvertHostnamesToURLs(request.hostname_list),
+        chrome_browser_net::UrlInfo::PAGE_SCAN_MOTIVATED);
+  }
 }
 
 void ChromeRenderMessageFilter::OnPreconnect(const GURL& url,
@@ -108,8 +132,15 @@ void ChromeRenderMessageFilter::OnPreconnect(const GURL& url,
                  << count;
     return;
   }
-  if (predictor_ && url.is_valid() && url.has_host() && url.has_scheme() &&
-      url.SchemeIsHTTPOrHTTPS()) {
+
+  if (!url.is_valid() || !url.has_host() || !url.has_scheme() ||
+      !url.SchemeIsHTTPOrHTTPS()) {
+    return;
+  }
+
+  if (preconnect_manager_) {
+    preconnect_manager_->StartDetached({url}, {});
+  } else if (predictor_) {
     predictor_->PreconnectUrl(url, GURL(),
                               chrome_browser_net::UrlInfo::EARLY_LOAD_MOTIVATED,
                               allow_credentials, count);

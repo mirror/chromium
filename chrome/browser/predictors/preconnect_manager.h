@@ -25,12 +25,15 @@ struct PreresolveInfo {
   PreresolveInfo(const PreresolveInfo& other);
   ~PreresolveInfo();
 
-  bool is_done() const { return queued_count == 0 && inflight_count == 0; }
+  bool is_done() const {
+    return !detached && queued_count == 0 && inflight_count == 0;
+  }
 
   GURL url;
   size_t queued_count;
   size_t inflight_count = 0;
   bool was_canceled = false;
+  bool detached = false;
 };
 
 // Stores all data need for running a preresolve and a subsequent optional
@@ -82,6 +85,10 @@ class PreconnectManager {
   void Start(const GURL& url,
              const std::vector<GURL>& preconnect_origins,
              const std::vector<GURL>& preresolve_hosts);
+  // Starts special preconnect and preresolve jobs that are not cancellable and
+  // don't report about their completion.
+  void StartDetached(const std::vector<GURL>& preconnect_origins,
+                     const std::vector<GURL>& preresolve_hosts);
   // No additional jobs keyed by the |url| will be queued after this.
   void Stop(const GURL& url);
 
@@ -101,6 +108,8 @@ class PreconnectManager {
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
   std::list<PreresolveJob> queued_jobs_;
   std::map<GURL, std::unique_ptr<PreresolveInfo>> preresolve_info_;
+  // Special instance of PreresolveInfo that is never done.
+  std::unique_ptr<PreresolveInfo> detached_info_;
   size_t inflight_preresolves_count_ = 0;
 
   base::WeakPtrFactory<PreconnectManager> weak_factory_;
