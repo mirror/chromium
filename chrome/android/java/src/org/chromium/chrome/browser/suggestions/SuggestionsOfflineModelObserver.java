@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.suggestions;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import org.chromium.base.Callback;
 import org.chromium.chrome.browser.offlinepages.DeletedPageInfo;
@@ -79,8 +80,11 @@ public abstract class SuggestionsOfflineModelObserver<T extends OfflinableSugges
                 suggestion.getUrl(), /*tabId=*/0, new Callback<OfflinePageItem>() {
                     @Override
                     public void onResult(OfflinePageItem item) {
-                        onSuggestionOfflineIdChanged(
-                                suggestion, item == null ? null : item.getOfflineId());
+                        boolean isPrefetched = item != null
+                                && TextUtils.equals(item.getClientId().getNamespace(),
+                                           OfflinePageBridge.SUGGESTED_ARTICLES_NAMESPACE);
+                        onSuggestionOfflineIdChanged(suggestion,
+                                item == null ? null : item.getOfflineId(), isPrefetched);
                     }
                 });
     }
@@ -89,8 +93,10 @@ public abstract class SuggestionsOfflineModelObserver<T extends OfflinableSugges
      * Called when the offline state of a suggestion is retrieved.
      * @param suggestion the suggestion for which the offline state was checked.
      * @param id the new offline id of the suggestion.
+     * @param isPrefetched whether the corresponding offline page has been automatically prefetched.
      */
-    public abstract void onSuggestionOfflineIdChanged(T suggestion, @Nullable Long id);
+    public abstract void onSuggestionOfflineIdChanged(
+            T suggestion, @Nullable Long id, boolean isPrefetched);
 
     /** Handle to the suggestions for which to observe changes. */
     public abstract Iterable<T> getOfflinableSuggestions();

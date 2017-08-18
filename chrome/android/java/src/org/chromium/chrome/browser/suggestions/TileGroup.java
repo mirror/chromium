@@ -559,7 +559,8 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
 
         @Override
-        public void onSuggestionOfflineIdChanged(Tile tile, @Nullable Long id) {
+        public void onSuggestionOfflineIdChanged(
+                Tile tile, @Nullable Long id, boolean isPrefetched) {
             boolean oldOfflineAvailable = tile.isOfflineAvailable();
             tile.setOfflinePageOfflineId(id);
 

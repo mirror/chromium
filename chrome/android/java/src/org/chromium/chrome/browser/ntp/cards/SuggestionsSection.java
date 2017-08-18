@@ -212,13 +212,15 @@ public class SuggestionsSection extends InnerNode {
             itemRemovedCallback.onResult(suggestion.mTitle);
         }
 
-        public void updateSuggestionOfflineId(SnippetArticle article, Long newId) {
+        public void updateSuggestionOfflineId(
+                SnippetArticle article, Long newId, boolean isPrefetched) {
             int index = mSuggestions.indexOf(article);
             // The suggestions could have been removed / replaced in the meantime.
             if (index == -1) return;
 
             Long oldId = article.getOfflinePageOfflineId();
             article.setOfflinePageOfflineId(newId);
+            article.setIsPrefetched(isPrefetched);
 
             if ((oldId == null) == (newId == null)) return;
             notifyItemChanged(
@@ -594,8 +596,9 @@ public class SuggestionsSection extends InnerNode {
         }
 
         @Override
-        public void onSuggestionOfflineIdChanged(SnippetArticle suggestion, @Nullable Long id) {
-            mSuggestionsList.updateSuggestionOfflineId(suggestion, id);
+        public void onSuggestionOfflineIdChanged(
+                SnippetArticle suggestion, @Nullable Long id, boolean isPrefetched) {
+            mSuggestionsList.updateSuggestionOfflineId(suggestion, id, isPrefetched);
         }
 
         @Override
