@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de2c6db9_d475a455",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T05:09:07Z",
+      "side": 1,
+      "message": "That\u0027s already on line 19. All these functions override those in FeedbackPrivateDelegate. Maybe Gerrit\u0027s presentation of the spacing between lines 24 and 25 made this look like its own newline-separated section?",
+      "parentUuid": "9a899e81_9aa2fcb8",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "398be3d526a4bc1631dc7abf96ba34320b4e5599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed082bb_d21fa6e8",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a864191b_61706537",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T05:09:07Z",
+      "side": 1,
+      "message": "There seems to be a LOT of code that\u0027s not exercised, including stuff in chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h. I\u0027ve filed crbug.com/756716 to check if it\u0027s okay to remove all of this. I\u0027ll avoid changing the idl or component extension in this CL to keep it manageable.",
+      "parentUuid": "1ed082bb_d21fa6e8",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 4
+      },
+      "revId": "398be3d526a4bc1631dc7abf96ba34320b4e5599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b6c0982_84465c4b",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-18T03:17:43Z",
       "side": 1,
       "message": "Here too.",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "398be3d526a4bc1631dc7abf96ba34320b4e5599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b072db_a5f3155b",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T05:09:07Z",
+      "side": 1,
+      "message": "Same as above. This corresponds to an extension function class in feedback_private_api.* that\u0027ll need to be removed as well.",
+      "parentUuid": "1b6c0982_84465c4b",
       "range": {
         "startLine": 176,
         "startChar": 4,
