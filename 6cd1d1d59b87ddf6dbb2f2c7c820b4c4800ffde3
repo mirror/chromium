@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d95991c_915268d1",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:14:02Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED();",
+      "range": {
+        "startLine": 1128,
+        "startChar": 2,
+        "endLine": 1128,
+        "endChar": 15
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583e6a23_592870d0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:14:02Z",
+      "side": 1,
+      "message": "Implements mojom::ServiceWorkerProviderHost.",
+      "range": {
+        "startLine": 411,
+        "startChar": 5,
+        "endLine": 411,
+        "endChar": 37
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2406587a_ca310edb",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:14:02Z",
+      "side": 1,
+      "message": "I think it\u0027d be better to put this comment between L.25-26.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e21c418a_7bb1dbab",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 1
@@ -13,6 +82,30 @@
       "writtenOn": "2017-08-16T12:15:01Z",
       "side": 1,
       "message": "I\u0027d like to impl only Register within this CL, and will pay attention to possible IPC ordering issue while investigating/implementing, if necessary will also impl other methods together. If you already have some concerns about this please let me know ;-)",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f896c21_c59294f1",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:14:02Z",
+      "side": 1,
+      "message": "That seems good for me:)",
+      "parentUuid": "e21c418a_7bb1dbab",
       "range": {
         "startLine": 21,
         "startChar": 2,
@@ -60,6 +153,30 @@
       "side": 1,
       "message": "Yes landing mojom changes sounds good",
       "parentUuid": "ac42c841_352a238a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "6cd1d1d59b87ddf6dbb2f2c7c820b4c4800ffde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7fe82c_6f6146ad",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T07:14:02Z",
+      "side": 1,
+      "message": "+1 to land it firstly.",
+      "parentUuid": "330aadee_1fc3d63d",
       "range": {
         "startLine": 7,
         "startChar": 0,
