@@ -46,7 +46,7 @@ std::unique_ptr<media::VideoCaptureJpegDecoder> CreateGpuJpegDecoder(
 // not on hardware performance.  For example, tab capture requires more buffers
 // than webcam capture because the pipeline is longer (it includes read-backs
 // pending in the GPU pipeline).
-const int kMaxNumberOfBuffers = 3;
+const int kMaxNumberOfBuffers = 9;
 // TODO(miu): The value for tab capture should be determined programmatically.
 // http://crbug.com/460318
 const int kMaxNumberOfBuffersForTabCapture = 10;

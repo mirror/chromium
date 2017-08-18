@@ -264,7 +264,7 @@ void VideoCaptureDeviceClient::OnIncomingCapturedData(
       // in positive src_width and src_height. Remove this hardcoded value when
       // negative src_height is supported. The negative src_height indicates
       // that vertical flipping is needed.
-      flip = true;
+      flip = false;
 #endif
       break;
     case media::PIXEL_FORMAT_RGB32:

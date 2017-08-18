@@ -19,6 +19,7 @@
 #include "base/win/scoped_variant.h"
 #include "media/base/media_switches.h"
 #include "media/base/win/mf_initializer.h"
+#include "media/capture/video/kinect_bgr/video_capture_device_kinect_bgr.h"
 #include "media/capture/video/win/video_capture_device_mf_win.h"
 #include "media/capture/video/win/video_capture_device_win.h"
 
@@ -337,6 +338,11 @@ VideoCaptureDeviceFactoryWin::VideoCaptureDeviceFactoryWin()
 std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
     const Descriptor& device_descriptor) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (device_descriptor.device_id == VideoCaptureDeviceKinectBgr::device_id()) {
+    return std::make_unique<VideoCaptureDeviceKinectBgr>();
+  }
+
   std::unique_ptr<VideoCaptureDevice> device;
   if (device_descriptor.capture_api == VideoCaptureApi::WIN_MEDIA_FOUNDATION) {
     DCHECK(PlatformSupportsMediaFoundation());
@@ -364,6 +370,13 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
 void VideoCaptureDeviceFactoryWin::GetDeviceDescriptors(
     VideoCaptureDeviceDescriptors* device_descriptors) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  device_descriptors->push_back(
+      VideoCaptureDeviceDescriptor(VideoCaptureDeviceKinectBgr::display_name(),
+                                   VideoCaptureDeviceKinectBgr::device_id(),
+                                   VideoCaptureApi::WIN_MEDIA_FOUNDATION,
+                                   VideoCaptureTransportType::OTHER_TRANSPORT));
+
   if (use_media_foundation_)
     GetDeviceDescriptorsMediaFoundation(device_descriptors);
   else
@@ -374,6 +387,12 @@ void VideoCaptureDeviceFactoryWin::GetSupportedFormats(
     const Descriptor& device,
     VideoCaptureFormats* formats) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (device.device_id == VideoCaptureDeviceKinectBgr::device_id()) {
+    VideoCaptureDeviceKinectBgr::GetSupportedFormats(formats);
+    return;
+  }
+
   if (use_media_foundation_)
     GetDeviceSupportedFormatsMediaFoundation(device, formats);
   else

@@ -162,12 +162,20 @@ component("capture_lib") {
   }
 
   if (is_win) {
-    deps += [ "//media/base/win" ]
+    sources += [
+      "video/kinect_bgr/video_capture_device_kinect_bgr.cc",
+      "video/kinect_bgr/video_capture_device_kinect_bgr.h",
+    ]
+    deps += [
+      ":kinect_bgr_dlls",
+      "//media/base/win",
+    ]
     libs = [
       "mf.lib",
       "mfplat.lib",
       "mfreadwrite.lib",
       "mfuuid.lib",
+      "//third_party/kinect_bgr/KinectVideoDevice.lib",
     ]
     ldflags = [
       "/DELAYLOAD:mf.dll",
@@ -203,6 +211,19 @@ component("capture_lib") {
       "//media/capture/video/chromeos/mojo:arc_camera3",
       "//mojo/edk/system",
       "//third_party/libsync",
+    ]
+  }
+}
+
+if (is_win) {
+  copy("kinect_bgr_dlls") {
+    sources = [
+      "//third_party/kinect_bgr/KinectVideoDevice.dll",
+      "//third_party/kinect_bgr/opencv_world320.dll",
+    ]
+
+    outputs = [
+      "$root_out_dir/{{source_file_part}}",
     ]
   }
 }
