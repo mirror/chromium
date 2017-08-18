@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c32330f8_b514fec5",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:09:22Z",
+      "side": 1,
+      "message": "Thanks, that makes sense.",
+      "parentUuid": "cd626398_576c32a7",
+      "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb73fe62_46452bfd",
         "filename": "content/renderer/service_worker/thread_safe_script_container.h",
         "patchSetId": 6
@@ -67,6 +85,24 @@
       "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c3ac8c_0926d163",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:09:22Z",
+      "side": 1,
+      "message": "Fair enough. Tried to remove the map and used IsInvalid() instead.",
+      "parentUuid": "eb73fe62_46452bfd",
+      "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
