@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4319aec6_95b7c365",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-18T06:08:58Z",
+      "side": 1,
+      "message": "Let\u0027s use |Base()| instead of |Start()| to avoid checking |IsBaseFirst()|.\n\nRootEditableElementOf(Base()) \u003d\u003d\nRootEditableElementOf(Extent()) \u003d\u003d\nRootEditableElementOf(Start()) \u003d\u003d\nRootEditableElementOf(End())\n\ndue by adjusting editing boundary during VisibleSelection::Validate()",
+      "revId": "5d2bf8eabf3fed59c86576b2dff8b14645ce5ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77694bdc_d4f1e0df",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
         "patchSetId": 2
