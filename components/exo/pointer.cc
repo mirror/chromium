@@ -185,26 +185,9 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
   // If target is different than the current pointer focus then we need to
   // generate enter and leave events.
   if (target != focus_surface_) {
-    // First generate a leave event if we currently have a target in focus.
-    if (focus_surface_) {
-      delegate_->OnPointerLeave(focus_surface_);
-      focus_surface_->RemoveSurfaceObserver(this);
-      // Require SetCursor() to be called and cursor to be re-defined in
-      // response to each OnPointerEnter() call.
-      focus_surface_->UnregisterCursorProvider(this);
-      focus_surface_ = nullptr;
-      cursor_ = ui::CursorType::kNull;
-      cursor_capture_weak_ptr_factory_.InvalidateWeakPtrs();
-    }
-    // Second generate an enter event if focus moved to a new target.
-    if (target) {
-      delegate_->OnPointerEnter(target, event->location_f(),
-                                event->button_flags());
-      location_ = event->location_f();
-      focus_surface_ = target;
-      focus_surface_->AddSurfaceObserver(this);
-      focus_surface_->RegisterCursorProvider(this);
-    }
+    ReleaseFocusSurface();
+    if (target)
+      AcquireFocusSurface(target, event->location_f(), event->button_flags());
     delegate_->OnPointerFrame();
   }
 
@@ -287,6 +270,20 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
 
 void Pointer::OnScrollEvent(ui::ScrollEvent* event) {
   OnMouseEvent(event);
+}
+
+void Pointer::OnTouchEvent(ui::TouchEvent* event) {
+  Surface* target = GetEffectiveTargetForEvent(event);
+
+  // Simulate pointer entering and leaving a surface together with touch
+  // events, as pointer enter/leave events are used to control hover states.
+  if (target != focus_surface_) {
+    ReleaseFocusSurface();
+    if (target)
+      AcquireFocusSurface(target, event->location_f(),
+                          0 /* pressed_button_flags */);
+    delegate_->OnPointerFrame();
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -431,6 +428,30 @@ void Pointer::UpdateCursor() {
       aura::client::GetCursorClient(root_window);
   if (cursor_client)
     cursor_client->SetCursor(cursor_);
+}
+
+void Pointer::ReleaseFocusSurface() {
+  if (focus_surface_) {
+    delegate_->OnPointerLeave(focus_surface_);
+    focus_surface_->RemoveSurfaceObserver(this);
+    // Require SetCursor() to be called and cursor to be re-defined in
+    // response to each OnPointerEnter() call.
+    focus_surface_->UnregisterCursorProvider(this);
+    focus_surface_ = nullptr;
+    cursor_ = ui::CursorType::kNull;
+    cursor_capture_weak_ptr_factory_.InvalidateWeakPtrs();
+  }
+}
+
+void Pointer::AcquireFocusSurface(Surface* target,
+                                  const gfx::PointF& location,
+                                  int pressed_button_flags) {
+  DCHECK(target);
+  delegate_->OnPointerEnter(target, location, pressed_button_flags);
+  location_ = location;
+  focus_surface_ = target;
+  focus_surface_->AddSurfaceObserver(this);
+  focus_surface_->RegisterCursorProvider(this);
 }
 
 }  // namespace exo

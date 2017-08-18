@@ -127,6 +127,48 @@ TEST_F(PointerTest, OnPointerLeave) {
   pointer.reset();
 }
 
+TEST_F(PointerTest, OnPointerLeave_BecauseOfTouch) {
+  std::unique_ptr<Surface> surface(new Surface);
+  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  gfx::Size buffer_size(10, 10);
+  std::unique_ptr<Buffer> buffer(
+      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
+  surface->Attach(buffer.get());
+  surface->Commit();
+
+  MockPointerDelegate delegate;
+  std::unique_ptr<Pointer> pointer(new Pointer(&delegate));
+
+  {
+    ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow());
+
+    EXPECT_CALL(delegate, CanAcceptPointerEventsForSurface(surface.get()))
+        .WillRepeatedly(testing::Return(true));
+    EXPECT_CALL(delegate, OnPointerFrame()).Times(1);
+    EXPECT_CALL(delegate, OnPointerEnter(surface.get(), gfx::PointF(), 0));
+    generator.MoveMouseTo(surface->window()->GetBoundsInScreen().origin());
+
+    // No switching surface, so no pointer leave expected.
+    EXPECT_CALL(delegate, OnPointerLeave(surface.get())).Times(0);
+    generator.PressTouchId(1);
+  }
+
+  {
+    // Going out of the surface bounds. Recreate the generator, so the new touch
+    // event is not send to the previous dispatcher set by mouse move.
+    // TODO(mtomasz): Modify EventGenerator to support this scenario without
+    // a need to recreate it.
+    ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow());
+
+    EXPECT_CALL(delegate, OnPointerFrame()).Times(1);
+    EXPECT_CALL(delegate, OnPointerLeave(surface.get())).Times(1);
+    generator.PressTouchId(2);
+  }
+
+  EXPECT_CALL(delegate, OnPointerDestroying(pointer.get()));
+  pointer.reset();
+}
+
 TEST_F(PointerTest, OnPointerMotion) {
   std::unique_ptr<Surface> surface(new Surface);
   std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
