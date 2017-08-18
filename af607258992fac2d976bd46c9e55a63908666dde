@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1f6fe25_e0936ff2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64076,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T06:02:58Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, fixed.",
+      "parentUuid": "fc11f07c_e9b77c43",
+      "range": {
+        "startLine": 64076,
+        "startChar": 17,
+        "endLine": 64076,
+        "endChar": 34
+      },
+      "revId": "af607258992fac2d976bd46c9e55a63908666dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a6bbbd_d1fde949",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "af607258992fac2d976bd46c9e55a63908666dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92500146_7f0913bb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64079,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T06:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19a6bbbd_d1fde949",
+      "range": {
+        "startLine": 64079,
+        "startChar": 4,
+        "endLine": 64079,
+        "endChar": 18
+      },
+      "revId": "af607258992fac2d976bd46c9e55a63908666dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
