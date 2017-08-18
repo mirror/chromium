@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6aa8eb77_9450314c",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T06:03:55Z",
+      "side": 1,
+      "message": "\u003e (2) (looks over killing. just INSIDE_BLINK looks enough)\n\nHiding actual fields in INSIDE_BLINK would make the exposed struct size incompatible, we\u0027ll need to follow pimpl pattern for member fields.\n\n\u003e I would appreciate something that wouldn\u0027t take me (i.e. a green intern) too much time\n\nYep, I\u0027ll try reducing discussion time, while we\u0027ll anyway need to add some conversion code somewhere as far as we want to share the code both inside and outside the Blink. It shouldn\u0027t be hard, but just a little more typing.\n\nAnyways in short I think both I and Takeshi are suggesting that only using std:: (and base::) types for the things that are exposed (e.g. HTTPSet/HTTPMap in WebCORS), and using pimpl pattern for the things that can be hidden inside .cpp (e.g. private fields).\n\nI think I can possibly help some of these if you feel you\u0027ll need some extra investigation to do that.",
+      "parentUuid": "e93ca2b8_7f8b251e",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5b883a_dc6fe362",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
