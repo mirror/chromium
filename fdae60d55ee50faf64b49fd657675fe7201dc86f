@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a08f2ae_fe2b788d",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-18T01:15:07Z",
+      "side": 1,
+      "message": "use \\ to break up the line",
+      "revId": "fdae60d55ee50faf64b49fd657675fe7201dc86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7634ba73_ab53c7aa",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-18T01:15:07Z",
+      "side": 1,
+      "message": "Move this in a \"finally\" so that cleanup takes place for early exits?",
+      "revId": "fdae60d55ee50faf64b49fd657675fe7201dc86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
