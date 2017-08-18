@@ -303,8 +303,10 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
       params.context_group
           ? params.context_group->decoder_->GetContextGroup()
           : new gles2::ContextGroup(
-                service_->gpu_preferences(), service_->mailbox_manager(),
-                nullptr /* memory_tracker */,
+                service_->gpu_preferences(),
+                gles2::CreatePassthroughCommandDecoders(
+                    service_->gpu_preferences()),
+                service_->mailbox_manager(), nullptr /* memory_tracker */,
                 service_->shader_translator_cache(),
                 service_->framebuffer_completeness_cache(), feature_info,
                 bind_generates_resource, service_->image_manager(),
@@ -359,18 +361,16 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
     if (!context_.get()) {
       context_ = gl::init::CreateGLContext(
           gl_share_group_.get(), surface_.get(),
-          GenerateGLContextAttribs(
-              params.attribs, decoder_->GetContextGroup()->gpu_preferences()));
+          GenerateGLContextAttribs(params.attribs,
+                                   decoder_->GetContextGroup()));
       gl_share_group_->SetSharedContext(surface_.get(), context_.get());
     }
 
     context_ = new GLContextVirtual(gl_share_group_.get(), context_.get(),
                                     decoder_->AsWeakPtr());
     if (context_->Initialize(
-            surface_.get(),
-            GenerateGLContextAttribs(
-                params.attribs,
-                decoder_->GetContextGroup()->gpu_preferences()))) {
+            surface_.get(), GenerateGLContextAttribs(
+                                params.attribs, decoder_->GetContextGroup()))) {
       VLOG(1) << "Created virtual GL context.";
     } else {
       context_ = NULL;
@@ -378,8 +378,7 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
   } else {
     context_ = gl::init::CreateGLContext(
         gl_share_group_.get(), surface_.get(),
-        GenerateGLContextAttribs(
-            params.attribs, decoder_->GetContextGroup()->gpu_preferences()));
+        GenerateGLContextAttribs(params.attribs, decoder_->GetContextGroup()));
   }
 
   if (!context_.get()) {
