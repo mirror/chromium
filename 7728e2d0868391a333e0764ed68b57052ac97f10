@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b48e0a7_61c08af1",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-18T16:36:57Z",
+      "side": 1,
+      "message": "This probably means that tasks posted on this task runner run asynchronously (as they are posted) and not on RunUntilIdle, but I guess we\u0027re fine with that. Maksim, WDYT?\n\n(OTOH, with regard to tasks posted through base::PostTasks, we don\u0027t pass QUEUED to scoped_task_environment_  and it\u0027s default seems to be ASYNC, so it shouldn\u0027t make much of a difference).",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 47
+      },
+      "revId": "7728e2d0868391a333e0764ed68b57052ac97f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdad812_fe4540d7",
+        "filename": "components/policy/core/common/configuration_policy_provider_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-18T16:36:57Z",
+      "side": 1,
+      "message": "Sorry to pester you with this, https://cs.chromium.org/chromium/src/base/test/scoped_task_environment.h?rcl\u003d15129ee4d7fc6670e9be038faef846e0668b2255\u0026l\u003d44 suggests that scoped_task_environment_ should be the first member. Could you please do that change (and add a comment that it\u0027s supposed to be the first member)? :) Thanks!",
+      "range": {
+        "startLine": 57,
+        "startChar": 36,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "7728e2d0868391a333e0764ed68b57052ac97f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
