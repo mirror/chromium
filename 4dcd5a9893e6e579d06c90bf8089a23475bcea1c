@@ -16,6 +16,24 @@
       "revId": "4dcd5a9893e6e579d06c90bf8089a23475bcea1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d725e1_fdcbbe05",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T16:49:47Z",
+      "side": 1,
+      "message": "It does, but after checking for |nullptr|.\n\nI\u0027ve added a comment to .h file where the member is defined.\n\n\"// |nullptr| is handled gracefully and just disables the functionality.\"",
+      "parentUuid": "766aa8a2_928678c5",
+      "revId": "4dcd5a9893e6e579d06c90bf8089a23475bcea1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
