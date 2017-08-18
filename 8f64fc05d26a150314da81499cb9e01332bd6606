@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "843cbe6f_05e6f055",
+        "filename": "third_party/WebKit/Source/platform/heap/GarbageCollected.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-18T12:47:00Z",
+      "side": 1,
+      "message": "I generalized IsHeapObjectAlive to GetHeapObjectHeader. However, we still need one additional method on all mixins.\n\nI remember that there was a noticeable (albeit not super large) improvement in code size when I removed similar calls in the past. WDYT?",
+      "range": {
+        "startLine": 76,
+        "startChar": 28,
+        "endLine": 76,
+        "endChar": 47
+      },
+      "revId": "8f64fc05d26a150314da81499cb9e01332bd6606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
