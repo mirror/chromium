@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "205472a2_9ea8f9ba",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T21:13:12Z",
+      "side": 1,
+      "message": "Would we want to delete this matcher eventually?",
+      "range": {
+        "startLine": 203,
+        "startChar": 1,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c292d2c_5e796a1c",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T21:13:12Z",
+      "side": 1,
+      "message": "Sorry, I just want to clarify. Are both of these methods doing the exact same thing? calling SignInMenuButton()?\n\nBut with a later change, we will change so these methods do different things?",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
