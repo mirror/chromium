@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "5112b642_8b4338b8",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T20:33:48Z",
+      "side": 1,
+      "message": "Yeah good point wrt interstitial, I suspect that is all subject to change with the recent project to de-insanify interstitials though (e.g. make them real committed navs).\n\nIn any case yeah I agree I am not changing behavior with this CL, and it looks like content owners are now discussing removing virtual URLs entirely, so would help simplify this a lot.",
+      "parentUuid": "2751d2e1_cd25cd7c",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9508f56c_7257a467",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
