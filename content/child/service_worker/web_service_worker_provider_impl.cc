@@ -22,9 +22,8 @@ namespace content {
 
 WebServiceWorkerProviderImpl::WebServiceWorkerProviderImpl(
     ThreadSafeSender* thread_safe_sender,
-    ServiceWorkerProviderContext* context)
-    : thread_safe_sender_(thread_safe_sender),
-      context_(context) {
+    scoped_refptr<ServiceWorkerProviderContext> context)
+    : thread_safe_sender_(thread_safe_sender), context_(context) {
   DCHECK(context_);
 }
 

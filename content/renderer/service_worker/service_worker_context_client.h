@@ -261,8 +261,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void Send(IPC::Message* message);
   void SendWorkerStarted();
   void SetRegistrationInServiceWorkerGlobalScope(
-      const ServiceWorkerRegistrationObjectInfo& info,
-      const ServiceWorkerVersionAttributes& attrs);
+      scoped_refptr<ServiceWorkerProviderContext> provider_context);
 
   // mojom::ServiceWorkerEventDispatcher
   void DispatchInstallEvent(
@@ -382,7 +381,8 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   scoped_refptr<base::TaskRunner> worker_task_runner_;
 
-  scoped_refptr<ServiceWorkerProviderContext> provider_context_;
+  // This is valid from the ctor to WorkerContextStarted.
+  scoped_refptr<ServiceWorkerProviderContext> pending_provider_context_;
 
   // Not owned; this object is destroyed when proxy_ becomes invalid.
   blink::WebServiceWorkerContextProxy* proxy_;

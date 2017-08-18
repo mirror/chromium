@@ -626,7 +626,7 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
   // we can observe its requests.
   pending_network_provider_ = ServiceWorkerNetworkProvider::CreateForController(
       std::move(provider_info));
-  provider_context_ = pending_network_provider_->context();
+  pending_provider_context_ = pending_network_provider_->context();
 
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker",
                                     "ServiceWorkerContextClient", this,
@@ -760,18 +760,14 @@ void ServiceWorkerContextClient::WorkerContextStarted(
   // willDestroyWorkerContext.
   context_.reset(new WorkerContextData(this));
 
-  ServiceWorkerRegistrationObjectInfo registration_info;
-  ServiceWorkerVersionAttributes version_attrs;
-  provider_context_->GetRegistration(&registration_info, &version_attrs);
-  DCHECK_NE(registration_info.registration_id,
-            kInvalidServiceWorkerRegistrationId);
-
   DCHECK(pending_dispatcher_request_.is_pending());
   DCHECK(!context_->event_dispatcher_binding.is_bound());
   context_->event_dispatcher_binding.Bind(
       std::move(pending_dispatcher_request_));
 
-  SetRegistrationInServiceWorkerGlobalScope(registration_info, version_attrs);
+  // No need to keep |pending_provider_context_| any more after this time point.
+  SetRegistrationInServiceWorkerGlobalScope(
+      std::move(pending_provider_context_));
 
   (*instance_host_)->OnThreadStarted(WorkerThread::GetCurrentId());
 
@@ -1205,6 +1201,10 @@ std::unique_ptr<blink::WebWorkerFetchContext>
 ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  // This function is sure to be called before worker thread starts up, i.e.
+  // before WorkerContextStarted(), so |pending_provider_context_| is still
+  // non-null.
+  DCHECK(pending_provider_context_);
   mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
   RenderThreadImpl::current()
       ->blink_platform_impl()
@@ -1214,17 +1214,20 @@ ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<ServiceWorkerFetchContextImpl>(
       script_url_, worker_url_loader_factory_provider.PassInterface(),
-      provider_context_->provider_id());
+      pending_provider_context_->provider_id());
 }
 
 std::unique_ptr<blink::WebServiceWorkerProvider>
 ServiceWorkerContextClient::CreateServiceWorkerProvider() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
-  DCHECK(provider_context_);
+  // This function is sure to be called before worker thread starts up, i.e.
+  // before WorkerContextStarted(), so |pending_provider_context_| is still
+  // non-null.
+  DCHECK(pending_provider_context_);
 
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<WebServiceWorkerProviderImpl>(
-      sender_.get(), provider_context_.get());
+      sender_.get(), pending_provider_context_);
 }
 
 void ServiceWorkerContextClient::PostMessageToClient(
@@ -1362,12 +1365,16 @@ void ServiceWorkerContextClient::SendWorkerStarted() {
 }
 
 void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
-    const ServiceWorkerRegistrationObjectInfo& info,
-    const ServiceWorkerVersionAttributes& attrs) {
+    scoped_refptr<ServiceWorkerProviderContext> provider_context) {
   DCHECK(worker_task_runner_->RunsTasksInCurrentSequence());
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
           sender_.get(), main_thread_task_runner_.get());
+
+  ServiceWorkerRegistrationObjectInfo info;
+  ServiceWorkerVersionAttributes attrs;
+  provider_context->GetRegistration(&info, &attrs);
+  DCHECK_NE(info.registration_id, kInvalidServiceWorkerRegistrationId);
 
   // Register a registration and its version attributes with the dispatcher
   // living on the worker thread.
