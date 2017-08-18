@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "781649e4_22b4f422",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "no namespace under chrome/browser. (some files still have namespace but that\u0027s due to historical reason)\n\njust remove \"keyboard\" and update the comment \"// namespace keyboard\" below.",
+      "parentUuid": "9e8f3fa2_3745a446",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cd7aee9_14a2cde6",
         "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
         "patchSetId": 4
@@ -42,6 +66,120 @@
         "endLine": 57,
         "endChar": 64
       },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3544895b_fde8fd6b",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "this is old format. new format is\n\n// content::WebContentsDelegate:",
+      "range": {
+        "startLine": 106,
+        "startChar": 21,
+        "endLine": 106,
+        "endChar": 28
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f748b3d2_9351aeaf",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "this is optional here (when you can easily see the name of the namespace), but please be consistent with other namespace around it.\n\nSince other namespaces (aura/gfx/wm etc) do not have it, I\u0027d just remove it.",
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985e44c8_a0b10b42",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "const method?",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d924d6e0_d97d7f9d",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "put this class definition in anonymous namespace.",
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b92244_51561eca",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "include macros\n\nthen\n\nDISALLOW_COPY_AND_ASSIGN",
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c300c585_173491e2",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-18T16:49:18Z",
+      "side": 1,
+      "message": "instead of defining new class, please do:\n\nusing ChromeRenderViewHostTestHarness \u003d ChromeKeyboardUITest;",
       "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
