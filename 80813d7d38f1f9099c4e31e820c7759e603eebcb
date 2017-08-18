@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f61413_f9fa3abd",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T16:00:28Z",
+      "side": 1,
+      "message": "nit: compile this as a constant at module scope",
+      "revId": "80813d7d38f1f9099c4e31e820c7759e603eebcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

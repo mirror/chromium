@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b95e5503_c8861d0e",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T16:00:28Z",
+      "side": 1,
+      "message": "Yeah, I think that\u0027s ok if you compile that as a constant at module scope here. We should make _THREADTIME_RE_FORMAT public, though.",
+      "parentUuid": "ca346f2e_378763d9",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eb0572f_d26269f5",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 9
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "See previous comment.",
       "parentUuid": "afd7762a_aba03b18",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faba391_2824e7be",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T16:00:28Z",
+      "side": 1,
+      "message": "Same :)",
+      "parentUuid": "9972611a_b7ae7f4a",
       "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
