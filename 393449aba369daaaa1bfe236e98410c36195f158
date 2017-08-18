@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a261fcc8_ae2e4afb",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T07:36:30Z",
+      "side": 1,
+      "message": "Looks complicated...\n\nNo entry -\u003e kPending\nEntry exists, but data is null -\u003e kSuccess(Taken)\nEntry exists, but data is invalid -\u003e kFailed\nEntry exists, and data is valid -\u003e kSuccess(NotTaken)",
+      "parentUuid": "8fbea4a1_a4e8f591",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c04ce4d7_a5e364d5",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 8
