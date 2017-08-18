@@ -166,7 +166,16 @@ void RendererWebMediaPlayerDelegate::ClearStaleFlag(int player_id) {
   // time idle cleanup runs.
   idle_player_map_[player_id] = tick_clock_->NowTicks() - idle_timeout_;
 
-  ScheduleUpdateTask();
+  // No need to call Update immediately, just make sure the idle
+  // timer is running. Calling ScheduleUpdateTask() here will cause
+  // immediate cleanup, and if that fails, this function gets called
+  // again which uses 100% cpu until resolved.
+  if (!idle_cleanup_timer_.IsRunning()) {
+    idle_cleanup_timer_.Start(
+        FROM_HERE, idle_cleanup_interval_,
+        base::Bind(&RendererWebMediaPlayerDelegate::UpdateTask,
+                   base::Unretained(this)));
+  }
 }
 
 bool RendererWebMediaPlayerDelegate::IsStale(int player_id) {
