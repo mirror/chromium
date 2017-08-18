@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a789656_bd2521b0",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T18:38:26Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "02d0ebbc_cbc2f0cf",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1779ab31_7bca61ff",
         "filename": "components/viz/host/renderer_settings_creation.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T15:10:30Z",
       "side": 1,
       "message": "If you have spare time (i.e. no action is required as part of this CL), I think that it might be nice to pull this out and put it in base::CommandLine.",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17fbb2b_a830e703",
+        "filename": "components/viz/host/renderer_settings_creation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T18:38:26Z",
+      "side": 1,
+      "message": "Thanks. I created a bug to do this and assign to myself: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756974",
+      "parentUuid": "1779ab31_7bca61ff",
       "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca5922c8_2e8a90f2",
+        "filename": "services/viz/compositing/privileged/interfaces/renderer_settings.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T18:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b026de52_3e02c055",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cf8ee25_b0ee889f",
         "filename": "ui/base/ui_base_switches.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-18T15:10:30Z",
       "side": 1,
       "message": "\"scale factor\" means something else in the compositor. How about \"slow down factor\" here to match the name of the option?",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480a34a6_587b5df1",
+        "filename": "ui/base/ui_base_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T18:38:26Z",
+      "side": 1,
+      "message": "Changed to slow down factor.",
+      "parentUuid": "8cf8ee25_b0ee889f",
       "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794e0928_d8a09e6a",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T18:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d97954ca_3e39a18f",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
