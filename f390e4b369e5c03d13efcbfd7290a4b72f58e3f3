@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d80768a_a00cf4ed",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-18T15:20:48Z",
+      "side": 1,
+      "message": "Alright, but since the WebFrameSchedulerImpl needs to call these methods, then its parameters need to be MainThreadTaskQueues instead of TaskQueues.",
+      "parentUuid": "3995d8e1_5630bf8a",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1fe3fda_7a6eaf88",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T19:39:46Z",
       "side": 1,
       "message": "We\u0027re not calling observer_ in the block below, are we? Do we need this change?",
+      "range": {
+        "startLine": 515,
+        "startChar": 56,
+        "endLine": 515,
+        "endChar": 65
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ed5449_236e0a17",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-18T15:20:48Z",
+      "side": 1,
+      "message": "I think it\u0027s needed. I\u0027m trying to account for the fact that the RendererSchedulerImpl is no longer a |task_time_observers_| (think about the case when before it was the only task_time_observer). |observer_| is set on the constructor of RendererSchedulerImpl, and is reset to nullptr on SchedulerHelper::Shutdown, which resets the TaskQueueManager.\n\nI think this check should always be true when the SchedulerHelper comes from the RendererSchedulerImpl. Before, it would set itself as a TaskTimeObserver. Now, it will always set the |observer_|.",
+      "parentUuid": "e1fe3fda_7a6eaf88",
       "range": {
         "startLine": 515,
         "startChar": 56,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9c457679_e4852c91",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-18T15:20:48Z",
+      "side": 1,
+      "message": "It\u0027s set iff |task_start_time| is set, so yea we should have gone through line 520 if we are here.",
+      "parentUuid": "5cba24fd_fc5603d4",
+      "range": {
+        "startLine": 559,
+        "startChar": 22,
+        "endLine": 559,
+        "endChar": 27
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ae0d88b_fcb3472d",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2afb09_a2f43654",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-18T15:20:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ae0d88b_fcb3472d",
+      "range": {
+        "startLine": 265,
+        "startChar": 36,
+        "endLine": 265,
+        "endChar": 43
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
