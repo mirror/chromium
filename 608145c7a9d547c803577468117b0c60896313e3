@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32014b27_4dd7ea5b",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-18T16:42:22Z",
+      "side": 1,
+      "message": "You can use |\u003d here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 42,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "608145c7a9d547c803577468117b0c60896313e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000cbfd1_acb8cb0e",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-18T16:42:22Z",
+      "side": 1,
+      "message": "My comment in the previous review was wrong: the \"additional information\" is the 5 bits encoded in the initial byte (https://tools.ietf.org/html/rfc7049#section-2), and |value| here doesn\u0027t have a real name. I guess it\u0027s sometimes called the \"unsigned integer\".\n\nSo, the function names you\u0027ve picked are exactly right, but this comment should change a bit.",
+      "range": {
+        "startLine": 69,
+        "startChar": 66,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "608145c7a9d547c803577468117b0c60896313e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
