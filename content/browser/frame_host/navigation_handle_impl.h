@@ -103,6 +103,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     DEFERRING_START,
     WILL_REDIRECT_REQUEST,
     DEFERRING_REDIRECT,
+    WILL_FAIL_REQUEST,
+    DEFERRING_FAILURE,
     CANCELING,
     WILL_PROCESS_RESPONSE,
     DEFERRING_RESPONSE,
@@ -300,6 +302,12 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       RenderProcessHost* post_redirect_process,
       const ThrottleChecksFinishedCallback& callback);
 
+  // Called when the URLRequest will fail.
+  // |callback| will be called when all throttles check have completed. This
+  // will allow the caller to explicitly cancel the navigation (with
+  // ERR_ABORTED) or let the failure proceed as normal.
+  void WillFailRequest(const ThrottleChecksFinishedCallback& callback);
+
   // Called when the URLRequest has delivered response headers and metadata.
   // |callback| will be called when all throttle checks have completed,
   // allowing the caller to cancel the navigation or let it proceed.
@@ -412,6 +420,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
+  NavigationThrottle::ThrottleCheckResult CheckWillFailRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillProcessResponse();
 
   void ResumeInternal();
