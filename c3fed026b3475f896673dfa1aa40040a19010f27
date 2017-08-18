@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "806ccdbe_3316ab1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-18T11:13:35Z",
+      "side": 1,
+      "message": "Nit: The correct spelling is Chrome OS.",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "c3fed026b3475f896673dfa1aa40040a19010f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
