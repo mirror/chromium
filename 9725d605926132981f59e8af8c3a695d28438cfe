@@ -52,6 +52,24 @@
       "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d65d1b_703a92e7",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-18T20:00:00Z",
+      "side": 1,
+      "message": "Changed to 123% to make it 16px.\n\nI think relative fonts are a bit too sensitive for us to just have \"123%\" as a shared value, since the parent\u0027s font-size will alter the resulting calculated font-size (unless we do a sweep across MD pages and apply stricter font-size rules).",
+      "parentUuid": "af095ace_bd8346a3",
+      "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
