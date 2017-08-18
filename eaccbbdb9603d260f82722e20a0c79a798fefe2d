@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e1eaaae_909e24ff",
+        "filename": "chrome/browser/ui/webui/sync_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1140424
+      },
+      "writtenOn": "2017-08-18T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "445ae5ff_6cc21809",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eed04333_23f82141",
         "filename": "components/sync/driver/resources/traffic_log.css",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d45dbf41_33b3f192",
+        "filename": "components/sync/driver/resources/traffic_log.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1140424
+      },
+      "writtenOn": "2017-08-18T17:16:14Z",
+      "side": 1,
+      "message": "haha missed that one. done.",
+      "parentUuid": "eed04333_23f82141",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5493816a_be7fb2ed",
         "filename": "components/sync/driver/resources/traffic_log.html",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9989ee68_8e11cf03",
+        "filename": "components/sync/driver/resources/traffic_log.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1140424
+      },
+      "writtenOn": "2017-08-18T17:16:14Z",
+      "side": 1,
+      "message": "I was gonna do it but looking at the code I don\u0027t think we have a single point of control over capture specifics settings. I think we\u0027d better leave it as is for now, and follow up with native hook to listen to changes and reflect in the UI (or control from single Js object)",
+      "parentUuid": "5493816a_be7fb2ed",
+      "revId": "eaccbbdb9603d260f82722e20a0c79a798fefe2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
