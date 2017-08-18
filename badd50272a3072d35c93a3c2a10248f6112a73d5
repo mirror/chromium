@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f79b3e1_0178efb4",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T17:10:34Z",
+      "side": 1,
+      "message": "I guess this is my fault. But GlobalMemoryDumpCallback should never be used anywhere. I think the service defines a callback. I dont see it used anywhere.",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "badd50272a3072d35c93a3c2a10248f6112a73d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73cbe30_9a8ca494",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T17:10:34Z",
+      "side": 1,
+      "message": "why is this not \"const base::trace_event::ProcessMemoryDump\u0026 pmd\"?\nbase::trace_event::ProcessMemoryDump* pmd would imply pmd is used as a return value.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "badd50272a3072d35c93a3c2a10248f6112a73d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fefc45_0c8584cc",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T17:10:34Z",
+      "side": 1,
+      "message": "we can remove this arg from AddDumpToTraceIfEnabled. There is AddOsDumpToTraceIfEnabled.",
+      "range": {
+        "startLine": 136,
+        "startChar": 18,
+        "endLine": 136,
+        "endChar": 38
+      },
+      "revId": "badd50272a3072d35c93a3c2a10248f6112a73d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
