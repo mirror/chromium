@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c98767_d45434c0",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "I think this would be better implemented as returning unique_ptr\u003cint\u003e or similar, so that we can differentiate from actually max concurrent and from an error.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7106b0e1_57212350",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "passing a pointer to stack object like this seems dangerous.  Why not just pass in a const ref and copy it into the PrefetchDownloaderQuota object?",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201b96b8_9b574f33",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "This task doesn\u0027t differentiate between successful return with zero downloads available and failure. I\u0027d prefer to make that distinction in the return value so we can handle them differently at some point.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8807e214_145b4051",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "\"largest\" should be removed.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae61f39_eacf0dc8",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "Need to subtract ready_item.archive_body_length from available_quota here",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95eb17a9_fa48c97d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "I think timedeltas can be constexpr, so you could do\n\nconstexpr base::TimeDelta kQuotaRefillTime \u003d base::TimeDelta::FromDays(1);\n\nthen use operator/ on the two timedeltas down in GetAvailableQuota.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957f2204_23d3887a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "nit: blank line afterwards",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108afff8_de165084",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "bytes?",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f03151_d9f1fc1c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "The shape of this api is somewhat susceptible to races.  Did you consider an API like:\n\nbool ReserveQuota(int64_t bytes) // returns whether allowed by quota, and reduces available quota if allowed.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca76c93_d8122e68",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "bytes?",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a45986_4e6da88a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "I\u0027d prefer something more explicit, the math here seems right but needs some explanation either in code or comments.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35aaf609_6752d844",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T20:31:33Z",
+      "side": 1,
+      "message": "nit: add comment that it updates to current time according to |clock_|",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
