@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4d6d0c0_c8820888",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T16:11:30Z",
+      "side": 1,
+      "message": "As discussed offline, moved this to WebContents::GetLastCommittedURL, which uses virtual urls in its implementation :)\n\nThis doesn\u0027t solve the particular worry, but since this is a very common technique for using content settings, we should probably figure out a solution at the WebContents level.\n\nMartin, I\u0027ve ccd you in case you have any experience with this particular problem.",
+      "parentUuid": "1e3d4ce6_9bdcfff3",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9508f56c_7257a467",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1e9a3b3b_810822cf",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T16:11:30Z",
+      "side": 1,
+      "message": "Sure, turned into DCHECK. I only kept this because existing code had it.",
+      "parentUuid": "9508f56c_7257a467",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d8b058f_8150addd",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8ada76_87d86ed8",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T16:11:30Z",
+      "side": 1,
+      "message": "I see, yes I like that solution best. Done",
+      "parentUuid": "0d8b058f_8150addd",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
