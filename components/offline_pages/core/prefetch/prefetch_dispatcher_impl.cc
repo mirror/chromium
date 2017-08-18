@@ -16,6 +16,7 @@
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
 #include "components/offline_pages/core/prefetch/download_archives_task.h"
 #include "components/offline_pages/core/prefetch/download_completed_task.h"
+#include "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
 #include "components/offline_pages/core/prefetch/import_archives_task.h"
@@ -109,7 +110,9 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
   task_queue_.AddTask(
       base::MakeUnique<StaleEntryFinalizerTask>(service_->GetPrefetchStore()));
 
-  // TODO(dimich): add more reconciliation tasks here.
+  task_queue_.AddTask(base::MakeUnique<GeneratePageBundleReconcileTask>(
+      service_->GetPrefetchStore(),
+      service_->GetPrefetchNetworkRequestFactory()));
 
   // This task should be last, because it is least important for correct
   // operation of the system, and because any reconciliation tasks might
