@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e03a354_5ffeacb9",
+        "filename": "chrome/traffic_annotation/annotations_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T06:45:12Z",
+      "side": 1,
+      "message": "I think there is a difference between this file and the enums.xml. AFAIK, in enums.xml, developers define a value and a label and use it in their code. But here the developers should select a unique id (text) for a new request in their code and they do not update/add this file manually.\nAfter one adds a new annotation (or modifies one), they should call the traffic_annotation_auditor to check the annotation, compute the hash code, check for collision or other problems, and automatically update this file. If they don\u0027t do that, all these tests are done in commit queue and errors are returned to the developer with instructions to run the auditor.\nGiven this, I think the only human reading of this file would be to check for existance of a specific unique id, or to add comments to one (as specified in https://docs.google.com/a/google.com/document/d/129Dkk9POQELDRxCIC5X8kghhcrQRXGRRvDA2ZCBxGj4/edit?usp\u003dsharing).\n\nWhat do you think?",
+      "parentUuid": "f628dbce_43d8864a",
+      "revId": "d37b345a8d22021ad74d88f2bddba4d572a723fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b368d4_a82ac3a1",
         "filename": "chrome/traffic_annotation/annotations_list.xml",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-17T14:51:58Z",
       "side": 1,
       "message": "There\u0027s a typo in the annotation.\n\nIt should be resource_dispatcher_host.",
+      "range": {
+        "startLine": 137,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "d37b345a8d22021ad74d88f2bddba4d572a723fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e980b6bb_7dab38a3",
+        "filename": "chrome/traffic_annotation/annotations_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T06:45:12Z",
+      "side": 1,
+      "message": "Thank you. This should be updated in the code (https://cs.chromium.org/chromium/src/content/browser/loader/resource_dispatcher_host_impl.cc?rcl\u003d1853e218a9f3634c89f476f0b5aad4b8a87eca08\u0026l\u003d138).\nI\u0027ll do it in another CL.",
+      "parentUuid": "49b368d4_a82ac3a1",
       "range": {
         "startLine": 137,
         "startChar": 11,
