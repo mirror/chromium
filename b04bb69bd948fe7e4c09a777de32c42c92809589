@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4c9fa22_dcc22cdb",
+        "filename": "ui/events/devices/device_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T15:13:54Z",
+      "side": 1,
+      "message": "I think this will call the default TouchDeviceTransform constructor kMaxDevNum times, then call the copy TouchDeviceTransform constructor 3*kMaxDevNum times to do the swap? I think the original would be optimize to just call the default constructor kMaxDevNum times?\n\nAlthough, |touch_map_| should probably just be a map of some sort anyways.",
+      "revId": "b04bb69bd948fe7e4c09a777de32c42c92809589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
