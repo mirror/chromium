@@ -139,16 +139,18 @@ void MainThreadDebugger::DidClearContextsForFrame(LocalFrame* frame) {
 
 void MainThreadDebugger::ContextCreated(ScriptState* script_state,
                                         LocalFrame* frame,
-                                        SecurityOrigin* origin) {
+                                        SecurityOrigin* origin,
+                                        String& world_type) {
   DCHECK(IsMainThread());
   v8::HandleScope handles(script_state->GetIsolate());
   DOMWrapperWorld& world = script_state->World();
   StringBuilder aux_data_builder;
-  aux_data_builder.Append("{\"isDefault\":");
-  aux_data_builder.Append(world.IsMainWorld() ? "true" : "false");
+  aux_data_builder.Append("{\"type\":");
+  aux_data_builder.Append(world_type);
   aux_data_builder.Append(",\"frameId\":\"");
   aux_data_builder.Append(IdentifiersFactory::FrameId(frame));
   aux_data_builder.Append("\"}");
+
   String aux_data = aux_data_builder.ToString();
   String human_readable_name =
       !world.IsMainWorld() ? world.NonMainWorldHumanReadableName() : String();
