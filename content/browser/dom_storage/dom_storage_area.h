@@ -65,7 +65,7 @@ class CONTENT_EXPORT DOMStorageArea
 
   const GURL& origin() const { return origin_; }
   int64_t namespace_id() const { return namespace_id_; }
-  size_t map_usage_in_bytes() const { return map_ ? map_->bytes_used() : 0; }
+  size_t map_memory_usage() const { return map_ ? map_->memory_usage() : 0; }
 
   // Writes a copy of the current set of values in the area to the |map|.
   void ExtractValues(DOMStorageValuesMap* map);
@@ -73,9 +73,13 @@ class CONTENT_EXPORT DOMStorageArea
   unsigned Length();
   base::NullableString16 Key(unsigned index);
   base::NullableString16 GetItem(const base::string16& key);
+
+  // |old_value| is changed only when DoesCacheOnlyKeys() is false. Otherwise
+  // |old_value| is not touched.
   bool SetItem(const base::string16& key, const base::string16& value,
                base::NullableString16* old_value);
   bool RemoveItem(const base::string16& key, base::string16* old_value);
+
   bool Clear();
   void FastClear();
 
@@ -85,6 +89,15 @@ class CONTENT_EXPORT DOMStorageArea
 
   bool HasUncommittedChanges() const;
   void ScheduleImmediateCommit();
+
+  // Stores only the keys in the in-memory cache when set to true. Changing this
+  // behavior will reload the cache only when needed and not immediately.
+  // Note: Do not use ExtractValues() frequently since will have a disk access
+  // when only keys are stored.
+  void SetCacheOnlyKeys(bool value);
+  bool DoesCacheOnlyKeys() const {
+    return desired_load_state_ == LOAD_STATE_KEYS_ONLY;
+  }
 
   // Similar to Clear() but more optimized for just deleting
   // without raising events.
@@ -100,25 +113,33 @@ class CONTENT_EXPORT DOMStorageArea
   // no longer do anything.
   void Shutdown();
 
-  // Returns true if the data is loaded in memory.
-  bool IsLoadedInMemory() const { return is_initial_import_done_; }
+  // Returns true if data needs to be loaded in memory.
+  bool IsMapReloadNeeded();
 
   // Adds memory statistics to |pmd| for chrome://tracing.
   void OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd);
 
  private:
   friend class DOMStorageAreaTest;
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, DOMStorageAreaBasics);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, DOMStorageAreaBasics);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, BackingDatabaseOpened);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, SetCacheOnlyKeysWithoutBacking);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, SetCacheOnlyKeysWithBacking);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, TestDatabaseFilePath);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitTasks);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitChangesAtShutdown);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, DeleteOrigin);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, PurgeMemory);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, CommitTasks);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, CommitChangesAtShutdown);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, DeleteOrigin);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, PurgeMemory);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, RateLimiter);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageContextImplTest, PersistentIds);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageContextImplTest, PurgeMemory);
   friend class base::RefCountedThreadSafe<DOMStorageArea>;
+
+  enum LoadState {
+    LOAD_STATE_UNLOADED = 0,
+    LOAD_STATE_KEYS_ONLY = 1,
+    LOAD_STATE_KEYS_AND_VALUES = 2
+  };
 
   // Used to rate limit commits.
   class CONTENT_EXPORT RateLimiter {
@@ -156,10 +177,19 @@ class CONTENT_EXPORT DOMStorageArea
 
   ~DOMStorageArea();
 
-  // If we haven't done so already and this is a local storage area,
-  // will attempt to read any values for this origin currently
-  // stored on disk.
-  void InitialImportIfNeeded();
+  // Attempt to read any values for this origin currently stored on disk. The
+  // read values are filled if |read_values| is not null and load was
+  // successful.
+  void LoadAtLeastDesiredState(DOMStorageValuesMap* read_values);
+
+  // Reads all values from the backing on disk. Also applies updates from commit
+  // batches if any.
+  void ReadValues(DOMStorageValuesMap* map);
+
+  // If the cache state is inconsistent with the map storage, purges the map and
+  // updates with new data if possible without reading from database. Noop if
+  // the area has uncommitted changes.
+  void UpdateMapIfPossible();
 
   // Post tasks to defer writing a batch of changed values to
   // disk on the commit sequence, and to call back on the primary
@@ -182,12 +212,14 @@ class CONTENT_EXPORT DOMStorageArea
   GURL origin_;
   base::FilePath directory_;
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
+  LoadState desired_load_state_;
+  LoadState load_state_;
   scoped_refptr<DOMStorageMap> map_;
   std::unique_ptr<DOMStorageDatabaseAdapter> backing_;
   scoped_refptr<SessionStorageDatabase> session_storage_backing_;
-  bool is_initial_import_done_;
   bool is_shutdown_;
   std::unique_ptr<CommitBatch> commit_batch_;
+  std::unique_ptr<CommitBatch> commit_batch_in_flight_;
   int commit_batches_in_flight_;
   base::TimeTicks start_time_;
   RateLimiter data_rate_limiter_;
