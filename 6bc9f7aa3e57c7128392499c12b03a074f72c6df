@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e79946a3_69b1b7db",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:02:50Z",
+      "side": 1,
+      "message": "nit: DOWNLOADED missing?",
+      "range": {
+        "startLine": 179,
+        "startChar": 45,
+        "endLine": 179,
+        "endChar": 56
+      },
+      "revId": "6bc9f7aa3e57c7128392499c12b03a074f72c6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
