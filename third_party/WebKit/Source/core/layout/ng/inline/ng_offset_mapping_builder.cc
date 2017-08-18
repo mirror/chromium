@@ -4,8 +4,9 @@
 
 #include "core/layout/ng/inline/ng_offset_mapping_builder.h"
 
+#include "core/layout/LayoutText.h"
+#include "core/layout/ng/inline/ng_offset_mapping_annotation.h"
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
-#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
@@ -20,10 +21,18 @@ NGOffsetMappingUnitType GetUnitLengthMappingType(unsigned value) {
   return NGOffsetMappingUnitType::kExpanded;
 }
 
+const LayoutText* GetNodeFromAnnotation(
+    const RefPtr<NGOffsetMappingAnnotation>& annotation) {
+  DCHECK(annotation.Get());
+  if (!annotation->IsNodeAnnotation())
+    return nullptr;
+  return ToNGNodeAnnotation(annotation.Get())->GetValue();
+}
+
 // Finds the offset mapping unit starting from index |start|.
 std::pair<NGOffsetMappingUnitType, unsigned> GetMappingUnitTypeAndEnd(
     const Vector<unsigned>& mapping,
-    const Vector<const LayoutText*>& annotation,
+    const Vector<RefPtr<NGOffsetMappingAnnotation>>& annotation,
     unsigned start) {
   DCHECK_LT(start + 1, mapping.size());
   NGOffsetMappingUnitType type =
@@ -33,7 +42,8 @@ std::pair<NGOffsetMappingUnitType, unsigned> GetMappingUnitTypeAndEnd(
 
   unsigned end = start + 1;
   for (; end + 1 < mapping.size(); ++end) {
-    if (annotation[end] != annotation[start])
+    if (GetNodeFromAnnotation(annotation[end]) !=
+        GetNodeFromAnnotation(annotation[start]))
       break;
     NGOffsetMappingUnitType next_type =
         GetUnitLengthMappingType(mapping[end + 1] - mapping[end]);
@@ -49,23 +59,26 @@ NGOffsetMappingBuilder::NGOffsetMappingBuilder() {
   mapping_.push_back(0);
 }
 
+NGOffsetMappingBuilder::~NGOffsetMappingBuilder() = default;
+
 void NGOffsetMappingBuilder::AppendIdentityMapping(unsigned length) {
   DCHECK_GT(length, 0u);
   DCHECK(!mapping_.IsEmpty());
   for (unsigned i = 0; i < length; ++i) {
     unsigned next = mapping_.back() + 1;
     mapping_.push_back(next);
+    annotation_.push_back(NGNullAnnotation::GetInstance());
   }
-  annotation_.resize(annotation_.size() + length);
 }
 
 void NGOffsetMappingBuilder::AppendCollapsedMapping(unsigned length) {
   DCHECK_GT(length, 0u);
   DCHECK(!mapping_.IsEmpty());
   const unsigned back = mapping_.back();
-  for (unsigned i = 0; i < length; ++i)
+  for (unsigned i = 0; i < length; ++i) {
     mapping_.push_back(back);
-  annotation_.resize(annotation_.size() + length);
+    annotation_.push_back(NGNullAnnotation::GetInstance());
+  }
 }
 
 void NGOffsetMappingBuilder::CollapseTrailingSpace(unsigned skip_length) {
@@ -82,8 +95,9 @@ void NGOffsetMappingBuilder::CollapseTrailingSpace(unsigned skip_length) {
   }
 }
 
-void NGOffsetMappingBuilder::Annotate(const LayoutText* layout_object) {
-  std::fill(annotation_.begin(), annotation_.end(), layout_object);
+void NGOffsetMappingBuilder::Annotate(
+    RefPtr<NGOffsetMappingAnnotation> annotation) {
+  std::fill(annotation_.begin(), annotation_.end(), annotation);
 }
 
 void NGOffsetMappingBuilder::Concatenate(const NGOffsetMappingBuilder& other) {
@@ -98,6 +112,8 @@ void NGOffsetMappingBuilder::Concatenate(const NGOffsetMappingBuilder& other) {
 void NGOffsetMappingBuilder::Composite(const NGOffsetMappingBuilder& other) {
   DCHECK(!mapping_.IsEmpty());
   DCHECK_EQ(mapping_.back() + 1, other.mapping_.size());
+  for (unsigned i = 0; i < annotation_.size(); ++i)
+    annotation_[i] = annotation_[i]->Composite(*other.annotation_[mapping_[i]]);
   for (unsigned i = 0; i < mapping_.size(); ++i)
     mapping_[i] = other.mapping_[mapping_[i]];
 }
@@ -110,17 +126,17 @@ NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
   unsigned inline_start = 0;
   unsigned unit_range_start = 0;
   for (unsigned start = 0; start + 1 < mapping_.size();) {
-    if (annotation_[start] != current_node) {
+    if (GetNodeFromAnnotation(annotation_[start]) != current_node) {
       if (current_node) {
         ranges.insert(current_node,
                       std::make_pair(unit_range_start, units.size()));
       }
-      current_node = annotation_[start];
+      current_node = GetNodeFromAnnotation(annotation_[start]);
       inline_start = start;
       unit_range_start = units.size();
     }
 
-    if (!annotation_[start]) {
+    if (!GetNodeFromAnnotation(annotation_[start])) {
       // Only extra characters are not annotated.
       DCHECK_EQ(mapping_[start] + 1, mapping_[start + 1]);
       ++start;
@@ -149,8 +165,8 @@ Vector<unsigned> NGOffsetMappingBuilder::DumpOffsetMappingForTesting() const {
   return mapping_;
 }
 
-Vector<const LayoutText*> NGOffsetMappingBuilder::DumpAnnotationForTesting()
-    const {
+Vector<RefPtr<NGOffsetMappingAnnotation>>
+NGOffsetMappingBuilder::DumpAnnotationForTesting() const {
   return annotation_;
 }
 

@@ -6,14 +6,14 @@
 #define NGOffsetMappingBuilder_h
 
 #include "core/CoreExport.h"
-#include "core/layout/LayoutText.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class NGOffsetMappingResult;
+class NGOffsetMappingAnnotation;
 
 // This is the helper class for constructing the DOM-to-TextContent offset
 // mapping. It holds an offset mapping, and provides APIs to modify the mapping
@@ -25,10 +25,11 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
  public:
   NGOffsetMappingBuilder();
+  ~NGOffsetMappingBuilder();
 
   // Associate the offset mapping with a simple annotation with the given node
   // as its value.
-  void Annotate(const LayoutText*);
+  void Annotate(RefPtr<NGOffsetMappingAnnotation>);
 
   // Append an identity offset mapping of the specified length with null
   // annotation to the builder.
@@ -65,7 +66,7 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
   // Exposed for testing only.
   Vector<unsigned> DumpOffsetMappingForTesting() const;
-  Vector<const LayoutText*> DumpAnnotationForTesting() const;
+  Vector<RefPtr<NGOffsetMappingAnnotation>> DumpAnnotationForTesting() const;
 
  private:
   // A mock implementation of the offset mapping builder that stores the mapping
@@ -75,7 +76,7 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
   // A mock implementation that stores the annotation value of all offsets in
   // the plain way. It will be replaced by a real implementation for efficiency.
-  Vector<const LayoutText*> annotation_;
+  Vector<RefPtr<NGOffsetMappingAnnotation>> annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingBuilder);
 };
