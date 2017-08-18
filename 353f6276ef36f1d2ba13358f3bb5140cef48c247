@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95a48280_9b290336",
+        "filename": "extensions/common/test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T14:52:06Z",
+      "side": 0,
+      "message": "Note: will remove this and others in subsequent CLs.",
+      "revId": "353f6276ef36f1d2ba13358f3bb5140cef48c247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
