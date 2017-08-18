@@ -22,6 +22,30 @@
       "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6e8042_09832172",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T20:01:42Z",
+      "side": 1,
+      "message": "Oops, I removed the link by accident. Added it back in.",
+      "parentUuid": "c765bd52_712f4386",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "2a44a7b28ab0a86028dbd6712ad0b9af93af6900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
