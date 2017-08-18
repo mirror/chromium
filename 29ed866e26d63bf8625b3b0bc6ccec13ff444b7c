@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2eaa7c4_96da16db",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T22:29:38Z",
+      "side": 1,
+      "message": "nit on my own naming suggestion :)\n\nRename to\n\nenum EnterpriseManagedStatusForTesting {\nENTERPRISE_MANAGED_STATUS_NOT_SET\nENTERPRISE_MANAGED_STATUS_TRUE\nENTERPRISE_MANAGED_STATUS_FALSE\n}\n\nso that all enums share the same prefix.",
+      "revId": "29ed866e26d63bf8625b3b0bc6ccec13ff444b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
