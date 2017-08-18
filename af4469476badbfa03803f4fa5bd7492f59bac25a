@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "9e8cd8ba_466b1f90",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T10:14:37Z",
+      "side": 1,
+      "message": "Hm, I feel EmbeddedWorkerInstanceClient is not the name that is super informative outside the service worker context, as its our internal impl detail. Could we use the name that tells that it\u0027s for ServiceWorker?  If we\u0027re renaming it with relevant code changes in a later patch it\u0027d be probably good too, but just felt slightly weird to see this at \u0027Renderer\u0027 interface surface.",
+      "parentUuid": "54d15e63_474fe374",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5715ba_ab6420c7",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 3
