@@ -10,8 +10,13 @@ Description:
 This contains a part of LZMA SDK 15.14.
 
 Local Modifications:
-Only the C code required to open 7z archive files and uncompress LZMA
-compression has been included.
+The original code can be found at http://7-zip.org/a/lzma1514.7z.  Only parts
+of this archive are copied here.  More specifically:
+
+1/ C code required to open 7z archive files and uncompress LZMA
+2/ C code for the 7zS2.sfx module
+3/ 7za.exe and 7zr.exe executables
+4/ 7zS2.sfx binary
 
 The patch in chromium.patch was applied to CpuArch.c to fix register corruption
 that can occur on 64-bit platforms built with -fPIC and register clobbering that
