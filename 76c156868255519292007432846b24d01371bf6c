@@ -22,6 +22,30 @@
       "revId": "76c156868255519292007432846b24d01371bf6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86177b66_a7dc1016",
+        "filename": "chrome/browser/resources/plugin_metadata/plugins_win.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-18T21:16:37Z",
+      "side": 1,
+      "message": "They are two different plugins. \"Chrome PDF Viewer\" is a BrowserPlugin which hosts an out-of-process renderer running the PDF component extension (https://cs.chromium.org/chromium/src/chrome/browser/resources/pdf/). \"Chrome PDF Plugin\" is the PPAPI pdf plugin.\n\nWe used to have 2 different plugins with the same name, I split them in https://crrev.com/478371 because this caused a few problems (mainly it wasn\u0027t spec-compatible).",
+      "parentUuid": "cf0e6cea_a91148cb",
+      "range": {
+        "startLine": 372,
+        "startChar": 13,
+        "endLine": 372,
+        "endChar": 30
+      },
+      "revId": "76c156868255519292007432846b24d01371bf6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
