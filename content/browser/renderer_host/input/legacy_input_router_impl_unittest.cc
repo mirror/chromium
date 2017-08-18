@@ -1552,6 +1552,7 @@ TEST_F(LegacyInputRouterImplTest,
   // End the touch sequence.
   ReleaseTouchPoint(0);
   uint32_t touch_release_event_id = SendTouchEvent();
+  printf("ACK should reset timeout\n");
   SendTouchEventACK(WebInputEvent::kTouchEnd, INPUT_EVENT_ACK_STATE_CONSUMED,
                     touch_release_event_id);
   EXPECT_TRUE(TouchEventTimeoutEnabled());
@@ -1620,11 +1621,10 @@ TEST_F(LegacyInputRouterImplTest, TouchActionResetBeforeEventReachesRenderer) {
   EXPECT_EQ(0U, GetSentMessageCountAndResetSink());
   SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
                        blink::kWebGestureDeviceTouchscreen);
-  SendScrollBeginAckIfNeeded(INPUT_EVENT_ACK_STATE_CONSUMED);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
                        blink::kWebGestureDeviceTouchscreen);
-  EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
+  EXPECT_EQ(0U, GetSentMessageCountAndResetSink());
   SendTouchEventACK(WebInputEvent::kTouchEnd, INPUT_EVENT_ACK_STATE_CONSUMED,
                     touch_release_event_id2);
 }

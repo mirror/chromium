@@ -705,7 +705,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DispatchInputEventWithLatencyInfo(const blink::WebInputEvent& event,
                                          ui::LatencyInfo* latency);
 
-  // InputAckHandler
+  // InputDispositionHandler
   void OnKeyboardEventAck(const NativeWebKeyboardEventWithLatencyInfo& event,
                           InputEventAckState ack_result) override;
   void OnMouseEventAck(const MouseEventWithLatencyInfo& event,
