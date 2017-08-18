@@ -20,7 +20,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -72,12 +71,9 @@ public class KeyboardHideHelperUnitTest {
     public void testHideNotifiedOnSizeDecrease_WithWindowDelegate() {
         mKeyboardHideHelper.setWindowDelegate(mWindowDelegate);
         final AtomicInteger height = new AtomicInteger(300);
-        Answer<Void> windowVisibleDisplayFrameAnswer = new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable {
-                ((Rect) invocation.getArgument(0)).set(0, 0, 100, height.get());
-                return null;
-            }
+        Answer<Void> windowVisibleDisplayFrameAnswer = invocation -> {
+            ((Rect) invocation.getArgument(0)).set(0, 0, 100, height.get());
+            return null;
         };
         Mockito.doAnswer(windowVisibleDisplayFrameAnswer)
                 .when(mWindowDelegate)

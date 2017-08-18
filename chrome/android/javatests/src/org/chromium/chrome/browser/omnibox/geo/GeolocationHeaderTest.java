@@ -222,45 +222,36 @@ public class GeolocationHeaderTest extends ChromeActivityTestCaseBase<ChromeActi
 
     private void checkHeaderWithPermissions(final ContentSetting httpsPermission,
             final long locationTime, final boolean shouldBeNull) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                GeolocationInfo infoHttps =
-                        new GeolocationInfo("https://www.google.de", null, false);
-                infoHttps.setContentSetting(httpsPermission);
-                String header = GeolocationHeader.getGeoHeader(
-                        "https://www.google.de/search?q=kartoffelsalat",
-                        getActivity().getActivityTab());
-                assertHeaderState(header, locationTime, shouldBeNull);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            GeolocationInfo infoHttps =
+                    new GeolocationInfo("https://www.google.de", null, false);
+            infoHttps.setContentSetting(httpsPermission);
+            String header = GeolocationHeader.getGeoHeader(
+                    "https://www.google.de/search?q=kartoffelsalat",
+                    getActivity().getActivityTab());
+            assertHeaderState(header, locationTime, shouldBeNull);
         });
     }
 
     private void checkHeaderWithPermissionAndSetting(final ContentSetting httpsPermission,
             final boolean settingValue, final long locationTime, final boolean shouldBeNull) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                GeolocationInfo infoHttps =
-                        new GeolocationInfo(SEARCH_URL_1, null, false);
-                infoHttps.setContentSetting(httpsPermission);
-                WebsitePreferenceBridge.setDSEGeolocationSetting(settingValue);
-                String header = GeolocationHeader.getGeoHeader(
-                        SEARCH_URL_1, getActivity().getActivityTab());
-                assertHeaderState(header, locationTime, shouldBeNull);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            GeolocationInfo infoHttps =
+                    new GeolocationInfo(SEARCH_URL_1, null, false);
+            infoHttps.setContentSetting(httpsPermission);
+            WebsitePreferenceBridge.setDSEGeolocationSetting(settingValue);
+            String header = GeolocationHeader.getGeoHeader(
+                    SEARCH_URL_1, getActivity().getActivityTab());
+            assertHeaderState(header, locationTime, shouldBeNull);
         });
     }
 
     private void checkHeaderWithLocation(final long locationTime, final boolean shouldBeNull) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                setMockLocation(locationTime);
-                String header = GeolocationHeader.getGeoHeader(SEARCH_URL_1,
-                        getActivity().getActivityTab());
-                assertHeaderState(header, locationTime, shouldBeNull);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            setMockLocation(locationTime);
+            String header = GeolocationHeader.getGeoHeader(SEARCH_URL_1,
+                    getActivity().getActivityTab());
+            assertHeaderState(header, locationTime, shouldBeNull);
         });
     }
 
@@ -299,12 +290,8 @@ public class GeolocationHeaderTest extends ChromeActivityTestCaseBase<ChromeActi
     private void assertNullHeader(final String url, final boolean isIncognito) {
         try {
             final Tab tab = loadUrlInNewTab("about:blank", isIncognito);
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    assertNull(GeolocationHeader.getGeoHeader(url, tab));
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> assertNull(GeolocationHeader.getGeoHeader(url, tab)));
         } catch (InterruptedException e) {
             fail(e.getMessage());
         }
@@ -314,13 +301,8 @@ public class GeolocationHeaderTest extends ChromeActivityTestCaseBase<ChromeActi
             final long locationTime, final boolean encodingType) {
         try {
             final Tab tab = loadUrlInNewTab("about:blank", isIncognito);
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    assertHeaderEquals(
-                            locationTime, encodingType, GeolocationHeader.getGeoHeader(url, tab));
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> assertHeaderEquals(
+                    locationTime, encodingType, GeolocationHeader.getGeoHeader(url, tab)));
         } catch (InterruptedException e) {
             fail(e.getMessage());
         }
