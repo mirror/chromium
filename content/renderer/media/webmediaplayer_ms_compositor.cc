@@ -128,11 +128,11 @@ scoped_refptr<media::VideoFrame> CopyFrame(
 }  // anonymous namespace
 
 WebMediaPlayerMSCompositor::WebMediaPlayerMSCompositor(
-    scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     const blink::WebMediaStream& web_stream,
     const base::WeakPtr<WebMediaPlayerMS>& player)
-    : compositor_task_runner_(compositor_task_runner),
+    : task_runner_(task_runner),
       io_task_runner_(io_task_runner),
       player_(player),
       video_frame_provider_client_(nullptr),
@@ -199,7 +199,7 @@ size_t WebMediaPlayerMSCompositor::dropped_frame_count() {
 
 void WebMediaPlayerMSCompositor::SetVideoFrameProviderClient(
     cc::VideoFrameProvider::Client* client) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   if (video_frame_provider_client_)
     video_frame_provider_client_->StopUsingProvider();
 
@@ -268,7 +268,7 @@ void WebMediaPlayerMSCompositor::EnqueueFrame(
 bool WebMediaPlayerMSCompositor::UpdateCurrentFrame(
     base::TimeTicks deadline_min,
     base::TimeTicks deadline_max) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
 
   TRACE_EVENT_BEGIN2("webmediaplayerms", "UpdateCurrentFrame",
                      "Actual Render Begin", deadline_min.ToInternalValue(),
@@ -322,7 +322,7 @@ WebMediaPlayerMSCompositor::GetCurrentFrameWithoutUpdatingStatistics() {
 
 void WebMediaPlayerMSCompositor::StartRendering() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  compositor_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebMediaPlayerMSCompositor::StartRenderingInternal,
                      this));
@@ -330,7 +330,7 @@ void WebMediaPlayerMSCompositor::StartRendering() {
 
 void WebMediaPlayerMSCompositor::StopRendering() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  compositor_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebMediaPlayerMSCompositor::StopRenderingInternal, this));
 }
@@ -348,7 +348,7 @@ void WebMediaPlayerMSCompositor::ReplaceCurrentFrameWithACopy() {
 
 void WebMediaPlayerMSCompositor::StopUsingProvider() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  compositor_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebMediaPlayerMSCompositor::StopUsingProviderInternal,
                      this));
@@ -357,7 +357,7 @@ void WebMediaPlayerMSCompositor::StopUsingProvider() {
 bool WebMediaPlayerMSCompositor::MapTimestampsToRenderTimeTicks(
     const std::vector<base::TimeDelta>& timestamps,
     std::vector<base::TimeTicks>* wall_clock_times) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread() ||
+  DCHECK(task_runner_->BelongsToCurrentThread() ||
          thread_checker_.CalledOnValidThread() ||
          io_task_runner_->BelongsToCurrentThread());
   for (const base::TimeDelta& timestamp : timestamps) {
@@ -369,7 +369,7 @@ bool WebMediaPlayerMSCompositor::MapTimestampsToRenderTimeTicks(
 
 void WebMediaPlayerMSCompositor::Render(base::TimeTicks deadline_min,
                                         base::TimeTicks deadline_max) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread() ||
+  DCHECK(task_runner_->BelongsToCurrentThread() ||
          thread_checker_.CalledOnValidThread());
   current_frame_lock_.AssertAcquired();
   last_deadline_max_ = deadline_max;
@@ -418,7 +418,7 @@ void WebMediaPlayerMSCompositor::SetCurrentFrame(
 }
 
 void WebMediaPlayerMSCompositor::StartRenderingInternal() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   stopped_ = false;
 
   if (video_frame_provider_client_)
@@ -426,7 +426,7 @@ void WebMediaPlayerMSCompositor::StartRenderingInternal() {
 }
 
 void WebMediaPlayerMSCompositor::StopRenderingInternal() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   stopped_ = true;
 
   // It is possible that the video gets paused and then resumed. We need to
@@ -444,7 +444,7 @@ void WebMediaPlayerMSCompositor::StopRenderingInternal() {
 }
 
 void WebMediaPlayerMSCompositor::StopUsingProviderInternal() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   if (video_frame_provider_client_)
     video_frame_provider_client_->StopUsingProvider();
   video_frame_provider_client_ = nullptr;

@@ -163,7 +163,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
       GetWebMediaStreamFromWebMediaPlayerSource(source);
   if (!web_stream.IsNull())
     return CreateWebMediaPlayerForMediaStream(client, sink_id, security_origin,
-                                              web_frame);
+                                              web_frame, layer_tree_view);
 
   // If |source| was not a MediaStream, it must be a URL.
   // TODO(guidou): Fix this when support for other srcObject types is added.
@@ -393,7 +393,8 @@ blink::WebMediaPlayer* MediaFactory::CreateWebMediaPlayerForMediaStream(
     blink::WebMediaPlayerClient* client,
     const blink::WebString& sink_id,
     const blink::WebSecurityOrigin& security_origin,
-    blink::WebLocalFrame* frame) {
+    blink::WebLocalFrame* frame,
+    blink::WebLayerTreeView* layer_tree_view) {
 #if BUILDFLAG(ENABLE_WEBRTC)
   RenderThreadImpl* const render_thread = RenderThreadImpl::current();
 
@@ -408,7 +409,9 @@ blink::WebMediaPlayer* MediaFactory::CreateWebMediaPlayerForMediaStream(
       CreateMediaStreamRendererFactory(), render_thread->GetIOTaskRunner(),
       compositor_task_runner, render_thread->GetMediaThreadTaskRunner(),
       render_thread->GetWorkerTaskRunner(), render_thread->GetGpuFactories(),
-      sink_id, security_origin);
+      sink_id, security_origin,
+      base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
+      base::Bind(&blink::WebVideoFrameSubmitter::Create));
 #else
   return NULL;
 #endif  // BUILDFLAG(ENABLE_WEBRTC)

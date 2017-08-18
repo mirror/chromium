@@ -7,6 +7,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_feature_list.h"
+#include "cc/blink/web_layer_impl.h"
 #include "content/public/renderer/media_stream_renderer_factory.h"
 #include "content/renderer/media/webmediaplayer_ms.h"
 #include "content/renderer/media/webmediaplayer_ms_compositor.h"
@@ -17,6 +19,12 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
+#include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
+#include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
+
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
 
 namespace content {
 
@@ -147,6 +155,20 @@ class ReusableMessageLoopEvent {
 
  private:
   std::unique_ptr<media::WaitableMessageLoopEvent> event_;
+};
+
+class MockSurfaceLayerBridge : public blink::WebSurfaceLayerBridge {
+ public:
+  MOCK_CONST_METHOD0(GetWebLayer, blink::WebLayer*());
+  MOCK_CONST_METHOD0(GetFrameSinkId, const viz::FrameSinkId&());
+};
+
+class MockVideoFrameSubmitter : public blink::WebVideoFrameSubmitter {
+ public:
+  MOCK_METHOD0(StopUsingProvider, void());
+  MOCK_METHOD0(StartRendering, void());
+  MOCK_METHOD0(StopRendering, void());
+  MOCK_METHOD0(DidReceiveFrame, void());
 };
 
 // The class is used mainly to inject VideoFrames into WebMediaPlayerMS.
@@ -450,19 +472,6 @@ class WebMediaPlayerMSTest
   WebMediaPlayerMSTest()
       : render_factory_(new MockRenderFactory(message_loop_.task_runner(),
                                               &message_loop_controller_)),
-        player_(new WebMediaPlayerMS(
-            nullptr,
-            this,
-            &delegate_,
-            base::MakeUnique<media::MediaLog>(),
-            std::unique_ptr<MediaStreamRendererFactory>(render_factory_),
-            message_loop_.task_runner(),
-            message_loop_.task_runner(),
-            message_loop_.task_runner(),
-            message_loop_.task_runner(),
-            nullptr,
-            blink::WebString(),
-            blink::WebSecurityOrigin())),
         web_layer_set_(false),
         rendering_(false),
         background_rendering_(false) {}
@@ -471,6 +480,20 @@ class WebMediaPlayerMSTest
     base::RunLoop().RunUntilIdle();
   }
 
+  void InitializeWebMediaPlayerMS() {
+    player_ = base::MakeUnique<WebMediaPlayerMS>(
+        nullptr, this, &delegate_, base::MakeUnique<media::MediaLog>(),
+        std::unique_ptr<MediaStreamRendererFactory>(render_factory_),
+        message_loop_.task_runner(), message_loop_.task_runner(),
+        message_loop_.task_runner(), message_loop_.task_runner(), nullptr,
+        blink::WebString(), blink::WebSecurityOrigin(),
+        base::Bind(&WebMediaPlayerMSTest::CreateMockSurfaceLayerBridge,
+                   base::Unretained(this)),
+        base::Bind(&WebMediaPlayerMSTest::CreateMockVideoFrameSubmitter,
+                   base::Unretained(this)));
+  }
+
+  void OnRotationChanged();
   MockMediaStreamVideoRenderer* LoadAndGetFrameProvider(bool algorithm_enabled);
 
   // Implementation of WebMediaPlayerClient
@@ -538,6 +561,19 @@ class WebMediaPlayerMSTest
   }
 
  protected:
+  std::unique_ptr<blink::WebSurfaceLayerBridge> CreateMockSurfaceLayerBridge(
+      blink::WebSurfaceLayerBridgeObserver*) {
+    return base::WrapUnique<blink::WebSurfaceLayerBridge>(
+        surface_layer_bridge_);
+  }
+
+  std::unique_ptr<blink::WebVideoFrameSubmitter> CreateMockVideoFrameSubmitter(
+      cc::VideoFrameProvider*,
+      const viz::FrameSinkId&) {
+    return base::WrapUnique<blink::WebVideoFrameSubmitter>(
+        video_frame_submitter_);
+  }
+
   MOCK_METHOD0(DoStartRendering, void());
   MOCK_METHOD0(DoStopRendering, void());
 
@@ -554,6 +590,8 @@ class WebMediaPlayerMSTest
   WebMediaPlayerMSCompositor* compositor_;
   ReusableMessageLoopEvent message_loop_controller_;
   blink::WebLayer* web_layer_;
+  StrictMock<MockSurfaceLayerBridge>* surface_layer_bridge_;
+  StrictMock<MockVideoFrameSubmitter>* video_frame_submitter_;
   bool is_audio_element_ = false;
 
  private:
@@ -565,6 +603,26 @@ class WebMediaPlayerMSTest
   bool rendering_;
   bool background_rendering_;
 };
+
+void WebMediaPlayerMSTest::OnRotationChanged() {
+  ASSERT_EQ(nullptr, player_->submitter_.get());
+ // std::unique_ptr<cc_blink::WebLayerImpl> web_layer =
+  //    base::MakeUnique<cc_blink::WebLayerImpl>();
+ // EXPECT_CALL(*surface_layer_bridge_, GetWebLayer())
+  //    .WillOnce(Return(web_layer.get()));
+
+  viz::FrameSinkId id = viz::FrameSinkId(1, 1);
+  EXPECT_CALL(*surface_layer_bridge_,
+              GetFrameSinkId()).WillOnce(ReturnRef(id));
+
+  player_->OnRotationChanged(media::VideoRotation::VIDEO_ROTATION_0, true);
+  base::RunLoop run_loop;
+  player_->compositor_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&base::DoNothing), run_loop.QuitClosure());
+  run_loop.Run();
+
+  ASSERT_EQ(video_frame_submitter_, player_->submitter_.get());
+}
 
 MockMediaStreamVideoRenderer* WebMediaPlayerMSTest::LoadAndGetFrameProvider(
     bool algorithm_enabled) {
@@ -578,7 +636,7 @@ MockMediaStreamVideoRenderer* WebMediaPlayerMSTest::LoadAndGetFrameProvider(
   player_->Load(blink::WebMediaPlayer::kLoadTypeURL,
                 blink::WebMediaPlayerSource(),
                 blink::WebMediaPlayer::kCORSModeUnspecified);
-  compositor_ = player_->compositor_.get();
+  compositor_ = player_->compositor_;
   EXPECT_TRUE(!!compositor_);
   compositor_->SetAlgorithmEnabledForTesting(algorithm_enabled);
 
@@ -673,7 +731,34 @@ void WebMediaPlayerMSTest::SizeChanged() {
   CheckSizeChanged(frame_size);
 }
 
+TEST_F(WebMediaPlayerMSTest, CreateSubmitterOnRotationChanged) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitFromCommandLine("UseSurfaceLayerForVideo", "");
+  surface_layer_bridge_ = new StrictMock<MockSurfaceLayerBridge>();
+  video_frame_submitter_ = new StrictMock<MockVideoFrameSubmitter>();
+  InitializeWebMediaPlayerMS();
+//  OnRotationChanged();
+}
+
+// TODO(lethalantidote): Once |client_| is converted from a dummy to a mock,
+// // test that |web_layer| is actually used by |client_|.
+// // crbug/755880.
+// TEST_F(WebMediaPlayerImplTest, OnWebLayerReplacedGetsWebLayerFromBridge) {
+//   base::test::ScopedFeatureList feature_list;
+//     feature_list.InitFromCommandLine("UseSurfaceLayerForVideo", "");
+//       surface_layer_bridge_ = new StrictMock<MockSurfaceLayerBridge>();
+//         InitializeWebMediaPlayerImpl();
+//
+//           std::unique_ptr<cc_blink::WebLayerImpl> web_layer =
+//                 base::MakeUnique<cc_blink::WebLayerImpl>();
+//
+//                   EXPECT_CALL(*surface_layer_bridge_, GetWebLayer())
+//                         .WillRepeatedly(Return(web_layer.get()));
+//                           wmpi_->OnWebLayerReplaced();
+//                           }
+
 TEST_F(WebMediaPlayerMSTest, NoDataDuringLoadForVideo) {
+  InitializeWebMediaPlayerMS();
   EXPECT_CALL(*this, DoReadyStateChanged(
                          blink::WebMediaPlayer::kReadyStateHaveMetadata))
       .Times(0);
@@ -691,6 +776,7 @@ TEST_F(WebMediaPlayerMSTest, NoDataDuringLoadForVideo) {
 }
 
 TEST_F(WebMediaPlayerMSTest, NoWaitForFrameForAudio) {
+  InitializeWebMediaPlayerMS();
   is_audio_element_ = true;
   scoped_refptr<MediaStreamAudioRenderer> audio_renderer(
       new MockMediaStreamAudioRenderer());
@@ -717,6 +803,7 @@ TEST_F(WebMediaPlayerMSTest, NoWaitForFrameForAudio) {
 }
 
 TEST_F(WebMediaPlayerMSTest, NoWaitForFrameForAudioOnly) {
+  InitializeWebMediaPlayerMS();
   render_factory_->set_support_video_renderer(false);
   scoped_refptr<MediaStreamAudioRenderer> audio_renderer(
       new MockMediaStreamAudioRenderer());
@@ -730,6 +817,7 @@ TEST_F(WebMediaPlayerMSTest, NoWaitForFrameForAudioOnly) {
 }
 
 TEST_F(WebMediaPlayerMSTest, Playing_Normal) {
+  InitializeWebMediaPlayerMS();
   // This test sends a bunch of normal frames with increasing timestamps
   // and verifies that they are produced by WebMediaPlayerMS in appropriate
   // order.
@@ -761,6 +849,7 @@ TEST_F(WebMediaPlayerMSTest, Playing_Normal) {
 }
 
 TEST_F(WebMediaPlayerMSTest, Playing_ErrorFrame) {
+  InitializeWebMediaPlayerMS();
   // This tests sends a broken frame to WebMediaPlayerMS, and verifies
   // OnSourceError function works as expected.
 
@@ -791,6 +880,7 @@ TEST_F(WebMediaPlayerMSTest, Playing_ErrorFrame) {
 }
 
 TEST_P(WebMediaPlayerMSTest, PlayThenPause) {
+  InitializeWebMediaPlayerMS();
   const bool opaque_frame = testing::get<0>(GetParam());
   const bool odd_size_frame = testing::get<1>(GetParam());
   // In the middle of this test, WebMediaPlayerMS::pause will be called, and we
@@ -832,6 +922,7 @@ TEST_P(WebMediaPlayerMSTest, PlayThenPause) {
 }
 
 TEST_P(WebMediaPlayerMSTest, PlayThenPauseThenPlay) {
+  InitializeWebMediaPlayerMS();
   const bool opaque_frame = testing::get<0>(GetParam());
   const bool odd_size_frame = testing::get<1>(GetParam());
   // Similary to PlayAndPause test above, this one focuses on testing that
@@ -891,6 +982,7 @@ INSTANTIATE_TEST_CASE_P(,
 // During this test, we check that when we send rotated video frames, it applies
 // to player's natural size.
 TEST_F(WebMediaPlayerMSTest, RotationChange) {
+  InitializeWebMediaPlayerMS();
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(true);
 
   const int kTestBrake = static_cast<int>(FrameType::TEST_BRAKE);
@@ -931,6 +1023,7 @@ TEST_F(WebMediaPlayerMSTest, RotationChange) {
 // During this test, we check that web layer changes opacity according to the
 // given frames.
 TEST_F(WebMediaPlayerMSTest, OpacityChange) {
+  InitializeWebMediaPlayerMS();
   MockMediaStreamVideoRenderer* provider = LoadAndGetFrameProvider(true);
 
   // Push one opaque frame.
@@ -969,6 +1062,8 @@ TEST_F(WebMediaPlayerMSTest, OpacityChange) {
 }
 
 TEST_F(WebMediaPlayerMSTest, BackgroundRendering) {
+  InitializeWebMediaPlayerMS();
+
   // During this test, we will switch to background rendering mode, in which
   // WebMediaPlayerMS::pause does not get called, but
   // cc::VideoFrameProviderClient simply stops asking frames from
@@ -1018,6 +1113,8 @@ TEST_F(WebMediaPlayerMSTest, BackgroundRendering) {
 }
 
 TEST_F(WebMediaPlayerMSTest, FrameSizeChange) {
+  InitializeWebMediaPlayerMS();
+
   // During this test, the frame size of the input changes.
   // We need to make sure, when sizeChanged() gets called, new size should be
   // returned by GetCurrentSize().
@@ -1048,6 +1145,7 @@ TEST_F(WebMediaPlayerMSTest, FrameSizeChange) {
 
 #if defined(OS_ANDROID)
 TEST_F(WebMediaPlayerMSTest, HiddenPlayerTests) {
+  InitializeWebMediaPlayerMS();
   LoadAndGetFrameProvider(true);
 
   // Hidden status should not affect playback.

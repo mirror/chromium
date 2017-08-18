@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/task_runner_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "cc/blink/web_layer_impl.h"
@@ -30,6 +31,7 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/media_content_type.h"
 #include "media/base/media_log.h"
+#include "media/base/media_switches.h"
 #include "media/base/video_frame.h"
 #include "media/base/video_rotation.h"
 #include "media/base/video_types.h"
@@ -39,9 +41,22 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
+#include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
+#include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace {
+void SetSubmitter(
+    const base::WeakPtr<content::WebMediaPlayerMS>& web_media_player,
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+    std::unique_ptr<blink::WebVideoFrameSubmitter>* cur_submitter,
+    std::unique_ptr<blink::WebVideoFrameSubmitter> new_submitter) {
+  if (web_media_player)
+    *cur_submitter = std::move(new_submitter);
+  else
+    task_runner->DeleteSoon(FROM_HERE, std::move(new_submitter));
+}
+
 enum class RendererReloadAction {
   KEEP_RENDERER,
   REMOVE_RENDERER,
@@ -164,7 +179,12 @@ WebMediaPlayerMS::WebMediaPlayerMS(
     scoped_refptr<base::TaskRunner> worker_task_runner,
     media::GpuVideoAcceleratorFactories* gpu_factories,
     const blink::WebString& sink_id,
-    const blink::WebSecurityOrigin& security_origin)
+    const blink::WebSecurityOrigin& security_origin,
+    base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
+        blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+    base::Callback<std::unique_ptr<blink::WebVideoFrameSubmitter>(
+        cc::VideoFrameProvider*,
+        const viz::FrameSinkId&)> submitter_callback)
     : frame_(frame),
       network_state_(WebMediaPlayer::kNetworkStateEmpty),
       ready_state_(WebMediaPlayer::kReadyStateHaveNothing),
@@ -177,10 +197,13 @@ WebMediaPlayerMS::WebMediaPlayerMS(
       media_log_(std::move(media_log)),
       renderer_factory_(std::move(factory)),
       io_task_runner_(io_task_runner),
-      compositor_task_runner_(compositor_task_runner),
       media_task_runner_(media_task_runner),
       worker_task_runner_(worker_task_runner),
       gpu_factories_(gpu_factories),
+      submitter_(nullptr),
+      submitter_creation_callback_(submitter_callback),
+      surface_layer_for_video_enabled_(
+          base::FeatureList::IsEnabled(media::kUseSurfaceLayerForVideo)),
       initial_audio_output_device_id_(sink_id.Utf8()),
       initial_security_origin_(security_origin.IsNull()
                                    ? url::Origin()
@@ -192,6 +215,11 @@ WebMediaPlayerMS::WebMediaPlayerMS(
   DCHECK(client);
   DCHECK(delegate_);
   delegate_id_ = delegate_->AddObserver(this);
+
+  if (surface_layer_for_video_enabled_) {
+    bridge_ = bridge_callback.Run(this);
+  }
+  compositor_task_runner_ = compositor_task_runner;
 
   media_log_->AddEvent(
       media_log_->CreateEvent(media::MediaLogEvent::WEBMEDIAPLAYER_CREATED));
@@ -209,7 +237,7 @@ WebMediaPlayerMS::~WebMediaPlayerMS() {
 
   // Destruct compositor resources in the proper order.
   get_client()->SetWebLayer(nullptr);
-  if (video_weblayer_)
+  if (!surface_layer_for_video_enabled_ && video_weblayer_)
     static_cast<cc::VideoLayer*>(video_weblayer_->layer())->StopUsingProvider();
 
   if (frame_deliverer_)
@@ -224,11 +252,18 @@ WebMediaPlayerMS::~WebMediaPlayerMS() {
   if (audio_renderer_)
     audio_renderer_->Stop();
 
+  compositor_task_runner_->DeleteSoon(FROM_HERE, std::move(submitter_));
+
   media_log_->AddEvent(
       media_log_->CreateEvent(media::MediaLogEvent::WEBMEDIAPLAYER_DESTROYED));
 
   delegate_->PlayerGone(delegate_id_);
   delegate_->RemoveObserver(delegate_id_);
+}
+
+void WebMediaPlayerMS::OnWebLayerReplaced() {
+  DCHECK(bridge_);
+  client_->SetWebLayer(bridge_->GetWebLayer());
 }
 
 void WebMediaPlayerMS::Load(LoadType load_type,
@@ -844,7 +879,10 @@ void WebMediaPlayerMS::OnOpacityChanged(bool is_opaque) {
 
   // Opacity can be changed during the session without resetting
   // |video_weblayer_|.
-  video_weblayer_->layer()->SetContentsOpaque(is_opaque);
+  if (!surface_layer_for_video_enabled_)
+    video_weblayer_->layer()->SetContentsOpaque(is_opaque);
+  else if (bridge_->GetWebLayer())
+    bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(is_opaque);
 }
 
 void WebMediaPlayerMS::OnRotationChanged(media::VideoRotation video_rotation,
@@ -853,13 +891,26 @@ void WebMediaPlayerMS::OnRotationChanged(media::VideoRotation video_rotation,
   DCHECK(thread_checker_.CalledOnValidThread());
   video_rotation_ = video_rotation;
 
-  std::unique_ptr<cc_blink::WebLayerImpl> rotated_weblayer =
-      base::WrapUnique(new cc_blink::WebLayerImpl(
-          cc::VideoLayer::Create(compositor_.get(), video_rotation)));
-  rotated_weblayer->layer()->SetContentsOpaque(is_opaque);
-  rotated_weblayer->SetContentsOpaqueIsFixed(true);
-  get_client()->SetWebLayer(rotated_weblayer.get());
-  video_weblayer_ = std::move(rotated_weblayer);
+  if (!surface_layer_for_video_enabled_) {
+    std::unique_ptr<cc_blink::WebLayerImpl> rotated_weblayer =
+        base::WrapUnique(new cc_blink::WebLayerImpl(
+            cc::VideoLayer::Create(compositor_, video_rotation)));
+    rotated_weblayer->layer()->SetContentsOpaque(is_opaque);
+    rotated_weblayer->SetContentsOpaqueIsFixed(true);
+    get_client()->SetWebLayer(rotated_weblayer.get());
+    video_weblayer_ = std::move(rotated_weblayer);
+  } else if (bridge_->GetWebLayer()) {
+    bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(is_opaque);
+    // TODO(lethalantidote): Figure out how to persist opaque setting
+    // without calling WebLayerImpl's SetContentsOpaueIsFixed;
+    // https://crbug/739859.
+    base::PostTaskAndReplyWithResult(
+        compositor_task_runner_.get(), FROM_HERE,
+        base::Bind(submitter_creation_callback_, base::Unretained(compositor_),
+                   bridge_->GetFrameSinkId()),
+        base::Bind(&SetSubmitter, AsWeakPtr(), compositor_task_runner_,
+                   &submitter_));
+  }
 }
 
 void WebMediaPlayerMS::RepaintInternal() {
