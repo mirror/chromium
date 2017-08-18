@@ -317,6 +317,30 @@
       "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578d0c1c_1ceaaf33",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-18T18:36:34Z",
+      "side": 1,
+      "message": "I see what you mean. We are tracking updates before 5 min, but only report after 5 min.",
+      "parentUuid": "5b255c9a_b2f582cc",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
