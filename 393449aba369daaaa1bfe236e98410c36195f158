@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c0d1f2_53b1bcae",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T07:31:43Z",
+      "side": 1,
+      "message": "AddOnIOThread(url, Data::CreateInvalidInstance()); here?\n\n  or\n\nkeeping this as is and adding DCHECK(data-\u003eIsValid()) in AddOnIOThread()?",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbea4a1_a4e8f591",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T07:31:43Z",
+      "side": 1,
+      "message": "Hmm... I feel separating state management from |Data| would make the code slightly more readable. Can you consider it later?",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04ce4d7_a5e364d5",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T07:31:43Z",
+      "side": 1,
+      "message": "How about changing these if-statements to switch-cases?",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
