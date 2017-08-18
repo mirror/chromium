@@ -222,6 +222,30 @@
       "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33c9ed6e_940a67e6",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-18T19:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6bf9e0_0512aaf8",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "350703210e359cb6b9a5f6ee0ef75dcc14932d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
