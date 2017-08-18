@@ -86,9 +86,9 @@ const AuthenticationViewConstants kCompactConstants = {
     14,  // SecondaryFontSize
     40,  // GradientHeight
     36,  // ButtonHeight
-    32,  // ButtonHorizontalPadding
+    16,  // ButtonHorizontalPadding
     16,  // ButtonTopPadding
-    32,  // ButtonBottomPadding
+    16,  // ButtonBottomPadding
 };
 
 const AuthenticationViewConstants kRegularConstants = {
