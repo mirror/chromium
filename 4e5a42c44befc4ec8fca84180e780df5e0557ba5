@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7395cec0_2ec73866",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-18T23:01:18Z",
+      "side": 1,
+      "message": "Can\u0027t you explicitly set this to false for your internal bots?",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
