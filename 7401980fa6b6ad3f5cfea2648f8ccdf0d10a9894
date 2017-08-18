@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56b36d89_1880e8af",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T20:22:32Z",
+      "side": 1,
+      "message": "Will this leak over time? Do we clean up entries here as web_contents die?\n\nLooks like the cause to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756004",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "7401980fa6b6ad3f5cfea2648f8ccdf0d10a9894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
