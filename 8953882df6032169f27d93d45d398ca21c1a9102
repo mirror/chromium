@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f7b8070_d0b7eeee",
+        "filename": "build/toolchain/gcc_solink_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T16:17:34Z",
+      "side": 1,
+      "message": "ld has a --strip-debug flag as well. Could we just do this w/ that (i.e, just an ldflag in https://codesearch.chromium.org/chromium/src/build/config/compiler/BUILD.gn?rcl\u003d44bb60e9a2f0eb573f0c4c1e7742fa53a7ab23b9\u0026l\u003d1819)? How does the size compare?",
+      "revId": "8953882df6032169f27d93d45d398ca21c1a9102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e51aed_b24a7163",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T16:17:34Z",
+      "side": 1,
+      "message": "I think this should be declared in build/config/compiler/BUILD.gn, and it should definitely have a comment explaining what it does.",
+      "revId": "8953882df6032169f27d93d45d398ca21c1a9102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dba6a85_3e8e8b3d",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-18T16:17:34Z",
+      "side": 1,
+      "message": "Failing the ld suggestion, could we do this in strip_switch? Does --strip-debug make sense if we don\u0027t have a strip binary?",
+      "revId": "8953882df6032169f27d93d45d398ca21c1a9102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
