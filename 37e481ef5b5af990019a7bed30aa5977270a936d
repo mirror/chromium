@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a61c59b_154c6e0f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50128,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T19:49:45Z",
+      "side": 1,
+      "message": "Good point. I went with (1) because I think there will be alert noise from either approach (the new metric approach will have alerts about it ramping up, I think). So it seems simpler to keep the same name and document the change. However, I also plan to give a heads up to the speed releasing group that monitors these metrics about this change, to avoid surprises there.",
+      "parentUuid": "cf28194f_25a4a826",
+      "range": {
+        "startLine": 50128,
+        "startChar": 49,
+        "endLine": 50128,
+        "endChar": 0
+      },
+      "revId": "37e481ef5b5af990019a7bed30aa5977270a936d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9c6aa6_22b4313d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-18T17:46:50Z",
       "side": 1,
       "message": "It appears you forgot to write/update this description.",
+      "revId": "37e481ef5b5af990019a7bed30aa5977270a936d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d159ac_6145cbb7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50150,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T19:49:45Z",
+      "side": 1,
+      "message": "Er, yes - how embarrassing! Done.",
+      "parentUuid": "4e9c6aa6_22b4313d",
       "revId": "37e481ef5b5af990019a7bed30aa5977270a936d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
