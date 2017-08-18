@@ -231,6 +231,7 @@ TEST_P(TaskSchedulerSingleThreadTaskRunnerManagerCommonTest,
   task_runner_background->PostTask(
       FROM_HERE,
       BindOnce(&WaitableEvent::Signal, Unretained(&waitable_event_background)));
+  waitable_event_background.Wait();
 
   ThreadPriority thread_priority_normal;
   task_runner_normal->PostTask(
@@ -241,8 +242,6 @@ TEST_P(TaskSchedulerSingleThreadTaskRunnerManagerCommonTest,
   task_runner_normal->PostTask(
       FROM_HERE,
       BindOnce(&WaitableEvent::Signal, Unretained(&waitable_event_normal)));
-
-  waitable_event_background.Wait();
   waitable_event_normal.Wait();
 
   if (Lock::HandlesMultipleThreadPriorities())

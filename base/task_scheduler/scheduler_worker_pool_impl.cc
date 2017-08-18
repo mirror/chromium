@@ -152,6 +152,7 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   void ReEnqueueSequence(scoped_refptr<Sequence> sequence) override;
   TimeDelta GetSleepTimeout() override;
   void OnMainExit(SchedulerWorker* worker) override;
+  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override;
 
  private:
   // Returns true if |worker| is allowed to cleanup and remove itself from the
@@ -314,17 +315,16 @@ void SchedulerWorkerPoolImpl::PostTaskWithSequenceNow(
 
   const bool sequence_was_empty = sequence->PushTask(std::move(task));
   if (sequence_was_empty) {
-    // Insert |sequence| in |shared_priority_queue_| if it was empty before
-    // |task| was inserted into it. Otherwise, one of these must be true:
-    // - |sequence| is already in a PriorityQueue, or,
+    // Insert |sequence| in |task_tracker_| or in |shared_priority_queue_| if it
+    // was empty before |task| was inserted into it. Otherwise, one of these
+    // must be true:
+    // - |sequence| is already in |task_tracker_| or |shared_priority_queue_|.
     // - A worker is running a Task from |sequence|. It will insert |sequence|
-    //   in a PriorityQueue once it's done running the Task.
-    const auto sequence_sort_key = sequence->GetSortKey();
-    shared_priority_queue_.BeginTransaction()->Push(std::move(sequence),
-                                                    sequence_sort_key);
-
-    // Wake up a worker to process |sequence|.
-    WakeUpOneWorker();
+    //   in |task_tracker_| or in |shared_priority_queue_| once it's done
+    //   running the Task.
+    sequence = task_tracker_->WillScheduleSequence(std::move(sequence), this);
+    if (sequence)
+      OnCanScheduleSequence(std::move(sequence));
   }
 }
 
@@ -539,6 +539,11 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
 #endif
 }
 
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    OnCanScheduleSequence(scoped_refptr<Sequence> sequence) {
+  outer_->OnCanScheduleSequence(std::move(sequence));
+}
+
 void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
   SchedulerWorker* worker = nullptr;
 
@@ -622,6 +627,16 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
     cleanup_timestamps_.pop();
   }
   return worker.get();
+}
+
+void SchedulerWorkerPoolImpl::OnCanScheduleSequence(
+    scoped_refptr<Sequence> sequence) {
+  const auto sequence_sort_key = sequence->GetSortKey();
+  shared_priority_queue_.BeginTransaction()->Push(std::move(sequence),
+                                                  sequence_sort_key);
+
+  // Wake up a worker to process |sequence|.
+  WakeUpOneWorker();
 }
 
 }  // namespace internal

@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/can_schedule_sequence_observer.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/scheduler_worker_params.h"
 #include "base/task_scheduler/sequence.h"
@@ -43,7 +44,7 @@ class BASE_EXPORT SchedulerWorker
  public:
   // Delegate interface for SchedulerWorker. The methods are always called from
   // the thread managed by the SchedulerWorker instance.
-  class BASE_EXPORT Delegate {
+  class BASE_EXPORT Delegate : public CanScheduleSequenceObserver {
    public:
     virtual ~Delegate() = default;
 
