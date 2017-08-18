@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e78d0faa_5ba74198",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T20:37:41Z",
+      "side": 1,
+      "message": "This is not going to work in mash because UserManager runs as part chrome and this code runs in ash.",
+      "range": {
+        "startLine": 513,
+        "startChar": 24,
+        "endLine": 513,
+        "endChar": 42
+      },
+      "revId": "d74466d76a13f75c206428d53c99b12265548000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a57f35_58ea729b",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T20:37:41Z",
+      "side": 1,
+      "message": "OnActiveUserSessionChanged is called for secondary user too. When would this flag to reset to false?\n\nWe should probably remember the account id when this is called for the first time, as that is the primary user id. And set the flag based on the account_id param.",
+      "range": {
+        "startLine": 518,
+        "startChar": 2,
+        "endLine": 518,
+        "endChar": 32
+      },
+      "revId": "d74466d76a13f75c206428d53c99b12265548000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9985a57c_f9e063f3",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 9
