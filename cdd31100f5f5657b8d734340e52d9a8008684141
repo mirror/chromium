@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d0ebbc_cbc2f0cf",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-18T14:40:14Z",
+      "side": 1,
+      "message": "Please add a comment (it can pretty brief) explaining the why of this. I (for one) reading this without having been on the review cycle for the CL would look at this and wonder: \"why we were drawing the same render pass several times?\"",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
