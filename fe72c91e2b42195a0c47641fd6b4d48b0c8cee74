@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1817dd96_dacd9567",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T22:03:14Z",
+      "side": 1,
+      "message": "nit: also stop |wizard_completed_timer_| ?",
+      "revId": "fe72c91e2b42195a0c47641fd6b4d48b0c8cee74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
