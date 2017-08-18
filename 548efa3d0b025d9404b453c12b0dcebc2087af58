@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9af8ca15_c6c4e347",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T14:15:03Z",
+      "side": 1,
+      "message": "Now we return early when explore is enabled, so all this is gone.",
+      "parentUuid": "8c8ac2f6_aadf98ea",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 224,
+        "endChar": 37
+      },
+      "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d276cf5a_1cad4c4f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "15210d40_967a94a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T14:15:03Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "d276cf5a_1cad4c4f",
+      "range": {
+        "startLine": 122,
+        "startChar": 28,
+        "endLine": 122,
+        "endChar": 50
+      },
+      "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe51010_5a8db74f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500ba00b_74835f6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T14:15:03Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "7fe51010_5a8db74f",
+      "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6275e595_18b3affc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T14:15:03Z",
+      "side": 1,
+      "message": "Good catch. Done",
+      "parentUuid": "6d98c8ef_7b376923",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 51
+      },
+      "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "480f4837_f7546695",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 6
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "13fbb3ea_ee078ad1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T14:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480f4837_f7546695",
+      "range": {
+        "startLine": 61,
+        "startChar": 61,
+        "endLine": 61,
+        "endChar": 69
+      },
+      "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1ef5de_eb259c95",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335710dd_980dc2b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-18T14:15:03Z",
+      "side": 1,
+      "message": "SparseArray.remove returns void. Can\u0027t assert anything there. But in ViewPager, the removeView just calls methods from ViewGroup. It doesn\u0027t do anything special to the adapter, so I think it makes sense to remove from mTileSectionLayouts explicitly.\n\nAlso, TabLayout is also a child of the ViewPager, so we could technically call ViewPager.removeView(TabLayout) too, and that wouldn\u0027t have to update the Adapter in any way. So it wouldn\u0027t make sense for the ViewPager to call mAdapter.removeItem().",
+      "parentUuid": "4e1ef5de_eb259c95",
+      "range": {
+        "startLine": 176,
+        "startChar": 42,
+        "endLine": 176,
+        "endChar": 52
+      },
+      "revId": "548efa3d0b025d9404b453c12b0dcebc2087af58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
