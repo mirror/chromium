@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5789704_293087a8",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T21:51:45Z",
+      "side": 1,
+      "message": "I would suggest since this code already captures the last committed origin, it can also capture the navigation id here.",
+      "revId": "4437127276db6758ec70dcc654db1d3ff13d2881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6876cc_0f15252c",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T21:51:45Z",
+      "side": 1,
+      "message": "drive-by: this is not the proper way to get an origin. Since the navigation has successfully completed, this code should be using navigation_handle-\u003eGetRenderFrameHost()-\u003eGetLastCommittedOrigin();",
+      "revId": "4437127276db6758ec70dcc654db1d3ff13d2881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746aa516_e32db57e",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T21:51:45Z",
+      "side": 1,
+      "message": "drive-by: this implies that no metrics are being recorded for sandboxed iframes, which have real URLs but get an unique origin.",
+      "revId": "4437127276db6758ec70dcc654db1d3ff13d2881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
