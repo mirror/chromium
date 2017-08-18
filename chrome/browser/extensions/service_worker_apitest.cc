@@ -9,6 +9,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
+#include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/gcm/fake_gcm_profile_service.h"
@@ -28,6 +29,7 @@
 #include "components/version_info/version_info.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/service_worker_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
@@ -39,7 +41,9 @@
 #include "content/public/test/service_worker_test_helpers.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/extension_service_worker_message_filter.h"
 #include "extensions/browser/process_manager.h"
+#include "extensions/common/extension_messages.h"
 #include "extensions/test/background_page_watcher.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "net/dns/mock_host_resolver.h"
@@ -55,6 +59,67 @@ namespace {
 std::string* const kExpectSuccess = nullptr;
 
 void DoNothingWithBool(bool b) {}
+
+// Test utility to observe ExtensionHostMsg_DecrementServiceWorkerActivity IPC
+// message.
+class WorkerRefCountTestUtil : public ChromeContentBrowserClient {
+ public:
+  WorkerRefCountTestUtil()
+      : original_browser_client_(content::SetBrowserClientForTesting(this)) {}
+  ~WorkerRefCountTestUtil() override {
+    content::SetBrowserClientForTesting(original_browser_client_);
+  }
+
+  void WaitForMessageCount(size_t count) {
+    filter_for_test_->WaitForMessageCount(count);
+  }
+
+  // ContentBrowserClient:
+  void RenderProcessWillLaunch(content::RenderProcessHost* host) override {
+    filter_for_test_ = new TestMessageFilter();
+    host->AddFilter(filter_for_test_.get());
+    ChromeContentBrowserClient::RenderProcessWillLaunch(host);
+  }
+
+ private:
+  class TestMessageFilter : public content::BrowserMessageFilter {
+   public:
+    TestMessageFilter()
+        : content::BrowserMessageFilter(ExtensionWorkerMsgStart) {}
+    // content::BrowserMessageFilter:
+    bool OnMessageReceived(const IPC::Message& message) override {
+      DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+      if (message.type() ==
+          ExtensionHostMsg_DecrementServiceWorkerActivity::ID) {
+        ++seen_num_messages_;
+        if (seen_num_messages_ == expected_num_messages_) {
+          std::move(quit_closure_).Run();
+        }
+      }
+      return false;
+    }
+
+    void WaitForMessageCount(size_t count) {
+      DCHECK_LE(seen_num_messages_, count);
+      if (seen_num_messages_ == count)
+        return;
+      expected_num_messages_ = count;
+      base::RunLoop run_loop;
+      quit_closure_ = run_loop.QuitClosure();
+      run_loop.Run();
+    }
+
+   private:
+    ~TestMessageFilter() override {}
+    size_t seen_num_messages_ = 0;
+    size_t expected_num_messages_ = 0;
+    base::OnceClosure quit_closure_;
+  };
+
+  content::ContentBrowserClient* const original_browser_client_;
+  scoped_refptr<TestMessageFilter> filter_for_test_;
+  DISALLOW_COPY_AND_ASSIGN(WorkerRefCountTestUtil);
+};
 
 // Returns the newly added WebContents.
 content::WebContents* AddTab(Browser* browser, const GURL& url) {
@@ -718,16 +783,11 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, EventsToStoppedWorker) {
   ASSERT_EQ("chrome.tabs.onUpdated callback", result);
 }
 
-// Tests that worker ref count increments while extension API function is
-// active.
+IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, WorkerRefCount) {
+  // It's sad that we have to dig this much into IPC system to test this, but
+  // again, this test wants to know about ref counts anyway.
+  WorkerRefCountTestUtil test_util;
 
-// Flaky on Linux and ChromeOS, https://crbug.com/702126
-#if defined(OS_LINUX)
-#define MAYBE_WorkerRefCount DISABLED_WorkerRefCount
-#else
-#define MAYBE_WorkerRefCount WorkerRefCount
-#endif
-IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
   // Extensions APIs from SW are only enabled on trunk.
   ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
   const Extension* extension = LoadExtensionWithFlags(
@@ -772,13 +832,20 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
     listener.Reply("Hello world");
   }
 
+  // The ref count should drop to 1, hence we will see 1 decrement IPC.
+  test_util.WaitForMessageCount(1u);
+  content::RunAllPendingInMessageLoop(content::BrowserThread::IO);
+  EXPECT_EQ(1u, GetWorkerRefCount(extension->url()));
+
   ExtensionTestMessageListener extension_listener("SUCCESS", false);
   extension_listener.set_failure_message("FAILURE");
   // Finish executing chrome.test.sendMessage().
   worker_listener.Reply("Hello world");
   ASSERT_TRUE(extension_listener.WaitUntilSatisfied());
 
-  // The ref count should drop to 0.
+  // The ref count should drop to 0, hence we will see 2 decrement IPCs.
+  test_util.WaitForMessageCount(2u);
+  content::RunAllPendingInMessageLoop(content::BrowserThread::IO);
   EXPECT_EQ(0u, GetWorkerRefCount(extension->url()));
 }
 
