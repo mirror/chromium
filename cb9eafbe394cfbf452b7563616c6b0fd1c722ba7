@@ -22,6 +22,30 @@
       "revId": "cb9eafbe394cfbf452b7563616c6b0fd1c722ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654fb3a2_01e6b7b1",
+        "filename": "components/ntp_tiles/webui/resources/ntp_tiles_internals.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-18T15:10:11Z",
+      "side": 1,
+      "message": "Done. Makes sense.",
+      "parentUuid": "3b0618bd_6d9a3839",
+      "range": {
+        "startLine": 121,
+        "startChar": 52,
+        "endLine": 121,
+        "endChar": 53
+      },
+      "revId": "cb9eafbe394cfbf452b7563616c6b0fd1c722ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
