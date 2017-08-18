@@ -51,6 +51,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/network_time/network_time_tracker.h"
 #include "components/offline_pages/features/features.h"
 #include "components/policy/core/common/cloud/policy_header_io_helper.h"
 #include "components/previews/core/previews_experiments.h"
@@ -461,6 +462,12 @@ void NotifyUIThreadOfRequestComplete(
           original_content_length, request_creation_time, net_error);
     }
   }
+}
+
+void StartNetworkTimeTrackerFetchOnUI(
+    network_time::NetworkTimeTracker* tracker) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  tracker->StartTimeFetch(base::Bind(&base::DoNothing));
 }
 
 }  // namespace
@@ -951,6 +958,15 @@ void ChromeResourceDispatcherHostDelegate::RequestComplete(
           base::TimeTicks::Now() - url_request->creation_time()));
 }
 
+void ChromeResourceDispatcherHostDelegate::StartNetworkTimeTrackerFetch(
+    network_time::NetworkTimeTracker* tracker) {
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&StartNetworkTimeTrackerFetchOnUI, tracker));
+}
+
+// TODO(http://crbug.com/755626): Factor previews logic out of
+// ChromeResourceDispatcherHostDelegate.
 content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
     const net::URLRequest& url_request,
     content::ResourceContext* resource_context,
@@ -970,6 +986,7 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
     if (data_reduction_proxy_io_data->ShouldEnableLitePages(url_request,
                                                             previews_io_data)) {
       previews_state |= content::SERVER_LITE_PAGE_ON;
+      StartNetworkTimeTrackerFetch(g_browser_process->network_time_tracker());
     }
 
     // Check that data saver is enabled and the user is eligible for Lo-Fi

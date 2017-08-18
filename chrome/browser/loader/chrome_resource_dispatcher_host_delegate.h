@@ -32,6 +32,10 @@ namespace net {
 class URLRequest;
 }
 
+namespace network_time {
+class NetworkTimeTracker;
+}
+
 namespace safe_browsing {
 class SafeBrowsingService;
 }
@@ -110,12 +114,21 @@ class ChromeResourceDispatcherHostDelegate
       std::vector<std::unique_ptr<content::ResourceThrottle>>* throttles);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(ChromeResourceDispatcherHostDelegateTimeTrackerTest,
+                           TimeQueryStarted);
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   struct StreamTargetInfo {
     std::string extension_id;
     std::string view_id;
   };
 #endif
+
+  // Start a network time query, which will
+  // only fetch the time if network time isn't already available and if
+  // there isn't already a time query in progress.
+  static void StartNetworkTimeTrackerFetch(
+      network_time::NetworkTimeTracker* tracker);
 
   scoped_refptr<DownloadRequestLimiter> download_request_limiter_;
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_;
