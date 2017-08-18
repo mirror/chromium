@@ -134,17 +134,6 @@ gfx::Size GetTileViewSize() {
   return gfx::Size(kPreferredTileWidth, kPreferredTileHeight);
 }
 
-// Returns the padding around a tile view.
-gfx::Insets GetTilePadding() {
-  if (features::IsFullscreenAppListEnabled()) {
-    return gfx::Insets(-kTileVerticalPadding, -kTileHorizontalPadding,
-                       -kTileVerticalPadding, -kTileHorizontalPadding);
-  }
-
-  return gfx::Insets(-kTileTopPadding, -kTileLeftRightPadding,
-                     -kTileBottomPadding, -kTileLeftRightPadding);
-}
-
 // RowMoveAnimationDelegate is used when moving an item into a different row.
 // Before running the animation, the item's layer is re-created and kept in
 // the original position, then the item is moved to just before its target
@@ -380,6 +369,17 @@ gfx::Size AppsGridView::GetTotalTileSize() {
   gfx::Rect rect(GetTileViewSize());
   rect.Inset(GetTilePadding());
   return rect.size();
+}
+
+// static
+gfx::Insets AppsGridView::GetTilePadding() {
+  if (features::IsFullscreenAppListEnabled()) {
+    return gfx::Insets(-kTileVerticalPadding, -kTileHorizontalPadding,
+                       -kTileVerticalPadding, -kTileHorizontalPadding);
+  }
+
+  return gfx::Insets(-kTileTopPadding, -kTileLeftRightPadding,
+                     -kTileBottomPadding, -kTileLeftRightPadding);
 }
 
 void AppsGridView::ResetForShowApps() {

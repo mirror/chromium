@@ -116,15 +116,17 @@ TEST_F(FolderHeaderViewTest, MaxFoldernNameLength) {
   EXPECT_TRUE(CanEditFolderName());
 
   // Update UI to set folder name to really long one beyond its maxium limit,
-  // The folder name should be trucated to the maximum length.
+  // The folder name should be trucated to the maximum length or elided string
+  // which is equal or less than the maximum length.
   std::string max_len_name;
   for (size_t i = 0; i < kMaxFolderNameChars; ++i)
     max_len_name += "a";
   UpdateFolderName(max_len_name);
-  EXPECT_EQ(max_len_name, delegate_->folder_name());
+  EXPECT_GE(kMaxFolderNameChars, delegate_->folder_name().length());
+  std::string folder_name = delegate_->folder_name();
   std::string too_long_name = max_len_name + "a";
   UpdateFolderName(too_long_name);
-  EXPECT_EQ(max_len_name, delegate_->folder_name());
+  EXPECT_EQ(folder_name, delegate_->folder_name());
 }
 
 TEST_F(FolderHeaderViewTest, OemFolderNameNotEditable) {
