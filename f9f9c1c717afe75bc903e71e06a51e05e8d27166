@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a2d8e554_18947723",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123771
+      },
+      "writtenOn": "2017-08-18T07:47:59Z",
+      "side": 1,
+      "message": "Please don\u0027t be nervous. Even if you find something wrong in coding style, you don\u0027t have to fix them together.  It can make logs confusing.\nSo in this CL, I recommend you to focus on only TestExtendedAttribute.",
+      "revId": "f9f9c1c717afe75bc903e71e06a51e05e8d27166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0261914d_803605fc",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 4
@@ -13,6 +30,23 @@
       "writtenOn": "2017-08-18T07:42:30Z",
       "side": 1,
       "message": "I\u0027m not quite sure if we want more test cases or this is just enough.\n\na) Do we want to test with other types than \"enum\"?\n\nb) Do we want to test in a more complicated situation such as\n    interface I {\n      [ExtendedAttr1] void operation([ExtendedAttr2] any arg);\n    }\n?",
+      "revId": "f9f9c1c717afe75bc903e71e06a51e05e8d27166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d93ce2_a489350d",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1123771
+      },
+      "writtenOn": "2017-08-18T07:47:59Z",
+      "side": 1,
+      "message": "Lines whose width goes over 80 columns should be folded, but otherwise, it should be in one line.",
       "revId": "f9f9c1c717afe75bc903e71e06a51e05e8d27166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
