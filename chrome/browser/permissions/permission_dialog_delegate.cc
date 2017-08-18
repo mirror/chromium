@@ -110,13 +110,13 @@ bool PermissionDialogDelegate::ShouldShowDialog(bool has_user_gesture) {
   if (!base::FeatureList::IsEnabled(features::kModalPermissionPrompts))
     return false;
 
-  // Only use modals when the prompt is triggered by a user gesture, unless the
-  // kModalParamsUserGestureKey is set to false.
+  // If kModalParamsUserGestureKey is set to true, only use modals when the
+  // prompt is triggered by a user gesture, otherwise use them for all prompts.
   std::string require_gesture = variations::GetVariationParamValueByFeature(
       features::kModalPermissionPrompts, kModalParamsUserGestureKey);
-  if (require_gesture == "false")
-    return true;
-  return has_user_gesture;
+  if (require_gesture == "true")
+    return has_user_gesture;
+  return true;
 }
 
 void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env) {
