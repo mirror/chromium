@@ -959,6 +959,30 @@
     },
     {
       "key": {
+        "uuid": "6a36dc76_b8135d5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-18T12:44:57Z",
+      "side": 1,
+      "message": "Yes it should be.",
+      "parentUuid": "b658d0bf_62640e93",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "ea0fdc20dc36d4cf13f36b094d011f8c97c8f4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef5dd8c_b7e5517a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
