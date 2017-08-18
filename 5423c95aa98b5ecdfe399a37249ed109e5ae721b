@@ -46,6 +46,30 @@
       "revId": "5423c95aa98b5ecdfe399a37249ed109e5ae721b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce79abd3_e8a0b757",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T16:02:16Z",
+      "side": 1,
+      "message": "|from| and |to| are args to the SimuateDrag method around L663, which expect |apps_grid_view_|\u0027s coordinates.",
+      "parentUuid": "fb688b9f_cb2730cd",
+      "range": {
+        "startLine": 655,
+        "startChar": 54,
+        "endLine": 655,
+        "endChar": 71
+      },
+      "revId": "5423c95aa98b5ecdfe399a37249ed109e5ae721b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
