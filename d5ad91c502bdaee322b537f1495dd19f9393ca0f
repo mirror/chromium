@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43d23ce6_15b7c76e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-18T21:28:45Z",
+      "side": 1,
+      "message": "It is possible that the browser enter high memory pressure when there is no background tab is pending. So when this resumes, it is also possible that there is no pending tabs.\n\nI updated the function name to reflect that.",
+      "parentUuid": "e4c81723_42d44e0a",
+      "range": {
+        "startLine": 924,
+        "startChar": 17,
+        "endLine": 924,
+        "endChar": 43
+      },
+      "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2032307a_23f6e70f",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d7bb9c68_a8760abb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-18T21:28:45Z",
+      "side": 1,
+      "message": "I see what you mean now. I updated the code to check if this tab is in session restore. Also updated the test.",
+      "parentUuid": "2032307a_23f6e70f",
+      "range": {
+        "startLine": 1154,
+        "startChar": 12,
+        "endLine": 1154,
+        "endChar": 35
+      },
+      "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf9d874_48358446",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803ab5ec_e39ec853",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-18T21:28:45Z",
+      "side": 1,
+      "message": "Done\n\nAlso added test for pause/resume.",
+      "parentUuid": "ebf9d874_48358446",
+      "range": {
+        "startLine": 439,
+        "startChar": 46,
+        "endLine": 439,
+        "endChar": 54
+      },
+      "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
