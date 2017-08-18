@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec3c1d8_6c02006f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "Trailing whitespace.",
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c815c291_271aa366",
+        "filename": "cc/output/renderer_pixeltest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "I would consider adding a using viz::SharedQuadState to the top here instead? Maybe in some of the other tests too. It will reduce churn when the test gets moved to namespace viz too.",
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1fae52_84b3ddf7",
+        "filename": "cc/quads/render_pass.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "using SharedQuadStateList \u003d ListContainer\u003cviz::SharedQuadState\u003e;",
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1dbca2_2b3039a9",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "Please put this above/below the rest of the includes and add a comment stating it\u0027s a temporary step and will be removed.",
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca690ef_97314bbe",
+        "filename": "components/viz/common/quads/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "Add similar comment here.",
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcf7860_5d0c62ad",
+        "filename": "components/viz/common/quads/shared_quad_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "Should you update these strings? Does that break things?",
+      "range": {
+        "startLine": 60,
+        "startChar": 59,
+        "endLine": 60,
+        "endChar": 77
+      },
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d10e75d_ac41b63f",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-18T19:33:12Z",
+      "side": 1,
+      "message": "Are there no unit tests for SharedQuadState StructTraits specifically?",
+      "revId": "374eea3c7b19958e0fc617ffc9ed34ac6cc6f114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
