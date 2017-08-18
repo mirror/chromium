@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 
 var browserTarget = new content.mojom.BrowserTargetPtr;
-Mojo.bindInterface(content.mojom.BrowserTarget.name,
-                   mojo.makeRequest(browserTarget).handle);
+Mojo.bindInterface({
+    interfaceName: content.mojom.BrowserTarget.name,
+    handle: mojo.makeRequest(browserTarget).handle });
 
 browserTarget.start().then(function() {
   browserTarget.stop();

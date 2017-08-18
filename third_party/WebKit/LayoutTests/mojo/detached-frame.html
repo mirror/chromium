@@ -28,8 +28,10 @@ promise_test(async () => {
   document.body.removeChild(frame);
 
   let helper = new content.mojom.MojoLayoutTestHelperPtr;
-  frameMojo.bindInterface(content.mojom.MojoLayoutTestHelper.name,
-                          mojo.makeRequest(helper).handle);
+  frameMojo.bindInterface({
+      interfaceName: content.mojom.MojoLayoutTestHelper.name,
+      handle: mojo.makeRequest(helper).handle
+  });
 
   try {
     let reply = await helper.reverse("hello world.");
@@ -51,8 +53,8 @@ promise_test(async () => {
       frame.contentWindow.MojoInterfaceInterceptor;
   document.body.removeChild(frame);
 
-  let interceptor = new frameMojoInterfaceInterceptor(
-      content.mojom.MojoLayoutTestHelper.name);
+  let interceptor = new frameMojoInterfaceInterceptor({
+      interfaceName: content.mojom.MojoLayoutTestHelper.name });
   try {
     interceptor.start();
     assert_unreached();
@@ -69,8 +71,8 @@ promise_test(async () => {
 
   // Create the interceptor while the frame is attached so that it is associated
   // with the frame's execution context.
-  let interceptor = new frame.contentWindow.MojoInterfaceInterceptor(
-      content.mojom.MojoLayoutTestHelper.name);
+  let interceptor = new frame.contentWindow.MojoInterfaceInterceptor({
+      interfaceName: content.mojom.MojoLayoutTestHelper.name });
   document.body.removeChild(frame);
 
   try {
@@ -88,8 +90,8 @@ promise_test(async () => {
   await promise;
 
   // Create the interceptor and start it while the frame is attached.
-  let interceptor = new frame.contentWindow.MojoInterfaceInterceptor(
-      content.mojom.MojoLayoutTestHelper.name);
+  let interceptor = new frame.contentWindow.MojoInterfaceInterceptor({
+      interfaceName: content.mojom.MojoLayoutTestHelper.name });
   interceptor.start();
   document.body.removeChild(frame);
 

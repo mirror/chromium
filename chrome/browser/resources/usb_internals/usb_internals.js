@@ -56,8 +56,10 @@ function addTestDevice(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
   pageHandler = new mojom.UsbInternalsPageHandlerPtr;
-  Mojo.bindInterface(
-      mojom.UsbInternalsPageHandler.name, mojo.makeRequest(pageHandler).handle);
+  Mojo.bindInterface({
+    interfaceName: mojom.UsbInternalsPageHandler.name,
+    handle: mojo.makeRequest(pageHandler).handle
+  });
 
   $('add-test-device-form').addEventListener('submit', addTestDevice);
   refreshDeviceList();

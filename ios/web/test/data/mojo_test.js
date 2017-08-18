@@ -38,8 +38,8 @@ function whenDomContentLoaded() {
 function main() {
   whenDomContentLoaded().then(function() {
     browserProxy = new TestUIHandlerMojoPtr();
-    Mojo.bindInterface(TestUIHandlerMojo.name,
-                       mojo.makeRequest(browserProxy).handle);
+    Mojo.bindInterface({ interfaceName: TestUIHandlerMojo.name,
+                         handle: mojo.makeRequest(browserProxy).handle });
 
     pageImpl = new TestPageImpl();
     var pagePtr = new TestPagePtr();

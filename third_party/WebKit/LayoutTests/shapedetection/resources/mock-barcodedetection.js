@@ -5,8 +5,8 @@ class MockBarcodeDetection {
     this.bindingSet_ = new mojo.BindingSet(
         shapeDetection.mojom.BarcodeDetection);
 
-    this.interceptor_ = new MojoInterfaceInterceptor(
-        shapeDetection.mojom.BarcodeDetection.name);
+    this.interceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: shapeDetection.mojom.BarcodeDetection.name });
     this.interceptor_.oninterfacerequest =
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();
