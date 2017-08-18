@@ -70,6 +70,30 @@
       "revId": "5423c95aa98b5ecdfe399a37249ed109e5ae721b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae311cac_ec037110",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-18T22:28:13Z",
+      "side": 1,
+      "message": "As discussed offline, I made the convert in SimuateDrag. And also add views::View::ConvertPointToWidget (which is the root cause of the test failure as apps_grid_view local bounds start below search box).",
+      "parentUuid": "ce79abd3_e8a0b757",
+      "range": {
+        "startLine": 655,
+        "startChar": 54,
+        "endLine": 655,
+        "endChar": 71
+      },
+      "revId": "5423c95aa98b5ecdfe399a37249ed109e5ae721b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
