@@ -1085,6 +1085,10 @@ ResourceProvider::ScopedWriteLockGL::ScopedWriteLockGL(
   allocated_ = resource->allocated;
 }
 
+GrPixelConfig ResourceProvider::ScopedWriteLockGL::PixelConfig() const {
+  return ToGrPixelConfig(format());
+}
+
 ResourceProvider::ScopedWriteLockGL::~ScopedWriteLockGL() {
   Resource* resource = resource_provider_->GetResource(resource_id_);
   DCHECK(resource->locked_for_write);
