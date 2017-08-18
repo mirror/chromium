@@ -16,6 +16,24 @@
       "revId": "f4490b9d188ae5cf93589b21a9872befcf1220c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426a82eb_af79017f",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:50:56Z",
+      "side": 1,
+      "message": "Having seen this, I can\u0027t help but wonder if this is really necessary.\n\nWhile it\u0027s obviously wasteful to transfer large chunks of data over the clipboard that won\u0027t fit, won\u0027t it just be rejected on the Android side if the parcel is too large?\n\nAlso, if anyone is curious what //base does, we have a simple estimator here: https://cs.chromium.org/chromium/src/base/strings/utf_string_conversion_utils.cc?rcl\u003d12d672123276e9346772f16ce74141ae864d235c\u0026l\u003d140\n\nMatching that logic would mean checking if the string is just ASCII (and multiplying by 2); otherwise, just assume that multibyte UTF-8 character will average out to be ~1 UTF-16 character.",
+      "parentUuid": "ee5a577d_b41b70ca",
+      "revId": "f4490b9d188ae5cf93589b21a9872befcf1220c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
