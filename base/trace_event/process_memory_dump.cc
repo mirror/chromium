@@ -349,7 +349,7 @@ void ProcessMemoryDump::AsValueInto(TracedValue* value) const {
     value->SetString("source", edge.source.ToString());
     value->SetString("target", edge.target.ToString());
     value->SetInteger("importance", edge.importance);
-    value->SetString("type", edge.type);
+    value->SetString("type", kEdgeTypeOwnership);
     value->EndDictionary();
   }
   value->EndArray();
