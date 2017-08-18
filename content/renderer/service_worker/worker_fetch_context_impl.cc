@@ -150,7 +150,7 @@ int WorkerFetchContextImpl::ApplicationCacheHostID() const {
 
 void WorkerFetchContextImpl::SetControllerServiceWorker(
     int64_t controller_version_id) {
-  controller_version_id_ = controller_version_id;
+  // controller_version_id_ = controller_version_id;
 }
 
 bool WorkerFetchContextImpl::Send(IPC::Message* message) {
