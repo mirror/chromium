@@ -22,6 +22,30 @@
       "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5701914_06b2e0c1",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-18T23:14:15Z",
+      "side": 1,
+      "message": "We had this explicitly set false internally, but are now having issues building the new c++14 stuff that got introduced recently for the host_cpu (b/64850365), so we want the x86/x64 host components to build with the chromium libc++ and then use our libc++ to build the device/arm components",
+      "parentUuid": "7395cec0_2ec73866",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
