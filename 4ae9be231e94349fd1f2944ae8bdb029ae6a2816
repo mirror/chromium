@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c144f03f_b8c231d4",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T20:10:31Z",
+      "side": 1,
+      "message": "Do we need separate logic around the title being set for the first time? Or is the ignore period sufficient to catch this as well?\n\nAlso, as far as I can see this boolean isn\u0027t actually used to control any logic?",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca913553_8b50ca0b",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T20:10:31Z",
+      "side": 1,
+      "message": "kSignalSendingDelay is quite generic. If this is specific to favicon and title then make the variable name indicate that.\n\nIt also isn\u0027t strictly a delay for *sending* the period. It\u0027s a period of time (post load) during which the signals are *ignored*.\n\nHow about kFaviconAndTitleUpdatesIgnoredTimeout?\n\nAnd why 5 minutes? I\u0027d imagine something much shorter than that...",
+      "range": {
+        "startLine": 159,
+        "startChar": 59,
+        "endLine": 159,
+        "endChar": 78
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b042e207_f49c6bc0",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T20:10:31Z",
+      "side": 1,
+      "message": "Why do we delay reporting? If anything we should be ignoring all signals early on, but once past that time period we should be reporting immediately.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 25
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174a770_ac865cb4",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T20:10:31Z",
+      "side": 1,
+      "message": "I think we should actually ignore all updates for the first few minutes. A common pattern is that a lightweight loader page will set the favicon/title, then the full page loads and updates it. We only care about once the page is \"stable\", which is maybe some delay *after* the page has fully loaded? (Once we have our new loaded signal based on quiescence?)",
+      "range": {
+        "startLine": 73,
+        "startChar": 24,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd952ba_9fa2568c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 80996,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T20:10:31Z",
+      "side": 1,
+      "message": "Document the \"ignore timeout\" logic here.",
+      "range": {
+        "startLine": 80996,
+        "startChar": 61,
+        "endLine": 80996,
+        "endChar": 71
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
