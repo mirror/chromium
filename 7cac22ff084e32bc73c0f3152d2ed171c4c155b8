@@ -22,6 +22,30 @@
       "revId": "7cac22ff084e32bc73c0f3152d2ed171c4c155b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4df9015_fa941c2e",
+        "filename": "WATCHLISTS",
+        "patchSetId": 2
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-18T17:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44557728_8260dfa0",
+      "range": {
+        "startLine": 632,
+        "startChar": 20,
+        "endLine": 632,
+        "endChar": 33
+      },
+      "revId": "7cac22ff084e32bc73c0f3152d2ed171c4c155b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
