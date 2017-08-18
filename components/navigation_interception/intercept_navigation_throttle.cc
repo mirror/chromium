@@ -41,9 +41,10 @@ InterceptNavigationThrottle::CheckIfShouldIgnoreNavigation(bool is_redirect) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   NavigationParams navigation_params(
       navigation_handle()->GetURL(), navigation_handle()->GetReferrer(),
-      navigation_handle()->HasUserGesture(), navigation_handle()->IsPost(),
-      navigation_handle()->GetPageTransition(), is_redirect,
-      navigation_handle()->IsExternalProtocol(), true,
+      navigation_handle()->HasUserGesture(),
+      navigation_handle()->WasStartedFromContextMenu(),
+      navigation_handle()->IsPost(), navigation_handle()->GetPageTransition(),
+      is_redirect, navigation_handle()->IsExternalProtocol(), true,
       navigation_handle()->GetBaseURLForDataURL());
   bool should_ignore_navigation = should_ignore_callback_.Run(
       navigation_handle()->GetWebContents(), navigation_params);
