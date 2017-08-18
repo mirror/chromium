@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b816454_24aa6c62",
+        "filename": "media/capture/video/chromeos/camera_buffer_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-18T12:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b30055_b12b7dc9",
+      "revId": "8f216faddcf5b42d31d218a73e116d2b15c10045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8082647_4156cf37",
         "filename": "media/capture/video/chromeos/local_gpu_memory_buffer_manager.cc",
         "patchSetId": 4
