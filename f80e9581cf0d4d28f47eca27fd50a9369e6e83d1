@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d48814f0_702f8133",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-18T00:06:28Z",
+      "side": 1,
+      "message": "What\u0027s the best way to pass an optional `ssl_info`in that case?\n\nThis requires modifying a whole bunch of call sites, at least one of which (in NavigationRequest::OnStartChecksComplete()) is cross-thread.",
+      "parentUuid": "bbfee198_0da239c2",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddc1b906_60d82bc0",
         "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
         "patchSetId": 11
