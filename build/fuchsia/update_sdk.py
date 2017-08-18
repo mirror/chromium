@@ -10,7 +10,6 @@ import os
 import shutil
 import subprocess
 import sys
-import tarfile
 import tempfile
 
 REPOSITORY_ROOT = os.path.abspath(os.path.join(
@@ -51,9 +50,12 @@ def main():
     cmd = [os.path.join(find_depot_tools.DEPOT_TOOLS_PATH, 'gsutil.py'),
            'cp', bucket + sdk_hash, f.name]
     subprocess.check_call(cmd)
-    f.seek(0)
     EnsureDirExists(output_dir)
-    tarfile.open(mode='r:gz', fileobj=f).extractall(path=output_dir)
+    unzip_command = 'unzip -q "%s" -d "%s"' % (f.name, output_dir)
+    unzip_exit_code = os.system(unzip_command)
+    if unzip_exit_code != 0:
+      print >> sys.stderr, 'Failed to unzip fuchsia_sdk (%s)' % unzip_command
+      return 1
 
   with open(hash_filename, 'w') as f:
     f.write(sdk_hash)
