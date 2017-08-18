@@ -1161,6 +1161,8 @@ config("default_warnings") {
   }
 
   if (is_clang) {
+    defines = [ "FOOBAR" ]
+
     cflags += [
       # TODO(thakis): Consider -Wloop-analysis (turns on
       # -Wrange-loop-analysis too).
