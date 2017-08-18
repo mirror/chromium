@@ -10,6 +10,7 @@
 
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "net/ssl/ssl_info.h"
 
 namespace content {
 
@@ -39,6 +40,9 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
 
   // The length of the response body after decoding.
   int64_t decoded_body_length = 0;
+
+  // The SSL info associated with the request.
+  net::SSLInfo ssl_info;
 };
 
 }  // namespace content
