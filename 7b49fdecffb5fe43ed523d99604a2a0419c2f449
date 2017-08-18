@@ -269,6 +269,30 @@
       "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "062d61cb_168540c0",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-18T18:10:31Z",
+      "side": 1,
+      "message": "I think the decision will depend on which of the following 2 is more frequent:\n1. A page loads within 5 min and set favicon/title, and then change the favicon/title once after 5 min.\n2. A page loads after 5 min, and set the favicon/title after 5 min.\n\nYou current approach handles 2, but will miss 1.\n\nI feel 1 is not rare. How about we check if the tab is loaded when favicon/title is updated after 5 min?\n1. If tab is loaded, report\n2. If tab is not loaded, skip once",
+      "parentUuid": "91bc33e9_afb5a3f4",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
