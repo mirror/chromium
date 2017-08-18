@@ -16,6 +16,24 @@
       "revId": "efcdee97a51b15dd36276aed3674007620580098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cb44ab_31875cff",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-18T18:21:39Z",
+      "side": 1,
+      "message": "We might be doing something wrong in GLImageTestSupport::SetBufferDataToColor. eglCreateImageKHR semantics for UV were different on different platforms and might have changed again lately. \n\nOn Intel, mesa i965 drivers are setting up the samplers and NIR color conversion code for YUV -\u003e RGB.\nWe had issues in the past with swapped chroma components or wrong color conversion matrixes. That unit test was a convenient way of debugging those issues.\nWe picked that color since it happened not to lose precision if converted from RGB -\u003e YUV and back from YUV -\u003e RGB on a rockchip device. \n\nFeel free to land as it is, since the test is already disabled, and I might investigate further.",
+      "parentUuid": "bbd49f1f_c81f73e8",
+      "revId": "efcdee97a51b15dd36276aed3674007620580098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
