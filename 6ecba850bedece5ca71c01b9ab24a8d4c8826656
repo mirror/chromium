@@ -36,6 +36,98 @@
     },
     {
       "key": {
+        "uuid": "25d372ae_7acde4c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:45:34Z",
+      "side": 1,
+      "message": "This sentence is a bit confusing for me.\n\nCould this be:\n\n\"Checks whether the given referer is valid for the Activity launched by the given intent\"",
+      "range": {
+        "startLine": 260,
+        "startChar": 52,
+        "endLine": 260,
+        "endChar": 54
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44faffb0_56d11409",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:45:34Z",
+      "side": 1,
+      "message": "what is active content?",
+      "range": {
+        "startLine": 262,
+        "startChar": 29,
+        "endLine": 262,
+        "endChar": 35
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4877188d_777d8935",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:45:34Z",
+      "side": 1,
+      "message": "I don\u0027t see any explicit checks for https origins here.  Is that done in OriginVerifier?  Should we add a check here (even an assert)?\n\nDoes the referrer url need to be https as well?  I assume it would need to make the page.",
+      "range": {
+        "startLine": 263,
+        "startChar": 71,
+        "endLine": 263,
+        "endChar": 76
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0500a204_12a233d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:45:34Z",
+      "side": 1,
+      "message": "I\u0027d add a blank line above this",
+      "range": {
+        "startLine": 264,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0603fda5_4ce50b8f",
         "filename": "content/public/android/java/src/org/chromium/content_public/common/Referrer.java",
         "patchSetId": 1
