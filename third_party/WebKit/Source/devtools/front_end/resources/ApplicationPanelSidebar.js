@@ -307,10 +307,13 @@ Resources.ApplicationPanelSidebar = class extends UI.VBox {
 
     var domStorageTreeElement = new Resources.DOMStorageTreeElement(this._panel, domStorage);
     this._domStorageTreeElements.set(domStorage, domStorageTreeElement);
-    if (domStorage.isLocalStorage)
+    if (domStorage.isLocalStorage) {
+      domStorageTreeElement.userMetricsActionId = 'ApplicationPanelLocalStorageClicked';
       this.localStorageListTreeElement.appendChild(domStorageTreeElement);
-    else
+    } else {
+      domStorageTreeElement.userMetricsActionId = 'ApplicationPanelSessionStorageClicked';
       this.sessionStorageListTreeElement.appendChild(domStorageTreeElement);
+    }
   }
 
   /**
@@ -736,6 +739,10 @@ Resources.DatabaseTableTreeElement = class extends Resources.BaseStorageTreeElem
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._sidebar._showDatabase(this._database, this._tableName);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelDatabasesClicked);
+
     return false;
   }
 };
@@ -905,8 +912,11 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.ServiceWorkerCacheView(this._model, this._cache);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelCacheStorageClicked);
+
     return false;
   }
 
@@ -945,6 +955,10 @@ Resources.ServiceWorkersTreeElement = class extends Resources.BaseStorageTreeEle
     if (!this._view)
       this._view = new Resources.ServiceWorkersView();
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelServiceWorkersClicked);
+
     return false;
   }
 };
@@ -978,6 +992,10 @@ Resources.AppManifestTreeElement = class extends Resources.BaseStorageTreeElemen
     if (!this._view)
       this._view = new Resources.AppManifestView();
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelManifestClicked);
+
     return false;
   }
 };
@@ -1011,6 +1029,10 @@ Resources.ClearStorageTreeElement = class extends Resources.BaseStorageTreeEleme
     if (!this._view)
       this._view = new Resources.ClearStorageView();
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelClearStorageClicked);
+
     return false;
   }
 };
@@ -1334,8 +1356,11 @@ Resources.IDBObjectStoreTreeElement = class extends Resources.BaseStorageTreeEle
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.IDBDataView(this._model, this._databaseId, this._objectStore, null);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelIndexedDBObjectStoreClicked);
+
     return false;
   }
 
@@ -1412,8 +1437,11 @@ Resources.IDBIndexTreeElement = class extends Resources.BaseStorageTreeElement {
     super.onselect(selectedByUser);
     if (!this._view)
       this._view = new Resources.IDBDataView(this._model, this._databaseId, this._objectStore, this._index);
-
     this.showView(this._view);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelIndexedDBIndexClicked);
+
     return false;
   }
 
@@ -1434,6 +1462,7 @@ Resources.DOMStorageTreeElement = class extends Resources.BaseStorageTreeElement
   constructor(storagePanel, domStorage) {
     super(storagePanel, domStorage.securityOrigin ? domStorage.securityOrigin : Common.UIString('Local Files'), false);
     this._domStorage = domStorage;
+    this._userMetricsActionId = null;
     var icon = UI.Icon.create('mediumicon-table', 'resource-tree-item');
     this.setLeadingIcons([icon]);
   }
@@ -1444,12 +1473,23 @@ Resources.DOMStorageTreeElement = class extends Resources.BaseStorageTreeElement
   }
 
   /**
+   * @param {string} id
+   */
+  set userMetricsActionId(id) {
+    this._userMetricsActionId = id;
+  }
+
+  /**
    * @override
    * @return {boolean}
    */
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._storagePanel.showDOMStorage(this._domStorage);
+
+    if (selectedByUser && this._userMetricsActionId)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action[this._userMetricsActionId]);
+
     return false;
   }
 
@@ -1511,6 +1551,10 @@ Resources.CookieTreeElement = class extends Resources.BaseStorageTreeElement {
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._storagePanel.showCookies(this._target, this._cookieDomain);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelCookiesClicked);
+
     return false;
   }
 };
@@ -1599,6 +1643,10 @@ Resources.ApplicationCacheFrameTreeElement = class extends Resources.BaseStorage
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
     this._sidebar._showApplicationCache(this._frameId);
+
+    if (selectedByUser)
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ApplicationPanelApplicationCacheClicked);
+
     return false;
   }
 };

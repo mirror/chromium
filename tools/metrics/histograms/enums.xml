@@ -7933,6 +7933,17 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="28" label="Coverage started"/>
   <int value="29" label="Audits started"/>
   <int value="30" label="Audits finished"/>
+  <int value="31" label="Application panel manifest clicked"/>
+  <int value="32" label="Application panel service worker clicked"/>
+  <int value="33" label="Application panel clear storage clicked"/>
+  <int value="34" label="Application panel local storage clicked"/>
+  <int value="35" label="Application panel session storage clicked"/>
+  <int value="36" label="Application panel indexedDB object store clicked"/>
+  <int value="37" label="Application panel indexedDB index clicked"/>
+  <int value="38" label="Application panel databases clicked"/>
+  <int value="39" label="Application panel cookies clicked"/>
+  <int value="40" label="Application panel cache storage clicked"/>
+  <int value="41" label="Application panel application cache clicked"/>
 </enum>
 
 <enum name="DevToolsPanel">
