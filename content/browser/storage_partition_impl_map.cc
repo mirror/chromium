@@ -589,8 +589,7 @@ void StoragePartitionImplMap::PostCreateInitialization(
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::Bind(&BackgroundFetchContext::InitializeOnIOThread,
-                   partition->GetBackgroundFetchContext(),
-                   base::RetainedRef(partition->GetURLRequestContext())));
+                   partition->GetBackgroundFetchContext()));
 
     // We do not call InitializeURLRequestContext() for media contexts because,
     // other than the HTTP cache, the media contexts share the same backing

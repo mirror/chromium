@@ -1032,4 +1032,18 @@ void ControllerImpl::SendOnDownloadFailed(
   client->OnDownloadFailed(guid, reason);
 }
 
+// TODO(delphick): Should this return a unique_ptr instead of value?
+url::Origin ControllerImpl::GetOrigin(const std::string& guid) {
+  Entry* entry = model_->Get(guid);
+  DCHECK(entry);
+
+  std::string origin;
+  if (entry->request_params.request_headers.GetHeader(
+          net::HttpRequestHeaders::kOrigin, &origin)) {
+    return url::Origin(GURL(origin));
+  } else {
+    return url::Origin(entry->request_params.url);
+  }
+}
+
 }  // namespace download

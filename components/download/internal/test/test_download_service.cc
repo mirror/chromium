@@ -142,5 +142,20 @@ void TestDownloadService::OnDownloadFailed(
     client_->OnDownloadFailed(guid, failure_reason);
 }
 
+url::Origin TestDownloadService::GetOrigin(const std::string& guid) {
+  for (DownloadParams& params : downloads_) {
+    if (params.guid == guid) {
+      std::string origin;
+      if (params.request_params.request_headers.GetHeader(
+              net::HttpRequestHeaders::kOrigin, &origin)) {
+        return url::Origin(GURL(origin));
+      } else {
+        return url::Origin(params.request_params.url);
+      }
+    }
+  }
+  return url::Origin();
+}
+
 }  // namespace test
 }  // namespace download

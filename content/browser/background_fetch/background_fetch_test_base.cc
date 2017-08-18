@@ -66,47 +66,6 @@ void DidFindServiceWorkerRegistration(
 }  // namespace
 
 // -----------------------------------------------------------------------------
-// TestResponse
-
-BackgroundFetchTestBase::TestResponse::TestResponse() = default;
-
-BackgroundFetchTestBase::TestResponse::~TestResponse() = default;
-
-// -----------------------------------------------------------------------------
-// TestResponseBuilder
-
-BackgroundFetchTestBase::TestResponseBuilder::TestResponseBuilder(
-    int response_code)
-    : response_(base::MakeUnique<BackgroundFetchTestBase::TestResponse>()) {
-  response_->headers = make_scoped_refptr(new net::HttpResponseHeaders(
-      "HTTP/1.1 " + std::to_string(response_code)));
-}
-
-BackgroundFetchTestBase::TestResponseBuilder::~TestResponseBuilder() = default;
-
-BackgroundFetchTestBase::TestResponseBuilder&
-BackgroundFetchTestBase::TestResponseBuilder::AddResponseHeader(
-    const std::string& name,
-    const std::string& value) {
-  DCHECK(response_);
-  response_->headers->AddHeader(name + ": " + value);
-  return *this;
-}
-
-BackgroundFetchTestBase::TestResponseBuilder&
-BackgroundFetchTestBase::TestResponseBuilder::SetResponseData(
-    std::string data) {
-  DCHECK(response_);
-  response_->data.swap(data);
-  return *this;
-}
-
-std::unique_ptr<BackgroundFetchTestBase::TestResponse>
-BackgroundFetchTestBase::TestResponseBuilder::Build() {
-  return std::move(response_);
-}
-
-// -----------------------------------------------------------------------------
 // RespondingDownloadManager
 
 // Faked download manager that will respond to known HTTP requests with a test-
@@ -205,6 +164,7 @@ BackgroundFetchTestBase::BackgroundFetchTestBase()
     // Using REAL_IO_THREAD would give better coverage for thread safety, but
     // at time of writing EmbeddedWorkerTestHelper didn't seem to support that.
     : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
+      delegate_(browser_context_.GetBackgroundFetchDelegate()),
       origin_(GURL(kTestOrigin)) {}
 
 BackgroundFetchTestBase::~BackgroundFetchTestBase() {
@@ -291,8 +251,8 @@ BackgroundFetchTestBase::CreateRequestWithProvidedResponse(
     std::unique_ptr<TestResponse> response) {
   GURL gurl(url);
 
-  // Register the |response| with the faked download manager.
-  download_manager_->RegisterResponse(gurl, std::move(response));
+  // Register the |response| with the faked delegate.
+  delegate_->RegisterResponse(url, std::move(response));
 
   // Create a ServiceWorkerFetchRequest request with the same information.
   return ServiceWorkerFetchRequest(gurl, method, ServiceWorkerHeaderMap(),

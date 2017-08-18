@@ -67,6 +67,7 @@ class ControllerImpl : public Controller,
   void OnStartScheduledTask(DownloadTaskType task_type,
                             const TaskFinishedCallback& callback) override;
   bool OnStopScheduledTask(DownloadTaskType task_type) override;
+  url::Origin GetOrigin(const std::string& guid) override;
 
  private:
   // DownloadDriver::Client implementation.
