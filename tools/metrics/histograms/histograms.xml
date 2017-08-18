@@ -82453,6 +82453,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Translate.Event">
+  <owner>renjieliu@google.com</owner>
+  <summary>
+    This logs the translate event that is associated with the translation. For
+    all translate event enum, see
+    //src/components/metrics/proto/translate_event.proto.
+  </summary>
+</histogram>
+
 <histogram name="Translate.HtmlLang" enum="TranslateLanguage">
   <owner>kenjibaheux@google.com</owner>
   <summary>
