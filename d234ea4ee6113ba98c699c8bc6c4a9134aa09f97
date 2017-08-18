@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "076baadf_e606a295",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-18T21:31:13Z",
+      "side": 1,
+      "message": "Can you comment here to explain that we get the decision first anyway, so that we can UMA the proper veto reason",
+      "range": {
+        "startLine": 305,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 76
+      },
+      "revId": "d234ea4ee6113ba98c699c8bc6c4a9134aa09f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f851e57f_19f3fe8b",
+        "filename": "cc/tiles/checker_image_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-18T21:31:13Z",
+      "side": 1,
+      "message": "nit: forced_disabled_? force_disabled_? forced_disable_? One of the words should have a \"d\" at the end it feels...",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 21
+      },
+      "revId": "d234ea4ee6113ba98c699c8bc6c4a9134aa09f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
