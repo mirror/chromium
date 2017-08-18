@@ -52,6 +52,24 @@
       "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88aafb0e_4383c92b",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T23:00:57Z",
+      "side": 1,
+      "message": "Hi sky@,\n\nI think I understand your question now, why not cache render surface for all animation types with opacity animation in this file core/window_animations.cc? Maybe all the animations in wm/window_animations.cc as well?\n\nThat is what we plan to do gradually. Since this caching mechanism is pretty new, currently we are picking up this four animations to see the performance and potential bugs. The treadeoff is that (I think), some of them are simple to understand, and most used. Some of them are complicated, but we still want to try on it to see what we can improvement on the cc side.\n\n1. Hiding window animation (close window).\n2. Cross fade animation (maximization, in/out tablet mode).\n3. Another one profile switching animation, this requires more code change in the switching animation itself.\n4. Overview mode animation, we might need to pick up which window to cache.\n\nThanks,\nTao",
+      "parentUuid": "8c763c83_fda4cfff",
+      "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
