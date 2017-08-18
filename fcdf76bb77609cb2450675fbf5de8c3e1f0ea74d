@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d8ed47c_6290297f",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T19:11:10Z",
+      "side": 1,
+      "message": "How about mentioning \nchrome/browser/resources/settings/site_settings/constants.js\nspecifically?",
+      "revId": "fcdf76bb77609cb2450675fbf5de8c3e1f0ea74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
