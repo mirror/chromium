@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43b31391_41720c32",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "No need to call here?\nIt seems it should start as soon as the first RTT observation is received.",
+      "range": {
+        "startLine": 294,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 31
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bf1284_055e9994",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "say why the timer should be stopped?\nThe reasoning IIUC is that we do not want to run the timer if there is no network traffic.\nAnd, also add why it is fine to stop it:\nMay be because it will be started once the traffic starts again?",
+      "range": {
+        "startLine": 1076,
+        "startChar": 5,
+        "endLine": 1076,
+        "endChar": 9
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c274b78_585e5374",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "seems like stale comment?",
+      "range": {
+        "startLine": 1134,
+        "startChar": 5,
+        "endLine": 1134,
+        "endChar": 69
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2e7474_22ea2b09",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "say when does it return a null value.",
+      "range": {
+        "startLine": 504,
+        "startChar": 12,
+        "endLine": 504,
+        "endChar": 19
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db805d93_8b606785",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "Can this be a const function?",
+      "range": {
+        "startLine": 505,
+        "startChar": 26,
+        "endLine": 505,
+        "endChar": 55
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac620e9_3b54481e",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "initialize to false in the constructor.",
+      "range": {
+        "startLine": 626,
+        "startChar": 7,
+        "endLine": 626,
+        "endChar": 49
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989a41fe_8d030531",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "s/running_/posted_/\n?",
+      "range": {
+        "startLine": 626,
+        "startChar": 41,
+        "endLine": 626,
+        "endChar": 49
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d040ad85_93ae13a4",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "add function comments...here and below.",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 7
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2c02cc_77058d03",
+        "filename": "net/nqe/network_quality_estimator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3274,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "It is a bit to difficult to understand where 10 is coming from.\n\nMay be say something like:\nhistorical 0 percentile rtt for |host| is 10* host;\nrecent 50 percentile rtt for |host| is 10* host + 10;\nDifference between the recent and historical rtts is expected to be 10 msec for each host.",
+      "range": {
+        "startLine": 3274,
+        "startChar": 49,
+        "endLine": 3274,
+        "endChar": 52
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdd636f_fdc92a5a",
+        "filename": "net/nqe/observation_buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "Explain all arguments in the comments.\neg., |host_keyed_percentiles| is set to the computed weighted percentile RTT for that host.\nweighted percentile is computed only for the hosts that are present in the |host_filter|.",
+      "range": {
+        "startLine": 113,
+        "startChar": 14,
+        "endLine": 113,
+        "endChar": 15
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfcdf9d_e0c0b297",
+        "filename": "net/nqe/observation_buffer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "may be add a test where this is not null?\n\nor: File a bug for recording UMA. Link this CL to that bug. Mention in the bug that this test needs to be added. With that, I will remember to do it later.",
+      "range": {
+        "startLine": 470,
+        "startChar": 54,
+        "endLine": 470,
+        "endChar": 67
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952e8721_97081d49",
+        "filename": "net/nqe/observation_buffer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "s/correct/is correct/",
+      "range": {
+        "startLine": 493,
+        "startChar": 27,
+        "endLine": 493,
+        "endChar": 34
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9becef5_f1ecc13a",
+        "filename": "net/nqe/observation_buffer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "s/i/host_index/\ns/j/count/\nPrefer not to use vague variable names.",
+      "range": {
+        "startLine": 502,
+        "startChar": 22,
+        "endLine": 502,
+        "endChar": 23
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffda881a_e4663ea8",
+        "filename": "net/nqe/observation_buffer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "s/5u/num_remote_hosts/\nand below.",
+      "range": {
+        "startLine": 514,
+        "startChar": 12,
+        "endLine": 514,
+        "endChar": 14
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad0f3b0_c864e121",
+        "filename": "net/nqe/observation_buffer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "s/i/ip_hash/\ns/j/observation_value/",
+      "range": {
+        "startLine": 531,
+        "startChar": 11,
+        "endLine": 531,
+        "endChar": 12
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b06e34_577eaf84",
+        "filename": "net/nqe/socket_watcher.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "comment about which byte offsets are used for which classes of addresses.",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c570e915_fbe498a7",
+        "filename": "net/nqe/socket_watcher.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "DCHECK_LE(index_min, index_max);\nDCHECK_GE(8, index_max - index_min);",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e2028a_fcfe29ac",
+        "filename": "net/nqe/socket_watcher.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "Why do we need to static_cast?\n\nAlso, it is not clear to me why we are left shifting by 8*i?\ne.g., if i is 12, we will be left shifting by 96 bits?\n\nseems like this is bit more readable:\n\nresult \u003d bytes[index_min];\nfor(...) {\n  result \u003d result \u003c\u003c 8;\n  result |\u003d  bytes[i];\n}",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47014bbc_2499a939",
+        "filename": "net/nqe/socket_watcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "can this be simply:\nEXPECT_EQ(host, callback_host_);",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad41c2a6_8849a7bb",
+        "filename": "net/nqe/socket_watcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "why are these static?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 8
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257ddbc8_e7571674",
+        "filename": "net/nqe/socket_watcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "s/callback_host_/callback_ip_hash_/",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 46
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cfaa68_ad217d75",
+        "filename": "net/nqe/socket_watcher_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T00:13:19Z",
+      "side": 1,
+      "message": "why are the first 2 bytes 0?",
+      "range": {
+        "startLine": 172,
+        "startChar": 9,
+        "endLine": 172,
+        "endChar": 13
+      },
+      "revId": "17cbb2724041eda6cb9d742b2c0754f6e55fa145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
