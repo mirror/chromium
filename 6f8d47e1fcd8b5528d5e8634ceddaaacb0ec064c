@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "92132ad8_d4874eab",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c93ca38a_17c2e3ae",
+      "range": {
+        "startLine": 77,
+        "startChar": 25,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a915e4_89c0e3b7",
         "filename": "base/test/test_mock_time_task_runner.cc",
         "patchSetId": 11
@@ -62,6 +86,24 @@
       "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e1d709_01e26e87",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a915e4_89c0e3b7",
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "cc2f9ec6_8fdd6131",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285a3284_a5cf7ac3",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cf81f39_4c15b8c8",
         "filename": "base/test/test_mock_time_task_runner.cc",
         "patchSetId": 11
@@ -108,6 +174,30 @@
       "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4beb24_b39fe97a",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cf81f39_4c15b8c8",
+      "range": {
+        "startLine": 410,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 19
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "e00518a6_1e74cf1c",
+        "filename": "base/test/test_mock_time_task_runner.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f373fb14_cd978f74",
+      "range": {
+        "startLine": 54,
+        "startChar": 61,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7307b57a_0449acca",
         "filename": "base/test/test_mock_time_task_runner.h",
         "patchSetId": 11
@@ -154,6 +268,30 @@
       "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed363cd4_b1c51158",
+        "filename": "base/test/test_mock_time_task_runner.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Yes:\n 1) This wouldn\u0027t work today in places that use MessageLoop+ScopedMockTimeMessageLoopTaskRunner.\n 2) Multiple TestMockTimeTaskRunners can be used in the same test fixture on the same thread to effectively mock multi-threading, e.g. [a].\n\n(1) Is deprecated by this CL (just added an explicit note+presubmit to that effect) and my initial thought was to make kUnbound be the initial default with a TODO to flip that to kBound. But then I realized that most people should just be using base::test::ScopedTaskEnvironment (which will use a kBound TestMockTimeTaskRunner instead of a MessageLoop by default shortly after this CL). As such, TestMockTimeTaskRunner will already be for special cases most which I think will be akin to (2) and not want binding by default.\n\n[a] https://cs.chromium.org/chromium/src/net/http/http_server_properties_manager_unittest.cc?type\u003dcs\u0026q\u003d%5CbScopedContext%5Cb\u0026sq\u003dpackage:chromium\u0026l\u003d97",
+      "parentUuid": "7307b57a_0449acca",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "bffe799e_9a9cc2a1",
+        "filename": "base/test/test_mock_time_task_runner_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f05130_4a7c77fd",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2de3a82d_78b48daf",
         "filename": "base/test/test_mock_time_task_runner_unittest.cc",
         "patchSetId": 11
@@ -200,6 +362,30 @@
       "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f9c6d8_e24c4b16",
+        "filename": "base/test/test_mock_time_task_runner_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Indeed that\u0027s the idea, guess my brain got lazy on that one..! \n\nDone.",
+      "parentUuid": "2de3a82d_78b48daf",
+      "range": {
+        "startLine": 43,
+        "startChar": 50,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "c7e7c71c_024d8eee",
+        "filename": "base/test/test_mock_time_task_runner_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bbfc05_7a126522",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebc981ce_806ad167",
         "filename": "base/threading/thread_task_runner_handle.cc",
         "patchSetId": 11
@@ -246,6 +456,30 @@
       "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1a9680_a329fefb",
+        "filename": "base/threading/thread_task_runner_handle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc981ce_806ad167",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
