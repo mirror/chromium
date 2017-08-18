@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e3d4ce6_9bdcfff3",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-18T15:28:03Z",
+      "side": 1,
+      "message": "Virtual URLs are for display to a user; why are you using it rather than GetURL()?",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9508f56c_7257a467",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-18T15:28:03Z",
+      "side": 1,
+      "message": "Why the hard check? This doesn\u0027t seem crashworthy to me.\n\n(In the long term we should get rid of one of those two copies of the variable.)",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8b058f_8150addd",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-18T15:28:03Z",
+      "side": 1,
+      "message": "Adding knowledge of the prerender code to the popup blocker feels off.\n\nPopupBlockerTabHelper::MaybeBlockPopup is called from two places.\n\nOne is Browser::OpenURLFromTab. But the prerender code sets the delegate of its prerender WebContentses to be PrerenderContents::WebContentsDelegateImpl, so this condition will never be true when called this way.\n\nThe other is ChromeContentBrowserClient::CanCreateWindow. ChromeContentBrowserClient already knows about prerender, so can we move this block of \"if prerender disallow\" to be one of the many disqualifications in ChromeContentBrowserClient::CanCreateWindow before calling PopupBlockerTabHelper::MaybeBlockPopup?",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
