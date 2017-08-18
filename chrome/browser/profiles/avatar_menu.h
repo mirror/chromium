@@ -88,7 +88,7 @@ class AvatarMenu :
   };
 
   // The load status of an avatar image.
-  enum class ImageLoadStatus {
+  enum ImageLoadStatus {
     // If there is a Gaia image used by the user, it is loaded. Otherwise, a
     // default avatar image is loaded.
     LOADED = 0,
@@ -98,7 +98,9 @@ class AvatarMenu :
     // default avatar image is loaded instead.
     MISSING,
     // Nothing is loaded as the profile has been deleted.
-    PROFILE_DELETED
+    PROFILE_DELETED,
+    // This is always the last one.
+    STATUS_MAX = PROFILE_DELETED
   };
 
   // Constructor. |observer| can be NULL. |browser| can be NULL and a new one
