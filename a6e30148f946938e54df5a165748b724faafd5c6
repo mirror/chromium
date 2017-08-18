@@ -22,6 +22,30 @@
       "revId": "a6e30148f946938e54df5a165748b724faafd5c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a903ab50_1679b476",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T12:49:49Z",
+      "side": 1,
+      "message": "ACK.\n\nI will pretty print it in a separate CL (I\u0027ve tried one pretty printer and it seemed to produce invalid JSON).",
+      "parentUuid": "5e01ed8e_40fae933",
+      "range": {
+        "startLine": 578,
+        "startChar": 19,
+        "endLine": 578,
+        "endChar": 20
+      },
+      "revId": "a6e30148f946938e54df5a165748b724faafd5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
