@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1796a869_5852da61",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T11:05:43Z",
+      "side": 1,
+      "message": "Unlike the below one, the expectation here is \"x-test\" is not appear in the header. This should be like:\n\nif request.headers.get(\"x-test\") is None and request.headers.get(\"X-Test\") is None:\n    response.headers.set(\"Access-Control-Allow-Headers\", \"X-Test\")\nelse:\n    response.status \u003d 400",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "5b5af3d113d1e35eb4ba02ece544d621c425ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61875528_d35342de",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T11:05:43Z",
+      "side": 1,
+      "message": "request.headers.get(name) returns None when |name| is not found. So I think this should be\n\nif request.headers.get(\"x-test\"):\n\nor\n\nif request.headers.get(\"x-test\") \u003d\u003d \"foobar\":",
+      "revId": "5b5af3d113d1e35eb4ba02ece544d621c425ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
