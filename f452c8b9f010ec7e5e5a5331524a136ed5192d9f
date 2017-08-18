@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "616ab2a4_9d086c9b",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-18T05:56:13Z",
+      "side": 1,
+      "message": "Replaced typedef with using here and at other changes in this CL.",
+      "parentUuid": "8e5b883a_dc6fe362",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9da602a_d66af9cb",
         "filename": "third_party/WebKit/public/platform/WebString.h",
         "patchSetId": 3
@@ -86,6 +104,24 @@
       "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5259e8d4_a2e241c1",
+        "filename": "third_party/WebKit/public/platform/WebString.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-18T05:56:13Z",
+      "side": 1,
+      "message": "I see. Replaced it with a struct.",
+      "parentUuid": "c9da602a_d66af9cb",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
