@@ -5,6 +5,7 @@
 module content.mojom;
 
 import "content/common/native_types.mojom";
+import "content/common/service_worker/embedded_worker.mojom";
 import "ipc/ipc.mojom";
 import "mojo/common/time.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
@@ -123,6 +124,13 @@ struct CreateFrameParams {
   CreateFrameWidgetParams widget_params;
 };
 
+// TODO(shimazu): Move EmbeddedWorkerStartParams into
+// CreateEmbeddedWorkerInstanceClientParams.
+struct CreateEmbeddedWorkerInstanceClientParams {
+  // A service worker's message pipe to request StartWorker/StopWorker.
+  associated EmbeddedWorkerInstanceClient& client_request;
+};
+
 struct UpdateScrollbarThemeParams {
   float initial_button_delay;
   float autoscroll_button_delay;
@@ -142,6 +150,11 @@ interface Renderer {
 
   // Tells the renderer to create a new RenderFrame.
   CreateFrame(CreateFrameParams params);
+
+  // Tells the renderer to create an EmbeddedWorkerInstanceClient which is
+  // managing service worker startup and shutdown.
+  CreateEmbeddedWorkerInstanceClient(
+      CreateEmbeddedWorkerInstanceClientParams params);
 
   // Tells the renderer to create a new RenderFrameProxy object with
   // |routing_id|.  |render_view_routing_id| identifies the
