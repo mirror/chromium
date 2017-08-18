@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 1237 tests; 974 PASS, 263 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 1237 tests; 973 PASS, 264 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS [["subscript",""]] "foo[]bar": execCommand("subscript", false, "") return value 
 PASS [["subscript",""]] "foo[]bar" checks for modifications to non-editable content 
 PASS [["subscript",""]] "foo[]bar" compare innerHTML 
@@ -1029,7 +1029,7 @@ PASS [["subscript",""]] "foo[<sub>b]ar</sub>baz" queryCommandState("subscript") 
 FAIL [["subscript",""]] "foo[<sub>b]ar</sub>baz" queryCommandValue("subscript") after assert_equals: Wrong result returned expected "" but got "false"
 PASS [["subscript",""]] "foo<sub>ba[r</sub>]baz": execCommand("subscript", false, "") return value 
 PASS [["subscript",""]] "foo<sub>ba[r</sub>]baz" checks for modifications to non-editable content 
-PASS [["subscript",""]] "foo<sub>ba[r</sub>]baz" compare innerHTML 
+FAIL [["subscript",""]] "foo<sub>ba[r</sub>]baz" compare innerHTML assert_equals: Unexpected innerHTML (after normalizing inline style) expected "foo<sub>ba</sub>rbaz" but got "foobarbaz"
 PASS [["subscript",""]] "foo<sub>ba[r</sub>]baz" queryCommandIndeterm("subscript") before 
 PASS [["subscript",""]] "foo<sub>ba[r</sub>]baz" queryCommandState("subscript") before 
 FAIL [["subscript",""]] "foo<sub>ba[r</sub>]baz" queryCommandValue("subscript") before assert_equals: Wrong result returned expected "" but got "true"

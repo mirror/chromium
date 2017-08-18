@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 1269 tests; 1002 PASS, 267 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 1269 tests; 1001 PASS, 268 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS [["superscript",""]] "foo[]bar": execCommand("superscript", false, "") return value 
 PASS [["superscript",""]] "foo[]bar" checks for modifications to non-editable content 
 PASS [["superscript",""]] "foo[]bar" compare innerHTML 
@@ -1029,7 +1029,7 @@ PASS [["superscript",""]] "foo[<sup>b]ar</sup>baz" queryCommandState("superscrip
 FAIL [["superscript",""]] "foo[<sup>b]ar</sup>baz" queryCommandValue("superscript") after assert_equals: Wrong result returned expected "" but got "false"
 PASS [["superscript",""]] "foo<sup>ba[r</sup>]baz": execCommand("superscript", false, "") return value 
 PASS [["superscript",""]] "foo<sup>ba[r</sup>]baz" checks for modifications to non-editable content 
-PASS [["superscript",""]] "foo<sup>ba[r</sup>]baz" compare innerHTML 
+FAIL [["superscript",""]] "foo<sup>ba[r</sup>]baz" compare innerHTML assert_equals: Unexpected innerHTML (after normalizing inline style) expected "foo<sup>ba</sup>rbaz" but got "foobarbaz"
 PASS [["superscript",""]] "foo<sup>ba[r</sup>]baz" queryCommandIndeterm("superscript") before 
 PASS [["superscript",""]] "foo<sup>ba[r</sup>]baz" queryCommandState("superscript") before 
 FAIL [["superscript",""]] "foo<sup>ba[r</sup>]baz" queryCommandValue("superscript") before assert_equals: Wrong result returned expected "" but got "true"
