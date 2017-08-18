@@ -34,6 +34,24 @@
       "revId": "aec66ad35ab0808c91ca6d888c6c7a644b3b7df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ed1428_f5dec0df",
+        "filename": "components/sync/protocol/extension_specifics.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-08-18T16:27:48Z",
+      "side": 1,
+      "message": "FYI we have a separate process for pushing chromium proto changes into Google3. This is fine.",
+      "parentUuid": "28d3c79e_b15c10f7",
+      "revId": "aec66ad35ab0808c91ca6d888c6c7a644b3b7df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
