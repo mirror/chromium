@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "ad43af0b_3f7df27e",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T17:26:37Z",
+      "side": 1,
+      "message": "After discussing with reveman@, we should use the following to skip empty exo window:\n\n  for (const auto\u0026 window : windows_) {\n    // Skip exo windows with empty input region.\n    exo::Surface* main_surface \u003d\n        exo::ShellSurface::GetMainSurface(window.first);\n    if (main_surface) {\n      views::Widget* const widget \u003d\n          views::Widget::GetWidgetForNativeWindow(window.first);\n      exo::ShellSurface* const shell_surface \u003d\n          static_cast\u003cexo::ShellSurface*\u003e(widget-\u003ewidget_delegate());\n      if (shell_surface-\u003eGetHitTestBounds().IsEmpty())\n        continue;\n    }\n\n    unsorted_windows.push_back(window.first);\n  }\n\nNot so pretty but it should work.",
+      "parentUuid": "be42f7cb_4866653c",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "d374e548634b8e888f538adf7a23764fa740a192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1261ad7_6f7e0cbf",
         "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
         "patchSetId": 3
