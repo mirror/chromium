@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870f9ecf_08c8a657",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T22:24:49Z",
+      "side": 1,
+      "message": "(nit): |guest_created_| could be initialized here if you prefer:\n(Non-static class member) source: https://chromium-cpp.appspot.com/",
+      "revId": "01e6e27fe6e9efb379613b666c6c8a1fdaf3aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
