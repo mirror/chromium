@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51b24b14_5a0d5ef3",
+        "filename": "components/download/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done, moved this thing to chrome/android/BUILD.gn.",
+      "parentUuid": "a7a3c498_ff667971",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48172e10_cdd02f34",
         "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33100b37_c87c602e",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48172e10_cdd02f34",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 27
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b8ce8c18_f1fb61c2",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831b1e08_8b28445d",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be72c1ca_5ea3dea2",
         "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315e41c7_7d28b044",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be72c1ca_5ea3dea2",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2c7d1a70_b6f648a8",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532ed859_674b6c91",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 71
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3c5ffb_e2dec4a8",
         "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "52b82151_25fc9350",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3c5ffb_e2dec4a8",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 73
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab15a55_9e817f56",
         "filename": "components/download/internal/android/network_status_listener_android.h",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-07T21:25:28Z",
       "side": 1,
       "message": "Do we still need this now?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31408e8e_b2d38e2b",
+        "filename": "components/download/internal/android/network_status_listener_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "2ab15a55_9e817f56",
       "range": {
         "startLine": 22,
         "startChar": 2,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "9cc22ead_2a4225cf",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bfd5982c_408ff11c",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "153dea49_c61753bb",
         "filename": "components/download/internal/scheduler/network_status_listener.h",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fb7035_aee1b0fe",
+        "filename": "components/download/internal/scheduler/network_status_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-18T23:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153dea49_c61753bb",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
