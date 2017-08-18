@@ -34,6 +34,24 @@
       "revId": "f8e4191e2352f2e9e459f60ef9c2a8bc3055b63d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b4d426_5fdd0248",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-18T18:17:21Z",
+      "side": 1,
+      "message": "As we have discussed in person, I will add a new function that creates a transparent quad.",
+      "parentUuid": "4554ed9e_195aceca",
+      "revId": "f8e4191e2352f2e9e459f60ef9c2a8bc3055b63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
