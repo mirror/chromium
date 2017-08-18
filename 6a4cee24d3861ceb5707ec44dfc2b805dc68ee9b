@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aeff7cf_2f80e56d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T08:14:58Z",
+      "side": 1,
+      "message": "Update this to reflect what the CL actually does - i.e mention the deviation from the spec and include spec issue link or so.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5906e227_ddc48695",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T08:14:58Z",
+      "side": 1,
+      "message": "If you\u0027re intending this to be an invalid URL, then just make it similar to the other cases but with a name doesn\u0027t (and is unlikely to ever) exist.",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ae31a3_7cd4c3a4",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T08:14:58Z",
+      "side": 1,
+      "message": "I think you should do this the other way around - i.e have the test \"document\" our (as well as other browsers) behavior, and then add a comment in the code point to the spec discussion. IF you want to add a comment in the test as well I guess that would be fine, but I suspect it would just end up getting stale.",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 44
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0162b1ce_1ddcd90e",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T08:14:58Z",
+      "side": 1,
+      "message": "Have two separate switches instead, and have each handle the relevant cases, and have the other cases do assert_unreached(). (I think we\u0027re not at a point where this test is testing too many cases in one test, and is a bit difficult to get an overview of what it test, so splitting it into a number of more explicit cases would probably be better/easier to manage. We can keep it like this though if you prefer.)",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec366839_197a72a6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T08:14:58Z",
+      "side": 1,
+      "message": "You should probably remove this condition as well (i.e do ScheduleLoad unconditionally), or else it seems we\u0027ll regress the case when .src \u003d \u0027\u0027? (Also, add test for this if there isn\u0027t one already.)",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864c44b4_5f860813",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-18T08:14:58Z",
+      "side": 1,
+      "message": "We should probably reorder stuff in this function so that we don\u0027t need this check, but that can be done as a follow up.",
+      "range": {
+        "startLine": 190,
+        "startChar": 6,
+        "endLine": 190,
+        "endChar": 17
+      },
+      "revId": "6a4cee24d3861ceb5707ec44dfc2b805dc68ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
