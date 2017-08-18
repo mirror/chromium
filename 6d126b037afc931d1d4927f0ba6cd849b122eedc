@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86978ef5_92c12aed",
+        "filename": "chrome/browser/offline_pages/prefetch/chrome_prefetch_configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T02:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f123138_eb4bec14",
+      "revId": "6d126b037afc931d1d4927f0ba6cd849b122eedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0bff045_881cd8a7",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T01:31:13Z",
       "side": 1,
       "message": "base::MakeUnique\u003c\u003e() will fix it.",
+      "revId": "6d126b037afc931d1d4927f0ba6cd849b122eedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2951aa_809490d1",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T02:06:20Z",
+      "side": 1,
+      "message": "Done.\n\n(Gah! I hate when building Android locally is broken)",
+      "parentUuid": "f0bff045_881cd8a7",
       "revId": "6d126b037afc931d1d4927f0ba6cd849b122eedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "6d126b037afc931d1d4927f0ba6cd849b122eedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc77833b_0f2e7c23",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T02:06:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44ce24c2_663a8eb8",
+      "revId": "6d126b037afc931d1d4927f0ba6cd849b122eedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
