@@ -6,6 +6,7 @@
 
 #include "base/atomic_sequence_num.h"
 #include "content/child/child_thread_impl.h"
+#include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/request_extra_data.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
@@ -98,12 +99,14 @@ class WebServiceWorkerNetworkProviderForFrame
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override {
     if (!ServiceWorkerUtils::IsServicificationEnabled() ||
-        !provider_->context() || !provider_->context()->event_dispatcher())
+        !ChildThreadImpl::current() || !provider_->context() ||
+        !provider_->context()->subresource_loader_factory() ||
+        !GURL(request.Url()).SchemeIsHTTPOrHTTPS())
       return nullptr;
 
-    // TODO(kinuko): Set up URLLoaderFactory with NetworkProvider's
-    // event_dispatcher_ for fetch event handling.
-    return nullptr;
+    return base::MakeUnique<WebURLLoaderImpl>(
+        ChildThreadImpl::current()->resource_dispatcher(), task_runner,
+        provider_->context()->subresource_loader_factory());
   }
 
  private:
@@ -118,7 +121,8 @@ ServiceWorkerNetworkProvider::CreateForNavigation(
     int route_id,
     const RequestNavigationParams& request_params,
     blink::WebLocalFrame* frame,
-    bool content_initiated) {
+    bool content_initiated,
+    scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
   bool should_create_provider_for_window = false;
   int service_worker_provider_id = kInvalidServiceWorkerProviderId;
@@ -155,14 +159,15 @@ ServiceWorkerNetworkProvider::CreateForNavigation(
     if (service_worker_provider_id == kInvalidServiceWorkerProviderId) {
       network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider(
           route_id, SERVICE_WORKER_PROVIDER_FOR_WINDOW, GetNextProviderId(),
-          is_parent_frame_secure));
+          is_parent_frame_secure, default_loader_factory_getter));
     } else {
       CHECK(browser_side_navigation);
       DCHECK(ServiceWorkerUtils::IsBrowserAssignedProviderId(
           service_worker_provider_id));
       network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider(
           route_id, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          service_worker_provider_id, is_parent_frame_secure));
+          service_worker_provider_id, is_parent_frame_secure,
+          default_loader_factory_getter));
     }
   } else {
     network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider());
@@ -176,7 +181,8 @@ std::unique_ptr<ServiceWorkerNetworkProvider>
 ServiceWorkerNetworkProvider::CreateForSharedWorker(int route_id) {
   return base::WrapUnique(new ServiceWorkerNetworkProvider(
       route_id, SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER, GetNextProviderId(),
-      true /* is_parent_frame_secure */));
+      true /* is_parent_frame_secure */,
+      nullptr /* default_loader_factory_getter */));
 }
 
 // static
@@ -224,7 +230,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     int route_id,
     ServiceWorkerProviderType provider_type,
     int browser_provider_id,
-    bool is_parent_frame_secure) {
+    bool is_parent_frame_secure,
+    scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter) {
   if (browser_provider_id == kInvalidServiceWorkerProviderId)
     return;
 
@@ -249,14 +256,14 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
             base::ThreadTaskRunnerHandle::Get().get());
     context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
         browser_provider_id, provider_type, std::move(client_request),
-        dispatcher);
+        dispatcher, default_loader_factory_getter);
     ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
         &dispatcher_host_);
     dispatcher_host_->OnProviderCreated(std::move(host_info));
   } else {
     context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
         browser_provider_id, provider_type, std::move(client_request),
-        nullptr /* dispatcher */);
+        nullptr /* dispatcher */, default_loader_factory_getter);
   }
 }
 
@@ -269,9 +276,12 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
           sender, base::ThreadTaskRunnerHandle::Get().get());
+  // TODO(kinuko): Split ServiceWorkerProviderContext ctor for
+  // controller and controllee.
   context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
       info->provider_id, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
-      std::move(info->client_request), dispatcher);
+      std::move(info->client_request), dispatcher,
+      nullptr /* loader_factory_getter */);
   std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration =
       ServiceWorkerRegistrationHandleReference::Adopt(info->registration,
                                                       sender);
