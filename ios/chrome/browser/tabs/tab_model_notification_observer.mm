@@ -38,3 +38,16 @@ void TabModelNotificationObserver::WebStateInsertedAt(
                     kTabModelOpenInBackgroundKey : @(!activating)
                   }];
 }
+
+void TabModelNotificationObserver::WebStateReplacedAt(
+    WebStateList* web_state_list,
+    web::WebState* old_web_state,
+    web::WebState* new_web_state,
+    int index) {
+  new_web_state->SetWebUsageEnabled(tab_model_.webUsageEnabled);
+
+  // Force the page to start loading even if it's in the background.
+  // TODO(crbug.com/705819): Remove this call.
+  if (new_web_state->IsWebUsageEnabled())
+    new_web_state->GetView();
+}
