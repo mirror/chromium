@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48310ba9_12d75b1e",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T23:09:45Z",
+      "side": 0,
+      "message": "It was added here: https://codereview.chromium.org/2656563006/diff/140001/chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html\n\nTo address: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d684152\n\nIt was continued to settings-toggle-button because settings-toggle-button will auto detect a sub-label and change between one/two-line, but doesn\u0027t auto-detect three-line. There is a long term crbug about changing how box heights are calculated (see Scott for more detail on that).\n\nEssentially I was looking to not change too many things in on CL, so I kept the styling.",
+      "parentUuid": "5c9eeb28_4fa1a11f",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "2830869b03a682af2063527a1a8437dfaadb234d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b226f681_6d1f7359",
         "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T21:16:40Z",
       "side": 0,
       "message": "two-line not needed anymore?",
+      "range": {
+        "startLine": 163,
+        "startChar": 33,
+        "endLine": 163,
+        "endChar": 41
+      },
+      "revId": "2830869b03a682af2063527a1a8437dfaadb234d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdba93f7_e4aa86fe",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T23:09:45Z",
+      "side": 0,
+      "message": "settings-toggle-button handles it automatically if there is a sub-label.",
+      "parentUuid": "b226f681_6d1f7359",
       "range": {
         "startLine": 163,
         "startChar": 33,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3b0cee43_06d7edf4",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T23:09:45Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "19feda08_12a16f0f",
+      "range": {
+        "startLine": 289,
+        "startChar": 35,
+        "endLine": 289,
+        "endChar": 43
+      },
+      "revId": "2830869b03a682af2063527a1a8437dfaadb234d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1055307e_501885ae",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2830869b03a682af2063527a1a8437dfaadb234d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243d0302_e9ff4243",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T23:09:45Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "1055307e_501885ae",
+      "range": {
+        "startLine": 97,
+        "startChar": 35,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "2830869b03a682af2063527a1a8437dfaadb234d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
