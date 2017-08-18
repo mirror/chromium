@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853ae1b7_5bed86cc",
+        "filename": "ash/public/cpp/shelf_item_delegate.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T09:33:11Z",
+      "side": 1,
+      "message": "TBH I would prefer to see these typemapped, but I\u0027m guessing that\u0027s not easy.\n\n(Though it seems like the enum at least should be pretty straightforward? Maybe we should do that one?)",
+      "revId": "8a64de3543f92e767791ed1bca88077090bb2aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18cc9a8c_24b8e7e9",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T09:33:11Z",
+      "side": 1,
+      "message": "Two nits:\n1) Consider just having LauncherContextMenu::Create() return a unique ptr\n2) Omit the explicit type parameter to WrapUnique if you opt to do the unique_ptr change in a followup",
+      "revId": "8a64de3543f92e767791ed1bca88077090bb2aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
