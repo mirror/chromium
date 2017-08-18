@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e43a63bd_fac8af6e",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_button_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "this test has no expectations?",
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41adc1c9_3cc9107f",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_view_protocol.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "comment on this one? \"state\" is a bit generic",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b98ba9_cfe106dd",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "what kind of padding is this?",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3ef266_1f56fd7b",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "multi-line ifs need {}",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 52
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e87ca0b_7dbc3724",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "what are these 16s and 32s?",
+      "range": {
+        "startLine": 157,
+        "startChar": 40,
+        "endLine": 157,
+        "endChar": 42
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741fa2e8_f24a5c45",
+        "filename": "chrome/browser/ui/cocoa/download/download_started_animation_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "72?",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc67a370_b2d84022",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "50?",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f6bbef_6d3791bb",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "I\u0027m surprised CABasicAnimation doesn\u0027t have an animationWithKeyPath:fromValue:toValue: constructor to make this simpler...\n\nI don\u0027t really like the look of this block construction but I don\u0027t have a markedly better way to do it. Perhaps we need a function in one of our cocoa util files like I mentioned above, if we\u0027re going to use CABasicAnimation more?",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 22
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecde3961_a5e4f38d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "can we adapt https://cs.chromium.org/chromium/src/ui/base/cocoa/controls/textfield_utils.mm?l\u003d9 to do the right thing instead perhaps? (that API mirrors the 10.12+ convenience function on NSTextField)",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5eedb2_8e704f8a",
+        "filename": "chrome/browser/ui/cocoa/nsview_additions.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T16:00:01Z",
+      "side": 1,
+      "message": "I can\u0027t think of a wieldy way to do this, but I would use !\u003d instead of ^ for the test, and add a comment explaining what this does, and/or rename the function to cr_rtlResizingMask",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
