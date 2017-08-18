@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66f153c_75bd7ad5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-18T02:20:05Z",
+      "side": 1,
+      "message": "We should mention this only works for images. Maybe rename to getEncodedImageResponse?",
+      "revId": "93276d917fb3f2e49950fec32cfc535956dcfcc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
