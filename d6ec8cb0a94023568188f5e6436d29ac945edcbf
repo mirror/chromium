@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2759f74f_1bc8c954",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-success-no-content-type.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-18T01:38:04Z",
+      "side": 1,
+      "message": "Good idea! I can do that. Thank you!",
+      "parentUuid": "274284f2_0e0782fe",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "d6ec8cb0a94023568188f5e6436d29ac945edcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8584ce3e_a139ebed",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-post-success-no-content-type.py",
         "patchSetId": 1
