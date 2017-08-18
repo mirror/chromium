@@ -7,6 +7,8 @@
 
 #include "components/crash/content/app/crashpad.h"
 
+#include <windows.h>
+
 extern "C" {
 
 // TODO(siggi): Rename these functions to something descriptive and unique,
@@ -26,6 +28,35 @@ void RequestSingleCrashUploadImpl(const std::string& local_id);
 // beyond that point (e.g. during tests).
 void GetCrashReportsImpl(const crash_reporter::Report** reports,
                          size_t* report_count);
+
+// Crashes the process after generating a dump for the provided exception. Note
+// that the crash reporter should be initialized before calling this function
+// for it to do anything.
+// NOTE: This function is used by SyzyASAN to invoke a crash. If you change the
+// the name or signature of this function you will break SyzyASAN instrumented
+// releases of Chrome. Please contact syzygy-team@chromium.org before doing so!
+int CrashForException(EXCEPTION_POINTERS* info);
+
+// This function is used in chrome_metrics_services_manager_client.cc to trigger
+// changes to the upload-enabled state. This is done when the metrics services
+// are initialized, and when the user changes their consent for uploads. See
+// crash_reporter::SetUploadConsent for effects. The given consent value should
+// be consistent with
+// crash_reporter::GetCrashReporterClient()->GetCollectStatsConsent(), but it's
+// not enforced to avoid blocking startup code on synchronizing them.
+void SetUploadConsentImpl(bool consent);
+
+// NOTE: This function is used by SyzyASAN to annotate crash reports. If you
+// change the name or signature of this function you will break SyzyASAN
+// instrumented releases of Chrome. Please contact syzygy-team@chromium.org
+// before doing so! See also http://crbug.com/567781.
+void SetCrashKeyValueImpl(const wchar_t* key, const wchar_t* value);
+
+void ClearCrashKeyValueImpl(const wchar_t* key);
+
+void SetCrashKeyValueImplEx(const char* key, const char* value);
+
+void ClearCrashKeyValueImplEx(const char* key);
 
 }  // extern "C"
 
