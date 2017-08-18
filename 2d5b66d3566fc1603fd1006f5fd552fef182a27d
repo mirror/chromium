@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dc1cd8f_b057136a",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-18T22:44:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37630836_b80d8f17",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "2d5b66d3566fc1603fd1006f5fd552fef182a27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce47e6de_4266ac35",
         "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T22:39:17Z",
       "side": 1,
       "message": "Looks line this condition is inverted.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 40
+      },
+      "revId": "2d5b66d3566fc1603fd1006f5fd552fef182a27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c55fd9_5a2a3d97",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-18T22:44:18Z",
+      "side": 1,
+      "message": "Curious, I could have sworn I had a \"!\" in there.\nFixed now.\n(Also curious that it didn\u0027t break any tests...)",
+      "parentUuid": "ce47e6de_4266ac35",
       "range": {
         "startLine": 171,
         "startChar": 2,
