@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
 #include "net/cert/cert_type.h"
 #include "net/cert/scoped_nss_types.h"
