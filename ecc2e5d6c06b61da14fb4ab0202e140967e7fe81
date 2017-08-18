@@ -1,0 +1,278 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a59eb5d1_ab5ea313",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: Other tests seem to include these via file:// URLs. Would that work here?",
+      "range": {
+        "startLine": 6,
+        "startChar": 14,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe032e28_3f6bb515",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: Don\u0027t forget to remove these logging statements.",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec43792_e8fbf6cd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "Hmm, what does this offer on top of promise_rejects?",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9ea63a_8593fd70",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: extra spaces before `new`",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec618b6_8b918e66",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: Can we just inline this into line 26?",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e7e362_c56eea1e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "Can you please explain to me why we need this? What is the lifetime of the mock we set up here?",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bd3837_74e6b586",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: I think it should be possible to omit the Promise.resolve part, documentation claims the returned value is automatically wrapped in such a construct.",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08921d7_82291e5d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "For simplicity, can we reduce the number of states this mock? E.g., can we make the \"post reset state\" \u003d\u003d \"post construction state\"?",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca8ec98_bacbfbdd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "Instead of this helper, have you considered a solution where the canned values set up on the Mock would be automatically reset after they are used once, that is, at the end of MakeCredential?",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a34907d_dfdeab44",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "Thanks for teaching me about ES7 features!",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfde049b_f64ab300",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 90,
+        "startChar": 63,
+        "endLine": 90,
+        "endChar": 67
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6405f5_6367e732",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: Please make sure to #include \u003cmemory\u003e in all headers where we use unique_ptr.",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042f3da3_6b28627b",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "nit: Let\u0027s tidy up the control flow here by negating this conditional and moving the body outside.",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3062d83a_98df3957",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-18T03:12:36Z",
+      "side": 1,
+      "message": "Nice, so going the extra mile to write all these tests was already worth it!",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
