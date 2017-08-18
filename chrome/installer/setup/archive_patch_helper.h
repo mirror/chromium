@@ -58,7 +58,11 @@ class ArchivePatchHelper {
 
   // Attempts to use courgette to apply last_uncompressed_file() to
   // patch_source() to generate target(). Returns false if patching fails.
-  bool EnsemblePatch();
+  bool CourgetteEnsemblePatch();
+
+  // Attempts to use zucchini to apply last_uncompressed_file() to
+  // patch_source() to generate target(). Returns false if patching fails.
+  bool ZucchiniEnsemblePatch();
 
   // Attempts to use bspatch to apply last_uncompressed_file() to patch_source()
   // to generate target(). Returns false if patching fails.
