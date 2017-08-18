@@ -41,9 +41,6 @@ DeviceDataManager::~DeviceDataManager() {
 }
 
 // static
-DeviceDataManager* DeviceDataManager::instance() { return instance_; }
-
-// static
 void DeviceDataManager::set_instance(DeviceDataManager* instance) {
   DCHECK(instance)
       << "Must reset the DeviceDataManager using DeleteInstance().";
@@ -53,7 +50,7 @@ void DeviceDataManager::set_instance(DeviceDataManager* instance) {
 
 // static
 void DeviceDataManager::CreateInstance() {
-  if (instance())
+  if (instance_)
     return;
 
   set_instance(new DeviceDataManager());
@@ -86,11 +83,16 @@ void DeviceDataManager::ConfigureTouchDevices(
   ClearTouchDeviceAssociations();
   for (const TouchDeviceTransform& transform : transforms)
     UpdateTouchInfoFromTransform(transform);
+  are_touchscreen_target_displays_valid_ = true;
+  for (InputDeviceEventObserver& observer : observers_)
+    observer.OnTouchDeviceAssociationChanged();
 }
 
 void DeviceDataManager::ClearTouchDeviceAssociations() {
-  for (size_t i = 0; i < touch_map_.size(); ++i)
-    touch_map_[i] = TouchDeviceTransform();
+  // Clear all the existing entries.
+  std::array<TouchDeviceTransform, kMaxDeviceNum> touch_map;
+  touch_map.swap(touch_map_);
+
   for (TouchscreenDevice& touchscreen_device : touchscreen_devices_)
     touchscreen_device.target_display_id = display::kInvalidDisplayId;
 }
@@ -169,6 +171,7 @@ void DeviceDataManager::OnTouchscreenDevicesUpdated(
                  InputDeviceEquals)) {
     return;
   }
+  are_touchscreen_target_displays_valid_ = false;
   touchscreen_devices_ = devices;
   for (TouchscreenDevice& touchscreen_device : touchscreen_devices_) {
     touchscreen_device.target_display_id =
@@ -258,6 +261,10 @@ void DeviceDataManager::SetTouchscreensEnabled(bool enabled) {
 
 bool DeviceDataManager::AreTouchscreensEnabled() const {
   return touch_screens_enabled_;
+}
+
+bool DeviceDataManager::AreTouchscreenTargetDisplaysValid() const {
+  return are_touchscreen_target_displays_valid_;
 }
 
 }  // namespace ui
