@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62024420_5d565483",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T01:16:16Z",
+      "side": 1,
+      "message": "Is this identifier used for automation test only and nothing to do with end users?\nWill it be good to comment this?",
+      "revId": "17aa7e09a0909132825aa3691b4ca24b9251ac80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3807b3_88c1b44a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T01:16:16Z",
+      "side": 1,
+      "message": "Will it be better if the comment says // We enable the swipe-to-delete gesture and reordering control for nodes of...",
+      "revId": "17aa7e09a0909132825aa3691b4ca24b9251ac80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cc7586_324291dd",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T01:16:16Z",
+      "side": 1,
+      "message": "Will it be better if\nif (!self.bookmarkModel-\u003eloaded() || !_currentRootNode)\n  return;\nand remove the if (_currentRootNode) {} condition below?",
+      "revId": "17aa7e09a0909132825aa3691b4ca24b9251ac80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
