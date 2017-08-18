@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bf2f5ca3_5a39b10e",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-18T15:55:53Z",
+      "side": 1,
+      "message": "Calling webkitRequsetFullscreen() multiple times ought not have any side effects like this, so I don\u0027t think that\u0027s the problem, no. But is it called multiple times if you don\u0027t do the filtering?\n\nWhat is e.code when it\u0027s not \u0027KeyS\u0027? It just seems to me like some part of the test here is sending a bunch of keys, and here the other part ignores some of them. Can\u0027t we instead just stop sending the other key events? I\u0027m not sure I understand the devtools bit, are there some other key events that\u0027s part of this test case?\n\nIt\u0027s not a big deal, this works, but I do suspect it could be simplified after a full accounting of what\u0027s going on. Spend as much additional time as you think is worth it, and then please go ahead.",
+      "parentUuid": "e0b47eed_6f8ea0d4",
+      "range": {
+        "startLine": 334,
+        "startChar": 34,
+        "endLine": 334,
+        "endChar": 35
+      },
+      "revId": "6cb30587706c5bb1c9d817d74f9f0c70acced6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f3352a9_b710ac93",
         "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "If BROWSER_TEST_WAIT_FOR_NAVIGATION is correctly handled in ui_test_utils.h (https://cs.chromium.org/chromium/src/chrome/test/base/ui_test_utils.h?l\u003d68\u0026gs\u003dcpp%253Aui_test_utils%253A%253Aenum-BrowserTestWaitFlags%253A%253ABROWSER_TEST_WAIT_FOR_NAVIGATION%2540chromium%252F..%252F..%252Fchrome%252Ftest%252Fbase%252Fui_test_utils.h%257Cdef\u0026gsn\u003dBROWSER_TEST_WAIT_FOR_NAVIGATION\u0026ct\u003dxref_usages), I think this function will never be called before body element is reached.\n\nI have not seen any console log of exceptions either.\nSo my gut feeling is OOM on ChromeOS.",
       "parentUuid": "5f3352a9_b710ac93",
+      "range": {
+        "startLine": 342,
+        "startChar": 26,
+        "endLine": 342,
+        "endChar": 27
+      },
+      "revId": "6cb30587706c5bb1c9d817d74f9f0c70acced6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65e94f5_c2a5b28b",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-18T15:55:53Z",
+      "side": 1,
+      "message": "Even if it\u0027s not happening, just putting \u003cbody\u003e before the script element would make it obviously a non-issue.",
+      "parentUuid": "5b8b8e79_04f041fc",
       "range": {
         "startLine": 342,
         "startChar": 26,
