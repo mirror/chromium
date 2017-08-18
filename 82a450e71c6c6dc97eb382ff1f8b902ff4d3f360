@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "952aeda1_f4973aa8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "nit: OnChannelOpenFailed is a bit of a misnomer, because OnError can also be called as a result of error in an opened channel.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0bf1e0_b34adf9a",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -13,6 +30,52 @@
       "writtenOn": "2017-08-17T17:17:18Z",
       "side": 1,
       "message": "This comment doesn\u0027t make sense to me, how can we reopen something that is already open?\n\nIs this about the socket previously existing or not?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a882bef_31ff044c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "Do we need to close the existing channel (if any) before re-opening?",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 15
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89bf2cc_d5269e6a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "I remember we ended up not supporting std::move for MediaSinkInternal. In that case, it would be more beneficial to change back to passing by const ref here and elsewhere in this file. We can change it to pass by value once we support std::move.",
+      "range": {
+        "startLine": 205,
+        "startChar": 43,
+        "endLine": 205,
+        "endChar": 60
+      },
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +99,41 @@
     },
     {
       "key": {
+        "uuid": "5bae2909_47449825",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "+1 on dropping the WithRetry from the name.",
+      "parentUuid": "3bbeb185_fc75a578",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf10b22_5f718a12",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "it\u0027s not necessary to log the time here -- it is already included by the logger.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3142529_3b1a2c87",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -47,6 +145,217 @@
       "writtenOn": "2017-08-17T17:17:18Z",
       "side": 1,
       "message": "I think it would be useful to have a metric of what attempt the channel open was successful at.\n\nDo we have any plans for that, or some other way of getting data for checking/adjusting our timeouts and retries?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7a6fcb_d12eb837",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "If a channel open fails, does it call OnChannelOpened(), or OnError(), or both?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ebcbfc_115eb9ec",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "ShouldRetry?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696b2457_e70fb0f4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "1) GetRetryDelay\n2) Can the method return a base::TimeDelta?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca346f6_9fc50a1e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "ditto on time here.",
+      "range": {
+        "startLine": 262,
+        "startChar": 55,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48f380e_02e93df9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "If we move this erase to the end of this method (and also in the early return below) then we can modify / copy from sink_it-\u003esecond directly, saving a copy operation. It does make the code more fragile though, as any future modification will need to ensure erase gets called in all return code paths. So I don\u0027t feel strongly.",
+      "range": {
+        "startLine": 284,
+        "startChar": 37,
+        "endLine": 284,
+        "endChar": 0
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3291356d_0279df33",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "would it make sense to expose a non-const getter for cast_data() so that we don\u0027t have to create updated_sink?",
+      "range": {
+        "startLine": 293,
+        "startChar": 66,
+        "endLine": 293,
+        "endChar": 67
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a9205c_75411a94",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "nit: |num_attempts| sounds a bit contradictory in this case. I would suggest naming it num_retries instead. Alternatively, we could make num_attempts count the initial attempt and not just the retries.",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf16bc96_b8303104",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "Would it be better to key this by sink id?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73b0bc6_b9d9c608",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "Prefer base::Optional\u003cRetryStrategy\u003e to represent optionality.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f8cf84_b80e0d8e",
+        "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "There should be some validation on the input parameters, such as max_attempts \u003e 0, delay \u003e 0, multiplier \u003e\u003d 1.0.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d4cc19_629e4520",
+        "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-18T04:43:19Z",
+      "side": 1,
+      "message": "Have you considered using something like https://cs.chromium.org/chromium/src/net/base/backoff_entry.h? Granted, our case is a lot simpler and is also structured a bit differently (i.e. you\u0027d have to keep a BackoffEntry for each pending socket)",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
