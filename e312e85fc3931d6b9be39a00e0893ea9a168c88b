@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b548c8ce_42f96153",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "s/run/runs an/",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f38089_66adcc6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "s/glcient/gclient\n\nThis second line seems out of place. Could you maybe update the CL description to be:\n\nTitle \n\n1-line Summary\n\nWhat the CL does.",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9aff39_eecd377a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "what. Is this CL not ready for review?",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69e7a91_c01c0003",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "Please use the type in place of auto.",
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bf373d_62459277",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "Please use the type in place of auto.",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "e312e85fc3931d6b9be39a00e0893ea9a168c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

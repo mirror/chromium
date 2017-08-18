@@ -46,6 +46,23 @@
       "revId": "7428da11fdc8dca46b765d3917a04e5024d216e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f595c9f_e097bced",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "don\u0027t we need a size check for patched_new_buffer [e.g. what if it\u0027s longer?]",
+      "revId": "7428da11fdc8dca46b765d3917a04e5024d216e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

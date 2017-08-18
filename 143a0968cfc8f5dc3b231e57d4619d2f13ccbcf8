@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df280703_6024b014",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "we\u0027re running this test on all platforms?",
+      "revId": "143a0968cfc8f5dc3b231e57d4619d2f13ccbcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f968bdb0_8bd597ac",
+        "filename": "chrome/installer/zucchini/integration_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T20:14:23Z",
+      "side": 1,
+      "message": "why wouldn\u0027t we try to do all combinations? e.g. setup1.exe -\u003e chrome64_1.exe\n\netc.",
+      "revId": "143a0968cfc8f5dc3b231e57d4619d2f13ccbcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
