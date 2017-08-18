@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f30861ee_da975adf",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-18T16:58:12Z",
+      "side": 1,
+      "message": "I wanted to introduce a new tile source and would only check this bool when constructing the tile. The only upside I can see here would be a marginally smaller memory use. Any reason why we should prefer a bool?",
+      "parentUuid": "32797ece_b84ca648",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275d5117_7d396350",
         "filename": "components/ntp_tiles/tile_source.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T15:48:09Z",
       "side": 1,
       "message": "Just BAKED_IN? Otherwise we\u0027d have to append _SITE to all of these.\nOr maybe POPULAR_BAKED_IN? After all these also come out of PopularSites.\n\nAlso, just to double-check: This enum isn\u0027t directly used for any UMA histograms. right? Just as a suffix?",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f872a08_a05a5bd4",
+        "filename": "components/ntp_tiles/tile_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-18T16:58:12Z",
+      "side": 1,
+      "message": "\u003e Just BAKED_IN? Otherwise we\u0027d have to append _SITE to all of these.\n\u003e Or maybe POPULAR_BAKED_IN? After all these also come out of PopularSites.\n\nPOPULAR_BAKED_IN makes sense.\n \n\u003e Also, just to double-check: This enum isn\u0027t directly used for any UMA histograms. right? Just as a suffix?\n\nDirectly? The suffix is used in UMA histograms, and therefore, baked-in sites that have been counted as popular sites will be counted as baked-in sites exclusively now. This is fully intentional but of course debatable.",
+      "parentUuid": "275d5117_7d396350",
       "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
