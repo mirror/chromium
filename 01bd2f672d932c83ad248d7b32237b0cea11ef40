@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "37604a94_b762e47c",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done. Removed comment altogether since this is pretty obvious struct...",
+      "parentUuid": "eafdb9ca_599cf8c0",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99225ede_65cffadb",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -57,6 +75,30 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5843b659_f22c91ee",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99225ede_65cffadb",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "da8208e8_64f1651f",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done.\n\nSomething to learn every day :)",
+      "parentUuid": "578cd172_89aab911",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "468083ca_07bf5920",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -97,6 +163,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d299f9_7d0e0422",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468083ca_07bf5920",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "f3967b6a_7258bb20",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0664acdb_d5a172d2",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29d766f8_2e07d032",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -131,6 +233,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c363a0d_7cee12cd",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d766f8_2e07d032",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "0ba843a8_b4d9dae6",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225301c5_a33c2d96",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885147aa_4314f63b",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -165,6 +303,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cbba2f_793dc48d",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885147aa_4314f63b",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "972e4019_807096c8",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": ".count is linear while find is log. Not a big deal here but since both notations are used and .find() is even used more often, keeping it. Please push back if needed.\n\nCarlos: I think if I did use count() it would be still advisable to keep \"\u003e 0\" because the type is int and while there are some conversion rules, it\u0027s generally better to be more explicit and avoid relying on implicit type conversions.",
+      "parentUuid": "0ba63132_65959910",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9e81cf1_da9d21ab",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
@@ -217,6 +391,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d6bf6a_bd0dbb61",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e81cf1_da9d21ab",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "efbf6157_b56a9c35",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a084e7_83e010eb",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5edc68b0_dd322438",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
         "patchSetId": 1
@@ -257,6 +473,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1992876c_6918a72a",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5edc68b0_dd322438",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "300e91cc_132eeea7",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2419ea52_8f6842b4",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34fc58fc_41a05474",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
         "patchSetId": 1
@@ -291,6 +543,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46aaa620_1806bb07",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34fc58fc_41a05474",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +581,24 @@
     },
     {
       "key": {
+        "uuid": "64ca770c_efed5809",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a02a9a2_04243abd",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c7f5c1_6475f7e6",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1
@@ -328,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "a5617f13_85ed3067",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c7f5c1_6475f7e6",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2158c09_b76c776f",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1
@@ -342,6 +648,24 @@
       "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2157214a_d6960d94",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T20:15:37Z",
+      "side": 1,
+      "message": "Yes, because Jian\u0027s patch that is landing too is already using 1200 :) Easier to merge later.",
+      "parentUuid": "e2158c09_b76c776f",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
