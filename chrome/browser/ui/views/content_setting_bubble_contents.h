@@ -124,11 +124,10 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
 
   typedef std::vector<views::RadioButton*> RadioGroup;
   RadioGroup radio_group_;
-  views::Link* custom_link_;
-  views::Link* manage_link_;
-  views::LabelButton* manage_button_;
-  views::Checkbox* manage_checkbox_;
-  views::ImageButton* learn_more_button_;
+  views::Link* custom_link_ = nullptr;
+  views::LabelButton* manage_button_ = nullptr;
+  views::Checkbox* manage_checkbox_ = nullptr;
+  views::ImageButton* learn_more_button_ = nullptr;
 
   // Combobox models the bubble owns.
   std::list<MediaComboboxModel> combobox_models_;
