@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1825248_8be6cd95",
+        "filename": "ui/shell_dialogs/select_file_dialog_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-18T17:54:12Z",
+      "side": 1,
+      "message": "does the calling code handle nullptr properly? Maybe return a stub SelectFileDialog implementation that just calls listener-\u003eFileSelectionCanceled()?",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "a203bb3107410fdb217166bfe539a02f4982b379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
