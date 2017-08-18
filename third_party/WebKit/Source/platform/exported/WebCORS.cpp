@@ -172,7 +172,7 @@ static bool IsOriginSeparator(UChar ch) {
 }  // namespace
 
 AccessStatus CheckAccess(
-    const WebURL response_url,
+    const WebURL& response_url,
     const int response_status_code,
     const HTTPHeaderMap& response_header,
     const WebURLRequest::FetchCredentialsMode credentials_mode,
@@ -230,15 +230,15 @@ AccessStatus CheckAccess(
 }
 
 bool HandleRedirect(WebSecurityOrigin& current_security_origin,
-                    WebURLRequest& new_request,
-                    const WebURL redirect_response_url,
+                    const WebURL& new_url,
+                    WebURLRequest::RequestContext request_context,
+                    const WebURL& redirect_response_url,
                     const int redirect_response_status_code,
                     const HTTPHeaderMap& redirect_response_header,
                     WebURLRequest::FetchCredentialsMode credentials_mode,
                     ResourceLoaderOptions& options,
                     WebString& error_message) {
   const KURL& last_url = redirect_response_url;
-  const KURL& new_url = new_request.Url();
 
   WebSecurityOrigin& new_security_origin = current_security_origin;
 
@@ -266,8 +266,7 @@ bool HandleRedirect(WebSecurityOrigin& current_security_origin,
       builder.Append("' has been blocked by CORS policy: ");
       builder.Append(AccessControlErrorString(
           cors_status, redirect_response_status_code, redirect_response_header,
-          WebSecurityOrigin(current_security_origin.Get()),
-          new_request.GetRequestContext()));
+          WebSecurityOrigin(current_security_origin.Get()), request_context));
       error_message = builder.ToString();
       return false;
     }
@@ -282,13 +281,10 @@ bool HandleRedirect(WebSecurityOrigin& current_security_origin,
   }
 
   if (!current_security_origin.CanRequest(new_url)) {
-    new_request.ClearHTTPHeaderField(WebString(HTTPNames::Suborigin));
-    new_request.SetHTTPHeaderField(WebString(HTTPNames::Origin),
-                                   new_security_origin.ToString());
-    if (!new_security_origin.Suborigin().IsEmpty()) {
-      new_request.SetHTTPHeaderField(WebString(HTTPNames::Suborigin),
-                                     new_security_origin.Suborigin());
-    }
+    // TODO(tyoshino): We need to let the new request to be sent have the
+    // Origin header generated from |new_security_origin|. Create a path to
+    // propagate the new value to net/ layer. See http://crbug.com/746687 and
+    // http://crbug.com/665766.
 
     options.cors_flag = true;
   }

@@ -92,7 +92,7 @@ enum RedirectStatus {
 // construct a user-friendly error message for any of the other (error)
 // conditions.
 BLINK_PLATFORM_EXPORT AccessStatus
-CheckAccess(const WebURL,
+CheckAccess(const WebURL&,
             const int response_status_code,
             const HTTPHeaderMap&,
             WebURLRequest::FetchCredentialsMode,
@@ -129,8 +129,9 @@ CreateAccessControlPreflightRequest(const WebURLRequest&);
 // depending on ResourceLoaderOptions.
 BLINK_PLATFORM_EXPORT bool HandleRedirect(
     WebSecurityOrigin&,
-    WebURLRequest&,
-    const WebURL,
+    const WebURL& new_url,
+    WebURLRequest::RequestContext,
+    const WebURL& redirect_response_url,
     const int redirect_response_status_code,
     const HTTPHeaderMap&,
     WebURLRequest::FetchCredentialsMode,
