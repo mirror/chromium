@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "ui/aura/client/capture_client.h"
 #include "ui/aura/client/drag_drop_client_observer.h"
 #include "ui/aura/env.h"
@@ -209,6 +210,66 @@ class TestNativeWidgetAura : public views::NativeWidgetAura {
   bool check_if_capture_lost_;
 
   DISALLOW_COPY_AND_ASSIGN(TestNativeWidgetAura);
+};
+
+class TestObserver : public aura::client::DragDropClientObserver {
+ public:
+  enum class State { kNotInvoked, kDragStartedInvoked, kDragEndedInvoked };
+
+  TestObserver() : state_(State::kNotInvoked) {}
+
+  State state() const { return state_; }
+
+  // aura::client::DragDropClientObserver
+
+  void OnDragStarted() override {
+    EXPECT_EQ(State::kNotInvoked, state_);
+    state_ = State::kDragStartedInvoked;
+  }
+
+  void OnDragEnded() override {
+    EXPECT_EQ(State::kDragStartedInvoked, state_);
+    state_ = State::kDragEndedInvoked;
+  }
+
+ private:
+  State state_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestObserver);
+};
+
+class EventTargetTestDelegate : public aura::client::DragDropDelegate {
+ public:
+  EventTargetTestDelegate(ui::test::EventGenerator* generator,
+                          aura::Window* window)
+      : generator_(generator), window_(window) {}
+
+  void GenerateMouseEvents() {
+    constexpr int kNumDrags = 17;
+    for (int i = 0; i < kNumDrags; ++i)
+      generator_->MoveMouseBy(0, 1);
+    generator_->ReleaseLeftButton();
+  }
+
+  // aura::client::DragDropDelegate:
+  void OnDragEntered(const ui::DropTargetEvent& event) override {
+    EXPECT_EQ(window_, event.target());
+  }
+  int OnDragUpdated(const ui::DropTargetEvent& event) override {
+    EXPECT_EQ(window_, event.target());
+    return ui::DragDropTypes::DRAG_COPY;
+  }
+  void OnDragExited() override {}
+  int OnPerformDrop(const ui::DropTargetEvent& event) override {
+    EXPECT_EQ(window_, event.target());
+    return ui::DragDropTypes::DRAG_COPY;
+  }
+
+ private:
+  ui::test::EventGenerator* const generator_;
+  aura::Window* const window_;
+
+  DISALLOW_COPY_AND_ASSIGN(EventTargetTestDelegate);
 };
 
 // TODO(sky): this is for debugging, remove when track down failure.
@@ -1099,36 +1160,6 @@ TEST_F(DragDropControllerTest, TouchDragDropCompletesOnFling) {
   EXPECT_TRUE(drag_view->drag_done_received_);
 }
 
-namespace {
-
-class TestObserver : public aura::client::DragDropClientObserver {
- public:
-  enum class State { kNotInvoked, kDragStartedInvoked, kDragEndedInvoked };
-
-  TestObserver() : state_(State::kNotInvoked) {}
-
-  State state() const { return state_; }
-
-  // aura::client::DragDropClientObserver
-
-  void OnDragStarted() override {
-    EXPECT_EQ(State::kNotInvoked, state_);
-    state_ = State::kDragStartedInvoked;
-  }
-
-  void OnDragEnded() override {
-    EXPECT_EQ(State::kDragStartedInvoked, state_);
-    state_ = State::kDragEndedInvoked;
-  }
-
- private:
-  State state_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestObserver);
-};
-
-}  // namespace
-
 TEST_F(DragDropControllerTest, DragStartedAndEndedEvents) {
   TestObserver observer;
   drag_drop_controller_->AddObserver(&observer);
@@ -1154,6 +1185,31 @@ TEST_F(DragDropControllerTest, DragStartedAndEndedEvents) {
   }
 
   drag_drop_controller_->RemoveObserver(&observer);
+}
+
+TEST_F(DragDropControllerTest, EventTarget) {
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
+
+  ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
+                                     widget->GetNativeView());
+  generator.PressLeftButton();
+
+  ui::OSExchangeData data;
+  data.SetString(base::UTF8ToUTF16("I am being dragged"));
+  aura::Window* const window = widget->GetNativeWindow();
+
+  EventTargetTestDelegate delegate(&generator, window);
+  aura::client::SetDragDropDelegate(window, &delegate);
+
+  // Posted task will be run when the inner loop runs in StartDragAndDrop.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&EventTargetTestDelegate::GenerateMouseEvents,
+                                base::Unretained(&delegate)));
+
+  drag_drop_controller_->set_should_block_during_drag_drop(true);
+  drag_drop_controller_->StartDragAndDrop(
+      data, window->GetRootWindow(), window, gfx::Point(5, 5),
+      ui::DragDropTypes::DRAG_MOVE, ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE);
 }
 
 }  // namespace ash
