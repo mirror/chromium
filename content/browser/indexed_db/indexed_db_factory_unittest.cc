@@ -445,7 +445,7 @@ TEST_F(IndexedDBFactoryTest, DeleteDatabaseClosesBackingStore) {
   RunAllBlockingPoolTasksUntilIdle();
 }
 
-TEST_F(IndexedDBFactoryTest, GetDatabaseNamesClosesBackingStore) {
+TEST_F(IndexedDBFactoryTest, GetDatabaseInfoClosesBackingStore) {
   context()->TaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(
@@ -457,8 +457,8 @@ TEST_F(IndexedDBFactoryTest, GetDatabaseNamesClosesBackingStore) {
             const Origin origin(GURL("http://localhost:81"));
             EXPECT_FALSE(factory->IsBackingStoreOpen(origin));
 
-            factory->GetDatabaseNames(callbacks, origin, context->data_path(),
-                                      nullptr /* request_context */);
+            factory->GetDatabaseInfo(callbacks, origin, context->data_path(),
+                                     nullptr /* request_context */);
 
             EXPECT_TRUE(factory->IsBackingStoreOpen(origin));
             EXPECT_TRUE(factory->IsBackingStorePendingClose(origin));

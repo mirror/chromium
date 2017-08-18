@@ -95,18 +95,18 @@ namespace {
 static const char kIndexedDBObjectGroup[] = "indexeddb";
 static const char kNoDocumentError[] = "No document for given frame found";
 
-class GetDatabaseNamesCallback final : public EventListener {
-  WTF_MAKE_NONCOPYABLE(GetDatabaseNamesCallback);
+class GetDatabaseInfosCallback final : public EventListener {
+  WTF_MAKE_NONCOPYABLE(GetDatabaseInfosCallback);
 
  public:
-  static GetDatabaseNamesCallback* Create(
+  static GetDatabaseInfosCallback* Create(
       std::unique_ptr<RequestDatabaseNamesCallback> request_callback,
       const String& security_origin) {
-    return new GetDatabaseNamesCallback(std::move(request_callback),
+    return new GetDatabaseInfosCallback(std::move(request_callback),
                                         security_origin);
   }
 
-  ~GetDatabaseNamesCallback() override {}
+  ~GetDatabaseInfosCallback() override {}
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -137,7 +137,7 @@ class GetDatabaseNamesCallback final : public EventListener {
   DEFINE_INLINE_VIRTUAL_TRACE() { EventListener::Trace(visitor); }
 
  private:
-  GetDatabaseNamesCallback(
+  GetDatabaseInfosCallback(
       std::unique_ptr<RequestDatabaseNamesCallback> request_callback,
       const String& security_origin)
       : EventListener(EventListener::kCPPEventListenerType),
@@ -783,7 +783,7 @@ void InspectorIndexedDBAgent::requestDatabaseNames(
   ScriptState::Scope scope(script_state);
   DummyExceptionStateForTesting exception_state;
   IDBRequest* idb_request =
-      idb_factory->GetDatabaseNames(script_state, exception_state);
+      idb_factory->getDatabaseInfo(script_state, exception_state);
   if (exception_state.HadException()) {
     request_callback->sendFailure(
         Response::Error("Could not obtain database names."));
@@ -791,7 +791,7 @@ void InspectorIndexedDBAgent::requestDatabaseNames(
   }
   idb_request->addEventListener(
       EventTypeNames::success,
-      GetDatabaseNamesCallback::Create(
+      GetDatabaseInfosCallback::Create(
           std::move(request_callback),
           document->GetSecurityOrigin()->ToRawString()),
       false);

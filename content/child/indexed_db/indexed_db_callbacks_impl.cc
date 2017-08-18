@@ -13,12 +13,14 @@
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCallbacks.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseError.h"
+#include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBMetadata.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBValue.h"
 
 using blink::WebBlobInfo;
 using blink::WebIDBCallbacks;
 using blink::WebIDBDatabase;
+using blink::WebIDBDatabaseInfo;
 using blink::WebIDBMetadata;
 using blink::WebIDBValue;
 using blink::WebString;
@@ -126,10 +128,10 @@ void IndexedDBCallbacksImpl::Error(int32_t code,
                             base::Unretained(internal_state_), code, message));
 }
 
-void IndexedDBCallbacksImpl::SuccessStringList(
-    const std::vector<base::string16>& value) {
+void IndexedDBCallbacksImpl::SuccessDatabaseInfoList(
+    const std::vector<IndexedDBDatabaseInfo>& value) {
   callback_runner_->PostTask(
-      FROM_HERE, base::Bind(&InternalState::SuccessStringList,
+      FROM_HERE, base::Bind(&InternalState::SuccessDatabaseInfoList,
                             base::Unretained(internal_state_), value));
 }
 
@@ -254,12 +256,16 @@ void IndexedDBCallbacksImpl::InternalState::Error(
   callbacks_.reset();
 }
 
-void IndexedDBCallbacksImpl::InternalState::SuccessStringList(
-    const std::vector<base::string16>& value) {
-  WebVector<WebString> web_value(value.size());
-  std::transform(
-      value.begin(), value.end(), web_value.begin(),
-      [](const base::string16& s) { return WebString::FromUTF16(s); });
+void IndexedDBCallbacksImpl::InternalState::SuccessDatabaseInfoList(
+    const std::vector<IndexedDBDatabaseInfo>& value) {
+  WebVector<WebString> web_value();
+  web_value.reserve(value.size());
+  std::transform(value.begin(), value.end(), std::back_inserter(web_value),
+                 [](const IndexedDBDatabaseInfo& database_info) {
+                   return WebIDBDatabaseInfo(database_info.name,
+                                             database_info.id,
+                                             database_info.version);
+                 });
   callbacks_->OnSuccess(web_value);
   callbacks_.reset();
 }

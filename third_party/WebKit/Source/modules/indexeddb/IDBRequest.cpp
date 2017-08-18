@@ -54,6 +54,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebBlobInfo.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 
 using blink::WebIDBCursor;
 
@@ -411,7 +412,8 @@ void IDBRequest::EnqueueResponse(DOMException* error) {
   metrics_.RecordAndReset();
 }
 
-void IDBRequest::EnqueueResponse(const Vector<String>& string_list) {
+void IDBRequest::EnqueueResponse(
+    const Vector<WebIDBDatabaseInfo>& string_list) {
   IDB_TRACE("IDBRequest::onSuccess(StringList)");
   if (!ShouldEnqueueEvent()) {
     metrics_.RecordAndReset();

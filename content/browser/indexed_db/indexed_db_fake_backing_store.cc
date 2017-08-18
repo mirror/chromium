@@ -29,10 +29,10 @@ IndexedDBFakeBackingStore::IndexedDBFakeBackingStore(
                             task_runner) {}
 IndexedDBFakeBackingStore::~IndexedDBFakeBackingStore() {}
 
-std::vector<base::string16> IndexedDBFakeBackingStore::GetDatabaseNames(
+std::vector<IndexedDBDatabaseInfo> IndexedDBFakeBackingStore::GetDatabasesInfo(
     leveldb::Status* s) {
   *s = leveldb::Status::OK();
-  return std::vector<base::string16>();
+  return std::vector<IndexedDBDatabaseInfo>();
 }
 leveldb::Status IndexedDBFakeBackingStore::GetIDBDatabaseMetaData(
     const base::string16& name,

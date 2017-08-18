@@ -32,11 +32,11 @@ class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
   void ReleaseDatabase(const IndexedDBDatabase::Identifier& identifier,
                        bool forced_close) override;
 
-  void GetDatabaseNames(scoped_refptr<IndexedDBCallbacks> callbacks,
-                        const url::Origin& origin,
-                        const base::FilePath& data_directory,
-                        scoped_refptr<net::URLRequestContextGetter>
-                            request_context_getter) override;
+  void GetDatabaseInfo(scoped_refptr<IndexedDBCallbacks> callbacks,
+                       const url::Origin& origin,
+                       const base::FilePath& data_directory,
+                       scoped_refptr<net::URLRequestContextGetter>
+                           request_context_getter) override;
   void Open(const base::string16& name,
             std::unique_ptr<IndexedDBPendingConnection> connection,
             scoped_refptr<net::URLRequestContextGetter> request_context_getter,
@@ -115,7 +115,7 @@ class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
   FRIEND_TEST_ALL_PREFIXES(IndexedDBFactoryTest,
                            ForceCloseReleasesBackingStore);
   FRIEND_TEST_ALL_PREFIXES(IndexedDBFactoryTest,
-                           GetDatabaseNamesClosesBackingStore);
+                           GetDatabaseInfoClosesBackingStore);
   FRIEND_TEST_ALL_PREFIXES(IndexedDBTest,
                            ForceCloseOpenDatabasesOnCommitFailure);
 

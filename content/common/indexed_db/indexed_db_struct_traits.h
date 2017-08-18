@@ -139,6 +139,19 @@ struct StructTraits<indexed_db::mojom::DatabaseMetadataDataView,
 };
 
 template <>
+struct StructTraits<indexed_db::mojom::DatabaseInfoDataView,
+                    content::IndexedDBDatabaseInfo> {
+  static base::string16 name(const content::IndexedDBDatabaseInfo& info) {
+    return info.name;
+  }
+  static int64_t version(const content::IndexedDBDatabaseInfo& info) {
+    return info.version;
+  }
+  static bool Read(indexed_db::mojom::DatabaseInfoDataView data,
+                   content::IndexedDBDatabaseInfo* out);
+};
+
+template <>
 struct EnumTraits<indexed_db::mojom::CursorDirection,
                   blink::WebIDBCursorDirection> {
   static indexed_db::mojom::CursorDirection ToMojom(

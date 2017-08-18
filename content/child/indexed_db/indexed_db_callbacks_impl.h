@@ -81,7 +81,8 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
 
   // indexed_db::mojom::Callbacks implementation:
   void Error(int32_t code, const base::string16& message) override;
-  void SuccessStringList(const std::vector<base::string16>& value) override;
+  void SuccessDatabaseInfoList(
+      const std::vector<content::IndexedDBDatabaseInfo>& value) override;
   void Blocked(int64_t existing_version) override;
   void UpgradeNeeded(
       indexed_db::mojom::DatabaseAssociatedPtrInfo database_info,

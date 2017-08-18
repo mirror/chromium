@@ -53,7 +53,7 @@ class WebIDBCallbacksImpl final : public WebIDBCallbacks {
 
   // Pointers transfer ownership.
   void OnError(const WebIDBDatabaseError&) override;
-  void OnSuccess(const WebVector<WebString>&) override;
+  void OnSuccess(const WebVector<WebIDBDatabaseInfo>&) override;
   void OnSuccess(WebIDBCursor*,
                  const WebIDBKey&,
                  const WebIDBKey& primary_key,

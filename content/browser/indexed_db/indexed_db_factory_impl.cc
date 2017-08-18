@@ -199,18 +199,18 @@ leveldb::Status IndexedDBFactoryImpl::AbortTransactions(const Origin& origin) {
         "indexedDB.abortTransactions.");
   }
 
-  leveldb::Status get_names_status;
-  std::vector<base::string16> db_names =
-      backing_store->GetDatabaseNames(&get_names_status);
-  if (!get_names_status.ok()) {
+  leveldb::Status get_info_status;
+  std::vector<IndexedDBDatabaseInfo> databases_info =
+      backing_store->GetDatabasesInfo(&get_info_status);
+  if (!get_info_status.ok()) {
     return leveldb::Status::IOError(
-        "Internal error getting origin database names for "
+        "Internal error getting origin database info for "
         "indexedDB.abortTransactions.");
   }
 
-  for (base::string16& name : db_names) {
+  for (IndexedDBDatabaseInfo& database_info : databases_info) {
     const scoped_refptr<IndexedDBDatabase>& db =
-        database_map_[std::make_pair(origin, name)];
+        database_map_[std::make_pair(origin, database_info.name)];
     db->AbortAllTransactionsForConnections();
   }
 
