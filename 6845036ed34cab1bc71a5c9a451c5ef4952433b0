@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b26ce3b2_f59e39d5",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-18T15:13:21Z",
+      "side": 1,
+      "message": "Right. Done.",
+      "parentUuid": "cee4c1b9_f5b9a586",
+      "revId": "6845036ed34cab1bc71a5c9a451c5ef4952433b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49734329_eb3b3899",
         "filename": "extensions/browser/app_window/app_window.h",
         "patchSetId": 6
