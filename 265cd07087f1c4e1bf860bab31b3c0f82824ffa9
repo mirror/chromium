@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68883f63_0eda3969",
+        "filename": "ash/system/user/tray_user_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T18:39:32Z",
+      "side": 1,
+      "message": "optional: It\u0027s a little weird that we enable multiprofile *after* simulating the login of several users. Maybe move this up?",
+      "revId": "265cd07087f1c4e1bf860bab31b3c0f82824ffa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9513244b_be3ced4a",
+        "filename": "ash/test/ash_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T18:39:32Z",
+      "side": 1,
+      "message": "nit: \"n\" to \"user_count\" or \"session_count\" or \"users\"\n\nAlso, should this function be called something like CreateUserSessions()? Just from reading the header it\u0027s not obvious to me if a new test should call SimulateLogin() vs. SimulateUserLogin().",
+      "revId": "265cd07087f1c4e1bf860bab31b3c0f82824ffa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2ca54c_2b1ac073",
+        "filename": "ash/test/ash_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-18T18:39:32Z",
+      "side": 1,
+      "message": "Nice comment, btw.",
+      "revId": "265cd07087f1c4e1bf860bab31b3c0f82824ffa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
