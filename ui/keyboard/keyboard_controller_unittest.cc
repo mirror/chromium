@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/test/aura_test_helper.h"
@@ -371,7 +372,14 @@ TEST_P(KeyboardControllerTest, KeyboardSize) {
   VerifyKeyboardWindowSize(container, keyboard);
 }
 
-TEST_P(KeyboardControllerTest, KeyboardSizeMultiRootWindow) {
+#if defined(OS_WIN)
+#define MAYBE_KeyboardSizeMultiRootWindow \
+    DISABLED_KeyboardSizeMultiRootWindow
+#else
+#define MAYBE_KeyboardSizeMultiRootWindow KeyboardSizeMultiRootWindow
+#endif
+// For more info: https://crbug.com/757044
+TEST_P(KeyboardControllerTest, MAYBE_KeyboardSizeMultiRootWindow) {
   aura::Window* container(controller()->GetContainerWindow());
   aura::Window* keyboard(ui()->GetContentsWindow());
   gfx::Rect screen_bounds = root_window()->bounds();
