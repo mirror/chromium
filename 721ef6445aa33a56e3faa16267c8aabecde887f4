@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2442d85_ed2d8da6",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "std::move() instead of .release()",
+      "range": {
+        "startLine": 499,
+        "startChar": 20,
+        "endLine": 499,
+        "endChar": 34
+      },
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5582bfea_bfee7c66",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "Seems this is still using the old function name - which shouldn\u0027t compile. Did you compile and run the tests on your CL after the last round of changes?\n\nAlso, rename this test class to use the new Record (and not Uploading) name.",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6366e94_e9a116f8",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "No (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e1c446_a677fce6",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "No (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65840883_242c82b9",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "Ifdef doesn\u0027t match file location.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 52
+      },
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122d3cd7_3a294e9b",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "Put this in the metrics namespace.",
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460e8cbd_38d8366c",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T20:20:07Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "721ef6445aa33a56e3faa16267c8aabecde887f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
