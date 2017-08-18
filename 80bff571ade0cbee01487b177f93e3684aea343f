@@ -87,6 +87,24 @@
       "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fcf99e_d379943b",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-18T19:47:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a604ffc2_58fc9f16",
+      "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
