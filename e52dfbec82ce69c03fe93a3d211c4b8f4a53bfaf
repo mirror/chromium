@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3129f7c_20e31eda",
+        "filename": "chrome/browser/ui/webui/settings/custom_home_pages_table_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T21:40:40Z",
+      "side": 1,
+      "message": "add a dep on this in chrome/browser/ui/BUILD.gn",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "e52dfbec82ce69c03fe93a3d211c4b8f4a53bfaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
