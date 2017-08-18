@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8039a749_967cd7a1",
+        "filename": "chrome/browser/profiles/avatar_menu.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-18T08:01:07Z",
+      "side": 1,
+      "message": "Please document that this is used to back an UMA histogram, and should therefore be treated as append-only.",
+      "range": {
+        "startLine": 90,
+        "startChar": 40,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "a44e6e53826463f43e5bf5aab39c169371347888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9655195_8bd2212e",
+        "filename": "chrome/browser/profiles/avatar_menu.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-18T08:01:07Z",
+      "side": 1,
+      "message": "Why did you drop \"class\" from this enum?  I think the enum constant names need to be updated to be of the form IMAGE_LOAD_STATUS_LOADED if you drop \"class\".",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "a44e6e53826463f43e5bf5aab39c169371347888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a48cc02_735116df",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31121,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-18T08:01:07Z",
+      "side": 1,
+      "message": "nit: You can use a space rather than an underscore here for a more human-friendly label.",
+      "range": {
+        "startLine": 31121,
+        "startChar": 31,
+        "endLine": 31121,
+        "endChar": 32
+      },
+      "revId": "a44e6e53826463f43e5bf5aab39c169371347888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
