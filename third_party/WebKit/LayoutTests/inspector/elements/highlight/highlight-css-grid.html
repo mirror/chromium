@@ -19,6 +19,11 @@ body {
 }
 .padded {
     padding: 50px 60px;
+    align-content: space-around;
+    justify-content: end;
+    grid-gap: 15px 25px;
+    border: 5px solid;
+    margin: 10px;
 }
 </style>
 
@@ -36,16 +41,8 @@ async function test()
     function dumpGridHighlight(id) {
         return new Promise(resolve => ElementsTestRunner.dumpInspectorHighlightJSON(id, resolve));
     }
-
-    try {
-
     await dumpGridHighlight('inspectedGrid');
     await dumpGridHighlight('paddedGrid');
-
-
-    } catch (e) {
-        TestRunner.addResult(e.message);
-    }
     TestRunner.completeTest();
 }
 

@@ -228,33 +228,20 @@ std::unique_ptr<protocol::DictionaryValue> BuildElementInfo(Element* element) {
   return element_info;
 }
 
-std::unique_ptr<protocol::DictionaryValue> BuildGapAndSpans(
+std::unique_ptr<protocol::Value> BuildGapAndPositions(
     double origin,
     LayoutUnit gap,
     const Vector<LayoutUnit>& positions) {
   std::unique_ptr<protocol::DictionaryValue> result =
       protocol::DictionaryValue::create();
   result->setDouble("origin", origin);
-  result->setDouble("gap", gap.ToDouble());
+  result->setDouble("gap", gap.Round());
 
   std::unique_ptr<protocol::ListValue> spans = protocol::ListValue::create();
-
-  if (positions.size() < 2) {
-    result->setValue("spans", std::move(spans));
-    return result;
+  for (const LayoutUnit& position : positions) {
+    spans->pushValue(protocol::FundamentalValue::create(position.Round()));
   }
-
-  for (size_t i = 0; i < positions.size() - 2; i++) {
-    double span = positions[i + 1] - positions[i] - gap;
-    spans->pushValue(protocol::FundamentalValue::create(span));
-  }
-
-  // There's no gap before neither the last row nor the last column
-  spans->pushValue(protocol::FundamentalValue::create(
-      (positions[positions.size() - 1] - positions[positions.size() - 2])
-          .ToDouble()));
-
-  result->setValue("spans", std::move(spans));
+  result->setValue("positions", std::move(spans));
 
   return result;
 }
@@ -263,12 +250,18 @@ std::unique_ptr<protocol::DictionaryValue>
 BuildGridInfo(LayoutGrid* layout_grid, FloatPoint origin, Color color) {
   std::unique_ptr<protocol::DictionaryValue> grid_info =
       protocol::DictionaryValue::create();
+
   grid_info->setValue(
-      "rows", BuildGapAndSpans(origin.Y(), layout_grid->GridGap(kForRows),
-                               layout_grid->RowPositions()));
+      "rows", BuildGapAndPositions(origin.Y(),
+                                   layout_grid->GridGap(kForRows) +
+                                       layout_grid->GetGridItemOffset(kForRows),
+                                   layout_grid->RowPositions()));
   grid_info->setValue(
-      "columns", BuildGapAndSpans(origin.X(), layout_grid->GridGap(kForColumns),
-                                  layout_grid->ColumnPositions()));
+      "columns",
+      BuildGapAndPositions(origin.X(),
+                           layout_grid->GridGap(kForColumns) +
+                               layout_grid->GetGridItemOffset(kForColumns),
+                           layout_grid->ColumnPositions()));
   grid_info->setString("color", color.Serialized());
   return grid_info;
 }
@@ -404,7 +397,7 @@ void InspectorHighlight::AppendNodeHighlight(
 
   if (highlight_config.css_grid != Color::kTransparent &&
       layout_object->IsLayoutGrid()) {
-    grid_info_ = BuildGridInfo(ToLayoutGrid(layout_object), content.P1(),
+    grid_info_ = BuildGridInfo(ToLayoutGrid(layout_object), border.P1(),
                                highlight_config.css_grid);
   }
 }
