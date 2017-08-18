@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de49d8fc_533ea888",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-18T04:42:05Z",
+      "side": 1,
+      "message": "Is this correct bug link?",
+      "revId": "a99f90a472af354c1198bbe74c0aab98c0d21b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2367bc5_d8e6cc77",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-18T04:42:05Z",
+      "side": 1,
+      "message": "Please move this to the unnamed namespace at beginning of this file.",
+      "revId": "a99f90a472af354c1198bbe74c0aab98c0d21b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ced0ef3_c5e5547e",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-18T04:42:05Z",
+      "side": 1,
+      "message": "Could you add the reference where this table come from? say, spec section number and name.",
+      "range": {
+        "startLine": 1208,
+        "startChar": 41,
+        "endLine": 1208,
+        "endChar": 42
+      },
+      "revId": "a99f90a472af354c1198bbe74c0aab98c0d21b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
