@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282f7713_f08b9061",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T01:06:59Z",
+      "side": 1,
+      "message": "file a crbug for all TODOs, please, and include a link here.",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fabf6f9_15768783",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T01:06:59Z",
+      "side": 1,
+      "message": "what compiler do we use on Android? gcc? Is this really better than some #pragmas?",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45795e45_c9ae6f34",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T01:06:59Z",
+      "side": 1,
+      "message": "Interesting. We should probably plumb an async callback all the way through the profiling service, so that we don\u0027t try to dump while we\u0027re already dumping.",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701d6f7d_97556baa",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-18T01:06:59Z",
+      "side": 1,
+      "message": "crying inside. :(",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
