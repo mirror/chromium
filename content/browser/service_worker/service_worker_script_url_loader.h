@@ -18,6 +18,7 @@ class BlobStorageContext;
 
 namespace content {
 
+class ServiceWorkerCacheWriter;
 class ServiceWorkerContextCore;
 class ServiceWorkerProviderHost;
 class URLLoaderFactoryGetter;
@@ -66,10 +67,18 @@ class ServiceWorkerScriptURLLoader : public mojom::URLLoader,
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
  private:
+  // Returns true when the incumbent service worker exists and it's required to
+  // do the byte-for-byte check.
+  bool ShouldByteForByteCheck() const;
+
   mojom::URLLoaderPtr network_loader_;
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
+
+  // Used for fowarding a fetched script to the controller in a renderer.
   mojom::URLLoaderClientPtr forwarding_client_;
+
   base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
+  std::unique_ptr<ServiceWorkerCacheWriter> cache_writer_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerScriptURLLoader);
 };
