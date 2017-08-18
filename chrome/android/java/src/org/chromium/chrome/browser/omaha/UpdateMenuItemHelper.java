@@ -29,6 +29,8 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.appmenu.AppMenu;
+import org.chromium.chrome.browser.externalauth.ExternalAuthUtils;
+import org.chromium.chrome.browser.externalauth.UserRecoverableErrorHandler;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.components.variations.VariationsAssociatedData;
 import org.chromium.ui.interpolators.BakedBezierInterpolator;
@@ -148,6 +150,11 @@ public class UpdateMenuItemHelper {
     public boolean shouldShowMenuItem(ChromeActivity activity) {
         if (getBooleanParam(ChromeSwitches.FORCE_SHOW_UPDATE_MENU_ITEM)) {
             return true;
+        }
+
+        if (!ExternalAuthUtils.getInstance().canUseGooglePlayServices(
+                    activity, new UserRecoverableErrorHandler.Silent())) {
+            return false;
         }
 
         return updateAvailable(activity);
