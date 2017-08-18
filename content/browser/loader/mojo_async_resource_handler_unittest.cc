@@ -17,7 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
-#include "base/test/test_simple_task_runner.h"
+#include "base/test/test_mock_time_task_runner.h"
 #include "content/browser/loader/mock_resource_loader.h"
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
@@ -214,8 +214,7 @@ class MojoAsyncResourceHandlerWithStubOperations
                                  rdh,
                                  std::move(mojo_request),
                                  std::move(url_loader_client),
-                                 RESOURCE_TYPE_MAIN_FRAME),
-        task_runner_(new base::TestSimpleTaskRunner) {}
+                                 RESOURCE_TYPE_MAIN_FRAME) {}
   ~MojoAsyncResourceHandlerWithStubOperations() override {}
 
   void ResetBeginWriteExpectation() { is_begin_write_expectation_set_ = false; }
@@ -238,8 +237,7 @@ class MojoAsyncResourceHandlerWithStubOperations
   }
 
   void PollUploadProgress() {
-    task_runner_->RunPendingTasks();
-    base::RunLoop().RunUntilIdle();
+    mock_time_task_runner_->FastForwardUntilNoTasksRemain();
   }
 
  private:
@@ -268,7 +266,7 @@ class MojoAsyncResourceHandlerWithStubOperations
     DCHECK(!upload_progress_tracker_);
 
     auto upload_progress_tracker = base::MakeUnique<FakeUploadProgressTracker>(
-        from_here, std::move(callback), request(), task_runner_);
+        from_here, std::move(callback), request());
     upload_progress_tracker_ = upload_progress_tracker.get();
     return std::move(upload_progress_tracker);
   }
@@ -281,7 +279,9 @@ class MojoAsyncResourceHandlerWithStubOperations
   scoped_refptr<net::IOBufferWithSize> metadata_;
 
   FakeUploadProgressTracker* upload_progress_tracker_ = nullptr;
-  scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
+  scoped_refptr<base::TestMockTimeTaskRunner> mock_time_task_runner_ =
+      base::MakeRefCounted<base::TestMockTimeTaskRunner>(
+          base::TestMockTimeTaskRunner::Type::kBound);
 
   DISALLOW_COPY_AND_ASSIGN(MojoAsyncResourceHandlerWithStubOperations);
 };

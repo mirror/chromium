@@ -18,12 +18,10 @@ constexpr base::TimeDelta kUploadProgressInterval =
 UploadProgressTracker::UploadProgressTracker(
     const tracked_objects::Location& location,
     UploadProgressReportCallback report_progress,
-    net::URLRequest* request,
-    scoped_refptr<base::SequencedTaskRunner> task_runner)
+    net::URLRequest* request)
     : request_(request), report_progress_(std::move(report_progress)) {
   DCHECK(report_progress_);
 
-  progress_timer_.SetTaskRunner(std::move(task_runner));
   progress_timer_.Start(location, kUploadProgressInterval, this,
                         &UploadProgressTracker::ReportUploadProgressIfNeeded);
 }
