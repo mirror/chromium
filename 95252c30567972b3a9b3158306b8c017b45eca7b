@@ -16,6 +16,24 @@
       "revId": "95252c30567972b3a9b3158306b8c017b45eca7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11d1a41_49d412b1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineUIUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-18T21:45:55Z",
+      "side": 1,
+      "message": "sounds good, done.",
+      "parentUuid": "05b1f1b5_2c389455",
+      "revId": "95252c30567972b3a9b3158306b8c017b45eca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
