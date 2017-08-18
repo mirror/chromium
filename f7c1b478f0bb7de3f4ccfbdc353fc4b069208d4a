@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "4bbf0502_d00b5b33",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T06:43:49Z",
+      "side": 1,
+      "message": "Doing that for files that have already been ported would be good but it\u0027s optional.",
+      "parentUuid": "1afe940e_cebbf791",
+      "range": {
+        "startLine": 2,
+        "startChar": 26,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "f7c1b478f0bb7de3f4ccfbdc353fc4b069208d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2df6c0c2_8e521819",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
         "patchSetId": 2
