@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78be052c_63f3ec1d",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T15:26:24Z",
+      "side": 1,
+      "message": "java_thread-\u003emessage_loop()-\u003eAddTaskObserver() here instead of plumbing |message_loop| through bind?",
+      "revId": "fbf4b86f15be2f323d5a4b807a662c57554cf2f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
