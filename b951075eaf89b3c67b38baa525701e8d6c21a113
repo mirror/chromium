@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "3f9e8807_2e3672e8",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T18:12:25Z",
+      "side": 1,
+      "message": "Ah, interesting. Can you file a bug for chrome_browser_interstitials::IsInterstitialDisplayingText and CC me?",
+      "parentUuid": "330b8150_9b83ee1b",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2c55940_ea4fb44d",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 12
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "fea3e798_e05731fc",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T18:12:25Z",
+      "side": 1,
+      "message": "I see.\n\nIn that case, passing is_enterprise_managed flag to SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial seems to make more sense. That way we can get rid of SSLErrorHandler::IsEnterpriseManaged(), and we can have a unit test for both enterprise and non-enterprise cases. WDYT?",
+      "parentUuid": "3db09fcd_9d973218",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a092c615_f95ec705",
         "filename": "chrome/browser/ssl/ssl_error_handler.h",
         "patchSetId": 12
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Do we need the unit test to that the enterprise interstitial was displayed? The only difference code-wise between the enterprise and non-enterprise interstitials is the strings that are displayed on the interstitial. I figured that since strings are a UI difference, we would save testing that they were correctly displayed to the browser test.\n\nThe intended use of this test is to test that the MITM software interstitial renders at all when the enterprise managed flag is set.",
       "parentUuid": "24587a08_bf5f5b06",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99662026_18b2fc4c",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T18:12:25Z",
+      "side": 1,
+      "message": "Not strictly necessary but it would be nice to have. That way we can be sure that is_enterprise_managed is passed properly down to the interstitial without running browser tests.\n\nBut I\u0027ll leave this up to you.",
+      "parentUuid": "e2325bb4_7d8a2b48",
       "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
