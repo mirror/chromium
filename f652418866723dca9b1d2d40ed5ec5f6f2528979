@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40acae36_1c00429d",
+        "filename": "chrome/browser/feedback/feedback_uploader_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "unused. can you check for others?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 68
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99024142_015c9b18",
+        "filename": "chrome/browser/feedback/feedback_uploader_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 28,
+        "startChar": 50,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e6a916_b499b81f",
+        "filename": "chrome/browser/feedback/feedback_uploader_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "nit: add \"Feedback report will be sent without authentication.\" like below. optionally, make that part of the string a constant.",
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a3c228_fae4cd1d",
+        "filename": "chrome/browser/feedback/feedback_uploader_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "|profile| is only null if context() is null, which should never happen (and would DCHECK in FeedbackUploader()). So this looks extraneous.",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c00eb1b_1c84462c",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd74909a_bd15bde3",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 25,
+        "startChar": 66,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da91635_771f63c8",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 27,
+        "startChar": 64,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac3bc66_3a608576",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bce44e_e0bc4a73",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "These are unnecessary since they have to have already been forward declared for the base class.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f024e6_03fcac9d",
+        "filename": "chrome/browser/feedback/feedback_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "What\u0027s the impetus for this to move out of chromeos/ now?",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a562bbfd_ae78173a",
+        "filename": "components/feedback/feedback_uploader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "Great comment.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 57
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253d13e1_496b4191",
+        "filename": "components/feedback/feedback_uploader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T19:45:19Z",
+      "side": 1,
+      "message": "Great use of |private| for virtual dispatch :-)",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
