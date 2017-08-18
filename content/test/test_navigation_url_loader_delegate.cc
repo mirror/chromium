@@ -80,6 +80,14 @@ void TestNavigationURLLoaderDelegate::OnRequestFailed(bool in_cache,
     request_failed_->Quit();
 }
 
+void TestNavigationURLLoaderDelegate::OnRequestFailedWithCertificateError(
+    bool in_cache,
+    int net_error,
+    net::SSLInfo ssl_info,
+    bool fatal) {
+  OnRequestFailed(in_cache, net_error);
+}
+
 void TestNavigationURLLoaderDelegate::OnRequestStarted(
     base::TimeTicks timestamp) {
   ASSERT_FALSE(timestamp.is_null());
