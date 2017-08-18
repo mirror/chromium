@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b21ae62e_a1228953",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-with-non-cors-safelisted-content-type.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-18T10:07:41Z",
+      "side": 1,
+      "message": "This comment should be e.g. \"Same-origin access doesn\u0027t issue a preflight and therefore not denied\"",
+      "revId": "4d0cbc3b3e6d6f3133a9b755be49ce21f4b9f716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
