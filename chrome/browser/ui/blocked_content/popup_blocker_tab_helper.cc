@@ -188,9 +188,10 @@ size_t PopupBlockerTabHelper::GetBlockedPopupsCount() const {
 PopupBlockerTabHelper::PopupIdMap
     PopupBlockerTabHelper::GetBlockedPopupRequests() {
   PopupIdMap result;
-  for (base::IDMap<std::unique_ptr<BlockedRequest>>::const_iterator iter(
+  for (IDMap<std::unique_ptr<BlockedRequest>>::const_iterator iter(
            &blocked_popups_);
-       !iter.IsAtEnd(); iter.Advance()) {
+       !iter.IsAtEnd();
+       iter.Advance()) {
     result[iter.GetCurrentKey()] = iter.GetCurrentValue()->params.url;
   }
   return result;

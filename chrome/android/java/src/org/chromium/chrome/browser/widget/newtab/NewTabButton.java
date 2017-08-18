@@ -10,7 +10,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.util.AttributeSet;
 import android.widget.Button;
 
@@ -28,7 +27,6 @@ public class NewTabButton extends Button implements Drawable.Callback {
 
     private final Drawable mNormalDrawable;
     private final Drawable mIncognitoDrawable;
-    private Drawable mModernDrawable;
     private boolean mIsIncognito;
     private AnimatorSet mTransitionAnimation;
 
@@ -53,13 +51,8 @@ public class NewTabButton extends Button implements Drawable.Callback {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int desiredWidth;
-        if (mModernDrawable != null) {
-            desiredWidth = mModernDrawable.getIntrinsicWidth();
-        } else {
-            desiredWidth = Math.max(
-                    mIncognitoDrawable.getIntrinsicWidth(), mNormalDrawable.getIntrinsicWidth());
-        }
+        int desiredWidth = Math.max(
+                mIncognitoDrawable.getIntrinsicWidth(), mNormalDrawable.getIntrinsicWidth());
         desiredWidth += getPaddingLeft() + getPaddingRight();
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(desiredWidth, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -76,32 +69,30 @@ public class NewTabButton extends Button implements Drawable.Callback {
         canvas.save();
         if (!isRtl) canvas.translate(paddingStart, 0);
 
-        if (mModernDrawable != null) {
-            drawIcon(canvas, mModernDrawable, isRtl, widthWithoutPadding);
-        } else {
-            drawIcon(canvas, mNormalDrawable, isRtl, widthWithoutPadding);
-            if (mIsIncognito
-                    || (mTransitionAnimation != null && mTransitionAnimation.isRunning())) {
-                drawIcon(canvas, mIncognitoDrawable, isRtl, widthWithoutPadding);
-            }
-        }
-
-        canvas.restore();
-    }
-
-    private void drawIcon(Canvas canvas, Drawable drawable, boolean isRtl, int widthNoPadding) {
         canvas.save();
-        canvas.translate(0, (getHeight() - drawable.getIntrinsicHeight()) / 2.f);
+        canvas.translate(0, (getHeight() - mNormalDrawable.getIntrinsicHeight()) / 2.f);
         if (isRtl) {
-            canvas.translate(widthNoPadding - drawable.getIntrinsicWidth(), 0);
+            canvas.translate(widthWithoutPadding - mNormalDrawable.getIntrinsicWidth(), 0);
         }
-        drawable.draw(canvas);
+        mNormalDrawable.draw(canvas);
+        canvas.restore();
+
+        if (mIsIncognito || (mTransitionAnimation != null && mTransitionAnimation.isRunning())) {
+            canvas.save();
+            canvas.translate(0, (getHeight() - mIncognitoDrawable.getIntrinsicHeight()) / 2.f);
+            if (isRtl) {
+                canvas.translate(widthWithoutPadding - mIncognitoDrawable.getIntrinsicWidth(), 0);
+            }
+            mIncognitoDrawable.draw(canvas);
+            canvas.restore();
+        }
+
         canvas.restore();
     }
 
     @Override
     public void invalidateDrawable(Drawable dr) {
-        if (dr == mIncognitoDrawable || dr == mNormalDrawable || dr == mModernDrawable) {
+        if (dr == mIncognitoDrawable || dr == mNormalDrawable) {
             invalidate();
         } else {
             super.invalidateDrawable(dr);
@@ -109,22 +100,10 @@ public class NewTabButton extends Button implements Drawable.Callback {
     }
 
     /**
-     * Set the icon to use the drawable for Chrome Modern.
-     */
-    public void setIsModern() {
-        mModernDrawable = VectorDrawableCompat.create(
-                getContext().getResources(), R.drawable.new_tab_icon, getContext().getTheme());
-        mModernDrawable.setBounds(
-                0, 0, mModernDrawable.getIntrinsicWidth(), mModernDrawable.getIntrinsicHeight());
-        mModernDrawable.setCallback(this);
-    }
-
-    /**
      * Updates the visual state based on whether incognito or normal tabs are being created.
      * @param incognito Whether the button is now used for creating incognito tabs.
      */
     public void setIsIncognito(boolean incognito) {
-        if (mModernDrawable != null) return;
         if (mIsIncognito == incognito) return;
         mIsIncognito = incognito;
 
@@ -163,7 +142,6 @@ public class NewTabButton extends Button implements Drawable.Callback {
     protected void drawableStateChanged() {
         super.drawableStateChanged();
 
-        if (mModernDrawable != null) return;
         mNormalDrawable.setState(getDrawableState());
         mIncognitoDrawable.setState(getDrawableState());
     }

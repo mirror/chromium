@@ -303,12 +303,13 @@ bool LinuxSandbox::InitializeSandboxImpl() {
   // returning.
   // Unretained() since the current object is a Singleton.
   base::ScopedClosureRunner sandbox_sealer(
-      base::BindOnce(&LinuxSandbox::SealSandbox, base::Unretained(this)));
+      base::Bind(&LinuxSandbox::SealSandbox, base::Unretained(this)));
   // Make sure that this function enables sandboxes as promised by GetStatus().
   // Unretained() since the current object is a Singleton.
   base::ScopedClosureRunner sandbox_promise_keeper(
-      base::BindOnce(&LinuxSandbox::CheckForBrokenPromises,
-                     base::Unretained(this), process_type));
+      base::Bind(&LinuxSandbox::CheckForBrokenPromises,
+                 base::Unretained(this),
+                 process_type));
 
   // No matter what, it's always an error to call InitializeSandbox() after
   // threads have been created.

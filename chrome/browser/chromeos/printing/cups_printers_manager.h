@@ -80,9 +80,7 @@ class CupsPrintersManager {
   virtual void AddObserver(Observer* observer) = 0;
   virtual void RemoveObserver(Observer* observer) = 0;
 
-  // Record that the given printers has been installed in CUPS for usage.  If
-  // |printer| is not a configured or enterprise printer, this will have the
-  // side effect of moving |printer| into the configured class.
+  // Record that the given printers has been installed in CUPS for usage.
   virtual void PrinterInstalled(const Printer& printer) = 0;
 
   // Returns true if |printer| is currently installed in CUPS with this

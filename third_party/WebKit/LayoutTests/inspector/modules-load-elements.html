@@ -4,13 +4,13 @@
 <script>
 async function test()
 {
-    var initialModules = TestRunner.loadedModules();
+    var initialModules = InspectorTest.loadedModules();
     await UI.inspectorView.panel("elements");
-    var elementsModules = TestRunner.dumpLoadedModules(initialModules);
-    TestRunner.addResult("Now with animations pane");
+    var elementsModules = InspectorTest.dumpLoadedModules(initialModules);
+    InspectorTest.addResult("Now with animations pane");
     await self.runtime.loadModulePromise("animation");
-    TestRunner.dumpLoadedModules(elementsModules);
-    TestRunner.completeTest();
+    InspectorTest.dumpLoadedModules(elementsModules);
+    InspectorTest.completeTest();
 }
 </script>
 </head>

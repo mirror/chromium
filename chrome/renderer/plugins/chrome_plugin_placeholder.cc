@@ -10,7 +10,6 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "chrome/common/chrome_features.h"
@@ -61,10 +60,13 @@ ChromePluginPlaceholder::ChromePluginPlaceholder(
     const blink::WebPluginParams& params,
     const std::string& html_data,
     const base::string16& title)
-    : plugins::LoadablePluginPlaceholder(render_frame, params, html_data),
+    : plugins::LoadablePluginPlaceholder(render_frame,
+                                         params,
+                                         html_data),
       status_(ChromeViewHostMsg_GetPluginInfo_Status::kAllowed),
       title_(title),
-      context_menu_request_id_(0) {
+      context_menu_request_id_(0),
+      did_send_blocked_content_notification_(false) {
   RenderThread::Get()->AddObserver(this);
 }
 
@@ -357,27 +359,14 @@ blink::WebPlugin* ChromePluginPlaceholder::CreatePlugin() {
                                       std::move(throttler));
 }
 
-void ChromePluginPlaceholder::OnBlockedContent(
-    content::RenderFrame::PeripheralContentStatus status,
-    bool is_same_origin) {
+void ChromePluginPlaceholder::OnBlockedTinyContent() {
   DCHECK(render_frame());
+  if (did_send_blocked_content_notification_)
+    return;
 
-  if (status ==
-      content::RenderFrame::PeripheralContentStatus::CONTENT_STATUS_TINY) {
-    ContentSettingsObserver::Get(render_frame())
-        ->DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS, title_);
-  }
-
-  std::string message = base::StringPrintf(
-      is_same_origin ? "Same-origin plugin content from %s must have a visible "
-                       "size larger than 6 x 6 pixels, or it will be blocked. "
-                       "Invisible content is always blocked."
-                     : "Cross-origin plugin content from %s must have a "
-                       "visible size larger than 400 x 300 pixels, or it will "
-                       "be blocked. Invisible content is always blocked.",
-      GetPluginParams().url.GetString().Utf8().c_str());
-  render_frame()->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_INFO,
-                                      message);
+  did_send_blocked_content_notification_ = true;
+  ContentSettingsObserver::Get(render_frame())
+      ->DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS, title_);
 }
 
 gin::ObjectTemplateBuilder ChromePluginPlaceholder::GetObjectTemplateBuilder(

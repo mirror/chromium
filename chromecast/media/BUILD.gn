@@ -37,16 +37,14 @@ test("cast_media_unittests") {
     "//chromecast/base/metrics:test_support",
     "//chromecast/media/cma:test_support",
     "//chromecast/public",
-    "//media:test_support",
+    "//media",
+    "//media/audio:test_support",
+    "//media/base:test_support",
     "//testing/gmock",
     "//testing/gtest",
   ]
 
-  if (is_cast_using_cma_backend) {
+  if (!is_android) {
     deps += [ "//chromecast/media/cma:unittests" ]
-    if (is_android) {
-      deps += [ "//chromecast/media/cma/backend/android:audio_track_java" ]
-      shard_timeout = 300
-    }
   }
 }

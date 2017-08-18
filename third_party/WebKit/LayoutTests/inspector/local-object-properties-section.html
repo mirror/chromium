@@ -19,8 +19,8 @@ function test()
     propertiesSection.expand();
     propertiesSection.objectTreeElement().childAt(1).expand();
 
-    TestRunner.addResult(TestRunner.textContentWithLineBreaks(propertiesSection.element));
-    TestRunner.completeTest();
+    InspectorTest.addResult(InspectorTest.textContentWithLineBreaks(propertiesSection.element));
+    InspectorTest.completeTest();
 }
 
 </script>

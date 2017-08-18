@@ -517,7 +517,7 @@ void WebURLLoaderImpl::Context::SetDefersLoading(bool value) {
   } else if (!value && defers_loading_ != NOT_DEFERRING) {
     if (defers_loading_ == DEFERRED_DATA) {
       task_runner_->PostTask(FROM_HERE,
-                             base::BindOnce(&Context::HandleDataURL, this));
+                             base::Bind(&Context::HandleDataURL, this));
     }
     defers_loading_ = NOT_DEFERRING;
   }
@@ -550,7 +550,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
                              &sync_load_response->data);
     } else {
       task_runner_->PostTask(FROM_HERE,
-                             base::BindOnce(&Context::HandleDataURL, this));
+                             base::Bind(&Context::HandleDataURL, this));
     }
     return;
   }

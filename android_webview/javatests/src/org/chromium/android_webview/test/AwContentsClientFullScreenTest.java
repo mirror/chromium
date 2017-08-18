@@ -32,6 +32,7 @@ import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content_public.browser.WebContents;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -87,8 +88,12 @@ public class AwContentsClientFullScreenTest {
         // we should not deadlock if apps try to use it.
         loadTestPageAndClickFullscreen(VIDEO_TEST_URL);
         mContentsClient.waitForCustomViewShown();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> mContentsClient.getExitCallback().onCustomViewHidden());
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mContentsClient.getExitCallback().onCustomViewHidden();
+            }
+        });
         mContentsClient.waitForCustomViewHidden();
     }
 
@@ -123,8 +128,12 @@ public class AwContentsClientFullScreenTest {
     }
 
     public void doTestOnShowAndHideCustomViewWithCallback(String videoTestUrl) throws Throwable {
-        doOnShowAndHideCustomViewTest(videoTestUrl,
-                () -> mContentsClient.getExitCallback().onCustomViewHidden());
+        doOnShowAndHideCustomViewTest(videoTestUrl, new Runnable() {
+            @Override
+            public void run() {
+                mContentsClient.getExitCallback().onCustomViewHidden();
+            }
+        });
     }
 
     /*
@@ -148,8 +157,12 @@ public class AwContentsClientFullScreenTest {
     }
 
     public void doTestOnShowAndHideCustomViewWithJavascript(String videoTestUrl) throws Throwable {
-        doOnShowAndHideCustomViewTest(videoTestUrl,
-                () -> DOMUtils.exitFullscreen(mContentViewCore.getWebContents()));
+        doOnShowAndHideCustomViewTest(videoTestUrl, new Runnable() {
+            @Override
+            public void run() {
+                DOMUtils.exitFullscreen(mContentViewCore.getWebContents());
+            }
+        });
     }
 
     /*
@@ -178,9 +191,12 @@ public class AwContentsClientFullScreenTest {
 
         // The key event should not be propagated to mTestContainerView (the original container
         // view).
-        mTestContainerView.setOnKeyListener((v, keyCode, event) -> {
-            Assert.fail("mTestContainerView received key event");
-            return false;
+        mTestContainerView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Assert.fail("mTestContainerView received key event");
+                return false;
+            }
         });
 
         InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
@@ -194,8 +210,12 @@ public class AwContentsClientFullScreenTest {
     @Feature({"AndroidWebView"})
     @RetryOnFailure
     public void testExitFullscreenEndsIfAppInvokesCallbackFromOnHideCustomView() throws Throwable {
-        mContentsClient.setOnHideCustomViewRunnable(
-                () -> mContentsClient.getExitCallback().onCustomViewHidden());
+        mContentsClient.setOnHideCustomViewRunnable(new Runnable() {
+            @Override
+            public void run() {
+                mContentsClient.getExitCallback().onCustomViewHidden();
+            }
+        });
         doTestOnShowAndHideCustomViewWithCallback(VIDEO_TEST_URL);
     }
 
@@ -393,8 +413,12 @@ public class AwContentsClientFullScreenTest {
 
     private boolean getKeepScreenOnOnInstrumentationThread(final View view) {
         try {
-            return mActivityTestRule.runTestOnUiThreadAndGetResult(
-                    () -> getKeepScreenOnOnUiThread(view));
+            return mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
+                @Override
+                public Boolean call() {
+                    return getKeepScreenOnOnUiThread(view);
+                }
+            });
         } catch (Exception e) {
             Assert.fail(e.getMessage());
             return false;
@@ -448,8 +472,12 @@ public class AwContentsClientFullScreenTest {
 
     private JavascriptEventObserver registerObserver(final String observerName) throws Throwable {
         final JavascriptEventObserver observer = new JavascriptEventObserver();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> observer.register(mContentViewCore, observerName));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                observer.register(mContentViewCore, observerName);
+            }
+        });
         return observer;
     }
 
@@ -481,8 +509,12 @@ public class AwContentsClientFullScreenTest {
 
     private WebContents getWebContentsOnUiThread() {
         try {
-            return mActivityTestRule.runTestOnUiThreadAndGetResult(
-                    () -> mContentViewCore.getWebContents());
+            return mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<WebContents>() {
+                @Override
+                public WebContents call() throws Exception {
+                    return mContentViewCore.getWebContents();
+                }
+            });
         } catch (Exception e) {
             Assert.fail(e.getMessage());
             return null;

@@ -13,6 +13,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/offline_event_logger.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
 #include "components/offline_pages/core/prefetch/download_archives_task.h"
 #include "components/offline_pages/core/prefetch/download_completed_task.h"
@@ -21,10 +22,8 @@
 #include "components/offline_pages/core/prefetch/import_archives_task.h"
 #include "components/offline_pages/core/prefetch/import_completed_task.h"
 #include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
-#include "components/offline_pages/core/prefetch/metrics_finalization_task.h"
 #include "components/offline_pages/core/prefetch/page_bundle_update_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
-#include "components/offline_pages/core/prefetch/prefetch_configuration.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
@@ -61,7 +60,7 @@ void PrefetchDispatcherImpl::SchedulePipelineProcessing() {
 void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
     const std::string& name_space,
     const std::vector<PrefetchURL>& prefetch_urls) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   PrefetchStore* prefetch_store = service_->GetPrefetchStore();
@@ -75,7 +74,7 @@ void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
 
 void PrefetchDispatcherImpl::RemoveAllUnprocessedPrefetchURLs(
     const std::string& name_space) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   NOTIMPLEMENTED();
@@ -83,7 +82,7 @@ void PrefetchDispatcherImpl::RemoveAllUnprocessedPrefetchURLs(
 
 void PrefetchDispatcherImpl::RemovePrefetchURLsByClientId(
     const ClientId& client_id) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   NOTIMPLEMENTED();
@@ -91,7 +90,7 @@ void PrefetchDispatcherImpl::RemovePrefetchURLsByClientId(
 
 void PrefetchDispatcherImpl::BeginBackgroundTask(
     std::unique_ptr<ScopedBackgroundTask> background_task) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
   service_->GetLogger()->RecordActivity("Beginning Background Task.");
 
@@ -110,13 +109,6 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
       base::MakeUnique<StaleEntryFinalizerTask>(service_->GetPrefetchStore()));
 
   // TODO(dimich): add more reconciliation tasks here.
-
-  // This task should be last, because it is least important for correct
-  // operation of the system, and because any reconciliation tasks might
-  // generate more entries in the FINISHED state that the finalization task
-  // could pick up.
-  task_queue_.AddTask(
-      base::MakeUnique<MetricsFinalizationTask>(service_->GetPrefetchStore()));
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
@@ -147,14 +139,14 @@ void PrefetchDispatcherImpl::QueueActionTasks() {
 }
 
 void PrefetchDispatcherImpl::StopBackgroundTask() {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   DisposeTask();
 }
 
 void PrefetchDispatcherImpl::RequestFinishBackgroundTaskForTest() {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   DisposeTask();
@@ -184,7 +176,7 @@ void PrefetchDispatcherImpl::DisposeTask() {
 
 void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
     const std::string& operation_name) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   PrefetchStore* prefetch_store = service_->GetPrefetchStore();
@@ -214,7 +206,7 @@ void PrefetchDispatcherImpl::DidGetOperationRequest(
 
 void PrefetchDispatcherImpl::DownloadCompleted(
     const PrefetchDownloadResult& download_result) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   service_->GetLogger()->RecordActivity(
@@ -231,7 +223,7 @@ void PrefetchDispatcherImpl::DownloadCompleted(
 }
 
 void PrefetchDispatcherImpl::ImportCompleted(int64_t offline_id, bool success) {
-  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+  if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
   service_->GetLogger()->RecordActivity("Importing archive " +

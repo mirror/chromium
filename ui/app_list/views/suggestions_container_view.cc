@@ -143,14 +143,9 @@ void SuggestionsContainerView::CreateAppsGrid(int apps_num) {
   // Add SearchResultTileItemViews to the container.
   int i = 0;
   search_result_tile_views_.reserve(apps_num);
-  const bool is_fullscreen_app_list_enabled =
-      features::IsFullscreenAppListEnabled();
-  const bool is_play_store_app_search_enabled =
-      features::IsPlayStoreAppSearchEnabled();
   for (; i < apps_num; ++i) {
-    SearchResultTileItemView* tile_item = new SearchResultTileItemView(
-        this, view_delegate_, true, is_fullscreen_app_list_enabled,
-        is_play_store_app_search_enabled);
+    SearchResultTileItemView* tile_item =
+        new SearchResultTileItemView(this, view_delegate_, true);
     if (i % kNumTilesCols == 0)
       tiles_layout_manager->StartRow(0, 0);
     tiles_layout_manager->AddView(tile_item);

@@ -8,9 +8,13 @@ import static org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedS
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.test.InstrumentationRegistry;
+
+import org.junit.Assert;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
@@ -53,19 +57,6 @@ public class NtpUiCaptureTestData {
             0xff903030 // Muted red.
     };
 
-    private static final Bitmap QUERIES_ICON =
-            BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/dots.png"));
-    private static final Bitmap SPORTS_ICON =
-            BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/landscape.png"));
-    private static final Bitmap MEME_ICON =
-            BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/hot.png"));
-    private static final Bitmap NEWS_ICON =
-            BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/train.png"));
-    private static final Bitmap SHOP_ICON =
-            BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/heart.png"));
-    private static final Bitmap ENTERTAINMENT_ICON =
-            BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/cloud.png"));
-
     private static final SnippetArticle[] FAKE_ARTICLE_SUGGESTIONS = new SnippetArticle[] {
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion0",
                     "James Roderick to step down as conductor for Laville orchestra",
@@ -95,13 +86,15 @@ public class NtpUiCaptureTestData {
         ContentSuggestionsTestUtils.registerCategory(suggestionsSource, KnownCategories.ARTICLES);
         suggestionsSource.setSuggestionsForCategory(
                 KnownCategories.ARTICLES, Arrays.asList(FAKE_ARTICLE_SUGGESTIONS));
-        suggestionsSource.setFaviconForId("suggestion0", NEWS_ICON);
+        final Bitmap favicon = BitmapFactory.decodeFile(
+                UrlUtils.getTestFilePath("/android/UiCapture/favicon.ico"));
+        Assert.assertNotNull(favicon);
+        suggestionsSource.setFaviconForId("suggestion0", favicon);
         suggestionsSource.setThumbnailForId("suggestion0",
                 BitmapFactory.decodeFile(
                         UrlUtils.getTestFilePath("/android/UiCapture/conductor.jpg")));
         suggestionsSource.setThumbnailForId("suggestion1",
                 BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/goat.jpg")));
-        suggestionsSource.setFaviconForId("suggestion2", ENTERTAINMENT_ICON);
         suggestionsSource.setThumbnailForId("suggestion2",
                 BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/UiCapture/gig.jpg")));
     }
@@ -135,12 +128,12 @@ public class NtpUiCaptureTestData {
 
     private static LargeIconBridge createLargeIconBridge() {
         final Map<String, Bitmap> iconMap = new HashMap<>();
-        iconMap.put(SITE_SUGGESTIONS[0].url, QUERIES_ICON);
-        iconMap.put(SITE_SUGGESTIONS[1].url, SPORTS_ICON);
-        iconMap.put(SITE_SUGGESTIONS[2].url, MEME_ICON);
-        iconMap.put(SITE_SUGGESTIONS[4].url, NEWS_ICON);
-        iconMap.put(SITE_SUGGESTIONS[6].url, SHOP_ICON);
-        iconMap.put(SITE_SUGGESTIONS[7].url, ENTERTAINMENT_ICON);
+        iconMap.put(SITE_SUGGESTIONS[0].url,
+                BitmapFactory.decodeFile(UrlUtils.getTestFilePath("/android/google.png")));
+        iconMap.put(SITE_SUGGESTIONS[1].url,
+                BitmapFactory.decodeResource(
+                        InstrumentationRegistry.getTargetContext().getResources(),
+                        R.drawable.star_green));
 
         final Map<String, Integer> colorMap = new HashMap<>();
         for (int i = 0; i < SITE_SUGGESTIONS.length; i++) {
@@ -153,8 +146,8 @@ public class NtpUiCaptureTestData {
                 ThreadUtils.postOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onLargeIconAvailable(
-                                iconMap.get(pageUrl), colorMap.get(pageUrl), true);
+                        callback.onLargeIconAvailable(iconMap.get(pageUrl), colorMap.get(pageUrl),
+                                true, pageUrl, desiredSizePx);
                     }
                 });
                 return true;

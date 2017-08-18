@@ -50,10 +50,6 @@
 #include "extensions/common/permissions/permissions_data.h"
 #include "media/media_features.h"
 
-#if defined(OS_CHROMEOS)
-#include "ash/public/cpp/ash_pref_names.h"  // nogncheck
-#endif
-
 namespace keys = extensions::preference_api_constants;
 namespace helpers = extensions::preference_helpers;
 
@@ -150,25 +146,25 @@ PrefMappingEntry kPrefMapping[] = {
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
 #if defined(OS_CHROMEOS)
-    {"autoclick", ash::prefs::kAccessibilityAutoclickEnabled,
+    {"autoclick", prefs::kAccessibilityAutoclickEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
-    {"highContrast", ash::prefs::kAccessibilityHighContrastEnabled,
+    {"highContrast", prefs::kAccessibilityHighContrastEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
-    {"largeCursor", ash::prefs::kAccessibilityLargeCursorEnabled,
+    {"largeCursor", prefs::kAccessibilityLargeCursorEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
-    {"screenMagnifier", ash::prefs::kAccessibilityScreenMagnifierEnabled,
+    {"screenMagnifier", prefs::kAccessibilityScreenMagnifierEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
-    {"spokenFeedback", ash::prefs::kAccessibilitySpokenFeedbackEnabled,
+    {"spokenFeedback", prefs::kAccessibilitySpokenFeedbackEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
-    {"stickyKeys", ash::prefs::kAccessibilityStickyKeysEnabled,
+    {"stickyKeys", prefs::kAccessibilityStickyKeysEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
-    {"virtualKeyboard", ash::prefs::kAccessibilityVirtualKeyboardEnabled,
+    {"virtualKeyboard", prefs::kAccessibilityVirtualKeyboardEnabled,
      APIPermission::kAccessibilityFeaturesRead,
      APIPermission::kAccessibilityFeaturesModify},
 #endif

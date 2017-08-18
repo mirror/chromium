@@ -55,6 +55,8 @@ public class LayoutTab implements ChromeAnimation.Animatable<LayoutTab.Property>
     // Public Layout constants.
     public static final float CLOSE_BUTTON_WIDTH_DP = 36.f;
 
+    // Layout constants.
+    private static final float SHADOW_OPACITY = 1.f;
     // TODO(dtrainor): Investigate removing this.
     private static final float BORDER_THICKNESS_DP = 4.f;
 
@@ -568,6 +570,13 @@ public class LayoutTab implements ChromeAnimation.Animatable<LayoutTab.Property>
      */
     public float getAlpha() {
         return mAlpha;
+    }
+
+    /**
+     * @return The opactiy of the tab's shadow.
+     */
+    public float getShadowOpacity() {
+        return SHADOW_OPACITY;
     }
 
     /**

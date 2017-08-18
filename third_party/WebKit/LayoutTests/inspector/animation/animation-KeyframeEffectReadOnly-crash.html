@@ -26,18 +26,18 @@ function test()
 {
     UI.viewManager.showView("animations");
     var timeline = self.runtime.sharedInstance(Animation.AnimationTimeline);
-    TestRunner.evaluateInPage("startAnimationWithKeyframeEffect()");
-    ElementsTestRunner.waitForAnimationAdded(step2);
+    InspectorTest.evaluateInPage("startAnimationWithKeyframeEffect()");
+    InspectorTest.waitForAnimationAdded(step2);
 
     function step2(group)
     {
-        ElementsTestRunner.waitForAnimationAdded(step3);
-        TestRunner.evaluateInPage("startAnimationWithKeyframeEffectReadOnly()");
+        InspectorTest.waitForAnimationAdded(step3);
+        InspectorTest.evaluateInPage("startAnimationWithKeyframeEffectReadOnly()");
     }
 
     function step3(group)
     {
-        TestRunner.completeTest();
+        InspectorTest.completeTest();
     }
 }
 

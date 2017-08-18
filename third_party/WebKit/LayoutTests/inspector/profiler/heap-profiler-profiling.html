@@ -23,34 +23,34 @@ function test()
     {
         var node = tree.children[0];
         if (!node)
-            TestRunner.addResult("no node");
+            InspectorTest.addResult("no node");
         while (node) {
             var nodeURL = node.element().children[2].lastChild.textContent;
             if (node.functionName === name && (!url || url === nodeURL)) {
-                TestRunner.addResult(`found ${name} ${url || ""}`);
+                InspectorTest.addResult(`found ${name} ${url || ""}`);
                 return;
             }
             node = node.traverseNextNode(true, null, true);
         }
-        TestRunner.addResult(name + " not found");
+        InspectorTest.addResult(name + " not found");
     }
 
-    ProfilerTestRunner.runProfilerTestSuite([
+    InspectorTest.runProfilerTestSuite([
         function testProfiling(next)
         {
             function findPageFunctionInProfileView(view)
             {
                 var tree = view.profileDataGridTree;
                 if (!tree)
-                    TestRunner.addResult("no tree");
+                    InspectorTest.addResult("no tree");
                 checkFunction(tree, "pageFunction", "heap-profiler-profiling.html:7");
                 checkFunction(tree, "(anonymous)", "heap-profiler-profiling.html:8");
                 next();
             }
-            ProfilerTestRunner.showProfileWhenAdded("Profile 1");
-            ProfilerTestRunner.waitUntilProfileViewIsShown("Profile 1", findPageFunctionInProfileView);
-            ProfilerTestRunner.startSamplingHeapProfiler();
-            TestRunner.evaluateInPage("pageFunction()", ProfilerTestRunner.stopSamplingHeapProfiler);
+            InspectorTest.showProfileWhenAdded("Profile 1");
+            InspectorTest.waitUntilProfileViewIsShown("Profile 1", findPageFunctionInProfileView);
+            InspectorTest.startSamplingHeapProfiler();
+            InspectorTest.evaluateInPage("pageFunction()", InspectorTest.stopSamplingHeapProfiler);
         }
     ]);
 }

@@ -12,12 +12,12 @@ function test()
             this._widgetName = widgetName;
             this._processWillShowCount = 0;
             this._processWasHiddenCount = 0;
-            TestRunner.addResult(this._widgetName + "()");
+            InspectorTest.addResult(this._widgetName + "()");
         }
 
         _processWillShow()
         {
-            TestRunner.assertEquals(this._processWillShowCount, this._processWasHiddenCount);
+            InspectorTest.assertEquals(this._processWillShowCount, this._processWasHiddenCount);
             super._processWillShow();
             ++this._processWillShowCount;
         }
@@ -26,30 +26,30 @@ function test()
         {
             super._processWasHidden();
             ++this._processWasHiddenCount;
-            TestRunner.assertEquals(this._processWillShowCount, this._processWasHiddenCount);
+            InspectorTest.assertEquals(this._processWillShowCount, this._processWasHiddenCount);
         }
 
         show(parentElement)
         {
-            TestRunner.addResult(this._widgetName + ".show()");
+            InspectorTest.addResult(this._widgetName + ".show()");
             super.show(parentElement);
         }
 
         detach()
         {
-            TestRunner.addResult(this._widgetName + ".detach()");
+            InspectorTest.addResult(this._widgetName + ".detach()");
             super.detach();
         }
 
         doResize()
         {
-            TestRunner.addResult(this._widgetName + ".doResize()");
+            InspectorTest.addResult(this._widgetName + ".doResize()");
             super.doResize();
         }
 
         wasShown()
         {
-            TestRunner.addResult("  " + this._widgetName + ".wasShown()");
+            InspectorTest.addResult("  " + this._widgetName + ".wasShown()");
             if (this.showOnWasShown)
                 this.showOnWasShown.show(this.showRoot || this.element);
             if (this.detachOnWasShown)
@@ -60,7 +60,7 @@ function test()
 
         willHide()
         {
-            TestRunner.addResult("  " + this._widgetName + ".willHide()");
+            InspectorTest.addResult("  " + this._widgetName + ".willHide()");
             if (this.showOnWillHide)
                 this.showOnWillHide.show(this.element);
             if (this.detachOnWillHide)
@@ -69,11 +69,11 @@ function test()
 
         onResize()
         {
-            TestRunner.addResult("  " + this._widgetName + ".onResize()");
+            InspectorTest.addResult("  " + this._widgetName + ".onResize()");
         }
     };
 
-    TestRunner.runTestSuite([
+    InspectorTest.runTestSuite([
         function testShowWidget(next)
         {
             var widget = new TestWidget("Widget");
@@ -88,7 +88,7 @@ function test()
                 var widget = new TestWidget("Widget");
                 document.body.appendChild(widget.element);
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },
@@ -99,7 +99,7 @@ function test()
                 var widget = new TestWidget("Widget");
                 document.body.insertBefore(widget.element, null);
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },
@@ -111,7 +111,7 @@ function test()
                 var div = document.createElement("div");
                 widget.show(div);
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },
@@ -122,9 +122,9 @@ function test()
             var childWidget = new TestWidget("Child");
             childWidget.show(parentWidget.element);
             if (childWidget._parentWidget === parentWidget)
-                TestRunner.addResult("OK");
+                InspectorTest.addResult("OK");
             else
-                TestRunner.addResult("FAILED");
+                InspectorTest.addResult("FAILED");
             next();
         },
 
@@ -137,9 +137,9 @@ function test()
             childWidget.show(div);
 
             if (childWidget._parentWidget === parentWidget)
-                TestRunner.addResult("OK");
+                InspectorTest.addResult("OK");
             else
-                TestRunner.addResult("FAILED");
+                InspectorTest.addResult("FAILED");
             next();
         },
 
@@ -184,17 +184,17 @@ function test()
 
             var childWidget = new TestWidget("Child");
             childWidget.show(parentWidget.element);
-            TestRunner.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
+            InspectorTest.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
 
             var childWidget2 = new TestWidget("Child 2");
             childWidget2.show(parentWidget.element);
-            TestRunner.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
+            InspectorTest.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
 
             childWidget.detach();
-            TestRunner.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
+            InspectorTest.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
 
             childWidget2.detach();
-            TestRunner.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
+            InspectorTest.addResult("  widget counter: " + parentWidget.element.__widgetCounter);
 
             next();
         },
@@ -209,7 +209,7 @@ function test()
             try {
                 parentWidget.element.removeChild(childWidget.element);
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },
@@ -226,7 +226,7 @@ function test()
             try {
                 parentWidget.element.removeChild(div);
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },
@@ -240,7 +240,7 @@ function test()
             try {
                 parentWidget.element.removeChildren();
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },
@@ -257,7 +257,7 @@ function test()
             try {
                 parentWidget.element.removeChildren();
             } catch (e) {
-                TestRunner.addResult(e);
+                InspectorTest.addResult(e);
             }
             next();
         },

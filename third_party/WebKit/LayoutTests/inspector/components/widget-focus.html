@@ -32,31 +32,31 @@ function test()
     widget2.element.appendChild(input2);
     widget2.setDefaultFocusedElement(input2);
 
-    TestRunner.addResult("Focusing outer input...");
+    InspectorTest.addResult("Focusing outer input...");
     outerInput.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing widget1...");
+    InspectorTest.addResult("Focusing widget1...");
     widget1.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing widget2...");
+    InspectorTest.addResult("Focusing widget2...");
     input2.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing outer input again...");
+    InspectorTest.addResult("Focusing outer input again...");
     outerInput.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing main widget...");
+    InspectorTest.addResult("Focusing main widget...");
     mainWidget.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing outer input again...");
+    InspectorTest.addResult("Focusing outer input again...");
     outerInput.focus();
     dumpFocus();
 
-    TestRunner.addResult("Hiding widget2 and focusing main widget...");
+    InspectorTest.addResult("Hiding widget2 and focusing main widget...");
     widget2.hideWidget();
     mainWidget.focus();
     dumpFocus();
@@ -75,25 +75,25 @@ function test()
     splitWidget.setMainWidget(widget4);
     splitWidget.setDefaultFocusedChild(widget4);
 
-    TestRunner.addResult("Focusing split widget in main that has 3 and 4 inputs...");
+    InspectorTest.addResult("Focusing split widget in main that has 3 and 4 inputs...");
     splitWidget.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing widget 3...");
+    InspectorTest.addResult("Focusing widget 3...");
     widget3.focus();
     dumpFocus();
 
-    TestRunner.addResult("Focusing main widget again...");
+    InspectorTest.addResult("Focusing main widget again...");
     mainWidget.focus();
     dumpFocus();
 
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 
     function dumpFocus()
     {
         var focused = document.deepActiveElement();
         var id = focused ? focused.id : "";
-        TestRunner.addResult(id ? id + " Focused" : "No focus");
+        InspectorTest.addResult(id ? id + " Focused" : "No focus");
     }
 }
 </script>

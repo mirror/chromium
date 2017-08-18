@@ -313,11 +313,21 @@ public class AwTestContainerView extends FrameLayout {
         if (mHardwareView == null || mHardwareView.isReadyToRender()) {
             attachedContentsInternal();
         } else {
-            mHardwareView.setReadyToRenderCallback(() -> attachedContentsInternal());
+            mHardwareView.setReadyToRenderCallback(new Runnable() {
+                @Override
+                public void run() {
+                    attachedContentsInternal();
+                }
+            });
         }
 
         if (mHardwareView != null) {
-            mHardwareView.setReadyToDetachCallback(() -> detachedContentsInternal());
+            mHardwareView.setReadyToDetachCallback(new Runnable() {
+                @Override
+                public void run() {
+                    detachedContentsInternal();
+                }
+            });
         }
     }
 

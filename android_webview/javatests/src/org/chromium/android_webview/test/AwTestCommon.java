@@ -75,14 +75,24 @@ final class AwTestCommon {
         final InMemorySharedPreferences prefs = new InMemorySharedPreferences();
         final Context appContext =
                 mCallback.getInstrumentation().getTargetContext().getApplicationContext();
-        mCallback.getInstrumentation().runOnMainSync(() -> mBrowserContext =
-                mCallback.createAwBrowserContextOnUiThread(prefs, appContext));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mBrowserContext =
+                        mCallback.createAwBrowserContextOnUiThread(prefs, appContext);
+            }
+        });
     }
 
     void startBrowserProcess() throws Exception {
         // The Activity must be launched in order for proper webview statics to be setup.
         mCallback.launchActivity();
-        mCallback.getInstrumentation().runOnMainSync(() -> AwBrowserProcess.start());
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                AwBrowserProcess.start();
+            }
+        });
     }
 
     <R> R runTestOnUiThreadAndGetResult(Callable<R> callable) throws Exception {
@@ -92,13 +102,21 @@ final class AwTestCommon {
     }
 
     void enableJavaScriptOnUiThread(final AwContents awContents) {
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> awContents.getSettings().setJavaScriptEnabled(true));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.getSettings().setJavaScriptEnabled(true);
+            }
+        });
     }
 
     void setNetworkAvailableOnUiThread(final AwContents awContents, final boolean networkUp) {
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> awContents.setNetworkAvailable(networkUp));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.setNetworkAvailable(networkUp);
+            }
+        });
     }
 
     void loadUrlSync(final AwContents awContents, CallbackHelper onPageFinishedHelper,
@@ -131,7 +149,12 @@ final class AwTestCommon {
 
     void loadUrlAsync(
             final AwContents awContents, final String url, final Map<String, String> extraHeaders) {
-        mCallback.getInstrumentation().runOnMainSync(() -> awContents.loadUrl(url, extraHeaders));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.loadUrl(url, extraHeaders);
+            }
+        });
     }
 
     void postUrlSync(final AwContents awContents, CallbackHelper onPageFinishedHelper,
@@ -170,17 +193,25 @@ final class AwTestCommon {
             final String data, final String mimeType, final boolean isBase64Encoded,
             final String charset) throws Exception {
         int currentCallCount = onPageFinishedHelper.getCallCount();
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> awContents.loadUrl(LoadUrlParams.createLoadDataParams(
-                        data, mimeType, isBase64Encoded, charset)));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.loadUrl(LoadUrlParams.createLoadDataParams(
+                        data, mimeType, isBase64Encoded, charset));
+            }
+        });
         onPageFinishedHelper.waitForCallback(
                 currentCallCount, 1, WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
     }
 
     void loadDataAsync(final AwContents awContents, final String data, final String mimeType,
             final boolean isBase64Encoded) throws Exception {
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> awContents.loadData(data, mimeType, isBase64Encoded ? "base64" : null));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.loadData(data, mimeType, isBase64Encoded ? "base64" : null);
+            }
+        });
     }
 
     void loadDataWithBaseUrlSync(final AwContents awContents, CallbackHelper onPageFinishedHelper,
@@ -195,51 +226,76 @@ final class AwTestCommon {
     void loadDataWithBaseUrlAsync(final AwContents awContents, final String data,
             final String mimeType, final boolean isBase64Encoded, final String baseUrl,
             final String historyUrl) throws Throwable {
-        mCallback.runOnUiThread(() -> awContents.loadDataWithBaseURL(
-                baseUrl, data, mimeType, isBase64Encoded ? "base64" : null, historyUrl));
+        mCallback.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                awContents.loadDataWithBaseURL(
+                        baseUrl, data, mimeType, isBase64Encoded ? "base64" : null, historyUrl);
+            }
+        });
     }
 
     void reloadSync(final AwContents awContents, CallbackHelper onPageFinishedHelper)
             throws Exception {
         int currentCallCount = onPageFinishedHelper.getCallCount();
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> awContents.getNavigationController().reload(true));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.getNavigationController().reload(true);
+            }
+        });
         onPageFinishedHelper.waitForCallback(
                 currentCallCount, 1, WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
     }
 
     void stopLoading(final AwContents awContents) {
-        mCallback.getInstrumentation().runOnMainSync(() -> awContents.stopLoading());
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.stopLoading();
+            }
+        });
     }
 
     void waitForVisualStateCallback(final AwContents awContents) throws Exception {
         final CallbackHelper ch = new CallbackHelper();
         final int chCount = ch.getCallCount();
-        mCallback.getInstrumentation().runOnMainSync(() -> {
-            final long requestId = 666;
-            awContents.insertVisualStateCallback(
-                    requestId, new AwContents.VisualStateCallback() {
-                        @Override
-                        public void onComplete(long id) {
-                            Assert.assertEquals(requestId, id);
-                            ch.notifyCalled();
-                        }
-                    });
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                final long requestId = 666;
+                awContents.insertVisualStateCallback(
+                        requestId, new AwContents.VisualStateCallback() {
+                            @Override
+                            public void onComplete(long id) {
+                                Assert.assertEquals(requestId, id);
+                                ch.notifyCalled();
+                            }
+                        });
+            }
         });
         ch.waitForCallback(chCount);
     }
 
     void insertVisualStateCallbackOnUIThread(final AwContents awContents, final long requestId,
             final AwContents.VisualStateCallback callback) {
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> awContents.insertVisualStateCallback(requestId, callback));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.insertVisualStateCallback(requestId, callback);
+            }
+        });
     }
 
     void waitForPixelColorAtCenterOfView(final AwContents awContents,
             final AwTestContainerView testContainerView, final int expectedColor) throws Exception {
-        pollUiThread(
-                () -> GraphicsTestUtils.getPixelColorAtCenterOfView(awContents, testContainerView)
-                        == expectedColor);
+        pollUiThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return GraphicsTestUtils.getPixelColorAtCenterOfView(awContents, testContainerView)
+                        == expectedColor;
+            }
+        });
     }
 
     AwTestContainerView createAwTestContainerView(final AwContentsClient awContentsClient) {
@@ -300,21 +356,41 @@ final class AwTestCommon {
 
     AwTestContainerView createAwTestContainerViewOnMainSync(final AwContentsClient client,
             final boolean supportsLegacyQuirks, final TestDependencyFactory testDependencyFactory) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(() -> createAwTestContainerView(
-                client, supportsLegacyQuirks, testDependencyFactory));
+        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<AwTestContainerView>() {
+            @Override
+            public AwTestContainerView call() {
+                return createAwTestContainerView(
+                        client, supportsLegacyQuirks, testDependencyFactory);
+            }
+        });
     }
 
     void destroyAwContentsOnMainSync(final AwContents awContents) {
         if (awContents == null) return;
-        mCallback.getInstrumentation().runOnMainSync(() -> awContents.destroy());
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.destroy();
+            }
+        });
     }
 
     String getTitleOnUiThread(final AwContents awContents) throws Exception {
-        return runTestOnUiThreadAndGetResult(() -> awContents.getTitle());
+        return runTestOnUiThreadAndGetResult(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return awContents.getTitle();
+            }
+        });
     }
 
     AwSettings getAwSettingsOnUiThread(final AwContents awContents) throws Exception {
-        return runTestOnUiThreadAndGetResult(() -> awContents.getSettings());
+        return runTestOnUiThreadAndGetResult(new Callable<AwSettings>() {
+            @Override
+            public AwSettings call() throws Exception {
+                return awContents.getSettings();
+            }
+        });
     }
 
     String maybeStripDoubleQuotes(String raw) {
@@ -356,32 +432,67 @@ final class AwTestCommon {
     }
 
     void pollUiThread(final Callable<Boolean> callable) throws Exception {
-        pollInstrumentationThread(() -> runTestOnUiThreadAndGetResult(callable));
+        pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return runTestOnUiThreadAndGetResult(callable);
+            }
+        });
     }
 
     void clearCacheOnUiThread(final AwContents awContents, final boolean includeDiskFiles)
             throws Exception {
-        mCallback.getInstrumentation().runOnMainSync(() -> awContents.clearCache(includeDiskFiles));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.clearCache(includeDiskFiles);
+            }
+        });
     }
 
     float getScaleOnUiThread(final AwContents awContents) throws Exception {
-        return runTestOnUiThreadAndGetResult(() -> awContents.getPageScaleFactor());
+        return runTestOnUiThreadAndGetResult(new Callable<Float>() {
+            @Override
+            public Float call() throws Exception {
+                return awContents.getPageScaleFactor();
+            }
+        });
     }
 
     float getPixelScaleOnUiThread(final AwContents awContents) throws Exception {
-        return runTestOnUiThreadAndGetResult(() -> awContents.getScale());
+        return runTestOnUiThreadAndGetResult(new Callable<Float>() {
+            @Override
+            public Float call() throws Exception {
+                return awContents.getScale();
+            }
+        });
     }
 
     boolean canZoomInOnUiThread(final AwContents awContents) throws Exception {
-        return runTestOnUiThreadAndGetResult(() -> awContents.canZoomIn());
+        return runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return awContents.canZoomIn();
+            }
+        });
     }
 
     boolean canZoomOutOnUiThread(final AwContents awContents) throws Exception {
-        return runTestOnUiThreadAndGetResult(() -> awContents.canZoomOut());
+        return runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return awContents.canZoomOut();
+            }
+        });
     }
 
     void killRenderProcessOnUiThreadAsync(final AwContents awContents) throws Exception {
-        mCallback.getInstrumentation().runOnMainSync(() -> awContents.killRenderProcess());
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.killRenderProcess();
+            }
+        });
     }
 
     void triggerPopup(final AwContents parentAwContents,
@@ -389,9 +500,12 @@ final class AwTestCommon {
             String mainHtml, String popupHtml, String popupPath, String triggerScript)
             throws Exception {
         enableJavaScriptOnUiThread(parentAwContents);
-        mCallback.getInstrumentation().runOnMainSync(() -> {
-            parentAwContents.getSettings().setSupportMultipleWindows(true);
-            parentAwContents.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                parentAwContents.getSettings().setSupportMultipleWindows(true);
+                parentAwContents.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+            }
         });
 
         final String parentUrl = testWebServer.setResponse("/popupParent.html", mainHtml, null);
@@ -421,8 +535,12 @@ final class AwTestCommon {
         popupContents = popupContainerView.getAwContents();
         enableJavaScriptOnUiThread(popupContents);
 
-        mCallback.getInstrumentation().runOnMainSync(
-                () -> parentAwContents.supplyContentsForPopup(popupContents));
+        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                parentAwContents.supplyContentsForPopup(popupContents);
+            }
+        });
 
         OnPageFinishedHelper onPageFinishedHelper = popupContentsClient.getOnPageFinishedHelper();
         int finishCallCount = onPageFinishedHelper.getCallCount();

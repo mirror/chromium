@@ -6,7 +6,6 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_TASK_TEST_BASE_H_
 
 #include <memory>
-#include <set>
 #include <vector>
 
 #include "base/memory/ref_counted.h"
@@ -14,7 +13,6 @@
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h"
-#include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_network_request_factory.h"
 #include "components/offline_pages/core/task.h"
@@ -22,7 +20,6 @@
 #include "net/url_request/url_request_test_util.h"
 
 namespace offline_pages {
-struct PrefetchItem;
 class PrefetchStore;
 class Task;
 
@@ -54,9 +51,6 @@ class TaskTestBase : public testing::Test {
 
   int64_t InsertPrefetchItemInStateWithOperation(std::string operation_name,
                                                  PrefetchItemState state);
-
-  std::set<PrefetchItem> FilterByState(const std::set<PrefetchItem>& items,
-                                       PrefetchItemState state) const;
 
  private:
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;

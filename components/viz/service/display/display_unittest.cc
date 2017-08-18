@@ -90,7 +90,8 @@ class TestDisplayScheduler : public DisplayScheduler {
 class DisplayTest : public testing::Test {
  public:
   DisplayTest()
-      : support_(
+      : manager_(nullptr, SurfaceManager::LifetimeType::REFERENCES),
+        support_(
             CompositorFrameSinkSupport::Create(nullptr,
                                                &manager_,
                                                kArbitraryFrameSinkId,

@@ -13,8 +13,6 @@
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
 
-namespace media_router {
-
 bool MaybeGetWifiSSID(const std::string& if_name, std::string* ssid_out) {
   DCHECK(ssid_out);
 
@@ -30,5 +28,3 @@ bool MaybeGetWifiSSID(const std::string& if_name, std::string* ssid_out) {
   ssid_out->assign(std::move(ssid));
   return true;
 }
-
-}  // namespace media_router

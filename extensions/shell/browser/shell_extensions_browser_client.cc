@@ -30,6 +30,7 @@
 #include "extensions/shell/browser/shell_extensions_api_client.h"
 #include "extensions/shell/browser/shell_navigation_ui_data.h"
 #include "extensions/shell/browser/shell_runtime_api_delegate.h"
+#include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/login/login_state.h"
@@ -282,8 +283,7 @@ bool ShellExtensionsBrowserClient::IsLockScreenContext(
 }
 
 std::string ShellExtensionsBrowserClient::GetApplicationLocale() {
-  // TODO(michaelpg): Use system locale.
-  return "en-US";
+  return l10n_util::GetApplicationLocale(std::string());
 }
 
 }  // namespace extensions

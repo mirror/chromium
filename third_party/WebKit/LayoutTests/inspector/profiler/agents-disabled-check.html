@@ -25,9 +25,9 @@ async function test()
         if (message.startsWith('backend'))
             continue;
         message = message.replace(/"id":\d+,/, '"id":<number>,');
-        TestRunner.addResult(message);
+        InspectorTest.addResult(message);
     }
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 }
 
 </script>

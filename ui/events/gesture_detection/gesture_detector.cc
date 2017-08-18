@@ -13,7 +13,6 @@
 #include <cmath>
 
 #include "base/timer/timer.h"
-#include "build/build_config.h"
 #include "ui/events/gesture_detection/gesture_listeners.h"
 #include "ui/events/gesture_detection/motion_event.h"
 
@@ -60,15 +59,7 @@ GestureDetector::Config::Config()
       two_finger_tap_max_separation(300),
       two_finger_tap_timeout(base::TimeDelta::FromMilliseconds(700)),
       single_tap_repeat_interval(1),
-      velocity_tracker_strategy(VelocityTracker::Strategy::STRATEGY_DEFAULT) {
-// TODO(dtapuska): Always send press gestures for stylus by fixing
-// crbug.com/615468
-#if defined(OS_WIN)
-  press_enabled_for_stylus_ = false;
-#else
-  press_enabled_for_stylus_ = true;
-#endif
-}
+      velocity_tracker_strategy(VelocityTracker::Strategy::STRATEGY_DEFAULT) {}
 
 GestureDetector::Config::Config(const Config& other) = default;
 
@@ -300,16 +291,12 @@ bool GestureDetector::OnTouchEvent(const MotionEvent& ev) {
       two_finger_tap_allowed_for_gesture_ = two_finger_tap_enabled_;
       maximum_pointer_count_ = 1;
 
-      // Don't allow long press/show press on stylus events.
-      if (ev.GetToolType() != MotionEvent::TOOL_TYPE_STYLUS ||
-          press_enabled_for_stylus_) {
-        // Always start the SHOW_PRESS timer before the LONG_PRESS timer to
-        // ensure proper timeout ordering.
-        if (showpress_enabled_)
-          timeout_handler_->StartTimeout(SHOW_PRESS);
-        if (longpress_enabled_)
-          timeout_handler_->StartTimeout(LONG_PRESS);
-      }
+      // Always start the SHOW_PRESS timer before the LONG_PRESS timer to ensure
+      // proper timeout ordering.
+      if (showpress_enabled_)
+        timeout_handler_->StartTimeout(SHOW_PRESS);
+      if (longpress_enabled_)
+        timeout_handler_->StartTimeout(LONG_PRESS);
       handled |= listener_->OnDown(ev);
     } break;
 
@@ -471,7 +458,6 @@ void GestureDetector::Init(const Config& config) {
 
   DCHECK_GE(config.single_tap_repeat_interval, 1);
   single_tap_repeat_interval_ = config.single_tap_repeat_interval;
-  press_enabled_for_stylus_ = config.press_enabled_for_stylus_;
 }
 
 void GestureDetector::OnShowPressTimeout() {

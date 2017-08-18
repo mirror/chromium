@@ -7,7 +7,6 @@
 #include "base/bind.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/public/client.h"
-#include "components/download/public/download_metadata.h"
 #include "components/download/public/download_params.h"
 #include "components/download/public/download_service.h"
 #include "components/download/public/service_config.h"
@@ -125,16 +124,15 @@ void TestDownloadService::ProcessDownload() {
   if (!failed_download_id_.empty() && params.guid == failed_download_id_) {
     OnDownloadFailed(params.guid, Client::FailureReason::ABORTED);
   } else {
-    CompletionInfo completion_info(base::FilePath(), file_size_);
-    OnDownloadSucceeded(params.guid, completion_info);
+    OnDownloadSucceeded(params.guid, base::FilePath(), file_size_);
   }
 }
 
-void TestDownloadService::OnDownloadSucceeded(
-    const std::string& guid,
-    const CompletionInfo& completion_info) {
+void TestDownloadService::OnDownloadSucceeded(const std::string& guid,
+                                              const base::FilePath& file_path,
+                                              uint64_t file_size) {
   if (client_)
-    client_->OnDownloadSucceeded(guid, completion_info);
+    client_->OnDownloadSucceeded(guid, file_path, file_size);
 }
 
 void TestDownloadService::OnDownloadFailed(

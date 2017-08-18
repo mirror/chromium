@@ -12,7 +12,6 @@
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_request.h"
 #include "components/offline_pages/core/prefetch/get_operation_request.h"
-#include "components/offline_pages/core/prefetch/prefetch_configuration.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
 #include "components/offline_pages/core/prefetch/prefetch_request_test_base.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
@@ -59,10 +58,6 @@ class PrefetchDispatcherTest : public PrefetchRequestTestBase {
 
   PrefetchDispatcher::ScopedBackgroundTask* GetBackgroundTask() {
     return dispatcher_->background_task_.get();
-  }
-
-  TaskQueue& GetTaskQueueFrom(PrefetchDispatcherImpl* prefetch_dispatcher) {
-    return prefetch_dispatcher->task_queue_;
   }
 
   TaskQueue* dispatcher_task_queue() { return &dispatcher_->task_queue_; }
@@ -135,7 +130,10 @@ TEST_F(PrefetchDispatcherTest, DispatcherDoesNothingIfFeatureNotEnabled) {
   disabled_feature_list.InitAndDisableFeature(kPrefetchingOfflinePagesFeature);
 
   // Don't add a task for new prefetch URLs.
-  prefetch_dispatcher()->AddCandidatePrefetchURLs(kTestNamespace, test_urls_);
+  PrefetchURL prefetch_url("id", GURL("https://www.chromium.org"),
+                           base::string16());
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(
+      kTestNamespace, std::vector<PrefetchURL>(1, prefetch_url));
   EXPECT_FALSE(dispatcher_task_queue()->HasRunningTask());
 
   // Do nothing with a new background task.
@@ -143,33 +141,7 @@ TEST_F(PrefetchDispatcherTest, DispatcherDoesNothingIfFeatureNotEnabled) {
       base::MakeUnique<TestScopedBackgroundTask>());
   EXPECT_EQ(nullptr, GetBackgroundTask());
 
-  // TODO(carlosk): add more checks here.
-}
-
-class DisablingPrefetchConfiguration : public PrefetchConfiguration {
- public:
-  bool IsPrefetchingEnabledBySettings() override { return false; };
-};
-
-TEST_F(PrefetchDispatcherTest, DispatcherDoesNothingIfSettingsDoNotAllowIt) {
-  PrefetchDispatcherImpl* dispatcher = new PrefetchDispatcherImpl();
-  PrefetchServiceTestTaco taco;
-  taco.SetPrefetchDispatcher(base::WrapUnique(dispatcher));
-  taco.SetPrefetchNetworkRequestFactory(
-      base::MakeUnique<TestPrefetchNetworkRequestFactory>());
-  taco.SetPrefetchConfiguration(
-      base::MakeUnique<DisablingPrefetchConfiguration>());
-  taco.CreatePrefetchService();
-
-  // Don't add a task for new prefetch URLs.
-  dispatcher->AddCandidatePrefetchURLs(kTestNamespace, test_urls_);
-  EXPECT_FALSE(GetTaskQueueFrom(dispatcher).HasRunningTask());
-
-  // Do nothing with a new background task.
-  dispatcher->BeginBackgroundTask(base::MakeUnique<TestScopedBackgroundTask>());
-  EXPECT_EQ(nullptr, GetBackgroundTask());
-
-  // TODO(carlosk): add more checks here.
+  // Everything else is unimplemented.
 }
 
 TEST_F(PrefetchDispatcherTest, DispatcherReleasesBackgroundTask) {

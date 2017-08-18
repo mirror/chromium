@@ -9,73 +9,73 @@ function test()
     var instanceCount = 25;
     function createHeapSnapshot()
     {
-        return ProfilerTestRunner.createHeapSnapshot(instanceCount);
+        return InspectorTest.createHeapSnapshot(instanceCount);
     }
 
-    ProfilerTestRunner.runHeapSnapshotTestSuite([
+    InspectorTest.runHeapSnapshotTestSuite([
         function testExpansionPreservedWhenSorting(next)
         {
-            ProfilerTestRunner.takeAndOpenSnapshot(createHeapSnapshot, step1);
+            InspectorTest.takeAndOpenSnapshot(createHeapSnapshot, step1);
 
             function step1()
             {
-                ProfilerTestRunner.switchToView("Summary", step2);
+                InspectorTest.switchToView("Summary", step2);
             }
 
             function step2()
             {
-                var row = ProfilerTestRunner.findRow("B");
-                TestRunner.assertEquals(true, !!row, "\"B\" row");
-                ProfilerTestRunner.expandRow(row, expandB);
+                var row = InspectorTest.findRow("B");
+                InspectorTest.assertEquals(true, !!row, "\"B\" row");
+                InspectorTest.expandRow(row, expandB);
                 function expandB()
                 {
-                    var buttonsNode = ProfilerTestRunner.findButtonsNode(row);
-                    TestRunner.assertEquals(true, !!buttonsNode, "no buttons node found!");
-                    ProfilerTestRunner.clickShowMoreButton("showAll", buttonsNode, step3);
+                    var buttonsNode = InspectorTest.findButtonsNode(row);
+                    InspectorTest.assertEquals(true, !!buttonsNode, "no buttons node found!");
+                    InspectorTest.clickShowMoreButton("showAll", buttonsNode, step3);
                 }
             }
 
             var columns;
             function step3()
             {
-                columns = ProfilerTestRunner.viewColumns();
-                ProfilerTestRunner.clickColumn(columns[0], step4);
+                columns = InspectorTest.viewColumns();
+                InspectorTest.clickColumn(columns[0], step4);
             }
 
             function step4()
             {
-                var row = ProfilerTestRunner.findRow("B");
-                TestRunner.assertEquals(true, !!row, "\"B\" row");
+                var row = InspectorTest.findRow("B");
+                InspectorTest.assertEquals(true, !!row, "\"B\" row");
                 var bInstanceRow = row.children[0];
-                TestRunner.assertEquals(true, !!bInstanceRow, "\"B\" instance row");
-                ProfilerTestRunner.expandRow(bInstanceRow, expandA);
+                InspectorTest.assertEquals(true, !!bInstanceRow, "\"B\" instance row");
+                InspectorTest.expandRow(bInstanceRow, expandA);
                 function expandA(row)
                 {
                     function propertyMatcher(data)
                     {
                         return data._referenceName === "a" && data._name.charAt(0) === "A";
                     }
-                    var aRow = ProfilerTestRunner.findMatchingRow(propertyMatcher, row);
-                    TestRunner.assertEquals(true, !!aRow, "\"a: A\" row");
-                    ProfilerTestRunner.expandRow(aRow, step5);
+                    var aRow = InspectorTest.findMatchingRow(propertyMatcher, row);
+                    InspectorTest.assertEquals(true, !!aRow, "\"a: A\" row");
+                    InspectorTest.expandRow(aRow, step5);
                 }
             }
 
             var columnContents;
             function step5()
             {
-                columnContents = ProfilerTestRunner.columnContents(columns[0]);
-                ProfilerTestRunner.clickColumn(columns[0], clickTwice);
+                columnContents = InspectorTest.columnContents(columns[0]);
+                InspectorTest.clickColumn(columns[0], clickTwice);
                 function clickTwice()
                 {
-                    ProfilerTestRunner.clickColumn(columns[0], step6);
+                    InspectorTest.clickColumn(columns[0], step6);
                 }
             }
 
             function step6()
             {
-                var newColumnContents = ProfilerTestRunner.columnContents(columns[0]);
-                ProfilerTestRunner.assertColumnContentsEqual(columnContents, newColumnContents);
+                var newColumnContents = InspectorTest.columnContents(columns[0]);
+                InspectorTest.assertColumnContentsEqual(columnContents, newColumnContents);
                 setTimeout(next, 0);
             }
         }

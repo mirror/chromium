@@ -10,7 +10,8 @@ TestPrefetchDownloader::TestPrefetchDownloader() = default;
 
 TestPrefetchDownloader::~TestPrefetchDownloader() = default;
 
-void TestPrefetchDownloader::SetPrefetchService(PrefetchService* service) {}
+void TestPrefetchDownloader::SetCompletedCallback(
+    const PrefetchDownloadCompletedCallback& callback) {}
 
 void TestPrefetchDownloader::StartDownload(
     const std::string& download_id,

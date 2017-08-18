@@ -69,10 +69,6 @@ component("shell_dialogs") {
       "AppKit.framework",
     ]
   }
-
-  if (is_fuchsia) {
-    sources += [ "select_file_dialog_fuchsia.cc" ]
-  }
 }
 
 test("shell_dialogs_unittests") {

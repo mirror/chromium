@@ -7,8 +7,6 @@
 
 #include <string>
 
-namespace media_router {
-
 // Represents a single network interface that can be used for local discovery.
 struct DiscoveryNetworkInfo {
  public:
@@ -31,7 +29,5 @@ struct DiscoveryNetworkInfo {
   // address to identify the network.
   std::string network_id;
 };
-
-}  // namespace media_router
 
 #endif  // CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_DISCOVERY_NETWORK_INFO_H_

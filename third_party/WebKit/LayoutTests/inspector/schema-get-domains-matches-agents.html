@@ -4,25 +4,25 @@
 <script type="text/javascript">
 async function test()
 {
-    var target = TestRunner.mainTarget;
+    var target = InspectorTest.mainTarget;
     var domains = await target.schemaAgent().getDomains();
 
     if (!domains) {
-        TestRunner.addResult("error getting domains");
-        TestRunner.completeTest();
+        InspectorTest.addResult("error getting domains");
+        InspectorTest.completeTest();
         return;
     }
     var domainNames = domains.map(domain => domain.name).sort();
     var agentNames = Object.keys(target._agents).sort();
     for (var domain of domainNames) {
         if (agentNames.indexOf(domain) === -1)
-            TestRunner.addResult("agent " + domain + " is missing from target");
+            InspectorTest.addResult("agent " + domain + " is missing from target");
     }
     for (var agent of agentNames) {
         if (domainNames.indexOf(agent) === -1)
-            TestRunner.addResult("domain " + agent + " is missing from schema.getDomains");
+            InspectorTest.addResult("domain " + agent + " is missing from schema.getDomains");
     }
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 }
 
 </script>

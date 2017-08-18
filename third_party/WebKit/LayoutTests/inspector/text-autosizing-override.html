@@ -22,43 +22,43 @@ function test()
         function resultCallback(jsonResult) {
             var result = JSON.parse(jsonResult.value);
             var actual = result.textHeight > 200;
-            TestRunner.addResult('Text ' + (actual ? 'was' : 'was not') + ' autosized. ' + (expected == actual ? 'PASS' : 'FAIL'));
+            InspectorTest.addResult('Text ' + (actual ? 'was' : 'was not') + ' autosized. ' + (expected == actual ? 'PASS' : 'FAIL'));
             if (callback)
                 callback();
         }
-        TestRunner.evaluateInPage("getAutosizing()", resultCallback);
+        InspectorTest.evaluateInPage("getAutosizing()", resultCallback);
     }
 
-    TestRunner.runTestSuite([
+    InspectorTest.runTestSuite([
         function checkNotAutosizedWithoutPageAgent(next)
         {
-            TestRunner.PageAgent.disable();
+            InspectorTest.PageAgent.disable();
             assertAutosizingResult(false, next);
         },
 
         function checkNotAutosizedWithPageAgent(next)
         {
-            TestRunner.PageAgent.enable();
+            InspectorTest.PageAgent.enable();
             assertAutosizingResult(false, next);
         },
 
         function checkNotAutosizedWithZeroDeviceMetrics(next)
         {
-            TestRunner.PageAgent.invoke_setDeviceMetricsOverride({width: 0, height: 0, deviceScaleFactor: 0, mobile: false, fitWindow: true});
+            InspectorTest.PageAgent.invoke_setDeviceMetricsOverride({width: 0, height: 0, deviceScaleFactor: 0, mobile: false, fitWindow: true});
             assertAutosizingResult(false, next);
         },
 
         function checkAutosizedWhenDeviceMetrics(next)
         {
-            TestRunner.PageAgent.invoke_setDeviceMetricsOverride({width: 320, height: 480, deviceScaleFactor: 0, mobile: true, fitWindow: true});
+            InspectorTest.PageAgent.invoke_setDeviceMetricsOverride({width: 320, height: 480, deviceScaleFactor: 0, mobile: true, fitWindow: true});
             assertAutosizingResult(true, next);
         },
 
         function checkCleanupOverrides(next)
         {
-            TestRunner.PageAgent.clearDeviceMetricsOverride();
+            InspectorTest.PageAgent.clearDeviceMetricsOverride();
             assertAutosizingResult(false);
-            TestRunner.evaluateInPage("document.getElementById('measure').remove();", next);
+            InspectorTest.evaluateInPage("document.getElementById('measure').remove();", next);
         }
     ]);
 }

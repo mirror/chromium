@@ -6,14 +6,7 @@ package org.chromium.mojo.bindings;
 
 import android.support.test.filters.SmallTest;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.mojo.MojoTestRule;
+import org.chromium.mojo.MojoTestCase;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,12 +14,7 @@ import java.nio.ByteOrder;
 /**
  * Testing {@link ValidationTestUtil}.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class ValidationTestUtilTest {
-
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
-    @Rule
-    public MojoTestRule mTestRule = new MojoTestRule();
+public class ValidationTestUtilTest extends MojoTestCase {
 
     /**
      * Check that the input parser is correct on a given input.
@@ -35,19 +23,18 @@ public class ValidationTestUtilTest {
             String input, boolean isInputValid, ByteBuffer expectedData, int expectedHandlesCount) {
         ValidationTestUtil.Data data = ValidationTestUtil.parseData(input);
         if (isInputValid) {
-            Assert.assertNull(data.getErrorMessage());
-            Assert.assertEquals(expectedData, data.getData());
-            Assert.assertEquals(expectedHandlesCount, data.getHandlesCount());
+            assertNull(data.getErrorMessage());
+            assertEquals(expectedData, data.getData());
+            assertEquals(expectedHandlesCount, data.getHandlesCount());
         } else {
-            Assert.assertNotNull(data.getErrorMessage());
-            Assert.assertNull(data.getData());
+            assertNotNull(data.getErrorMessage());
+            assertNull(data.getData());
         }
     }
 
     /**
      * Testing {@link ValidationTestUtil#parseData(String)}.
      */
-    @Test
     @SmallTest
     public void testCorrectMessageParsing() {
         {

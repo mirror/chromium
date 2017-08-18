@@ -8,24 +8,11 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "components/download/public/download_service.h"
-#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_server_urls.h"
-#include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace offline_pages {
-namespace {
-
-void NotifyDispatcher(PrefetchService* service, PrefetchDownloadResult result) {
-  if (service) {
-    PrefetchDispatcher* dispatcher = service->GetPrefetchDispatcher();
-    if (dispatcher)
-      dispatcher->DownloadCompleted(result);
-  }
-}
-
-}  // namespace
 
 PrefetchDownloaderImpl::PrefetchDownloaderImpl(
     download::DownloadService* download_service,
@@ -43,8 +30,9 @@ PrefetchDownloaderImpl::PrefetchDownloaderImpl(version_info::Channel channel)
 
 PrefetchDownloaderImpl::~PrefetchDownloaderImpl() = default;
 
-void PrefetchDownloaderImpl::SetPrefetchService(PrefetchService* service) {
-  prefetch_service_ = service;
+void PrefetchDownloaderImpl::SetCompletedCallback(
+    const PrefetchDownloadCompletedCallback& callback) {
+  callback_ = callback;
 }
 
 void PrefetchDownloaderImpl::StartDownload(
@@ -119,15 +107,18 @@ void PrefetchDownloaderImpl::OnDownloadSucceeded(
     return;
   }
 
-  NotifyDispatcher(prefetch_service_,
-                   PrefetchDownloadResult(download_id, file_path,
-                                          static_cast<int64_t>(file_size)));
+  if (callback_) {
+    callback_.Run(PrefetchDownloadResult(download_id, file_path,
+                                         static_cast<int64_t>(file_size)));
+  }
 }
 
 void PrefetchDownloaderImpl::OnDownloadFailed(const std::string& download_id) {
-  PrefetchDownloadResult result;
-  result.download_id = download_id;
-  NotifyDispatcher(prefetch_service_, result);
+  if (callback_) {
+    PrefetchDownloadResult result;
+    result.download_id = download_id;
+    callback_.Run(result);
+  }
 }
 
 void PrefetchDownloaderImpl::OnStartDownload(

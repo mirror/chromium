@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// TODO: Add specification URL.
+// https://w3c.github.io/webappsec/specs/credentialmanagement/#dictdef-formdataoptions
 
 dictionary FormDataOptions {
     DOMString idName = "username";

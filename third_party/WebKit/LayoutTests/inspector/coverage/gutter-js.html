@@ -9,11 +9,11 @@
 
 async function test()
 {
-    CoverageTestRunner.startCoverage();
-    await TestRunner.evaluateInPagePromise("performActions()");
-    await CoverageTestRunner.stopCoverage();
-    await CoverageTestRunner.dumpDecorations("coverage.js");
-    TestRunner.completeTest();
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions()");
+    await InspectorTest.stopCoverage();
+    await InspectorTest.dumpDecorations("coverage.js");
+    InspectorTest.completeTest();
 }
 </script>
 </head>

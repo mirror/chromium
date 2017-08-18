@@ -347,9 +347,8 @@ void BlinkPlatformImpl::WaitUntilWebThreadTLSUpdate(
                             base::WaitableEvent::InitialState::NOT_SIGNALED);
   thread->GetTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&BlinkPlatformImpl::UpdateWebThreadTLS,
-                     base::Unretained(this), base::Unretained(thread),
-                     base::Unretained(&event)));
+      base::Bind(&BlinkPlatformImpl::UpdateWebThreadTLS, base::Unretained(this),
+                 base::Unretained(thread), base::Unretained(&event)));
   event.Wait();
 }
 

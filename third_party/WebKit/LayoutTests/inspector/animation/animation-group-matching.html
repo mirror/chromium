@@ -44,27 +44,27 @@ function test()
 
     function startTransition()
     {
-        var model = TestRunner.mainTarget.model(Animation.AnimationModel);
+        var model = InspectorTest.mainTarget.model(Animation.AnimationModel);
         model.ensureEnabled();
         model.addEventListener(Animation.AnimationModel.Events.AnimationGroupStarted, groupStarted);
-        TestRunner.evaluateInPage("startCSSTransition()");
+        InspectorTest.evaluateInPage("startCSSTransition()");
     }
 
     function groupStarted(event)
     {
-        TestRunner.addResult("Animation group triggered");
-        TestRunner.addResult("First animation of type: " + event.data.animations()[0].type());
+        InspectorTest.addResult("Animation group triggered");
+        InspectorTest.addResult("First animation of type: " + event.data.animations()[0].type());
         var group = event.data;
         if (!firstGroup)
             firstGroup = group;
-        TestRunner.addResult("Matches first group: " + firstGroup._matches(group));
+        InspectorTest.addResult("Matches first group: " + firstGroup._matches(group));
         i++;
         if (i < 5)
-            TestRunner.evaluateInPage("startCSSTransition()");
+            InspectorTest.evaluateInPage("startCSSTransition()");
         else if (i < 6)
-            TestRunner.evaluateInPage("startCSSAnimation()");
+            InspectorTest.evaluateInPage("startCSSAnimation()");
         else
-            TestRunner.completeTest();
+            InspectorTest.completeTest();
     }
 }
 

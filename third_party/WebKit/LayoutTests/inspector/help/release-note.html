@@ -23,32 +23,32 @@ function test() {
          },
     ];
 
-    TestRunner.addSniffer(UI.viewManager, "showView", onShowView);
+    InspectorTest.addSniffer(UI.viewManager, "showView", onShowView);
 
-    TestRunner.addResult("Last release note version seen:");
+    InspectorTest.addResult("Last release note version seen:");
     Help.releaseNoteVersionSetting().set(1);
-    TestRunner.addResult(Help.releaseNoteVersionSetting().get() + "\n");
+    InspectorTest.addResult(Help.releaseNoteVersionSetting().get() + "\n");
     Help.showReleaseNoteIfNeeded();
 
     function onShowView(viewId, isUserGesture, viewPromise) {
       viewPromise.then(() => {
             var releaseNoteView = UI.viewManager.view("release-note");
             var releaseNoteElement = releaseNoteView[UI.View._widgetSymbol].contentElement;
-            TestRunner.addResult("Dumping release note text:");
-            TestRunner.addResult(releaseNoteElement.innerText);
-            TestRunner.addResult("Last version of release note seen should be updated:");
-            TestRunner.addResult(Help.releaseNoteVersionSetting().get() + "\n");
+            InspectorTest.addResult("Dumping release note text:");
+            InspectorTest.addResult(releaseNoteElement.innerText);
+            InspectorTest.addResult("Last version of release note seen should be updated:");
+            InspectorTest.addResult(Help.releaseNoteVersionSetting().get() + "\n");
 
-            TestRunner.addSniffer(UI.InspectorView.prototype, "closeDrawerTab", onClose);
-            TestRunner.addResult("Click on hide button");
+            InspectorTest.addSniffer(UI.InspectorView.prototype, "closeDrawerTab", onClose);
+            InspectorTest.addResult("Click on hide button");
             var closeButton = releaseNoteElement.querySelector(".close-release-note");
             closeButton.click();
         });
     }
 
     function onClose(view) {
-        TestRunner.addResult(`Hiding view: ${view}`);
-        TestRunner.completeTest();
+        InspectorTest.addResult(`Hiding view: ${view}`);
+        InspectorTest.completeTest();
     }
 }
 

@@ -12,25 +12,25 @@ function getGreeting()
 
 function test()
 {
-    TestRunner.runTestSuite([
+    InspectorTest.runTestSuite([
         function checkGreetingSet(next)
         {
-            TestRunner.evaluateInPage("getGreeting()", callback);
+            InspectorTest.evaluateInPage("getGreeting()", callback);
             function callback(result)
             {
-                TestRunner.addResult("Received: " + result.value);
+                InspectorTest.addResult("Received: " + result.value);
                 next();
             }
         },
 
         function reloadPage(next)
         {
-            TestRunner.reloadPage(next);
+            InspectorTest.reloadPage(next);
         },
 
         function checkReloaded(next)
         {
-            TestRunner.addResult("Page successfully reloaded");
+            InspectorTest.addResult("Page successfully reloaded");
             next();
         }
     ]);

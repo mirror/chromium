@@ -118,15 +118,15 @@ function test()
     view._changeView();
     var tree = view.profileDataGridTree;
     if (!tree)
-        TestRunner.addResult("no tree");
+        InspectorTest.addResult("no tree");
     var node = tree.children[0];
     if (!node)
-        TestRunner.addResult("no node");
+        InspectorTest.addResult("no node");
     while (node) {
-        TestRunner.addResult(node.callUID + ": " + node.functionName + " " + node.self + " " + node.total + " " + node.element().textContent);
+        InspectorTest.addResult(node.callUID + ": " + node.functionName + " " + node.self + " " + node.total + " " + node.element().textContent);
         node = node.traverseNextNode(true, null, true);
     }
-    ProfilerTestRunner.completeProfilerTest();
+    InspectorTest.completeProfilerTest();
 }
 
 </script>

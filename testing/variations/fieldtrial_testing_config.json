@@ -2728,31 +2728,6 @@
             ]
         }
     ],
-    "ServiceWorkerScriptStreaming": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ServiceWorkerScriptStreaming"
-                    ]
-                },
-                {
-                    "name": "Disabled",
-                    "disable_features": [
-                        "ServiceWorkerScriptStreaming"
-                    ]
-                }
-            ]
-        }
-    ],
     "SettingsEnforcement": [
         {
             "platforms": [
@@ -3337,6 +3312,24 @@
                     "enable_features": [
                         "RequestUnbufferedDispatch",
                         "VsyncAlignedInput"
+                    ]
+                }
+            ]
+        }
+    ],
+    "WebApkGooglePlay": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "params": {
+                        "play_install": "true"
+                    },
+                    "enable_features": [
+                        "ImprovedA2HS"
                     ]
                 }
             ]

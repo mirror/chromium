@@ -85,11 +85,11 @@ function test()
         var provider = new InspectorTest.FlameChartProvider(entries, null);
         var flameChart = new PerfUI.FlameChart(provider, new PerfUI.FlameChartDelegate());
         flameChart.update();
-        TestRunner.addResult("PASSED")
+        InspectorTest.addResult("PASSED")
     } catch (e) {
-        TestRunner.addResult("Failed: " + e.stack);
+        InspectorTest.addResult("Failed: " + e.stack);
     }
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 }
 
 </script>

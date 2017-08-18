@@ -9,19 +9,29 @@ syntax = "proto2";
 
 package org.chromium.chrome.browser.download.ui;
 
+option java_outer_classname = "ThumbnailCacheEntry";
 option java_package = "org.chromium.chrome.browser.download.ui";
 
-message ContentId {
+// This contains either the content ID (for image) or URL (for page) of the
+// thumbnail.
+message Identifier {
   // Required.
   optional string id = 1;
 }
 
 message ThumbnailEntry {
   // Required.
-  optional ContentId content_id = 1;
+  optional Identifier identifier = 1;
   // Requested size (maximum required dimension (pixel) of the smaller side)
   // of the thumbnail.
   // Required.
   optional int32 size_px = 2;
   optional bytes compressed_png = 3;
+
+  enum FileType {
+    IMAGE = 0;
+    PAGE = 1;
+  }
+  // Required
+  optional FileType file_type = 4;
 }

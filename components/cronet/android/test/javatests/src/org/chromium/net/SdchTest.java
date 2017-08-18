@@ -4,22 +4,11 @@
 
 package org.chromium.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import static org.chromium.net.CronetTestRule.getContext;
-import static org.chromium.net.CronetTestRule.getTestStorage;
-
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.impl.CronetUrlRequestContext;
@@ -32,11 +21,7 @@ import java.util.Arrays;
 /**
  * Tests Sdch support.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class SdchTest {
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
+public class SdchTest extends CronetTestBase {
     private enum Sdch {
         ENABLED,
         DISABLED,
@@ -46,7 +31,7 @@ public class SdchTest {
         ExperimentalCronetEngine.Builder builder =
                 new ExperimentalCronetEngine.Builder(getContext());
         builder.enableSdch(setting == Sdch.ENABLED);
-        mTestRule.enableDiskCache(builder);
+        enableDiskCache(builder);
         JSONObject hostResolverParams = CronetTestUtil.generateHostResolverRules();
         JSONObject experimentalOptions =
                 new JSONObject().put("HostResolverRules", hostResolverParams);
@@ -56,12 +41,12 @@ public class SdchTest {
         return builder;
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Override
+    protected void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
+        super.tearDown();
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -107,7 +92,6 @@ public class SdchTest {
         assertEquals("The quick brown fox jumps over the lazy dog.\n", callback3.mResponseAsString);
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -123,7 +107,6 @@ public class SdchTest {
         cronetEngine.shutdown();
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -162,8 +145,8 @@ public class SdchTest {
 
     // Returns whether a file contains a particular string.
     private boolean fileContainsString(String filename, String content) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(
-                getTestStorage(getContext()) + "/prefs/" + filename));
+        BufferedReader reader = new BufferedReader(
+                new FileReader(getTestStorage(getContext()) + "/prefs/" + filename));
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.contains(content)) {

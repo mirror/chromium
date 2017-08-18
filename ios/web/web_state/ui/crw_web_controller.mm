@@ -586,6 +586,9 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // from the native provider.
 - (void)loadErrorInNativeView:(NSError*)error
             navigationContext:(web::NavigationContextImpl*)context;
+// YES if the navigation to |url| should be treated as a reload.
+- (BOOL)shouldReload:(const GURL&)destinationURL
+          transition:(ui::PageTransition)transition;
 // Aborts any load for both the web view and web controller.
 - (void)abortLoad;
 // Updates the internal state and informs the delegate that any outstanding load
@@ -1836,14 +1839,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 }
 
-- (void)loadCurrentURLIfNecessary {
-  if (_webProcessCrashed) {
-    [self loadCurrentURL];
-  } else {
-    [self triggerPendingLoad];
-  }
-}
-
 - (GURL)webURLWithTrustLevel:(web::URLVerificationTrustLevel*)trustLevel {
   DCHECK(trustLevel);
   *trustLevel = web::URLVerificationTrustLevel::kAbsolute;
@@ -1905,6 +1900,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
     if (_overlayPreviewMode && !isChromeScheme)
       [self addPlaceholderOverlay];
   }
+}
+
+- (BOOL)shouldReload:(const GURL&)destinationURL
+          transition:(ui::PageTransition)transition {
+  // Do a reload if the user hits enter in the address bar or re-types a URL.
+  web::NavigationItem* item = self.navigationManagerImpl->GetVisibleItem();
+  return (transition & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR) && item &&
+         (destinationURL == item->GetURL() ||
+          destinationURL == item->GetOriginalRequestURL());
 }
 
 - (void)reload {

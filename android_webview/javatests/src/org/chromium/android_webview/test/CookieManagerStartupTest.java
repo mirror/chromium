@@ -60,7 +60,12 @@ public class CookieManagerStartupTest extends AwTestBase {
     private void startChromiumWithClient(TestAwContentsClient contentsClient) throws Exception {
         // The activity must be launched in order for proper webview statics to be setup.
         getActivity();
-        getInstrumentation().runOnMainSync(() -> AwBrowserProcess.start());
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                AwBrowserProcess.start();
+            }
+        });
 
         mContentsClient = contentsClient;
         final AwTestContainerView testContainerView =

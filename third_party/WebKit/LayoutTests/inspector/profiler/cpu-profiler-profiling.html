@@ -17,33 +17,33 @@ function test()
     {
         var node = tree.children[0];
         if (!node)
-            TestRunner.addResult("no node");
+            InspectorTest.addResult("no node");
         while (node) {
             var nodeURL = node.element().children[2].lastChild.textContent;
             if (node.functionName === name && (!url || url === nodeURL)) {
-                TestRunner.addResult("found " + name + " " + (url || ""));
+                InspectorTest.addResult("found " + name + " " + (url || ""));
                 return;
             }
             node = node.traverseNextNode(true, null, true);
         }
-        TestRunner.addResult(name + " not found");
+        InspectorTest.addResult(name + " not found");
     }
 
-    ProfilerTestRunner.runProfilerTestSuite([
+    InspectorTest.runProfilerTestSuite([
         function testProfiling(next)
         {
             function findPageFunctionInProfileView(view)
             {
                 var tree = view.profileDataGridTree;
                 if (!tree)
-                    TestRunner.addResult("no tree");
+                    InspectorTest.addResult("no tree");
                 checkFunction(tree, "pageFunction", "cpu-profiler-profiling.html:7");
                 checkFunction(tree, "(anonymous)");
                 next();
             }
-            ProfilerTestRunner.showProfileWhenAdded("profile");
-            ProfilerTestRunner.waitUntilProfileViewIsShown("profile", findPageFunctionInProfileView);
-            TestRunner.evaluateInPage("pageFunction()", function done() {});
+            InspectorTest.showProfileWhenAdded("profile");
+            InspectorTest.waitUntilProfileViewIsShown("profile", findPageFunctionInProfileView);
+            InspectorTest.evaluateInPage("pageFunction()", function done() {});
         }
     ]);
 }

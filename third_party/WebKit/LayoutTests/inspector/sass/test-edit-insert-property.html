@@ -10,57 +10,57 @@
 
 function test()
 {
-    var header = TestRunner.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL)
+    var header = InspectorTest.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL)
 
-    SASSTestRunner.runCSSEditTests(header, [
+    InspectorTest.runCSSEditTests(header, [
         function testPrependProperty(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "color", "border: 1px solid black;color")
+                InspectorTest.createEdit(text, "color", "border: 1px solid black;color")
             ];
         },
 
         function testInsertMiddleProperty(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "red;", "red;border: 1px solid black;")
+                InspectorTest.createEdit(text, "red;", "red;border: 1px solid black;")
             ];
         },
 
         function testInsertTrailingProperty(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "10px;", "10px;border: 1px solid black;")
+                InspectorTest.createEdit(text, "10px;", "10px;border: 1px solid black;")
             ];
         },
 
         function testInsertDuplicateProperties(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "color", "border: 1px solid black;color", 0),
-                SASSTestRunner.createEdit(text, "color", "border: 1px solid black;color", 2),
+                InspectorTest.createEdit(text, "color", "border: 1px solid black;color", 0),
+                InspectorTest.createEdit(text, "color", "border: 1px solid black;color", 2),
             ];
         },
 
         function testPrependDifferentPropertiesSameRule(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "color", "display:flex;overflow:hidden;color"),
+                InspectorTest.createEdit(text, "color", "display:flex;overflow:hidden;color"),
             ];
         },
 
         function testInsertTrailingDifferentPropertiesSameRule(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "10px;", "10px;display:flex;overflow:hidden;"),
+                InspectorTest.createEdit(text, "10px;", "10px;display:flex;overflow:hidden;"),
             ];
         },
 
         function testInsertDifferentPropertiesDifferentRules(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "color", "margin:10px;color", 0),
-                SASSTestRunner.createEdit(text, "10px;", "10px;border: 1px solid black;", 2)
+                InspectorTest.createEdit(text, "color", "margin:10px;color", 0),
+                InspectorTest.createEdit(text, "10px;", "10px;border: 1px solid black;", 2)
             ];
         },
     ]);

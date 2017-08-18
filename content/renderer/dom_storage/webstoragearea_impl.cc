@@ -20,7 +20,7 @@ using blink::WebURL;
 namespace content {
 
 namespace {
-using AreaImplMap = base::IDMap<WebStorageAreaImpl*>;
+using AreaImplMap = IDMap<WebStorageAreaImpl*>;
 base::LazyInstance<AreaImplMap>::Leaky
     g_all_areas_map = LAZY_INSTANCE_INITIALIZER;
 

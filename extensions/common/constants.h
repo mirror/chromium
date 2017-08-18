@@ -205,9 +205,6 @@ enum ExtensionIcons {
   EXTENSION_ICON_INVALID = 0,
 };
 
-// The extension id of the feedback component extension.
-extern const char kFeedbackExtensionId[];
-
 // The extension id of the PDF extension.
 extern const char kPdfExtensionId[];
 

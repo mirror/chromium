@@ -58,12 +58,6 @@
 // Dismisses the TabSwitcher UI.
 - (void)dismissTabSwitcher;
 
-// Shows the Clear Browsing Data Settings UI (part of Settings).
-- (void)showClearBrowsingDataSettings;
-
-// Shows the Autofill Settings UI.
-- (void)showAutofillSettings;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_APPLICATION_COMMANDS_H_

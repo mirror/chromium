@@ -362,7 +362,7 @@ class TestServerWindowDelegate2 : public ServerWindowDelegate {
   ~TestServerWindowDelegate2() override = default;
 
   // ServerWindowDelegate:
-  viz::HostFrameSinkManager* GetHostFrameSinkManager() override {
+  viz::mojom::FrameSinkManager* GetFrameSinkManager() override {
     return nullptr;
   }
   ServerWindow* GetRootWindow(const ServerWindow* window) override {
@@ -372,8 +372,6 @@ class TestServerWindowDelegate2 : public ServerWindowDelegate {
     // TODO(sky): this cast shouldn't be necessary!
     return const_cast<ServerWindow*>(root);
   }
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info,
-                                ServerWindow* window) override {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestServerWindowDelegate2);

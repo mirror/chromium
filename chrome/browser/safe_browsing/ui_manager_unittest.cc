@@ -289,13 +289,7 @@ TEST_F(SafeBrowsingUIManagerTest, MAYBE_WhitelistWithUnrelatedPendingLoad) {
   }
 }
 
-// Leaks memory. https://crbug.com/755118
-#if defined(LEAK_SANITIZER)
-#define MAYBE_UICallbackProceed DISABLED_UICallbackProceed
-#else
-#define MAYBE_UICallbackProceed UICallbackProceed
-#endif
-TEST_F(SafeBrowsingUIManagerTest, MAYBE_UICallbackProceed) {
+TEST_F(SafeBrowsingUIManagerTest, UICallbackProceed) {
   security_interstitials::UnsafeResource resource =
       MakeUnsafeResourceAndStartNavigation(kBadURL);
   SafeBrowsingCallbackWaiter waiter;
@@ -313,13 +307,7 @@ TEST_F(SafeBrowsingUIManagerTest, MAYBE_UICallbackProceed) {
   EXPECT_TRUE(waiter.proceed());
 }
 
-// Leaks memory. https://crbug.com/755118
-#if defined(LEAK_SANITIZER)
-#define MAYBE_UICallbackDontProceed DISABLED_UICallbackDontProceed
-#else
-#define MAYBE_UICallbackDontProceed UICallbackDontProceed
-#endif
-TEST_F(SafeBrowsingUIManagerTest, MAYBE_UICallbackDontProceed) {
+TEST_F(SafeBrowsingUIManagerTest, UICallbackDontProceed) {
   security_interstitials::UnsafeResource resource =
       MakeUnsafeResourceAndStartNavigation(kBadURL);
   SafeBrowsingCallbackWaiter waiter;
@@ -337,13 +325,7 @@ TEST_F(SafeBrowsingUIManagerTest, MAYBE_UICallbackDontProceed) {
   EXPECT_FALSE(waiter.proceed());
 }
 
-// Leaks memory. https://crbug.com/755118
-#if defined(LEAK_SANITIZER)
-#define MAYBE_IOCallbackProceed DISABLED_IOCallbackProceed
-#else
-#define MAYBE_IOCallbackProceed IOCallbackProceed
-#endif
-TEST_F(SafeBrowsingUIManagerTest, MAYBE_IOCallbackProceed) {
+TEST_F(SafeBrowsingUIManagerTest, IOCallbackProceed) {
   security_interstitials::UnsafeResource resource =
       MakeUnsafeResourceAndStartNavigation(kBadURL);
   SafeBrowsingCallbackWaiter waiter;
@@ -361,13 +343,7 @@ TEST_F(SafeBrowsingUIManagerTest, MAYBE_IOCallbackProceed) {
   EXPECT_TRUE(waiter.proceed());
 }
 
-// Leaks memory. https://crbug.com/755118
-#if defined(LEAK_SANITIZER)
-#define MAYBE_IOCallbackDontProceed DISABLED_IOCallbackDontProceed
-#else
-#define MAYBE_IOCallbackDontProceed IOCallbackDontProceed
-#endif
-TEST_F(SafeBrowsingUIManagerTest, MAYBE_IOCallbackDontProceed) {
+TEST_F(SafeBrowsingUIManagerTest, IOCallbackDontProceed) {
   security_interstitials::UnsafeResource resource =
       MakeUnsafeResourceAndStartNavigation(kBadURL);
   SafeBrowsingCallbackWaiter waiter;
@@ -461,16 +437,8 @@ class TestSafeBrowsingBlockingPageFactory
 
 // Tests that the WebContentsDelegate is notified of a visible security
 // state change when a blocking page is shown for a subresource.
-// Leaks memory. https://crbug.com/755118
-#if defined(LEAK_SANITIZER)
-#define MAYBE_VisibleSecurityStateChangedForUnsafeSubresource \
-  DISABLED_VisibleSecurityStateChangedForUnsafeSubresource
-#else
-#define MAYBE_VisibleSecurityStateChangedForUnsafeSubresource \
-  VisibleSecurityStateChangedForUnsafeSubresource
-#endif
 TEST_F(SafeBrowsingUIManagerTest,
-       MAYBE_VisibleSecurityStateChangedForUnsafeSubresource) {
+       VisibleSecurityStateChangedForUnsafeSubresource) {
   TestSafeBrowsingBlockingPageFactory factory;
   SafeBrowsingBlockingPage::RegisterFactory(&factory);
   SecurityStateWebContentsDelegate delegate;

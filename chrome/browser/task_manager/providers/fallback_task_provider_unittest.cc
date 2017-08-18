@@ -6,7 +6,6 @@
 
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "chrome/browser/task_manager/providers/fallback_task_provider.h"
 #include "chrome/browser/task_manager/providers/task.h"
 #include "chrome/browser/task_manager/task_manager_observer.h"
@@ -160,22 +159,18 @@ class FallbackTaskProviderTest : public testing::Test,
 };
 
 TEST_F(FallbackTaskProviderTest, BasicTest) {
-  base::TimeDelta delay = base::TimeDelta::FromMilliseconds(750);
-  base::ScopedMockTimeMessageLoopTaskRunner mock_main_runner;
   StartUpdating();
   // In this secondary tasks are named starting with "S" followed by a
   // underscore with the next number being the Pid followed by the a underscore
-  // and then the number of processes with that pid that have been created. For
+  // and then the number of tasks with that pid that have been created. For
   // instance the first secondary task with Pid of 1 and will be named "S_1_1".
   // Similarly for the third primary process with a Pid of 7 would be "P_7_3".
   FakeTask fake_secondary_task_1_1(1, Task::RENDERER, "S_1_1");
   SecondaryTaskAdded(&fake_secondary_task_1_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ("S_1_1\n", DumpSeenTasks());
 
   FakeTask fake_secondary_task_1_2(1, Task::RENDERER, "S_1_2");
   SecondaryTaskAdded(&fake_secondary_task_1_2);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "S_1_1\n"
       "S_1_2\n",
@@ -183,17 +178,14 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
 
   FakeTask fake_primary_task_1_1(1, Task::RENDERER, "P_1_1");
   PrimaryTaskAdded(&fake_primary_task_1_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ("P_1_1\n", DumpSeenTasks());
 
   FakeTask fake_secondary_task_1_3(1, Task::RENDERER, "S_1_3");
   SecondaryTaskAdded(&fake_secondary_task_1_3);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ("P_1_1\n", DumpSeenTasks());
 
   FakeTask fake_secondary_task_2_1(2, Task::RENDERER, "S_2_1");
   SecondaryTaskAdded(&fake_secondary_task_2_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_1_1\n"
       "S_2_1\n",
@@ -201,7 +193,6 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
 
   FakeTask fake_primary_task_3_1(3, Task::RENDERER, "P_3_1");
   PrimaryTaskAdded(&fake_primary_task_3_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_1_1\n"
       "S_2_1\n"
@@ -209,7 +200,6 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
       DumpSeenTasks());
 
   PrimaryTaskRemoved(&fake_primary_task_1_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "S_2_1\n"
       "P_3_1\n"
@@ -224,7 +214,6 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
   // After updating the primary tasks (Ps) will be added before the secondary
   // tasks (Ss) so it is reordered.
   StartUpdating();
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_3_1\n"
       "S_1_1\n"
@@ -234,7 +223,6 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
       DumpSeenTasks());
 
   PrimaryTaskAdded(&fake_primary_task_1_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_3_1\n"
       "S_2_1\n"
@@ -251,7 +239,6 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
       DumpSeenTasks());
 
   PrimaryTaskRemoved(&fake_primary_task_1_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_3_1\n"
       "S_2_1\n"
@@ -259,21 +246,18 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
       DumpSeenTasks());
 
   SecondaryTaskRemoved(&fake_secondary_task_2_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_3_1\n"
       "P_1_2\n",
       DumpSeenTasks());
 
   SecondaryTaskRemoved(&fake_secondary_task_1_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_3_1\n"
       "P_1_2\n",
       DumpSeenTasks());
 
   PrimaryTaskRemoved(&fake_primary_task_1_2);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "P_3_1\n"
       "S_1_2\n"
@@ -281,7 +265,6 @@ TEST_F(FallbackTaskProviderTest, BasicTest) {
       DumpSeenTasks());
 
   PrimaryTaskRemoved(&fake_primary_task_3_1);
-  mock_main_runner->FastForwardBy(delay);
   EXPECT_EQ(
       "S_1_2\n"
       "S_1_3\n",

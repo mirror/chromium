@@ -29,6 +29,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnPageCommitVisibleHelper;
 import org.chromium.net.test.util.TestWebServer;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -83,11 +84,14 @@ public class WebKitHitTestTest {
     }
 
     private void simulateTabDownUpOnUiThread() throws Throwable {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-            mAwContents.getContentViewCore().dispatchKeyEvent(
-                    new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
-            mAwContents.getContentViewCore().dispatchKeyEvent(
-                    new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.getContentViewCore().dispatchKeyEvent(
+                        new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB));
+                mAwContents.getContentViewCore().dispatchKeyEvent(
+                        new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_TAB));
+            }
         });
     }
 
@@ -107,10 +111,13 @@ public class WebKitHitTestTest {
 
     private void pollForHitTestDataOnUiThread(
             final int expectedType, final String expectedExtra) throws Throwable {
-        mActivityTestRule.pollUiThread(() -> {
-            AwContents.HitTestData data = mAwContents.getLastHitTestResult();
-            return expectedType == data.hitTestResultType
-                    && stringEquals(expectedExtra, data.hitTestResultExtraData);
+        mActivityTestRule.pollUiThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                AwContents.HitTestData data = mAwContents.getLastHitTestResult();
+                return expectedType == data.hitTestResultType
+                        && stringEquals(expectedExtra, data.hitTestResultExtraData);
+            }
         });
     }
 
@@ -118,26 +125,32 @@ public class WebKitHitTestTest {
             final String expectedHref,
             final String expectedAnchorText,
             final String expectedImageSrc) throws Throwable {
-        mActivityTestRule.pollUiThread(() -> {
-            AwContents.HitTestData data = mAwContents.getLastHitTestResult();
-            return stringEquals(expectedHref, data.href)
-                    && stringEquals(expectedAnchorText, data.anchorText)
-                    && stringEquals(expectedImageSrc, data.imgSrc);
+        mActivityTestRule.pollUiThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                AwContents.HitTestData data = mAwContents.getLastHitTestResult();
+                return stringEquals(expectedHref, data.href)
+                        && stringEquals(expectedAnchorText, data.anchorText)
+                        && stringEquals(expectedImageSrc, data.imgSrc);
+            }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            Handler dummyHandler = new Handler();
-            Message focusNodeHrefMsg = dummyHandler.obtainMessage();
-            Message imageRefMsg = dummyHandler.obtainMessage();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                Handler dummyHandler = new Handler();
+                Message focusNodeHrefMsg = dummyHandler.obtainMessage();
+                Message imageRefMsg = dummyHandler.obtainMessage();
 
-            mAwContents.requestFocusNodeHref(focusNodeHrefMsg);
-            mAwContents.requestImageRef(imageRefMsg);
+                mAwContents.requestFocusNodeHref(focusNodeHrefMsg);
+                mAwContents.requestImageRef(imageRefMsg);
 
-            Assert.assertEquals(expectedHref, focusNodeHrefMsg.getData().getString("url"));
-            Assert.assertEquals(
-                    expectedAnchorText, focusNodeHrefMsg.getData().getString("title"));
-            Assert.assertEquals(expectedImageSrc, focusNodeHrefMsg.getData().getString("src"));
-            Assert.assertEquals(expectedImageSrc, imageRefMsg.getData().getString("url"));
+                Assert.assertEquals(expectedHref, focusNodeHrefMsg.getData().getString("url"));
+                Assert.assertEquals(
+                        expectedAnchorText, focusNodeHrefMsg.getData().getString("title"));
+                Assert.assertEquals(expectedImageSrc, focusNodeHrefMsg.getData().getString("src"));
+                Assert.assertEquals(expectedImageSrc, imageRefMsg.getData().getString("url"));
+            }
         });
     }
 

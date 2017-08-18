@@ -14,6 +14,7 @@
 #include "services/ui/public/interfaces/window_manager.mojom.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
+#include "third_party/skia/include/core/SkRegion.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/capture_client.h"
 #include "ui/aura/client/cursor_client.h"
@@ -493,9 +494,9 @@ void NativeWidgetAura::StackAtTop() {
     window_->parent()->StackChildAtTop(window_);
 }
 
-void NativeWidgetAura::SetShape(std::unique_ptr<Widget::ShapeRects> shape) {
+void NativeWidgetAura::SetShape(std::unique_ptr<SkRegion> region) {
   if (window_)
-    window_->layer()->SetAlphaShape(std::move(shape));
+    window_->layer()->SetAlphaShape(std::move(region));
 }
 
 void NativeWidgetAura::Close() {

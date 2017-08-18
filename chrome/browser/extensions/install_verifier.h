@@ -89,7 +89,7 @@ class InstallVerifier : public KeyedService,
   // ManagementPolicy::Provider interface.
   std::string GetDebugPolicyProviderName() const override;
   bool MustRemainDisabled(const Extension* extension,
-                          disable_reason::DisableReason* reason,
+                          Extension::DisableReason* reason,
                           base::string16* error) const override;
 
  private:

@@ -10,7 +10,6 @@
 #include "components/crx_file/id_util.h"
 #include "content/public/test/mock_render_thread.h"
 #include "extensions/common/extension.h"
-#include "extensions/common/extension_api.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/manifest.h"
@@ -32,6 +31,55 @@
 namespace extensions {
 
 namespace {
+
+enum class ItemType {
+  EXTENSION,
+  PLATFORM_APP,
+};
+
+// Creates an extension of the given |type| with the given |id| and
+// |permissions|.
+scoped_refptr<Extension> CreateExtensionWithId(
+    const std::string& id,
+    const std::string& name,
+    ItemType type,
+    const std::vector<std::string>& permissions) {
+  DictionaryBuilder manifest;
+  manifest.Set("name", name);
+  manifest.Set("manifest_version", 2);
+  manifest.Set("version", "0.1");
+  manifest.Set("description", "test extension");
+
+  if (type == ItemType::PLATFORM_APP) {
+    DictionaryBuilder background;
+    background.Set("scripts", ListBuilder().Append("test.js").Build());
+    manifest.Set(
+        "app",
+        DictionaryBuilder().Set("background", background.Build()).Build());
+  }
+
+  {
+    ListBuilder permissions_builder;
+    for (const std::string& permission : permissions)
+      permissions_builder.Append(permission);
+    manifest.Set("permissions", permissions_builder.Build());
+  }
+
+  return ExtensionBuilder()
+      .SetManifest(manifest.Build())
+      .SetLocation(Manifest::INTERNAL)
+      .SetID(id)
+      .Build();
+}
+
+// Same as CreateExtensionWithId(), but generates the id from |name|.
+scoped_refptr<Extension> CreateExtension(
+    const std::string& name,
+    ItemType type,
+    const std::vector<std::string>& permissions) {
+  return CreateExtensionWithId(name, crx_file::id_util::GenerateId(name), type,
+                               permissions);
+}
 
 class EventChangeHandler {
  public:
@@ -204,10 +252,8 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
 };
 
 TEST_F(NativeExtensionBindingsSystemUnittest, Basic) {
-  scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo")
-          .AddPermissions({"idle", "power", "webRequest"})
-          .Build();
+  scoped_refptr<Extension> extension = CreateExtension(
+      "foo", ItemType::EXTENSION, {"idle", "power", "webRequest"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -317,7 +363,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, Basic) {
 
 TEST_F(NativeExtensionBindingsSystemUnittest, Events) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermissions({"idle", "power"}).Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle", "power"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -359,7 +405,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, Events) {
 // i.e. chrome.foo === chrome.foo.
 TEST_F(NativeExtensionBindingsSystemUnittest, APIObjectsAreEqual) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermission("idle").Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -386,7 +432,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, APIObjectsAreEqual) {
 TEST_F(NativeExtensionBindingsSystemUnittest,
        ReferencingAPIAfterDisposingContext) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermissions({"idle", "power"}).Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle", "power"});
 
   RegisterExtension(extension);
 
@@ -443,7 +489,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestBridgingToJSCustomBindings) {
   source_map()->RegisterModule("idle", kCustomBinding);
 
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermission("idle").Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -533,7 +579,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestSendRequestHook) {
   source_map()->RegisterModule("idle", kCustomBinding);
 
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermission("idle").Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -568,7 +614,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestSendRequestHook) {
 TEST_F(NativeExtensionBindingsSystemUnittest, TestEventRegistration) {
   InitEventChangeHandler();
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermissions({"idle", "power"}).Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle", "power"});
 
   RegisterExtension(extension);
 
@@ -619,8 +665,8 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestEventRegistration) {
 TEST_F(NativeExtensionBindingsSystemUnittest,
        TestPrefixedApiEventsAndAppBinding) {
   InitEventChangeHandler();
-  scoped_refptr<Extension> app =
-      ExtensionBuilder("foo", ExtensionBuilder::Type::PLATFORM_APP).Build();
+  scoped_refptr<Extension> app = CreateExtension("foo", ItemType::PLATFORM_APP,
+                                                 std::vector<std::string>());
   EXPECT_TRUE(app->is_platform_app());
   RegisterExtension(app);
 
@@ -660,7 +706,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
 TEST_F(NativeExtensionBindingsSystemUnittest,
        TestPrefixedApiMethodsAndSystemBinding) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermission("system.cpu").Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"system.cpu"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -700,7 +746,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
 
 TEST_F(NativeExtensionBindingsSystemUnittest, TestLastError) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("foo").AddPermissions({"idle", "power"}).Build();
+      CreateExtension("foo", ItemType::EXTENSION, {"idle", "power"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -750,7 +796,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestLastError) {
 
 TEST_F(NativeExtensionBindingsSystemUnittest, TestCustomProperties) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("storage extension").AddPermission("storage").Build();
+      CreateExtension("storage extension", ItemType::EXTENSION, {"storage"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -786,7 +832,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestCustomProperties) {
 TEST_F(NativeExtensionBindingsSystemUnittest,
        CheckDifferentContextsHaveDifferentAPIObjects) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("extension").AddPermission("idle").Build();
+      CreateExtension("extension", ItemType::EXTENSION, {"idle"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -891,7 +937,8 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
 
 // Tests behavior when script sets window.chrome to be various things.
 TEST_F(NativeExtensionBindingsSystemUnittest, TestUsingOtherChromeObjects) {
-  scoped_refptr<Extension> extension = ExtensionBuilder("extension").Build();
+  scoped_refptr<Extension> extension = CreateExtension(
+      "extension", ItemType::EXTENSION, std::vector<std::string>());
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -960,8 +1007,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestUsingOtherChromeObjects) {
 // Tests updating a context's bindings after adding or removing permissions.
 TEST_F(NativeExtensionBindingsSystemUnittest, TestUpdatingPermissions) {
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("extension").AddPermission("idle").Build();
-
+      CreateExtension("extension", ItemType::EXTENSION, {"idle"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -1057,8 +1103,8 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestUpdatingPermissions) {
 TEST_F(NativeExtensionBindingsSystemUnittest, UnmanagedEvents) {
   InitEventChangeHandler();
 
-  scoped_refptr<Extension> extension = ExtensionBuilder("extension").Build();
-
+  scoped_refptr<Extension> extension =
+      CreateExtension("foo", ItemType::EXTENSION, std::vector<std::string>());
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -1089,11 +1135,8 @@ TEST_F(NativeExtensionBindingsSystemUnittest, UnmanagedEvents) {
 TEST_F(NativeExtensionBindingsSystemUnittest,
        AccessToAliasSourceDoesntGiveAliasAccess) {
   const char kWhitelistedId[] = "pkedcjkdefgpdelpbcmbmeomcjbeemfm";
-  scoped_refptr<Extension> extension = ExtensionBuilder("extension")
-                                           .SetID(kWhitelistedId)
-                                           .AddPermission("networkingPrivate")
-                                           .Build();
-
+  scoped_refptr<Extension> extension = CreateExtension(
+      kWhitelistedId, ItemType::EXTENSION, {"networkingPrivate"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -1116,10 +1159,8 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
 TEST_F(NativeExtensionBindingsSystemUnittest,
        AccessToAliasDoesntGiveAliasSourceAccess) {
   const char kWhitelistedId[] = "pkedcjkdefgpdelpbcmbmeomcjbeemfm";
-  scoped_refptr<Extension> extension = ExtensionBuilder("extension")
-                                           .SetID(kWhitelistedId)
-                                           .AddPermission("networking.onc")
-                                           .Build();
+  scoped_refptr<Extension> extension =
+      CreateExtension(kWhitelistedId, ItemType::EXTENSION, {"networking.onc"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());
@@ -1142,10 +1183,8 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
 TEST_F(NativeExtensionBindingsSystemUnittest, AliasedAPIsAreDifferentObjects) {
   const char kWhitelistedId[] = "pkedcjkdefgpdelpbcmbmeomcjbeemfm";
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("extension")
-          .SetID(kWhitelistedId)
-          .AddPermissions({"networkingPrivate", "networking.onc"})
-          .Build();
+      CreateExtension(kWhitelistedId, ItemType::EXTENSION,
+                      {"networkingPrivate", "networking.onc"});
   RegisterExtension(extension);
 
   v8::HandleScope handle_scope(isolate());

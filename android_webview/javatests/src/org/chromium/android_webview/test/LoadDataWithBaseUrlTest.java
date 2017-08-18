@@ -20,6 +20,7 @@ import org.chromium.net.test.util.TestWebServer;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.concurrent.Callable;
 
 /**
  * Tests for the {@link android.webkit.WebView#loadDataWithBaseURL(String, String, String, String,
@@ -281,9 +282,12 @@ public class LoadDataWithBaseUrlTest extends AwTestBase {
 
         loadDataWithBaseUrlSync(data, "text/html", false, baseUrl, null);
 
-        pollInstrumentationThread(() -> {
-            String title = getTitleOnUiThread(mAwContents);
-            return imageLoaded.equals(title) || imageNotLoaded.equals(title);
+        pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                String title = getTitleOnUiThread(mAwContents);
+                return imageLoaded.equals(title) || imageNotLoaded.equals(title);
+            }
         });
 
         return imageLoaded.equals(getTitleOnUiThread(mAwContents));

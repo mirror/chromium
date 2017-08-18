@@ -396,9 +396,8 @@ TEST_F(EasyUnlockAppManagerTest, LoadAppPreviouslyDisabled) {
 
   extension_service_->component_loader()->Add(IDR_EASY_UNLOCK_MANIFEST,
                                               GetAppPath());
-  extension_service_->DisableExtension(
-      extension_misc::kEasyUnlockAppId,
-      extensions::disable_reason::DISABLE_RELOAD);
+  extension_service_->DisableExtension(extension_misc::kEasyUnlockAppId,
+                                       extensions::Extension::DISABLE_RELOAD);
 
   ASSERT_TRUE(extension_service_->GetExtensionById(
       extension_misc::kEasyUnlockAppId, true));
@@ -433,9 +432,8 @@ TEST_F(EasyUnlockAppManagerTest, ReloadAppDisabled) {
 
   extension_service_->component_loader()->Add(IDR_EASY_UNLOCK_MANIFEST,
                                               GetAppPath());
-  extension_service_->DisableExtension(
-      extension_misc::kEasyUnlockAppId,
-      extensions::disable_reason::DISABLE_RELOAD);
+  extension_service_->DisableExtension(extension_misc::kEasyUnlockAppId,
+                                       extensions::Extension::DISABLE_RELOAD);
   ExtensionReloadTracker reload_tracker(&profile_,
                                         extension_misc::kEasyUnlockAppId);
   ASSERT_FALSE(reload_tracker.HasReloaded());

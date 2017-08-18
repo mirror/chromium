@@ -33,7 +33,7 @@ class StandardManagementPolicyProvider : public ManagementPolicy::Provider {
   bool MustRemainEnabled(const Extension* extension,
                          base::string16* error) const override;
   bool MustRemainDisabled(const Extension* extension,
-                          disable_reason::DisableReason* reason,
+                          Extension::DisableReason* reason,
                           base::string16* error) const override;
   bool MustRemainInstalled(const Extension* extension,
                            base::string16* error) const override;

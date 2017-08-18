@@ -33,9 +33,6 @@ class AndroidLiveTabContext : public sessions::LiveTabContext {
   sessions::LiveTab* GetLiveTabAt(int index) const override;
   sessions::LiveTab* GetActiveLiveTab() const override;
   bool IsTabPinned(int index) const override;
-  const gfx::Rect GetRestoredBounds() const override;
-  ui::WindowShowState GetRestoredState() const override;
-  std::string GetWorkspace() const override;
   sessions::LiveTab* AddRestoredTab(
       const std::vector<sessions::SerializedNavigationEntry>& navigations,
       int tab_index,

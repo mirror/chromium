@@ -20,7 +20,6 @@
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
 #include "components/download/public/client.h"
-#include "components/download/public/download_metadata.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
@@ -784,8 +783,9 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
 }
 
 void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {
-  auto categorized = util::MapEntriesToMetadataForClients(
-      clients_->GetRegisteredClients(), model_->PeekEntries());
+  std::set<Entry::State> ignored_states = {Entry::State::COMPLETE};
+  auto categorized = util::MapEntriesToClients(
+      clients_->GetRegisteredClients(), model_->PeekEntries(), ignored_states);
 
   for (auto client_id : clients_->GetRegisteredClients()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -854,14 +854,13 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
     stats::LogFilePathRenamed(driver_entry->current_file_path !=
                               entry->target_file_path);
     entry->target_file_path = driver_entry->current_file_path;
-    entry->bytes_downloaded = driver_entry->bytes_downloaded;
+
     entry->completion_time = driver_entry->completion_time;
-    CompletionInfo completion_info(driver_entry->current_file_path,
-                                   driver_entry->bytes_downloaded);
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadSucceeded,
                               weak_ptr_factory_.GetWeakPtr(), entry->client,
-                              guid, completion_info));
+                              guid, driver_entry->current_file_path,
+                              driver_entry->bytes_downloaded));
     TransitTo(entry, Entry::State::COMPLETE, model_.get());
     ScheduleCleanupTask();
   } else {
@@ -992,10 +991,10 @@ void ControllerImpl::HandleExternalDownload(const std::string& guid,
 void ControllerImpl::SendOnServiceInitialized(
     DownloadClient client_id,
     bool state_lost,
-    const std::vector<DownloadMetaData>& downloads) {
+    const std::vector<std::string>& guids) {
   auto* client = clients_->GetClient(client_id);
   DCHECK(client);
-  client->OnServiceInitialized(state_lost, downloads);
+  client->OnServiceInitialized(state_lost, guids);
 }
 
 void ControllerImpl::SendOnServiceUnavailable() {
@@ -1015,13 +1014,13 @@ void ControllerImpl::SendOnDownloadUpdated(DownloadClient client_id,
   client->OnDownloadUpdated(guid, bytes_downloaded);
 }
 
-void ControllerImpl::SendOnDownloadSucceeded(
-    DownloadClient client_id,
-    const std::string& guid,
-    const CompletionInfo& completion_info) {
+void ControllerImpl::SendOnDownloadSucceeded(DownloadClient client_id,
+                                             const std::string& guid,
+                                             const base::FilePath& path,
+                                             uint64_t size) {
   auto* client = clients_->GetClient(client_id);
   DCHECK(client);
-  client->OnDownloadSucceeded(guid, completion_info);
+  client->OnDownloadSucceeded(guid, path, size);
 }
 
 void ControllerImpl::SendOnDownloadFailed(

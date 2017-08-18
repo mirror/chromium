@@ -292,21 +292,4 @@ TEST(EquivalenceMapTest, Build) {
           4.0));
 }
 
-TEST(EquivalenceMapTest, MakeForwardEquivalences) {
-  EXPECT_EQ(std::vector<Equivalence>(),
-            EquivalenceMap().MakeForwardEquivalences());
-  EXPECT_EQ(std::vector<Equivalence>({{0, 0, 1}}),
-            EquivalenceMap({{{0, 0, 1}, 0.0}}).MakeForwardEquivalences());
-  EXPECT_EQ(std::vector<Equivalence>({{0, 0, 1}, {1, 1, 1}}),
-            EquivalenceMap({{{0, 0, 1}, 0.0}, {{1, 1, 1}, 0.0}})
-                .MakeForwardEquivalences());
-  EXPECT_EQ(std::vector<Equivalence>({{0, 1, 1}, {1, 0, 1}}),
-            EquivalenceMap({{{1, 0, 1}, 0.0}, {{0, 1, 1}, 0.0}})
-                .MakeForwardEquivalences());
-  EXPECT_EQ(
-      std::vector<Equivalence>({{0, 2, 1}, {1, 0, 1}, {4, 1, 1}}),
-      EquivalenceMap({{{1, 0, 1}, 0.0}, {{4, 1, 1}, 0.0}, {{0, 2, 1}, 0.0}})
-          .MakeForwardEquivalences());
-}
-
 }  // namespace zucchini

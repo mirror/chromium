@@ -2280,13 +2280,7 @@ TEST_F(PaintControllerUnderInvalidationTest, ChangeDrawing) {
   EXPECT_DEATH(TestChangeDrawing(), "");
 }
 
-#if defined(OS_MACOSX)
-#define MAYBE_MoreDrawing DISABLED_MoreDrawing
-#else
-#define MAYBE_MoreDrawing MoreDrawing
-#endif
-// See https://crbug.com/757036
-TEST_F(PaintControllerUnderInvalidationTest, MAYBE_MoreDrawing) {
+TEST_F(PaintControllerUnderInvalidationTest, MoreDrawing) {
   EXPECT_DEATH(TestMoreDrawing(), "");
 }
 
@@ -2311,28 +2305,14 @@ TEST_F(PaintControllerUnderInvalidationTest, MoreDrawingInSubsequence) {
   EXPECT_DEATH(TestMoreDrawingInSubsequence(), "");
 }
 
-#if defined(OS_MACOSX)
-#define MAYBE_LessDrawingInSubsequence DISABLED_LessDrawingInSubsequence
-#else
-#define MAYBE_LessDrawingInSubsequence LessDrawingInSubsequence
-#endif
-// See https://crbug.com/757036
-TEST_F(PaintControllerUnderInvalidationTest, MAYBE_LessDrawingInSubsequence) {
+TEST_F(PaintControllerUnderInvalidationTest, LessDrawingInSubsequence) {
   // We allow invalidated display item clients as long as they would produce the
   // same display items. The cases of changed display items are tested by other
   // test cases.
   EXPECT_DEATH(TestLessDrawingInSubsequence(), "");
 }
 
-#if defined(OS_MACOSX)
-#define MAYBE_ChangeNonCacheableInSubsequence \
-  DISABLED_ChangeNonCacheableInSubsequence
-#else
-#define MAYBE_ChangeNonCacheableInSubsequence ChangeNonCacheableInSubsequence
-#endif
-// See https://crbug.com/757036
-TEST_F(PaintControllerUnderInvalidationTest,
-       MAYBE_ChangeNonCacheableInSubsequence) {
+TEST_F(PaintControllerUnderInvalidationTest, ChangeNonCacheableInSubsequence) {
   EXPECT_DEATH(TestChangeNonCacheableInSubsequence(), "");
 }
 

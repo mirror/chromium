@@ -63,7 +63,8 @@ gfx::Size SurfaceSize() {
 class SurfaceAggregatorTest : public testing::Test {
  public:
   explicit SurfaceAggregatorTest(bool use_damage_rect)
-      : observer_(false),
+      : manager_(nullptr, SurfaceManager::LifetimeType::REFERENCES),
+        observer_(false),
         support_(CompositorFrameSinkSupport::Create(&fake_client_,
                                                     &manager_,
                                                     kArbitraryRootFrameSinkId,
@@ -2126,6 +2127,9 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
 
 class SurfaceAggregatorWithResourcesTest : public testing::Test {
  public:
+  SurfaceAggregatorWithResourcesTest()
+      : manager_(nullptr, SurfaceManager::LifetimeType::REFERENCES) {}
+
   void SetUp() override {
     shared_bitmap_manager_ = base::MakeUnique<cc::TestSharedBitmapManager>();
     resource_provider_ =

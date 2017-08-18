@@ -579,10 +579,6 @@ source_set("common") {
       "//third_party/widevine/cdm:headers",
     ]
   }
-
-  if (is_fuchsia) {
-    sources += [ "font_list_fuchsia.cc" ]
-  }
 }
 
 # See comment at the top of //content/BUILD.gn for how this works.

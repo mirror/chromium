@@ -97,15 +97,9 @@ function mapTestFilename(filename) {
   if (namespacePrefix === 'HeapSnapshot')
     namespacePrefix = 'Profiler';
   if (namespacePrefix === 'Sass') {
-    namespacePrefix = 'SASS';
-    filenamePrefix = 'SASS';
+    namespacePrefix = 'SASS'
+    filenamePrefix = 'SASS'
   }
-  if (namespacePrefix === 'Editing') {
-    namespacePrefix = 'SASS';
-    filenamePrefix = 'SASSEditing'
-  }
-  if (namespacePrefix === 'ExtensionsAudits')
-    namespacePrefix = 'Extensions';
   return {namespacePrefix, filenamePrefix};
 }
 

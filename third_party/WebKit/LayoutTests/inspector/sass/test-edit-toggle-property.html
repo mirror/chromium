@@ -10,28 +10,28 @@
 
 function test()
 {
-    var header = TestRunner.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL)
+    var header = InspectorTest.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL)
 
-    SASSTestRunner.runCSSEditTests(header, [
+    InspectorTest.runCSSEditTests(header, [
         function testDisableProperty(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "margin: 10px;", "/* margin: 10px; */")
+                InspectorTest.createEdit(text, "margin: 10px;", "/* margin: 10px; */")
             ];
         },
 
         function testEnableProperty(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "/*color: red;*/", "color: red;")
+                InspectorTest.createEdit(text, "/*color: red;*/", "color: red;")
             ];
         },
 
         function testDisableMultipleProperties(text)
         {
             return [
-                SASSTestRunner.createEdit(text, "margin: 10px;", "/* margin: 10px; */", 0),
-                SASSTestRunner.createEdit(text, "margin: 10px;", "/* margin: 10px; */", 2)
+                InspectorTest.createEdit(text, "margin: 10px;", "/* margin: 10px; */", 0),
+                InspectorTest.createEdit(text, "margin: 10px;", "/* margin: 10px; */", 2)
             ];
         },
     ]);

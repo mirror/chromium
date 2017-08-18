@@ -5,11 +5,9 @@
     "sass"
   ],
   "scripts": [
-    "SASSTestRunner.js",
-    "SASSEditingTestRunner.js"
+    "SASSTestRunner.js"
   ],
   "skip_compilation": [
-    "SASSTestRunner.js",
-    "SASSEditingTestRunner.js"
+    "SASSTestRunner.js"
   ]
 }

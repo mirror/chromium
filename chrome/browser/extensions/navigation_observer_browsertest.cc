@@ -45,11 +45,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
 
   // Disable the extension due to a permissions increase.
   extension_service()->DisableExtension(
-      kExtensionId, disable_reason::DISABLE_PERMISSIONS_INCREASE);
+      kExtensionId, Extension::DISABLE_PERMISSIONS_INCREASE);
   EXPECT_TRUE(registry->disabled_extensions().Contains(kExtensionId));
 
   ExtensionPrefs* prefs = ExtensionPrefs::Get(profile());
-  EXPECT_EQ(disable_reason::DISABLE_PERMISSIONS_INCREASE,
+  EXPECT_EQ(Extension::DISABLE_PERMISSIONS_INCREASE,
             prefs->GetDisableReasons(kExtensionId));
 
   {
@@ -59,7 +59,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
     navigate_to_url_in_new_tab(kUrl);
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(registry->disabled_extensions().Contains(kExtensionId));
-    EXPECT_EQ(disable_reason::DISABLE_PERMISSIONS_INCREASE,
+    EXPECT_EQ(Extension::DISABLE_PERMISSIONS_INCREASE,
               prefs->GetDisableReasons(kExtensionId));
   }
 
@@ -71,15 +71,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
     navigate_to_url_in_new_tab(kUrl);
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(registry->enabled_extensions().Contains(kExtensionId));
-    EXPECT_EQ(disable_reason::DISABLE_NONE,
-              prefs->GetDisableReasons(kExtensionId));
+    EXPECT_EQ(Extension::DISABLE_NONE, prefs->GetDisableReasons(kExtensionId));
   }
 
   // Disable the extension for something other than a permissions increase.
   extension_service()->DisableExtension(kExtensionId,
-                                        disable_reason::DISABLE_USER_ACTION);
+                                        Extension::DISABLE_USER_ACTION);
   EXPECT_TRUE(registry->disabled_extensions().Contains(kExtensionId));
-  EXPECT_EQ(disable_reason::DISABLE_USER_ACTION,
+  EXPECT_EQ(Extension::DISABLE_USER_ACTION,
             prefs->GetDisableReasons(kExtensionId));
 
   {
@@ -90,7 +89,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
     navigate_to_url_in_new_tab(kUrl);
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(registry->disabled_extensions().Contains(kExtensionId));
-    EXPECT_EQ(disable_reason::DISABLE_USER_ACTION,
+    EXPECT_EQ(Extension::DISABLE_USER_ACTION,
               prefs->GetDisableReasons(kExtensionId));
   }
 
@@ -105,9 +104,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
                             kHostedAppUrl));
 
   extension_service()->DisableExtension(
-      kHostedAppId, disable_reason::DISABLE_PERMISSIONS_INCREASE);
+      kHostedAppId, Extension::DISABLE_PERMISSIONS_INCREASE);
   EXPECT_TRUE(registry->disabled_extensions().Contains(kHostedAppId));
-  EXPECT_EQ(disable_reason::DISABLE_PERMISSIONS_INCREASE,
+  EXPECT_EQ(Extension::DISABLE_PERMISSIONS_INCREASE,
             prefs->GetDisableReasons(kHostedAppId));
 
   {
@@ -120,7 +119,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
     navigate_to_url_in_new_tab(kHostedAppUrl);
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(registry->disabled_extensions().Contains(kHostedAppId));
-    EXPECT_EQ(disable_reason::DISABLE_PERMISSIONS_INCREASE,
+    EXPECT_EQ(Extension::DISABLE_PERMISSIONS_INCREASE,
               prefs->GetDisableReasons(kHostedAppId));
   }
 }

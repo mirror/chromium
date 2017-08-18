@@ -16,7 +16,6 @@ extern NSString* const kInvalidStateError;
 extern NSString* const kNotAllowedErrorName;
 extern NSString* const kNotSupportedErrorName;
 
-@protocol ApplicationCommands;
 class ToolbarModelIOS;
 
 namespace ios {
@@ -45,7 +44,6 @@ class WebState;
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
                               browserState:
                                   (ios::ChromeBrowserState*)browserState
-                                dispatcher:(id<ApplicationCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;

@@ -70,7 +70,10 @@ class FakeExternalBeginFrameSourceClient
 
 class SurfaceSynchronizationTest : public testing::Test {
  public:
-  SurfaceSynchronizationTest() : surface_observer_(false) {}
+  SurfaceSynchronizationTest()
+      : frame_sink_manager_(nullptr /* display_provider */,
+                            SurfaceManager::LifetimeType::REFERENCES),
+        surface_observer_(false) {}
   ~SurfaceSynchronizationTest() override {}
 
   CompositorFrameSinkSupport& display_support() {

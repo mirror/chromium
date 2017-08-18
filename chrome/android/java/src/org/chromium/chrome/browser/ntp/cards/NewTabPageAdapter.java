@@ -111,7 +111,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mRoot.addChild(mSiteSection);
         }
 
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (SuggestionsConfig.useModern()) {
             mRoot.addChildren(mSigninPromo, mSections, mAllDismissed);
         } else {
             mRoot.addChildren(mSections, mSigninPromo, mAllDismissed);
@@ -154,7 +154,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
                 return new NewTabPageViewHolder(mAboveTheFoldView);
 
             case ItemViewType.SITE_SECTION:
-                return SiteSection.createViewHolder(SiteSection.inflateSiteSection(parent));
+                return SiteSection.createViewHolder(parent);
 
             case ItemViewType.HEADER:
                 return new SectionHeaderViewHolder(mRecyclerView, mUiConfig);
@@ -284,7 +284,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         assert child == mRoot;
         notifyItemRangeInserted(itemPosition, itemCount);
         if (mBottomSpacer != null) mBottomSpacer.refresh();
-        if (mRecyclerView != null && FeatureUtilities.isChromeHomeModernEnabled()
+        if (mRecyclerView != null && SuggestionsConfig.useModern()
                 && mSections.hasRecentlyInsertedContent()) {
             mRecyclerView.highlightContentLength();
         }

@@ -17,17 +17,17 @@ function test()
         next();
     }
 
-    TestRunner.runTestSuite([
+    InspectorTest.runTestSuite([
         async function testSetUp(next)
         {
-            await new Promise(resolve => TestRunner.evaluateInPage("dumpObjects('Initial')", resolve));
+            await new Promise(resolve => InspectorTest.evaluateInPage("dumpObjects('Initial')", resolve));
 
-            var result = await TestRunner.RuntimeAgent.evaluate("object1");
+            var result = await InspectorTest.RuntimeAgent.evaluate("object1");
 
-            obj1 = TestRunner.runtimeModel.createRemoteObject(result);
-            var result = await TestRunner.RuntimeAgent.evaluate("object2");
+            obj1 = InspectorTest.runtimeModel.createRemoteObject(result);
+            var result = await InspectorTest.RuntimeAgent.evaluate("object2");
 
-            obj2 = TestRunner.runtimeModel.createRemoteObject(result);
+            obj2 = InspectorTest.runtimeModel.createRemoteObject(result);
             next();
         },
 
@@ -57,7 +57,7 @@ function test()
         convertPropertyValueForTest(property, "value");
         convertPropertyValueForTest(property, "getter");
         convertPropertyValueForTest(property, "setter");
-        TestRunner.dump(property, { objectId: "formatAsTypeName" });
+        InspectorTest.dump(property, { objectId: "formatAsTypeName" });
     }
 }
 

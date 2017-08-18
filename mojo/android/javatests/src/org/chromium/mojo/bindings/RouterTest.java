@@ -6,15 +6,8 @@ package org.chromium.mojo.bindings;
 
 import android.support.test.filters.SmallTest;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.mojo.MojoTestRule;
+import org.chromium.mojo.MojoTestCase;
 import org.chromium.mojo.bindings.BindingsTestUtils.CapturingErrorHandler;
 import org.chromium.mojo.bindings.BindingsTestUtils.RecordingMessageReceiverWithResponder;
 import org.chromium.mojo.system.Core;
@@ -32,13 +25,7 @@ import java.util.ArrayList;
 /**
  * Testing {@link Router}
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class RouterTest {
-
-
-    @Rule
-    public MojoTestRule mTestRule = new MojoTestRule();
-
+public class RouterTest extends MojoTestCase {
 
     private MessagePipeHandle mHandle;
     private Router mRouter;
@@ -48,8 +35,9 @@ public class RouterTest {
     /**
      * @see MojoTestCase#setUp()
      */
-    @Before
-        public void setUp() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         Core core = CoreImpl.getInstance();
         Pair<MessagePipeHandle, MessagePipeHandle> handles = core.createMessagePipe(null);
         mHandle = handles.first;
@@ -64,7 +52,6 @@ public class RouterTest {
     /**
      * Testing sending a message via the router that expected a response.
      */
-    @Test
     @SmallTest
     public void testSendingToRouterWithResponse() {
         final int requestMessageType = 0xdead;
@@ -79,15 +66,15 @@ public class RouterTest {
         ResultAnd<MessagePipeHandle.ReadMessageResult> result =
                 mHandle.readMessage(MessagePipeHandle.ReadFlags.NONE);
 
-        Assert.assertEquals(MojoResult.OK, result.getMojoResult());
+        assertEquals(MojoResult.OK, result.getMojoResult());
         MessageHeader receivedHeader =
                 new Message(ByteBuffer.wrap(result.getValue().mData), new ArrayList<Handle>())
                         .asServiceMessage()
                         .getHeader();
 
-        Assert.assertEquals(header.getType(), receivedHeader.getType());
-        Assert.assertEquals(header.getFlags(), receivedHeader.getFlags());
-        Assert.assertTrue(receivedHeader.getRequestId() != 0);
+        assertEquals(header.getType(), receivedHeader.getType());
+        assertEquals(header.getFlags(), receivedHeader.getFlags());
+        assertTrue(receivedHeader.getRequestId() != 0);
 
         // Sending the response.
         MessageHeader responseHeader = new MessageHeader(responseMessageType,
@@ -97,13 +84,13 @@ public class RouterTest {
         Message responseMessage = encoder.getMessage();
         mHandle.writeMessage(responseMessage.getData(), new ArrayList<Handle>(),
                 MessagePipeHandle.WriteFlags.NONE);
-        mTestRule.runLoopUntilIdle();
+        runLoopUntilIdle();
 
-        Assert.assertEquals(1, mReceiver.messages.size());
+        assertEquals(1, mReceiver.messages.size());
         ServiceMessage receivedResponseMessage = mReceiver.messages.get(0).asServiceMessage();
-        Assert.assertEquals(MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
+        assertEquals(MessageHeader.MESSAGE_IS_RESPONSE_FLAG,
                 receivedResponseMessage.getHeader().getFlags());
-        Assert.assertEquals(responseMessage.getData(), receivedResponseMessage.getData());
+        assertEquals(responseMessage.getData(), receivedResponseMessage.getData());
     }
 
     /**
@@ -122,12 +109,12 @@ public class RouterTest {
         Message headerMessage = encoder.getMessage();
         mHandle.writeMessage(headerMessage.getData(), new ArrayList<Handle>(),
                 MessagePipeHandle.WriteFlags.NONE);
-        mTestRule.runLoopUntilIdle();
+        runLoopUntilIdle();
 
-        Assert.assertEquals(messageIndex + 1, mReceiver.messagesWithReceivers.size());
+        assertEquals(messageIndex + 1, mReceiver.messagesWithReceivers.size());
         Pair<Message, MessageReceiver> receivedMessage =
                 mReceiver.messagesWithReceivers.get(messageIndex);
-        Assert.assertEquals(headerMessage.getData(), receivedMessage.first.getData());
+        assertEquals(headerMessage.getData(), receivedMessage.first.getData());
     }
 
     /**
@@ -153,8 +140,8 @@ public class RouterTest {
         ResultAnd<MessagePipeHandle.ReadMessageResult> result =
                 mHandle.readMessage(MessagePipeHandle.ReadFlags.NONE);
 
-        Assert.assertEquals(MojoResult.OK, result.getMojoResult());
-        Assert.assertEquals(message.getData(), ByteBuffer.wrap(result.getValue().mData));
+        assertEquals(MojoResult.OK, result.getMojoResult());
+        assertEquals(message.getData(), ByteBuffer.wrap(result.getValue().mData));
     }
 
     /**
@@ -194,7 +181,6 @@ public class RouterTest {
     /**
      * Testing receiving a message via the router that expected a response.
      */
-    @Test
     @SmallTest
     public void testReceivingViaRouterWithResponse() {
         final int requestMessageType = 0xdead;
@@ -212,7 +198,6 @@ public class RouterTest {
      * Tests that if a callback is dropped (i.e. becomes unreachable and is finalized
      * without being used), then the message pipe will be closed.
      */
-    @Test
     @SmallTest
     public void testDroppingReceiverWithoutUsingIt() {
         // Send 10 messages to the router without sending a response.
@@ -237,10 +222,10 @@ public class RouterTest {
         // should close the pipe.
         clearAllMessageReceivers();
         // The close() occurs asynchronously on this thread.
-        mTestRule.runLoopUntilIdle();
+        runLoopUntilIdle();
 
         // Confirm that the pipe was closed on the Router side.
         HandleSignals closedFlag = HandleSignals.none().setPeerClosed(true);
-        Assert.assertEquals(closedFlag, mHandle.querySignalsState().getSatisfiedSignals());
+        assertEquals(closedFlag, mHandle.querySignalsState().getSatisfiedSignals());
     }
 }

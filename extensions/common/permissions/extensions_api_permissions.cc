@@ -58,8 +58,6 @@ ExtensionsAPIPermissions::GetAllPermissions() const {
        APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kExternallyConnectableAllUrls,
        "externally_connectable.all_urls"},
-      {APIPermission::kFeedbackPrivate, "feedbackPrivate",
-       APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kFullscreen, "app.window.fullscreen"},
 
       // The permission string for "fileSystem" is only shown when

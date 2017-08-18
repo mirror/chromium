@@ -10,17 +10,17 @@
 
 function test()
 {
-    var header = TestRunner.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL)
-    SASSTestRunner.loadASTMapping(header, onMapping);
+    var header = InspectorTest.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL)
+    InspectorTest.loadASTMapping(header, onMapping);
 
     function onMapping(map)
     {
         if (map) {
-            TestRunner.addResult("ERROR: a valid mapping created for misaligned sourcemap.");
+            InspectorTest.addResult("ERROR: a valid mapping created for misaligned sourcemap.");
         } else {
-            TestRunner.addResult("OK: the mapping successfully reported misalignment.");
+            InspectorTest.addResult("OK: the mapping successfully reported misalignment.");
         }
-        TestRunner.completeTest();
+        InspectorTest.completeTest();
     }
 }
 

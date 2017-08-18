@@ -23,6 +23,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
 /**
  * A test suite for zooming-related methods and settings.
@@ -65,60 +66,103 @@ public class AwZoomTest {
     }
 
     private boolean isMultiTouchZoomSupportedOnUiThread() throws Throwable {
-        return mActivityTestRule.runTestOnUiThreadAndGetResult(
-                () -> mAwContents.isMultiTouchZoomSupported());
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return mAwContents.isMultiTouchZoomSupported();
+            }
+        });
     }
 
     private int getVisibilityOnUiThread(final View view) throws Throwable {
-        return mActivityTestRule.runTestOnUiThreadAndGetResult(() -> view.getVisibility());
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return view.getVisibility();
+            }
+        });
     }
 
     private View getZoomControlsOnUiThread() throws Throwable {
-        return mActivityTestRule.runTestOnUiThreadAndGetResult(
-                () -> mAwContents.getZoomControlsForTest());
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<View>() {
+            @Override
+            public View call() throws Exception {
+                return mAwContents.getZoomControlsForTest();
+            }
+        });
     }
 
     private void invokeZoomPickerOnUiThread() throws Throwable {
-        ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.invokeZoomPicker());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.invokeZoomPicker();
+            }
+        });
     }
 
     private void zoomInOnUiThreadAndWait() throws Throwable {
         final float previousScale = mActivityTestRule.getPixelScaleOnUiThread(mAwContents);
-        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(
-                () -> mAwContents.zoomIn()));
+        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return mAwContents.zoomIn();
+            }
+        }));
         // The zoom level is updated asynchronously.
         waitForScaleChange(previousScale);
     }
 
     private void zoomOutOnUiThreadAndWait() throws Throwable {
         final float previousScale = mActivityTestRule.getPixelScaleOnUiThread(mAwContents);
-        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(
-                () -> mAwContents.zoomOut()));
+        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return mAwContents.zoomOut();
+            }
+        }));
         // The zoom level is updated asynchronously.
         waitForScaleChange(previousScale);
     }
 
     private void zoomByOnUiThreadAndWait(final float delta) throws Throwable {
         final float previousScale = mActivityTestRule.getPixelScaleOnUiThread(mAwContents);
-        ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.zoomBy(delta));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.zoomBy(delta);
+            }
+        });
         // The zoom level is updated asynchronously.
         waitForScaleChange(previousScale);
     }
 
     private void waitForScaleChange(final float previousScale) throws Throwable {
-        AwActivityTestRule.pollInstrumentationThread(
-                () -> previousScale != mActivityTestRule.getPixelScaleOnUiThread(mAwContents));
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return previousScale != mActivityTestRule.getPixelScaleOnUiThread(mAwContents);
+            }
+        });
     }
 
     private void waitForScaleToBecome(final float expectedScale) throws Throwable {
-        AwActivityTestRule.pollInstrumentationThread(
-                () -> expectedScale == mActivityTestRule.getScaleOnUiThread(mAwContents));
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return expectedScale == mActivityTestRule.getScaleOnUiThread(mAwContents);
+            }
+        });
     }
 
     private void waitUntilCanNotZoom() throws Throwable {
-        AwActivityTestRule.pollInstrumentationThread(
-                () -> !mActivityTestRule.canZoomInOnUiThread(mAwContents)
-                        && !mActivityTestRule.canZoomOutOnUiThread(mAwContents));
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return !mActivityTestRule.canZoomInOnUiThread(mAwContents)
+                        && !mActivityTestRule.canZoomOutOnUiThread(mAwContents);
+            }
+        });
     }
 
     private void runMagnificationTest() throws Throwable {

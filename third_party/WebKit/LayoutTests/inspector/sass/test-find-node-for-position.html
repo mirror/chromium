@@ -12,10 +12,10 @@ pre {
 
 function test()
 {
-    TestRunner.evaluateInPagePromise("getSASS()")
-        .then(result => SASSTestRunner.parseSCSS("", result.value))
+    InspectorTest.evaluateInPagePromise("getSASS()")
+        .then(result => InspectorTest.parseSCSS("", result.value))
         .then(ast => onAST(ast))
-        .then(() => TestRunner.completeTest());
+        .then(() => InspectorTest.completeTest());
 
     function onAST(ast)
     {
@@ -39,11 +39,11 @@ function test()
             cursor.advance(i);
             var fastSearch = ast.findNodeForPosition(cursor.lineNumber(), cursor.columnNumber());
             if (fastSearch !== canonical) {
-                TestRunner.addResult("Results differ for offset " + i);
+                InspectorTest.addResult("Results differ for offset " + i);
                 return;
             }
         }
-        TestRunner.addResult("All nodes found correctly.");
+        InspectorTest.addResult("All nodes found correctly.");
     }
 }
 

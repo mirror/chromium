@@ -19,7 +19,6 @@
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
-#include "ios/chrome/test/earl_grey/accessibility_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
@@ -182,11 +181,6 @@ UIView* CollectionView() {
 }
 
 #pragma mark - Tests
-
-// Tests that all items are accessible on the home page.
-- (void)testAccessibility {
-  chrome_test_util::VerifyAccessibilityForCurrentScreen();
-}
 
 // Tests that the fake omnibox width is correctly updated after a rotation.
 - (void)testOmniboxWidthRotation {

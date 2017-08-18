@@ -49,8 +49,12 @@ public class AwJavaBridgeTest {
             @JavascriptInterface
             public void destroy() {
                 try {
-                    InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                            () -> awContents.destroy());
+                    InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                        @Override
+                        public void run() {
+                            awContents.destroy();
+                        }
+                    });
                     // Destroying one AwContents from within the JS callback should still
                     // leave others functioning. Note that we must do this asynchronously,
                     // as Blink thread is currently blocked waiting for this method to finish.
@@ -63,8 +67,12 @@ public class AwJavaBridgeTest {
         }
 
         mActivityTestRule.enableJavaScriptOnUiThread(awContents);
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> awContents.addJavascriptInterface(new Test(), "test"));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.addJavascriptInterface(new Test(), "test");
+            }
+        });
 
         mActivityTestRule.loadDataSync(
                 awContents, mContentsClient.getOnPageFinishedHelper(), html, "text/html", false);
@@ -104,9 +112,12 @@ public class AwJavaBridgeTest {
             private int mValue;
         }
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-            awContents1.addJavascriptInterface(new Test(1), "test");
-            awContents2.addJavascriptInterface(new Test(2), "test");
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents1.addJavascriptInterface(new Test(1), "test");
+                awContents2.addJavascriptInterface(new Test(2), "test");
+            }
         });
         final String html = "<html>Hello World</html>";
         mActivityTestRule.loadDataSync(
@@ -141,8 +152,12 @@ public class AwJavaBridgeTest {
             private int mValue;
         }
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> awContents1.addJavascriptInterface(new Test(1), "test"));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents1.addJavascriptInterface(new Test(1), "test");
+            }
+        });
         final String html = "<html>Hello World</html>";
         mActivityTestRule.loadDataSync(
                 awContents1, mContentsClient.getOnPageFinishedHelper(), html, "text/html", false);
@@ -156,8 +171,12 @@ public class AwJavaBridgeTest {
         final AwContents awContents2 = view2.getAwContents();
         mActivityTestRule.enableJavaScriptOnUiThread(awContents2);
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> awContents2.addJavascriptInterface(new Test(2), "test"));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents2.addJavascriptInterface(new Test(2), "test");
+            }
+        });
         mActivityTestRule.loadDataSync(
                 awContents2, client2.getOnPageFinishedHelper(), html, "text/html", false);
 

@@ -21,8 +21,8 @@ JSON = {};
 <script>
 var test = function()
 {
-    TestRunner.reloadPage();
-    TestRunner.addSniffer(SDK.CSSModel.prototype, "_styleSheetAdded", onStyleSheetAdded, true);
+    InspectorTest.reloadPage();
+    InspectorTest.addSniffer(SDK.CSSModel.prototype, "_styleSheetAdded", onStyleSheetAdded, true);
 
     var pendingStyleSheetsCount = 5;
     function onStyleSheetAdded()
@@ -33,12 +33,12 @@ var test = function()
             return "[domain]";
         };
 
-        AuditsTestRunner.launchAllAudits(false, onAuditsFinished);
+        InspectorTest.launchAllAudits(false, onAuditsFinished);
     }
 
     function onAuditsFinished()
     {
-        AuditsTestRunner.collectAuditResults(TestRunner.completeTest);
+        InspectorTest.collectAuditResults(InspectorTest.completeTest);
     }
 }
 </script>

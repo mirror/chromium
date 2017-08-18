@@ -368,12 +368,15 @@ public class ClientOnReceivedError2Test {
         startWebServer();
         final String url = mWebServer.setResponseWithRunnableAction(
                 "/about.html", CommonResources.ABOUT_HTML, null,
-                () -> {
-                    try {
-                        latch.await(
-                                WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
-                    } catch (InterruptedException e) {
-                        Assert.fail("Caught InterruptedException " + e);
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            latch.await(
+                                    WAIT_TIMEOUT_MS, java.util.concurrent.TimeUnit.MILLISECONDS);
+                        } catch (InterruptedException e) {
+                            Assert.fail("Caught InterruptedException " + e);
+                        }
                     }
                 });
         TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =

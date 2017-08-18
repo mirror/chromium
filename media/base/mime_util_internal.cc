@@ -18,11 +18,7 @@
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
-
-// TODO(dalecurtis): This include is not allowed by media/base since
-// media/base/android is technically a different component. We should move
-// mime_util*.{cc,h} out of media/base to fix this.
-#include "media/base/android/media_codec_util.h"  // nogncheck
+#include "media/base/android/media_codec_util.h"
 #endif
 
 namespace media {

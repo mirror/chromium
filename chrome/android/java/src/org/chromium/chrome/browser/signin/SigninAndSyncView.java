@@ -24,8 +24,6 @@ import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.components.sync.AndroidSyncSettings;
 import org.chromium.components.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
 
-import javax.annotation.Nullable;
-
 /**
  * A View that shows the user the next step they must complete to start syncing their data (eg.
  * Recent Tabs or Bookmarks). For example, if the user is not signed in, the View will prompt them
@@ -35,8 +33,8 @@ import javax.annotation.Nullable;
  */
 public class SigninAndSyncView extends LinearLayout
         implements AndroidSyncSettingsObserver, SignInStateObserver {
-    private @Nullable Listener mListener;
-    private @AccessPoint int mAccessPoint;
+    private Listener mListener;
+    @AccessPoint private int mAccessPoint;
     private boolean mInitialized;
     private final SigninManager mSigninManager;
 
@@ -59,18 +57,12 @@ public class SigninAndSyncView extends LinearLayout
     /**
      * A convenience method to inflate and initialize a SigninAndSyncView.
      * @param parent A parent used to provide LayoutParams (the SigninAndSyncView will not be
-     *         attached).
-     * @param listener Listener for user interactions. A null listener marks that the promo is not
-     *         dismissible.
+     *     attached).
+     * @param listener Listener for user interactions.
      * @param accessPoint Where the SigninAndSyncView is used.
      */
-    public static SigninAndSyncView create(
-            ViewGroup parent, @Nullable Listener listener, @AccessPoint int accessPoint) {
-        if (listener == null) {
-            assert accessPoint
-                    == SigninAccessPoint.RECENT_TABS
-                : "The promo should not be dismissible in Recent Tabs!";
-        }
+    public static SigninAndSyncView create(ViewGroup parent, Listener listener,
+            @AccessPoint int accessPoint) {
         SigninAndSyncView signinView = (SigninAndSyncView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.signin_and_sync_view, parent, false);
         signinView.init(listener, accessPoint);

@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "base/containers/id_map.h"
+#include "base/id_map.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/strings/string_number_conversions.h"
@@ -31,7 +31,7 @@ class AuraWindowRegistry : public aura::WindowObserver {
   }
 
   int RegisterWindow(aura::Window* window) {
-    base::IDMap<aura::Window*>::const_iterator it(&registered_windows_);
+    IDMap<aura::Window*>::const_iterator it(&registered_windows_);
     for (; !it.IsAtEnd(); it.Advance()) {
       if (it.GetCurrentValue() == window)
         return it.GetCurrentKey();
@@ -53,7 +53,7 @@ class AuraWindowRegistry : public aura::WindowObserver {
 
   // WindowObserver overrides.
   void OnWindowDestroying(aura::Window* window) override {
-    base::IDMap<aura::Window*>::iterator it(&registered_windows_);
+    IDMap<aura::Window*>::iterator it(&registered_windows_);
     for (; !it.IsAtEnd(); it.Advance()) {
       if (it.GetCurrentValue() == window) {
         registered_windows_.Remove(it.GetCurrentKey());
@@ -63,7 +63,7 @@ class AuraWindowRegistry : public aura::WindowObserver {
     NOTREACHED();
   }
 
-  base::IDMap<aura::Window*> registered_windows_;
+  IDMap<aura::Window*> registered_windows_;
 
   DISALLOW_COPY_AND_ASSIGN(AuraWindowRegistry);
 };

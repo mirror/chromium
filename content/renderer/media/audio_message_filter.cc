@@ -175,7 +175,7 @@ void AudioMessageFilter::OnChannelClosing() {
   DLOG_IF(WARNING, !delegates_.IsEmpty())
       << "Not all audio devices have been closed.";
 
-  base::IDMap<media::AudioOutputIPCDelegate*>::iterator it(&delegates_);
+  IDMap<media::AudioOutputIPCDelegate*>::iterator it(&delegates_);
   while (!it.IsAtEnd()) {
     it.GetCurrentValue()->OnIPCClosed();
     delegates_.Remove(it.GetCurrentKey());

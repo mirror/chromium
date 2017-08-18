@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 1871 tests; 1817 PASS, 54 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 1863 tests; 1809 PASS, 54 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS Selectors-API Test Suite: XHTML 
 PASS Document supports querySelector 
 PASS Document supports querySelectorAll 
@@ -111,8 +111,6 @@ PASS Document.querySelector: Invalid namespace: ^|div
 PASS Document.querySelectorAll: Invalid namespace: ^|div 
 PASS Document.querySelector: Invalid namespace: $|div 
 PASS Document.querySelectorAll: Invalid namespace: $|div 
-PASS Document.querySelector: Relative selector: >* 
-PASS Document.querySelectorAll: Relative selector: >* 
 PASS Detached Element.querySelector: Empty String:  
 PASS Detached Element.querySelectorAll: Empty String:  
 PASS Detached Element.querySelector: Invalid character: [ 
@@ -175,8 +173,6 @@ PASS Detached Element.querySelector: Invalid namespace: ^|div
 PASS Detached Element.querySelectorAll: Invalid namespace: ^|div 
 PASS Detached Element.querySelector: Invalid namespace: $|div 
 PASS Detached Element.querySelectorAll: Invalid namespace: $|div 
-PASS Detached Element.querySelector: Relative selector: >* 
-PASS Detached Element.querySelectorAll: Relative selector: >* 
 PASS Fragment.querySelector: Empty String:  
 PASS Fragment.querySelectorAll: Empty String:  
 PASS Fragment.querySelector: Invalid character: [ 
@@ -239,8 +235,6 @@ PASS Fragment.querySelector: Invalid namespace: ^|div
 PASS Fragment.querySelectorAll: Invalid namespace: ^|div 
 PASS Fragment.querySelector: Invalid namespace: $|div 
 PASS Fragment.querySelectorAll: Invalid namespace: $|div 
-PASS Fragment.querySelector: Relative selector: >* 
-PASS Fragment.querySelectorAll: Relative selector: >* 
 PASS In-document Element.querySelector: Empty String:  
 PASS In-document Element.querySelectorAll: Empty String:  
 PASS In-document Element.querySelector: Invalid character: [ 
@@ -303,8 +297,6 @@ PASS In-document Element.querySelector: Invalid namespace: ^|div
 PASS In-document Element.querySelectorAll: Invalid namespace: ^|div 
 PASS In-document Element.querySelector: Invalid namespace: $|div 
 PASS In-document Element.querySelectorAll: Invalid namespace: $|div 
-PASS In-document Element.querySelector: Relative selector: >* 
-PASS In-document Element.querySelectorAll: Relative selector: >* 
 PASS Document.querySelectorAll: Type selector, matching html element: html 
 PASS Document.querySelector: Type selector, matching html element: html 
 PASS Document.querySelectorAll: Type selector, matching body element: body 

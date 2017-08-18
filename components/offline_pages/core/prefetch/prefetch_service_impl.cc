@@ -12,7 +12,6 @@
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
-#include "components/offline_pages/core/prefetch/prefetch_configuration.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
@@ -33,8 +32,7 @@ PrefetchServiceImpl::PrefetchServiceImpl(
     std::unique_ptr<PrefetchDownloader> prefetch_downloader,
     std::unique_ptr<PrefetchImporter> prefetch_importer,
     std::unique_ptr<PrefetchBackgroundTaskHandler>
-        prefetch_background_task_handler,
-    std::unique_ptr<PrefetchConfiguration> prefetch_configuration)
+        prefetch_background_task_handler)
     : offline_metrics_collector_(std::move(offline_metrics_collector)),
       prefetch_dispatcher_(std::move(dispatcher)),
       prefetch_gcm_handler_(std::move(gcm_handler)),
@@ -44,12 +42,14 @@ PrefetchServiceImpl::PrefetchServiceImpl(
       prefetch_downloader_(std::move(prefetch_downloader)),
       prefetch_importer_(std::move(prefetch_importer)),
       prefetch_background_task_handler_(
-          std::move(prefetch_background_task_handler)),
-      prefetch_configuration_(std::move(prefetch_configuration)) {
+          std::move(prefetch_background_task_handler)) {
   prefetch_dispatcher_->SetService(this);
-  prefetch_downloader_->SetPrefetchService(this);
   prefetch_gcm_handler_->SetService(this);
   suggested_articles_observer_->SetPrefetchService(this);
+  prefetch_downloader_->SetCompletedCallback(
+      base::Bind(&PrefetchServiceImpl::OnDownloadCompleted,
+                 // Downloader is owned by this instance.
+                 base::Unretained(this)));
 }
 
 PrefetchServiceImpl::~PrefetchServiceImpl() = default;
@@ -96,13 +96,22 @@ PrefetchServiceImpl::GetPrefetchBackgroundTaskHandler() {
   return prefetch_background_task_handler_.get();
 }
 
-PrefetchConfiguration* PrefetchServiceImpl::GetPrefetchConfiguration() {
-  return prefetch_configuration_.get();
-}
-
 void PrefetchServiceImpl::Shutdown() {
   suggested_articles_observer_.reset();
   prefetch_downloader_.reset();
+}
+
+void PrefetchServiceImpl::OnDownloadCompleted(
+    const PrefetchDownloadResult& result) {
+  logger_.RecordActivity("Download " + result.download_id +
+                         (result.success ? " succeeded" : " failed"));
+  if (!result.success)
+    return;
+
+  logger_.RecordActivity("Downloaded as " + result.file_path.MaybeAsASCII() +
+                         " with size " + std::to_string(result.file_size));
+
+  // TODO(jianli): To hook up with prefetch importer.
 }
 
 }  // namespace offline_pages

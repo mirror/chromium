@@ -21,6 +21,8 @@ import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.test.util.TestWebServer;
 
+import java.util.concurrent.Callable;
+
 /**
  * Test AwPermissionManager.
  */
@@ -72,7 +74,12 @@ public class AwPermissionManagerTest {
 
                 // Emulate a delayed response to the request by running four seconds in the future.
                 Handler handler = new Handler(Looper.myLooper());
-                handler.postDelayed(() -> awPermissionRequest.grant(), 4000);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        awPermissionRequest.grant();
+                    }
+                }, 4000);
             }
         };
 
@@ -86,8 +93,12 @@ public class AwPermissionManagerTest {
 
     private void pollTitleAs(final String title, final AwContents awContents)
             throws Exception {
-        AwActivityTestRule.pollInstrumentationThread(
-                () -> title.equals(mActivityTestRule.getTitleOnUiThread(awContents)));
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return title.equals(mActivityTestRule.getTitleOnUiThread(awContents));
+            }
+        });
     }
 }
 

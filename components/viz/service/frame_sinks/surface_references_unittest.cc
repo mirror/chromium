@@ -112,7 +112,9 @@ class SurfaceReferencesTest : public testing::Test {
   // testing::Test:
   void SetUp() override {
     // Start each test with a fresh SurfaceManager instance.
-    manager_ = std::make_unique<FrameSinkManagerImpl>();
+    manager_ = base::MakeUnique<FrameSinkManagerImpl>(
+        nullptr /* display_provider */,
+        SurfaceManager::LifetimeType::REFERENCES);
   }
   void TearDown() override {
     for (auto& support : supports_)

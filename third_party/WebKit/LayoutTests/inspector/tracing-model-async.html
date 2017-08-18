@@ -66,7 +66,7 @@ function test()
 
     ];
 
-    var model = PerformanceTestRunner.createTracingModel(testData);
+    var model = InspectorTest.createTracingModel(testData);
     var events = model.sortedProcesses()[0].threadById(mainThread).asyncEvents();
     for (var i = 0; i < events.length; ++i) {
         var stepString = events[i].name + " " + events[i].startTime + "-" + events[i].endTime + ": ";
@@ -77,9 +77,9 @@ function test()
                 stepString += ", ";
             stepString += step.phase + " " + step.startTime;
         }
-        TestRunner.addResult(stepString);
+        InspectorTest.addResult(stepString);
     }
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 }
 
 </script>

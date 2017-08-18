@@ -21,7 +21,6 @@ import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.ui.mojom.WindowOpenDisposition;
 
 import java.util.ArrayList;
@@ -293,7 +292,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     /** @return the sites currently loaded in the group, grouped by vertical. */
-    public SparseArray<List<Tile>> getTileSections() {
+    public SparseArray<List<Tile>> getTiles() {
         return mTileSections;
     }
 
@@ -358,10 +357,9 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         // TODO(dgn): change these events, maybe introduce new ones or just change semantics? This
         // will depend on the UI to be implemented and the desired refresh behaviour.
-        List<Tile> personalizedTiles = mTileSections.get(TileSectionType.PERSONALIZED);
-        int numberOfPersonalizedTiles = personalizedTiles == null ? 0 : personalizedTiles.size();
-        boolean countChanged =
-                isInitialLoad || numberOfPersonalizedTiles != oldPersonalisedTilesCount;
+        boolean countChanged = isInitialLoad
+                || mTileSections.get(TileSectionType.PERSONALIZED).size()
+                        != oldPersonalisedTilesCount;
         dataChanged = dataChanged || countChanged;
 
         if (!dataChanged) return;
@@ -456,7 +454,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         // Have an empty list for now that can be rendered as-is without causing issues or too much
         // state checking. We will have to decide if we want empty lists or no section at all for
         // the others.
-        newTileData.put(TileSectionType.PERSONALIZED, new ArrayList<Tile>());
+        newTileData.put(TileSectionType.PERSONALIZED, new ArrayList<>());
 
         return newTileData;
     }
@@ -473,12 +471,12 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
 
         @Override
-        public void onLargeIconAvailable(
-                @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
+        public void onLargeIconAvailable(@Nullable Bitmap icon, int fallbackColor,
+                boolean isFallbackColorDefault, String url, int iconSizePx) {
             Tile tile = findTile(mSiteData);
             if (tile != null) { // Do nothing if the tile was removed.
                 if (icon == null) {
-                    if (FeatureUtilities.isChromeHomeModernEnabled()) {
+                    if (SuggestionsConfig.useModern()) {
                         mTileRenderer.setDefaultTileIcon(tile);
                     } else {
                         mTileRenderer.setTileIconFromColor(
@@ -542,9 +540,7 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         @Override
         public boolean isItemSupported(@ContextMenuItemId int menuItemId) {
-            // Personalized tiles are the only tiles that can be removed.
-            return !(menuItemId == ContextMenuManager.ID_REMOVE
-                    && mSuggestion.sectionType != TileSectionType.PERSONALIZED);
+            return true;
         }
 
         @Override

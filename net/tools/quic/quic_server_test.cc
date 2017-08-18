@@ -75,7 +75,7 @@ class TestQuicServer : public QuicServer {
     return mock_dispatcher_;
   }
 
-  MockQuicSimpleDispatcher* mock_dispatcher_ = nullptr;
+  MockQuicSimpleDispatcher* mock_dispatcher_;
   QuicHttpResponseCache response_cache_;
 };
 

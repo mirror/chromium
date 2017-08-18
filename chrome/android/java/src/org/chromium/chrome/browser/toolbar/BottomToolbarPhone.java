@@ -25,6 +25,7 @@ import android.widget.ImageView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.appmenu.AppMenuButtonHelper;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.tab.Tab;
@@ -129,9 +130,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
     /** The background alpha for the tab switcher. */
     private static final float TAB_SWITCHER_TOOLBAR_ALPHA = 0.7f;
 
-    /** The background alpha for the tab switcher in Chrome Modern. */
-    private static final float MODERN_TAB_SWITCHER_TOOLBAR_ALPHA = 0.9f;
-
     /** The white version of the toolbar handle; used for dark themes and incognito. */
     private final Drawable mHandleLight;
 
@@ -162,9 +160,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
     /** Whether or not the toolbar handle should be used. */
     private boolean mUseToolbarHandle;
-
-    /** The bottom toolbar's shadow. */
-    private View mBottomToolbarShadow;
 
     /**
      * Tracks whether the toolbar buttons are hidden, with 1.f being fully visible and 0.f being
@@ -570,14 +565,13 @@ public class BottomToolbarPhone extends ToolbarPhone {
         // own. Get the root view and search for the handle.
         mToolbarHandleView = (ImageView) getRootView().findViewById(R.id.toolbar_handle);
         mToolbarHandleView.setImageDrawable(mHandleDark);
-        mBottomToolbarShadow = getRootView().findViewById(R.id.bottom_toolbar_shadow);
     }
 
     @Override
     public void onNativeLibraryReady() {
         super.onNativeLibraryReady();
 
-        mUseModernDesign = FeatureUtilities.isChromeHomeModernEnabled();
+        mUseModernDesign = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
         mUseToolbarHandle = !FeatureUtilities.isChromeHomeExpandButtonEnabled();
 
         if (!mUseToolbarHandle) {
@@ -617,8 +611,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
         mToolbarShadowPermanentlyHidden = true;
         mToolbarShadow.setVisibility(View.GONE);
-
-        mNewTabButton.setIsModern();
 
         // TODO(twellington): remove or fix incognito chip before making the modern layout the
         //                    default.
@@ -726,16 +718,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
         updateToolbarBackground(ColorUtils.getColorWithOverlay(
                 getTabThemeColor(), tabSwitcherThemeColor, progress));
 
-        if (mUseModernDesign) {
-            mBottomToolbarShadow.setAlpha(1f - progress);
-        }
-
         // Don't use transparency for accessibility mode or low-end devices since the
         // {@link OverviewListLayout} will be used instead of the normal tab switcher.
         if (!DeviceClassManager.enableAccessibilityLayout()) {
-            float toolbarAlpha = mUseModernDesign ? MODERN_TAB_SWITCHER_TOOLBAR_ALPHA
-                                                  : TAB_SWITCHER_TOOLBAR_ALPHA;
-            float alphaTransition = 1f - toolbarAlpha;
+            float alphaTransition = 1f - TAB_SWITCHER_TOOLBAR_ALPHA;
             mToolbarBackground.setAlpha((int) ((1f - (alphaTransition * progress)) * 255));
         }
     }
@@ -939,12 +925,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
     @Override
     protected int getToolbarColorForVisualState(final VisualState visualState) {
-        if (mUseModernDesign) {
-            if (visualState == VisualState.TAB_SWITCHER_NORMAL) {
-                return Color.WHITE;
-            } else if (visualState == VisualState.NORMAL) {
-                return ApiCompatibilityUtils.getColor(getResources(), R.color.modern_primary_color);
-            }
+        if (mUseModernDesign && visualState == VisualState.NORMAL) {
+            return ApiCompatibilityUtils.getColor(getResources(), R.color.modern_primary_color);
         }
 
         return super.getToolbarColorForVisualState(visualState);

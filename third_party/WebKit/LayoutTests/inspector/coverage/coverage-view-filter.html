@@ -10,26 +10,26 @@
 <script>
 async function test()
 {
-    CoverageTestRunner.startCoverage();
-    await TestRunner.evaluateInPagePromise("performActions()");
-    await CoverageTestRunner.stopCoverage();
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions()");
+    await InspectorTest.stopCoverage();
 
     var coverageView = self.runtime.sharedInstance(Coverage.CoverageView);
     setFilter("inspector");
-    CoverageTestRunner.dumpCoverageListView();
+    InspectorTest.dumpCoverageListView();
     setFilter("CES/COV");
-    CoverageTestRunner.dumpCoverageListView();
+    InspectorTest.dumpCoverageListView();
     setFilter("no pasaran");
-    CoverageTestRunner.dumpCoverageListView();
+    InspectorTest.dumpCoverageListView();
     setFilter("");
-    CoverageTestRunner.dumpCoverageListView();
-    TestRunner.completeTest();
+    InspectorTest.dumpCoverageListView();
+    InspectorTest.completeTest();
 
     function setFilter(text)
     {
         coverageView._filterInput.setValue(text);
         coverageView._filterInput._onChangeCallback();
-        TestRunner.addResult(`Filter: ${text}`);
+        InspectorTest.addResult(`Filter: ${text}`);
     }
 }
 

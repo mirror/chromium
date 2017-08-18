@@ -7,10 +7,7 @@
 
 #include <string>
 
-namespace media_router {
-
+// TODO(crbug.com/713378): Implement for Mac.
 bool MaybeGetWifiSSID(const std::string& if_name, std::string* ssid);
-
-}  // namespace media_router
 
 #endif  // CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_DISCOVERY_NETWORK_LIST_WIFI_H_

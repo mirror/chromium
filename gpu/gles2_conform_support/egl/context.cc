@@ -40,6 +40,8 @@
 // text in this case.
 
 namespace {
+const int32_t kCommandBufferSize = 1024 * 1024;
+const int32_t kTransferBufferSize = 512 * 1024;
 const bool kBindGeneratesResources = true;
 const bool kLoseContextWhenOutOfMemory = false;
 const bool kSupportClientSideArrays = true;
@@ -253,7 +255,6 @@ void Context::ApplyContextReleased() {
 }
 
 bool Context::CreateService(gl::GLSurface* gl_surface) {
-  gpu::SharedMemoryLimits limits;
   scoped_refptr<gpu::gles2::FeatureInfo> feature_info(
       new gpu::gles2::FeatureInfo(gpu_driver_bug_workarounds_));
   scoped_refptr<gpu::gles2::ContextGroup> group(new gpu::gles2::ContextGroup(
@@ -303,7 +304,7 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
 
   std::unique_ptr<gpu::gles2::GLES2CmdHelper> gles2_cmd_helper(
       new gpu::gles2::GLES2CmdHelper(command_buffer.get()));
-  if (!gles2_cmd_helper->Initialize(limits.command_buffer_size)) {
+  if (!gles2_cmd_helper->Initialize(kCommandBufferSize)) {
     decoder->Destroy(true);
     return false;
   }
@@ -323,7 +324,9 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
           kBindGeneratesResources, kLoseContextWhenOutOfMemory,
           kSupportClientSideArrays, this));
 
-  if (!context->Initialize(limits)) {
+  if (!context->Initialize(kTransferBufferSize, kTransferBufferSize / 2,
+                           kTransferBufferSize * 2,
+                           gpu::SharedMemoryLimits::kNoLimit)) {
     DestroyService();
     return false;
   }

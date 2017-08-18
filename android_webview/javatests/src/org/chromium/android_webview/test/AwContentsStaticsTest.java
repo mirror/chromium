@@ -39,11 +39,14 @@ public class AwContentsStaticsTest {
     public void testClearClientCertPreferences() throws Throwable {
         final ClearClientCertCallbackHelper callbackHelper = new ClearClientCertCallbackHelper();
         int currentCallCount = callbackHelper.getCallCount();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-            // Make sure calling clearClientCertPreferences with null callback does not
-            // cause a crash.
-            AwContentsStatics.clearClientCertPreferences(null);
-            AwContentsStatics.clearClientCertPreferences(callbackHelper);
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                // Make sure calling clearClientCertPreferences with null callback does not
+                // cause a crash.
+                AwContentsStatics.clearClientCertPreferences(null);
+                AwContentsStatics.clearClientCertPreferences(callbackHelper);
+            }
         });
         callbackHelper.waitForCallback(currentCallCount);
     }

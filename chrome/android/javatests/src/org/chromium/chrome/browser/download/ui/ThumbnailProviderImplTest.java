@@ -27,8 +27,6 @@ import org.chromium.chrome.browser.download.ui.ThumbnailProvider.ThumbnailReques
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
-import org.chromium.content.browser.test.util.Criteria;
-import org.chromium.content.browser.test.util.CriteriaHelper;
 
 /**
  * Instrumentation test for {@link ThumbnailProviderImpl}.
@@ -45,13 +43,10 @@ public class ThumbnailProviderImplTest {
 
     private ThumbnailProviderImpl mThumbnailProvider;
 
-    private static final long TIMEOUT_MS = 10000;
-    private static final long INTERVAL_MS = 500;
-
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        initializeOnUiThread();
+        mThumbnailProvider = new ThumbnailProviderImpl();
         clearThumbnailCache();
     }
 
@@ -186,20 +181,6 @@ public class ThumbnailProviderImplTest {
         Assert.assertEquals(expectedHeight, request.getRetrievedThumbnail().getHeight());
     }
 
-    private void initializeOnUiThread() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mThumbnailProvider = new ThumbnailProviderImpl();
-            }
-        });
-        CriteriaHelper.pollInstrumentationThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return mThumbnailProvider != null;
-            }
-        }, TIMEOUT_MS, INTERVAL_MS);
-    }
     private void clearThumbnailCache() {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
@@ -229,7 +210,7 @@ public class ThumbnailProviderImplTest {
 
         @Override
         public @Nullable String getContentId() {
-            return "contentId";  // None-null value for ThumbnailProviderImpl to work
+            return null;
         }
 
         @Override
@@ -241,6 +222,16 @@ public class ThumbnailProviderImplTest {
         @Override
         public int getIconSize() {
             return mRequiredSize;
+        }
+
+        @Override
+        public @NonNull String getUrl() {
+            return "";
+        }
+
+        @Override
+        public int getFileType() {
+            return DownloadFilter.FILTER_IMAGE;
         }
 
         Bitmap getRetrievedThumbnail() {

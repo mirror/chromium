@@ -70,8 +70,7 @@ QuotaDispatcher::QuotaDispatcher(ThreadSafeSender* thread_safe_sender,
 }
 
 QuotaDispatcher::~QuotaDispatcher() {
-  base::IDMap<std::unique_ptr<Callback>>::iterator iter(
-      &pending_quota_callbacks_);
+  IDMap<std::unique_ptr<Callback>>::iterator iter(&pending_quota_callbacks_);
   while (!iter.IsAtEnd()) {
     iter.GetCurrentValue()->DidFail(storage::kQuotaErrorAbort);
     iter.Advance();

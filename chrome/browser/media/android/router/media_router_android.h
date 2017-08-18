@@ -10,7 +10,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "base/containers/id_map.h"
+#include "base/id_map.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "chrome/browser/media/android/router/media_router_android_bridge.h"
@@ -142,14 +142,13 @@ class MediaRouterAndroid : public MediaRouterBase {
     std::vector<MediaRouteResponseCallback> callbacks;
   };
 
-  using MediaRouteRequests = base::IDMap<std::unique_ptr<MediaRouteRequest>>;
+  using MediaRouteRequests = IDMap<std::unique_ptr<MediaRouteRequest>>;
   MediaRouteRequests route_requests_;
 
   using MediaRoutes = std::vector<MediaRoute>;
   MediaRoutes active_routes_;
 
-  using SendMessageCallbacks =
-      base::IDMap<std::unique_ptr<SendRouteMessageCallback>>;
+  using SendMessageCallbacks = IDMap<std::unique_ptr<SendRouteMessageCallback>>;
   SendMessageCallbacks message_callbacks_;
 
   using MessageObservers = std::unordered_map<

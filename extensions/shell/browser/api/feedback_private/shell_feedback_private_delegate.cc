@@ -9,7 +9,6 @@
 #include "base/logging.h"
 #include "base/values.h"
 #include "components/feedback/system_logs/system_logs_fetcher.h"
-#include "components/feedback/system_logs/system_logs_source.h"
 #include "content/public/browser/browser_context.h"
 #include "extensions/shell/browser/system_logs/shell_system_logs_fetcher.h"
 
@@ -30,21 +29,5 @@ ShellFeedbackPrivateDelegate::CreateSystemLogsFetcher(
     content::BrowserContext* context) const {
   return system_logs::BuildShellSystemLogsFetcher(context);
 }
-
-#if defined(OS_CHROMEOS)
-std::unique_ptr<system_logs::SystemLogsSource>
-ShellFeedbackPrivateDelegate::CreateSingleLogSource(
-    api::feedback_private::LogSource source_type) const {
-  NOTIMPLEMENTED();
-  return nullptr;
-}
-#endif
-
-std::string ShellFeedbackPrivateDelegate::GetSignedInUserEmail(
-    content::BrowserContext* context) const {
-  return std::string();
-}
-
-void ShellFeedbackPrivateDelegate::NotifyFeedbackDelayed() const {}
 
 }  // namespace extensions

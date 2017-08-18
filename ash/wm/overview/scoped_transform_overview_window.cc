@@ -180,7 +180,6 @@ ScopedTransformOverviewWindow::~ScopedTransformOverviewWindow() {}
 
 void ScopedTransformOverviewWindow::RestoreWindow() {
   ShowHeader();
-  wm::GetWindowState(window_)->set_ignored_by_shelf(ignored_by_shelf_);
   if (minimized_widget_) {
     // TODO(oshima): Use unminimize animation instead of hiding animation.
     minimized_widget_->CloseNow();
@@ -194,6 +193,7 @@ void ScopedTransformOverviewWindow::RestoreWindow() {
   ScopedOverviewAnimationSettings animation_settings(
       OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS,
       window_);
+  wm::GetWindowState(window_)->set_ignored_by_shelf(ignored_by_shelf_);
   SetOpacity(original_opacity_);
 }
 
@@ -348,9 +348,9 @@ void ScopedTransformOverviewWindow::SetTransform(
   if (&transform != &original_transform_ &&
       !determined_original_window_shape_) {
     determined_original_window_shape_ = true;
-    const ShapeRects* window_shape = window()->layer()->alpha_shape();
+    SkRegion* window_shape = window()->layer()->alpha_shape();
     if (!original_window_shape_ && window_shape)
-      original_window_shape_ = base::MakeUnique<ShapeRects>(*window_shape);
+      original_window_shape_.reset(new SkRegion(*window_shape));
   }
 
   gfx::Point target_origin(GetTargetBoundsInScreen().origin());
@@ -380,27 +380,24 @@ void ScopedTransformOverviewWindow::HideHeader() {
   if (inset > 0) {
     // Use alpha shape to hide the window header.
     bounds.Inset(0, inset, 0, 0);
-    std::unique_ptr<ShapeRects> shape;
-    if (original_window_shape_) {
-      // When the |window| has a shape, use the new bounds to clip that shape.
-      shape = base::MakeUnique<ShapeRects>(*original_window_shape_);
-      for (auto& rect : *shape)
-        rect.Intersect(bounds);
-    } else {
-      shape = base::MakeUnique<ShapeRects>();
-      shape->push_back(bounds);
-    }
+    std::unique_ptr<SkRegion> region(new SkRegion);
+    region->setRect(RectToSkIRect(bounds));
+    if (original_window_shape_)
+      region->op(*original_window_shape_, SkRegion::kIntersect_Op);
     aura::Window* window = GetOverviewWindow();
-    window->layer()->SetAlphaShape(std::move(shape));
+    window->layer()->SetAlphaShape(std::move(region));
     window->layer()->SetMasksToBounds(true);
   }
 }
 
 void ScopedTransformOverviewWindow::ShowHeader() {
   ui::Layer* layer = window()->layer();
-  layer->SetAlphaShape(original_window_shape_ ? base::MakeUnique<ShapeRects>(
-                                                    *original_window_shape_)
-                                              : nullptr);
+  if (original_window_shape_) {
+    layer->SetAlphaShape(
+        base::MakeUnique<SkRegion>(*original_window_shape_.get()));
+  } else {
+    layer->SetAlphaShape(nullptr);
+  }
   layer->SetMasksToBounds(false);
 }
 

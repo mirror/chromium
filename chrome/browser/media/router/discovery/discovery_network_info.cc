@@ -4,8 +4,6 @@
 
 #include "chrome/browser/media/router/discovery/discovery_network_info.h"
 
-namespace media_router {
-
 DiscoveryNetworkInfo::DiscoveryNetworkInfo() {}
 
 DiscoveryNetworkInfo::DiscoveryNetworkInfo(const std::string& name,
@@ -27,5 +25,3 @@ bool DiscoveryNetworkInfo::operator==(const DiscoveryNetworkInfo& other) const {
 bool DiscoveryNetworkInfo::operator!=(const DiscoveryNetworkInfo& o) const {
   return !(*this == o);
 }
-
-}  // namespace media_router

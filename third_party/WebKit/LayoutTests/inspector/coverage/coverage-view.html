@@ -10,12 +10,12 @@
 <script>
 async function test()
 {
-    CoverageTestRunner.startCoverage();
-    await TestRunner.evaluateInPagePromise("performActions()");
-    await CoverageTestRunner.stopCoverage();
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions()");
+    await InspectorTest.stopCoverage();
 
-    CoverageTestRunner.dumpCoverageListView();
-    TestRunner.completeTest();
+    InspectorTest.dumpCoverageListView();
+    InspectorTest.completeTest();
 }
 
 </script>

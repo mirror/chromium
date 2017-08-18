@@ -138,7 +138,8 @@ class FakeCompositorFrameSinkSupportClient
 class CompositorFrameSinkSupportTest : public testing::Test {
  public:
   CompositorFrameSinkSupportTest()
-      : frame_sink_manager_client_(&manager_),
+      : manager_(nullptr, SurfaceManager::LifetimeType::REFERENCES),
+        frame_sink_manager_client_(&manager_),
         begin_frame_source_(0.f, false),
         local_surface_id_(3, kArbitraryToken),
         frame_sync_token_(GenTestSyncToken(4)),

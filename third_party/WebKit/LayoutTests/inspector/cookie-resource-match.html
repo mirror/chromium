@@ -57,9 +57,9 @@ function test() {
             if (SDK.CookieModel.cookieMatchesResourceURL(cookies[i], resourceURLs[j]))
                 cookieResult.push(j);
         }
-        TestRunner.addResult("[" + cookieResult + "]");
+        InspectorTest.addResult("[" + cookieResult + "]");
     }
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 
     function createCookie(name, value, secure, domain, path, port)
     {

@@ -73,8 +73,12 @@ public class WebViewFindApisTestBase extends AwTestBase {
         final IntegerFuture future = new IntegerFuture() {
             @Override
             public void run() {
-                mFindResultListener = (activeMatchOrdinal, numberOfMatches, isDoneCounting) -> {
-                    if (isDoneCounting) set(numberOfMatches);
+                mFindResultListener = new FindResultListener() {
+                    @Override
+                    public void onFindResultReceived(int activeMatchOrdinal, int numberOfMatches,
+                            boolean isDoneCounting) {
+                        if (isDoneCounting) set(numberOfMatches);
+                    }
                 };
                 mContents.findAllAsync(searchString);
             }
@@ -97,8 +101,12 @@ public class WebViewFindApisTestBase extends AwTestBase {
         final IntegerFuture future = new IntegerFuture() {
             @Override
             public void run() {
-                mFindResultListener = (activeMatchOrdinal, numberOfMatches, isDoneCounting) -> {
-                    if (isDoneCounting) set(activeMatchOrdinal);
+                mFindResultListener = new FindResultListener() {
+                    @Override
+                    public void onFindResultReceived(int activeMatchOrdinal, int numberOfMatches,
+                            boolean isDoneCounting) {
+                        if (isDoneCounting) set(activeMatchOrdinal);
+                    }
                 };
                 mContents.findNext(forwards);
             }
@@ -113,7 +121,12 @@ public class WebViewFindApisTestBase extends AwTestBase {
      * @throws Throwable
      */
     protected void clearMatchesOnUiThread() throws Throwable {
-        runTestOnUiThread(() -> mContents.clearMatches());
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mContents.clearMatches();
+            }
+        });
     }
 
     // Similar to java.util.concurrent.Future, but without the ability to cancel.

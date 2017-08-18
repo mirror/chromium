@@ -4,10 +4,10 @@
 <script>
 async function test()
 {
-    var initialModules = TestRunner.loadedModules();
+    var initialModules = InspectorTest.loadedModules();
     await UI.inspectorView.panel("network");
-    TestRunner.dumpLoadedModules(initialModules);
-    TestRunner.completeTest();
+    InspectorTest.dumpLoadedModules(initialModules);
+    InspectorTest.completeTest();
 }
 </script>
 </head>

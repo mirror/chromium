@@ -2738,6 +2738,9 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableBrowserTaskScheduler,
                                switches::kDisableBrowserTaskScheduler)},
 #if defined(OS_ANDROID)
+    {"enable-improved-a2hs", flag_descriptions::kEnableWebapk,
+     flag_descriptions::kEnableWebapkDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kImprovedA2HS)},
     {"no-credit-card-abort", flag_descriptions::kNoCreditCardAbort,
      flag_descriptions::kNoCreditCardAbortDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kNoCreditCardAbort)},
@@ -2758,10 +2761,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"arc-boot-completed-broadcast", flag_descriptions::kArcBootCompleted,
      flag_descriptions::kArcBootCompletedDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(arc::kBootCompletedBroadcastFeature)},
-    {"arc-native-bridge-experiment",
-     flag_descriptions::kArcNativeBridgeExperimentName,
-     flag_descriptions::kArcNativeBridgeExperimentDescription, kOsCrOS,
-     FEATURE_VALUE_TYPE(arc::kNativeBridgeExperimentFeature)},
 #endif  // OS_CHROMEOS
     {"enable-generic-sensor", flag_descriptions::kEnableGenericSensorName,
      flag_descriptions::kEnableGenericSensorDescription, kOsAll,

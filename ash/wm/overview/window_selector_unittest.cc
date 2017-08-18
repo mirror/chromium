@@ -483,7 +483,8 @@ TEST_F(WindowSelectorTest, ActivateMinimized) {
 
   EXPECT_FALSE(window->IsVisible());
   EXPECT_EQ(0.f, window->layer()->GetTargetOpacity());
-  EXPECT_EQ(wm::WINDOW_STATE_TYPE_MINIMIZED, window_state->GetStateType());
+  EXPECT_EQ(wm::WINDOW_STATE_TYPE_MINIMIZED,
+            wm::GetWindowState(window.get())->GetStateType());
   aura::Window* window_for_minimized_window =
       GetOverviewWindowForMinimizedState(0, window.get());
   EXPECT_TRUE(window_for_minimized_window);
@@ -498,7 +499,8 @@ TEST_F(WindowSelectorTest, ActivateMinimized) {
 
   EXPECT_TRUE(window->IsVisible());
   EXPECT_EQ(1.f, window->layer()->GetTargetOpacity());
-  EXPECT_EQ(wm::WINDOW_STATE_TYPE_NORMAL, window_state->GetStateType());
+  EXPECT_EQ(wm::WINDOW_STATE_TYPE_NORMAL,
+            wm::GetWindowState(window.get())->GetStateType());
 }
 
 // Tests that entering overview mode with an App-list active properly focuses
@@ -814,7 +816,7 @@ TEST_F(WindowSelectorTest, CloseButton) {
 }
 
 // Tests minimizing/unminimizing in overview mode.
-TEST_F(WindowSelectorTest, MinimizeUnminimize) {
+TEST_F(WindowSelectorTest, MinimizeUnminimizei) {
   std::unique_ptr<views::Widget> widget =
       CreateWindowWidget(gfx::Rect(0, 0, 400, 400));
   aura::Window* window = widget->GetNativeWindow();
@@ -986,27 +988,31 @@ TEST_F(WindowSelectorTest, SelectingHidesAppList) {
   ToggleOverview();
 }
 
-// Tests that a minimized window's visibility and layer visibility
-// stay invisible (A minimized window is cloned during overview),
-// and ignored_by_shelf state is restored upon exit.
-TEST_F(WindowSelectorTest, MinimizedWindowState) {
+// Tests that a minimized window's visibility and layer visibility is correctly
+// changed when entering overview and restored when leaving overview mode.
+// Crashes after the skia roll in http://crrev.com/274114.
+// http://crbug.com/379570
+TEST_F(WindowSelectorTest, DISABLED_MinimizedWindowVisibility) {
   gfx::Rect bounds(0, 0, 400, 400);
   std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   wm::WindowState* window_state = wm::GetWindowState(window1.get());
   window_state->Minimize();
   EXPECT_FALSE(window1->IsVisible());
   EXPECT_FALSE(window1->layer()->GetTargetVisibility());
-  EXPECT_FALSE(window_state->ignored_by_shelf());
-
-  ToggleOverview();
-  EXPECT_FALSE(window1->IsVisible());
-  EXPECT_FALSE(window1->layer()->GetTargetVisibility());
-  EXPECT_TRUE(window_state->ignored_by_shelf());
-
-  ToggleOverview();
-  EXPECT_FALSE(window1->IsVisible());
-  EXPECT_FALSE(window1->layer()->GetTargetVisibility());
-  EXPECT_FALSE(window_state->ignored_by_shelf());
+  {
+    ui::ScopedAnimationDurationScaleMode test_duration_mode(
+        ui::ScopedAnimationDurationScaleMode::NON_ZERO_DURATION);
+    ToggleOverview();
+    EXPECT_TRUE(window1->IsVisible());
+    EXPECT_TRUE(window1->layer()->GetTargetVisibility());
+  }
+  {
+    ui::ScopedAnimationDurationScaleMode test_duration_mode(
+        ui::ScopedAnimationDurationScaleMode::NON_ZERO_DURATION);
+    ToggleOverview();
+    EXPECT_FALSE(window1->IsVisible());
+    EXPECT_FALSE(window1->layer()->GetTargetVisibility());
+  }
 }
 
 // Tests that it is safe to destroy a window while the overview header animation

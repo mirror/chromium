@@ -10,7 +10,7 @@ function test()
 {
     var textEditor;
     var panel = UI.panels.sources;
-    SourcesTestRunner.showScriptSource("edit-me.js", didShowScriptSource);
+    InspectorTest.showScriptSource("edit-me.js", didShowScriptSource);
 
     function showReplaceField()
     {
@@ -28,8 +28,8 @@ function test()
 
     function dumpTextEditor(message)
     {
-        TestRunner.addResult(message);
-        TestRunner.addResult(textEditor.text());
+        InspectorTest.addResult(message);
+        InspectorTest.addResult(textEditor.text());
     }
 
     function didShowScriptSource(sourceFrame)
@@ -37,7 +37,7 @@ function test()
         textEditor = sourceFrame._textEditor;
         showReplaceField();
 
-        TestRunner.runTestSuite([
+        InspectorTest.runTestSuite([
             function testReplaceAll(next)
             {
                 var source = "// var a1, a2, a3;\nconst  a1, a2, a3;\n";

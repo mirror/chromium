@@ -308,35 +308,35 @@ struct ServiceWorkerContextClient::WorkerContextData {
   using SimpleEventCallback =
       base::OnceCallback<void(ServiceWorkerStatusCode, base::Time)>;
   using ClientsCallbacksMap =
-      base::IDMap<std::unique_ptr<blink::WebServiceWorkerClientsCallbacks>>;
-  using ClaimClientsCallbacksMap = base::IDMap<
-      std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks>>;
+      IDMap<std::unique_ptr<blink::WebServiceWorkerClientsCallbacks>>;
+  using ClaimClientsCallbacksMap =
+      IDMap<std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks>>;
   using ClientCallbacksMap =
-      base::IDMap<std::unique_ptr<blink::WebServiceWorkerClientCallbacks>>;
+      IDMap<std::unique_ptr<blink::WebServiceWorkerClientCallbacks>>;
   using SkipWaitingCallbacksMap =
-      base::IDMap<std::unique_ptr<blink::WebServiceWorkerSkipWaitingCallbacks>>;
+      IDMap<std::unique_ptr<blink::WebServiceWorkerSkipWaitingCallbacks>>;
   using InstallEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchInstallEventCallback>>;
+      IDMap<std::unique_ptr<DispatchInstallEventCallback>>;
   using ActivateEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchActivateEventCallback>>;
+      IDMap<std::unique_ptr<DispatchActivateEventCallback>>;
   using BackgroundFetchAbortEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchBackgroundFetchAbortEventCallback>>;
+      IDMap<std::unique_ptr<DispatchBackgroundFetchAbortEventCallback>>;
   using BackgroundFetchClickEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchBackgroundFetchClickEventCallback>>;
+      IDMap<std::unique_ptr<DispatchBackgroundFetchClickEventCallback>>;
   using BackgroundFetchFailEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchBackgroundFetchFailEventCallback>>;
+      IDMap<std::unique_ptr<DispatchBackgroundFetchFailEventCallback>>;
   using BackgroundFetchedEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchBackgroundFetchedEventCallback>>;
-  using SyncEventCallbacksMap = base::IDMap<std::unique_ptr<SyncCallback>>;
+      IDMap<std::unique_ptr<DispatchBackgroundFetchedEventCallback>>;
+  using SyncEventCallbacksMap = IDMap<std::unique_ptr<SyncCallback>>;
   using NotificationClickEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchNotificationClickEventCallback>>;
+      IDMap<std::unique_ptr<DispatchNotificationClickEventCallback>>;
   using NotificationCloseEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchNotificationCloseEventCallback>>;
+      IDMap<std::unique_ptr<DispatchNotificationCloseEventCallback>>;
   using PushEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchPushEventCallback>>;
+      IDMap<std::unique_ptr<DispatchPushEventCallback>>;
   using ExtendableMessageEventCallbacksMap =
-      base::IDMap<std::unique_ptr<DispatchExtendableMessageEventCallback>>;
-  using NavigationPreloadRequestsMap = base::IDMap<
+      IDMap<std::unique_ptr<DispatchExtendableMessageEventCallback>>;
+  using NavigationPreloadRequestsMap = IDMap<
       std::unique_ptr<ServiceWorkerContextClient::NavigationPreloadRequest>>;
   using InstallEventMethodsMap =
       std::map<int, mojom::ServiceWorkerInstallEventMethodsAssociatedPtr>;

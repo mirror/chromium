@@ -17,6 +17,8 @@
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/transform.h"
 
+class SkRegion;
+
 namespace aura {
 class Window;
 }
@@ -41,7 +43,6 @@ class WindowSelectorItem;
 class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
  public:
   class OverviewContentMask;
-  using ShapeRects = std::vector<gfx::Rect>;
   using ScopedAnimationSettings =
       std::vector<std::unique_ptr<ScopedOverviewAnimationSettings>>;
 
@@ -173,7 +174,7 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   aura::Window* window_;
 
   // Original |window_|'s shape, if it was set on the window.
-  std::unique_ptr<ShapeRects> original_window_shape_;
+  std::unique_ptr<SkRegion> original_window_shape_;
 
   // True after the |original_window_shape_| has been set or after it has
   // been determined that window shape was not originally set on the |window_|.

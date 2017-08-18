@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "extensions/common/disable_reason.h"
 #include "extensions/common/extension.h"
 
 namespace extensions {
@@ -79,7 +78,7 @@ class ManagementPolicy {
     // Similar to MustRemainEnabled, but for whether an extension must remain
     // disabled, and returns an error and/or reason if the caller needs it.
     virtual bool MustRemainDisabled(const Extension* extension,
-                                    disable_reason::DisableReason* reason,
+                                    Extension::DisableReason* reason,
                                     base::string16* error) const;
 
     // Similar to MustRemainEnabled, but for whether an extension must remain
@@ -125,7 +124,7 @@ class ManagementPolicy {
   // Returns true immediately if any registered provider's MustRemainDisabled
   // function returns true.
   bool MustRemainDisabled(const Extension* extension,
-                          disable_reason::DisableReason* reason,
+                          Extension::DisableReason* reason,
                           base::string16* error) const;
 
   // Returns true immediately if any registered provider's MustRemainInstalled

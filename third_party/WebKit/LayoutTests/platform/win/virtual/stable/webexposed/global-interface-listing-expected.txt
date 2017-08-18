@@ -4000,7 +4000,6 @@ interface Performance : EventTarget
     getter memory
     getter navigation
     getter onresourcetimingbufferfull
-    getter timeOrigin
     getter timing
     method clearMarks
     method clearMeasures
@@ -7879,7 +7878,6 @@ interface webkitURL
     attribute gamepadController
     attribute gin
     attribute internals
-    attribute layoutTestController
     attribute length
     attribute location
     attribute opener

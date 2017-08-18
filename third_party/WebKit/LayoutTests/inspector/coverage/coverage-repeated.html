@@ -10,25 +10,25 @@
 <script>
 async function test()
 {
-    CoverageTestRunner.startCoverage();
-    await TestRunner.evaluateInPagePromise("performActions()");
-    await CoverageTestRunner.stopCoverage();
-    TestRunner.addResult('Initial');
-    CoverageTestRunner.dumpCoverageListView();
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions()");
+    await InspectorTest.stopCoverage();
+    InspectorTest.addResult('Initial');
+    InspectorTest.dumpCoverageListView();
 
-    CoverageTestRunner.startCoverage();
-    await CoverageTestRunner.stopCoverage();
-    TestRunner.addResult('After second session');
-    CoverageTestRunner.dumpCoverageListView();
+    InspectorTest.startCoverage();
+    await InspectorTest.stopCoverage();
+    InspectorTest.addResult('After second session');
+    InspectorTest.dumpCoverageListView();
 
     var coverageView = self.runtime.sharedInstance(Coverage.CoverageView);
     coverageView._clear();
-    CoverageTestRunner.startCoverage();
-    await CoverageTestRunner.stopCoverage();
-    TestRunner.addResult('After clear');
-    CoverageTestRunner.dumpCoverageListView();
+    InspectorTest.startCoverage();
+    await InspectorTest.stopCoverage();
+    InspectorTest.addResult('After clear');
+    InspectorTest.dumpCoverageListView();
 
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 }
 
 </script>

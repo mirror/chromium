@@ -32,15 +32,15 @@ async function test()
     Protocol.InspectorBackend.reportProtocolError = function(error, message)
     {
         if (numberOfReports < messages.length) {
-            TestRunner.addObject(message);
-            TestRunner.addResult("-------------------------------------------------------");
+            InspectorTest.addObject(message);
+            InspectorTest.addResult("-------------------------------------------------------");
         }
 
         if (++numberOfReports === messages.length)
-            TestRunner.completeTest();
+            InspectorTest.completeTest();
     }
 
-    await TestRunner.DebuggerAgent.disable();
+    await InspectorTest.DebuggerAgent.disable();
     for (var message of messages)
         InspectorFrontendHost.sendMessageToBackend(message);
 }

@@ -49,7 +49,7 @@ TEST(ServiceManagerConnectionImplTest, ServiceLaunchThreading) {
   service->OnBindInterface(source_info,
                            service_manager::mojom::ServiceFactory::Name_,
                            mojo::MakeRequest(&factory).PassMessagePipe(),
-                           base::BindOnce(&base::DoNothing));
+                           base::Bind(&base::DoNothing));
   service_manager::mojom::ServicePtr created_service;
   factory->CreateService(mojo::MakeRequest(&created_service), kTestServiceName);
   event.Wait();

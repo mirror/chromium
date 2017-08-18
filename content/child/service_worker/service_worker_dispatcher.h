@@ -12,7 +12,7 @@
 #include <set>
 #include <vector>
 
-#include "base/containers/id_map.h"
+#include "base/id_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
@@ -179,23 +179,23 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
 
  private:
   using RegistrationCallbackMap =
-      base::IDMap<std::unique_ptr<WebServiceWorkerRegistrationCallbacks>>;
+      IDMap<std::unique_ptr<WebServiceWorkerRegistrationCallbacks>>;
   using UpdateCallbackMap =
-      base::IDMap<std::unique_ptr<WebServiceWorkerUpdateCallbacks>>;
+      IDMap<std::unique_ptr<WebServiceWorkerUpdateCallbacks>>;
   using UnregistrationCallbackMap =
-      base::IDMap<std::unique_ptr<WebServiceWorkerUnregistrationCallbacks>>;
+      IDMap<std::unique_ptr<WebServiceWorkerUnregistrationCallbacks>>;
   using GetRegistrationCallbackMap =
-      base::IDMap<std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks>>;
+      IDMap<std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks>>;
   using GetRegistrationsCallbackMap =
-      base::IDMap<std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks>>;
-  using GetRegistrationForReadyCallbackMap = base::IDMap<
-      std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>>;
+      IDMap<std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks>>;
+  using GetRegistrationForReadyCallbackMap =
+      IDMap<std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>>;
   using EnableNavigationPreloadCallbackMap =
-      base::IDMap<std::unique_ptr<WebEnableNavigationPreloadCallbacks>>;
+      IDMap<std::unique_ptr<WebEnableNavigationPreloadCallbacks>>;
   using GetNavigationPreloadStateCallbackMap =
-      base::IDMap<std::unique_ptr<WebGetNavigationPreloadStateCallbacks>>;
+      IDMap<std::unique_ptr<WebGetNavigationPreloadStateCallbacks>>;
   using SetNavigationPreloadHeaderCallbackMap =
-      base::IDMap<std::unique_ptr<WebSetNavigationPreloadHeaderCallbacks>>;
+      IDMap<std::unique_ptr<WebSetNavigationPreloadHeaderCallbacks>>;
 
   using ProviderClientMap =
       std::map<int, blink::WebServiceWorkerProviderClient*>;

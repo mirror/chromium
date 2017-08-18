@@ -195,8 +195,8 @@ class CookieManagerImplTest : public testing::Test {
     cookie_monster_.SetCanonicalCookieAsync(
         base::MakeUnique<net::CanonicalCookie>(cookie), secure_source,
         can_modify_httponly,
-        base::BindOnce(&net::ResultSavingCookieCallback<bool>::Run,
-                       base::Unretained(&callback)));
+        base::Bind(&net::ResultSavingCookieCallback<bool>::Run,
+                   base::Unretained(&callback)));
     callback.WaitUntilDone();
     return callback.result();
   }

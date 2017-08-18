@@ -2024,7 +2024,7 @@ TEST(NetworkQualityEstimatorTest, UnknownEffectiveConnectionType) {
       NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP);
 
   for (size_t i = 0; i < 10; ++i) {
-    estimator.AddAndNotifyObserversOfRTT(rtt_observation);
+    estimator.NotifyObserversOfRTT(rtt_observation);
     EXPECT_EQ(expected_effective_connection_type_notifications,
               observer.effective_connection_types().size());
   }
@@ -2033,7 +2033,7 @@ TEST(NetworkQualityEstimatorTest, UnknownEffectiveConnectionType) {
   // Even though there are 10 RTT samples already available, the addition of one
   // more RTT sample should trigger recomputation of the effective connection
   // type since the last computed effective connection type was unknown.
-  estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+  estimator.NotifyObserversOfRTT(NetworkQualityEstimator::Observation(
       5000, tick_clock_ptr->NowTicks(), INT32_MIN,
       NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
   ++expected_effective_connection_type_notifications;
@@ -2118,7 +2118,12 @@ TEST(NetworkQualityEstimatorTest,
     // of current observations. This should trigger recomputation of
     // effective connection type.
     for (size_t i = 0; i < rtt_observations_count + 1; ++i) {
-      estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+      estimator.rtt_ms_observations_.AddObservation(
+          NetworkQualityEstimator::Observation(
+              5000, tick_clock_ptr->NowTicks(), INT32_MIN,
+              NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
+
+      estimator.NotifyObserversOfRTT(NetworkQualityEstimator::Observation(
           5000, tick_clock_ptr->NowTicks(), INT32_MIN,
           NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
 

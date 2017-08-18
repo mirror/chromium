@@ -20,9 +20,6 @@ class TouchEvent;
 }
 
 namespace aura {
-namespace test {
-class EnvTestHelper;
-}
 
 class Window;
 
@@ -38,7 +35,6 @@ class AURA_EXPORT EnvInputStateController {
                             const gfx::Point& location_in_root) const;
 
  private:
-  friend class test::EnvTestHelper;
   // Touch ids that are currently down.
   uint32_t touch_ids_down_;
 

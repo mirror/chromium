@@ -9,17 +9,17 @@ function codeSnippet() {
 
 function test()
 {
-    var textEditor = SourcesTestRunner.createTestEditor();
+    var textEditor = InspectorTest.createTestEditor();
     textEditor.setMimeType("text/javascript");
     textEditor.setReadOnly(false);
     textEditor.element.focus();
-    TestRunner.evaluateInPage("codeSnippet();", onCodeSnippet);
+    InspectorTest.evaluateInPage("codeSnippet();", onCodeSnippet);
 
     function onCodeSnippet(result)
     {
         var codeLines = result.value;
         textEditor.setText(codeLines);
-        TestRunner.runTestSuite(testSuite);
+        InspectorTest.runTestSuite(testSuite);
     }
 
     function nextOccurrence(times)
@@ -37,7 +37,7 @@ function test()
     {
         if (typeof to !== "number")
             to = from;
-        SourcesTestRunner.setLineSelections(textEditor, [
+        InspectorTest.setLineSelections(textEditor, [
             { line: line, from: from, to: to }
         ]);
     }
@@ -47,7 +47,7 @@ function test()
         {
             lineSelection(8, 0);
             nextOccurrence(1);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
 
@@ -55,7 +55,7 @@ function test()
         {
             lineSelection(8, 8);
             nextOccurrence(1);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
 
@@ -63,7 +63,7 @@ function test()
         {
             lineSelection(18, 12, 14);
             nextOccurrence(8);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
 
@@ -71,44 +71,44 @@ function test()
         {
             lineSelection(17, 30, 33);
             nextOccurrence(8);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
 
         function testNonWordSelection3(next)
         {
-            SourcesTestRunner.setLineSelections(textEditor, [
+            InspectorTest.setLineSelections(textEditor, [
                 { line: 14, from: 15, to: 25 },
                 { line: 16, column: 21 },
                 { line: 17, from: 42, to: 47 },
             ]);
             var selections = textEditor.selections();
             nextOccurrence(3);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
 
         function testNonWordSelection4(next)
         {
-            SourcesTestRunner.setLineSelections(textEditor, [
+            InspectorTest.setLineSelections(textEditor, [
                 { line: 14, from: 15, to: 25 },
                 { line: 16, from: 21, to: 23 },
                 { line: 17, from: 42, to: 47 },
             ]);
             var selections = textEditor.selections();
             nextOccurrence(3);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
 
         function testTriggerWordSearchInMixedCase(next)
         {
-            SourcesTestRunner.setLineSelections(textEditor, [
+            InspectorTest.setLineSelections(textEditor, [
                 { line: 9, from: 10, to: 25 },
                 { line: 14, column: 33 }
             ]);
             nextOccurrence(5);
-            SourcesTestRunner.dumpSelectionStats(textEditor);
+            InspectorTest.dumpSelectionStats(textEditor);
             next();
         },
     ];

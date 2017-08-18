@@ -9,11 +9,11 @@
 <script>
 
 function test() {
-    TestRunner.waitForUISourceCode("after.css").then(uiSourceCode => uiSourceCode.requestContent()).then(onAfterContent);
+    InspectorTest.waitForUISourceCode("after.css").then(uiSourceCode => uiSourceCode.requestContent()).then(onAfterContent);
 
     function onAfterContent(content) {
-      SourcesTestRunner.waitForScriptSource("before.css", uiSourceCode => uiSourceCode.setWorkingCopy(content));
-      TestRunner.addSniffer(Changes.ChangesView.prototype, "_renderDiffRows", rowsRendered, true);
+      InspectorTest.waitForScriptSource("before.css", uiSourceCode => uiSourceCode.setWorkingCopy(content));
+      InspectorTest.addSniffer(Changes.ChangesView.prototype, "_renderDiffRows", rowsRendered, true);
       UI.viewManager.showView("changes.changes");
     }
 
@@ -29,10 +29,10 @@ function test() {
           prefix = "+";
         else if (lineInfo.handle.styleClasses.bgClass === "equal")
           prefix = " ";
-        TestRunner.addResult(prefix + " " + lineInfo.text);
+        InspectorTest.addResult(prefix + " " + lineInfo.text);
 
       }
-      TestRunner.completeTest();
+      InspectorTest.completeTest();
     }
 }
 </script>

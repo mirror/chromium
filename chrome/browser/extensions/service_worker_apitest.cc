@@ -557,7 +557,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
 
   // Disable the extension. Opening the page should fail.
   extension_service()->DisableExtension(extension_id,
-                                        disable_reason::DISABLE_USER_ACTION);
+                                        Extension::DISABLE_USER_ACTION);
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(content::PAGE_TYPE_ERROR,

@@ -125,8 +125,8 @@ class MemoryCoordinatorTestThread : public base::Thread,
   void CheckLastState(base::MemoryState state) {
     task_runner()->PostTask(
         FROM_HERE,
-        base::BindOnce(&MemoryCoordinatorTestThread::CheckLastStateInternal,
-                       base::Unretained(this), state));
+        base::Bind(&MemoryCoordinatorTestThread::CheckLastStateInternal,
+                   base::Unretained(this), state));
   }
 
  private:

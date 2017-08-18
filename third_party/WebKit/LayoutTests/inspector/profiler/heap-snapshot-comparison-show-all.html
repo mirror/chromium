@@ -10,31 +10,31 @@ function test()
     var firstId = 100;
     function createHeapSnapshotA()
     {
-        return ProfilerTestRunner.createHeapSnapshot(instanceCount, firstId);
+        return InspectorTest.createHeapSnapshot(instanceCount, firstId);
     }
     function createHeapSnapshotB()
     {
-        return ProfilerTestRunner.createHeapSnapshot(instanceCount + 1, firstId + instanceCount * 2);
+        return InspectorTest.createHeapSnapshot(instanceCount + 1, firstId + instanceCount * 2);
     }
 
-    ProfilerTestRunner.runHeapSnapshotTestSuite([
+    InspectorTest.runHeapSnapshotTestSuite([
         function testShowAll(next)
         {
-            ProfilerTestRunner.takeAndOpenSnapshot(createHeapSnapshotA, createSnapshotB);
+            InspectorTest.takeAndOpenSnapshot(createHeapSnapshotA, createSnapshotB);
             function createSnapshotB() {
-                ProfilerTestRunner.takeAndOpenSnapshot(createHeapSnapshotB, step1);
+                InspectorTest.takeAndOpenSnapshot(createHeapSnapshotB, step1);
             }
 
             function step1()
             {
-                ProfilerTestRunner.switchToView("Comparison", step2);
+                InspectorTest.switchToView("Comparison", step2);
             }
 
             function step2()
             {
-                var row = ProfilerTestRunner.findRow("A");
-                TestRunner.assertEquals(true, !!row, "\"A\" row");
-                ProfilerTestRunner.expandRow(row, step3);
+                var row = InspectorTest.findRow("A");
+                InspectorTest.assertEquals(true, !!row, "\"A\" row");
+                InspectorTest.expandRow(row, step3);
             }
 
             var countA;
@@ -42,33 +42,33 @@ function test()
             function step3(row)
             {
                 countA = row._addedCount;
-                TestRunner.assertEquals(true, countA > 0, "countA > 0");
+                InspectorTest.assertEquals(true, countA > 0, "countA > 0");
                 countB = row._removedCount;
-                TestRunner.assertEquals(true, countB > 0, "countB > 0");
+                InspectorTest.assertEquals(true, countB > 0, "countB > 0");
 
-                var buttonsNode = ProfilerTestRunner.findButtonsNode(row);
-                TestRunner.assertEquals(true, !!buttonsNode, "buttons node (added)");
+                var buttonsNode = InspectorTest.findButtonsNode(row);
+                InspectorTest.assertEquals(true, !!buttonsNode, "buttons node (added)");
                 var words = buttonsNode.showAll.textContent.split(" ");
                 for (var i = 0; i < words.length; ++i) {
                     var maybeNumber = parseInt(words[i], 10);
                     if (!isNaN(maybeNumber))
-                        TestRunner.assertEquals(countA + countB - row._dataGrid.defaultPopulateCount(), maybeNumber, buttonsNode.showAll.textContent);
+                        InspectorTest.assertEquals(countA + countB - row._dataGrid.defaultPopulateCount(), maybeNumber, buttonsNode.showAll.textContent);
                 }
-                ProfilerTestRunner.clickShowMoreButton("showAll", buttonsNode, step4);
+                InspectorTest.clickShowMoreButton("showAll", buttonsNode, step4);
             }
 
             function step4(row)
             {
-                var rowsShown = ProfilerTestRunner.countDataRows(row, function(node) { return node.data.addedCount; });
-                TestRunner.assertEquals(countA, rowsShown, "after showAll click 1");
+                var rowsShown = InspectorTest.countDataRows(row, function(node) { return node.data.addedCount; });
+                InspectorTest.assertEquals(countA, rowsShown, "after showAll click 1");
 
                 countB = row._removedCount;
-                TestRunner.assertEquals(true, countB > 0, "countB > 0");
-                var buttonsNode = ProfilerTestRunner.findButtonsNode(row);
-                TestRunner.assertEquals(false, !!buttonsNode, "buttons node (deleted)");
+                InspectorTest.assertEquals(true, countB > 0, "countB > 0");
+                var buttonsNode = InspectorTest.findButtonsNode(row);
+                InspectorTest.assertEquals(false, !!buttonsNode, "buttons node (deleted)");
 
-                var deletedRowsShown = ProfilerTestRunner.countDataRows(row, function(node) { return node.data.removedCount; });
-                TestRunner.assertEquals(countB, deletedRowsShown, "deleted rows shown");
+                var deletedRowsShown = InspectorTest.countDataRows(row, function(node) { return node.data.removedCount; });
+                InspectorTest.assertEquals(countB, deletedRowsShown, "deleted rows shown");
                 setTimeout(next, 0);
             }
         }

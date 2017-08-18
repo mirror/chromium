@@ -100,23 +100,18 @@ void TestInterfaces::ConfigureForTestWithURL(const blink::WebURL& test_url,
     test_runner_->setShouldDumpAsText(true);
     test_runner_->setShouldGeneratePixelResults(false);
   }
-  if (spec.find("/devtools/") != std::string::npos ||
-      spec.find("/inspector/") != std::string::npos ||
+  if (spec.find("/inspector/") != std::string::npos ||
       spec.find("/inspector-enabled/") != std::string::npos) {
     test_runner_->ClearDevToolsLocalStorage();
     test_runner_->SetV8CacheDisabled(true);
   } else {
     test_runner_->SetV8CacheDisabled(false);
   }
-  if ((spec.find("/devtools/") != std::string::npos ||
-       spec.find("/inspector/") != std::string::npos) &&
+  if (spec.find("/inspector/") != std::string::npos &&
       spec.find("integration_test_runner.html") == std::string::npos &&
       spec.find("unit_test_runner.html") == std::string::npos) {
     // Subfolder name determines default panel to open.
-    std::string folder = spec.find("/inspector/") == std::string::npos
-                             ? "/devtools/"
-                             : "/inspector/";
-    std::string test_path = spec.substr(spec.find(folder) + folder.length());
+    std::string test_path = spec.substr(spec.find("/inspector/") + 11);
     base::DictionaryValue settings;
     settings.SetString("testPath", base::GetQuotedJSONString(spec));
     std::string settings_string;

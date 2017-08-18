@@ -109,8 +109,7 @@ class VIEWS_EXPORT Widget : public internal::NativeWidgetDelegate,
                             public FocusTraversable,
                             public ui::NativeThemeObserver {
  public:
-  using Widgets = std::set<Widget*>;
-  using ShapeRects = std::vector<gfx::Rect>;
+  typedef std::set<Widget*> Widgets;
 
   enum FrameType {
     FRAME_TYPE_DEFAULT,         // Use whatever the default would be.
@@ -485,7 +484,7 @@ class VIEWS_EXPORT Widget : public internal::NativeWidgetDelegate,
 
   // Sets a shape on the widget. Passing a NULL |shape| reverts the widget to
   // be rectangular.
-  void SetShape(std::unique_ptr<ShapeRects> shape);
+  void SetShape(std::unique_ptr<SkRegion> shape);
 
   // Hides the widget then closes it after a return to the message loop.
   virtual void Close();

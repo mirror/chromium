@@ -7,18 +7,18 @@ function test()
 {
     var script;
 
-    SourcesTestRunner.startDebuggerTest(waitForScripts);
+    InspectorTest.startDebuggerTest(waitForScripts);
 
     function waitForScripts()
     {
-        SourcesTestRunner.showScriptSource("linkifier.html", debuggerTest);
+        InspectorTest.showScriptSource("linkifier.html", debuggerTest);
     }
 
     function debuggerTest()
     {
         var target = SDK.targetManager.mainTarget();
         var url = target.inspectedURL();
-        for (var scriptCandidate of TestRunner.debuggerModel.scripts()) {
+        for (var scriptCandidate of InspectorTest.debuggerModel.scripts()) {
             if (scriptCandidate.sourceURL === url) {
                 script = scriptCandidate;
                 break;
@@ -28,34 +28,34 @@ function test()
         dumpLiveLocationsCount();
 
         var linkifier = new Components.Linkifier();
-        TestRunner.addResult("Created linkifier");
+        InspectorTest.addResult("Created linkifier");
         dumpLiveLocationsCount();
 
         var linkA = linkifier.linkifyScriptLocation(target, null, url, 10);
-        TestRunner.addResult("Linkified script location A");
+        InspectorTest.addResult("Linkified script location A");
         dumpLiveLocationsCount();
 
         var linkB = linkifier.linkifyScriptLocation(target, null, url, 15);
-        TestRunner.addResult("Linkified script location B");
+        InspectorTest.addResult("Linkified script location B");
         dumpLiveLocationsCount();
 
         linkifier.reset();
-        TestRunner.addResult("Reseted linkifier");
+        InspectorTest.addResult("Reseted linkifier");
         dumpLiveLocationsCount();
 
         linkifier.dispose();
-        TestRunner.addResult("Disposed linkifier");
+        InspectorTest.addResult("Disposed linkifier");
         dumpLiveLocationsCount();
 
-        TestRunner.completeTest();
+        InspectorTest.completeTest();
     }
 
     function dumpLiveLocationsCount()
     {
         var modelData = Bindings.debuggerWorkspaceBinding._debuggerModelToData.get(script.debuggerModel);
         var locations = modelData._locations.get(script);
-        TestRunner.addResult("Live locations count: " + locations.size);
-        TestRunner.addResult("");
+        InspectorTest.addResult("Live locations count: " + locations.size);
+        InspectorTest.addResult("");
     }
 }
 

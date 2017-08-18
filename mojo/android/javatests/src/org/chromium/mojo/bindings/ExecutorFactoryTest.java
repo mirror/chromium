@@ -6,14 +6,7 @@ package org.chromium.mojo.bindings;
 
 import android.support.test.filters.SmallTest;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.mojo.MojoTestRule;
+import org.chromium.mojo.MojoTestCase;
 import org.chromium.mojo.system.impl.CoreImpl;
 
 import java.util.ArrayList;
@@ -27,13 +20,7 @@ import java.util.concurrent.Executors;
 /**
  * Testing the executor factory.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class ExecutorFactoryTest {
-
-
-    @Rule
-    public MojoTestRule mTestRule = new MojoTestRule();
-
+public class ExecutorFactoryTest extends MojoTestCase {
 
     private static final long RUN_LOOP_TIMEOUT_MS = 50;
     private static final int CONCURRENCY_LEVEL = 5;
@@ -45,8 +32,9 @@ public class ExecutorFactoryTest {
     /**
      * @see MojoTestCase#setUp()
      */
-    @Before
-        public void setUp() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         mExecutor = ExecutorFactory.getExecutorForCurrentThread(CoreImpl.getInstance());
         mThreadContainer = new ArrayList<Thread>();
     }
@@ -54,7 +42,6 @@ public class ExecutorFactoryTest {
     /**
      * Testing the {@link Executor} when called from the executor thread.
      */
-    @Test
     @SmallTest
     public void testExecutorOnCurrentThread() {
         Runnable action = new Runnable() {
@@ -65,18 +52,17 @@ public class ExecutorFactoryTest {
         };
         mExecutor.execute(action);
         mExecutor.execute(action);
-        Assert.assertEquals(0, mThreadContainer.size());
-        mTestRule.runLoop(RUN_LOOP_TIMEOUT_MS);
-        Assert.assertEquals(2, mThreadContainer.size());
+        assertEquals(0, mThreadContainer.size());
+        runLoop(RUN_LOOP_TIMEOUT_MS);
+        assertEquals(2, mThreadContainer.size());
         for (Thread thread : mThreadContainer) {
-            Assert.assertEquals(Thread.currentThread(), thread);
+            assertEquals(Thread.currentThread(), thread);
         }
     }
 
     /**
      * Testing the {@link Executor} when called from another thread.
      */
-    @Test
     @SmallTest
     public void testExecutorOnOtherThread() {
         final CyclicBarrier barrier = new CyclicBarrier(CONCURRENCY_LEVEL + 1);
@@ -94,9 +80,9 @@ public class ExecutorFactoryTest {
                     try {
                         barrier.await();
                     } catch (InterruptedException e) {
-                        Assert.fail("Unexpected exception: " + e.getMessage());
+                        fail("Unexpected exception: " + e.getMessage());
                     } catch (BrokenBarrierException e) {
-                        Assert.fail("Unexpected exception: " + e.getMessage());
+                        fail("Unexpected exception: " + e.getMessage());
                     }
                 }
             });
@@ -104,15 +90,15 @@ public class ExecutorFactoryTest {
         try {
             barrier.await();
         } catch (InterruptedException e) {
-            Assert.fail("Unexpected exception: " + e.getMessage());
+            fail("Unexpected exception: " + e.getMessage());
         } catch (BrokenBarrierException e) {
-            Assert.fail("Unexpected exception: " + e.getMessage());
+            fail("Unexpected exception: " + e.getMessage());
         }
-        Assert.assertEquals(0, mThreadContainer.size());
-        mTestRule.runLoop(RUN_LOOP_TIMEOUT_MS);
-        Assert.assertEquals(CONCURRENCY_LEVEL, mThreadContainer.size());
+        assertEquals(0, mThreadContainer.size());
+        runLoop(RUN_LOOP_TIMEOUT_MS);
+        assertEquals(CONCURRENCY_LEVEL, mThreadContainer.size());
         for (Thread thread : mThreadContainer) {
-            Assert.assertEquals(Thread.currentThread(), thread);
+            assertEquals(Thread.currentThread(), thread);
         }
     }
 }

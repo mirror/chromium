@@ -6,15 +6,15 @@
 
 function test()
 {
-    ProfilerTestRunner.runProfilerTestSuite([
+    InspectorTest.runProfilerTestSuite([
         function testProfiling(next)
         {
-            var cpuProfiler = TestRunner.cpuProfilerModel;
+            var cpuProfiler = InspectorTest.cpuProfilerModel;
             var targetManager = SDK.targetManager;
             targetManager.addEventListener(SDK.TargetManager.Events.SuspendStateChanged, onSuspendStateChanged);
             var profilesPanel = UI.panels.js_profiler;
-            TestRunner.addSniffer(cpuProfiler, "stopRecording", stopRecording);
-            TestRunner.addSniffer(profilesPanel, "_addProfileHeader", onAddProfileHeader);
+            InspectorTest.addSniffer(cpuProfiler, "stopRecording", stopRecording);
+            InspectorTest.addSniffer(profilesPanel, "_addProfileHeader", onAddProfileHeader);
             profilesPanel.toggleRecord();  // Start profiling.
 
             function onAddProfileHeader()
@@ -26,22 +26,22 @@ function test()
             function onSuspendStateChanged()
             {
                 if (SDK.targetManager.allTargetsSuspended()) {
-                    TestRunner.addResult("Suspending targets");
+                    InspectorTest.addResult("Suspending targets");
                     return;
                 }
-                TestRunner.addResult("Resuming targets");
-                ProfilerTestRunner.completeProfilerTest();
+                InspectorTest.addResult("Resuming targets");
+                InspectorTest.completeProfilerTest();
             }
 
             function stopRecording(resultPromise)
             {
-                TestRunner.addResult("Stop recording command issued.");
+                InspectorTest.addResult("Stop recording command issued.");
                 resultPromise.then(didStopRecording);
             }
 
             function didStopRecording(profile)
             {
-                TestRunner.addResult("Recording stopped. profile (should be null): " + profile);
+                InspectorTest.addResult("Recording stopped. profile (should be null): " + profile);
             }
         }
     ]);

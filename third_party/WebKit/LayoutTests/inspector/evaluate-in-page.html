@@ -12,10 +12,10 @@ function test()
 {
     function callback(result)
     {
-        TestRunner.addResult("2 + 2 = " + result.description);
-        TestRunner.completeTest();
+        InspectorTest.addResult("2 + 2 = " + result.description);
+        InspectorTest.completeTest();
     }
-    TestRunner.evaluateInPage("sum(2, 2)", callback);
+    InspectorTest.evaluateInPage("sum(2, 2)", callback);
 }
 
 </script>

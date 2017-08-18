@@ -349,11 +349,6 @@ bool IsArticleProviderEnabled() {
   return base::FeatureList::IsEnabled(ntp_snippets::kArticleSuggestionsFeature);
 }
 
-bool IsKeepingPrefetchedSuggestionsEnabled() {
-  return base::FeatureList::IsEnabled(
-      ntp_snippets::kKeepPrefetchedContentSuggestions);
-}
-
 void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
                                       Profile* profile,
                                       SigninManagerBase* signin_manager,
@@ -395,10 +390,8 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
   }
   std::unique_ptr<PrefetchedPagesTracker> prefetched_pages_tracker;
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-  if (IsKeepingPrefetchedSuggestionsEnabled()) {
-    prefetched_pages_tracker =
-        base::MakeUnique<PrefetchedPagesTrackerImpl>(offline_page_model);
-  }
+  prefetched_pages_tracker =
+      base::MakeUnique<PrefetchedPagesTrackerImpl>(offline_page_model);
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
   auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcherImpl>(
       signin_manager, token_service, request_context, pref_service,

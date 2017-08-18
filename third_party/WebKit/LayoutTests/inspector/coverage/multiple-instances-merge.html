@@ -10,25 +10,25 @@
 <script>
 async function test()
 {
-    CoverageTestRunner.startCoverage();
-    await TestRunner.evaluateInPagePromise("performActions(); frames[0].performActionsInFrame()");
-    await CoverageTestRunner.stopCoverage();
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions(); frames[0].performActionsInFrame()");
+    await InspectorTest.stopCoverage();
 
     var coverageView = self.runtime.sharedInstance(Coverage.CoverageView);
     var dataGrid = coverageView._listView._dataGrid;
     for (var child of dataGrid.rootNode().children) {
         var data = child._coverageInfo;
-        var url = TestRunner.formatters.formatAsURL(data.url());
+        var url = InspectorTest.formatters.formatAsURL(data.url());
         if (url.endsWith("-test.js") || url.endsWith(".html"))
             continue;
         var type = Coverage.CoverageListView._typeToString(data.type());
-        TestRunner.addResult(`${url} ${type} used: ${data.usedSize()} unused: ${data.unusedSize()} total: ${data.size()}`);
+        InspectorTest.addResult(`${url} ${type} used: ${data.usedSize()} unused: ${data.unusedSize()} total: ${data.size()}`);
     }
 
-    await CoverageTestRunner.dumpDecorations("highlight-in-source.css")
-    await CoverageTestRunner.dumpDecorations("coverage.js")
+    await InspectorTest.dumpDecorations("highlight-in-source.css")
+    await InspectorTest.dumpDecorations("coverage.js")
 
-    TestRunner.completeTest();
+    InspectorTest.completeTest();
 }
 
 </script>

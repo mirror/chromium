@@ -10,18 +10,18 @@
 
 function test()
 {
-    var header = TestRunner.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL);
-    SASSTestRunner.loadASTMapping(header, onMappingLoaded);
+    var header = InspectorTest.cssModel.styleSheetHeaders().find(header => !!header.sourceMapURL);
+    InspectorTest.loadASTMapping(header, onMappingLoaded);
 
     function onMappingLoaded(map)
     {
         if (!map) {
-            TestRunner.addResult("ERROR: mapping is not valid.");
-            TestRunner.completeTest();
+            InspectorTest.addResult("ERROR: mapping is not valid.");
+            InspectorTest.completeTest();
             return;
         }
-        SASSTestRunner.validateMapping(map);
-        TestRunner.completeTest();
+        InspectorTest.validateMapping(map);
+        InspectorTest.completeTest();
     }
 }
 

@@ -34,8 +34,7 @@ public class IntentionalCrashTest {
     @Test
     public void testRendererCrash() {
         try {
-            mActivityTestRule.startMainActivityFromLauncher();
-            mActivityTestRule.loadUrl("chrome://crash");
+            mActivityTestRule.startMainActivityWithURL("chrome://crash");
         } catch (InterruptedException e) {
             Assert.fail(e.toString());
         }
@@ -46,8 +45,7 @@ public class IntentionalCrashTest {
     @Test
     public void testBrowserCrash() {
         try {
-            mActivityTestRule.startMainActivityFromLauncher();
-            mActivityTestRule.loadUrl("chrome://inducebrowsercrashforrealz");
+            mActivityTestRule.startMainActivityWithURL("chrome://inducebrowsercrashforrealz");
         } catch (InterruptedException e) {
             Assert.fail(e.toString());
         }
@@ -58,8 +56,7 @@ public class IntentionalCrashTest {
     @Test
     public void testJavaCrash() {
         try {
-            mActivityTestRule.startMainActivityFromLauncher();
-            mActivityTestRule.loadUrl("chrome://java-crash/");
+            mActivityTestRule.startMainActivityWithURL("chrome://java-crash");
         } catch (InterruptedException e) {
             Assert.fail(e.toString());
         }
@@ -70,8 +67,7 @@ public class IntentionalCrashTest {
     @Test
     public void testGpuCrash() {
         try {
-            mActivityTestRule.startMainActivityFromLauncher();
-            mActivityTestRule.loadUrl("chrome://gpucrash");
+            mActivityTestRule.startMainActivityWithURL("chrome://gpucrash");
         } catch (InterruptedException e) {
             Assert.fail(e.toString());
         }

@@ -957,35 +957,22 @@ bool FrameFetchContext::ShouldBlockFetchByMixedContentCheck(
 bool FrameFetchContext::ShouldBlockFetchAsCredentialedSubresource(
     const ResourceRequest& resource_request,
     const KURL& url) const {
-  // BlockCredentialedSubresources has already been checked on the
-  // browser-side. It should not be checked a second time here because the
-  // renderer-side implementation suffers from https://crbug.com/756846.
-  if (!resource_request.CheckForBrowserSideNavigation())
-    return false;
+  if ((!url.User().IsEmpty() || !url.Pass().IsEmpty()) &&
+      resource_request.GetRequestContext() !=
+          WebURLRequest::kRequestContextXMLHttpRequest) {
+    if (Url().User() != url.User() || Url().Pass() != url.Pass() ||
+        !SecurityOrigin::Create(url)->IsSameSchemeHostPort(
+            GetSecurityOrigin())) {
+      CountDeprecation(
+          WebFeature::kRequestedSubresourceWithEmbeddedCredentials);
 
-  // URLs with no embedded credentials should load correctly.
-  if (url.User().IsEmpty() && url.Pass().IsEmpty())
-    return false;
-
-  if (resource_request.GetRequestContext() ==
-      WebURLRequest::kRequestContextXMLHttpRequest) {
-    return false;
+      // TODO(mkwst): Remove the runtime check one way or the other once we're
+      // sure it's going to stick (or that it's not).
+      if (RuntimeEnabledFeatures::BlockCredentialedSubresourcesEnabled())
+        return true;
+    }
   }
-
-  // Relative URLs on top-level pages that were loaded with embedded credentials
-  // should load correctly.
-  // TODO(mkwst): This doesn't work when the subresource is an iframe.
-  // See https://crbug.com/756846.
-  if (Url().User() == url.User() && Url().Pass() == url.Pass() &&
-      SecurityOrigin::Create(url)->IsSameSchemeHostPort(GetSecurityOrigin())) {
-    return false;
-  }
-
-  CountDeprecation(WebFeature::kRequestedSubresourceWithEmbeddedCredentials);
-
-  // TODO(mkwst): Remove the runtime check one way or the other once we're
-  // sure it's going to stick (or that it's not).
-  return RuntimeEnabledFeatures::BlockCredentialedSubresourcesEnabled();
+  return false;
 }
 
 ReferrerPolicy FrameFetchContext::GetReferrerPolicy() const {

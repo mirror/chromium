@@ -56,7 +56,7 @@ function test()
     var groupIds = [];
     var i = 0;
     var stepNumber = 0;
-    var model = TestRunner.mainTarget.model(Animation.AnimationModel);
+    var model = InspectorTest.mainTarget.model(Animation.AnimationModel);
     model.ensureEnabled();
     model.addEventListener(Animation.AnimationModel.Events.AnimationGroupStarted, groupStarted);
     // Each step triggers a new transition group.
@@ -76,24 +76,24 @@ function test()
         "resetElement('node4'); toggleClass('node4', 'duration'); toggleClass('node4', 'expand')",
         "resetElement('node4'); toggleClass('node4', 'expand')"
     ];
-    TestRunner.evaluateInPage(steps[0]);
+    InspectorTest.evaluateInPage(steps[0]);
 
     function groupStarted(event)
     {
-        TestRunner.addResult(">> " + steps[stepNumber]);
+        InspectorTest.addResult(">> " + steps[stepNumber]);
         var group = event.data;
 
         if (groupIds.indexOf(group.id()) !== -1) {
-            TestRunner.addResult("Group #" + groupIds.indexOf(group.id()) + " started again!\n");
+            InspectorTest.addResult("Group #" + groupIds.indexOf(group.id()) + " started again!\n");
         } else {
-            TestRunner.addResult("New group #" + groupIds.length + " started.\n");
+            InspectorTest.addResult("New group #" + groupIds.length + " started.\n");
             groupIds.push(group.id());
         }
         stepNumber++;
         if (stepNumber < steps.length)
-            TestRunner.evaluateInPage(steps[stepNumber]);
+            InspectorTest.evaluateInPage(steps[stepNumber]);
         else
-            TestRunner.completeTest();
+            InspectorTest.completeTest();
     }
 }
 

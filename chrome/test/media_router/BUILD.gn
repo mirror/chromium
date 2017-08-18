@@ -86,7 +86,7 @@ source_set("media_router_browsertests") {
     "//chrome/test:test_support",
     "//chrome/test:test_support_ui",
     "//extensions/browser",
-    "//media:test_support",
+    "//media/base:test_support",
     "//skia",
     "//testing/gtest",
   ]

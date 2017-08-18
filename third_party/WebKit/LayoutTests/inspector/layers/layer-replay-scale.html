@@ -5,15 +5,15 @@
 <script>
 function test()
 {
-    LayersTestRunner.requestLayers(onGotLayers);
+    InspectorTest.requestLayers(onGotLayers);
 
     async function onGotLayers()
     {
-        var layer = LayersTestRunner.findLayerByNodeIdAttribute("a");
+        var layer = InspectorTest.findLayerByNodeIdAttribute("a");
         var snapshotWithRect = await layer.snapshots()[0];
         await testImageForSnapshot(snapshotWithRect.snapshot, undefined);
         await testImageForSnapshot(snapshotWithRect.snapshot, 0.5);
-        TestRunner.completeTest();
+        InspectorTest.completeTest();
     }
 
     async function testImageForSnapshot(snapshot, scale)
@@ -24,7 +24,7 @@ function test()
             image.addEventListener("load", () => fulfill(image), false);
             image.src = imageURL;
         });
-        TestRunner.addResult(`Image dimensions at scale ${scale}: ${image.naturalWidth} x ${image.naturalHeight}`);
+        InspectorTest.addResult(`Image dimensions at scale ${scale}: ${image.naturalWidth} x ${image.naturalHeight}`);
     }
 }
 </script>

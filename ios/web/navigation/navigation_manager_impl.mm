@@ -273,10 +273,6 @@ void NavigationManagerImpl::Reload(ReloadType reload_type,
   delegate_->Reload();
 }
 
-void NavigationManagerImpl::LoadIfNecessary() {
-  delegate_->LoadIfNecessary();
-}
-
 std::unique_ptr<NavigationItemImpl>
 NavigationManagerImpl::CreateNavigationItemWithRewriters(
     const GURL& url,

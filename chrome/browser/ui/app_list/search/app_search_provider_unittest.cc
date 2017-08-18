@@ -135,7 +135,7 @@ TEST_F(AppSearchProviderTest, DisableAndEnable) {
   EXPECT_EQ("Hosted App", RunQuery("host"));
 
   service_->DisableExtension(kHostedAppId,
-                             extensions::disable_reason::DISABLE_NONE);
+                             extensions::Extension::DISABLE_NONE);
   EXPECT_EQ("Hosted App", RunQuery("host"));
 
   service_->EnableExtension(kHostedAppId);

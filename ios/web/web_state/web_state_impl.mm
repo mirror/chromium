@@ -755,10 +755,6 @@ void WebStateImpl::LoadCurrentItem() {
   [web_controller_ loadCurrentURL];
 }
 
-void WebStateImpl::LoadIfNecessary() {
-  [web_controller_ loadCurrentURLIfNecessary];
-}
-
 void WebStateImpl::Reload() {
   [web_controller_ reload];
 }

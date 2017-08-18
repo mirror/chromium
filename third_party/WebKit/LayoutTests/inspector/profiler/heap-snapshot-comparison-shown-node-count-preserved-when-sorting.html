@@ -9,78 +9,78 @@ function test()
     var instanceCount = 24;
     function createHeapSnapshotA()
     {
-        return ProfilerTestRunner.createHeapSnapshot(instanceCount, 5);
+        return InspectorTest.createHeapSnapshot(instanceCount, 5);
     }
     function createHeapSnapshotB()
     {
-        return ProfilerTestRunner.createHeapSnapshot(instanceCount + 1, 5 + instanceCount);
+        return InspectorTest.createHeapSnapshot(instanceCount + 1, 5 + instanceCount);
     }
 
-    ProfilerTestRunner.runHeapSnapshotTestSuite([
+    InspectorTest.runHeapSnapshotTestSuite([
         function testExpansionPreservedWhenSorting(next)
         {
-            ProfilerTestRunner.takeAndOpenSnapshot(createHeapSnapshotA, createSnapshotB);
+            InspectorTest.takeAndOpenSnapshot(createHeapSnapshotA, createSnapshotB);
             function createSnapshotB() {
-                ProfilerTestRunner.takeAndOpenSnapshot(createHeapSnapshotB, step1);
+                InspectorTest.takeAndOpenSnapshot(createHeapSnapshotB, step1);
             }
 
             function step1()
             {
-                ProfilerTestRunner.switchToView("Comparison", step2);
+                InspectorTest.switchToView("Comparison", step2);
             }
 
             var columns;
             function step2()
             {
-                columns = ProfilerTestRunner.viewColumns();
-                ProfilerTestRunner.clickColumn(columns[0], step3);
+                columns = InspectorTest.viewColumns();
+                InspectorTest.clickColumn(columns[0], step3);
             }
 
             function step3()
             {
-                var row = ProfilerTestRunner.findRow("B");
-                TestRunner.assertEquals(true, !!row, "\"B\" row");
-                ProfilerTestRunner.expandRow(row, showNext);
+                var row = InspectorTest.findRow("B");
+                InspectorTest.assertEquals(true, !!row, "\"B\" row");
+                InspectorTest.expandRow(row, showNext);
                 function showNext(row)
                 {
-                    var buttonsNode = ProfilerTestRunner.findButtonsNode(row);
-                    TestRunner.assertEquals(true, !!buttonsNode, "no buttons node found!");
-                    ProfilerTestRunner.clickShowMoreButton("showAll", buttonsNode, step4);
+                    var buttonsNode = InspectorTest.findButtonsNode(row);
+                    InspectorTest.assertEquals(true, !!buttonsNode, "no buttons node found!");
+                    InspectorTest.clickShowMoreButton("showAll", buttonsNode, step4);
                 }
             }
 
             function step4()
             {
-                var row = ProfilerTestRunner.findRow("B");
-                TestRunner.assertEquals(true, !!row, "\"B\" row");
+                var row = InspectorTest.findRow("B");
+                InspectorTest.assertEquals(true, !!row, "\"B\" row");
                 function deletedNodeMatcher(data)
                 {
                     return data._isDeletedNode && data._name.charAt(0) === "B";
                 }
-                var bInstanceRow = ProfilerTestRunner.findMatchingRow(deletedNodeMatcher, row);
-                TestRunner.assertEquals(true, !!bInstanceRow, "\"B\" instance row");
-                var buttonsNode = ProfilerTestRunner.findButtonsNode(row, bInstanceRow);
-                TestRunner.assertEquals(false, !!buttonsNode, "buttons node found!");
+                var bInstanceRow = InspectorTest.findMatchingRow(deletedNodeMatcher, row);
+                InspectorTest.assertEquals(true, !!bInstanceRow, "\"B\" instance row");
+                var buttonsNode = InspectorTest.findButtonsNode(row, bInstanceRow);
+                InspectorTest.assertEquals(false, !!buttonsNode, "buttons node found!");
                 step5();
             }
 
             var nodeCount;
             function step5()
             {
-                nodeCount = ProfilerTestRunner.columnContents(columns[0]).length;
-                TestRunner.assertEquals(true, nodeCount > 0, "nodeCount > 0");
+                nodeCount = InspectorTest.columnContents(columns[0]).length;
+                InspectorTest.assertEquals(true, nodeCount > 0, "nodeCount > 0");
 
-                ProfilerTestRunner.clickColumn(columns[0], clickTwice);
+                InspectorTest.clickColumn(columns[0], clickTwice);
                 function clickTwice()
                 {
-                    ProfilerTestRunner.clickColumn(columns[0], step6);
+                    InspectorTest.clickColumn(columns[0], step6);
                 }
             }
 
             function step6()
             {
-                var newNodeCount = ProfilerTestRunner.columnContents(columns[0]).length;
-                TestRunner.assertEquals(nodeCount, newNodeCount);
+                var newNodeCount = InspectorTest.columnContents(columns[0]).length;
+                InspectorTest.assertEquals(nodeCount, newNodeCount);
                 setTimeout(next, 0);
             }
         }

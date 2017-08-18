@@ -259,11 +259,8 @@ std::unique_ptr<protocol::DictionaryValue> BuildGapAndSpans(
   return result;
 }
 
-std::unique_ptr<protocol::DictionaryValue> BuildGridInfo(
-    LayoutGrid* layout_grid,
-    FloatPoint origin,
-    Color color,
-    bool isPrimary) {
+std::unique_ptr<protocol::DictionaryValue>
+BuildGridInfo(LayoutGrid* layout_grid, FloatPoint origin, Color color) {
   std::unique_ptr<protocol::DictionaryValue> grid_info =
       protocol::DictionaryValue::create();
   grid_info->setValue(
@@ -273,7 +270,6 @@ std::unique_ptr<protocol::DictionaryValue> BuildGridInfo(
       "columns", BuildGapAndSpans(origin.X(), layout_grid->GridGap(kForColumns),
                                   layout_grid->ColumnPositions()));
   grid_info->setString("color", color.Serialized());
-  grid_info->setBoolean("isPrimaryGrid", isPrimary);
   return grid_info;
 }
 
@@ -406,21 +402,11 @@ void InspectorHighlight::AppendNodeHighlight(
   AppendQuad(border, highlight_config.border, Color::kTransparent, "border");
   AppendQuad(margin, highlight_config.margin, Color::kTransparent, "margin");
 
-  if (highlight_config.css_grid == Color::kTransparent)
-    return;
-  grid_info_ = protocol::ListValue::create();
-  if (layout_object->IsLayoutGrid()) {
-    grid_info_->pushValue(BuildGridInfo(ToLayoutGrid(layout_object),
-                                        content.P1(), highlight_config.css_grid,
-                                        true));
+  if (highlight_config.css_grid != Color::kTransparent &&
+      layout_object->IsLayoutGrid()) {
+    grid_info_ = BuildGridInfo(ToLayoutGrid(layout_object), content.P1(),
+                               highlight_config.css_grid);
   }
-  LayoutObject* parent = layout_object->Parent();
-  if (!parent || !parent->IsLayoutGrid())
-    return;
-  if (!BuildNodeQuads(parent->GetNode(), &content, &padding, &border, &margin))
-    return;
-  grid_info_->pushValue(BuildGridInfo(ToLayoutGrid(parent), content.P1(),
-                                      highlight_config.css_grid, false));
 }
 
 std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
@@ -433,7 +419,7 @@ std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
   if (element_info_)
     object->setValue("elementInfo", element_info_->clone());
   object->setBoolean("displayAsMaterial", display_as_material_);
-  if (grid_info_ && grid_info_->size() > 0)
+  if (grid_info_)
     object->setValue("gridInfo", grid_info_->clone());
   return object;
 }

@@ -9,7 +9,7 @@
 #include <memory>
 #include <set>
 
-#include "base/containers/id_map.h"
+#include "base/id_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -111,7 +111,7 @@ class CONTENT_EXPORT RendererWebMediaPlayerDelegate
   bool has_played_video_ = false;
   bool pending_update_task_ = false;
 
-  base::IDMap<Observer*> id_map_;
+  IDMap<Observer*> id_map_;
 
   // Flag for gating if players should ever transition to a stale state after a
   // period of inactivity.

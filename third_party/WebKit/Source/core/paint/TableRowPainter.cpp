@@ -101,8 +101,10 @@ void TableRowPainter::PaintBoxDecorationBackground(
   }
 
   if (has_box_shadow) {
-    BoxPainterBase::PaintInsetBoxShadowWithInnerRect(
-        paint_info, paint_rect, layout_table_row_.StyleRef());
+    // TODO(wangxianzhu): Calculate the inset shadow bounds by insetting
+    // paintRect by half widths of collapsed borders.
+    BoxPainterBase::PaintInsetBoxShadow(paint_info, paint_rect,
+                                        layout_table_row_.StyleRef());
   }
 }
 

@@ -10,7 +10,7 @@
 <script>
 function test()
 {
-    TestRunner.reloadPage(step1);
+    InspectorTest.reloadPage(step1);
 
     function step1()
     {
@@ -18,12 +18,12 @@ function test()
             return "[domain]";
         };
 
-        AuditsTestRunner.launchAllAudits(false, step2);
+        InspectorTest.launchAllAudits(false, step2);
     }
 
     function step2()
     {
-        AuditsTestRunner.collectAuditResults(TestRunner.completeTest);
+        InspectorTest.collectAuditResults(InspectorTest.completeTest);
     }
 }
 </script>

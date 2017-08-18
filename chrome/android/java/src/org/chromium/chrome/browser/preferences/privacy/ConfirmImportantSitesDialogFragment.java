@@ -120,8 +120,8 @@ public class ConfirmImportantSitesDialogFragment extends DialogFragment {
         private void loadFavicon(final ViewAndFaviconHolder viewHolder, final String url) {
             viewHolder.imageCallback = new LargeIconCallback() {
                 @Override
-                public void onLargeIconAvailable(
-                        Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
+                public void onLargeIconAvailable(Bitmap icon, int fallbackColor,
+                        boolean isFallbackColorDefault, String pageUrl, int iconSizePx) {
                     if (this != viewHolder.imageCallback) return;
                     Drawable image = getFaviconDrawable(icon, fallbackColor, url);
                     viewHolder.imageView.setImageDrawable(image);

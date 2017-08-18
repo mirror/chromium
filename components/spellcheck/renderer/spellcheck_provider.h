@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "base/containers/id_map.h"
+#include "base/id_map.h"
 #include "base/macros.h"
 #include "components/spellcheck/common/spellcheck.mojom.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -30,8 +30,7 @@ class SpellCheckProvider
       public content::RenderFrameObserverTracker<SpellCheckProvider>,
       public blink::WebTextCheckClient {
  public:
-  using WebTextCheckCompletions =
-      base::IDMap<blink::WebTextCheckingCompletion*>;
+  using WebTextCheckCompletions = IDMap<blink::WebTextCheckingCompletion*>;
 
   SpellCheckProvider(content::RenderFrame* render_frame,
                      SpellCheck* spellcheck);

@@ -1022,6 +1022,9 @@ extern const char kEnableOskOverscrollDescription[];
 extern const char kEnableSpecialLocaleName[];
 extern const char kEnableSpecialLocaleDescription[];
 
+extern const char kEnableWebapk[];
+extern const char kEnableWebapkDescription[];
+
 extern const char kEnableWebNfcName[];
 extern const char kEnableWebNfcDescription[];
 
@@ -1331,9 +1334,6 @@ extern const char kAllowTouchpadThreeFingerClickDescription[];
 
 extern const char kArcBootCompleted[];
 extern const char kArcBootCompletedDescription[];
-
-extern const char kArcNativeBridgeExperimentName[];
-extern const char kArcNativeBridgeExperimentDescription[];
 
 extern const char kAshEnableUnifiedDesktopName[];
 extern const char kAshEnableUnifiedDesktopDescription[];

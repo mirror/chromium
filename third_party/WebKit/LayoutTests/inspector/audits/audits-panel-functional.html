@@ -51,9 +51,9 @@ JSON = {};
 <script>
 var test = function()
 {
-    TestRunner.reloadPage(onPageReloaded);
+    InspectorTest.reloadPage(onPageReloaded);
     var pendingStyleSheetsCount = 4;
-    TestRunner.addSniffer(SDK.CSSModel.prototype, "_styleSheetAdded", maybeStylesheetsLoaded, true);
+    InspectorTest.addSniffer(SDK.CSSModel.prototype, "_styleSheetAdded", maybeStylesheetsLoaded, true);
 
     var pageReloaded = false;
     function onPageReloaded()
@@ -66,18 +66,18 @@ var test = function()
     {
         if (!pageReloaded)
             return;
-        if (TestRunner.cssModel.styleSheetHeaders().length !== pendingStyleSheetsCount)
+        if (InspectorTest.cssModel.styleSheetHeaders().length !== pendingStyleSheetsCount)
             return;
         Audits.AuditRuleResult.resourceDomain = function() {
             return "[domain]";
         };
 
-        AuditsTestRunner.launchAllAudits(false, onAuditsFinished);
+        InspectorTest.launchAllAudits(false, onAuditsFinished);
     }
 
     function onAuditsFinished()
     {
-        AuditsTestRunner.collectAuditResults(TestRunner.completeTest);
+        InspectorTest.collectAuditResults(InspectorTest.completeTest);
     }
 }
 </script>

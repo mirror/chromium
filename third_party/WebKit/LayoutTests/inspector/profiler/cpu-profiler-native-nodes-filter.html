@@ -133,11 +133,11 @@ function test()
     printTree("", model.profileHead);
     function printTree(padding, node)
     {
-        TestRunner.addResult(`${padding}${node.functionName} id:${node.id} total:${node.total} self:${node.self} depth:${node.depth}`);
+        InspectorTest.addResult(`${padding}${node.functionName} id:${node.id} total:${node.total} self:${node.self} depth:${node.depth}`);
         node.children.sort((a, b) => a.id - b.id).forEach(printTree.bind(null, padding + "  "));
     }
-    TestRunner.addResult(model.samples.join(", "));
-    TestRunner.completeTest();
+    InspectorTest.addResult(model.samples.join(", "));
+    InspectorTest.completeTest();
 }
 
 </script>

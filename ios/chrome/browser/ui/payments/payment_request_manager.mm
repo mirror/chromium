@@ -47,7 +47,9 @@
 #import "ios/chrome/browser/payments/payment_request_cache.h"
 #import "ios/chrome/browser/payments/payment_response_helper.h"
 #include "ios/chrome/browser/procedural_block_types.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
+#import "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/payments/js_payment_request_manager.h"
 #import "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
@@ -122,6 +124,9 @@ struct PendingPaymentResponse {
   // up).
   BOOL _activeWebStateEnabled;
 
+  // Coordinator used to create and present the PaymentRequest view controller.
+  PaymentRequestCoordinator* _paymentRequestCoordinator;
+
   // Timer used to periodically unblock the webview's JS event queue.
   NSTimer* _unblockEventQueueTimer;
 
@@ -144,18 +149,11 @@ struct PendingPaymentResponse {
 // The ios::ChromeBrowserState instance passed to the initializer.
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 
-// Coordinator used to create and present the PaymentRequest view controller.
-@property(nonatomic, strong)
-    PaymentRequestCoordinator* paymentRequestCoordinator;
-
 // Object that manages JavaScript injection into the web view.
 @property(nonatomic, weak) JSPaymentRequestManager* paymentRequestJsManager;
 
 // The payments::PaymentRequest instance currently showing, if any.
 @property(nonatomic, assign) payments::PaymentRequest* pendingPaymentRequest;
-
-// The dispatcher for Payment Requests.
-@property(nonatomic, weak, readonly) id<ApplicationCommands> dispatcher;
 
 // Terminates the pending request with |errorMessage| and dismisses the UI.
 // Invokes the callback once the request has been terminated.
@@ -232,21 +230,16 @@ struct PendingPaymentResponse {
 @synthesize browserState = _browserState;
 @synthesize enabled = _enabled;
 @synthesize activeWebState = _activeWebState;
-@synthesize paymentRequestCoordinator = _paymentRequestCoordinator;
 @synthesize paymentRequestJsManager = _paymentRequestJsManager;
 @synthesize pendingPaymentRequest = _pendingPaymentRequest;
-@synthesize dispatcher = _dispatcher;
 
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
                               browserState:
-                                  (ios::ChromeBrowserState*)browserState
-                                dispatcher:(id<ApplicationCommands>)dispatcher {
+                                  (ios::ChromeBrowserState*)browserState {
   if ((self = [super init])) {
     _baseViewController = viewController;
 
     _browserState = browserState;
-
-    _dispatcher = dispatcher;
 
     _personalDataManager =
         autofill::PersonalDataManagerFactory::GetForBrowserState(
@@ -318,16 +311,10 @@ struct PendingPaymentResponse {
   DCHECK(_pendingPaymentRequest);
   _pendingPaymentRequest = nullptr;
   [self resetIOSPaymentInstrumentLauncherDelegate];
-
-  __weak PaymentRequestManager* weakSelf = self;
-  ProceduralBlock dismissUICallback = ^() {
-    [weakSelf.paymentRequestJsManager
-        rejectRequestPromiseWithErrorName:kAbortErrorName
-                             errorMessage:errorMessage
-                        completionHandler:callback];
-    weakSelf.paymentRequestCoordinator = nil;
-  };
-  [self dismissUIWithCallback:dismissUICallback];
+  [self dismissUI];
+  [_paymentRequestJsManager rejectRequestPromiseWithErrorName:kAbortErrorName
+                                                 errorMessage:errorMessage
+                                            completionHandler:callback];
 }
 
 - (void)resetIOSPaymentInstrumentLauncherDelegate {
@@ -675,13 +662,9 @@ struct PendingPaymentResponse {
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlock callback = ^{
     weakSelf.pendingPaymentRequest = nullptr;
-    ProceduralBlock dismissUICallback = ^() {
-      [weakSelf.paymentRequestJsManager
-          resolveResponsePromiseWithCompletionHandler:nil];
-      weakSelf.paymentRequestCoordinator = nil;
-    };
-    [weakSelf dismissUIWithCallback:dismissUICallback];
-
+    [weakSelf dismissUI];
+    [weakSelf.paymentRequestJsManager
+        resolveResponsePromiseWithCompletionHandler:nil];
   };
 
   // Display UI indicating failure if the value of |result| is "fail".
@@ -748,10 +731,9 @@ struct PendingPaymentResponse {
                              repeats:NO];
 }
 
-- (void)dismissUIWithCallback:(ProceduralBlock)callback {
-  [_paymentRequestCoordinator stopWithCallback:callback];
-  if (!callback)
-    _paymentRequestCoordinator = nil;
+- (void)dismissUI {
+  [_paymentRequestCoordinator stop];
+  _paymentRequestCoordinator = nil;
 }
 
 - (BOOL)webStateContentIsSecureHTML {
@@ -860,9 +842,12 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
   coordinator.paymentRequest->journey_logger().SetAborted(
       payments::JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
 
-  __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlockWithBool callback = ^(BOOL) {
-    [weakSelf.dispatcher showAutofillSettings];
+    UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
+    DCHECK(mainWindow);
+    GenericChromeCommand* command =
+        [[GenericChromeCommand alloc] initWithTag:IDC_SHOW_AUTOFILL_SETTINGS];
+    [mainWindow chromeExecuteCommand:command];
   };
 
   [self terminatePendingRequestWithErrorMessage:kCancelErrorMessage
@@ -929,7 +914,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     [self resetIOSPaymentInstrumentLauncherDelegate];
   }
 
-  [self dismissUIWithCallback:nil];
+  [self dismissUI];
   [self enableActiveWebState];
 
   // The lifetime of a PaymentRequest is tied to the WebState it is associated

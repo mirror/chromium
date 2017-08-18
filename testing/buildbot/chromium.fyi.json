@@ -9945,8 +9945,7 @@
   },
   "Fuchsia": {
     "additional_compile_targets": [
-      "gl_unittests",
-      "headless_shell"
+      "gl_unittests"
     ],
     "gtest_tests": [
       {
@@ -10032,9 +10031,6 @@
         "test": "net_unittests"
       },
       {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.service_manager_unittests.filter"
-        ],
         "swarming": {
           "can_use_on_swarming_builders": false
         },
@@ -10134,9 +10130,6 @@
         "test": "mojo_system_unittests"
       },
       {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.service_manager_unittests.filter"
-        ],
         "swarming": {
           "can_use_on_swarming_builders": false
         },

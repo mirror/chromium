@@ -10,7 +10,7 @@
 #include <memory>
 #include <vector>
 
-#include "base/containers/id_map.h"
+#include "base/id_map.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
@@ -282,10 +282,10 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   // Only accessed on the IO thread.
   scoped_refptr<ServiceWorkerContextWrapper> context_wrapper_;
 
-  base::IDMap<std::unique_ptr<ServiceWorkerHandle>> handles_;
+  IDMap<std::unique_ptr<ServiceWorkerHandle>> handles_;
 
   using RegistrationHandleMap =
-      base::IDMap<std::unique_ptr<ServiceWorkerRegistrationHandle>>;
+      IDMap<std::unique_ptr<ServiceWorkerRegistrationHandle>>;
   RegistrationHandleMap registration_handles_;
 
   bool channel_ready_;  // True after BrowserMessageFilter::sender_ != NULL.

@@ -63,59 +63,59 @@ function test()
 
     UI.viewManager.showView("animations");
     var timeline = self.runtime.sharedInstance(Animation.AnimationTimeline);
-    TestRunner.evaluateInPage("startAnimationWithDelay()");
-    ElementsTestRunner.waitForAnimationAdded(step2);
+    InspectorTest.evaluateInPage("startAnimationWithDelay()");
+    InspectorTest.waitForAnimationAdded(step2);
 
     function step2(group)
     {
         timeline._selectAnimationGroup(group);
         timeline._render();
-        TestRunner.addResult(">>>> Animation with start delay only");
-        ElementsTestRunner.dumpAnimationTimeline(timeline);
+        InspectorTest.addResult(">>>> Animation with start delay only");
+        InspectorTest.dumpAnimationTimeline(timeline);
         timeline._reset();
-        ElementsTestRunner.waitForAnimationAdded(step3);
-        TestRunner.evaluateInPage("startAnimationWithEndDelay()");
+        InspectorTest.waitForAnimationAdded(step3);
+        InspectorTest.evaluateInPage("startAnimationWithEndDelay()");
     }
 
     function step3(group)
     {
         timeline._selectAnimationGroup(group);
         timeline._render();
-        TestRunner.addResult(">>>> Animation with start and end delay");
-        ElementsTestRunner.dumpAnimationTimeline(timeline);
-        ElementsTestRunner.waitForAnimationAdded(step5);
-        TestRunner.evaluateInPage("startAnimationWithStepTiming()");
+        InspectorTest.addResult(">>>> Animation with start and end delay");
+        InspectorTest.dumpAnimationTimeline(timeline);
+        InspectorTest.waitForAnimationAdded(step5);
+        InspectorTest.evaluateInPage("startAnimationWithStepTiming()");
     }
 
     function step5(group)
     {
         timeline._selectAnimationGroup(group);
         timeline._render();
-        TestRunner.addResult(">>>> Animation with step timing function");
-        ElementsTestRunner.dumpAnimationTimeline(timeline);
+        InspectorTest.addResult(">>>> Animation with step timing function");
+        InspectorTest.dumpAnimationTimeline(timeline);
         timeline._reset();
-        ElementsTestRunner.waitForAnimationAdded(step6);
-        TestRunner.evaluateInPage("startCSSAnimation()");
+        InspectorTest.waitForAnimationAdded(step6);
+        InspectorTest.evaluateInPage("startCSSAnimation()");
     }
 
     function step6(group)
     {
         timeline._selectAnimationGroup(group);
         timeline._render();
-        TestRunner.addResult(">>>> CSS animation started");
-        ElementsTestRunner.dumpAnimationTimeline(timeline);
+        InspectorTest.addResult(">>>> CSS animation started");
+        InspectorTest.dumpAnimationTimeline(timeline);
         timeline._reset();
-        ElementsTestRunner.waitForAnimationAdded(step7);
-        TestRunner.evaluateInPage("startCSSTransition()");
+        InspectorTest.waitForAnimationAdded(step7);
+        InspectorTest.evaluateInPage("startCSSTransition()");
     }
 
     function step7(group)
     {
         timeline._selectAnimationGroup(group);
         timeline._render();
-        TestRunner.addResult(">>>> CSS transition started");
-        ElementsTestRunner.dumpAnimationTimeline(timeline);
-        TestRunner.completeTest();
+        InspectorTest.addResult(">>>> CSS transition started");
+        InspectorTest.dumpAnimationTimeline(timeline);
+        InspectorTest.completeTest();
     }
 }
 

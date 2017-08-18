@@ -147,16 +147,15 @@ void RecordDisbleReasonHistogram(int reason) {
 }
 
 // Records the disable reasons for a single extension grouped by
-// disable_reason::DisableReason.
+// Extension::DisableReason.
 void RecordDisableReasons(int reasons) {
-  // |reasons| is a bitmask with values from ExtensionDisabledReason
+  // |reasons| is a bitmask with values from Extension::DisabledReason
   // which are increasing powers of 2.
-  if (reasons == disable_reason::DISABLE_NONE) {
-    RecordDisbleReasonHistogram(disable_reason::DISABLE_NONE);
+  if (reasons == Extension::DISABLE_NONE) {
+    RecordDisbleReasonHistogram(Extension::DISABLE_NONE);
     return;
   }
-  for (int reason = 1; reason < disable_reason::DISABLE_REASON_LAST;
-       reason <<= 1) {
+  for (int reason = 1; reason < Extension::DISABLE_REASON_LAST; reason <<= 1) {
     if (reasons & reason)
       RecordDisbleReasonHistogram(reason);
   }
@@ -206,7 +205,7 @@ void InstalledLoader::Load(const ExtensionInfo& info, bool write_to_prefs) {
   const ManagementPolicy* policy = extensions::ExtensionSystem::Get(
       extension_service_->profile())->management_policy();
   if (extension.get()) {
-    disable_reason::DisableReason disable_reason = disable_reason::DISABLE_NONE;
+    Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
     bool force_disabled = false;
     if (!policy->UserMayLoad(extension.get(), nullptr)) {
       // The error message from UserMayInstall() often contains the extension ID
@@ -221,7 +220,7 @@ void InstalledLoader::Load(const ExtensionInfo& info, bool write_to_prefs) {
     } else if (extension_prefs_->IsExtensionDisabled(extension->id()) &&
                policy->MustRemainEnabled(extension.get(), nullptr) &&
                extension_prefs_->HasDisableReason(
-                   extension->id(), disable_reason::DISABLE_CORRUPTED)) {
+                   extension->id(), Extension::DISABLE_CORRUPTED)) {
       // This extension must have been disabled due to corruption on a previous
       // run of chrome, and for some reason we weren't successful in
       // auto-reinstalling it. So we want to notify the PendingExtensionManager

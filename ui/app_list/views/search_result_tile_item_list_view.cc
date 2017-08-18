@@ -67,8 +67,7 @@ SearchResultTileItemListView::SearchResultTileItemListView(
       }
 
       SearchResultTileItemView* tile_item = new SearchResultTileItemView(
-          this, view_delegate, false /* Not a suggested app */,
-          is_fullscreen_app_list_enabled_, is_play_store_app_search_enabled_);
+          this, view_delegate, false /* Not a suggested app */);
       tile_item->SetParentBackgroundColor(kCardBackgroundColorFullscreen);
       tile_views_.push_back(tile_item);
       AddChildView(tile_item);
@@ -79,8 +78,7 @@ SearchResultTileItemListView::SearchResultTileItemListView(
         kBetweenTileSpacing));
     for (size_t i = 0; i < kNumSearchResultTiles; ++i) {
       SearchResultTileItemView* tile_item = new SearchResultTileItemView(
-          this, view_delegate, false /* Not a suggested app */,
-          is_fullscreen_app_list_enabled_, is_play_store_app_search_enabled_);
+          this, view_delegate, false /* Not a suggested app */);
       tile_item->SetParentBackgroundColor(kCardBackgroundColor);
       tile_item->SetBorder(
           views::CreateEmptyBorder(kTopBottomPadding, 0, kTopBottomPadding, 0));

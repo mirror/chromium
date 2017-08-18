@@ -14,7 +14,6 @@
 namespace offline_pages {
 class OfflineMetricsCollector;
 class PrefetchBackgroundTaskHandler;
-class PrefetchConfiguration;
 class PrefetchDispatcher;
 class PrefetchDownloader;
 class PrefetchGCMHandler;
@@ -58,8 +57,6 @@ class PrefetchServiceTestTaco {
   void SetPrefetchBackgroundTaskHandler(
       std::unique_ptr<PrefetchBackgroundTaskHandler>
           prefetch_background_task_handler);
-  void SetPrefetchConfiguration(
-      std::unique_ptr<PrefetchConfiguration> prefetch_configuration);
 
   // Creates and caches an instance of PrefetchService, using default or
   // overridden test dependencies.
@@ -87,7 +84,6 @@ class PrefetchServiceTestTaco {
   std::unique_ptr<PrefetchImporter> prefetch_importer_;
   std::unique_ptr<PrefetchBackgroundTaskHandler>
       prefetch_background_task_handler_;
-  std::unique_ptr<PrefetchConfiguration> prefetch_configuration_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
 };

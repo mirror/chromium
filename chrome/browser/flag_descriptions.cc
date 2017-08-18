@@ -1682,6 +1682,13 @@ const char kEnableSpecialLocaleDescription[] =
     "Enable custom logic for special locales. In this mode, Chrome might "
     "behave differently in some locales.";
 
+const char kEnableWebapk[] = "Enable improved add to Home screen";
+const char kEnableWebapkDescription[] =
+    R"*(Packages "Progressive Web Apps" so that they can integrate more )*"
+    R"*(deeply with Android. A Chrome server is used to package sites. In )*"
+    R"*(Chrome Canary and Chrome Dev, this requires “Untrusted )*"
+    R"*(sources” to be enabled in Android security settings.)*";
+
 const char kEnableWebNfcName[] = "WebNFC";
 const char kEnableWebNfcDescription[] = "Enable WebNFC support.";
 
@@ -2165,11 +2172,6 @@ const char kAllowTouchpadThreeFingerClickDescription[] =
 const char kArcBootCompleted[] = "Load Android apps automatically";
 const char kArcBootCompletedDescription[] =
     "Allow Android apps to start automatically after signing in.";
-
-const char kArcNativeBridgeExperimentName[] =
-    "Enable native bridge experiment for ARC";
-const char kArcNativeBridgeExperimentDescription[] =
-    "Enables experimental native bridge feature.";
 
 const char kAshEnableUnifiedDesktopName[] = "Unified desktop mode";
 const char kAshEnableUnifiedDesktopDescription[] =

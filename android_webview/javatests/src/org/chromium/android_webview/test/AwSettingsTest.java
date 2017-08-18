@@ -53,6 +53,7 @@ import org.chromium.net.test.util.TestWebServer;
 import org.chromium.ui.display.DisplayAndroid;
 
 import java.io.File;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -950,10 +951,13 @@ public class AwSettingsTest {
                 executeJavaScriptAndWaitForResult("setTitleToActualFontSize()");
             } else {
                 final float oldFontSize = mOldFontSize;
-                AwActivityTestRule.pollInstrumentationThread(() -> {
-                    executeJavaScriptAndWaitForResult("setTitleToActualFontSize()");
-                    float newFontSize = Float.parseFloat(getTitleOnUiThread());
-                    return newFontSize != oldFontSize;
+                AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        executeJavaScriptAndWaitForResult("setTitleToActualFontSize()");
+                        float newFontSize = Float.parseFloat(getTitleOnUiThread());
+                        return newFontSize != oldFontSize;
+                    }
                 });
                 mNeedToWaitForFontSizeChange = false;
             }
@@ -1169,10 +1173,13 @@ public class AwSettingsTest {
         protected void doEnsureSettingHasValue(Boolean value) throws Throwable {
             loadDataSync(getData());
             final boolean expectPopupEnabled = value;
-            AwActivityTestRule.pollInstrumentationThread(() -> {
-                String title = getTitleOnUiThread();
-                return expectPopupEnabled ? POPUP_ENABLED.equals(title) :
-                        POPUP_BLOCKED.equals(title);
+            AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    String title = getTitleOnUiThread();
+                    return expectPopupEnabled ? POPUP_ENABLED.equals(title) :
+                            POPUP_BLOCKED.equals(title);
+                }
             });
             Assert.assertEquals(value ? POPUP_ENABLED : POPUP_BLOCKED, getTitleOnUiThread());
         }
@@ -1598,9 +1605,13 @@ public class AwSettingsTest {
         Assert.assertEquals(ImagePageGenerator.IMAGE_NOT_LOADED_STRING,
                 mActivityTestRule.getTitleOnUiThread(awContents));
         settings.setLoadsImagesAutomatically(true);
-        AwActivityTestRule.pollInstrumentationThread(
-                () -> !ImagePageGenerator.IMAGE_NOT_LOADED_STRING.equals(
-                        mActivityTestRule.getTitleOnUiThread(awContents)));
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return !ImagePageGenerator.IMAGE_NOT_LOADED_STRING.equals(
+                        mActivityTestRule.getTitleOnUiThread(awContents));
+            }
+        });
         Assert.assertEquals(ImagePageGenerator.IMAGE_LOADED_STRING,
                 mActivityTestRule.getTitleOnUiThread(awContents));
     }
@@ -1998,9 +2009,13 @@ public class AwSettingsTest {
                     mActivityTestRule.getTitleOnUiThread(awContents));
 
             settings.setImagesEnabled(true);
-            AwActivityTestRule.pollInstrumentationThread(
-                    () -> ImagePageGenerator.IMAGE_LOADED_STRING.equals(
-                            mActivityTestRule.getTitleOnUiThread(awContents)));
+            AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    return ImagePageGenerator.IMAGE_LOADED_STRING.equals(
+                            mActivityTestRule.getTitleOnUiThread(awContents));
+                }
+            });
         } finally {
             webServer.shutdown();
         }
@@ -2124,9 +2139,12 @@ public class AwSettingsTest {
                     + "</body></html>";
             // Actual test. Blocking should trigger onerror handler.
             awSettings.setBlockNetworkLoads(true);
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                    () -> awContents.addJavascriptInterface(new AudioEvent(callback),
-                            "AudioEvent"));
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                @Override
+                public void run() {
+                    awContents.addJavascriptInterface(new AudioEvent(callback), "AudioEvent");
+                }
+            });
             int count = callback.getCallCount();
             mActivityTestRule.loadDataSync(awContents, contentClient.getOnPageFinishedHelper(),
                     pageHtml, "text/html", false);
@@ -2270,11 +2288,14 @@ public class AwSettingsTest {
     @Feature({"AndroidWebView", "Preferences"})
     public void testJavaScriptPopupsAndMultiWindowsWithTwoViews() throws Throwable {
         final ViewPair views = createViews();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-            AwSettings awSettings = views.getContents0().getSettings();
-            awSettings.setSupportMultipleWindows(true);
-            awSettings = views.getContents1().getSettings();
-            awSettings.setSupportMultipleWindows(true);
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                AwSettings awSettings = views.getContents0().getSettings();
+                awSettings.setSupportMultipleWindows(true);
+                awSettings = views.getContents1().getSettings();
+                awSettings.setSupportMultipleWindows(true);
+            }
         });
         views.getClient0().getOnCreateWindowHelper().setReturnValue(true);
         views.getClient1().getOnCreateWindowHelper().setReturnValue(true);
@@ -2436,8 +2457,12 @@ public class AwSettingsTest {
 
         private int waitUntilResourceIsRequested(
                 final String path, final int initialRequestCount) throws Exception {
-            AwActivityTestRule.pollInstrumentationThread(
-                    () -> mWebServer.getRequestCount(path) > initialRequestCount);
+            AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    return mWebServer.getRequestCount(path) > initialRequestCount;
+                }
+            });
             return mWebServer.getRequestCount(path);
         }
     }
@@ -2825,9 +2850,12 @@ public class AwSettingsTest {
         };
         final AwContents awContents =
                 mActivityTestRule.createAwTestContainerViewOnMainSync(client).getAwContents();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-            AwSettings awSettings = awContents.getSettings();
-            awSettings.setDefaultVideoPosterURL(defaultVideoPosterUrl);
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                AwSettings awSettings = awContents.getSettings();
+                awSettings.setDefaultVideoPosterURL(defaultVideoPosterUrl);
+            }
         });
         VideoTestWebServer webServer = new VideoTestWebServer();
         try {
@@ -2925,9 +2953,12 @@ public class AwSettingsTest {
 
             String url = httpServer.setResponseWithRunnableAction(
                     "/about.html", "Hello, World!", null,
-                    () -> {
-                        // This will update the UA string on the UI thread synchronously.
-                        awSettings.setUserAgentString("UA Override");
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            // This will update the UA string on the UI thread synchronously.
+                            awSettings.setUserAgentString("UA Override");
+                        }
                     }
             );
 
@@ -3082,8 +3113,12 @@ public class AwSettingsTest {
     }
 
     private void pollTitleAs(final String title, final AwContents awContents) throws Exception {
-        AwActivityTestRule.pollInstrumentationThread(
-                () -> title.equals(mActivityTestRule.getTitleOnUiThread(awContents)));
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return title.equals(mActivityTestRule.getTitleOnUiThread(awContents));
+            }
+        });
     }
 
     private int getSelectionChangeCountForSelectionUpdateTest(
@@ -3261,8 +3296,12 @@ public class AwSettingsTest {
         final int x = (webView.getRight() - webView.getLeft()) / 2;
         final int y = (webView.getBottom() - webView.getTop()) / 2;
         final AwContents awContents = webView.getAwContents();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> awContents.getContentViewCore().sendDoubleTapForTest(
-                        SystemClock.uptimeMillis(), x, y));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.getContentViewCore().sendDoubleTapForTest(
+                        SystemClock.uptimeMillis(), x, y);
+            }
+        });
     }
 }

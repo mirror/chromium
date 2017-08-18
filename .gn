@@ -70,7 +70,6 @@ check_targets = [
 
   #"//chrome/*",  # Epic number of errors.
   "//chrome/app/*",
-  "//chrome/app_shim/*",
   "//chrome/browser/chromeos/*",
   "//chrome/browser/extensions/*",
   "//chrome/browser/ui/*",
@@ -113,8 +112,7 @@ check_targets = [
   "//mash/*",
 
   #"//media/*",  # Lots of errors.
-  "//media/base/*",
-
+  #"//media/base/*",
   #"//media/capture/*",
   "//media/cast/*",
   "//media:media",

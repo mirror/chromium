@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '67520e6add0372b9e025a8b2fc639fbcd13caa90',
+  'catapult_revision': 'f83558ef7bc609e38b9b6bdb541393ad02209ad8',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -124,7 +124,7 @@ allowed_hosts = [
 
 deps = {
   'src/breakpad/src':
-    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + 'e6bc67c33952f25a1d81be49ad9eb38aca9934a7',
+    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + '877d207e755e7eae303369e837bbe44f22280e8a',
 
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' +  Var('buildtools_revision'),
@@ -362,7 +362,7 @@ deps_os = {
       Var('chromium_git') + '/external/github.com/swisspol/GCDWebServer.git' + '@' + '43555c66627f6ed44817855a0f6d465f559d30e0',
 
     'src/ios/third_party/material_components_ios/src':
-      Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + 'f8efb0cc6c4c99b123390f621f4c016a553d43ee',
+      Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + 'a0466df249c593ba65007440d7a84e4665ac2631',
 
     'src/ios/third_party/material_font_disk_loader_ios/src':
       Var('chromium_git') + '/external/github.com/material-foundation/material-font-disk-loader-ios.git' + '@' + '8e30188777b016182658fbaa0a4a020a48183224',
@@ -1214,7 +1214,7 @@ hooks_os = {
       'action': [
         'python',
         'src/build/fuchsia/update_sdk.py',
-        '1560f91ee0dc10ffa7b66c1435ce145e4bbf84ab',
+        '2c480ede6948b4134bde9c689d2a72a1ba0d1282',
       ],
     },
   ],

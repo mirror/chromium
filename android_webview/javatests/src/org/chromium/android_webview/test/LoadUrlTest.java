@@ -118,8 +118,12 @@ public class LoadUrlTest {
             final String url,
             final Map<String, String> extraHeaders) throws Throwable {
         int currentCallCount = onPageFinishedHelper.getCallCount();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> awContents.loadUrl(url, extraHeaders));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.loadUrl(url, extraHeaders);
+            }
+        });
         onPageFinishedHelper.waitForCallback(currentCallCount, 1, WAIT_TIMEOUT_MS,
                 TimeUnit.MILLISECONDS);
     }
@@ -343,8 +347,12 @@ public class LoadUrlTest {
         final AwContents awContents = testContainerView.getAwContents();
         mActivityTestRule.enableJavaScriptOnUiThread(awContents);
 
-        contentsClient.setOnReceivedTitleCallback(
-                () -> awContents.loadUrl("javascript:testProperty=42;void(0);"));
+        contentsClient.setOnReceivedTitleCallback(new Runnable() {
+            @Override
+            public void run() {
+                awContents.loadUrl("javascript:testProperty=42;void(0);");
+            }
+        });
 
         TestWebServer webServer = TestWebServer.start();
         try {

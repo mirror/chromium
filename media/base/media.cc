@@ -14,15 +14,11 @@
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
+#include "media/base/android/media_codec_util.h"
 #endif
 
 #if !defined(MEDIA_DISABLE_FFMPEG)
-#include "third_party/ffmpeg/ffmpeg_features.h"
-extern "C" {
-#include <libavutil/cpu.h>
-#include <libavutil/log.h>
-#include <libavutil/mem.h>
-}
+#include "media/ffmpeg/ffmpeg_common.h"
 #endif
 
 namespace media {

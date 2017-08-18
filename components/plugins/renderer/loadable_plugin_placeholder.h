@@ -101,10 +101,8 @@ class LoadablePluginPlaceholder : public PluginPlaceholderBase {
   // Plugin creation is embedder-specific.
   virtual blink::WebPlugin* CreatePlugin() = 0;
 
-  // Embedder-specific behavior. This will only be called once per placeholder.
-  virtual void OnBlockedContent(
-      content::RenderFrame::PeripheralContentStatus status,
-      bool is_same_origin) = 0;
+  // Embedder-specific behavior.
+  virtual void OnBlockedTinyContent() = 0;
 
   content::WebPluginInfo plugin_info_;
 

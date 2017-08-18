@@ -18,8 +18,8 @@ function populateDOMStorage()
 
 function test()
 {
-    TestRunner.evaluateInPage("populateDOMStorage()", function(result) {
-        TestRunner.addResult("Populated local and session storage");
+    InspectorTest.evaluateInPage("populateDOMStorage()", function(result) {
+        InspectorTest.addResult("Populated local and session storage");
     });
     function name(storage)
     {
@@ -36,32 +36,32 @@ function test()
                 rows.push(node._data.key + node._data.value);
         }
         rows.sort();
-        TestRunner.addResult("KeyValue pairs: " + rows.join(''));
+        InspectorTest.addResult("KeyValue pairs: " + rows.join(''));
     }
 
     function testStorageInView(storages) {
         var storage = storages.shift();
         if (!storage) {
-            TestRunner.addResult("DONE");
-            TestRunner.completeTest();
+            InspectorTest.addResult("DONE");
+            InspectorTest.completeTest();
             return;
         }
         UI.panels.resources.showDOMStorage(storage);
-        TestRunner.addResult("Did show: " + name(storage));
-        TestRunner.deprecatedRunAfterPendingDispatches(function() {
-            TestRunner.addResult(name(storage) + " content: ");
+        InspectorTest.addResult("Did show: " + name(storage));
+        InspectorTest.deprecatedRunAfterPendingDispatches(function() {
+            InspectorTest.addResult(name(storage) + " content: ");
             var view = UI.panels.resources._domStorageView;
             dumpDataGridContent(view._dataGrid);
-            TestRunner.deprecatedRunAfterPendingDispatches(() => testStorageInView(storages));
+            InspectorTest.deprecatedRunAfterPendingDispatches(() => testStorageInView(storages));
         });
     }
 
-    TestRunner.deprecatedRunAfterPendingDispatches(function() {
-        var storages = ApplicationTestRunner.domStorageModel().storages();
+    InspectorTest.deprecatedRunAfterPendingDispatches(function() {
+        var storages = InspectorTest.domStorageModel().storages();
         if (storages)
             testStorageInView(storages.slice());
         else
-            TestRunner.addResult("FAIL: no DOM storages found.");
+            InspectorTest.addResult("FAIL: no DOM storages found.");
 
     });
 }

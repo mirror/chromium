@@ -116,7 +116,9 @@ class TestResourceMultiBuffer : public ResourceMultiBuffer {
 
 class TestUrlData : public UrlData {
  public:
-  TestUrlData(const GURL& url, CORSMode cors_mode, UrlIndex* url_index)
+  TestUrlData(const GURL& url,
+              CORSMode cors_mode,
+              const base::WeakPtr<UrlIndex>& url_index)
       : UrlData(url, cors_mode, url_index),
         block_shift_(url_index->block_shift()) {}
 
@@ -147,7 +149,8 @@ class TestUrlIndex : public UrlIndex {
 
   scoped_refptr<UrlData> NewUrlData(const GURL& url,
                                     UrlData::CORSMode cors_mode) override {
-    last_url_data_ = new TestUrlData(url, cors_mode, this);
+    last_url_data_ =
+        new TestUrlData(url, cors_mode, weak_factory_.GetWeakPtr());
     return last_url_data_;
   }
 
@@ -215,7 +218,7 @@ class MultibufferDataSourceTest : public testing::Test {
         preload_(MultibufferDataSource::AUTO) {
     WebLocalFrame* frame =
         WebLocalFrame::CreateMainFrame(view_, &client_, nullptr, nullptr);
-    url_index_ = base::MakeUnique<TestUrlIndex>(frame);
+    url_index_ = make_linked_ptr(new TestUrlIndex(frame));
   }
 
   virtual ~MultibufferDataSourceTest() { view_->Close(); }
@@ -464,7 +467,7 @@ class MultibufferDataSourceTest : public testing::Test {
   WebView* view_;
   MultibufferDataSource::Preload preload_;
   base::MessageLoop message_loop_;
-  std::unique_ptr<TestUrlIndex> url_index_;
+  linked_ptr<TestUrlIndex> url_index_;
 
   std::unique_ptr<MockMultibufferDataSource> data_source_;
 

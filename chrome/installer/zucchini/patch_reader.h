@@ -8,7 +8,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <map>
 #include <vector>
 
 #include "base/debug/stack_trace.h"
@@ -65,8 +64,7 @@ bool ParseVarInt(BufferSource* source, T* value) {
 
 }  // namespace patch
 
-// The *Source classes below are light-weight (i.e., allows copying) visitors to
-// read patch data. Each of them has an associated "main type", and performs the
+// Each of *Source classes below has an associated "main type", and performs the
 // following:
 // - Consumes portions of a BufferSource (required to remain valid for the
 //   lifetime of the object).
@@ -210,35 +208,35 @@ class PatchElementReader {
   PatchElementReader(PatchElementReader&&);
   ~PatchElementReader();
 
-  // If data read from |source| is well-formed, initialize cached sources to
+  // If data read from |source| is well-formed, initialize internal state to
   // read from it, and returns true. Otherwise returns false.
   bool Initialize(BufferSource* source);
 
   const ElementMatch& element_match() const { return element_match_; }
   const Element& old_element() const { return element_match_.old_element; }
   const Element& new_element() const { return element_match_.new_element; }
+  size_t pool_count() const { return extra_targets_.size(); }
 
-  // The Get*() functions below return copies of cached sources.
-  EquivalenceSource GetEquivalenceSource() const { return equivalences_; }
-  ExtraDataSource GetExtraDataSource() const { return extra_data_; }
-  RawDeltaSource GetRawDeltaSource() const { return raw_delta_; }
-  ReferenceDeltaSource GetReferenceDeltaSource() const {
+  const EquivalenceSource& GetEquivalenceSource() const {
+    return equivalences_;
+  }
+  const ExtraDataSource& GetExtraDataSource() const { return extra_data_; }
+  const RawDeltaSource& GetRawDeltaSource() const { return raw_delta_; }
+  const ReferenceDeltaSource& GetReferenceDeltaSource() const {
     return reference_delta_;
   }
-  TargetSource GetExtraTargetSource(PoolTag tag) const {
-    auto pos = extra_targets_.find(tag);
-    return pos != extra_targets_.end() ? pos->second : TargetSource();
+  const TargetSource& GetExtraTargetSource(PoolTag tag) const {
+    DCHECK_LT(tag.value(), extra_targets_.size());
+    return extra_targets_[tag.value()];
   }
 
  private:
   ElementMatch element_match_;
-
-  // Cached sources.
   EquivalenceSource equivalences_;
   ExtraDataSource extra_data_;
   RawDeltaSource raw_delta_;
   ReferenceDeltaSource reference_delta_;
-  std::map<PoolTag, TargetSource> extra_targets_;
+  std::vector<TargetSource> extra_targets_;
 };
 
 // Utility to read a Zucchini ensemble patch. An ensemble patch is the
@@ -260,7 +258,7 @@ class EnsemblePatchReader {
   // Check old / new image file validity, comparing against expected size and
   // CRC32. Return true if file matches expectations, false otherwise.
   bool CheckOldFile(ConstBufferView old_image) const;
-  bool CheckNewFile(ConstBufferView new_image) const;
+  bool CheckNewFile(ConstBufferView old_image) const;
 
   const PatchHeader& header() const { return header_; }
   PatchType patch_type() const { return patch_type_; }

@@ -560,6 +560,7 @@ ActivityLog::ActivityLog(content::BrowserContext* context)
       extension_system_(ExtensionSystem::Get(context)),
       db_enabled_(false),
       testing_mode_(false),
+      has_threads_(true),
       extension_registry_observer_(this),
       active_consumers_(0),
       cached_consumer_count_(0),
@@ -576,6 +577,15 @@ ActivityLog::ActivityLog(content::BrowserContext* context)
       profile_->GetPrefs()->GetInteger(prefs::kWatchdogExtensionActive);
 
   observers_ = new base::ObserverListThreadSafe<Observer>;
+
+  // Check that the right threads exist for logging to the database.
+  // If not, we shouldn't try to do things that require them.
+  // TODO(devlin): We can clean this up now that we use sequenced task runners.
+  if (!BrowserThread::IsMessageLoopValid(BrowserThread::DB) ||
+      !BrowserThread::IsMessageLoopValid(BrowserThread::FILE) ||
+      !BrowserThread::IsMessageLoopValid(BrowserThread::IO)) {
+    has_threads_ = false;
+  }
 
   extension_registry_observer_.Add(ExtensionRegistry::Get(profile_));
   CheckActive(true);  // use cached
@@ -613,7 +623,9 @@ void ActivityLog::SetDatabasePolicy(
     default:
       NOTREACHED();
   }
+  LOG(WARNING) << "Initing";
   database_policy_->Init();
+  LOG(WARNING) << "inited";
   database_policy_type_ = policy_type;
 }
 
@@ -636,6 +648,8 @@ void ActivityLog::ChooseDatabasePolicy() {
 }
 
 bool ActivityLog::IsDatabaseEnabled() {
+  // Make sure we are not enabled when there are no threads.
+  DCHECK(has_threads_ || !db_enabled_);
   return db_enabled_;
 }
 
@@ -848,8 +862,9 @@ void ActivityLog::CheckActive(bool use_cached) {
   bool has_consumer =
       active_consumers_ || (use_cached && cached_consumer_count_);
   bool needs_db =
-      has_consumer || base::CommandLine::ForCurrentProcess()->HasSwitch(
-                          switches::kEnableExtensionActivityLogging);
+      has_threads_ && (has_consumer ||
+                       base::CommandLine::ForCurrentProcess()->HasSwitch(
+                           switches::kEnableExtensionActivityLogging));
   bool should_be_active = needs_db || has_consumer;
 
   if (should_be_active == is_active_)

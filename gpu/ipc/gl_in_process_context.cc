@@ -171,7 +171,11 @@ bool GLInProcessContextImpl::Initialize(
       bind_generates_resource, attribs.lose_context_when_out_of_memory,
       support_client_side_arrays, command_buffer_.get()));
 
-  if (!gles2_implementation_->Initialize(mem_limits)) {
+  if (!gles2_implementation_->Initialize(
+          mem_limits.start_transfer_buffer_size,
+          mem_limits.min_transfer_buffer_size,
+          mem_limits.max_transfer_buffer_size,
+          mem_limits.mapped_memory_reclaim_limit)) {
     return false;
   }
 

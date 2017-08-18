@@ -333,7 +333,7 @@ void NativeWidgetMac::StackAtTop() {
   NOTIMPLEMENTED();
 }
 
-void NativeWidgetMac::SetShape(std::unique_ptr<Widget::ShapeRects> shape) {
+void NativeWidgetMac::SetShape(std::unique_ptr<SkRegion> shape) {
   NOTIMPLEMENTED();
 }
 

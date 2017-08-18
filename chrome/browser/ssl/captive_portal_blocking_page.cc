@@ -21,7 +21,6 @@
 #include "chrome/browser/ssl/cert_report_helper.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "components/captive_portal/captive_portal_detector.h"
-#include "components/captive_portal/captive_portal_metrics.h"
 #include "components/certificate_reporting/error_reporter.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/security_interstitials/core/controller_client.h"
@@ -40,6 +39,18 @@
 namespace {
 
 const char kMetricsName[] = "captive_portal";
+
+// Events for UMA.
+enum CaptivePortalBlockingPageEvent {
+  SHOW_ALL,
+  OPEN_LOGIN_PAGE,
+  CAPTIVE_PORTAL_BLOCKING_PAGE_EVENT_COUNT
+};
+
+void RecordUMA(CaptivePortalBlockingPageEvent event) {
+  UMA_HISTOGRAM_ENUMERATION("interstitial.captive_portal", event,
+                            CAPTIVE_PORTAL_BLOCKING_PAGE_EVENT_COUNT);
+}
 
 std::unique_ptr<ChromeMetricsHelper> CreateMetricsHelper(
     content::WebContents* web_contents,
@@ -84,8 +95,7 @@ CaptivePortalBlockingPage::CaptivePortalBlockingPage(
         base::Time::Now(), nullptr));
   }
 
-  captive_portal::CaptivePortalMetrics::LogCaptivePortalBlockingPageEvent(
-      captive_portal::CaptivePortalMetrics::SHOW_ALL);
+  RecordUMA(SHOW_ALL);
 }
 
 CaptivePortalBlockingPage::~CaptivePortalBlockingPage() {
@@ -214,8 +224,7 @@ void CaptivePortalBlockingPage::CommandReceived(const std::string& command) {
           command_num);
   switch (cmd) {
     case security_interstitials::CMD_OPEN_LOGIN:
-      captive_portal::CaptivePortalMetrics::LogCaptivePortalBlockingPageEvent(
-          captive_portal::CaptivePortalMetrics::OPEN_LOGIN_PAGE);
+      RecordUMA(OPEN_LOGIN_PAGE);
       CaptivePortalTabHelper::OpenLoginTabForWebContents(web_contents(), true);
       break;
     case security_interstitials::CMD_DO_REPORT:

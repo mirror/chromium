@@ -14,7 +14,6 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
-#include "components/viz/host/host_frame_sink_client.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
@@ -31,6 +30,7 @@
 namespace ui {
 namespace ws {
 
+class ServerWindowCompositorFrameSinkManager;
 class ServerWindowDelegate;
 class ServerWindowObserver;
 
@@ -45,7 +45,7 @@ class ServerWindowObserver;
 // children the children are implicitly removed. Similarly if a window has a
 // parent and the window is deleted the deleted window is implicitly removed
 // from the parent.
-class ServerWindow : public viz::HostFrameSinkClient {
+class ServerWindow {
  public:
   using Properties = std::map<std::string, std::vector<uint8_t>>;
   using Windows = std::vector<ServerWindow*>;
@@ -54,7 +54,7 @@ class ServerWindow : public viz::HostFrameSinkClient {
   ServerWindow(ServerWindowDelegate* delegate,
                const WindowId& id,
                const Properties& properties);
-  ~ServerWindow() override;
+  ~ServerWindow();
 
   void AddObserver(ServerWindowObserver* observer);
   void RemoveObserver(ServerWindowObserver* observer);
@@ -185,10 +185,6 @@ class ServerWindow : public viz::HostFrameSinkClient {
   void set_is_activation_parent(bool value) { is_activation_parent_ = value; }
   bool is_activation_parent() const { return is_activation_parent_; }
 
-  bool has_created_compositor_frame_sink() const {
-    return has_created_compositor_frame_sink_;
-  }
-
   void set_event_targeting_policy(mojom::EventTargetingPolicy policy) {
     event_targeting_policy_ = policy;
   }
@@ -215,6 +211,16 @@ class ServerWindow : public viz::HostFrameSinkClient {
     extended_touch_hit_test_region_ = touch_insets;
   }
 
+  ServerWindowCompositorFrameSinkManager*
+  GetOrCreateCompositorFrameSinkManager();
+  ServerWindowCompositorFrameSinkManager* compositor_frame_sink_manager() {
+    return compositor_frame_sink_manager_.get();
+  }
+  const ServerWindowCompositorFrameSinkManager* compositor_frame_sink_manager()
+      const {
+    return compositor_frame_sink_manager_.get();
+  }
+
   // Offset of the underlay from the the window bounds (used for shadows).
   const gfx::Vector2d& underlay_offset() const { return underlay_offset_; }
   void SetUnderlayOffset(const gfx::Vector2d& offset);
@@ -231,9 +237,6 @@ class ServerWindow : public viz::HostFrameSinkClient {
 #endif
 
  private:
-  // viz::HostFrameSinkClient implementation.
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
-
   // Implementation of removing a window. Doesn't send any notification.
   void RemoveImpl(ServerWindow* window);
 
@@ -248,7 +251,7 @@ class ServerWindow : public viz::HostFrameSinkClient {
   // RestackTransientDescendants.
   static ServerWindow** GetStackingTarget(ServerWindow* window);
 
-  ServerWindowDelegate* const delegate_;
+  ServerWindowDelegate* delegate_;
   const WindowId id_;
   viz::FrameSinkId frame_sink_id_;
   base::Optional<viz::LocalSurfaceId> current_local_surface_id_;
@@ -268,6 +271,8 @@ class ServerWindow : public viz::HostFrameSinkClient {
   gfx::Rect bounds_;
   gfx::Insets client_area_;
   std::vector<gfx::Rect> additional_client_areas_;
+  std::unique_ptr<ServerWindowCompositorFrameSinkManager>
+      compositor_frame_sink_manager_;
   ui::CursorData cursor_;
   ui::CursorData non_client_cursor_;
   float opacity_;
@@ -304,9 +309,6 @@ class ServerWindow : public viz::HostFrameSinkClient {
   // when a window is considered top level. That is, if true the children of
   // this window are considered top level windows.
   bool is_activation_parent_ = false;
-
-  // Used by tests to know whether clients have already drawn this window.
-  bool has_created_compositor_frame_sink_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ServerWindow);
 };

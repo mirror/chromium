@@ -105,7 +105,6 @@ namespace gpu {
 class GpuControl;
 class IdAllocator;
 class ScopedTransferBufferPtr;
-struct SharedMemoryLimits;
 class TransferBufferInterface;
 
 namespace gles2 {
@@ -171,7 +170,11 @@ class GLES2_IMPL_EXPORT GLES2Implementation
 
   ~GLES2Implementation() override;
 
-  bool Initialize(const SharedMemoryLimits& limits);
+  bool Initialize(
+      unsigned int starting_transfer_buffer_size,
+      unsigned int min_transfer_buffer_size,
+      unsigned int max_transfer_buffer_size,
+      unsigned int mapped_memory_limit);
 
   // The GLES2CmdHelper being used by this GLES2Implementation. You can use
   // this to issue cmds at a lower level for certain kinds of optimization.
@@ -782,7 +785,9 @@ class GLES2_IMPL_EXPORT GLES2Implementation
 
   // Maximum amount of extra memory from the mapped memory pool to use when
   // needing to transfer something exceeding the default transfer buffer.
-  uint32_t max_extra_transfer_buffer_size_;
+  // This should be 0 for low memory devices since they are already memory
+  // constrained.
+  const uint32_t max_extra_transfer_buffer_size_;
 
   // Set of strings returned from glGetString.  We need to cache these because
   // the pointer passed back to the client has to remain valid for eternity.

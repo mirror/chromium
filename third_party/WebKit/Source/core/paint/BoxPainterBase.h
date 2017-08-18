@@ -71,16 +71,13 @@ class BoxPainterBase {
                                    bool include_logical_left_edge = true,
                                    bool include_logical_right_edge = true);
 
-  static void PaintInsetBoxShadowWithBorderRect(
-      const PaintInfo&,
-      const LayoutRect&,
-      const ComputedStyle&,
-      bool include_logical_left_edge = true,
-      bool include_logical_right_edge = true);
-
-  static void PaintInsetBoxShadowWithInnerRect(const PaintInfo&,
-                                               const LayoutRect&,
-                                               const ComputedStyle&);
+  // The input rect should be the border rect. The outer bounds of the shadow
+  // will be inset by border widths.
+  static void PaintInsetBoxShadow(const PaintInfo&,
+                                  const LayoutRect&,
+                                  const ComputedStyle&,
+                                  bool include_logical_left_edge = true,
+                                  bool include_logical_right_edge = true);
 
   static void PaintBorder(const ImageResourceObserver&,
                           const Document&,
@@ -172,12 +169,6 @@ class BoxPainterBase {
       const LayoutRect& border_rect,
       bool include_logical_left_edge,
       bool include_logical_right_edge) const;
-
-  static void PaintInsetBoxShadow(const PaintInfo&,
-                                  const FloatRoundedRect&,
-                                  const ComputedStyle&,
-                                  bool include_logical_left_edge = true,
-                                  bool include_logical_right_edge = true);
 
  private:
   const DisplayItemClient& display_item_;

@@ -4,20 +4,10 @@
 
 package org.chromium.net.urlconnection;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import android.support.test.filters.SmallTest;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetTestRule;
+import org.chromium.net.CronetTestBase;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -29,12 +19,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Tests the MessageLoop implementation.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class MessageLoopTest {
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
+public class MessageLoopTest extends CronetTestBase {
     private Thread mTestThread;
     private final ExecutorService mExecutorService =
             Executors.newSingleThreadExecutor(new ExecutorThreadFactory());
@@ -46,7 +31,6 @@ public class MessageLoopTest {
     }
     private boolean mFailed = false;
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testInterrupt() throws Exception {
@@ -87,7 +71,6 @@ public class MessageLoopTest {
         }).get();
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testTaskFailed() throws Exception {
@@ -136,7 +119,6 @@ public class MessageLoopTest {
         }).get();
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testLoopWithTimeout() throws Exception {

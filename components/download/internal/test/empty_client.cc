@@ -9,7 +9,7 @@ namespace test {
 
 void EmptyClient::OnServiceInitialized(
     bool state_lost,
-    const std::vector<DownloadMetaData>& downloads) {}
+    const std::vector<std::string>& outstanding_download_guids) {}
 
 void EmptyClient::OnServiceUnavailable() {}
 
@@ -27,7 +27,8 @@ void EmptyClient::OnDownloadFailed(const std::string& guid,
                                    FailureReason reason) {}
 
 void EmptyClient::OnDownloadSucceeded(const std::string& guid,
-                                      const CompletionInfo& completion_info) {}
+                                      const base::FilePath& path,
+                                      uint64_t size) {}
 
 }  // namespace test
 }  // namespace download

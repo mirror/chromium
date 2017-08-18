@@ -1051,11 +1051,10 @@ bool PasswordAutofillAgent::ShowSuggestions(
                                                                 frame_url);
       }
 #endif
-      if (ShouldShowStandaloneManuallFallback(element) &&
-          ShowManualFallbackSuggestion(element)) {
+      if (ShouldShowStandaloneManuallFallback(element)) {
+        ShowManualFallbackSuggestion(element);
         return true;
       }
-
       if (ShouldShowNotSecureWarning(element)) {
         autofill_agent_->ShowNotSecureWarning(element);
         return true;
@@ -1754,20 +1753,14 @@ bool PasswordAutofillAgent::ShowSuggestionPopup(
   return CanShowSuggestion(password_info.fill_data, username_string, show_all);
 }
 
-bool PasswordAutofillAgent::ShowManualFallbackSuggestion(
+void PasswordAutofillAgent::ShowManualFallbackSuggestion(
     const blink::WebInputElement& element) {
-  if (!element.Value().IsEmpty()) {
-    GetAutofillDriver()->HidePopup();
-    return false;
-  }
-
   FormData form;
   FormFieldData field;
   form_util::FindFormAndFieldForFormControlElement(element, &form, &field);
   GetPasswordManagerDriver()->ShowManualFallbackSuggestion(
       field.text_direction,
       render_frame()->GetRenderView()->ElementBoundsInWindow(element));
-  return true;
 }
 
 void PasswordAutofillAgent::FrameClosing() {
@@ -1807,14 +1800,14 @@ void PasswordAutofillAgent::ProvisionallySavePassword(
     ProvisionallySaveRestriction restriction) {
   if (!password_form)
     return;
-  bool has_password = !password_form->password_value.empty() ||
-                      !password_form->new_password_value.empty();
-  if (restriction == RESTRICTION_NON_EMPTY_PASSWORD && !has_password)
+  bool has_no_password = password_form->password_value.empty() &&
+                         password_form->new_password_value.empty();
+  if (restriction == RESTRICTION_NON_EMPTY_PASSWORD && has_no_password)
     return;
 
   DCHECK(password_form && (!form.IsNull() || !input.IsNull()));
   provisionally_saved_form_.Set(std::move(password_form), form, input);
-  if (has_password) {
+  if (!has_no_password) {
     GetPasswordManagerDriver()->ShowManualFallbackForSaving(
         provisionally_saved_form_.password_form());
   } else {

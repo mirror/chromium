@@ -4,24 +4,11 @@
 
 package org.chromium.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import static org.chromium.net.CronetTestRule.SERVER_CERT_PEM;
 import static org.chromium.net.CronetTestRule.SERVER_KEY_PKCS8_PEM;
-import static org.chromium.net.CronetTestRule.getContext;
 
 import android.support.test.filters.SmallTest;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.CronetTestRule.RequiresMinApi;
@@ -29,31 +16,27 @@ import org.chromium.net.CronetTestRule.RequiresMinApi;
 /**
  * Simple test for Brotli support.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
 @RequiresMinApi(5) // Brotli support added in API version 5: crrev.com/465216
-public class BrotliTest {
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
+public class BrotliTest extends CronetTestBase {
     private CronetEngine mCronetEngine;
 
-    @Before
-    public void setUp() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         TestFilesInstaller.installIfNeeded(getContext());
         assertTrue(Http2TestServer.startHttp2TestServer(
                 getContext(), SERVER_CERT_PEM, SERVER_KEY_PKCS8_PEM));
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Override
+    protected void tearDown() throws Exception {
         assertTrue(Http2TestServer.shutdownHttp2TestServer());
         if (mCronetEngine != null) {
             mCronetEngine.shutdown();
         }
+        super.tearDown();
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -70,7 +53,6 @@ public class BrotliTest {
         assertTrue(callback.mResponseAsString.contains("accept-encoding: gzip, deflate, br"));
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -86,7 +68,6 @@ public class BrotliTest {
         assertFalse(callback.mResponseAsString.contains("br"));
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet

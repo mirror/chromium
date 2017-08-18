@@ -80,8 +80,12 @@ public class PolicyUrlFilteringTest {
     public void testBlacklistedUrl() throws Throwable {
         final AwPolicyProvider testProvider =
                 new AwPolicyProvider(mActivityTestRule.getActivity().getApplicationContext());
-        ThreadUtils.runOnUiThreadBlocking(
-                () -> CombinedPolicyProvider.get().registerProvider(testProvider));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                CombinedPolicyProvider.get().registerProvider(testProvider);
+            }
+        });
 
         navigateAndCheckOutcome(mFooTestUrl, 0 /* error count before */, 0 /* error count after*/);
 
@@ -159,7 +163,12 @@ public class PolicyUrlFilteringTest {
         AbstractAppRestrictionsProvider.setTestRestrictions(
                 PolicyData.asBundle(Arrays.asList(policies)));
 
-        ThreadUtils.runOnUiThreadBlocking(() -> testProvider.refresh());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                testProvider.refresh();
+            }
+        });
 
         // To avoid race conditions
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();

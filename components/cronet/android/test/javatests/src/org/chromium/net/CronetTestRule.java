@@ -62,10 +62,6 @@ public class CronetTestRule implements CronetTestCommonCallback, TestRule {
         }
     }
 
-    public static Context getContext() {
-        return InstrumentationRegistry.getTargetContext();
-    }
-
     public CronetTestRule() {
         mTestCommon = new CronetTestCommon(this);
     }
@@ -149,7 +145,8 @@ public class CronetTestRule implements CronetTestCommonCallback, TestRule {
                 if (desc.getAnnotation(OnlyRunNativeCronet.class) == null) {
                     if (mTestCommon.getCronetTestFramework() != null) {
                         ExperimentalCronetEngine.Builder builder = createJavaEngineBuilder();
-                        builder.setUserAgent(UserAgent.from(getContext()));
+                        builder.setUserAgent(
+                                UserAgent.from(InstrumentationRegistry.getTargetContext()));
                         mTestCommon.getCronetTestFramework().mCronetEngine =
                                 (CronetEngineBase) builder.build();
                         // Make sure that the instantiated engine is JavaCronetEngine.
@@ -257,7 +254,7 @@ public class CronetTestRule implements CronetTestCommonCallback, TestRule {
 
     @Override
     public Context getContextForTestCommon() {
-        return getContext();
+        return InstrumentationRegistry.getTargetContext();
     }
 
     /**

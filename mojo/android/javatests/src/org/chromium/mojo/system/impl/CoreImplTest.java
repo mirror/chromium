@@ -6,15 +6,7 @@ package org.chromium.mojo.system.impl;
 
 import android.support.test.filters.SmallTest;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.mojo.MojoTestRule;
+import org.chromium.mojo.MojoTestCase;
 import org.chromium.mojo.system.Core;
 import org.chromium.mojo.system.Core.HandleSignals;
 import org.chromium.mojo.system.DataPipe;
@@ -39,14 +31,7 @@ import java.util.concurrent.ScheduledExecutorService;
 /**
  * Testing the core API.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class CoreImplTest {
-
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
-    @Rule
-    public MojoTestRule mTestRule = new MojoTestRule();
-
-
+public class CoreImplTest extends MojoTestCase {
     private static final long RUN_LOOP_TIMEOUT_MS = 5;
 
     private static final ScheduledExecutorService WORKER =
@@ -60,8 +45,8 @@ public class CoreImplTest {
     /**
      * @see MojoTestCase#tearDown()
      */
-    @After
-        public void tearDown() throws Exception {
+    @Override
+    protected void tearDown() throws Exception {
         MojoException toThrow = null;
         for (Handle handle : mHandlesToClose) {
             try {
@@ -75,6 +60,7 @@ public class CoreImplTest {
         if (toThrow != null) {
             throw toThrow;
         }
+        super.tearDown();
     }
 
     private void addHandleToClose(Handle handle) {
@@ -99,9 +85,9 @@ public class CoreImplTest {
         // Read the message back.
         ResultAnd<MessagePipeHandle.ReadMessageResult> result =
                 out.readMessage(MessagePipeHandle.ReadFlags.NONE);
-        Assert.assertEquals(MojoResult.OK, result.getMojoResult());
-        Assert.assertTrue(Arrays.equals(bytes, result.getValue().mData));
-        Assert.assertEquals(0, result.getValue().mHandles.size());
+        assertEquals(MojoResult.OK, result.getMojoResult());
+        assertTrue(Arrays.equals(bytes, result.getValue().mData));
+        assertEquals(0, result.getValue().mHandles.size());
     }
 
     private static void checkSendingData(DataPipe.ProducerHandle in, DataPipe.ConsumerHandle out) {
@@ -113,43 +99,43 @@ public class CoreImplTest {
         ByteBuffer buffer = ByteBuffer.allocateDirect(bytes.length);
         buffer.put(bytes);
         ResultAnd<Integer> result = in.writeData(buffer, DataPipe.WriteFlags.NONE);
-        Assert.assertEquals(MojoResult.OK, result.getMojoResult());
-        Assert.assertEquals(bytes.length, result.getValue().intValue());
+        assertEquals(MojoResult.OK, result.getMojoResult());
+        assertEquals(bytes.length, result.getValue().intValue());
 
         // Query number of bytes available.
         ResultAnd<Integer> readResult = out.readData(null, DataPipe.ReadFlags.none().query(true));
-        Assert.assertEquals(MojoResult.OK, readResult.getMojoResult());
-        Assert.assertEquals(bytes.length, readResult.getValue().intValue());
+        assertEquals(MojoResult.OK, readResult.getMojoResult());
+        assertEquals(bytes.length, readResult.getValue().intValue());
 
         // Peek data into a buffer.
         ByteBuffer peekBuffer = ByteBuffer.allocateDirect(bytes.length);
         readResult = out.readData(peekBuffer, DataPipe.ReadFlags.none().peek(true));
-        Assert.assertEquals(MojoResult.OK, readResult.getMojoResult());
-        Assert.assertEquals(bytes.length, readResult.getValue().intValue());
-        Assert.assertEquals(bytes.length, peekBuffer.limit());
+        assertEquals(MojoResult.OK, readResult.getMojoResult());
+        assertEquals(bytes.length, readResult.getValue().intValue());
+        assertEquals(bytes.length, peekBuffer.limit());
         byte[] peekBytes = new byte[bytes.length];
         peekBuffer.get(peekBytes);
-        Assert.assertTrue(Arrays.equals(bytes, peekBytes));
+        assertTrue(Arrays.equals(bytes, peekBytes));
 
         // Read into a buffer.
         ByteBuffer receiveBuffer = ByteBuffer.allocateDirect(bytes.length);
         readResult = out.readData(receiveBuffer, DataPipe.ReadFlags.NONE);
-        Assert.assertEquals(MojoResult.OK, readResult.getMojoResult());
-        Assert.assertEquals(bytes.length, readResult.getValue().intValue());
-        Assert.assertEquals(0, receiveBuffer.position());
-        Assert.assertEquals(bytes.length, receiveBuffer.limit());
+        assertEquals(MojoResult.OK, readResult.getMojoResult());
+        assertEquals(bytes.length, readResult.getValue().intValue());
+        assertEquals(0, receiveBuffer.position());
+        assertEquals(bytes.length, receiveBuffer.limit());
         byte[] receivedBytes = new byte[bytes.length];
         receiveBuffer.get(receivedBytes);
-        Assert.assertTrue(Arrays.equals(bytes, receivedBytes));
+        assertTrue(Arrays.equals(bytes, receivedBytes));
     }
 
     private static void checkSharing(SharedBufferHandle in, SharedBufferHandle out) {
         Random random = new Random();
 
         ByteBuffer buffer1 = in.map(0, 8, SharedBufferHandle.MapFlags.NONE);
-        Assert.assertEquals(8, buffer1.capacity());
+        assertEquals(8, buffer1.capacity());
         ByteBuffer buffer2 = out.map(0, 8, SharedBufferHandle.MapFlags.NONE);
-        Assert.assertEquals(8, buffer2.capacity());
+        assertEquals(8, buffer2.capacity());
 
         byte[] bytes = new byte[8];
         random.nextBytes(bytes);
@@ -158,7 +144,7 @@ public class CoreImplTest {
         byte[] receivedBytes = new byte[bytes.length];
         buffer2.get(receivedBytes);
 
-        Assert.assertTrue(Arrays.equals(bytes, receivedBytes));
+        assertTrue(Arrays.equals(bytes, receivedBytes));
 
         in.unmap(buffer1);
         out.unmap(buffer2);
@@ -167,27 +153,26 @@ public class CoreImplTest {
     /**
      * Testing that Core can be retrieved from a handle.
      */
-    @Test
     @SmallTest
     public void testGetCore() {
         Core core = CoreImpl.getInstance();
 
         Pair<? extends Handle, ? extends Handle> handles = core.createMessagePipe(null);
         addHandlePairToClose(handles);
-        Assert.assertEquals(core, handles.first.getCore());
-        Assert.assertEquals(core, handles.second.getCore());
+        assertEquals(core, handles.first.getCore());
+        assertEquals(core, handles.second.getCore());
 
         handles = core.createDataPipe(null);
         addHandlePairToClose(handles);
-        Assert.assertEquals(core, handles.first.getCore());
-        Assert.assertEquals(core, handles.second.getCore());
+        assertEquals(core, handles.first.getCore());
+        assertEquals(core, handles.second.getCore());
 
         SharedBufferHandle handle = core.createSharedBuffer(null, 100);
         SharedBufferHandle handle2 = handle.duplicate(null);
         addHandleToClose(handle);
         addHandleToClose(handle2);
-        Assert.assertEquals(core, handle.getCore());
-        Assert.assertEquals(core, handle2.getCore());
+        assertEquals(core, handle.getCore());
+        assertEquals(core, handle2.getCore());
     }
 
     private static void createAndCloseMessagePipe(MessagePipeHandle.CreateOptions options) {
@@ -200,7 +185,6 @@ public class CoreImplTest {
     /**
      * Testing {@link MessagePipeHandle} creation.
      */
-    @Test
     @SmallTest
     public void testMessagePipeCreation() {
         // Test creation with null options.
@@ -212,7 +196,6 @@ public class CoreImplTest {
     /**
      * Testing {@link MessagePipeHandle}.
      */
-    @Test
     @SmallTest
     public void testMessagePipeEmpty() {
         Core core = CoreImpl.getInstance();
@@ -222,7 +205,7 @@ public class CoreImplTest {
         // Testing read on an empty pipe.
         ResultAnd<MessagePipeHandle.ReadMessageResult> readResult =
                 handles.first.readMessage(MessagePipeHandle.ReadFlags.NONE);
-        Assert.assertEquals(MojoResult.SHOULD_WAIT, readResult.getMojoResult());
+        assertEquals(MojoResult.SHOULD_WAIT, readResult.getMojoResult());
 
         handles.first.close();
         handles.second.close();
@@ -231,7 +214,6 @@ public class CoreImplTest {
     /**
      * Testing {@link MessagePipeHandle}.
      */
-    @Test
     @SmallTest
     public void testMessagePipeSend() {
         Core core = CoreImpl.getInstance();
@@ -245,7 +227,6 @@ public class CoreImplTest {
     /**
      * Testing {@link MessagePipeHandle}.
      */
-    @Test
     @SmallTest
     public void testMessagePipeSendHandles() {
         Core core = CoreImpl.getInstance();
@@ -256,14 +237,14 @@ public class CoreImplTest {
 
         handles.first.writeMessage(null, Collections.<Handle>singletonList(handlesToShare.second),
                 MessagePipeHandle.WriteFlags.NONE);
-        Assert.assertFalse(handlesToShare.second.isValid());
+        assertFalse(handlesToShare.second.isValid());
         ResultAnd<MessagePipeHandle.ReadMessageResult> readMessageResult =
                 handles.second.readMessage(MessagePipeHandle.ReadFlags.NONE);
-        Assert.assertEquals(1, readMessageResult.getValue().mHandles.size());
+        assertEquals(1, readMessageResult.getValue().mHandles.size());
         MessagePipeHandle newHandle =
                 readMessageResult.getValue().mHandles.get(0).toMessagePipeHandle();
         addHandleToClose(newHandle);
-        Assert.assertTrue(newHandle.isValid());
+        assertTrue(newHandle.isValid());
         checkSendingMessage(handlesToShare.first, newHandle);
         checkSendingMessage(newHandle, handlesToShare.first);
     }
@@ -279,7 +260,6 @@ public class CoreImplTest {
     /**
      * Testing {@link DataPipe}.
      */
-    @Test
     @SmallTest
     public void testDataPipeCreation() {
         // Create datapipe with null options.
@@ -296,7 +276,6 @@ public class CoreImplTest {
     /**
      * Testing {@link DataPipe}.
      */
-    @Test
     @SmallTest
     public void testDataPipeSend() {
         Core core = CoreImpl.getInstance();
@@ -310,7 +289,6 @@ public class CoreImplTest {
     /**
      * Testing {@link DataPipe}.
      */
-    @Test
     @SmallTest
     public void testDataPipeTwoPhaseSend() {
         Random random = new Random();
@@ -322,25 +300,24 @@ public class CoreImplTest {
         byte[] bytes = new byte[8];
         random.nextBytes(bytes);
         ByteBuffer buffer = handles.first.beginWriteData(bytes.length, DataPipe.WriteFlags.NONE);
-        Assert.assertTrue(buffer.capacity() >= bytes.length);
+        assertTrue(buffer.capacity() >= bytes.length);
         buffer.put(bytes);
         handles.first.endWriteData(bytes.length);
 
         // Read into a buffer.
         ByteBuffer receiveBuffer =
                 handles.second.beginReadData(bytes.length, DataPipe.ReadFlags.NONE);
-        Assert.assertEquals(0, receiveBuffer.position());
-        Assert.assertEquals(bytes.length, receiveBuffer.limit());
+        assertEquals(0, receiveBuffer.position());
+        assertEquals(bytes.length, receiveBuffer.limit());
         byte[] receivedBytes = new byte[bytes.length];
         receiveBuffer.get(receivedBytes);
-        Assert.assertTrue(Arrays.equals(bytes, receivedBytes));
+        assertTrue(Arrays.equals(bytes, receivedBytes));
         handles.second.endReadData(bytes.length);
     }
 
     /**
      * Testing {@link DataPipe}.
      */
-    @Test
     @SmallTest
     public void testDataPipeDiscard() {
         Random random = new Random();
@@ -354,32 +331,31 @@ public class CoreImplTest {
         ByteBuffer buffer = ByteBuffer.allocateDirect(bytes.length);
         buffer.put(bytes);
         ResultAnd<Integer> result = handles.first.writeData(buffer, DataPipe.WriteFlags.NONE);
-        Assert.assertEquals(MojoResult.OK, result.getMojoResult());
-        Assert.assertEquals(bytes.length, result.getValue().intValue());
+        assertEquals(MojoResult.OK, result.getMojoResult());
+        assertEquals(bytes.length, result.getValue().intValue());
 
         // Discard bytes.
         final int nbBytesToDiscard = 4;
-        Assert.assertEquals(nbBytesToDiscard,
+        assertEquals(nbBytesToDiscard,
                 handles.second.discardData(nbBytesToDiscard, DataPipe.ReadFlags.NONE));
 
         // Read into a buffer.
         ByteBuffer receiveBuffer = ByteBuffer.allocateDirect(bytes.length - nbBytesToDiscard);
         ResultAnd<Integer> readResult =
                 handles.second.readData(receiveBuffer, DataPipe.ReadFlags.NONE);
-        Assert.assertEquals(MojoResult.OK, readResult.getMojoResult());
-        Assert.assertEquals(bytes.length - nbBytesToDiscard, readResult.getValue().intValue());
-        Assert.assertEquals(0, receiveBuffer.position());
-        Assert.assertEquals(bytes.length - nbBytesToDiscard, receiveBuffer.limit());
+        assertEquals(MojoResult.OK, readResult.getMojoResult());
+        assertEquals(bytes.length - nbBytesToDiscard, readResult.getValue().intValue());
+        assertEquals(0, receiveBuffer.position());
+        assertEquals(bytes.length - nbBytesToDiscard, receiveBuffer.limit());
         byte[] receivedBytes = new byte[bytes.length - nbBytesToDiscard];
         receiveBuffer.get(receivedBytes);
-        Assert.assertTrue(Arrays.equals(
+        assertTrue(Arrays.equals(
                 Arrays.copyOfRange(bytes, nbBytesToDiscard, bytes.length), receivedBytes));
     }
 
     /**
      * Testing {@link SharedBufferHandle}.
      */
-    @Test
     @SmallTest
     public void testSharedBufferCreation() {
         Core core = CoreImpl.getInstance();
@@ -392,7 +368,6 @@ public class CoreImplTest {
     /**
      * Testing {@link SharedBufferHandle}.
      */
-    @Test
     @SmallTest
     public void testSharedBufferDuplication() {
         Core core = CoreImpl.getInstance();
@@ -408,7 +383,6 @@ public class CoreImplTest {
     /**
      * Testing {@link SharedBufferHandle}.
      */
-    @Test
     @SmallTest
     public void testSharedBufferSending() {
         Core core = CoreImpl.getInstance();
@@ -424,7 +398,6 @@ public class CoreImplTest {
     /**
      * Testing that invalid handle can be used with this implementation.
      */
-    @Test
     @SmallTest
     public void testInvalidHandle() {
         Core core = CoreImpl.getInstance();
@@ -437,29 +410,28 @@ public class CoreImplTest {
         try {
             handles.first.writeMessage(null, Collections.<Handle>singletonList(handle),
                     MessagePipeHandle.WriteFlags.NONE);
-            Assert.fail();
+            fail();
         } catch (MojoException e) {
-            Assert.assertEquals(MojoResult.ABORTED, e.getMojoResult());
+            assertEquals(MojoResult.ABORTED, e.getMojoResult());
         }
     }
 
     /**
      * Testing the pass method on message pipes.
      */
-    @Test
     @SmallTest
     public void testMessagePipeHandlePass() {
         Core core = CoreImpl.getInstance();
         Pair<MessagePipeHandle, MessagePipeHandle> handles = core.createMessagePipe(null);
         addHandlePairToClose(handles);
 
-        Assert.assertTrue(handles.first.isValid());
+        assertTrue(handles.first.isValid());
         MessagePipeHandle handleClone = handles.first.pass();
 
         addHandleToClose(handleClone);
 
-        Assert.assertFalse(handles.first.isValid());
-        Assert.assertTrue(handleClone.isValid());
+        assertFalse(handles.first.isValid());
+        assertTrue(handleClone.isValid());
         checkSendingMessage(handleClone, handles.second);
         checkSendingMessage(handles.second, handleClone);
     }
@@ -467,7 +439,6 @@ public class CoreImplTest {
     /**
      * Testing the pass method on data pipes.
      */
-    @Test
     @SmallTest
     public void testDataPipeHandlePass() {
         Core core = CoreImpl.getInstance();
@@ -480,17 +451,16 @@ public class CoreImplTest {
         addHandleToClose(producerClone);
         addHandleToClose(consumerClone);
 
-        Assert.assertFalse(handles.first.isValid());
-        Assert.assertFalse(handles.second.isValid());
-        Assert.assertTrue(producerClone.isValid());
-        Assert.assertTrue(consumerClone.isValid());
+        assertFalse(handles.first.isValid());
+        assertFalse(handles.second.isValid());
+        assertTrue(producerClone.isValid());
+        assertTrue(consumerClone.isValid());
         checkSendingData(producerClone, consumerClone);
     }
 
     /**
      * Testing the pass method on shared buffers.
      */
-    @Test
     @SmallTest
     public void testSharedBufferPass() {
         Core core = CoreImpl.getInstance();
@@ -505,8 +475,8 @@ public class CoreImplTest {
         addHandleToClose(handleClone);
         addHandleToClose(newHandleClone);
 
-        Assert.assertFalse(handle.isValid());
-        Assert.assertTrue(handleClone.isValid());
+        assertFalse(handle.isValid());
+        assertTrue(handleClone.isValid());
         checkSharing(handleClone, newHandleClone);
         checkSharing(newHandleClone, handleClone);
     }
@@ -514,7 +484,6 @@ public class CoreImplTest {
     /**
      * esting handle conversion to native and back.
      */
-    @Test
     @SmallTest
     public void testHandleConversion() {
         Core core = CoreImpl.getInstance();
@@ -525,7 +494,7 @@ public class CoreImplTest {
                 core.acquireNativeHandle(handles.first.releaseNativeHandle()).toMessagePipeHandle();
         addHandleToClose(converted);
 
-        Assert.assertFalse(handles.first.isValid());
+        assertFalse(handles.first.isValid());
 
         checkSendingMessage(converted, handles.second);
         checkSendingMessage(handles.second, converted);

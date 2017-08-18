@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * Tests for the CookieManager.
@@ -228,7 +229,12 @@ public class CookieManagerTest {
 
         mCookieManager.setCookie(url, cookie, null);
 
-        AwActivityTestRule.pollInstrumentationThread(() -> mCookieManager.hasCookies());
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return mCookieManager.hasCookies();
+            }
+        });
     }
 
     @Test
@@ -263,7 +269,12 @@ public class CookieManagerTest {
         mCookieManager.removeAllCookies(null);
 
         // Eventually the cookies are removed.
-        AwActivityTestRule.pollInstrumentationThread(() -> !mCookieManager.hasCookies());
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return !mCookieManager.hasCookies();
+            }
+        });
     }
 
     @Test
@@ -313,9 +324,12 @@ public class CookieManagerTest {
         mCookieManager.removeSessionCookies(null);
 
         // Eventually the session cookie is removed.
-        AwActivityTestRule.pollInstrumentationThread(() -> {
-            String c = mCookieManager.getCookie(url);
-            return !c.contains(sessionCookie) && c.contains(normalCookie);
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                String c = mCookieManager.getCookie(url);
+                return !c.contains(sessionCookie) && c.contains(normalCookie);
+            }
         });
     }
 
@@ -343,7 +357,12 @@ public class CookieManagerTest {
         Assert.assertTrue(mCookieManager.hasCookies());
 
         // But eventually expires:
-        AwActivityTestRule.pollInstrumentationThread(() -> !mCookieManager.hasCookies());
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return !mCookieManager.hasCookies();
+            }
+        });
     }
 
     @Test
@@ -736,20 +755,32 @@ public class CookieManagerTest {
 
     private void setCookieOnUiThread(final String url, final String cookie,
             final ValueCallback<Boolean> callback) throws Throwable {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> mCookieManager.setCookie(url, cookie, callback));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mCookieManager.setCookie(url, cookie, callback);
+            }
+        });
     }
 
     private void removeSessionCookiesOnUiThread(final ValueCallback<Boolean> callback)
             throws Throwable {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> mCookieManager.removeSessionCookies(callback));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mCookieManager.removeSessionCookies(callback);
+            }
+        });
     }
 
     private void removeAllCookiesOnUiThread(final ValueCallback<Boolean> callback)
             throws Throwable {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> mCookieManager.removeAllCookies(callback));
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mCookieManager.removeAllCookies(callback);
+            }
+        });
     }
 
     /**
@@ -760,7 +791,12 @@ public class CookieManagerTest {
     }
 
     private void waitForCookie(final String url) throws Exception {
-        AwActivityTestRule.pollInstrumentationThread(() -> mCookieManager.getCookie(url) != null);
+        AwActivityTestRule.pollInstrumentationThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return mCookieManager.getCookie(url) != null;
+            }
+        });
     }
 
     private void validateCookies(String responseCookie, String... expectedCookieNames) {

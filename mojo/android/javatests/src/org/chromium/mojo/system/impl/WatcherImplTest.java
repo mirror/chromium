@@ -6,15 +6,7 @@ package org.chromium.mojo.system.impl;
 
 import android.support.test.filters.SmallTest;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.mojo.MojoTestRule;
+import org.chromium.mojo.MojoTestCase;
 import org.chromium.mojo.system.Core;
 import org.chromium.mojo.system.Handle;
 import org.chromium.mojo.system.InvalidHandle;
@@ -32,13 +24,7 @@ import java.util.List;
 /**
  * Testing the Watcher.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class WatcherImplTest {
-
-    @Rule
-    public MojoTestRule mTestRule = new MojoTestRule();
-
-
+public class WatcherImplTest extends MojoTestCase {
     private List<Handle> mHandlesToClose = new ArrayList<Handle>();
     private Watcher mWatcher;
     private Core mCore;
@@ -46,8 +32,9 @@ public class WatcherImplTest {
     /**
      * @see MojoTestCase#setUp()
      */
-    @Before
-        public void setUp() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         mWatcher = new WatcherImpl();
         mCore = CoreImpl.getInstance();
     }
@@ -55,8 +42,8 @@ public class WatcherImplTest {
     /**
      * @see MojoTestCase#tearDown()
      */
-    @After
-        public void tearDown() throws Exception {
+    @Override
+    protected void tearDown() throws Exception {
         mWatcher.destroy();
         MojoException toThrow = null;
         for (Handle handle : mHandlesToClose) {
@@ -71,6 +58,7 @@ public class WatcherImplTest {
         if (toThrow != null) {
             throw toThrow;
         }
+        super.tearDown();
     }
 
     private void addHandlePairToClose(Pair<? extends Handle, ? extends Handle> handles) {
@@ -115,28 +103,26 @@ public class WatcherImplTest {
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testCorrectResult() {
         // Checking a correct result.
         Pair<MessagePipeHandle, MessagePipeHandle> handles = mCore.createMessagePipe(null);
         addHandlePairToClose(handles);
         final WatcherResult watcherResult = new WatcherResult(handles.first);
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         mWatcher.start(handles.first, Core.HandleSignals.READABLE, watcherResult);
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         handles.second.writeMessage(
                 ByteBuffer.allocateDirect(1), null, MessagePipeHandle.WriteFlags.NONE);
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(MojoResult.OK, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(MojoResult.OK, watcherResult.getResult());
     }
 
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testClosingPeerHandle() {
         // Closing the peer handle.
@@ -144,23 +130,22 @@ public class WatcherImplTest {
         addHandlePairToClose(handles);
 
         final WatcherResult watcherResult = new WatcherResult();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         mWatcher.start(handles.first, Core.HandleSignals.READABLE, watcherResult);
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         handles.second.close();
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(MojoResult.FAILED_PRECONDITION, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(MojoResult.FAILED_PRECONDITION, watcherResult.getResult());
     }
 
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testClosingWatchedHandle() {
         // Closing the peer handle.
@@ -168,23 +153,22 @@ public class WatcherImplTest {
         addHandlePairToClose(handles);
 
         final WatcherResult watcherResult = new WatcherResult();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         mWatcher.start(handles.first, Core.HandleSignals.READABLE, watcherResult);
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         handles.first.close();
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(MojoResult.CANCELLED, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(MojoResult.CANCELLED, watcherResult.getResult());
     }
 
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testInvalidHandle() {
         // Closing the peer handle.
@@ -192,38 +176,36 @@ public class WatcherImplTest {
         addHandlePairToClose(handles);
 
         final WatcherResult watcherResult = new WatcherResult();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         handles.first.close();
-        Assert.assertEquals(MojoResult.INVALID_ARGUMENT,
+        assertEquals(MojoResult.INVALID_ARGUMENT,
                 mWatcher.start(handles.first, Core.HandleSignals.READABLE, watcherResult));
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
     }
 
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testDefaultInvalidHandle() {
         final WatcherResult watcherResult = new WatcherResult();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
-        Assert.assertEquals(MojoResult.INVALID_ARGUMENT,
+        assertEquals(MojoResult.INVALID_ARGUMENT,
                 mWatcher.start(InvalidHandle.INSTANCE, Core.HandleSignals.READABLE, watcherResult));
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
     }
 
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testCancel() {
         // Closing the peer handle.
@@ -231,28 +213,27 @@ public class WatcherImplTest {
         addHandlePairToClose(handles);
 
         final WatcherResult watcherResult = new WatcherResult();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         mWatcher.start(handles.first, Core.HandleSignals.READABLE, watcherResult);
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         mWatcher.cancel();
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         handles.second.writeMessage(
                 ByteBuffer.allocateDirect(1), null, MessagePipeHandle.WriteFlags.NONE);
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
     }
 
     /**
      * Testing {@link Watcher} implementation.
      */
-    @Test
     @SmallTest
     public void testImmediateCancelOnInvalidHandle() {
         // Closing the peer handle.
@@ -261,13 +242,13 @@ public class WatcherImplTest {
 
         final WatcherResult watcherResult = new WatcherResult();
         handles.first.close();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
 
         mWatcher.start(handles.first, Core.HandleSignals.READABLE, watcherResult);
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
         mWatcher.cancel();
 
-        mTestRule.runLoopUntilIdle();
-        Assert.assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
+        runLoopUntilIdle();
+        assertEquals(Integer.MIN_VALUE, watcherResult.getResult());
     }
 }
