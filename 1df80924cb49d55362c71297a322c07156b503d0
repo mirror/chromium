@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d60f1b4a_f4f98e80",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-18T08:52:18Z",
+      "side": 1,
+      "message": "we should make sure we can easily roll this out without having to split or shuffle existing groups.",
+      "parentUuid": "502f33fa_40cebdf7",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f1bf75_f425748a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
