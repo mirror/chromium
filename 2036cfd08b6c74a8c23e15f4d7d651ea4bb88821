@@ -16,6 +16,24 @@
       "revId": "2036cfd08b6c74a8c23e15f4d7d651ea4bb88821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0e6a4e_1a185a3d",
+        "filename": "ios/web/active_state_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-18T21:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe94a3c_e1f08332",
+      "revId": "2036cfd08b6c74a8c23e15f4d7d651ea4bb88821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
