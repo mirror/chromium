@@ -26,18 +26,13 @@
 #include "net/base/request_priority.h"
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/http/http_response_headers.h"
+#include "net/test/spawned_test_server/test_server_config.h"
 #include "net/url_request/url_request_test_util.h"
 #include "url/gurl.h"
 
 namespace net {
 
 namespace {
-
-GURL GenerateSpawnerCommandURL(const std::string& command, uint16_t port) {
-  // Always performs HTTP request for sending command to the spawner server.
-  return GURL(base::StringPrintf("%s:%u/%s", "http://127.0.0.1", port,
-                                 command.c_str()));
-}
 
 int kBufferSize = 2048;
 
@@ -107,11 +102,10 @@ class SpawnerRequestData : public base::SupportsUserData::Data {
 
 }  // namespace
 
-SpawnerCommunicator::SpawnerCommunicator(uint16_t port)
+SpawnerCommunicator::SpawnerCommunicator()
     : io_thread_("spawner_communicator"),
       event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
              base::WaitableEvent::InitialState::NOT_SIGNALED),
-      port_(port),
       next_id_(0),
       is_running_(false),
       weak_factory_(this) {}
@@ -131,7 +125,6 @@ void SpawnerCommunicator::StartIOThread() {
   if (is_running_)
     return;
 
-  allowed_port_.reset(new ScopedPortException(port_));
   base::Thread::Options options;
   options.message_loop_type = base::MessageLoop::TYPE_IO;
   is_running_ = io_thread_.StartWithOptions(options);
@@ -147,7 +140,6 @@ void SpawnerCommunicator::Shutdown() {
   DCHECK(!context_.get());
   is_running_ = false;
   io_thread_.Stop();
-  allowed_port_.reset();
 }
 
 void SpawnerCommunicator::SendCommandAndWaitForResult(
@@ -185,7 +177,9 @@ void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
   DCHECK(!cur_request_.get());
   context_.reset(new TestURLRequestContext);
   cur_request_ = context_->CreateRequest(
-      GenerateSpawnerCommandURL(command, port_), DEFAULT_PRIORITY, this);
+      TestServerConfig::Get()->GetSpawnerUrl(command), DEFAULT_PRIORITY, this);
+  LOG(ERROR) << "Connecting to "
+             << TestServerConfig::Get()->GetSpawnerUrl(command).spec();
   DCHECK(cur_request_);
   int current_request_id = ++next_id_;
   cur_request_->SetUserData(
