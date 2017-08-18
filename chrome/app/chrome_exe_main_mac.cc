@@ -42,7 +42,7 @@ constexpr char v2_sandbox_enabled_arg[] = "--v2-sandbox-enabled";
 // sandbox policy.
 constexpr char fd_mapping_arg[] = "--fd_mapping=";
 
-__attribute__((noreturn)) void SandboxExec(const char* exec_path,
+void SandboxExec(const char* exec_path,
                                            int argc,
                                            char* argv[],
                                            int fd_mapping) {
@@ -84,9 +84,9 @@ __attribute__((noreturn)) void SandboxExec(const char* exec_path,
   new_argv.push_back(nullptr);
 
   // The helper executable re-executes itself under the sandbox.
-  execv(exec_path, new_argv.data());
-  perror("execve");
-  abort();
+//  execv(exec_path, new_argv.data());
+//  perror("execve");
+//  abort();
 }
 #endif  // defined(HELPER_EXECUTABLE)
 

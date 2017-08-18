@@ -434,7 +434,7 @@ const base::Feature kDeviceMonitorMac{"DeviceMonitorMac",
 // The V2 sandbox on MacOS removes the unsandboed warmup phase and sandboxes the
 // entire life of the process.
 const base::Feature kMacV2Sandbox{"MacV2Sandbox",
-                                  base::FEATURE_DISABLED_BY_DEFAULT};
+                                  base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
 
 }  // namespace features
