@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "cc/input/touch_action.h"
 #include "content/common/content_export.h"
+#include "ui/events/gesture_detection/touch_disposition_gesture_filter.h"
 
 namespace blink {
 class WebGestureEvent;
@@ -26,7 +27,9 @@ class CONTENT_EXPORT TouchActionFilter {
   // Returns true if the supplied gesture event should be dropped based on the
   // current touch-action state. Otherwise returns false, and possibly modifies
   // the event's directional parameters to make the event compatible with
-  // the effective touch-action.
+  // the effective touch-action. If called after receipt of the whitelisted
+  // touch-action and before receipt of the effective touch-action, we will save
+  // any scrolling that may be lost due to the whitelisted state.
   bool FilterGestureEvent(blink::WebGestureEvent* gesture_event);
 
   // Called when a set-touch-action message is received from the renderer
@@ -50,12 +53,22 @@ class CONTENT_EXPORT TouchActionFilter {
 
   cc::TouchAction allowed_touch_action() const { return allowed_touch_action_; }
 
+  bool white_listed_touch_action_set() const {
+    return white_listed_touch_action_set_;
+  }
+
  private:
   bool ShouldSuppressManipulation(const blink::WebGestureEvent&);
   bool FilterManipulationEventAndResetState();
 
+  // Must be called at the end of each touch sequence.
+  void ResetAccumulatedScrolling();
+
   // Whether scroll and pinch gestures should be discarded due to touch-action.
   bool suppress_manipulation_events_;
+  // True iff suppress_manipulation_events_ was set based on the effective
+  // touch-action.
+  bool suppress_manipulation_events_set_;
 
   // Whether a tap ending event in this sequence should be discarded because a
   // previous GestureTapUnconfirmed event was turned into a GestureTap.
@@ -67,11 +80,29 @@ class CONTENT_EXPORT TouchActionFilter {
   // and the next DoubleTap.
   bool allow_current_double_tap_event_;
 
+  // If a whitelisted touch action is received and accepted and the scrolling
+  // in one direction is not allowed, we accumulate the scrolling that has
+  // not been allowed in that direction and allow the gesture to be released.
+  float accumulated_x_scrolling_;
+  float accumulated_y_scrolling_;
+
   // What touch actions are currently permitted.
   cc::TouchAction allowed_touch_action_;
+  // Used on receipt of an InputEventAck received from the compositor to
+  // determine if we should be using the whitelisted touch action or the
+  // effective touch action.
+  bool allowed_touch_action_set_;
 
   // Whitelisted touch action received from the compositor.
   cc::TouchAction white_listed_touch_action_;
+  // True iff a whitelisted touch action has been received.
+  bool white_listed_touch_action_set_;
+
+  // When we receive the whitelisted touch action on the scroll begin, if we
+  // have not received the effective touch action, we need to save the minimal
+  // conforming touch action to see if an event should be suppressed or not on
+  // receipt of the effective touch action.
+  cc::TouchAction minimal_conforming_touch_action_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchActionFilter);
 };
