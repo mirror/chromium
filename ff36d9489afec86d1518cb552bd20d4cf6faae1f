@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36fad7a3_044eb10c",
+        "filename": "chrome/common/extensions/media_parser_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T05:41:22Z",
+      "side": 1,
+      "message": "This can\u0027t use the shorter convenience forms, due to the reinterpret cast.",
+      "revId": "ff36d9489afec86d1518cb552bd20d4cf6faae1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
