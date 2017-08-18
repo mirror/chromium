@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50888324_b43ae13d",
+        "filename": "chrome/android/java/res/layout/modern_list_item_view.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:04:22Z",
+      "side": 1,
+      "message": "add the 2017 copyright",
+      "range": {
+        "startLine": 1,
+        "startChar": 20,
+        "endLine": 1,
+        "endChar": 28
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0470c3_4e261449",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderSelectActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:04:22Z",
+      "side": 1,
+      "message": "I believe this has been replaced with something in FeatureUtils that combines chrome home and modern (as we should also be checking whether we are in chrome home here)",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 37
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413379fb_d85640b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:04:22Z",
+      "side": 1,
+      "message": "Doesn\u0027t the base class handle the selection changes (showing the checkmark)?  Is this doing something in addition?  Just wondering why this needs more logic.",
+      "range": {
+        "startLine": 259,
+        "startChar": 26,
+        "endLine": 259,
+        "endChar": 47
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be4ef01_370bd5b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemHighlightView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:04:22Z",
+      "side": 1,
+      "message": "same comment as before, this should also be keyed off of chrome home",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a054a981_139d42ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:04:22Z",
+      "side": 1,
+      "message": "same here too",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 24
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d89230_b7752d5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:04:22Z",
+      "side": 1,
+      "message": "If there were fewer methods that people need to call on mIconView, I\u0027d probably say we should make that private and just expose setIconDrawable on this class which would handle the updates accordingly, but I think that isn\u0027t possible yet.",
+      "range": {
+        "startLine": 197,
+        "startChar": 19,
+        "endLine": 197,
+        "endChar": 40
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
