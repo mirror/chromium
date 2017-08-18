@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb0765f_c7545574",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T14:21:50Z",
+      "side": 1,
+      "message": "Could you also update this description?",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0342100e_fa4c7863",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T14:21:50Z",
+      "side": 1,
+      "message": "Can you add a short comment? (We could probably briefly note that WebServiceWorkerError struct handles this error enums)",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0094fc75_60b6d731",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T14:21:50Z",
+      "side": 1,
+      "message": "Should this follow kNone naming style?",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
