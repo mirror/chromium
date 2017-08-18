@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f97c7a0_5cab26b9",
+        "filename": "ui/views/view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4769,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-18T13:30:55Z",
+      "side": 1,
+      "message": "Thanks for adding this!",
+      "range": {
+        "startLine": 4769,
+        "startChar": 11,
+        "endLine": 4769,
+        "endChar": 31
+      },
+      "revId": "f77d7b2cf9f80a7ad218dc2a713bb25b9b2fcfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
