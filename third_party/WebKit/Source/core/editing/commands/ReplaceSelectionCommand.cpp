@@ -1000,27 +1000,7 @@ ElementToSplitToAvoidPastingIntoInlineElementsWithStyle(
       containing_block));
 }
 
-void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
-  TRACE_EVENT0("blink", "ReplaceSelectionCommand::doApply");
-  const VisibleSelection selection = EndingVisibleSelection();
-  DCHECK(!selection.IsNone());
-  DCHECK(selection.Start().AnchorNode());
-  if (!selection.IsNonOrphanedCaretOrRange() || !selection.Start().AnchorNode())
-    return;
-
-  if (!selection.RootEditableElement())
-    return;
-
-  ReplacementFragment fragment(&GetDocument(), document_fragment_.Get(),
-                               selection);
-  bool trivial_replace_result = PerformTrivialReplace(fragment, editing_state);
-  if (editing_state->IsAborted())
-    return;
-  if (trivial_replace_result)
-    return;
-
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
+void ReplaceSelectionCommand::SetUpStyle(const VisibleSelection& selection) {
   // We can skip matching the style if the selection is plain text.
   if ((selection.Start().AnchorNode()->GetLayoutObject() &&
        selection.Start()
@@ -1037,7 +1017,12 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     insertion_style_ = EditingStyle::Create(selection.Start());
     insertion_style_->MergeTypingStyle(&GetDocument());
   }
+}
 
+void ReplaceSelectionCommand::CreateInsertionPointIfNeeds(
+    const VisibleSelection& selection,
+    const ReplacementFragment& fragment,
+    EditingState* editing_state) {
   const VisiblePosition visible_start = selection.VisibleStart();
   const VisiblePosition visible_end = selection.VisibleEnd();
 
@@ -1045,13 +1030,13 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   const bool selection_start_was_start_of_paragraph =
       IsStartOfParagraph(visible_start);
 
-  Element* enclosing_block_of_visible_start =
+  Element* const enclosing_block_of_visible_start =
       EnclosingBlock(visible_start.DeepEquivalent().AnchorNode());
 
   const bool start_is_inside_mail_blockquote = EnclosingNodeOfType(
       selection.Start(), IsMailHTMLBlockquoteElement, kCanCrossEditingBoundary);
   const bool selection_is_plain_text = !selection.IsContentRichlyEditable();
-  Element* current_root = selection.RootEditableElement();
+  Element* const current_root = selection.RootEditableElement();
 
   if ((selection_start_was_start_of_paragraph &&
        selection_end_was_end_of_paragraph &&
@@ -1140,7 +1125,12 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
               .Build());
     }
   }
+}
 
+Position ReplaceSelectionCommand::FindInsertionPointAndMakeDocumentReady(
+    const VisibleSelection& selection,
+    ReplacementFragment* fragment,
+    EditingState* editing_state) {
   Position insertion_pos = EndingVisibleSelection().Start();
   // We don't want any of the pasted content to end up nested in a Mail
   // blockquote, so first break out of any surrounding Mail blockquotes. Unless
@@ -1153,7 +1143,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     ApplyCommandToComposite(BreakBlockquoteCommand::Create(GetDocument()),
                             editing_state);
     if (editing_state->IsAborted())
-      return;
+      return {};
     // This will leave a br between the split.
     Node* br = EndingVisibleSelection().Start().AnchorNode();
     DCHECK(isHTMLBRElement(br)) << br;
@@ -1162,7 +1152,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     insertion_pos = Position::InParentBeforeNode(*br);
     RemoveNode(br, editing_state);
     if (editing_state->IsAborted())
-      return;
+      return {};
   }
 
   // Inserting content could cause whitespace to collapse, e.g. inserting
@@ -1173,27 +1163,30 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
 
   // If the downstream node has been removed there's no point in continuing.
   if (!MostForwardCaretPosition(insertion_pos).AnchorNode())
-    return;
+    return {};
 
   // NOTE: This would be an incorrect usage of downstream() if downstream() were
   // changed to mean the last position after p that maps to the same visible
   // position as p (since in the case where a br is at the end of a block and
   // collapsed away, there are positions after the br which map to the same
   // visible position as [br, 0]).
-  HTMLBRElement* end_br =
+  end_br_ =
       isHTMLBRElement(*MostForwardCaretPosition(insertion_pos).AnchorNode())
           ? toHTMLBRElement(
                 MostForwardCaretPosition(insertion_pos).AnchorNode())
           : 0;
-  VisiblePosition original_vis_pos_before_end_br;
-  if (end_br) {
-    original_vis_pos_before_end_br =
-        PreviousPositionOf(VisiblePosition::BeforeNode(*end_br));
+  original_vis_pos_before_end_br_ = VisiblePosition();
+  if (end_br_) {
+    original_vis_pos_before_end_br_ =
+        PreviousPositionOf(VisiblePosition::BeforeNode(*end_br_));
   }
 
   Element* enclosing_block_of_insertion_pos =
       EnclosingBlock(insertion_pos.AnchorNode());
 
+  const bool start_is_inside_mail_blockquote = EnclosingNodeOfType(
+      selection.Start(), IsMailHTMLBlockquoteElement, kCanCrossEditingBoundary);
+  Element* const current_root = selection.RootEditableElement();
   // Adjust |enclosingBlockOfInsertionPos| to prevent nesting.
   // If the start was in a Mail blockquote, we will have already handled
   // adjusting |enclosingBlockOfInsertionPos| above.
@@ -1205,7 +1198,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
         CreateVisiblePosition(insertion_pos);
     if (IsEndOfBlock(visible_insertion_pos) &&
         !(IsStartOfBlock(visible_insertion_pos) &&
-          fragment.HasInterchangeNewlineAtEnd()))
+          fragment->HasInterchangeNewlineAtEnd()))
       insertion_pos =
           Position::InParentAfterNode(*enclosing_block_of_insertion_pos);
     else if (IsStartOfBlock(visible_insertion_pos))
@@ -1217,7 +1210,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   insertion_pos =
       PositionAvoidingSpecialElementBoundary(insertion_pos, editing_state);
   if (editing_state->IsAborted())
-    return;
+    return {};
 
   // FIXME: Can this wait until after the operation has been performed?  There
   // doesn't seem to be any work performed after this that queries or uses the
@@ -1225,7 +1218,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   if (LocalFrame* frame = GetDocument().GetFrame())
     frame->GetEditor().ClearTypingStyle();
 
-  RemoveHeadContents(fragment);
+  RemoveHeadContents(*fragment);
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
@@ -1238,11 +1231,11 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   // Paste into run of tabs splits the tab span.
   insertion_pos = PositionOutsideTabSpan(insertion_pos);
 
-  HandleStyleSpansBeforeInsertion(fragment, insertion_pos);
+  HandleStyleSpansBeforeInsertion(*fragment, insertion_pos);
 
   // We're finished if there is nothing to add.
-  if (fragment.IsEmpty() || !fragment.FirstChild())
-    return;
+  if (fragment->IsEmpty() || !fragment->FirstChild())
+    return {};
 
   // If we are not trying to match the destination style we prefer a position
   // that is outside inline elements that provide style.
@@ -1274,6 +1267,48 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       }
     }
   }
+  return insertion_pos;
+}
+
+void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
+  TRACE_EVENT0("blink", "ReplaceSelectionCommand::doApply");
+  const VisibleSelection selection = EndingVisibleSelection();
+  DCHECK(!selection.IsNone());
+  DCHECK(selection.Start().AnchorNode());
+  if (!selection.IsNonOrphanedCaretOrRange() || !selection.Start().AnchorNode())
+    return;
+
+  if (!selection.RootEditableElement())
+    return;
+
+  ReplacementFragment fragment(&GetDocument(), document_fragment_.Get(),
+                               selection);
+  bool trivial_replace_result = PerformTrivialReplace(fragment, editing_state);
+  if (editing_state->IsAborted())
+    return;
+  if (trivial_replace_result)
+    return;
+
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  SetUpStyle(selection);
+  const bool selection_end_was_end_of_paragraph =
+      IsEndOfParagraph(selection.VisibleStart());
+  const bool selection_start_was_start_of_paragraph =
+      IsStartOfParagraph(selection.VisibleEnd());
+  const bool start_is_inside_mail_blockquote = EnclosingNodeOfType(
+      selection.Start(), IsMailHTMLBlockquoteElement, kCanCrossEditingBoundary);
+
+  CreateInsertionPointIfNeeds(selection, fragment, editing_state);
+  if (editing_state->IsAborted())
+    return;
+
+  const Position& insertion_pos = FindInsertionPointAndMakeDocumentReady(
+      selection, &fragment, editing_state);
+  if (editing_state->IsAborted())
+    return;
+  if (insertion_pos.IsNull())
+    return;
 
   // FIXME: When pasting rich content we're often prevented from heading down
   // the fast path by style spans.  Try again here if they've been removed.
@@ -1349,6 +1384,8 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       !inserted_nodes.FirstNodeInserted()->isConnected())
     return;
 
+  Element* enclosing_block_of_insertion_pos =
+      EnclosingBlock(insertion_pos.AnchorNode());
   // Scripts specified in javascript protocol may remove
   // |enclosingBlockOfInsertionPos| during insertion, e.g. <iframe
   // src="javascript:...">
@@ -1376,13 +1413,15 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   }
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (end_br &&
+
+  if (end_br_ &&
       (plain_text_fragment ||
-       (ShouldRemoveEndBR(end_br, original_vis_pos_before_end_br) &&
-        !(fragment.HasInterchangeNewlineAtEnd() && selection_is_plain_text)))) {
-    ContainerNode* parent = end_br->parentNode();
-    inserted_nodes.WillRemoveNode(*end_br);
-    RemoveNode(end_br, editing_state);
+       (ShouldRemoveEndBR(end_br_, original_vis_pos_before_end_br_) &&
+        !(fragment.HasInterchangeNewlineAtEnd() &&
+          !selection.IsContentRichlyEditable())))) {
+    ContainerNode* parent = end_br_->parentNode();
+    inserted_nodes.WillRemoveNode(*end_br_);
+    RemoveNode(end_br_, editing_state);
     if (editing_state->IsAborted())
       return;
     if (Node* node_to_remove = HighestNodeToRemoveInPruning(parent)) {
@@ -1517,7 +1556,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     if (selection_end_was_end_of_paragraph ||
         !IsEndOfParagraph(end_of_inserted_content) || next.IsNull()) {
       if (TextControlElement* text_control =
-              EnclosingTextControl(current_root)) {
+              EnclosingTextControl(selection.RootEditableElement())) {
         if (!inserted_nodes.LastLeafInserted()->nextSibling()) {
           InsertNodeAfter(text_control->CreatePlaceholderBreakElement(),
                           inserted_nodes.LastLeafInserted(), editing_state);
@@ -2015,6 +2054,8 @@ DEFINE_TRACE(ReplaceSelectionCommand) {
   visitor->Trace(document_fragment_);
   visitor->Trace(start_of_inserted_range_);
   visitor->Trace(end_of_inserted_range_);
+  visitor->Trace(end_br_);
+  visitor->Trace(original_vis_pos_before_end_br_);
   CompositeEditCommand::Trace(visitor);
 }
 

@@ -137,6 +137,13 @@ class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
                                     EditingState*);
 
   bool PerformTrivialReplace(const ReplacementFragment&, EditingState*);
+  void SetUpStyle(const VisibleSelection&);
+  void CreateInsertionPointIfNeeds(const VisibleSelection&,
+                                   const ReplacementFragment&,
+                                   EditingState*);
+  Position FindInsertionPointAndMakeDocumentReady(const VisibleSelection&,
+                                                  ReplacementFragment*,
+                                                  EditingState*);
 
   Position start_of_inserted_content_;
   Position end_of_inserted_content_;
@@ -150,6 +157,8 @@ class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
   InputEvent::InputType input_type_;
   bool sanitize_fragment_;
   bool should_merge_end_;
+  Member<HTMLBRElement> end_br_;
+  VisiblePosition original_vis_pos_before_end_br_;
 
   Position start_of_inserted_range_;
   Position end_of_inserted_range_;
