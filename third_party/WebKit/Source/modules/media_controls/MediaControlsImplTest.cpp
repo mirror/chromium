@@ -24,6 +24,7 @@
 #include "core/testing/DummyPageHolder.h"
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
+#include "modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlTimelineElement.h"
 #include "modules/media_controls/elements/MediaControlVolumeSliderElement.h"
 #include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
@@ -195,6 +196,10 @@ class MediaControlsImplTest : public ::testing::Test {
   }
   MediaControlCurrentTimeDisplayElement* GetCurrentTimeDisplayElement() const {
     return media_controls_->current_time_display_;
+  }
+  MediaControlRemainingTimeDisplayElement* GetRemainingTimeDisplayElement()
+      const {
+    return media_controls_->duration_display_;
   }
   MockWebMediaPlayerForImpl* WebMediaPlayer() {
     return static_cast<MockWebMediaPlayerForImpl*>(
@@ -856,6 +861,39 @@ TEST_F(MediaControlsImplTest,
     EXPECT_TRUE(remote_playback->HasEventListeners());
     EXPECT_TRUE(HasAvailabilityCallbacks(remote_playback));
   }
+}
+
+TEST_F(MediaControlsImplTest, InitialInfinityDurationHidesDurationField) {
+  EnsureSizing();
+
+  LoadMediaWithDuration(std::numeric_limits<double>::infinity());
+
+  MediaControlRemainingTimeDisplayElement* duration_display =
+      GetRemainingTimeDisplayElement();
+
+  EXPECT_FALSE(duration_display->IsWanted());
+  EXPECT_EQ(std::numeric_limits<double>::infinity(),
+            duration_display->CurrentValue());
+}
+
+TEST_F(MediaControlsImplTest, InfinityDurationChangeHidesDurationField) {
+  EnsureSizing();
+
+  LoadMediaWithDuration(42);
+
+  MediaControlRemainingTimeDisplayElement* duration_display =
+      GetRemainingTimeDisplayElement();
+
+  EXPECT_TRUE(duration_display->IsWanted());
+  EXPECT_EQ(42, duration_display->CurrentValue());
+
+  MediaControls().MediaElement().DurationChanged(
+      std::numeric_limits<double>::infinity(), false /* request_seek */);
+  testing::RunPendingTasks();
+
+  EXPECT_FALSE(duration_display->IsWanted());
+  EXPECT_EQ(std::numeric_limits<double>::infinity(),
+            duration_display->CurrentValue());
 }
 
 }  // namespace blink
