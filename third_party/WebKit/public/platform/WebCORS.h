@@ -27,10 +27,9 @@
 #ifndef WebCORS_h
 #define WebCORS_h
 
+#include <unordered_set>
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/network/HTTPHeaderMap.h"
-#include "platform/wtf/HashSet.h"
-#include "platform/wtf/text/StringHash.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
@@ -42,7 +41,9 @@ class WebSecurityOrigin;
 
 namespace WebCORS {
 
-typedef HashSet<String, CaseFoldingHash> HTTPHeaderSet;
+using HTTPHeaderSet = std::unordered_set<WebString,
+                                         WebString::IgnoreCaseASCIIHash,
+                                         WebString::IgnoreCaseASCIIEqual>;
 
 // Enumerating the error conditions that the CORS
 // access control check can report, including success.

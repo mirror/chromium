@@ -85,81 +85,81 @@ TEST(ParseAccessControlExposeHeadersAllowListTest, ValidInput) {
   WebCORS::HTTPHeaderSet set;
   WebCORS::ParseAccessControlExposeHeadersAllowList("valid", set);
   EXPECT_EQ(1U, set.size());
-  EXPECT_TRUE(set.Contains("valid"));
+  EXPECT_TRUE(set.find("valid") != set.end());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("a,b", set);
   EXPECT_EQ(2U, set.size());
-  EXPECT_TRUE(set.Contains("a"));
-  EXPECT_TRUE(set.Contains("b"));
+  EXPECT_TRUE(set.find("a") != set.end());
+  EXPECT_TRUE(set.find("b") != set.end());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("   a ,  b ", set);
   EXPECT_EQ(2U, set.size());
-  EXPECT_TRUE(set.Contains("a"));
-  EXPECT_TRUE(set.Contains("b"));
+  EXPECT_TRUE(set.find("a") != set.end());
+  EXPECT_TRUE(set.find("b") != set.end());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList(" \t   \t\t a", set);
   EXPECT_EQ(1U, set.size());
-  EXPECT_TRUE(set.Contains("a"));
+  EXPECT_TRUE(set.find("a") != set.end());
 }
 
 TEST(ParseAccessControlExposeHeadersAllowListTest, DuplicatedEntries) {
   WebCORS::HTTPHeaderSet set;
   WebCORS::ParseAccessControlExposeHeadersAllowList("a, a", set);
   EXPECT_EQ(1U, set.size());
-  EXPECT_TRUE(set.Contains("a"));
+  EXPECT_TRUE(set.find("a") != set.end());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("a, a, b", set);
   EXPECT_EQ(2U, set.size());
-  EXPECT_TRUE(set.Contains("a"));
-  EXPECT_TRUE(set.Contains("b"));
+  EXPECT_TRUE(set.find("a") != set.end());
+  EXPECT_TRUE(set.find("b") != set.end());
 }
 
 TEST(ParseAccessControlExposeHeadersAllowListTest, InvalidInput) {
   WebCORS::HTTPHeaderSet set;
   WebCORS::ParseAccessControlExposeHeadersAllowList("not valid", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("///", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("/a/", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList(",", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList(" , ", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList(" , a", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("a , ", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList("", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   WebCORS::ParseAccessControlExposeHeadersAllowList(" ", set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 
   set.clear();
   // U+0141 which is 'A' (0x41) + 0x100.
   WebCORS::ParseAccessControlExposeHeadersAllowList(
       String::FromUTF8("\xC5\x81"), set);
-  EXPECT_TRUE(set.IsEmpty());
+  EXPECT_TRUE(set.empty());
 }
 
 }  // namespace

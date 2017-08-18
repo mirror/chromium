@@ -229,11 +229,11 @@ void WebAssociatedURLLoaderImpl::ClientAdapter::DidReceiveResponse(
   for (const auto& header : response.HttpHeaderFields()) {
     if (FetchUtils::IsForbiddenResponseHeaderName(header.key) ||
         (!WebCORS::IsOnAccessControlResponseHeaderWhitelist(header.key) &&
-         !exposed_headers.Contains(header.key)))
+         exposed_headers.find(header.key) == exposed_headers.end()))
       blocked_headers.insert(header.key);
   }
 
-  if (blocked_headers.IsEmpty()) {
+  if (blocked_headers.empty()) {
     // Use the original ResourceResponse.
     client_->DidReceiveResponse(WrappedResourceResponse(response));
     return;
