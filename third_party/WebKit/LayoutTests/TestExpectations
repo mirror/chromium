@@ -2757,8 +2757,6 @@ crbug.com/747751 http/tests/inspector/application-panel/resources-panel-resource
 
 crbug.com/689781 external/wpt/media-source/mediasource-duration.html [ Failure Pass ]
 
-crbug.com/754669 virtual/mojo-loading/http/tests/media/media-source/mediasource-duration.html [ Failure Pass ]
-
 crbug.com/701445 external/wpt/dom/events/EventListener-invoke-legacy.html [ Timeout Pass ]
 
 # When WebAssembly is exposed in V8 (soon), this test has the wrong number of expected Object.getOwnPropertyNames() for global object.
@@ -3111,7 +3109,6 @@ crbug.com/708499 [ Win7 Mac10.11 Retina Debug ] virtual/wheelscrolllatching/fast
 crbug.com/752845 [ Win ] inspector/sha1.html [ Pass Crash ]
 
 # Sheriff failure 2017-08-11
-crbug.com/754657 http/tests/media/media-source/mediasource-duration.html [ Pass Failure ]
 crbug.com/626703 virtual/outofblink-cors/external/wpt/fetch/api/response/response-cancel-stream.html [ Pass Timeout ]
 
 # Ganesh dither changes
