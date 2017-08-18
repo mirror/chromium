@@ -35,8 +35,13 @@ class ThreadSafeSender;
 class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
                                public mojom::ServiceWorkerWorkerClient {
  public:
+  // Used when NetworkService is disabled.
   explicit WorkerFetchContextImpl(
       mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info);
+  // Used when NetworkService is enabled.
+  WorkerFetchContextImpl(
+      mojom::URLLoaderFactoryPtrInfo net_url_loader_factory_info,
+      mojom::URLLoaderFactoryPtrInfo blob_url_loader_factory_info);
   ~WorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
@@ -80,6 +85,10 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   bool Send(IPC::Message* message);
 
   mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info_;
+
+  mojom::URLLoaderFactoryPtrInfo net_url_loader_factory_info_;
+  mojom::URLLoaderFactoryPtrInfo blob_url_loader_factory_info_;
+
   int service_worker_provider_id_ = kInvalidServiceWorkerProviderId;
   bool is_controlled_by_service_worker_ = false;
 
@@ -88,7 +97,14 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   std::unique_ptr<mojo::AssociatedBinding<mojom::ServiceWorkerWorkerClient>>
       binding_;
   mojom::WorkerURLLoaderFactoryProviderPtr provider_;
+
+  // Used when NetworkService is disabled.
   mojom::URLLoaderFactoryAssociatedPtr url_loader_factory_;
+
+  // Used when NetworkService is enabled.
+  mojom::URLLoaderFactoryPtr net_url_loader_factory_;
+  // Used when NetworkService is enabled.
+  mojom::URLLoaderFactoryPtr blob_url_loader_factory_;
 
   // Updated when mojom::ServiceWorkerWorkerClient::SetControllerServiceWorker()
   // is called from the browser process via mojo IPC.

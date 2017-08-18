@@ -258,14 +258,34 @@ std::unique_ptr<blink::WebWorkerFetchContext>
 EmbeddedSharedWorkerStub::CreateWorkerFetchContext(
     blink::WebServiceWorkerNetworkProvider* web_network_provider) {
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
-  RenderThreadImpl::current()
-      ->blink_platform_impl()
-      ->GetInterfaceProvider()
-      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
-  std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
-      base::MakeUnique<WorkerFetchContextImpl>(
-          worker_url_loader_factory_provider.PassInterface());
+  std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory =
+        RenderThreadImpl::current()
+            ->blink_platform_impl()
+            ->CreateNetworkURLLoaderFactory();
+    mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
+    url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
+
+    mojom::URLLoaderFactoryPtr blob_url_loader_factory;
+    RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
+        mojo::MakeRequest(&blob_url_loader_factory));
+    mojom::URLLoaderFactoryPtrInfo blob_url_loader_factory_copy;
+    blob_url_loader_factory->Clone(
+        mojo::MakeRequest(&blob_url_loader_factory_copy));
+
+    worker_fetch_context = base::MakeUnique<WorkerFetchContextImpl>(
+        std::move(url_loader_factory_copy),
+        std::move(blob_url_loader_factory_copy));
+  } else {
+    mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
+    RenderThreadImpl::current()
+        ->blink_platform_impl()
+        ->GetInterfaceProvider()
+        ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
+    worker_fetch_context = base::MakeUnique<WorkerFetchContextImpl>(
+        worker_url_loader_factory_provider.PassInterface());
+  }
   // TODO(horo): To get the correct first_party_to_cookies for the shared
   // worker, we need to check the all documents bounded by the shared worker.
   // (crbug.com/723553)
