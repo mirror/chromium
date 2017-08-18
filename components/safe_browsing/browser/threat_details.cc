@@ -8,9 +8,9 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <list>
 #include <unordered_set>
 #include <vector>
-
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/metrics/histogram_macros.h"
@@ -39,6 +39,12 @@ using content::WebContents;
 static const uint32_t kMaxDomNodes = 500;
 
 namespace safe_browsing {
+// static
+std::vector<const safe_browsing::SafeBrowsingUIHandler*>
+    ThreatDetails::webui_listeners;
+
+// static
+ThreatDetails* ThreatDetails::current_threat_details_;
 
 // static
 ThreatDetailsFactory* ThreatDetails::factory_ = NULL;
@@ -329,6 +335,7 @@ ThreatDetails::ThreatDetails(
   redirects_collector_ = new ThreatDetailsRedirectsCollector(
       history_service ? history_service->AsWeakPtr()
                       : base::WeakPtr<history::HistoryService>());
+  current_threat_details_ = this;
   StartCollection();
 }
 
@@ -341,7 +348,10 @@ ThreatDetails::ThreatDetails()
       ambiguous_dom_(false),
       trim_to_ad_tags_(false) {}
 
-ThreatDetails::~ThreatDetails() {}
+ThreatDetails::~ThreatDetails() {
+  current_threat_details_ = NULL;
+  std::vector<const SafeBrowsingUIHandler*>().swap(webui_listeners);
+}
 
 bool ThreatDetails::OnMessageReceived(const IPC::Message& message,
                                       RenderFrameHost* render_frame_host) {
@@ -748,7 +758,42 @@ void ThreatDetails::OnCacheCollectionReady() {
     DLOG(ERROR) << "Unable to serialize the threat report.";
     return;
   }
+  if (webui_listeners.size()) {
+    ClientSafeBrowsingReportRequest client_report_request;
+    client_report_request.set_type(report_->type());
+    client_report_request.set_page_url(report_->page_url());
+    client_report_request.set_client_country(report_->client_country());
+    client_report_request.set_repeat_visit(report_->repeat_visit());
+    client_report_request.set_did_proceed(report_->did_proceed());
+
+    old_threat_details_.push_back(client_report_request);
+    /*
+    for (auto* recorder : webui_listeners) {  // TODO(hkamila)pass message
+      recorder->GetThreatDetailsUpdate();
+    }*/
+    for (const auto& update_callback : update_callbacks_)
+      update_callback.Run(client_report_request);
+  }
   ui_manager_->SendSerializedThreatDetails(serialized);
+}
+
+void ThreatDetails::RegisterListener(
+    UpdateCallback callback,
+    ThreatDetailsInfo* threat_details_info_proto) const {
+  update_callbacks_.push_back(callback);
+  /*for (auto& threat_detail : old_threat_details_) {
+      const ClientSafeBrowsingReportRequest* request =
+  threat_details_info_proto->add_old_request(); request = &threat_detail;
+  }*/
+}
+
+void ThreatDetails::UnregisterListener(SafeBrowsingUIHandler* recorder) {
+  auto listener =
+      std::find(begin(webui_listeners), end(webui_listeners), recorder);
+  webui_listeners.erase(listener);
+  if (!webui_listeners.size()) {
+    std::vector<ClientSafeBrowsingReportRequest>().swap(old_threat_details_);
+  }
 }
 
 }  // namespace safe_browsing

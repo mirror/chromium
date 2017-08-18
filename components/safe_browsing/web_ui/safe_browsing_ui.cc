@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/base64url.h"
+#include "base/callback.h"
 #include "base/i18n/time_formatting.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/strings/utf_string_conversions.h"
@@ -17,12 +18,15 @@
 #include "base/values.h"
 #include "components/grit/components_resources.h"
 #include "components/grit/components_scaled_resources.h"
+#include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_context.h"
+
+#include "base/memory/ref_counted.h"
 
 #if SAFE_BROWSING_DB_LOCAL
 #include "components/safe_browsing_db/v4_local_database_manager.h"
@@ -228,9 +232,18 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
 SafeBrowsingUI::~SafeBrowsingUI() {}
 
 SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
-    : browser_context_(context) {}
+    : browser_context_(context), registered_as_thread_details_receiver_(false) {
+  // TODO(hkamila) Create new listener and let threat details know
 
-SafeBrowsingUIHandler::~SafeBrowsingUIHandler() = default;
+  // TODO(hkamila) Return to the main function a list of the old strings if
+  // //this isn't the only listener (other tabs opened).
+}
+
+SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {
+  ThreatDetails* threat_details_instance =
+      ThreatDetails::current_threat_details();
+  threat_details_instance->UnregisterListener(this);
+}
 
 void SafeBrowsingUIHandler::GetExperiments(const base::ListValue* args) {
   AllowJavascript();
@@ -283,6 +296,55 @@ void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
   ResolveJavascriptCallback(base::Value(callback_id), database_manager_info);
 }
 
+std::string ParseThreatDetailsInfo(
+    ClientSafeBrowsingReportRequest client_safe_browsing_report_request) {
+  std::string report_request_parsed;
+  base::DictionaryValue report_request;
+
+  report_request.SetInteger(
+      "type", static_cast<int>(client_safe_browsing_report_request.type()));
+  report_request.SetString("page_url",
+                           client_safe_browsing_report_request.page_url());
+  report_request.SetString(
+      "client_country", client_safe_browsing_report_request.client_country());
+  report_request.SetInteger("repeat_visit",
+                            client_safe_browsing_report_request.repeat_visit());
+  report_request.SetInteger("did_proceed",
+                            client_safe_browsing_report_request.did_proceed());
+
+  base::Value* report_request_tree = &report_request;
+  JSONStringValueSerializer serializer(&report_request_parsed);
+  serializer.set_pretty_print(true);
+  serializer.Serialize(*report_request_tree);
+
+  return report_request_parsed;
+}
+
+void SafeBrowsingUIHandler::GetThreatDetails(const base::ListValue* args) {
+  ThreatDetails* threat_details_instance =
+      ThreatDetails::current_threat_details();
+  ThreatDetailsInfo threat_details_info_proto;
+
+  scoped_refptr<SafeBrowsingUIHandler> ref = this;
+  base::Callback<ClientSafeBrowsingReportRequest> ref_cb =
+      Bind(&SafeBrowsingUIHandler::GetThreatDetailsUpdate, ref_cb);
+
+  threat_details_instance->RegisterListener(ref_cb, &threat_details_info_proto);
+
+  registered_as_thread_details_receiver_ =
+      true;  // TODO(hkamila)Do we need this?
+  AllowJavascript();
+  CallJavascriptFunction("safe_browsing.addThreatDetailsInfo",
+                         base::Value("GetThreatDetails"));
+}
+
+void SafeBrowsingUIHandler::GetThreatDetailsUpdate() const {
+  // web_ui()->AllowJavascript();
+  LOG(ERROR) << "GetThreatDetailsUpdate";
+  web_ui()->CallJavascriptFunctionUnsafe("safe_browsing.addThreatDetailsInfo",
+                                         base::Value("threatdetailsUpdate"));
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getExperiments", base::Bind(&SafeBrowsingUIHandler::GetExperiments,
@@ -294,6 +356,9 @@ void SafeBrowsingUIHandler::RegisterMessages() {
       "getDatabaseManagerInfo",
       base::Bind(&SafeBrowsingUIHandler::GetDatabaseManagerInfo,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getThreatDetails", base::Bind(&SafeBrowsingUIHandler::GetThreatDetails,
+                                     base::Unretained(this)));
 }
 
 }  // namespace safe_browsing

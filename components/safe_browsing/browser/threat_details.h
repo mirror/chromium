@@ -11,9 +11,11 @@
 // An instance of this class is generated when a safe browsing warning page
 // is shown (SafeBrowsingBlockingPage).
 
+#include <list>
 #include <memory>
 #include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
@@ -22,6 +24,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/safe_browsing/common/safebrowsing_types.h"
 #include "components/safe_browsing/proto/csd.pb.h"
+#include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -85,6 +88,11 @@ class ThreatDetails : public base::RefCountedThreadSafe<
     factory_ = factory;
   }
 
+  // Return an instance of the ThreatDetails object
+  static ThreatDetails* current_threat_details() {
+    return current_threat_details_;
+  }
+
   // The SafeBrowsingBlockingPage calls this from the IO thread when
   // the user is leaving the blocking page and has opted-in to sending
   // the report. We start the redirection urls collection from history service
@@ -100,6 +108,15 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // content::WebContentsObserver implementation.
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
+
+  using UpdateCallback =
+      base::RepeatingCallback<void(ClientSafeBrowsingReportRequest)>;
+  std::list<UpdateCallback> update_callbacks_;
+
+  // Registers listener object that receives the information in the webui.
+  void RegisterListener(UpdateCallback callback, ThreatDetailsInfo*) const;
+
+  void UnregisterListener(SafeBrowsingUIHandler* recorder);
 
  protected:
   friend class ThreatDetailsFactoryImpl;
@@ -228,10 +245,22 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // in the report. Only populated if this report will be trimmed.
   std::set<int> trimmed_dom_element_ids_;
 
+  // Record the threat details saved since the first safe browsing tab
+  // was opened.
+  std::vector<ClientSafeBrowsingReportRequest> old_threat_details_;
+
   // The factory used to instantiate SafeBrowsingBlockingPage objects.
   // Useful for tests, so they can provide their own implementation of
   // SafeBrowsingBlockingPage.
   static ThreatDetailsFactory* factory_;
+
+  // List of listener objects receiving threat details in the webui.
+  static std::vector<const SafeBrowsingUIHandler*> webui_listeners;
+  // Use the map instead
+  /*static std::map<const SafeBrowsingUIHandler*, ThreatDetailsInfo*>
+      webui_listeners;*/
+  // Instance of the V4LocalDatabaseManager object
+  static ThreatDetails* current_threat_details_;
 
   // Used to collect details from the HTTP Cache.
   scoped_refptr<ThreatDetailsCacheCollector> cache_collector_;

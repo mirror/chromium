@@ -8,6 +8,8 @@ syntax = "proto2";
 
 package safe_browsing;
 
+import "csd.proto";
+
 option optimize_for = LITE_RUNTIME;
 
 // Describes the state of the database manager.
@@ -103,4 +105,9 @@ message FullHashCacheInfo {
     optional CachedHashPrefixInfo cached_hash_prefix_info = 2;
   }
   repeated FullHashCache full_hash_cache = 2;
+}
+
+message ThreatDetailsInfo {
+  repeated ClientSafeBrowsingReportRequest old_request = 1;
+  optional ClientSafeBrowsingReportRequest update_request = 2;
 }
