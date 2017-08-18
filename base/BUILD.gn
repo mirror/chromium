@@ -1373,6 +1373,8 @@ component("base") {
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
+      "task_scheduler/scheduler_worker_pool_windows_impl.cc",
+      "task_scheduler/scheduler_worker_pool_windows_impl.h",
       "time/time_win.cc",
     ]
 
@@ -2151,6 +2153,7 @@ test("base_unittests") {
     "task_scheduler/scheduler_lock_unittest.cc",
     "task_scheduler/scheduler_single_thread_task_runner_manager_unittest.cc",
     "task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+    "task_scheduler/scheduler_worker_pool_unittest.cc",
     "task_scheduler/scheduler_worker_stack_unittest.cc",
     "task_scheduler/scheduler_worker_unittest.cc",
     "task_scheduler/scoped_set_task_priority_for_current_thread_unittest.cc",
