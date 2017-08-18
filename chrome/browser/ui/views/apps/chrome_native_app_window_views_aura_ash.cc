@@ -20,6 +20,7 @@
 #include "ash/wm/window_state_observer.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_context_menu.h"
 #include "services/ui/public/cpp/property_type_converters.h"
@@ -315,9 +316,14 @@ void ChromeNativeAppWindowViewsAuraAsh::SetFullscreen(int fullscreen_types) {
   if (immersive_fullscreen_controller_.get()) {
     // |immersive_fullscreen_controller_| should only be set if immersive
     // fullscreen is the fullscreen type used by the OS.
+    bool immersive_enabled =
+        (fullscreen_types & AppWindow::FULLSCREEN_TYPE_OS) != 0;
+    // In Public Session, always use immersive fullscreen.
+    if (profiles::IsPublicSession())
+      immersive_enabled = true;
     immersive_fullscreen_controller_->SetEnabled(
         ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP,
-        (fullscreen_types & AppWindow::FULLSCREEN_TYPE_OS) != 0);
+        immersive_enabled);
     // Autohide the shelf instead of hiding the shelf completely when only in
     // OS fullscreen.
     ash::wm::WindowState* window_state =
