@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a07a6a91_59f07c3b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T03:41:44Z",
+      "side": 1,
+      "message": "It seems it is fine actually and pls ignore my comment here.",
+      "parentUuid": "62024420_5d565483",
+      "revId": "17aa7e09a0909132825aa3691b4ca24b9251ac80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a3807b3_88c1b44a",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 3
