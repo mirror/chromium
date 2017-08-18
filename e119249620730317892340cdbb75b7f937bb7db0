@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c47409f0_1d936578",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-18T14:25:55Z",
+      "side": 1,
+      "message": "Done, should be equivalent.",
+      "parentUuid": "c80d2505_34d20641",
+      "revId": "e119249620730317892340cdbb75b7f937bb7db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77d2b955_5fa54efb",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e119249620730317892340cdbb75b7f937bb7db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3b59a6_2ab88e5c",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-18T14:25:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d2b955_5fa54efb",
+      "revId": "e119249620730317892340cdbb75b7f937bb7db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
