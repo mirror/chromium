@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71d461b9_c896c72f",
+        "filename": "chrome/browser/ui/webui/signin/inline_login_ui.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-18T12:40:17Z",
+      "side": 1,
+      "message": "This is not the only reason we use an extension around the sign-in flow. It may be good to document the other reasons as well (but maybe this is already documented elsewhere):\n* Security (this is the main reason): an attacker cannot compromise the renderer that is used for signing in to Chrome\n* Gaia requirements: Gaia endpoints used during sign-in expect a clean cookie jar\n* Bypass account consistency and reconciliation: \u003cyour explanation\u003e.",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "5d2e56dd96f77dc49ad10d5b71ab9e2f8cfc6f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
