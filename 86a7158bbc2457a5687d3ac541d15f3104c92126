@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dfd15eb_b001a7d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-18T22:24:17Z",
+      "side": 1,
+      "message": "Nit: trailing space.",
+      "revId": "86a7158bbc2457a5687d3ac541d15f3104c92126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dbbda9_0b33fa11",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-18T22:24:17Z",
+      "side": 1,
+      "message": "Nit: I would still mention that we look in the leaf certificate of ssl_info.\n\nEven better, could we have this take the certificate directly, since that\u0027s the only part of ssl_info that it needs?",
+      "revId": "86a7158bbc2457a5687d3ac541d15f3104c92126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
