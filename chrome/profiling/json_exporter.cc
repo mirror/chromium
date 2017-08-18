@@ -285,8 +285,8 @@ void WriteMetadata(std::ostream& out) {
 
 // Output the OS info.
 #if defined(OS_CHROMEOS)
-  out << "\"os-name\": \"CrOS\",\n;
-      int32_t major_version;
+  out << "\"os-name\": \"CrOS\",\n";
+  int32_t major_version;
   int32_t minor_version;
   int32_t bugfix_version;
   // OperatingSystemVersion only has a POSIX implementation which returns the

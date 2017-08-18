@@ -399,6 +399,15 @@ const char kEnableOutOfBlinkCORSName[] = "Out of blink CORS";
 const char kEnableOutOfBlinkCORSDescription[] =
     "CORS handling logic is moved out of blink.";
 
+const char kEnableOutOfProcessHeapProfilingName[] =
+    "Out of process heap profiling.";
+const char kEnableOutOfProcessHeapProfilingDescription[] =
+    "Creates a profiling service that records stacktraces for all live, "
+    "malloced objects.";
+const char kEnableOutOfProcessHeapProfilingModeBrowser[] =
+    "Profile only the browser process.";
+const char kEnableOutOfProcessHeapProfilingModeAll[] = "Profile all processes.";
+
 const char kEnablePictureInPictureName[] = "Enable picture in picture.";
 const char kEnablePictureInPictureDescription[] =
     "Enable the picture in picture feature for videos.";
