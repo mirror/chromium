@@ -22,6 +22,30 @@
       "revId": "148ce9fd71f2aa0fa421b25821dbf36299d4e6c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b7b37a_1bbbe905",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/OmniboxUrlEmphasizer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-18T20:25:30Z",
+      "side": 0,
+      "message": "The removed text was very misleading. \"normal pages\" is of ambiguous meaning. It was meant to say \"HTTP pages\" but that\u0027s misleading too, insofar as the parent code block isn\u0027t even entered unless the scheme is present.\n\nThe new text is correct.",
+      "parentUuid": "b3f62d5a_0a019a2c",
+      "range": {
+        "startLine": 199,
+        "startChar": 88,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "148ce9fd71f2aa0fa421b25821dbf36299d4e6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

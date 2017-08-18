@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8dc1342_c97f2cec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-18T20:25:30Z",
+      "side": 1,
+      "message": "I\u0027d like to do a general cleanup of SECURE_WITH_POLICY_INSTALLED_CERT in a followup CL, if that\u0027s okay.",
+      "parentUuid": "583dc7ac_6b03d59e",
+      "range": {
+        "startLine": 1324,
+        "startChar": 17,
+        "endLine": 1324,
+        "endChar": 40
+      },
+      "revId": "49e68dc58cd259c18b6e256bb0e112369d1f1e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e303fec_31100b31",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "49e68dc58cd259c18b6e256bb0e112369d1f1e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dda2c0_7d9eaec4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-18T20:25:30Z",
+      "side": 1,
+      "message": "I\u0027d like to do a general cleanup of SECURE_WITH_POLICY_INSTALLED_CERT in a followup CL, if that\u0027s okay.",
+      "parentUuid": "2e303fec_31100b31",
+      "range": {
+        "startLine": 938,
+        "startChar": 60,
+        "endLine": 938,
+        "endChar": 93
+      },
+      "revId": "49e68dc58cd259c18b6e256bb0e112369d1f1e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c2dd5a88_289c4fd4",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/LocationBarLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-18T20:25:30Z",
+      "side": 1,
+      "message": "Fair enough. Removed.",
+      "parentUuid": "dad30321_ca2509c7",
+      "range": {
+        "startLine": 33,
+        "startChar": 36,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "49e68dc58cd259c18b6e256bb0e112369d1f1e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb476ba7_5f34f94c",
         "filename": "components/security_state/content/content_utils.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "49e68dc58cd259c18b6e256bb0e112369d1f1e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81560a75_a4f7711e",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-18T20:25:30Z",
+      "side": 1,
+      "message": "Yeah, the plan is to just get rid of this state in a subsequent CL. In the general use-case, users are likely not to have access to developer tools.",
+      "parentUuid": "fb476ba7_5f34f94c",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "49e68dc58cd259c18b6e256bb0e112369d1f1e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
