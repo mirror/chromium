@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd50d0e5_a5e9b08a",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-18T19:54:49Z",
+      "side": 1,
+      "message": "what is this madness",
+      "parentUuid": "47a1bcd5_6c8b0e47",
+      "revId": "d1dec26e4332bc8c92e9ace2c588a844bd40e3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b3404b_f83b6aea",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d1dec26e4332bc8c92e9ace2c588a844bd40e3c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5f9817_3df96b70",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-18T19:54:49Z",
+      "side": 1,
+      "message": "We didn\u0027t.\n\nThe bug is \"if popup then drop fullscreen\" so I implemented it exactly that way so I didn\u0027t have to think about intents or anything. But the Blink version that I\u0027m removing didn\u0027t care, so I can probably get away with not caring either.",
+      "parentUuid": "78b3404b_f83b6aea",
+      "revId": "d1dec26e4332bc8c92e9ace2c588a844bd40e3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
