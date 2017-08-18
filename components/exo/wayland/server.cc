@@ -2892,10 +2892,11 @@ void data_device_manager_get_data_device(wl_client* client,
                                          wl_resource* resource,
                                          uint32_t id,
                                          wl_resource* seat_resource) {
+  Display* display = GetUserDataAs<Display>(resource);
   wl_resource* data_device_resource =
       wl_resource_create(client, &wl_data_device_interface, 1, id);
   SetImplementation(data_device_resource, &data_device_implementation,
-                    base::MakeUnique<DataDevice>(new WaylandDataDeviceDelegate(
+                    display->CreateDataDevice(new WaylandDataDeviceDelegate(
                         client, data_device_resource)));
 }
 
@@ -2911,7 +2912,7 @@ void bind_data_device_manager(wl_client* client,
   wl_resource* resource =
       wl_resource_create(client, &wl_data_device_manager_interface, 1, id);
   wl_resource_set_implementation(resource, &data_device_manager_implementation,
-                                 nullptr, nullptr);
+                                 data, nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
