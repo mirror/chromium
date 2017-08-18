@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbe94a3c_e1f08332",
+        "filename": "ios/web/active_state_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-18T20:35:36Z",
+      "side": 1,
+      "message": "I think your CL is ok since it maintains the existing behavior.\n\nHowever, WDYT about simply removing line 55 instead of adding the SetActive calls in contructor/destructor?\n\nLine 62 already tests that setting it to true while active is ok, so I think removing this ASSERT_TRUE is reasonable.",
+      "revId": "2036cfd08b6c74a8c23e15f4d7d651ea4bb88821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
