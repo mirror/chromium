@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e823d097_e0ea0c56",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T18:39:49Z",
+      "side": 1,
+      "message": "update?",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "e7153910586aa88f515610765338e9c75a7fb436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9209f6_27aa5366",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T18:39:49Z",
+      "side": 1,
+      "message": "Flip this back now that you\u0027re using std::greater",
+      "revId": "e7153910586aa88f515610765338e9c75a7fb436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fa89eb_9c863e76",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T18:39:49Z",
+      "side": 1,
+      "message": "Actually, I think this can result in flipping order of two tasks: e.g. if two tasks are posted back-to-back and get same TimeTicks. If a foreground task is posted in parallel, it\u0027s possible that second one is preempted in WillScheduleSequence() while first one is only preempted later in RunNextTask(). The priority_queue currently won\u0027t sort these properly I think.",
+      "revId": "e7153910586aa88f515610765338e9c75a7fb436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1e759c_3ae6ee98",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T18:39:49Z",
+      "side": 1,
+      "message": "\"(isn\u0027t empty and isn\u0027t preempted by more important work)\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 52,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "e7153910586aa88f515610765338e9c75a7fb436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

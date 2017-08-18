@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7a3acbb1_2204de8a",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T18:39:49Z",
+      "side": 1,
+      "message": "Ah I see, I was under the impression this was always grabbing the lock but it\u0027s only when |sequence| is BACKGROUND which means this pool is out of foreground work in which case a little contention is fine.",
+      "parentUuid": "b70d573d_0217ef38",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901dd753_080f3804",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 3
