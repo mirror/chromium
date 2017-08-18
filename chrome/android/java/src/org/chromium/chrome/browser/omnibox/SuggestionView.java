@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -364,14 +363,11 @@ class SuggestionView extends ViewGroup {
     private void setRefinable(boolean refinable) {
         if (refinable) {
             mRefineView.setVisibility(VISIBLE);
-            mRefineView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Post the refine action to the end of the UI thread to allow the refine view
-                    // a chance to update its background selection state.
-                    PerformRefineSuggestion performRefine = new PerformRefineSuggestion();
-                    if (!post(performRefine)) performRefine.run();
-                }
+            mRefineView.setOnClickListener(v -> {
+                // Post the refine action to the end of the UI thread to allow the refine view
+                // a chance to update its background selection state.
+                PerformRefineSuggestion performRefine = new PerformRefineSuggestion();
+                if (!post(performRefine)) performRefine.run();
             });
         } else {
             mRefineView.setOnClickListener(null);
@@ -590,12 +586,7 @@ class SuggestionView extends ViewGroup {
 
             String url = "https:" + secondLine.getImage().replace("\\/", "/");
             AnswersImage.requestAnswersImage(mLocationBar.getToolbarDataProvider().getProfile(),
-                    url, new AnswersImage.AnswersImageObserver() {
-                        @Override
-                        public void onAnswersImageChanged(Bitmap bitmap) {
-                            mContentsView.mAnswerImage.setImageBitmap(bitmap);
-                        }
-                    });
+                    url, bitmap -> mContentsView.mAnswerImage.setImageBitmap(bitmap));
         }
     }
 
@@ -640,12 +631,7 @@ class SuggestionView extends ViewGroup {
         private float mMatchContentsWidth;
         private boolean mForceIsFocused;
 
-        private final Runnable mRelayoutRunnable = new Runnable() {
-            @Override
-            public void run() {
-                requestLayout();
-            }
-        };
+        private final Runnable mRelayoutRunnable = () -> requestLayout();
 
         // TODO(crbug.com/635567): Fix this properly.
         @SuppressLint("InlinedApi")
@@ -658,55 +644,36 @@ class SuggestionView extends ViewGroup {
             setClickable(true);
             setFocusable(true);
             setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, mSuggestionHeight));
-            setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Post the selection action to the end of the UI thread to allow the suggestion
-                    // view a chance to update their background selection state.
-                    PerformSelectSuggestion performSelection = new PerformSelectSuggestion();
-                    if (!post(performSelection)) performSelection.run();
-                }
+            setOnClickListener(v -> {
+                // Post the selection action to the end of the UI thread to allow the suggestion
+                // view a chance to update their background selection state.
+                PerformSelectSuggestion performSelection = new PerformSelectSuggestion();
+                if (!post(performSelection)) performSelection.run();
             });
-            setOnLongClickListener(new OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    RecordUserAction.record("MobileOmniboxDeleteGesture");
-                    if (!mSuggestion.isDeletable()) return true;
+            setOnLongClickListener(v -> {
+                RecordUserAction.record("MobileOmniboxDeleteGesture");
+                if (!mSuggestion.isDeletable()) return true;
 
-                    AlertDialog.Builder b =
-                            new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme);
-                    b.setTitle(mSuggestion.getDisplayText());
-                    b.setMessage(R.string.omnibox_confirm_delete);
-                    DialogInterface.OnClickListener okListener =
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    RecordUserAction.record("MobileOmniboxDeleteRequested");
-                                    mSuggestionDelegate.onDeleteSuggestion(mPosition);
-                                }
-                            };
-                    b.setPositiveButton(android.R.string.ok, okListener);
-                    DialogInterface.OnClickListener cancelListener =
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            };
-                    b.setNegativeButton(android.R.string.cancel, cancelListener);
+                AlertDialog.Builder b =
+                        new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme);
+                b.setTitle(mSuggestion.getDisplayText());
+                b.setMessage(R.string.omnibox_confirm_delete);
+                DialogInterface.OnClickListener okListener =
+                        (dialog, which) -> {
+                            RecordUserAction.record("MobileOmniboxDeleteRequested");
+                            mSuggestionDelegate.onDeleteSuggestion(mPosition);
+                        };
+                b.setPositiveButton(android.R.string.ok, okListener);
+                DialogInterface.OnClickListener cancelListener =
+                        (dialog, which) -> dialog.cancel();
+                b.setNegativeButton(android.R.string.cancel, cancelListener);
 
-                    AlertDialog dialog = b.create();
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            mSuggestionDelegate.onHideModal();
-                        }
-                    });
+                AlertDialog dialog = b.create();
+                dialog.setOnDismissListener(dialog1 -> mSuggestionDelegate.onHideModal());
 
-                    mSuggestionDelegate.onShowModal();
-                    dialog.show();
-                    return true;
-                }
+                mSuggestionDelegate.onShowModal();
+                dialog.show();
+                return true;
             });
 
             mTextLine1 = new TextView(context);

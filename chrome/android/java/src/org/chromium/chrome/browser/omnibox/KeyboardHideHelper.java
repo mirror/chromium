@@ -40,12 +40,7 @@ class KeyboardHideHelper implements ViewTreeObserver.OnGlobalLayoutListener {
     public KeyboardHideHelper(View view, Runnable onHideCallback) {
         mView = view;
         mOnHideCallback = onHideCallback;
-        mClearListenerDelayedTask = new Runnable() {
-            @Override
-            public void run() {
-                cleanUp();
-            }
-        };
+        mClearListenerDelayedTask = () -> cleanUp();
         mTempRect = new Rect();
     }
 
