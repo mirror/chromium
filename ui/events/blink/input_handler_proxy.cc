@@ -1040,10 +1040,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
   *is_touching_scrolling_layer = false;
   EventDisposition result = DROP_EVENT;
   for (size_t i = 0; i < touch_event.touches_length; ++i) {
-    if (touch_event.touch_start_or_first_touch_move)
-      DCHECK(white_listed_touch_action);
-    else
-      DCHECK(!white_listed_touch_action);
+    // HitTestTouchEvent is called on TouchStarts and FirstTouchMoves only.
+    DCHECK(white_listed_touch_action);
 
     if (touch_event.GetType() == WebInputEvent::kTouchStart &&
         touch_event.touches[i].state != WebTouchPoint::kStatePressed) {
@@ -1068,6 +1066,11 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
       result = DID_NOT_HANDLE;
       break;
     }
+  }
+
+  if (touch_event.touch_start_or_first_touch_move &&
+      *white_listed_touch_action != cc::kTouchActionNone) {
+    result = DID_HANDLE_NON_BLOCKING;
   }
 
   // If |result| is DROP_EVENT it wasn't processed above.
@@ -1110,6 +1113,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
     const blink::WebTouchEvent& touch_event) {
   bool is_touching_scrolling_layer;
   cc::TouchAction white_listed_touch_action = cc::kTouchActionAuto;
+
   EventDisposition result = HitTestTouchEvent(
       touch_event, &is_touching_scrolling_layer, &white_listed_touch_action);
 

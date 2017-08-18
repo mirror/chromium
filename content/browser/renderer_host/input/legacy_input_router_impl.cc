@@ -264,7 +264,11 @@ void LegacyInputRouterImpl::OnTouchEventAck(
   // in some cases we may filter out sending the touchstart - catch those here.
   if (WebTouchEventTraits::IsTouchSequenceStart(event.event) &&
       ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS) {
-    touch_action_filter_.ResetTouchAction();
+    // Receiving a touch event ack after the whitelisted touch action is
+    // received will result in allowing actions we should not be releasing. Only
+    // reset touch action if we have not already set whitelisted touch action.
+    if (!touch_action_filter_.white_listed_touch_action_set())
+      touch_action_filter_.ResetTouchAction();
     UpdateTouchAckTimeoutEnabled();
   }
   disposition_handler_->OnTouchEventAck(event, ack_result);
@@ -496,8 +500,6 @@ void LegacyInputRouterImpl::OnHasTouchEventHandlers(bool has_handlers) {
 }
 
 void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
-  // Synthetic touchstart events should get filtered out in RenderWidget.
-  DCHECK(touch_event_queue_->IsPendingAckTouchStart());
   TRACE_EVENT1("input", "LegacyInputRouterImpl::OnSetTouchAction", "action",
                touch_action);
 
@@ -511,8 +513,9 @@ void LegacyInputRouterImpl::OnSetWhiteListedTouchAction(
     cc::TouchAction white_listed_touch_action,
     uint32_t unique_touch_event_id,
     InputEventAckState ack_result) {
-  // TODO(hayleyferr): Catch the cases that we have filtered out sending the
-  // touchstart.
+  // On receipt of whitelisted touch action we know we are at a touch start or
+  // first touch move. In both cases, we should reset the touch actions.
+  touch_action_filter_.ResetTouchAction();
 
   touch_action_filter_.OnSetWhiteListedTouchAction(white_listed_touch_action);
   client_->OnSetWhiteListedTouchAction(white_listed_touch_action);
