@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9683b9_be517ba9",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-18T19:22:39Z",
+      "side": 1,
+      "message": "nit: sizeof(base::string16::value_type)",
+      "range": {
+        "startLine": 133,
+        "startChar": 68,
+        "endLine": 133,
+        "endChar": 69
+      },
+      "revId": "77912a92acacff8c113afd2181ce81747fdaabe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
