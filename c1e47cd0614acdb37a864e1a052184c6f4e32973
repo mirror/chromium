@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8bd9c82_a6ec0ef7",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-18T18:02:44Z",
+      "side": 1,
+      "message": "is this really no longer necessary?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "c1e47cd0614acdb37a864e1a052184c6f4e32973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

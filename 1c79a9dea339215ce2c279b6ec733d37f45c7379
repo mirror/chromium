@@ -305,6 +305,30 @@
       "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d01a86_9558a3f1",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-18T18:02:44Z",
+      "side": 1,
+      "message": "thanks for investigating.",
+      "parentUuid": "8b8b632e_1a3fe32e",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
