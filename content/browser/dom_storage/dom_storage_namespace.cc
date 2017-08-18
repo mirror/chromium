@@ -40,6 +40,8 @@ DOMStorageNamespace::~DOMStorageNamespace() {
 DOMStorageArea* DOMStorageNamespace::OpenStorageArea(const GURL& origin) {
   if (AreaHolder* holder = GetAreaHolder(origin)) {
     ++(holder->open_count_);
+    if (holder->open_count_ > 1)
+      holder->area_->SetCacheOnlyKeys(false);
     return holder->area_.get();
   }
   DOMStorageArea* area;
@@ -59,6 +61,8 @@ void DOMStorageNamespace::CloseStorageArea(DOMStorageArea* area) {
   DCHECK(holder);
   DCHECK_EQ(holder->area_.get(), area);
   --(holder->open_count_);
+  // TODO(ssid): disable caching when the open count goes to 0 and it's safe,
+  // crbug.com/743187.
   // TODO(michaeln): Clean up areas that aren't needed in memory anymore.
   // The in-process-webkit based impl didn't do this either, but would be nice.
 }
@@ -172,8 +176,8 @@ DOMStorageNamespace::UsageStatistics DOMStorageNamespace::GetUsageStatistics()
     const {
   UsageStatistics stats = {0};
   for (AreaMap::const_iterator it = areas_.begin(); it != areas_.end(); ++it) {
-    if (it->second.area_->IsLoadedInMemory()) {
-      stats.total_cache_size += it->second.area_->map_usage_in_bytes();
+    if (it->second.area_->map_memory_usage()) {
+      stats.total_cache_size += it->second.area_->map_memory_usage();
       ++stats.total_area_count;
       if (it->second.open_count_ == 0)
         ++stats.inactive_area_count;
@@ -222,7 +226,12 @@ DOMStorageNamespace::AreaHolder::AreaHolder(
     : area_(area), open_count_(count) {
 }
 
-DOMStorageNamespace::AreaHolder::AreaHolder(const AreaHolder& other) = default;
+DOMStorageNamespace::AreaHolder& DOMStorageNamespace::AreaHolder::operator=(
+    AreaHolder&& other) {
+  area_ = std::move(other.area_);
+  open_count_ = other.open_count_;
+  return *this;
+}
 
 DOMStorageNamespace::AreaHolder::~AreaHolder() {
 }
