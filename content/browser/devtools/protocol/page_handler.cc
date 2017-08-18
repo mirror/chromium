@@ -22,13 +22,17 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/devtools/devtools_session.h"
+#include "content/browser/devtools/protocol/devtools_download_manager_delegate.h"
+#include "content/browser/devtools/protocol/devtools_download_manager_helper.h"
 #include "content/browser/devtools/protocol/emulation_handler.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/view_messages.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/download_manager.h"
 #include "content/public/browser/javascript_dialog_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
@@ -265,6 +269,7 @@ Response PageHandler::Disable() {
   if (!pending_dialog_.is_null())
     pending_dialog_.Run(false, base::string16());
   pending_dialog_.Reset();
+  MaybeResetDownloadDelegate();
   return Response::FallThrough();
 }
 
@@ -611,10 +616,61 @@ Response PageHandler::BringToFront() {
   return Response::InternalError();
 }
 
+Response PageHandler::SetDownloadBehavior(const std::string& behavior,
+                                          Maybe<std::string> download_path) {
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return Response::InternalError();
+
+  OverrideDownloadDelegate();
+  // Ensure that there is one helper attached. If there's already one we reuse
+  // it.
+  DevToolsDownloadManagerHelper::CreateForWebContents(web_contents);
+  DevToolsDownloadManagerHelper* download_helper =
+      DevToolsDownloadManagerHelper::FromWebContents(web_contents);
+
+  DevToolsDownloadManagerHelper::DownloadBehavior download_behavior =
+      DevToolsDownloadManagerHelper::DownloadBehavior::DENY;
+  if (behavior == "allow") {
+    download_behavior = DevToolsDownloadManagerHelper::DownloadBehavior::ALLOW;
+    if (!download_path.isJust()) {
+      return Response::Error("downloadPath not provided");
+    }
+    download_helper->SetDownloadPath(download_path.fromJust());
+  }
+  if (behavior == "default")
+    download_behavior =
+        DevToolsDownloadManagerHelper::DownloadBehavior::DEFAULT;
+  download_helper->SetDownloadBehavior(download_behavior);
+
+  return Response::OK();
+}
+
 WebContentsImpl* PageHandler::GetWebContents() {
   return host_ ?
       static_cast<WebContentsImpl*>(WebContents::FromRenderFrameHost(host_)) :
       nullptr;
+}
+
+int PageHandler::count_ = 0;
+
+void PageHandler::MaybeResetDownloadDelegate() {
+  if (count_ > 0 && --count_ == 0)
+    DevToolsDownloadManagerDelegate::Reset();
+}
+
+void PageHandler::OverrideDownloadDelegate() {
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return;
+  content::BrowserContext* browser_context = web_contents->GetBrowserContext();
+  if (!browser_context)
+    return;
+
+  count_++;
+  content::DownloadManager* download_manager =
+      content::BrowserContext::GetDownloadManager(browser_context);
+  DevToolsDownloadManagerDelegate::TakeOver(download_manager);
 }
 
 void PageHandler::NotifyScreencastVisibility(bool visible) {
