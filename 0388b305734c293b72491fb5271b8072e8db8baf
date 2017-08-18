@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "fc0e8fc9_bfa52ace",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-18T11:55:21Z",
+      "side": 1,
+      "message": "I agree, but you also get IndexOutOfBoundsException if the collection is empty, so I emptiness check isn\u0027t required here, too. You\u0027re right, null check doesn\u0027t make much sense here. I would leave size check in place, but change message to \"Only one element is supported in promo header section\". Current message gives an impression that we\u0027re checking emptiness here, which is redundant (and actually checks getSection postcondition).",
+      "parentUuid": "2c821d8e_a2e54657",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 82
+      },
+      "revId": "0388b305734c293b72491fb5271b8072e8db8baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b14ae9_d6b83829",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 19
