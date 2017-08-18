@@ -918,12 +918,18 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, DISABLED_TransparentScreenshots) {
   CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
 }
 
-#if defined(OS_ANDROID)
 // Disabled, see http://crbug.com/469947.
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizePinchGesture) {
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+  params->SetBoolean("enabled", true);
+  params->SetInteger("maxTouchPoints", 2);
+  SendCommand("Emulation.setTouchEmulationEnabled", std::move(params));
+
   GURL test_url = GetTestUrl("devtools", "synthetic_gesture_tests.html");
   NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 1);
-  Attach();
 
   int old_width;
   ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
@@ -934,7 +940,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizePinchGesture) {
       shell(), "domAutomationController.send(window.innerHeight)",
       &old_height));
 
-  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+  params.reset(new base::DictionaryValue());
   params->SetInteger("x", old_width / 2);
   params->SetInteger("y", old_height / 2);
   params->SetDouble("scaleFactor", 2.0);
@@ -951,58 +957,6 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizePinchGesture) {
       &new_height));
   ASSERT_DOUBLE_EQ(2.0, static_cast<double>(old_height) / new_height);
 }
-
-IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizeScrollGesture) {
-  GURL test_url = GetTestUrl("devtools", "synthetic_gesture_tests.html");
-  NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 1);
-  Attach();
-
-  int scroll_top;
-  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
-      shell(), "domAutomationController.send(document.body.scrollTop)",
-      &scroll_top));
-  ASSERT_EQ(0, scroll_top);
-
-  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
-  params->SetInteger("x", 0);
-  params->SetInteger("y", 0);
-  params->SetInteger("xDistance", 0);
-  params->SetInteger("yDistance", -100);
-  SendCommand("Input.synthesizeScrollGesture", std::move(params));
-
-  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
-      shell(), "domAutomationController.send(document.body.scrollTop)",
-      &scroll_top));
-  ASSERT_EQ(100, scroll_top);
-}
-
-IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizeTapGesture) {
-  GURL test_url = GetTestUrl("devtools", "synthetic_gesture_tests.html");
-  NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 1);
-  Attach();
-
-  int scroll_top;
-  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
-      shell(), "domAutomationController.send(document.body.scrollTop)",
-      &scroll_top));
-  ASSERT_EQ(0, scroll_top);
-
-  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
-  params->SetInteger("x", 16);
-  params->SetInteger("y", 16);
-  params->SetString("gestureSourceType", "touch");
-  SendCommand("Input.synthesizeTapGesture", std::move(params));
-
-  // The link that we just tapped should take us to the bottom of the page. The
-  // new value of |document.body.scrollTop| will depend on the screen dimensions
-  // of the device that we're testing on, but in any case it should be greater
-  // than 0.
-  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
-      shell(), "domAutomationController.send(document.body.scrollTop)",
-      &scroll_top));
-  ASSERT_GT(scroll_top, 0);
-}
-#endif  // defined(OS_ANDROID)
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, NavigationPreservesMessages) {
   ASSERT_TRUE(embedded_test_server()->Start());

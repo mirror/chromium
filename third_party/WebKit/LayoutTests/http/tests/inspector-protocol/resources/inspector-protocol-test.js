@@ -202,6 +202,12 @@ TestRunner.Page = class {
     await session.disconnect();
   }
 
+  async reload() {
+    var session = await this.createSession();
+    await session.reload();
+    await session.disconnect();
+  }
+
   async loadHTML(html) {
     html = html.replace(/'/g, "\\'").replace(/\n/g, '\\n');
     var session = await this.createSession();
@@ -274,6 +280,22 @@ TestRunner.Session = class {
   async _navigate(url) {
     this.protocol.Page.enable();
     this.protocol.Page.navigate({url: url});
+
+    var callback;
+    var promise = new Promise(f => callback = f);
+    this.protocol.Page.onFrameNavigated(message => {
+      if (!message.params.frame.parentId)
+        callback();
+    });
+    await Promise.all([
+      promise,
+      this.protocol.Page.onceLoadEventFired()
+    ]);
+  }
+
+  async reload() {
+    this.protocol.Page.enable();
+    this.protocol.Page.reload();
 
     var callback;
     var promise = new Promise(f => callback = f);

@@ -1,0 +1,10 @@
+Tests Input.synthesizeScrollGesture method.
+div1.scrollTop = 0
+div2.scrollTop = 0
+Scrolling div1 by 200
+div1.scrollTop = 199
+div2.scrollTop = 0
+Scrolling div2 by 300
+div1.scrollTop = 199
+div2.scrollTop = 299
+

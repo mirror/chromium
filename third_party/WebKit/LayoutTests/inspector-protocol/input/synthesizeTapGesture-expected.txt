@@ -1,0 +1,9 @@
+Tests Input.synthesizeTapGesture method.
+scrollTop = 0
+Tapping the link
+scrollTop = 250
+Tapping event handler
+scrollTop = 350
+Tapping 3 times
+scrollTop = 650
+
