@@ -22,6 +22,30 @@
       "revId": "f26b5eb59ae102de17eb2bf3b769a40827a3e206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950b97c4_ccd2563f",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-18T20:50:20Z",
+      "side": 1,
+      "message": "I think this value is used by Polymer to render the current position on the slider, so I\u0027m not sure what it would do with a string here.",
+      "parentUuid": "9944e41d_8b5dc80c",
+      "range": {
+        "startLine": 284,
+        "startChar": 30,
+        "endLine": 284,
+        "endChar": 75
+      },
+      "revId": "f26b5eb59ae102de17eb2bf3b769a40827a3e206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
