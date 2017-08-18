@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "019c9769_54e1929e",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T14:09:55Z",
+      "side": 1,
+      "message": "Is it useful running this in the simulator? The comment calls this a \"stress\" test which adds 500 passwords. Can we infer anything about the actual performance from how it runs in a simulator?\n\nI also don\u0027t like the idea of landing a suite that runs \"tens of seconds\" in our functional test suite. All of these should be running in under 10 minutes (likely faster), and this is a significant portion of that time.",
+      "parentUuid": "61c00472_61f68647",
+      "revId": "a8621fef1a0318ccd7e8c456f99b84f8cc6011bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "731d2f31_e28a35e0",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
