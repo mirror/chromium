@@ -9,6 +9,8 @@
 #include "base/atomicops.h"
 #include "base/bits.h"
 #include "base/memory/singleton.h"
+#include "base/metrics/field_trial_params.h"              // for crbug/736675
+#include "base/metrics/persistent_histogram_allocator.h"  // for crbug/736675
 #include "base/metrics/persistent_memory_allocator.h"
 #include "base/pickle.h"
 #include "base/stl_util.h"
@@ -292,6 +294,15 @@ void PersistentSystemProfile::SetSystemProfile(
 
   if (allocators_.empty() || serialized_profile.empty())
     return;
+
+  // Experiment with disabling system profile in order to try to find source
+  // of memory overwrites.
+  // TODO(bcwhite): Remove after crbug/736675
+  if (base::GetFieldTrialParamValueByFeature(base::kPersistentHistogramsFeature,
+                                             "disable_persistent_profile") ==
+      "yes") {
+    return;
+  }
 
   for (auto& allocator : allocators_) {
     // Don't overwrite a complete profile with an incomplete one.
