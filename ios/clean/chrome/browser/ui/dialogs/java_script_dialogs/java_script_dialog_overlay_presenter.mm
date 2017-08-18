@@ -4,6 +4,7 @@
 
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_overlay_presenter.h"
 
+#import "ios/chrome/browser/ui/dialogs/java_script_dialog_blocking_state.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_coordinator.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_request.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
@@ -47,6 +48,13 @@ void JavaScriptDialogOverlayPresenter::RunJavaScriptDialog(
   // This presenter should only attempt to present dialogs from its associated
   // WebState.
   DCHECK_EQ(web_state_, web_state);
+  // Block the dialog if instructed by the blocking state.
+  JavaScriptDialogBlockingState* blocking_state =
+      JavaScriptDialogBlockingState::FromWebState(web_state_);
+  if (blocking_state && blocking_state->blocked()) {
+    callback.Run(NO, nil);
+    return;
+  }
   // Create a new coordinator and add it to the overlay queue.
   JavaScriptDialogRequest* request =
       [JavaScriptDialogRequest stateWithWebState:web_state
