@@ -3022,14 +3022,41 @@ RenderFrameImpl::CreateWorkerContentSettingsClient() {
 std::unique_ptr<blink::WebWorkerFetchContext>
 RenderFrameImpl::CreateWorkerFetchContext() {
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
-  RenderThreadImpl::current()
-      ->blink_platform_impl()
-      ->GetInterfaceProvider()
-      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
-  std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
-      base::MakeUnique<WorkerFetchContextImpl>(
-          worker_url_loader_factory_provider.PassInterface());
+  std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    // Clone URLLoaderFactory.
+    mojom::URLLoaderFactory* url_loader_factory =
+        custom_url_loader_factory_.get();
+    if (!url_loader_factory) {
+      url_loader_factory =
+          GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory();
+    }
+    DCHECK(url_loader_factory);
+    mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
+    url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
+
+    // Clone URLLoaderFactory for Blobs.
+    mojom::URLLoaderFactory* blob_url_loader_factory =
+        GetDefaultURLLoaderFactoryGetter()->GetBlobLoaderFactory();
+    DCHECK(blob_url_loader_factory);
+    mojom::URLLoaderFactoryPtrInfo blob_url_loader_factory_copy;
+    blob_url_loader_factory->Clone(
+        mojo::MakeRequest(&blob_url_loader_factory_copy));
+
+    worker_fetch_context = base::MakeUnique<WorkerFetchContextImpl>(
+        std::move(url_loader_factory_copy),
+        std::move(blob_url_loader_factory_copy));
+
+  } else {
+    mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
+    RenderThreadImpl::current()
+        ->blink_platform_impl()
+        ->GetInterfaceProvider()
+        ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
+
+    worker_fetch_context = base::MakeUnique<WorkerFetchContextImpl>(
+        worker_url_loader_factory_provider.PassInterface());
+  }
   worker_fetch_context->set_parent_frame_id(routing_id_);
   worker_fetch_context->set_site_for_cookies(
       frame_->GetDocument().SiteForCookies());
