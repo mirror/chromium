@@ -293,6 +293,30 @@
       "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b255c9a_b2f582cc",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-18T18:21:59Z",
+      "side": 1,
+      "message": "If the first case changes the favicon/title after 5 mins, and it\u0027s in background, then we send the signal, because it\u0027s not the first-time-set and it\u0027s in background.\n\nI also mis-placed the visibility check in the code, already corrected.",
+      "parentUuid": "062d61cb_168540c0",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "7b49fdecffb5fe43ed523d99604a2a0419c2f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
