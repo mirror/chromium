@@ -188,6 +188,7 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
           base::BindOnce(
               &ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable,
               weak_ptr_factory_.GetWeakPtr()));
+  waiting_for_contextual_suggestion_request_ = true;
 }
 
 void ZeroSuggestProvider::Stop(bool clear_cached_results,
@@ -196,6 +197,7 @@ void ZeroSuggestProvider::Stop(bool clear_cached_results,
     LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_INVALIDATED);
   fetcher_.reset();
   waiting_for_most_visited_urls_request_ = false;
+  waiting_for_contextual_suggestion_request_ = false;
   done_ = true;
 
   if (clear_cached_results) {
@@ -245,7 +247,8 @@ ZeroSuggestProvider::ZeroSuggestProvider(
       listener_(listener),
       results_from_cache_(false),
       waiting_for_most_visited_urls_request_(false),
-      weak_ptr_factory_(this) {
+      waiting_for_contextual_suggestion_request(false),
+      _ weak_ptr_factory_(this) {
   // Record whether contextual zero suggest is possible for this user / profile.
   const TemplateURLService* template_url_service =
       client->GetTemplateURLService();
@@ -396,6 +399,9 @@ void ZeroSuggestProvider::OnMostVisitedUrlsAvailable(
 
 void ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable(
     std::unique_ptr<net::URLFetcher> fetcher) {
+  if (!waiting_for_contextual_suggestion_request_)
+    return;
+  waiting_for_contextual_suggestion_request_ = false;
   fetcher_ = std::move(fetcher);
   fetcher_->Start();
   LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_SENT);
