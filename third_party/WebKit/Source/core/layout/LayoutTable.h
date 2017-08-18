@@ -455,6 +455,16 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   enum WhatToMarkAllCells { kMarkDirtyOnly, kMarkDirtyAndNeedsLayout };
   void MarkAllCellsWidthsDirtyAndOrNeedsLayout(WhatToMarkAllCells);
 
+  bool IsAbsoluteColumnCollapsed(unsigned absolute_column_index) const;
+
+  bool IsAnyColumnEverCollapsed() const {
+    return is_any_column_ever_collapsed_;
+  }
+
+  void SetIsAnyColumnEverCollapsed(bool isAnyColumnEverCollapsed) {
+    is_any_column_ever_collapsed_ = isAnyColumnEverCollapsed;
+  }
+
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
   void SimplifiedNormalFlowLayout() override;
@@ -521,6 +531,11 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
                      LayoutUnit logical_left,
                      TableHeightChangingValue);
 
+  // If any columns are collapsed, populates given vector with how much width is
+  // collapsed in each column. If no columns are collapsed, given vector remains
+  // empty. Logical width of table is adjusted.
+  void AdjustWidthsForCollapsedColumns(Vector<int>&);
+
   // Return the logical height based on the height, min-height and max-height
   // properties from CSS. Will return 0 if auto.
   LayoutUnit LogicalHeightFromStyle() const;
@@ -582,6 +597,9 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   mutable bool collapsed_outer_borders_valid_ : 1;
 
   bool should_paint_all_collapsed_borders_ : 1;
+
+  // Whether any column in the table section is or has been collapsed.
+  bool is_any_column_ever_collapsed_ : 1;
 
   mutable bool has_col_elements_ : 1;
   mutable bool needs_section_recalc_ : 1;
