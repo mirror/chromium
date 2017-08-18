@@ -13,6 +13,7 @@ struct CC_EXPORT TileManagerSettings {
   bool use_partial_raster = false;
   bool enable_checker_imaging = false;
   size_t min_image_bytes_to_checker = 1 * 1024 * 1024;
+  bool only_checker_images_with_gpu_raster = false;
 };
 
 }  // namespace cc

@@ -54,7 +54,8 @@ class CC_EXPORT CheckerImageTracker {
   CheckerImageTracker(ImageController* image_controller,
                       CheckerImageTrackerClient* client,
                       bool enable_checker_imaging,
-                      size_t min_image_bytes_to_checker);
+                      size_t min_image_bytes_to_checker,
+                      bool only_checker_images_with_gpu_raster);
   ~CheckerImageTracker();
 
   // Returns true if the decode for |image| will be deferred to the image decode
@@ -91,6 +92,10 @@ class CC_EXPORT CheckerImageTracker {
   // do so. This call is meant to be issued prior to the image appearing during
   // raster.
   void DisallowCheckeringForImage(const PaintImage& image);
+
+  void set_using_gpu_rasterization(bool using_gpu_rasterization) {
+    using_gpu_rasterization_ = using_gpu_rasterization;
+  }
 
   bool has_locked_decodes_for_testing() const {
     return !image_id_to_decode_.empty();
@@ -157,6 +162,9 @@ class CC_EXPORT CheckerImageTracker {
   CheckerImageTrackerClient* client_;
   const bool enable_checker_imaging_;
   const size_t min_image_bytes_to_checker_;
+  const bool only_checker_images_with_gpu_raster_;
+
+  bool using_gpu_rasterization_ = false;
 
   // A set of images which have been decoded and are pending invalidation for
   // raster on the checkered tiles.

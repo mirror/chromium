@@ -33,6 +33,9 @@ enum class CheckerImagingDecision {
   kVetoedSmallerThanCheckeringSize = 7,
   kVetoedLargerThanCacheSize = 8,
 
+  // Vetoed because we are using software raster.
+  kVetoedSoftwareRaster = 9,
+
   kCheckerImagingDecisionCount,
 };
 
@@ -121,14 +124,17 @@ CheckerImageTracker::ImageDecodeRequest::ImageDecodeRequest(
     DecodeType type)
     : paint_image(std::move(paint_image)), type(type) {}
 
-CheckerImageTracker::CheckerImageTracker(ImageController* image_controller,
-                                         CheckerImageTrackerClient* client,
-                                         bool enable_checker_imaging,
-                                         size_t min_image_bytes_to_checker)
+CheckerImageTracker::CheckerImageTracker(
+    ImageController* image_controller,
+    CheckerImageTrackerClient* client,
+    bool enable_checker_imaging,
+    size_t min_image_bytes_to_checker,
+    bool only_checker_images_with_gpu_raster)
     : image_controller_(image_controller),
       client_(client),
       enable_checker_imaging_(enable_checker_imaging),
       min_image_bytes_to_checker_(min_image_bytes_to_checker),
+      only_checker_images_with_gpu_raster_(only_checker_images_with_gpu_raster),
       weak_factory_(this) {}
 
 CheckerImageTracker::~CheckerImageTracker() = default;
@@ -299,6 +305,12 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
     CheckerImagingDecision decision = GetCheckerImagingDecision(
         image, draw_image.src_rect(), min_image_bytes_to_checker_,
         image_controller_->image_cache_max_limit_bytes());
+    if (decision == CheckerImagingDecision::kCanChecker &&
+        only_checker_images_with_gpu_raster_ && !using_gpu_rasterization_) {
+      // UMA the images we would have checkered if we were in GPU raster mode.
+      decision = CheckerImagingDecision::kVetoedSoftwareRaster;
+    }
+
     it->second.policy = decision == CheckerImagingDecision::kCanChecker
                             ? DecodePolicy::ASYNC
                             : DecodePolicy::SYNC;
