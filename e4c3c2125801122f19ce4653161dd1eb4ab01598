@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d24330_f7229f93",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-18T17:51:58Z",
+      "side": 1,
+      "message": "nit: I\u0027d avoid auto* if the actual type can be included without causing excess wrapping.",
+      "revId": "e4c3c2125801122f19ce4653161dd1eb4ab01598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
