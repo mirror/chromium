@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
@@ -69,8 +70,7 @@ class WasRecentlyAudibleWatcher {
 // Class used to test the Media Engagement service.
 class MediaEngagementBrowserTest : public InProcessBrowserTest {
  public:
-  MediaEngagementBrowserTest()
-      : task_runner_(new base::TestMockTimeTaskRunner()) {
+  MediaEngagementBrowserTest() {
     http_server_.ServeFilesFromSourceDirectory(kMediaEngagementTestDataPath);
     http_server_origin2_.ServeFilesFromSourceDirectory(
         kMediaEngagementTestDataPath);
@@ -85,14 +85,13 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
     scoped_feature_list_.InitAndEnableFeature(
         media::kRecordMediaEngagementScores);
 
+    mock_time_task_runner = base::MakeRefCounted<base::TestMockTimeTaskRunner>(
+        base::TestMockTimeTaskRunner::Type::kBound);
+
     InProcessBrowserTest::SetUp();
   };
 
   void LoadTestPage(const std::string& page) {
-    // We can't do this in SetUp as the browser isn't ready yet and we
-    // need it before the page navigates.
-    InjectTimerTaskRunner();
-
     ui_test_utils::NavigateToURL(browser(), http_server_.GetURL("/" + page));
   };
 
@@ -107,8 +106,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
   };
 
   void Advance(base::TimeDelta time) {
-    task_runner_->FastForwardBy(time);
-    base::RunLoop().RunUntilIdle();
+    mock_time_task_runner_->FastForwardBy(time);
   }
 
   void AdvanceMeaningfulPlaybackTime() {
@@ -161,10 +159,6 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
     EXPECT_EQ(media_playbacks, score.media_playbacks());
   }
 
-  void InjectTimerTaskRunner() {
-    contents_observer()->playback_timer_->SetTaskRunner(task_runner_);
-  }
-
   MediaEngagementService* GetService() {
     return MediaEngagementService::Get(browser()->profile());
   }
@@ -180,8 +174,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
 
   base::test::ScopedFeatureList scoped_feature_list_;
 
-  scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
-
+  scoped_refptr<base::TestMockTimeTaskRunner> mock_time_task_runner_;
   const base::TimeDelta kMaxWaitingTime =
       MediaEngagementContentsObserver::kSignificantMediaPlaybackTime +
       base::TimeDelta::FromSeconds(2);
