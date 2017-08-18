@@ -231,17 +231,24 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason) {
 }
 
 void ArcSessionRunner::EmitLoginPromptVisibleCalled() {
+  // TODO(yusukes): This is a workaround for crbug.com/756687. Remove the code
+  // once the issue is fixed.
+  if (state_ != State::STOPPED) {
+    LOG(WARNING) << "The instance has already started before "
+                 << "EmitLoginPromptVisibleCalled() is called. Ignoring the "
+                 << "signal. Current |state_| is " << static_cast<int>(state_);
+    return;
+  }
+
   // Since 'login-prompt-visible' Upstart signal starts all Upstart jobs the
   // container may depend on such as cras, EmitLoginPromptVisibleCalled() is the
   // safe place to start the container for login screen.
   DCHECK(!arc_session_);
   DCHECK_EQ(state_, State::STOPPED);
-
-  // TODO(yusukes): Once Chrome OS side is ready, uncomment the following:
-  // arc_session_ = factory_.Run();
-  // arc_session_->AddObserver(this);
-  // state_ = State::STARTING_FOR_LOGIN_SCREEN;
-  // arc_session_->StartForLoginScreen();
+  arc_session_ = factory_.Run();
+  arc_session_->AddObserver(this);
+  state_ = State::STARTING_FOR_LOGIN_SCREEN;
+  arc_session_->StartForLoginScreen();
 }
 
 }  // namespace arc
