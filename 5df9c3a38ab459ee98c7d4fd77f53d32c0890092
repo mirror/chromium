@@ -223,6 +223,30 @@
       "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c4952f_f7070e76",
+        "filename": "extensions/common/extension_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T17:50:39Z",
+      "side": 1,
+      "message": "Sure thing!  Done.",
+      "parentUuid": "7f20e939_6e93a53a",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "5df9c3a38ab459ee98c7d4fd77f53d32c0890092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
