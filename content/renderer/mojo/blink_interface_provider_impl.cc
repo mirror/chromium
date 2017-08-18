@@ -36,8 +36,9 @@ void BlinkInterfaceProviderImpl::GetInterfaceInternal(
     mojo::ScopedMessagePipeHandle handle) {
   if (!main_thread_task_runner_->BelongsToCurrentThread()) {
     main_thread_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&BlinkInterfaceProviderImpl::GetInterfaceInternal,
-                              weak_ptr_, name, base::Passed(&handle)));
+        FROM_HERE,
+        base::BindOnce(&BlinkInterfaceProviderImpl::GetInterfaceInternal,
+                       weak_ptr_, name, base::Passed(&handle)));
     return;
   }
 
