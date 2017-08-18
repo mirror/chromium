@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "5bf822a2_8413f911",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7329,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T18:59:26Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "187f0c52_50735448",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a776c229_24d78f88",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 14
@@ -347,6 +365,24 @@
       "side": 1,
       "message": "So, looking closer, when an interstitial is active, GetRenderWidgetHostView() returns the RWHV of the interstitial in https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager.cc?sq\u003dpackage:chromium\u0026l\u003d136.  I don\u0027t think we can have OOPIFs on interstitials today, but the problem is that SetVisibilityForChildViews(true) would affect OOPIFs on the real page under the interstitial.  E.g., with a SafeBrowsing interstitial triggered by a subframe load, I think the main frame and other subframes stay active under the warning, and then this will change visibility for just the OOPIFs (but not the main frame), which seems weird.  So I\u0027d exclude line 1508.\n\nYou have a good point that if the user clicks through the warning, the OOPIFs will need to have correct visibility, but I guess this should be handled at clickthrough time, along with the main frame\u0027s visibility, for consistency.  I have no idea whether we do this correctly today :), but in any case we could explore this in a followup.",
       "parentUuid": "329be050_fa79cf9d",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01daca06_62a70872",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T18:59:26Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation. IIUC, this discussion clarifies that the new API added with this patch is not exactly equivalent to walking the (virtual) RWHV tree. I think if we truly implement walking down the RWHV tree (in a followup API), the reasoning around the issue here should become clearer. Supposedly this problem would not have existed if a RWHVBase::Show/Hide could call its child views::Show/Hide and we could drop the line 1508 altogether.",
+      "parentUuid": "d33b2e6f_e3b9ed5a",
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -403,6 +439,24 @@
       "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c41bf2f_e4f878c1",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5988,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T18:59:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c593512c_44586b44",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
