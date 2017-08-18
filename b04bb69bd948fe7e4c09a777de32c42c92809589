@@ -16,6 +16,24 @@
       "revId": "b04bb69bd948fe7e4c09a777de32c42c92809589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01ee789_561c553e",
+        "filename": "ui/events/devices/device_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T15:23:25Z",
+      "side": 1,
+      "message": "\u003e I think this will call the default TouchDeviceTransform constructor kMaxDevNum times\n\nThe old code was doing this too.\n\n\u003e , then call the copy TouchDeviceTransform constructor 3*kMaxDevNum times to do the swap? I think the original would be optimize to just call the default constructor kMaxDevNum times?\n\nI don\u0027t believe that\u0027s the case. I think swap swaps the internal implementation of the two arrays. At least that\u0027s the way it is for vector: http://en.cppreference.com/w/cpp/container/vector/swap . The array page doesn\u0027t mention that though and I didn\u0027t want to dig into the implementation so I nuked this part.\n\n\u003e Although, |touch_map_| should probably just be a map of some sort anyways.\n\nI suspect the reason it\u0027s like this is for performance, but I suspect the map isn\u0027t accessed enough to justify the array. And in general the size is going to be very small.",
+      "parentUuid": "f4c9fa22_dcc22cdb",
+      "revId": "b04bb69bd948fe7e4c09a777de32c42c92809589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
