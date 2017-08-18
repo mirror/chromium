@@ -22,6 +22,30 @@
       "revId": "77912a92acacff8c113afd2181ce81747fdaabe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1559a9a_b0fb06ac",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-18T20:26:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9683b9_be517ba9",
+      "range": {
+        "startLine": 133,
+        "startChar": 68,
+        "endLine": 133,
+        "endChar": 69
+      },
+      "revId": "77912a92acacff8c113afd2181ce81747fdaabe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
