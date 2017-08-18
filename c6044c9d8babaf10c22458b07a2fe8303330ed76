@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4a113c_f283c7ef",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "Try to use std::pair\u003c\u003e because you are using only 2 values.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5f3706_6e5b4c40",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "I think it would be better to leverage CreateTestWebContents() of the base class RenderViewHostTestHarness, unless you need to create a full-fledged WebContents.",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208ee232_89b59a26",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "tab_manager_stats_collector() looks easier to read for me.",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220fd2e0_89129585",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "private:",
+      "range": {
+        "startLine": 71,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06785e6_5cae60ba",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "you may create should_test_session_restore() or simply test_session_restore() if this field needs to be accessible from child classes.",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98732f4f_662b5df2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "protected",
+      "range": {
+        "startLine": 79,
+        "startChar": 1,
+        "endLine": 79,
+        "endChar": 7
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5ce6e1_970f655f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 115,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 10
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252051fb_8f0920b1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "[foreground,background]_tab names are easier to understand for me. If these are just temporary variables, how about instantiating them inside SetForegroundAndBackgroundTabs)?\nAfter SetForegroundAndBackgroundTabs(), tab1.IsVisible() and !tab2.IsVisible()? SetForegroundAndBackgroundTabs() seems not change visibility of these tabs.",
+      "range": {
+        "startLine": 208,
+        "startChar": 33,
+        "endLine": 208,
+        "endChar": 37
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a49ff5_71a1e38c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-18T23:59:37Z",
+      "side": 1,
+      "message": "use make_pair",
+      "range": {
+        "startLine": 340,
+        "startChar": 27,
+        "endLine": 340,
+        "endChar": 37
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
