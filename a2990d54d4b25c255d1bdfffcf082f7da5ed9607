@@ -88,6 +88,24 @@
       "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e30338_61b77a5f",
+        "filename": "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:51:18Z",
+      "side": 1,
+      "message": "How can we resolve this today?  Sounds like option #1 is out.\n\nI\u0027m seeing that the dispatcher is often nil in unittests.  That makes me lean slightly towards option #2 (separate property) rather than making it a constructor argument.",
+      "parentUuid": "803287c1_8ba1e3de",
+      "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
