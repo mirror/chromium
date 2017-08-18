@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac67eebe_97810dbb",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-18T17:44:49Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t aw_renderer_priority.h be there?\n\nyep, done\n\nsemi-surprised gn check didn\u0027t complain",
+      "parentUuid": "12a45da3_16abced0",
+      "range": {
+        "startLine": 503,
+        "startChar": 13,
+        "endLine": 503,
+        "endChar": 46
+      },
+      "revId": "1f1855342e2aff506028e41e0e59ae25201741e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f41cb4a_efff8258",
         "filename": "android_webview/browser/aw_renderer_priority.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "40b99ed9_961f863c",
+        "filename": "android_webview/browser/aw_renderer_priority.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-18T17:44:49Z",
+      "side": 1,
+      "message": "\u003e Nit: s/ANDROID_WEBVIEW_BROWSER_AW_RENDERER_PRIORITY_MANAGER_H_/ANDROID_WEBVIEW_BROWSER_AW_RENDERER_PRIORITY_H_/\n\ndone",
+      "parentUuid": "0f41cb4a_efff8258",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "1f1855342e2aff506028e41e0e59ae25201741e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a89465fd_7e48e62a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-18T15:40:21Z",
       "side": 1,
       "message": "I missed the previous CLs so sorry I may be missing context, but why isn\u0027t the BindingManager dealing with this?\nSo now both the CPLH and the BindingManager manage the bindings?",
+      "range": {
+        "startLine": 477,
+        "startChar": 31,
+        "endLine": 477,
+        "endChar": 49
+      },
+      "revId": "1f1855342e2aff506028e41e0e59ae25201741e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b81374_1e1bd180",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-18T17:44:49Z",
+      "side": 1,
+      "message": "\u003e I missed the previous CLs so sorry I may be missing context, but why isn\u0027t the BindingManager dealing with this?\n\u003e So now both the CPLH and the BindingManager manage the bindings?\n\nBindingManager is not the only thing that controls moderate binding, since https://chromium-review.googlesource.com/602892 Connection now keeps a refcount for moderate binding as well, so as long as both systems stay independent and only call add/remove in pairs, we are still ok.\n\nI think after this CL, can move everything except the lru queue things out of BindingManager. Then BindingManager can be lyfted entirely into the chrome layer, and work on Tabs rather than on connections directly. But that\u0027s in longer-ish time frame",
+      "parentUuid": "a89465fd_7e48e62a",
       "range": {
         "startLine": 477,
         "startChar": 31,
