@@ -31,7 +31,9 @@ import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.ChildProcessImportance;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -433,10 +435,16 @@ public class ChildProcessLauncherHelper {
         mUseBindingManager = sandboxed;
         mSandboxed = sandboxed;
 
+        List<IBinder> binderCallbacks = null;
+        if (binderCallback != null) {
+            binderCallbacks = new ArrayList<>();
+            binderCallbacks.add(binderCallback);
+        }
+
         final ChildConnectionAllocator connectionAllocator = getConnectionAllocator(
                 ContextUtils.getApplicationContext(), mCreationParams, sandboxed);
         mLauncher = new ChildProcessLauncher(LauncherThread.getHandler(), mLauncherDelegate,
-                commandLine, filesToBeMapped, connectionAllocator, binderCallback);
+                commandLine, filesToBeMapped, connectionAllocator, binderCallbacks);
     }
 
     public int getPid() {

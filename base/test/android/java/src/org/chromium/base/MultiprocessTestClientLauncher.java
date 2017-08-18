@@ -6,6 +6,7 @@ package org.chromium.base;
 
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -20,6 +21,8 @@ import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.base.process_launcher.IChildProcessService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
@@ -138,8 +141,10 @@ public final class MultiprocessTestClientLauncher {
                     "org.chromium.native_test.NUM_TEST_CLIENT_SERVICES", false /* bindToCaller */,
                     false /* bindAsExternalService */, false /* useStrongBinding */);
         }
+        List<IBinder> callbacks = new ArrayList<>();
+        callbacks.add(mCallback);
         mLauncher = new ChildProcessLauncher(sLauncherHandler, mLauncherDelegate, commandLine,
-                filesToMap, sConnectionAllocator, mCallback);
+                filesToMap, sConnectionAllocator, callbacks);
     }
 
     private boolean waitForConnection(long timeoutMs) {

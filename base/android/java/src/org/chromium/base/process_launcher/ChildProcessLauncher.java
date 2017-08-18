@@ -15,6 +15,7 @@ import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.SuppressFBWarnings;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This class is used to start a child process by connecting to a ChildProcessService.
@@ -87,8 +88,8 @@ public class ChildProcessLauncher {
     // The allocator used to create the connection.
     private final ChildConnectionAllocator mConnectionAllocator;
 
-    // The IBinder provided to the created service.
-    private final IBinder mIBinderCallback;
+    // The IBinder instances provided to the created service.
+    private final List<IBinder> mIBinderCallbacks;
 
     // The actual service connection. Set once we have connected to the service.
     private ChildProcessConnection mConnection;
@@ -101,12 +102,12 @@ public class ChildProcessLauncher {
      * @param commandLine the command line that should be passed to the started process.
      * @param filesToBeMapped the files that should be passed to the started process.
      * @param connectionAllocator the allocator used to create connections to the service.
-     * @param binderCallback the callback that should be passed to the started process.
+     * @param binderCallbacks the callbacks that should be passed to the started process.
      */
     @SuppressFBWarnings("EI_EXPOSE_REP2")
     public ChildProcessLauncher(Handler launcherHandler, Delegate delegate, String[] commandLine,
             FileDescriptorInfo[] filesToBeMapped, ChildConnectionAllocator connectionAllocator,
-            IBinder binderCallback) {
+            List<IBinder> binderCallbacks) {
         assert connectionAllocator != null;
         mLauncherHandler = launcherHandler;
         isRunningOnLauncherThread();
@@ -114,7 +115,7 @@ public class ChildProcessLauncher {
         mConnectionAllocator = connectionAllocator;
         mDelegate = delegate;
         mFilesToBeMapped = filesToBeMapped;
-        mIBinderCallback = binderCallback;
+        mIBinderCallbacks = binderCallbacks;
     }
 
     /**
@@ -233,7 +234,7 @@ public class ChildProcessLauncher {
                 };
         Bundle connectionBundle = createConnectionBundle();
         mDelegate.onBeforeConnectionSetup(connectionBundle);
-        mConnection.setupConnection(connectionBundle, getIBinderCallback(), connectionCallback);
+        mConnection.setupConnection(connectionBundle, getIBinderCallbacks(), connectionCallback);
     }
 
     private void onServiceConnected() {
@@ -258,8 +259,8 @@ public class ChildProcessLauncher {
         return mConnection == null ? NULL_PROCESS_HANDLE : mConnection.getPid();
     }
 
-    public IBinder getIBinderCallback() {
-        return mIBinderCallback;
+    public List<IBinder> getIBinderCallbacks() {
+        return mIBinderCallbacks;
     }
 
     private boolean isRunningOnLauncherThread() {
