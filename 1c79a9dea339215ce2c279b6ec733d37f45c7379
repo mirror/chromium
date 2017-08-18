@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3809b7a_2277c0bb",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:00:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5fcdec35_7362f494",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bba9b87f_f93ace2a",
         "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e401313f_31213863",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba9b87f_f93ace2a",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c05e6346_139d2f39",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5f9546_0d0ff99f",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58bc173d_ec8fcfa7",
         "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "570a4f4a_03bbd765",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:00:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58bc173d_ec8fcfa7",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b0581e8_de6ab0f5",
         "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-14T16:06:57Z",
       "side": 1,
       "message": "Can we use some values from |data| here instead of |0, 0|? Sorry if that\u0027s a stupid question, I\u0027m not familiar with the skia :P",
+      "range": {
+        "startLine": 46,
+        "startChar": 37,
+        "endLine": 46,
+        "endChar": 41
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347490b5_5d77836a",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:00:04Z",
+      "side": 1,
+      "message": "Not a stupid question at all. I looked into this, and I believe these are just specifying the base x,y to build a rectangle of size |kBitmapSize| x |kBitmapSize|.\n\nThese don\u0027t need to be |0,0|, but they probably should match the values passed into |drawBitmap| below.",
+      "parentUuid": "4b0581e8_de6ab0f5",
       "range": {
         "startLine": 46,
         "startChar": 37,
@@ -152,6 +272,30 @@
       "side": 1,
       "message": "on the other hand, it may be useful to compare execution speed to see whether if it\u0027s worth sharing the |canvas| between runs, though it could hurt reproducibility.",
       "parentUuid": "83a32d0b_9e13ea08",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8b632e_1a3fe32e",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-18T18:00:04Z",
+      "side": 1,
+      "message": "Good thought. I tried using a global canvas and leaving these calls, and the execution speed was not noticeably faster. I\u0027ll keep a local canvas and remove these calls .",
+      "parentUuid": "9fb47eb7_a6cbed72",
       "range": {
         "startLine": 53,
         "startChar": 4,
