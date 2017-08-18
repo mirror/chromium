@@ -159,8 +159,17 @@ void LocalWindowProxy::Initialize() {
     SetSecurityToken(origin);
   }
 
-  MainThreadDebugger::Instance()->ContextCreated(script_state_.Get(),
-                                                 GetFrame(), origin);
+  String world_type = "";
+  if (world_->IsMainWorld())
+    world_type.append("default");
+  else if (world_->IsWorkerWorld())
+    world_type.append("worker");
+  else if (world_->IsIsolatedWorld())
+    world_type.append("isolated");
+  else
+    world_type.append("others");
+  MainThreadDebugger::Instance()->ContextCreated(
+      script_state_.Get(), GetFrame(), origin, world_type);
   GetFrame()->Client()->DidCreateScriptContext(context, world_->GetWorldId());
 
   InstallConditionalFeaturesOnGlobal(&V8Window::wrapperTypeInfo,

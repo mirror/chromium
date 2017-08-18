@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<style>
+.container {
+  width: 100px;
+  height: 100px;
+}
+
+#canvas-geometry {
+  background-image: paint(geometry);
+}
+</style>
+<body>
+<div id="canvas-geometry" class="container"></div>
+<script>
+paintWorklet.addModule('paint-worklet-testpage.js');
+</script>
+</body>
+</html>
