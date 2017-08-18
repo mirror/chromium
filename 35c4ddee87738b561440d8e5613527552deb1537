@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e949c8f_d8b73534",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-18T09:26:19Z",
+      "side": 1,
+      "message": "These two lines are in every test, can they be factored out to the cleanup?",
+      "revId": "35c4ddee87738b561440d8e5613527552deb1537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9913804_00df5f99",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-18T09:26:19Z",
+      "side": 1,
+      "message": "This comment can be confused with \"TODO: remove this\". Perhaps \"// Tap on Remove.\" ?",
+      "range": {
+        "startLine": 534,
+        "startChar": 5,
+        "endLine": 534,
+        "endChar": 11
+      },
+      "revId": "35c4ddee87738b561440d8e5613527552deb1537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8902990c_0bd6da99",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-18T09:26:19Z",
+      "side": 1,
+      "message": "Optional nit: create a separate EGTest class for most visited tile long press, maybe even directly in this file, maybe subclassing the current one. Move this method\u0027s contents to setUp.",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 618,
+        "endChar": 37
+      },
+      "revId": "35c4ddee87738b561440d8e5613527552deb1537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
