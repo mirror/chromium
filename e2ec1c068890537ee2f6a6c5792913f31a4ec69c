@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08d10dd9_7abdb6db",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T16:03:42Z",
+      "side": 1,
+      "message": "Is that the correct title? Wouldn\u0027t it be \"E-commerce\" or something?",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 17
+      },
+      "revId": "e2ec1c068890537ee2f6a6c5792913f31a4ec69c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
