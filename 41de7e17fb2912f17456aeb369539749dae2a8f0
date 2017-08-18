@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46888925_8b90a873",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T02:23:34Z",
+      "side": 1,
+      "message": "I\u0027m not saying any action is required, but at least for future reference, I just noticed shrink_to_fit() is disallowed: https://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 649,
+        "startChar": 23,
+        "endLine": 649,
+        "endChar": 36
+      },
+      "revId": "41de7e17fb2912f17456aeb369539749dae2a8f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
