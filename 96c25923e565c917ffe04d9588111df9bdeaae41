@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d46ab1b_2348e8fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T16:36:37Z",
+      "side": 1,
+      "message": "Hey, I was not aware we have a new namespace for that, which is totally OK.\n\nI want to ask you to fix one more place with respect to that thou:\nPlease add this namespace to:\n\u003chistogram_suffixes name\u003d\"OfflinePagesNamespace\" separator\u003d\".\"\u003e\nbelow ntp_suggestions entry.\n\nMost of the histograms will not use it, but things like *.ExpirePage.* will cause a crash in 30 days.",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 59
+      },
+      "revId": "96c25923e565c917ffe04d9588111df9bdeaae41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
