@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e93db29_369799d9",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_button_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Yes — that setter/getter doesn\u0027t exist anymore, and I think the test still serves its primary purpose: \"can we do these things and not crash?\"",
+      "parentUuid": "e43a63bd_fac8af6e",
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41adc1c9_3cc9107f",
         "filename": "chrome/browser/ui/cocoa/download/download_item_view_protocol.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e370e5ff_c0b6db92",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_view_protocol.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Done. It\u0027s the same as the existing `setStateFromDownload:` method on DownloadItemController, fwiw.",
+      "parentUuid": "41adc1c9_3cc9107f",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c4fe6bd7_c6b85e4c",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b98ba9_cfe106dd",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d3ef266_1f56fd7b",
         "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956d58ba_28916658",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3ef266_1f56fd7b",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 52
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "dcdf4c0c_b68c6c39",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Good point, constant\u0027d.",
+      "parentUuid": "0e87ca0b_7dbc3724",
+      "range": {
+        "startLine": 157,
+        "startChar": 40,
+        "endLine": 157,
+        "endChar": 42
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "741fa2e8_f24a5c45",
         "filename": "chrome/browser/ui/cocoa/download/download_started_animation_mac.mm",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae622a3_536b52c8",
+        "filename": "chrome/browser/ui/cocoa/download/download_started_animation_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Constant\u0027d",
+      "parentUuid": "741fa2e8_f24a5c45",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "e680d30e_e37ff1a7",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Constant\u0027d.",
+      "parentUuid": "fc67a370_b2d84022",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f6bbef_6d3791bb",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 5
@@ -177,6 +339,30 @@
       "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bc6cc3_fb26ddd4",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f6bbef_6d3791bb",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 22
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "6a0f985c_48adbb61",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecde3961_a5e4f38d",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f5eedb2_8e704f8a",
         "filename": "chrome/browser/ui/cocoa/nsview_additions.mm",
         "patchSetId": 5
@@ -223,6 +433,30 @@
       "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8462043b_452e447c",
+        "filename": "chrome/browser/ui/cocoa/nsview_additions.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-18T20:09:56Z",
+      "side": 1,
+      "message": "Done — I want to keep the name unless you have strong feelings, to be consistent with cr_localizedRect: below.",
+      "parentUuid": "2f5eedb2_8e704f8a",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "870e98e45b470702b224ab0677b82f7ef77c4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
