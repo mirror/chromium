@@ -794,6 +794,7 @@ mojom("mojo_bindings") {
     "platform/referrer.mojom",
     "platform/reporting.mojom",
     "platform/site_engagement.mojom",
+    "platform/web_client_hints_types.mojom",
     "web/console_message.mojom",
     "web/window_features.mojom",
     "web/worker_content_settings_proxy.mojom",
@@ -919,6 +920,7 @@ mojom("web_feature_mojo_bindings") {
 source_set("shared_typemap_traits") {
   visibility = [ ":*" ]
   sources = [
+    "platform/ClientHintsTypesTraits.h",
     "web/ConsoleMessageStructTraits.cpp",
     "web/ConsoleMessageStructTraits.h",
   ]
