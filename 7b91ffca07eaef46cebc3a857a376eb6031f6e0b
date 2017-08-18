@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5848d08a_9a45212d",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-18T06:20:18Z",
+      "side": 1,
+      "message": "optional: Any particular reason for not putting it as a member like in ARC source?",
+      "revId": "7b91ffca07eaef46cebc3a857a376eb6031f6e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
