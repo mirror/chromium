@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fbc59a8_0d1b9bc3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T05:48:43Z",
+      "side": 1,
+      "message": "Think this is not necessary.",
+      "range": {
+        "startLine": 379,
+        "startChar": 28,
+        "endLine": 379,
+        "endChar": 42
+      },
+      "revId": "c015eb2f06a3ba19069e280bc93d0d5500fde47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2c0c88_6fb7cb64",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T05:48:43Z",
+      "side": 1,
+      "message": "Let\u0027s use rect_size.IsEmpty() and early bail-out pattern.\n\ni.e.\n  if (!rect_size.IsEmpty())\n    return rect_size;\n  ...\n  return rect_size;",
+      "range": {
+        "startLine": 380,
+        "startChar": 6,
+        "endLine": 380,
+        "endChar": 30
+      },
+      "revId": "c015eb2f06a3ba19069e280bc93d0d5500fde47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
