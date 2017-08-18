@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b4ae892b_b2cb457e",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-18T16:56:40Z",
+      "side": 1,
+      "message": "Not sure which particular problem, but IMHO GetLastCommittedURL() is correct, exactly for the reasons which you already explained in the .h file.\n\nI would perhaps add that setting window.location.hash or calling history.pushState() may bring you to a different URL than the one which opened the popup, but certainly on the same origin. That\u0027s what matters for permissions (I didn\u0027t read much of the code, but I assume this URL is checked against the content setting?).",
+      "parentUuid": "f4d6d0c0_c8820888",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9508f56c_7257a467",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
