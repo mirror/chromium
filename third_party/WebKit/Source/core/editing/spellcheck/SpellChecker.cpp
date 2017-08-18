@@ -502,7 +502,9 @@ void SpellChecker::MarkMisspellingsAfterReplaceSelectionCommand(
   if (inserted_range.IsNull())
     return;
 
-  Node* node = cmd.EndingVisibleSelection().RootEditableElement();
+  DCHECK(!GetFrame().GetDocument()->NeedsLayoutTreeUpdate());
+  Node* node = RootEditableElementOf(cmd.EndingSelection().Base());
+
   if (!node)
     return;
 
