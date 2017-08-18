@@ -52,6 +52,24 @@
       "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55cf195_8fb59751",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-18T16:36:45Z",
+      "side": 1,
+      "message": "I see, thanks for explaining. Yes, I don\u0027t think we change the browse windows opacity and the captions should not have a hierarchy of layers - it should only use a layer for the view that contains the caption and the close button.",
+      "parentUuid": "e90783fe_c8e34f17",
+      "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
