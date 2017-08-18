@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d004691d_e9d9f568",
+        "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "I remember you mentioning this, do we have any tests that verify that this works as expected?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 31
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880a4723_e1b60948",
+        "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "This section has incorrect indents after your change.\n\nhttp://screen/JdWCE2FtQOT",
+      "range": {
+        "startLine": 144,
+        "startChar": 14,
+        "endLine": 144,
+        "endChar": 37
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae27c1d_ff632a1a",
+        "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "nit indent +1",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 59
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8070a5c3_cbc47212",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "nit: indent is off",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 71
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd19622_6e92b1f2",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "This toggle overflows to the next line.\n\nhttp://screen/OvJzuGnzQZr",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f067027_5d73a8a5",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "aria-labelledby no longer necessary",
+      "range": {
+        "startLine": 217,
+        "startChar": 10,
+        "endLine": 217,
+        "endChar": 43
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a53d45_7a655643",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "nit: indent",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 54
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114cf834_575a9c73",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "This line is 83 chars long... Not sure how we can shorten it. This is fine since it was at 85 chars before, so it\u0027s 2 chars better. ¯\\_(ツ)_/¯",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 83
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17be149a_9626ae9c",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-18T21:16:40Z",
+      "side": 1,
+      "message": "nit: indent",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "5c6173002941c2a879f925c822049aa863291757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
