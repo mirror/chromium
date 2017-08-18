@@ -388,6 +388,12 @@ void OfflinePageModelImpl::SavePage(
   create_archive_params.remove_popup_overlay = save_page_params.is_background;
   create_archive_params.use_page_problem_detectors =
       save_page_params.use_page_problem_detectors;
+  // For temporary pages, the file names will be random GUIDs. For
+  // user-requested ones, the names will consist of hostname and title.
+  if (policy_controller_->IsRemovedOnCacheReset(
+          save_page_params.client_id.name_space)) {
+    create_archive_params.use_random_guid_names = true;
+  }
   archiver->CreateArchive(
       archives_dir_, create_archive_params,
       base::Bind(&OfflinePageModelImpl::OnCreateArchiveDone,

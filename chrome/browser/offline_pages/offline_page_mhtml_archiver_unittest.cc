@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -122,6 +123,7 @@ class OfflinePageMHTMLArchiverTest : public testing::Test {
   }
   const base::FilePath& last_file_path() const { return last_file_path_; }
   int64_t last_file_size() const { return last_file_size_; }
+  const base::ScopedTempDir& temp_dir() { return temp_dir_; }
 
   const OfflinePageArchiver::CreateArchiveCallback callback() {
     return base::Bind(&OfflinePageMHTMLArchiverTest::OnCreateArchiveDone,
@@ -141,6 +143,7 @@ class OfflinePageMHTMLArchiverTest : public testing::Test {
   GURL last_url_;
   base::FilePath last_file_path_;
   int64_t last_file_size_;
+  base::ScopedTempDir temp_dir_;
 
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
@@ -155,6 +158,7 @@ OfflinePageMHTMLArchiverTest::OfflinePageMHTMLArchiverTest()
       last_file_size_(0L),
       task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {
+  EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
 }
 
 OfflinePageMHTMLArchiverTest::~OfflinePageMHTMLArchiverTest() {
@@ -265,6 +269,101 @@ TEST_F(OfflinePageMHTMLArchiverTest, SuccessfullyCreateOfflineArchive) {
             last_result());
   EXPECT_EQ(GetTestFilePath(), last_file_path());
   EXPECT_EQ(kTestFileSize, last_file_size());
+}
+
+// Test for the generation of file names.
+TEST_F(OfflinePageMHTMLArchiverTest, GenerateFileName) {
+  base::FilePath archives_dir = temp_dir().GetPath();
+
+  GURL url_1("http://news.google.com/page1");
+  std::string title_1("Google News Page");
+  base::FilePath expected_1(
+      FILE_PATH_LITERAL("news.google.com-Google_News_Page.mhtml"));
+  base::FilePath actual_1(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1, title_1));
+  EXPECT_EQ(0, base::WriteFile(actual_1, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_1), actual_1);
+
+  // Adding same file again should introduce suffices "(1)".
+  base::FilePath expected_1_dup1(
+      FILE_PATH_LITERAL("news.google.com-Google_News_Page (1).mhtml"));
+  base::FilePath actual_1_dup1(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1, title_1));
+  EXPECT_EQ(0, base::WriteFile(actual_1_dup1, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_1_dup1), actual_1_dup1);
+
+  // Adding same file again should introduce suffices "(2)".
+  base::FilePath expected_1_dup2(
+      FILE_PATH_LITERAL("news.google.com-Google_News_Page (2).mhtml"));
+  base::FilePath actual_1_dup2(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1, title_1));
+  EXPECT_EQ(0, base::WriteFile(actual_1_dup2, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_1_dup2), actual_1_dup2);
+
+  // Try another url and title.
+  GURL url_2("https://en.m.wikipedia.org/Sample_page_about_stuff");
+  std::string title_2("Some Wiki Page");
+  base::FilePath expected_2(
+      FILE_PATH_LITERAL("en.m.wikipedia.org-Some_Wiki_Page.mhtml"));
+  base::FilePath actual_2(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_2, title_2));
+  EXPECT_EQ(0, base::WriteFile(actual_2, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_2), actual_2);
+
+  // Try a long title.
+  GURL url_3("https://www.google.com/search");
+  std::string title_3 =
+      "A really really really really long long^ - TRUNCATE THIS PART ";
+  std::string expected_title_3_part =
+      "A_really_really_really_really_long_long^";
+  base::FilePath expected_3(
+      FILE_PATH_LITERAL("www.google.com-" + expected_title_3_part + ".mhtml"));
+  base::FilePath actual_3(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_3, title_3));
+  EXPECT_EQ(0, base::WriteFile(actual_3, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_3), actual_3);
+
+  // Try the long title again, to see suffix.
+  base::FilePath expected_3_dup(FILE_PATH_LITERAL(
+      "www.google.com-" + expected_title_3_part + " (1).mhtml"));
+  base::FilePath actual_3_dup(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_3, title_3));
+  EXPECT_EQ(0, base::WriteFile(actual_3_dup, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_3_dup), actual_3_dup);
+}
+
+TEST_F(OfflinePageMHTMLArchiverTest, GenerateFileNameExceedingLimit) {
+  base::FilePath archives_dir = temp_dir().GetPath();
+
+  GURL url_1("http://news.google.com/page1");
+  std::string title_1("Google News Page");
+  base::FilePath expected_1(
+      FILE_PATH_LITERAL("news.google.com-Google_News_Page.mhtml"));
+  base::FilePath actual_1(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1, title_1));
+  EXPECT_EQ(0, base::WriteFile(actual_1, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_1), actual_1);
+
+  // Adding same file again should introduce suffices "(1)".
+  base::FilePath expected_1_dup1(
+      FILE_PATH_LITERAL("news.google.com-Google_News_Page (1).mhtml"));
+  base::FilePath actual_1_dup1(
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1, title_1));
+  EXPECT_EQ(0, base::WriteFile(actual_1_dup1, NULL, 0));
+  EXPECT_EQ(archives_dir.Append(expected_1_dup1), actual_1_dup1);
+
+  // The last available suffix of the file names is (99).
+  base::FilePath file_path;
+  for (int i = 2; i < 100; i++) {
+    file_path = OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1,
+                                                           title_1);
+    EXPECT_EQ(0, base::WriteFile(file_path, NULL, 0));
+    EXPECT_FALSE(file_path.empty());
+    EXPECT_TRUE(file_path.value().find(std::to_string(i)) != std::string::npos);
+  }
+  file_path =
+      OfflinePageMHTMLArchiver::GenerateFileName(archives_dir, url_1, title_1);
+  EXPECT_TRUE(file_path.empty());
 }
 
 }  // namespace offline_pages
