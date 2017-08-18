@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12a45da3_16abced0",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-18T15:40:21Z",
+      "side": 1,
+      "message": "Shouldn\u0027t aw_renderer_priority.h be there?",
+      "range": {
+        "startLine": 503,
+        "startChar": 13,
+        "endLine": 503,
+        "endChar": 46
+      },
+      "revId": "1f1855342e2aff506028e41e0e59ae25201741e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f41cb4a_efff8258",
+        "filename": "android_webview/browser/aw_renderer_priority.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-18T15:40:21Z",
+      "side": 1,
+      "message": "Nit: s/ANDROID_WEBVIEW_BROWSER_AW_RENDERER_PRIORITY_MANAGER_H_/ANDROID_WEBVIEW_BROWSER_AW_RENDERER_PRIORITY_H_/",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "1f1855342e2aff506028e41e0e59ae25201741e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89465fd_7e48e62a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-18T15:40:21Z",
+      "side": 1,
+      "message": "I missed the previous CLs so sorry I may be missing context, but why isn\u0027t the BindingManager dealing with this?\nSo now both the CPLH and the BindingManager manage the bindings?",
+      "range": {
+        "startLine": 477,
+        "startChar": 31,
+        "endLine": 477,
+        "endChar": 49
+      },
+      "revId": "1f1855342e2aff506028e41e0e59ae25201741e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
