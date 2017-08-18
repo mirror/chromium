@@ -117,7 +117,7 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
 
   // Shows an Autofill-style popup with an option to go to settings and check
   // all saved passwords.
-  void ShowManualFallbackSuggestion(const blink::WebInputElement& element);
+  bool ShowManualFallbackSuggestion(const blink::WebInputElement& element);
 
   // Called when new form controls are inserted.
   void OnDynamicFormsSeen();
