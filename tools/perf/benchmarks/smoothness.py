@@ -235,7 +235,10 @@ class SmoothnessKeyMobileSites(_Smoothness):
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing.
+        self.DisableStory(
+            'http://digg.com',
+            [story_module.expectations.ALL_ANDROID],
+            'crbug.com/756119')
     return StoryExpectations()
 
 
@@ -416,7 +419,10 @@ class SmoothnessSyncScrollKeyMobileSites(_Smoothness):
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing.
+        self.DisableStory(
+            'http://digg.com',
+            [story_module.expectations.ALL],
+            'crbug.com/756119')
     return StoryExpectations()
 
 
@@ -456,7 +462,7 @@ class SmoothnessToughPinchZoomCases(_Smoothness):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
         self.DisableStory('https://www.google.com/#hl=en&q=barack+obama',
-                          [story_module.expectations.ALL_ANDROID,
+                          [story_module.expectations.ALL,
                           story_module.expectations.ALL_WIN],
                           'crbug.com/631015')
         self.DisableStory('https://mail.google.com/mail/',
