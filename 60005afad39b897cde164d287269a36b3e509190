@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64bb9299_71463bab",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-18T02:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c330ce6_e6fe71a7",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a999b0_8fd59cc5",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "60005afad39b897cde164d287269a36b3e509190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e31f88_2a164f34",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-18T02:15:12Z",
+      "side": 1,
+      "message": "Thanks this is nice. Done!",
+      "parentUuid": "31a999b0_8fd59cc5",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d2ca31f5_3a70f89e",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-18T02:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1871e4f0_6604eb15",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1eb760_42a375d4",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "90443361_0078fbf9",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-18T02:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba1eb760_42a375d4",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2127f45_76ce01e7",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "60005afad39b897cde164d287269a36b3e509190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b203aec_e6475a5c",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-18T02:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2127f45_76ce01e7",
+      "revId": "60005afad39b897cde164d287269a36b3e509190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
