@@ -70,6 +70,24 @@
       "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df39f837_cee18fe6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-18T02:57:23Z",
+      "side": 1,
+      "message": "I am not sure I understand correctly, but if we resolve promise after setting state to \u0027activating\u0027, will the following case cause deadlock?\naddEventListener(\u0027install\u0027, () \u003d\u003e event.waitUntil(skipWaiting()));",
+      "parentUuid": "9f36d6d2_e46cfc17",
+      "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
