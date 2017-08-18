@@ -25,6 +25,15 @@ const base::Feature kDropSyncCredential = {"drop-sync-credential",
 const base::Feature kEnableManualFallbacksFilling = {
     "EnableManualFallbacksFilling", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enable that an omnibox icon is shown when the user types into a password
+// field. When the user clicks on the icon, a password save/update bubble is
+// shown.
+const base::Feature kEnableManualSaving = {
+    "EnableManualSaving",
+    // TODO: Remove this if all tests pass while the feature is disabled.
+    base::FEATURE_DISABLED_BY_DEFAULT};
+//                                           base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Enable a context menu item in the password field that allows the user
 // to manually enforce saving of their password.
 const base::Feature kEnablePasswordForceSaving = {
