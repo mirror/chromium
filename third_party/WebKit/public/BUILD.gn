@@ -909,6 +909,7 @@ group("generate_mojo_bindings") {
 # dependencies.
 mojom("web_feature_mojo_bindings") {
   sources = [
+    "platform/web_client_hints_types.mojom",
     "platform/web_feature.mojom",
   ]
 }
@@ -919,6 +920,7 @@ mojom("web_feature_mojo_bindings") {
 source_set("shared_typemap_traits") {
   visibility = [ ":*" ]
   sources = [
+    "platform/ClientHintsTypesTraits.h",
     "web/ConsoleMessageStructTraits.cpp",
     "web/ConsoleMessageStructTraits.h",
   ]
