@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32ac7fa_13dab137",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-18T18:41:34Z",
+      "side": 1,
+      "message": "Is there any chance the loader_job needs to access its handler_ data member prior to getting here? Just checking.",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ad31fa_caed375f",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-18T18:41:34Z",
+      "side": 1,
+      "message": "what if the it returns nullptr, should we call NotifyError?",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d27f41d_04f1331b",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-18T18:41:34Z",
+      "side": 1,
+      "message": "I wish these wern\u0027t here but this can be taken care of later when utilizing mocks for the handler unittests.",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8423f607_06622928",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-18T18:41:34Z",
+      "side": 1,
+      "message": "we could setup the subresource_load_info_, binding_, client_, etc right here",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a5be8f_fc4ba667",
+        "filename": "content/browser/appcache/appcache_url_loader_job.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-18T18:41:34Z",
+      "side": 1,
+      "message": "could this method either be private or hoisted into the ctor?",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c966136_78a5679f",
+        "filename": "content/browser/appcache/appcache_url_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-18T18:41:34Z",
+      "side": 1,
+      "message": "is this include needed?",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
