@@ -16,6 +16,7 @@
 namespace blink {
 
 using Corner = ScrollAnchor::Corner;
+using SerializedAnchor = ScrollAnchor::SerializedAnchor;
 
 ScrollAnchor::ScrollAnchor()
     : anchor_object_(nullptr),
@@ -320,6 +321,19 @@ void ScrollAnchor::Adjust() {
   adjusted_offset_histogram.Count(1);
   UseCounter::Count(ScrollerLayoutBox(scroller_)->GetDocument(),
                     WebFeature::kScrollAnchored);
+}
+
+bool ScrollAnchor::RestoreAnchor(Document* document,
+                                 const SerializedAnchor serialized_anchor) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+const SerializedAnchor ScrollAnchor::SerializeAnchor() {
+  // todo(pnoland): When implementing, limit the length of the serialized
+  // anchor's selector to some constant.
+  NOTIMPLEMENTED();
+  return SerializedAnchor("", LayoutPoint());
 }
 
 void ScrollAnchor::ClearSelf() {
