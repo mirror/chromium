@@ -1036,7 +1036,11 @@ void PrintRenderFrameHelper::ScriptedPrint(bool user_initiated) {
 #endif
   } else {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
+    web_frame->DispatchBeforePrintEvent();
+    if (!web_frame->View())
+      return;
     Print(web_frame, blink::WebNode(), true /* is_scripted? */);
+    web_frame->DispatchAfterPrintEvent();
 #endif
   }
   // WARNING: |this| may be gone at this point. Do not do any more work here and
@@ -1066,6 +1070,8 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PrintMsg_InitiatePrintPreview, OnInitiatePrintPreview)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintPreview, OnPrintPreview)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintingDone, OnPrintingDone)
+    IPC_MESSAGE_HANDLER(PrintMsg_ClosePrintPreviewDialog,
+                        OnClosePrintPreviewDialog)
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
     IPC_MESSAGE_HANDLER(PrintMsg_SetPrintingEnabled, OnSetPrintingEnabled)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -1091,11 +1097,15 @@ void PrintRenderFrameHelper::OnPrintPages() {
     return;
 
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+  frame->DispatchBeforePrintEvent();
+  if (!frame->View())
+    return;
 
   // If we are printing a PDF extension frame, find the plugin node and print
   // that instead.
   auto plugin = delegate_->GetPdfElement(frame);
   Print(frame, plugin, false /* is_scripted? */);
+  frame->DispatchAfterPrintEvent();
   // WARNING: |this| may be gone at this point. Do not do any more work here and
   // just return.
 }
@@ -1109,6 +1119,7 @@ void PrintRenderFrameHelper::OnPrintForSystemDialog() {
     return;
   }
   Print(frame, print_preview_context_.source_node(), false);
+  frame->DispatchAfterPrintEvent();
   // WARNING: |this| may be gone at this point. Do not do any more work here and
   // just return.
 }
@@ -1483,6 +1494,10 @@ void PrintRenderFrameHelper::OnInitiatePrintPreview(bool has_selection) {
   RequestPrintPreview(has_selection
                           ? PRINT_PREVIEW_USER_INITIATED_SELECTION
                           : PRINT_PREVIEW_USER_INITIATED_ENTIRE_FRAME);
+}
+
+void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
+  print_preview_context_.source_frame()->DispatchAfterPrintEvent();
 }
 #endif
 
@@ -2025,6 +2040,9 @@ void PrintRenderFrameHelper::ShowScriptedPrintPreview() {
 }
 
 void PrintRenderFrameHelper::RequestPrintPreview(PrintPreviewRequestType type) {
+  print_preview_context_.source_frame()->DispatchBeforePrintEvent();
+  if (!print_preview_context_.source_frame()->View())
+    return;
   const bool is_modifiable = print_preview_context_.IsModifiable();
   const bool has_selection = print_preview_context_.HasSelection();
   PrintHostMsg_RequestPrintPreview_Params params;

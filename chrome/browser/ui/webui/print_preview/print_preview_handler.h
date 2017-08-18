@@ -275,7 +275,13 @@ class PrintPreviewHandler
   content::WebContents* GetInitiator() const;
 
   // Closes the preview dialog.
+  void ClosePreviewDialogBySwitchToSystemDialog();
+
+  // Closes the preview dialog, and notify it.
   void ClosePreviewDialog();
+
+  // Notify that this preview dialog is closed.
+  void NotifyClosePreviewDialog();
 
   // Adds all the recorded stats taken so far to histogram counts.
   void ReportStats();
