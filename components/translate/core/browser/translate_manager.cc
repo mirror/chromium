@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -72,6 +73,9 @@ const char kInitiateTranslationULPConfidenceThresholdName[] =
     "initiate_translation_ulp_confidence_threshold";
 const char kInitiateTranslationULPProbabilityThresholdName[] =
     "initiate_translation_ulp_probability_threshold";
+
+// Name for uma histograms.
+const char kUMATranslateEvent[] = "Translate.Event";
 
 // Constants for considering ULP. These built-in constatants of default will be
 // override by the value in config params if present.
@@ -581,6 +585,11 @@ void TranslateManager::InitTranslateEvent(const std::string& src_lang,
 }
 
 void TranslateManager::RecordTranslateEvent(int event_type) {
+  // Log translate event to uma.
+  UMA_HISTOGRAM_ENUMERATION(
+      kUMATranslateEvent,
+      static_cast<metrics::TranslateEventProto::EventType>(event_type),
+      metrics::TranslateEventProto::EVENT_TYPE_MAX);
   translate_ranker_->RecordTranslateEvent(
       event_type, translate_driver_->GetVisibleURL(), translate_event_.get());
   translate_client_->RecordTranslateEvent(*translate_event_.get());

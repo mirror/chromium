@@ -144,6 +144,8 @@ message TranslateEventProto {
     // Failed to initialize the translate script, this can happen for iOS due
     // to CSPs.
     INITIALIZATION_ERROR = 27;
+    // Max event type.
+    EVENT_TYPE_MAX = 1000;
   }
 
   // Event received from translate UI.
