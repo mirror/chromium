@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "979c9c09_0e784696",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T21:16:07Z",
+      "side": 1,
+      "message": "Is it better to also add the NORMAL priority requirement as well?",
+      "revId": "28d7667d3943a157b5b6b70c72ddee077941b280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
