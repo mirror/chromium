@@ -139,6 +139,24 @@
     },
     {
       "key": {
+        "uuid": "b7a3102b_e2f4b501",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:01:46Z",
+      "side": 1,
+      "message": "You can declare the constant definition (in the .cc) as constexpr, while leaving it as const here.\n\nIIRC, the sizes step on the waterfall should catch this if it regresses.",
+      "parentUuid": "fdd3718a_b083bd8a",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980b19c1_0bfbc06b",
         "filename": "media/blink/video_decode_stats_reporter.h",
         "patchSetId": 16
@@ -150,6 +168,40 @@
       "writtenOn": "2017-08-17T01:40:28Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4b7d73_44becfe8",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:01:46Z",
+      "side": 1,
+      "message": "Nit: add a brief comment describing this interface (interface for the renderer to send media playback statistics to the browser) or something like that.",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fc1a2b_05e46f4c",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:01:46Z",
+      "side": 1,
+      "message": "I\u0027m curious if we even need this; can the contract just be that closing the message pipe finalizes the record?",
       "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
