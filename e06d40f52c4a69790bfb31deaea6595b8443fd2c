@@ -118,6 +118,30 @@
       "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564276bd_71d39181",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T20:43:50Z",
+      "side": 0,
+      "message": "\u003e But I don\u0027t get the later part \"... you route to ash\u0027s AcceleratorController too.\". Does it mean \"route to ash\u0027s one by ActivationEventHandler\"? Ash\u0027s one is the global one. Other widgets also register their accelerators. It seems that global AcceleratorController behaves differently depending on the tray bubble view is open or not. I don\u0027t think other widgets expect it.\n\nYour EventHandler will be installed before ActivationEventHandler, right? By that I mean you\u0027re going to call PrependPreTargetHandler(), right? Assuming you do, and further if you stop the event from propagating the ash\u0027s ActivationEventHandler won\u0027t get a chance at the event. I think you want ash\u0027s ActivationEventHandler to see the event, right?\n\n\u003e Or how about to simply route events to FocusManager of widget of TrayBubbleView while ActivationEventHandler (different name might be better) is active. We can know when TrayBubbleView is activated by FocusManager with OnWidgetActivationChanged. We can remove the ActivationEventHandler when the view is activated.\n\u003e \n\u003e WDYT?\n\nI agree that you want to route it to the FocusManager too. Seems like you you want simulate the flow we have now:\n. Send to ActivationEventHandler first.\n. If not handled, then send to tray\u0027s focusmanager.\n. Mark handled/stop propagation.",
+      "parentUuid": "f9112614_bf252706",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
