@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c11fbbac_b4754673",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-18T00:50:59Z",
+      "side": 1,
+      "message": "This feature is used for a finch experiment. According to Step 3 in this doc:\nhttps://docs.google.com/document/d/13-1L5Ywt9lURTXv5z4vjkXkM5pNFGJqWdw0t804LRqw/edit#heading\u003dh.a0wgj63i2mcz\n\nA base feature needed.",
+      "parentUuid": "14728ab8_1d3fb953",
+      "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3720f8d8_7455f3d8",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T20:53:18Z",
       "side": 1,
       "message": "Bikeshed: why not \"RuntimeEnabledFeatures::Composite2DAndOpacityAnimations\" and then have the feature enabled by default. Your flag would then be to disable this enabled-by-default feature.",
+      "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2a4c79_0b3451c3",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-18T00:50:59Z",
+      "side": 1,
+      "message": "I was basically following the guidelines from this doc:\nhttps://docs.google.com/document/d/13-1L5Ywt9lURTXv5z4vjkXkM5pNFGJqWdw0t804LRqw/edit#heading\u003dh.a0wgj63i2mcz\n\nThe basic idea is to add a new flag that is disabled by default, and when we launch the experiment, we enable that flag.\n\nIf we change it to Composite2DAndOpacityAnimations, then in the RuntimeEnabledFeatures.json5 file, the status for this will be \"stable\", and IMHO that is a bit confusing for launching an experiment. Does that make sense?",
+      "parentUuid": "3720f8d8_7455f3d8",
       "revId": "80bff571ade0cbee01487b177f93e3684aea343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
