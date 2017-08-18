@@ -455,9 +455,10 @@ class BASE_EXPORT FilePath {
 // This is declared here for use in gtest-based unit tests but is defined in
 // the test_support_base target. Depend on that to use this in your unit test.
 // This should not be used in production code - call ToString() instead.
-void PrintTo(const FilePath& path, std::ostream* out);
+void BASE_EXPORT PrintTo(const FilePath& path, std::ostream* out);
 
-std::ostream& operator<<(std::ostream& out, const FilePath& file_path);
+std::ostream& BASE_EXPORT operator<<(std::ostream& out,
+                                     const FilePath& file_path);
 
 }  // namespace base
 
