@@ -45,7 +45,9 @@ class NavigationURLLoaderNetworkService : public NavigationURLLoader {
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& head);
   void OnStartLoadingResponseBody(mojo::ScopedDataPipeConsumerHandle body);
-  void OnComplete(const ResourceRequestCompletionStatus& completion_status);
+  void OnComplete(const ResourceRequestCompletionStatus& completion_status,
+                  base::Optional<net::SSLInfo> ssl_info,
+                  base::Optional<bool> fatal_cert_error);
 
  private:
   class URLLoaderRequestController;

@@ -10,11 +10,13 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "content/browser/loader/navigation_url_loader.h"
 
 namespace net {
 struct RedirectInfo;
+class SSLInfo;
 }
 
 namespace content {
@@ -61,7 +63,13 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
                              bool is_stream);
 
   // Notifies the delegate the request failed to return a response.
-  void NotifyRequestFailed(bool in_cache, int net_error);
+  // |ssl_info| and |fatal_cert_error| should have values if net_error is a
+  // certificate error, and be null otherwise. |fatal_cert_error| indicates if
+  // the certificate error is fatal.
+  void NotifyRequestFailed(bool in_cache,
+                           int net_error,
+                           base::Optional<net::SSLInfo> ssl_info,
+                           base::Optional<bool> fatal_cert_error);
 
   // Notifies the delegate the begin navigation request was handled and a
   // potential first network request is about to be made.

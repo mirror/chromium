@@ -66,6 +66,10 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       bool is_stream,
       mojom::URLLoaderFactoryPtrInfo loader_factory_ptr_info) override;
   void OnRequestFailed(bool in_cache, int net_error) override;
+  void OnRequestFailedWithCertificateError(bool in_cache,
+                                           int net_error,
+                                           net::SSLInfo ssl_info,
+                                           bool fatal) override;
   void OnRequestStarted(base::TimeTicks timestamp) override;
 
  private:
