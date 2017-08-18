@@ -46,6 +46,30 @@
       "revId": "a203bb3107410fdb217166bfe539a02f4982b379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9627d1d_be09b98f",
+        "filename": "ui/shell_dialogs/select_file_dialog_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-18T18:07:25Z",
+      "side": 1,
+      "message": "Actually, I\u0027m leaning more towards nullptr, since this method isn\u0027t even necessary to link without is_component_mode\u003dtrue, so hopefully that means we don\u0027t end up calling it in release builds.\n\n(Hopefully a null will make it relatively obvious if/when we do someday.)",
+      "parentUuid": "25659156_5e936ee7",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "a203bb3107410fdb217166bfe539a02f4982b379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
