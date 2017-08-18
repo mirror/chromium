@@ -42,6 +42,8 @@
   if (self.started) {
     return;
   }
+  [self.parentCoordinator childCoordinatorWillStart:self];
+  [self willStart];
   self.started = YES;
   [self.parentCoordinator childCoordinatorDidStart:self];
 }
@@ -147,6 +149,14 @@
 }
 
 - (void)willBeRemovedFromParentCoordinator {
+  // Default implementation is a no-op.
+}
+
+- (void)willStart {
+  // Default implementation is a no-op.
+}
+
+- (void)childCoordinatorWillStart:(BrowserCoordinator*)childCoordinator {
   // Default implementation is a no-op.
 }
 
