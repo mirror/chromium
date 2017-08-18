@@ -46,7 +46,11 @@ void TabSocketTest::OnExecutionContextCreated(
   bool is_main_world;
   if (params.GetContext()->HasAuxData() &&
       params.GetContext()->GetAuxData()->GetAsDictionary(&dictionary)) {
-    if (dictionary->GetBoolean("isDefault", &is_main_world) && !is_main_world) {
+    std::string world_type;
+    if ((dictionary->GetBoolean("isDefault", &is_main_world) &&
+         !is_main_world) ||
+        (dictionary->GetString("type", &world_type) &&
+         world_type != "default")) {
       world_name_to_v8_execution_context_id_[params.GetContext()->GetName()] =
           params.GetContext()->GetId();
     }

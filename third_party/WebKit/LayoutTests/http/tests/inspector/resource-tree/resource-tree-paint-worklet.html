@@ -1,0 +1,44 @@
+<html>
+<head>
+<script src="../inspector-test.js"></script>
+<script src="../resources-test.js"></script>
+<script src="resource-tree-test.js"></script>
+<script>
+var uiSourceCodes = [];
+async function addUISourceCode(url)
+{
+    TestRunner.addScriptForFrame(url, '', TestRunner.mainFrame());
+    var uiSourceCode = await waitForUISourceCodeAdded(url);
+    uiSourceCodes.push(uiSourceCode);
+}
+
+function waitForUISourceCodeAdded(url) {
+    var fulfill;
+    var promise = new Promise(x => fulfill = x);
+    Workspace.workspace.addEventListener(Workspace.Workspace.Events.UISourceCodeAdded, uiSourceCodeAdded);
+    return promise;
+
+    function uiSourceCodeAdded(event)
+    {
+        if (event.data.url() !== url)
+            return;
+        Workspace.workspace.removeEventListener(Workspace.Workspace.Events.UISourceCodeAdded, uiSourceCodeAdded);
+        fulfill(event.data);
+    }
+}
+
+function test()
+{
+    var pageURL = "resources/paint-worklet-testpage.html";
+    addUISourceCode(pageURL);
+    TestRunner.addResult("Resources Tree:");
+    ApplicationTestRunner.dumpResourcesTree();
+    TestRunner.completeTest();
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests resources panel shows several resources with the same url if they were loaded with inspector already opened.</p>
+</body>
+</html>
+

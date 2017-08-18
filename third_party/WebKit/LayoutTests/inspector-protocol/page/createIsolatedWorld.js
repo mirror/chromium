@@ -5,7 +5,8 @@
   dp.Runtime.onExecutionContextCreated(message => {
     if (message.params.context.auxData.frameId !== mainFrameId)
       return;
-    if (message.params.context.auxData.isDefault === false &&
+    if ((message.params.context.auxData.isDefault === false ||
+         message.params.context.auxData['type'] === 'isolated') &&
         message.params.context.name === 'Test world') {
       reportedExecutionContextId = message.params.context.id;
     } else {
