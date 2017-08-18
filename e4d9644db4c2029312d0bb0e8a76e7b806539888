@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "fc9cde3d_13ccdb35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:09:06Z",
+      "side": 1,
+      "message": "Nit: GPU",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924defb3_134eecad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:09:06Z",
+      "side": 1,
+      "message": "Nit: \"need\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 24,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3306c20a_db8e6889",
         "filename": "content/common/BUILD.gn",
         "patchSetId": 3
@@ -22,6 +68,29 @@
       "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fc4ce18_f8c39389",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:09:06Z",
+      "side": 1,
+      "message": "Are you sure you need all these includes? Were these copied from another file?\n\nE.g. I don\u0027t see use of Bind anywhere?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -111,6 +180,52 @@
     },
     {
       "key": {
+        "uuid": "a1c88ec6_3c275fc7",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:09:06Z",
+      "side": 1,
+      "message": "Nit: end with period.",
+      "range": {
+        "startLine": 146,
+        "startChar": 34,
+        "endLine": 146,
+        "endChar": 43
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fcfb7f_c72a64d0",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:09:06Z",
+      "side": 1,
+      "message": "We haven\u0027t been doing this on the other GPU sandbox cases but can you check the result of dlopen here? It will help with debugging.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 56
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f80acc1_39358dbd",
         "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
         "patchSetId": 3
@@ -131,6 +246,29 @@
       "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "798afc37_2e0163cf",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-18T19:09:06Z",
+      "side": 1,
+      "message": "Is the __amd64__ define only defined with AMD CPUs? How does that work, since it\u0027s a build-time setting?\n\nI don\u0027t think this does what you think it does.",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
