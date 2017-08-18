@@ -17,6 +17,7 @@
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
+#import "ios/clean/chrome/browser/experiment_support.h"
 #import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
@@ -27,6 +28,7 @@
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service_observer_bridge.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_coordinator.h"
+#import "ios/clean/chrome/browser/ui/tab/tab_strip_tab_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_mediator.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_coordinator.h"
@@ -203,7 +205,7 @@
   // on its own.
   [self.activeTabCoordinator stop];
   [self removeChildCoordinator:self.activeTabCoordinator];
-  TabCoordinator* tabCoordinator = [[TabCoordinator alloc] init];
+  TabCoordinator* tabCoordinator = [self newTabCoordinator];
   self.activeTabCoordinator = tabCoordinator;
   tabCoordinator.webState = self.webStateList.GetWebStateAt(index);
   tabCoordinator.presentationKey =
@@ -324,6 +326,16 @@
       stopDispatchingForSelector:@selector(showToolsMenu)];
   [self.browser->dispatcher()
       stopDispatchingForSelector:@selector(closeToolsMenu)];
+}
+
+#pragma mark - Experiment support
+
+// Creates and returns a tab coordinator based on experimental settings.
+- (TabCoordinator*)newTabCoordinator {
+  if (experiment_support::IsTapStripEnabled()) {
+    return [[TabStripTabCoordinator alloc] init];
+  }
+  return [[TabCoordinator alloc] init];
 }
 
 @end
