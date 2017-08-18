@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3306c20a_db8e6889",
+        "filename": "content/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-08-18T18:31:07Z",
+      "side": 1,
+      "message": "alphabetize",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 542,
+        "endChar": 56
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4f03f26_fc0ae208",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-08-18T18:31:07Z",
+      "side": 1,
+      "message": "Please format like the list on line 60 and alphabetize the paths.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 61
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc07b7ac_0f255740",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-08-18T18:31:07Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t match the code.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 18
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d5b347c_e9e59f5f",
         "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
         "patchSetId": 3
@@ -13,6 +82,52 @@
       "writtenOn": "2017-08-18T17:22:09Z",
       "side": 1,
       "message": "I maybe missing something ... should __NR_access and __NR_open be in place considering __aarch64__ will not be defined in this case?",
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2db7f32_c834897a",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-08-18T18:31:07Z",
+      "side": 1,
+      "message": "alphabetize these",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f80acc1_39358dbd",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-08-18T18:31:07Z",
+      "side": 1,
+      "message": "alphabetize.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 71
+      },
       "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
