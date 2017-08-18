@@ -16,6 +16,70 @@
       "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710fe06d_deb7b6d4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-18T04:11:42Z",
+      "side": 1,
+      "message": "Why do you need this method? We can just use the public method for this, and move this code into the public method.",
+      "parentUuid": "134c8a38_c194b3e8",
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec841d8b_c3c342cf",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-18T04:11:42Z",
+      "side": 1,
+      "message": "Please ensure that this context bar does not overlap the uitableview, by adding multiple rows to the table to go beyond the screen size.",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 48
+      },
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277ca6c2_bae55bd6",
+        "filename": "ios/chrome/browser/ui/history/clear_browsing_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-18T04:11:42Z",
+      "side": 1,
+      "message": "revert this file?",
+      "range": {
+        "startLine": 113,
+        "startChar": 12,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
