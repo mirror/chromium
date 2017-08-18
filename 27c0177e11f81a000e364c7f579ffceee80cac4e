@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cea00c3_4eb4adb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-18T01:53:36Z",
+      "side": 1,
+      "message": "Does this block apply to both mPwaLayout and mShortcutTitleInput? I am unsure if mPwaLayout has a background drawable.",
+      "revId": "27c0177e11f81a000e364c7f579ffceee80cac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec7602d_80ddcf5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-18T01:53:36Z",
+      "side": 1,
+      "message": "If the page is WebAPK-compatible and the WebAPK install fails, won\u0027t we end up with a homescreen shortcut with an empty title?",
+      "revId": "27c0177e11f81a000e364c7f579ffceee80cac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40492804_3f1c6289",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-18T01:53:36Z",
+      "side": 1,
+      "message": "Is setting the field as enabled necessary?",
+      "range": {
+        "startLine": 156,
+        "startChar": 49,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "27c0177e11f81a000e364c7f579ffceee80cac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
