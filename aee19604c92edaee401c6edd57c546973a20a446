@@ -393,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "07a2fd53_a0002487",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2582,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-18T21:47:23Z",
+      "side": 0,
+      "message": "This is to protect about static initializers, right? I\u0027m not sure but it still might be useful to have a presubmit to catch this right?",
+      "parentUuid": "74e98b15_f871074a",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1352c0d8_db095bb5",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
