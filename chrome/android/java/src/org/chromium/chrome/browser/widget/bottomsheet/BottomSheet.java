@@ -1391,7 +1391,7 @@ public class BottomSheet
      * @param state The current state of the sheet.
      */
     private void setInternalCurrentState(@SheetState int state) {
-        if (state == mCurrentState) return;
+        if (state == mCurrentState || state == SHEET_STATE_NONE) return;
         mCurrentState = state;
 
         for (BottomSheetObserver o : mObservers) {
