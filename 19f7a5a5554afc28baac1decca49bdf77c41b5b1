@@ -67,6 +67,23 @@
       "revId": "19f7a5a5554afc28baac1decca49bdf77c41b5b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293e67d2_04a0fc6d",
+        "filename": "content/common/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-18T18:59:14Z",
+      "side": 1,
+      "message": "Why is a deps change needed to content, if you\u0027re not editing content?",
+      "revId": "19f7a5a5554afc28baac1decca49bdf77c41b5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
