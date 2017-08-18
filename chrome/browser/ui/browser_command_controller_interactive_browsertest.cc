@@ -316,27 +316,26 @@ void BrowserCommandControllerInteractiveTest::
   const int initial_active_index = GetActiveTabIndex();
   const int initial_tab_count = GetTabCount();
   const size_t initial_browser_count = GetBrowserCount();
-  const auto enter_fullscreen = [this, js_fullscreen]() {
+  const auto enter_fullscreen = [this, js_fullscreen] () {
     ASSERT_TRUE(ui_test_utils::BringBrowserWindowToFront(
         this->GetActiveBrowser()));
     if (js_fullscreen) {
       if (!this->IsActiveTabFullscreen()) {
-        const std::string page =
-            "<html><head><script>"
+        static const std::string page =
+            "<html><head></head><body></body><script>"
             "document.addEventListener('keydown', "
-            "    () => { document.body.webkitRequestFullscreen(); });"
-            "</script></head><body></body></html>";
+            "    (e) => {"
+            "      if (e.code == 'KeyS') { "
+            "        document.body.webkitRequestFullscreen();"
+            "      }"
+            "    });"
+            "</script></html>";
         ui_test_utils::NavigateToURLWithDisposition(
             this->GetActiveBrowser(),
             GURL("data:text/html," + page),
             WindowOpenDisposition::CURRENT_TAB,
             ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
-        content::WindowedNotificationObserver observer(
-            chrome::NOTIFICATION_FULLSCREEN_CHANGED,
-            content::NotificationService::AllSources());
         ASSERT_NO_FATAL_FAILURE(this->SendJsFullscreenShortcutAndWait());
-        observer.Wait();
-        ASSERT_TRUE(this->IsActiveTabFullscreen());
       }
     } else {
       if (!this->IsInBrowserFullscreen()) {
@@ -569,4 +568,5 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerInteractiveTest,
                        MAYBE_ShortcutsShouldTakeEffectInJsFullscreen) {
   ASSERT_NO_FATAL_FAILURE(SendShortcutsAndExpectNotPrevented(true));
 }
+
 #endif
