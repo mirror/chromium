@@ -1,0 +1,55 @@
+rootWebArea
+++grid
+++++row selectable
+++++++cell selectable name='A1'
+++++++++staticText name='A1'
+++++++++++inlineTextBox name='A1'
+++++++cell selectable name='A2'
+++++++++staticText name='A2'
+++++++++++inlineTextBox name='A2'
+++++row selectable
+++++++cell selectable name='B1'
+++++++++staticText name='B1'
+++++++++++inlineTextBox name='B1'
+++++++cell selectable name='B2'
+++++++++staticText name='B2'
+++++++++++inlineTextBox name='B2'
+++++column
+++++column
+++++tableHeaderContainer
+++grid
+++++row selectable
+++++++cell selectable name='A1'
+++++++++staticText name='A1'
+++++++++++inlineTextBox name='A1'
+++++++cell selectable name='A2'
+++++++++staticText name='A2'
+++++++++++inlineTextBox name='A2'
+++++row selectable
+++++++cell selectable name='B1'
+++++++++staticText name='B1'
+++++++++++inlineTextBox name='B1'
+++++++cell selectable name='B2'
+++++++++staticText name='B2'
+++++++++++inlineTextBox name='B2'
+++++column
+++++column
+++++tableHeaderContainer
+++grid
+++++row selectable
+++++++cell selectable name='A1'
+++++++++staticText name='A1'
+++++++++++inlineTextBox name='A1'
+++++++cell selectable name='A2'
+++++++++staticText name='A2'
+++++++++++inlineTextBox name='A2'
+++++row selectable
+++++++cell selectable name='B1'
+++++++++staticText name='B1'
+++++++++++inlineTextBox name='B1'
+++++++cell selectable name='B2'
+++++++++staticText name='B2'
+++++++++++inlineTextBox name='B2'
+++++column
+++++column
+++++tableHeaderContainer

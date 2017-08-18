@@ -2,53 +2,70 @@ Tests accessibility values of ignored nodes.
 
 WebArea
   tree
-    *Ignored
+    treeitem "non-hidden treeitem"
+    *GenericContainer
+      text "hidden non-treeitem"
 {
   "nodeId": "<string>",
-  "ignored": true,
-  "ignoredReasons": [
-    {
-      "name": "ancestorDisallowsChild",
-      "value": {
-        "type": "idref",
-        "relatedNodes": [
-          {
-            "nodeResult": "div"
-          }
-        ]
-      }
-    }
-  ],
+  "ignored": false,
   "role": {
     "type": "internalRole",
-    "value": "Ignored"
+    "value": "GenericContainer"
   },
+  "name": {
+    "type": "computedString",
+    "value": "",
+    "sources": [
+      {
+        "type": "relatedElement",
+        "attribute": "aria-labelledby"
+      },
+      {
+        "type": "attribute",
+        "attribute": "aria-label"
+      },
+      {
+        "type": "attribute",
+        "attribute": "title"
+      }
+    ]
+  },
+  "properties": [],
   "domNode": "div"
 }
 
 WebArea
   img
-    *Ignored
 {
   "nodeId": "<string>",
-  "ignored": true,
-  "ignoredReasons": [
-    {
-      "name": "ancestorDisallowsChild",
-      "value": {
-        "type": "idref",
-        "relatedNodes": [
-          {
-            "nodeResult": "div"
-          }
-        ]
-      }
-    }
-  ],
+  "ignored": false,
   "role": {
     "type": "internalRole",
-    "value": "Ignored"
+    "value": "SVGRoot"
   },
+  "name": {
+    "type": "computedString",
+    "value": "",
+    "sources": [
+      {
+        "type": "relatedElement",
+        "attribute": "aria-labelledby"
+      },
+      {
+        "type": "attribute",
+        "attribute": "aria-label"
+      },
+      {
+        "type": "relatedElement",
+        "nativeSource": "title"
+      },
+      {
+        "type": "attribute",
+        "attribute": "title"
+      }
+    ]
+  },
+  "properties": [],
   "domNode": "svg"
 }
 
@@ -504,4 +521,3 @@ WebArea
   },
   "domNode": "button"
 }
-
