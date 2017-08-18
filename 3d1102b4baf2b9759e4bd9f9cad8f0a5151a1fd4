@@ -331,6 +331,30 @@
       "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c6c69d_a3a93821",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:18:54Z",
+      "side": 1,
+      "message": "There are some discussions around whether this is predictable.  Seems like it \"should\" be but maybe isn\u0027t.  Please file a bug about this so we can track this, but to unblock this, we can land this as is for now.",
+      "parentUuid": "ef3a0091_5ff55f9c",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 55
+      },
+      "revId": "3d1102b4baf2b9759e4bd9f9cad8f0a5151a1fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
