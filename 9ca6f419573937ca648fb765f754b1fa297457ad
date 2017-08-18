@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98912868_3b76c6b7",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T14:41:01Z",
+      "side": 1,
+      "message": "Could we update this comment, to make it clear how it\u0027s different for the new one?\n\n// Returns matcher for |text| exactly matching text in the omnibox.",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468adc24_721208d9",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T14:41:01Z",
+      "side": 1,
+      "message": "// Returns matcher for |text| being a substring of the text in the omnibox.",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c79b4bf_74836876",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T14:41:01Z",
+      "side": 1,
+      "message": "Could you move this right below OmniboxText()? ~Line 66.",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c5f006_f52d64a7",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-18T14:41:01Z",
+      "side": 1,
+      "message": "Could we move this next to the OmniboxText implementation?",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
