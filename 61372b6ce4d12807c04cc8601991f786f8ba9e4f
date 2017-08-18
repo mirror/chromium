@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b7e03b_cf4bc7d3",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-18T20:38:35Z",
+      "side": 1,
+      "message": "Add  DCHECK(thread_checker_.CalledOnValidThread());",
+      "range": {
+        "startLine": 1091,
+        "startChar": 49,
+        "endLine": 1091,
+        "endChar": 78
+      },
+      "revId": "61372b6ce4d12807c04cc8601991f786f8ba9e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
