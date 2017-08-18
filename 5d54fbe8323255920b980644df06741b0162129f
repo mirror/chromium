@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "482b58b8_0264bf11",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Done. We don\u0027t use it for tests, so I think is safe to remove.",
+      "parentUuid": "b37b5225_7af765d9",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10b2663e_3f3499a0",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T17:25:38Z",
       "side": 1,
       "message": "Let\u0027s make sure download path is always there in the helper?",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c7a37c_8a5a6175",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure what you mean by this. The default path can only be obtained from the BrowserContext, that\u0027s why this check is here.",
+      "parentUuid": "10b2663e_3f3499a0",
       "revId": "5d54fbe8323255920b980644df06741b0162129f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "49415185_e651df4a",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "DOne. You\u0027re right this is probably not something we want for automated. This is when a request info has a save file path attached, which I imagine is when is setup in the user profile.",
+      "parentUuid": "e29f34ab_25ac075b",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf37100b_4e07543e",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "5d54fbe8323255920b980644df06741b0162129f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87237aad_c1f32d19",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Oops, good catch!",
+      "parentUuid": "cf37100b_4e07543e",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "240dda2d_c90dc07c",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Done. Thinking about this a bit, I\u0027ve made TakeOver the only way to create this instance, that way we ensure that its not possible to create and assign this delegate directly.",
+      "parentUuid": "d4e67d12_5d9ee0a4",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fa841f2_6bd2e1fb",
         "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
         "patchSetId": 19
@@ -115,6 +205,24 @@
       "writtenOn": "2017-08-17T17:25:38Z",
       "side": 1,
       "message": "Just started reviewing this, but it feels like there should be an opposite one that would release the control over the download manager for symmetry. For example, when Page.disable is called.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bddaee4_bd579b03",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Yes, this makes sense if we decide to release control at Page.Disable(), see my comment in page_handler.cc",
+      "parentUuid": "8fa841f2_6bd2e1fb",
       "revId": "5d54fbe8323255920b980644df06741b0162129f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "65194955_e3ccb9ac",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bc362a_e00cd675",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e0de09_a3c371cf",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 19
@@ -149,6 +275,24 @@
       "writtenOn": "2017-08-17T18:57:37Z",
       "side": 1,
       "message": "Ok, so the only thing missing is going back from this state. We want PageHandler::Disable to delete all the helpers from the web contents and we\u0027d also want devtools delegate to release control and redirect manager back to its original delegate.\n\nThe tricky bit is web contents vs browser, single devtools delegate is singleton, we would need to count clients.",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b266f7e_3a95537a",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "I did try this and it worked up to a point. I found a couple of problem though: \n- Sometimes Page.Disable() is called before the download initiates, so I thought it was best ensuring that if Helper data is associated we follow that setup. See code p[1] for an example\n- Also, I founds sometimes Page.Disable() was not called as I expected (but maybe that was bad code on my part), again, to ensure that things are consistent I thing that relying on Helper data was better.\n\nIf you think this is correct behavior then is doable, the devtools delegate still needs to be aware of the GetNextID method of the proxied delegate though, since otherwise download ids are not in sync.\n\n[1] \n\nconst CDP \u003d require(\"chrome-remote-interface\");\n\nasync function getDownload () {\n const protocol \u003d await CDP({port:9222});\n  try {\n    const {Page, Runtime} \u003d protocol;\n    await Page.enable();\n    await protocol.send(\u0027Page.setDownloadBehavior\u0027, {behavior : \"allow\", downloadPath: \"/tmp/download1\"});\n    // await protocol.send(\u0027Page.bringToFront\u0027, {});\n    await Page.navigate({url:\"http://ipv4.download.thinkbroadband.com/5MB.zip\"});\n  } catch (err) {\n    console.error(err);\n  } finally {\n    protocol.close();\n  }\n}\n\ngetDownload().catch((err) \u003d\u003e console.error(err));",
+      "parentUuid": "29e0de09_a3c371cf",
       "revId": "5d54fbe8323255920b980644df06741b0162129f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -169,6 +313,24 @@
       "revId": "5d54fbe8323255920b980644df06741b0162129f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdfc29a_f1e17373",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-18T03:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec578741_a2a6b527",
+      "revId": "5d54fbe8323255920b980644df06741b0162129f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
