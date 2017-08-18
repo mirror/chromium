@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8e913b16_d40b2c99",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T19:10:22Z",
+      "side": 1,
+      "message": "You can use more early returns here without a need for is_enterprise_managed.",
+      "revId": "fb987fef60e27652dab73836251d63650e93fece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abbaa4cb_44a8878a",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 15
@@ -16,6 +33,41 @@
       "revId": "fb987fef60e27652dab73836251d63650e93fece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36c993c8_b88193fb",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T19:10:22Z",
+      "side": 1,
+      "message": "SG.",
+      "parentUuid": "abbaa4cb_44a8878a",
+      "revId": "fb987fef60e27652dab73836251d63650e93fece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8847a64_30529056",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-18T19:10:22Z",
+      "side": 1,
+      "message": "You can also store the value of is_enterprise_managed passed to this method, and check that it\u0027s the same value as you expect. So basically,\n\nvoid ShowMITMSoftwareInterstitial(const std::string\u0026 mitm_software_name,\n                                    bool is_enterprise_managed) override {\n  mitm_software_interstitial_shown_ \u003d true;\n  is_mitm_software_interstitial_enterprise_ \u003d is_enterprise_managed;\n}\n\n// This can use a better name. is_mitm_software_interstitial_enterprise() maybe?\nbool is_mitm_software_interstitial_enterprise() const {\n  return is_mitm_software_interstitial_enterprise_;\n}\n\nAnd then check the value of delegate()-\u003eis_mitm_software_interstitial_enterprise() in your tests MITMSoftware_EnterpriseManaged and MITMSoftware_NoEnterpriseManaged.",
+      "revId": "fb987fef60e27652dab73836251d63650e93fece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
