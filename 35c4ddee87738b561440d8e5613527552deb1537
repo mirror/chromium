@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "550b7240_c4a0544f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T15:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e949c8f_d8b73534",
+      "revId": "35c4ddee87738b561440d8e5613527552deb1537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9913804_00df5f99",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0503f6d6_77e5d1d6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T15:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9913804_00df5f99",
+      "range": {
+        "startLine": 534,
+        "startChar": 5,
+        "endLine": 534,
+        "endChar": 11
+      },
+      "revId": "35c4ddee87738b561440d8e5613527552deb1537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8902990c_0bd6da99",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "35c4ddee87738b561440d8e5613527552deb1537",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2253b181_5f0e6a8b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-18T15:29:32Z",
+      "side": 1,
+      "message": "This test case has a lot of init code and this setup is only used by 4 tests, so I prefer it this way.",
+      "parentUuid": "8902990c_0bd6da99",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 618,
+        "endChar": 37
+      },
+      "revId": "35c4ddee87738b561440d8e5613527552deb1537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
