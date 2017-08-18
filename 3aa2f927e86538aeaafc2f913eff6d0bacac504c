@@ -25,6 +25,54 @@
     },
     {
       "key": {
+        "uuid": "890f9df2_d7138ad9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8b39bd_50de18d8",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38f70266_cae6d265",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8b39bd_50de18d8",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62a973fd_e7430bdf",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 9
@@ -60,6 +108,30 @@
       "side": 1,
       "message": "This sounds like base::Optional. I would suggest base::Optional\u003cSessionData\u003e FromDictValue(const base::DictionaryValue\u0026); What do you think?",
       "parentUuid": "62a973fd_e7430bdf",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a831c2_a10ad1e9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Changed to std::unique_ptr.",
+      "parentUuid": "3349a9e1_02edbcc4",
       "range": {
         "startLine": 74,
         "startChar": 2,
@@ -119,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "91b46179_a970cf21",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79555d7_016bdc4e",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "239de2a9_61f070d1",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 9
@@ -130,6 +226,30 @@
       "writtenOn": "2017-08-17T23:49:46Z",
       "side": 1,
       "message": "Not sure std::move() is needed on a std::string.",
+      "range": {
+        "startLine": 133,
+        "startChar": 28,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73d4f02_b6388157",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "It still makes sense for move std::string.",
+      "parentUuid": "239de2a9_61f070d1",
       "range": {
         "startLine": 133,
         "startChar": 28,
@@ -165,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "5b20fd95_ba260e75",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb4cfd8_085195d4",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4bb5ba_7389ac8d",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 9
@@ -185,6 +329,30 @@
       "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d655a5_1529e62c",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4bb5ba_7389ac8d",
+      "range": {
+        "startLine": 448,
+        "startChar": 19,
+        "endLine": 448,
+        "endChar": 58
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +402,54 @@
     },
     {
       "key": {
+        "uuid": "a39b9053_65cec205",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "939a7640_d8c0e55e",
+      "range": {
+        "startLine": 456,
+        "startChar": 31,
+        "endLine": 456,
+        "endChar": 65
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2affc3eb_2609f823",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "This is also expected. If the origin is provisioned but no licenses are persisted, then the session dict will be empty.",
+      "parentUuid": "052305b2_42d6917e",
+      "range": {
+        "startLine": 456,
+        "startChar": 10,
+        "endLine": 456,
+        "endChar": 11
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f815de1_4e7c2d9a",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 9
@@ -251,6 +467,47 @@
         "endLine": 464,
         "endChar": 65
       },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88182687_dfc0c24c",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "This is also expected.",
+      "parentUuid": "1f815de1_4e7c2d9a",
+      "range": {
+        "startLine": 464,
+        "startChar": 31,
+        "endLine": 464,
+        "endChar": 65
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f899c3_fb3bc4d9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "This one is something we don\u0027t want. Change to DLOG(WARNING).",
       "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -280,6 +537,30 @@
     },
     {
       "key": {
+        "uuid": "7098d25d_6b5647bf",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dff02df_59323c44",
+      "range": {
+        "startLine": 476,
+        "startChar": 26,
+        "endLine": 476,
+        "endChar": 56
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f28593b_b6a7d9fa",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 9
@@ -291,6 +572,30 @@
       "writtenOn": "2017-08-17T23:49:46Z",
       "side": 1,
       "message": "DCHECK() not really needed, as it will crash with nullptr dereference anyway.",
+      "range": {
+        "startLine": 494,
+        "startChar": 2,
+        "endLine": 494,
+        "endChar": 8
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1293e4f_038eabf9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Change to CHECK.",
+      "parentUuid": "9f28593b_b6a7d9fa",
       "range": {
         "startLine": 494,
         "startChar": 2,
@@ -326,6 +631,30 @@
     },
     {
       "key": {
+        "uuid": "f8780735_0eceaf14",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15e7139c_9fb9b683",
+      "range": {
+        "startLine": 494,
+        "startChar": 2,
+        "endLine": 511,
+        "endChar": 3
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d236e358_9d65f0c8",
         "filename": "components/cdm/browser/media_drm_storage_impl.h",
         "patchSetId": 9
@@ -346,6 +675,30 @@
       "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4017b323_cee52bd9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T02:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d236e358_9d65f0c8",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
