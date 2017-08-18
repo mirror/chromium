@@ -16,6 +16,24 @@
       "revId": "b6e27865db477449822b991486c7d537786a1345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb457f8_b2014e3f",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T22:43:29Z",
+      "side": 1,
+      "message": "Having attempted that I realized:\nThis is not a request to add test, but to redesign the interface to the task (to pass the clock as I explained earlier).\nI think this could be done, but not as part of this patch.\nWhat do you think?",
+      "parentUuid": "dad049c9_6bdfec57",
+      "revId": "b6e27865db477449822b991486c7d537786a1345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
