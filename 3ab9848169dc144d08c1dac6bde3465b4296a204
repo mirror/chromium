@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "2a13efd7_4ebb54ae",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-18T16:59:50Z",
+      "side": 1,
+      "message": "Yes the last committed URL is correct, but should we use the \"raw\" version of the URL, or the \"virtual\" version?\n\nVirtual URL (if I understand my history correctly) was originally mainly for the omnibox, where some URLs (not exactly sure which...) get re-written to be cleaner / more user friendly. I am not sure what security/privacy implications this has for content settings exactly.",
+      "parentUuid": "b4ae892b_b2cb457e",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "3ab9848169dc144d08c1dac6bde3465b4296a204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9508f56c_7257a467",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
