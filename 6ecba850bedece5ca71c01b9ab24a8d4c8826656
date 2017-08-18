@@ -142,6 +142,24 @@
       "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4111de_6dcf8aeb",
+        "filename": "content/public/android/java/src/org/chromium/content_public/common/Referrer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:46:30Z",
+      "side": 1,
+      "message": "These aren\u0027t used \"that\" many times, so we could just remove these as part of this cl IMO.",
+      "parentUuid": "0603fda5_4ce50b8f",
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
