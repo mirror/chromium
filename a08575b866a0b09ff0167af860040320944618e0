@@ -87,6 +87,24 @@
       "revId": "a08575b866a0b09ff0167af860040320944618e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628a52f1_665cac36",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-18T16:22:20Z",
+      "side": 1,
+      "message": "I believe so, in my new CL: https://chromium-review.googlesource.com/c/621109\ntwo more tests are passing. They are concerning FederatedCredential, so probably corresponding PasswordCredential tests should be easy to fix too.",
+      "parentUuid": "5b8ceb1c_d5251de9",
+      "revId": "a08575b866a0b09ff0167af860040320944618e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
