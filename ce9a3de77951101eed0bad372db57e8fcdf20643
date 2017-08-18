@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ced4730_5b0823c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-18T14:21:51Z",
+      "side": 1,
+      "message": "reverse condition",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 13
+      },
+      "revId": "ce9a3de77951101eed0bad372db57e8fcdf20643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
