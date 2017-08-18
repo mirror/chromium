@@ -337,6 +337,29 @@ bool OverscrollController::ProcessEventForOverscroll(
       SetOverscrollMode(OVERSCROLL_NONE, OverscrollSource::NONE);
       break;
     }
+    case blink::WebInputEvent::kGestureScrollEnd: {
+      // Avoid resetting the state on GestureScrollEnd generated
+      // from the touchpad since it is sent based on a timeout.
+      bool reset_scroll_state = !IsGestureEventFromTouchpad(event);
+
+      if (reset_scroll_state)
+        scroll_state_ = STATE_UNKNOWN;
+
+      if (DispatchEventCompletesAction(event)) {
+        CompleteAction();
+        break;
+      }
+
+      if (!reset_scroll_state)
+        break;
+
+      if (overscroll_mode_ != OVERSCROLL_NONE) {
+        SetOverscrollMode(OVERSCROLL_NONE, OverscrollSource::NONE);
+      } else {
+        overscroll_delta_x_ = overscroll_delta_y_ = 0.f;
+      }
+      break;
+    }
 
     default:
       DCHECK(blink::WebInputEvent::IsGestureEventType(event.GetType()) ||
