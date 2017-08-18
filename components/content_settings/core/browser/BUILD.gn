@@ -54,6 +54,7 @@ static_library("browser") {
     "//components/prefs",
     "//components/url_formatter",
     "//extensions/features",
+    "//media",
     "//net",
     "//services/preferences/public/cpp",
     "//url",
