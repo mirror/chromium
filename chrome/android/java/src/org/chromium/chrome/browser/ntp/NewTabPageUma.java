@@ -89,7 +89,8 @@ public final class NewTabPageUma {
      */
     @IntDef({NTP_LAYOUT_DOES_NOT_FIT, NTP_LAYOUT_DOES_NOT_FIT_PUSH_MOST_LIKELY,
             NTP_LAYOUT_FITS_NO_FIELD_TRIAL, NTP_LAYOUT_FITS_WITHOUT_FIELD_TRIAL,
-            NTP_LAYOUT_FITS_WITH_FIELD_TRIAL, NTP_LAYOUT_CONDENSED, NUM_NTP_LAYOUT_RESULTS})
+            NTP_LAYOUT_FITS_WITH_FIELD_TRIAL, NTP_LAYOUT_CONDENSED, NUM_NTP_LAYOUT_RESULTS,
+            SITE_EXPLORE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface NTPLayoutResult {}
 
@@ -119,6 +120,9 @@ public final class NewTabPageUma {
 
     /** The number of possible results for the NewTabPageLayout calculations. */
     public static final int NUM_NTP_LAYOUT_RESULTS = 6;
+
+    /** The NewTabPageLayout has the site explore UI and space distribution was skipped. */
+    public static final int SITE_EXPLORE = 7;
 
     /**
      * Possible results when updating content suggestions list in the UI. Keep in sync with the
