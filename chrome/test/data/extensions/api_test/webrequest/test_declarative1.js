@@ -65,23 +65,31 @@ function cancelThirdPartyExpected() {
         event: "onBeforeRequest",
         details: {
           url: getURLOfHTMLWithThirdParty(),
-          frameUrl: getURLOfHTMLWithThirdParty()
+          frameUrl: getURLOfHTMLWithThirdParty(),
+          initiator: getServerDomain()
         }
       },
       { label: "onBeforeSendHeaders",
         event: "onBeforeSendHeaders",
-        details: {url: getURLOfHTMLWithThirdParty()}
+        details: {
+          url: getURLOfHTMLWithThirdParty(),
+          initiator: getServerDomain()
+        }
       },
       { label: "onSendHeaders",
         event: "onSendHeaders",
-        details: {url: getURLOfHTMLWithThirdParty()}
+        details: {
+          url: getURLOfHTMLWithThirdParty(),
+          initiator: getServerDomain()
+        }
       },
       { label: "onHeadersReceived",
         event: "onHeadersReceived",
         details: {
           url: getURLOfHTMLWithThirdParty(),
           statusLine: "HTTP/1.1 200 OK",
-          statusCode: 200
+          statusCode: 200,
+          initiator: getServerDomain()
         }
       },
       { label: "onResponseStarted",
@@ -91,7 +99,8 @@ function cancelThirdPartyExpected() {
           fromCache: false,
           ip: "127.0.0.1",
           statusCode: 200,
-          statusLine: "HTTP/1.1 200 OK"
+          statusLine: "HTTP/1.1 200 OK",
+          initiator: getServerDomain()
         }
       },
       { label: "onCompleted",
@@ -101,7 +110,8 @@ function cancelThirdPartyExpected() {
           ip: "127.0.0.1",
           url: getURLOfHTMLWithThirdParty(),
           statusCode: 200,
-          statusLine: "HTTP/1.1 200 OK"
+          statusLine: "HTTP/1.1 200 OK",
+          initiator: getServerDomain()
         }
       },
       { label: "img-onBeforeRequest",
@@ -109,7 +119,8 @@ function cancelThirdPartyExpected() {
         details: {
           type: "image",
           url: "http://non_existing_third_party.com/image.png",
-          frameUrl: getURLOfHTMLWithThirdParty()
+          frameUrl: getURLOfHTMLWithThirdParty(),
+          initiator: getServerDomain(true)
         }
       },
       { label: "img-onErrorOccurred",
@@ -118,7 +129,8 @@ function cancelThirdPartyExpected() {
           error: "net::ERR_BLOCKED_BY_CLIENT",
           fromCache: false,
           type: "image",
-          url: "http://non_existing_third_party.com/image.png"
+          url: "http://non_existing_third_party.com/image.png",
+          initiator: getServerDomain(true)
         }
       },
     ];
@@ -143,7 +155,8 @@ runTests([
           details: {
             url: getURLHttpWithHeaders(),
             fromCache: false,
-            error: "net::ERR_BLOCKED_BY_CLIENT"
+            error: "net::ERR_BLOCKED_BY_CLIENT",
+            initiator: getServerDomain()
           }
         },
       ],
@@ -179,19 +192,22 @@ runTests([
           event: "onBeforeRequest",
           details: {
             url: getURLHttpWithHeaders(),
-            frameUrl: getURLHttpWithHeaders()
+            frameUrl: getURLHttpWithHeaders(),
+            initiator: getServerDomain()
           }
         },
         { label: "onBeforeSendHeaders",
           event: "onBeforeSendHeaders",
           details: {
             url: getURLHttpWithHeaders(),
+            initiator: getServerDomain()
           }
         },
         { label: "onSendHeaders",
           event: "onSendHeaders",
           details: {
             url: getURLHttpWithHeaders(),
+            initiator: getServerDomain()
           }
         },
         { label: "onHeadersReceived",
@@ -199,7 +215,8 @@ runTests([
           details: {
             statusLine: "HTTP/1.1 200 OK",
             url: getURLHttpWithHeaders(),
-            statusCode: 200
+            statusCode: 200,
+            initiator: getServerDomain()
           }
         },
         { label: "onErrorOccurred",
@@ -207,7 +224,8 @@ runTests([
           details: {
             url: getURLHttpWithHeaders(),
             fromCache: false,
-            error: "net::ERR_BLOCKED_BY_CLIENT"
+            error: "net::ERR_BLOCKED_BY_CLIENT",
+            initiator: getServerDomain()
           }
         },
       ],
@@ -267,7 +285,8 @@ runTests([
           event: "onBeforeRequest",
           details: {
             url: getURLOfHTMLWithThirdParty(),
-            frameUrl: getURLOfHTMLWithThirdParty()
+            frameUrl: getURLOfHTMLWithThirdParty(),
+            initiator: getServerDomain()
           }
         },
         { label: "onErrorOccurred",
@@ -275,7 +294,8 @@ runTests([
           details: {
             url: getURLOfHTMLWithThirdParty(),
             fromCache: false,
-            error: "net::ERR_BLOCKED_BY_CLIENT"
+            error: "net::ERR_BLOCKED_BY_CLIENT",
+            initiator: getServerDomain()
           }
         },
       ],
@@ -304,7 +324,8 @@ runTests([
           details: {
             type: "main_frame",
             url: getURLHttpComplex(),
-            frameUrl: getURLHttpComplex()
+            frameUrl: getURLHttpComplex(),
+            initiator: getServerDomain()
           },
         },
         { label: "onBeforeRedirect",
@@ -315,6 +336,7 @@ runTests([
             fromCache: false,
             statusLine: "HTTP/1.1 307 Internal Redirect",
             statusCode: 307,
+            initiator: getServerDomain()
           }
         },
         { label: "onBeforeRequest-b",
@@ -323,6 +345,7 @@ runTests([
             type: "main_frame",
             url: getURLHttpSimple(),
             frameUrl: getURLHttpSimple(),
+            initiator: getServerDomain()
           },
         },
         { label: "onCompleted",
@@ -333,6 +356,7 @@ runTests([
             fromCache: false,
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
+            initiator: getServerDomain()
           }
         },
       ],
@@ -360,6 +384,7 @@ runTests([
             fromCache: false,
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
+            initiator: getServerDomain()
           }
         },
         // We cannot wait for onCompleted signals because these are not sent
@@ -376,6 +401,7 @@ runTests([
             statusLine: "HTTP/1.1 307 Internal Redirect",
             statusCode: 307,
             type: "image",
+            initiator: getServerDomain(true)
           }
         },
         { label: "onBeforeRedirect-2",
@@ -390,6 +416,7 @@ runTests([
             statusLine: "HTTP/1.1 307 Internal Redirect",
             statusCode: 307,
             type: "sub_frame",
+            initiator: getServerDomain(true)
           }
         },
       ],
@@ -418,7 +445,8 @@ runTests([
           details: {
             type: "main_frame",
             url: getURLHttpWithHeaders(),
-            frameUrl: getURLHttpWithHeaders()
+            frameUrl: getURLHttpWithHeaders(),
+            initiator: getServerDomain()
           },
         },
         { label: "onBeforeRedirect",
@@ -430,6 +458,7 @@ runTests([
             statusCode: 302,
             fromCache: false,
             ip: "127.0.0.1",
+            initiator: getServerDomain()
           }
         },
         { label: "onBeforeRequest-b",
@@ -438,6 +467,7 @@ runTests([
             type: "main_frame",
             url: getURLHttpSimple(),
             frameUrl: getURLHttpSimple(),
+            initiator: getServerDomain()
           },
         },
         { label: "onCompleted",
@@ -448,6 +478,7 @@ runTests([
             fromCache: false,
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
+            initiator: getServerDomain()
           }
         },
       ],
@@ -475,6 +506,7 @@ runTests([
             fromCache: false,
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
+            initiator: getServerDomain()
           }
         },
       ],
@@ -498,7 +530,8 @@ runTests([
           details: {
             url: getURLHttpSimple(),
             fromCache: false,
-            error: "net::ERR_BLOCKED_BY_CLIENT"
+            error: "net::ERR_BLOCKED_BY_CLIENT",
+            initiator: getServerDomain()
           }
         },
       ],

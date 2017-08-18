@@ -63,6 +63,16 @@ function getServerURL(path, opt_host, opt_scheme) {
   return scheme + "://" + host + ":" + testServerPort + "/" + path;
 }
 
+// Similar to getURL without the path.
+function getDomain() {
+  return getURL('').slice(0,-1);
+}
+
+// Similar to getServerURL without the path.
+function getServerDomain(opt_host, opt_scheme) {
+  return getServerURL('', opt_host, opt_scheme).slice(0, -1);
+}
+
 // Helper to advance to the next test only when the tab has finished loading.
 // This is because tabs.update can sometimes fail if the tab is in the middle
 // of a navigation (from the previous test), resulting in flakiness.

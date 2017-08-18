@@ -225,14 +225,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestApi) {
 #endif  // defined(OS_WIN)
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestSimple) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_simple.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_simple.html"))
+      << message_;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestComplex) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_complex.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_complex.html"))
+      << message_;
 }
 
 // This test times out regularly on MSAN trybots. See https://crbug.com/733395.
@@ -322,8 +322,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 #endif
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestBlocking) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_blocking.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_blocking.html"))
+      << message_;
 }
 
 // Fails often on Windows dbg bots. http://crbug.com/177163
@@ -493,15 +493,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_PostData1) {
   // Test HTML form POST data access with the default and "url" encoding.
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_post1.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_post1.html")) << message_;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_PostData2) {
   // Test HTML form POST data access with the multipart and plaintext encoding.
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_post2.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_post2.html")) << message_;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
@@ -982,6 +980,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
     url_fetcher.SetExpectedResponse(kExampleFullContent);
     url_fetcher.WaitForCompletion();
   }
+}
+
+// Test that initiator is only included as part of event details when the
+// extension has a permission matching the initiator.
+IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MinimumAccessInitiator) {
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  ASSERT_TRUE(RunExtensionTest("webrequest_permissions/initiator")) << message_;
 }
 
 // Tests that the webRequest events aren't dispatched when the request initiator
