@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf8343c5_31c1e854",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-18T17:45:49Z",
+      "side": 1,
+      "message": "I\u0027m still shaky on c style, but don\u0027t we already have a protected section above that this could/should be added to?\n\nCan you mix them like this?",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a28893_ed4dd979",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-18T17:45:49Z",
+      "side": 1,
+      "message": "Feels odd to be instantiating these in the \u0027GetRouteController\u0027 method.  I would have expected that to happen in the \u0027DoCreateMdiaRouteController\u0027 method instead.\n\nIt looks like the creation happens here, and the initialization happens in the DoCreate call.\n\nIs that right?  Maybe this is documented somewhere I wasn\u0027t paying attention to...",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
