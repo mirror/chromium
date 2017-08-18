@@ -46,6 +46,40 @@
       "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3dd907_1d0cea67",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T20:50:16Z",
+      "side": 1,
+      "message": "Should/could this go in the arc component?",
+      "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0390b0e7_f7dbba70",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T20:50:16Z",
+      "side": 1,
+      "message": "This is the first I\u0027ve seen of this project, so this might be a silly question, but are we worried about losing any user data?  Or about needing to roll this back (which is much harder once the items are gone)?",
+      "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
