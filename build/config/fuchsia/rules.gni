@@ -26,6 +26,7 @@ template("generate_runner_script") {
   action(target_name) {
     forward_variables_from(invoker,
                            [
+                             "data",
                              "data_deps",
                              "deps",
                              "runner_script",
