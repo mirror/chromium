@@ -58,11 +58,11 @@ CSSPaintDefinition::CSSPaintDefinition(
       constructor_(script_state->GetIsolate(), this, constructor),
       paint_(script_state->GetIsolate(), this, paint),
       instance_(this),
-      did_call_constructor_(false),
-      has_alpha_(has_alpha) {
+      did_call_constructor_(false) {
   native_invalidation_properties_ = native_invalidation_properties;
   custom_invalidation_properties_ = custom_invalidation_properties;
   input_argument_types_ = input_argument_types;
+  context_attributes_.setAlpha(has_alpha);
 }
 
 CSSPaintDefinition::~CSSPaintDefinition() {}
@@ -96,8 +96,8 @@ PassRefPtr<Image> CSSPaintDefinition::Paint(
   PaintRenderingContext2D* rendering_context = PaintRenderingContext2D::Create(
       ImageBuffer::Create(WTF::WrapUnique(new RecordingImageBufferSurface(
           size, RecordingImageBufferSurface::kDisallowFallback,
-          has_alpha_ ? kNonOpaque : kOpaque))),
-      has_alpha_, zoom);
+          context_attributes_.alpha() ? kNonOpaque : kOpaque))),
+      context_attributes_.alpha(), zoom);
   PaintSize* paint_size = PaintSize::Create(specified_size);
   StylePropertyMapReadonly* style_map =
       FilteredComputedStylePropertyMap::Create(
