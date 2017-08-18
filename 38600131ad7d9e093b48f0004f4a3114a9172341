@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "851696cc_a40884da",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed60a089_b0cf0009",
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a24a733_5c1a1dac",
         "filename": "chrome/browser/exo_parts.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0b015e_794928b0",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a24a733_5c1a1dac",
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3e0a740e_981c6a86",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88875c17_91689e57",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 40
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2361b8_c15b6a5c",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 8
@@ -79,6 +139,30 @@
       "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9948df18_074fe349",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2361b8_c15b6a5c",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f2baf785_a66b5468",
+        "filename": "components/exo/display.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1649a9ee_f557eb75",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb7c3c4_fc6a7866",
         "filename": "components/exo/display.h",
         "patchSetId": 8
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-17T17:36:53Z",
       "side": 1,
       "message": "Would it make sense for Display to take ownership of FileHelper? Is there a reason this wouldn\u0027t work?",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3923ab2_8e2a6302",
+        "filename": "components/exo/display.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Display can take an ownership. Done",
+      "parentUuid": "1cb7c3c4_fc6a7866",
       "range": {
         "startLine": 47,
         "startChar": 19,
@@ -142,6 +274,24 @@
       "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c39297_ac9ac227",
+        "filename": "components/exo/display.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-18T01:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edec11f9_63552bfa",
+      "revId": "38600131ad7d9e093b48f0004f4a3114a9172341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
