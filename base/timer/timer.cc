@@ -138,9 +138,7 @@ void Timer::Start(const tracked_objects::Location& posted_from,
 }
 
 void Timer::Stop() {
-  // TODO(gab): Enable this when it's no longer called racily from
-  // RunScheduledTask(): https://crbug.com/587199.
-  // DCHECK(origin_sequence_checker_.CalledOnValidSequence());
+  DCHECK(origin_sequence_checker_.CalledOnValidSequence());
 
   is_running_ = false;
 
@@ -182,44 +180,32 @@ void Timer::Reset() {
 }
 
 TimeTicks Timer::Now() const {
-  // TODO(gab): Enable this when it's no longer called racily from
-  // RunScheduledTask(): https://crbug.com/587199.
-  // DCHECK(origin_sequence_checker_.CalledOnValidSequence());
+  DCHECK(origin_sequence_checker_.CalledOnValidSequence());
   return tick_clock_ ? tick_clock_->NowTicks() : TimeTicks::Now();
 }
 
 void Timer::PostNewScheduledTask(TimeDelta delay) {
-  // TODO(gab): Enable this when it's no longer called racily from
-  // RunScheduledTask(): https://crbug.com/587199.
-  // DCHECK(origin_sequence_checker_.CalledOnValidSequence());
+  DCHECK(origin_sequence_checker_.CalledOnValidSequence());
   DCHECK(!scheduled_task_);
   is_running_ = true;
   scheduled_task_ = new BaseTimerTaskInternal(this);
   if (delay > TimeDelta::FromMicroseconds(0)) {
-    // TODO(gab): Posting BaseTimerTaskInternal::Run to another sequence makes
-    // this code racy. https://crbug.com/587199
-    GetTaskRunner()->PostDelayedTask(
+    SequencedTaskRunnerHandle::Get()->PostDelayedTask(
         posted_from_,
         base::BindOnce(&BaseTimerTaskInternal::Run,
                        base::Owned(scheduled_task_)),
         delay);
     scheduled_run_time_ = desired_run_time_ = Now() + delay;
   } else {
-    GetTaskRunner()->PostTask(posted_from_,
-                              base::BindOnce(&BaseTimerTaskInternal::Run,
-                                             base::Owned(scheduled_task_)));
+    SequencedTaskRunnerHandle::Get()->PostTask(
+        posted_from_, base::BindOnce(&BaseTimerTaskInternal::Run,
+                                     base::Owned(scheduled_task_)));
     scheduled_run_time_ = desired_run_time_ = TimeTicks();
   }
 }
 
-scoped_refptr<SequencedTaskRunner> Timer::GetTaskRunner() {
-  return task_runner_.get() ? task_runner_ : SequencedTaskRunnerHandle::Get();
-}
-
 void Timer::AbandonScheduledTask() {
-  // TODO(gab): Enable this when it's no longer called racily from
-  // RunScheduledTask() -> Stop(): https://crbug.com/587199.
-  // DCHECK(origin_sequence_checker_.CalledOnValidSequence());
+  DCHECK(origin_sequence_checker_.CalledOnValidSequence());
   if (scheduled_task_) {
     scheduled_task_->Abandon();
     scheduled_task_ = nullptr;
@@ -227,9 +213,7 @@ void Timer::AbandonScheduledTask() {
 }
 
 void Timer::RunScheduledTask() {
-  // TODO(gab): Enable this when it's no longer called racily:
-  // https://crbug.com/587199.
-  // DCHECK(origin_sequence_checker_.CalledOnValidSequence());
+  DCHECK(origin_sequence_checker_.CalledOnValidSequence());
 
   // Task may have been disabled.
   if (!is_running_)
@@ -258,7 +242,10 @@ void Timer::RunScheduledTask() {
   else
     Stop();
 
-  task.Run();
+  if (task_runner_ && !task_runner_->RunsTasksInCurrentSequence())
+    task_runner_->PostTask(posted_from_, std::move(task));
+  else
+    task.Run();
 
   // No more member accesses here: |this| could be deleted at this point.
 }
