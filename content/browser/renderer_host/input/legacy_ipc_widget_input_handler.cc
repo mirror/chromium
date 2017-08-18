@@ -27,6 +27,12 @@ blink::WebImeTextSpan::Type ConvertUiImeTextSpanTypeToBlinkType(
   return blink::WebImeTextSpan::Type::kComposition;
 }
 
+blink::WebImeTextSpan::Thickness ConvertUiImeTextSpanThicknessToBlinkThickness(
+    ui::ImeTextSpan::Thickness thickness) {
+  // TODO
+  return static_cast<blink::WebImeTextSpan::Thickness>(thickness);
+}
+
 std::vector<blink::WebImeTextSpan> ConvertToBlinkImeTextSpan(
     const std::vector<ui::ImeTextSpan>& ui_ime_text_spans) {
   std::vector<blink::WebImeTextSpan> ime_text_spans;
@@ -34,7 +40,8 @@ std::vector<blink::WebImeTextSpan> ConvertToBlinkImeTextSpan(
     ime_text_spans.emplace_back(blink::WebImeTextSpan(
         ConvertUiImeTextSpanTypeToBlinkType(ime_text_span.type),
         ime_text_span.start_offset, ime_text_span.end_offset,
-        ime_text_span.underline_color, ime_text_span.thick,
+        ime_text_span.underline_color,
+        ConvertUiImeTextSpanThicknessToBlinkThickness(ime_text_span.thickness),
         ime_text_span.background_color,
         ime_text_span.suggestion_highlight_color, ime_text_span.suggestions));
   }
