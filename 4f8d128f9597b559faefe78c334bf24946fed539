@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "dd713d31_af2ac950",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T00:35:54Z",
+      "side": 1,
+      "message": "gosh - there are many ways. I think we want to handle this at the framework level. There is BubbleFrameView::content_margins_, but it\u0027s always gfx::Insets(0,0,0,0) for tab-modal dialogs inheriting from DialogDelegateView (rather than BubbleDialogDelegateView).\n\n\nOne approach could be a new DialogDelegate method,\n\n // Whether the dialog content should always be aligned to the dialog\u0027s title\n // label. If there is no title, uses a margin from the frame view.\n virtual bool ShouldAlignContentToTitle() const;\n\ndefault false (with a goal to make it true for all dialogs)\n\nThen BubbleFrameView::UpdateWindowIcon() and BubbleFrameView::UpdateWindowTitle() set |content_margins_.left()| to be equal to |BubbleFrameView::GetTitleLabelInsetsFromFrame().left()|.\n\n\n\nAlternatives to that all require duplicating the logic done in BubbleFrameView::GetTitleLabelInsetsFromFrame() to get the appropriate left inset, and then setting that inset \"somewhere\".\n - in the GridLayout (this CL\u0027s current approach)\n - via SetBorder(CreateEmptyBorder(INSETS_DIALOG_CONTENTS + left inset))\n - via an override of DialogDelegate::CreateNonClientFrameView to create a BubbleFrameView with a custom contents_insets\n - via an override of View::GetInsets()\n\n\nIt\u0027s difficult to expose BubbleFrameView::GetTitleLabelInsetsFromFrame() to tab-modal dialogs, and none of that plumbing really appeals to me.\n\n\nsky@ might have a better idea though.",
+      "parentUuid": "427410a8_a0408f0c",
+      "revId": "4f8d128f9597b559faefe78c334bf24946fed539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92a367b9_9630b926",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 12

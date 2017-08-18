@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5989c9_3bc8f807",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T00:35:54Z",
+      "side": 1,
+      "message": "nit: foward declare",
+      "revId": "039decdcab0f83624d5412b16c84dabf246af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad87469_bc8ec914",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-18T00:35:54Z",
+      "side": 1,
+      "message": "nit: // views::DialogDelegateView:\n\nThis style is preferred for new code - means we don\u0027t have to worry about whether \"override\" should be plural or not ;)",
+      "revId": "039decdcab0f83624d5412b16c84dabf246af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
