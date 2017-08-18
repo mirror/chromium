@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065cd4e1_87daba20",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:55:04Z",
+      "side": 1,
+      "message": "empty_item",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 25
+      },
+      "revId": "1ed4b0ac6b7d18f47803bdb7df97caa53316ec49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c7fcb4_b5eb8628",
+        "filename": "ui/views/controls/menu/menu_item_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:55:04Z",
+      "side": 1,
+      "message": "empty_item",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 25
+      },
+      "revId": "1ed4b0ac6b7d18f47803bdb7df97caa53316ec49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baec46f8_de20e763",
+        "filename": "ui/views/controls/menu/submenu_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T17:55:04Z",
+      "side": 1,
+      "message": "Returns true if the submenu has ...",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "1ed4b0ac6b7d18f47803bdb7df97caa53316ec49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
