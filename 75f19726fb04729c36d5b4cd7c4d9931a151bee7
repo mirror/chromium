@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d2972070_91075416",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-18T13:13:20Z",
+      "side": 0,
+      "message": "Yes, as mentioned elsewhere in the CL, this should be pushed to authoring tools, because:\n- devs don\u0027t always do things perfectly \n- it would preclude some useful cases (complex radio buttons, menu items, even buttons as it turns out)\n- this aligns us with Firefox",
+      "parentUuid": "5812319a_dd34625a",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e76a96_9bb1133d",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
         "patchSetId": 8
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-17T20:47:05Z",
       "side": 0,
       "message": "Can we still expose this for the narrow case of an element\nwith just one text child?",
+      "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e04dd4_69fe0832",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-18T13:13:20Z",
+      "side": 0,
+      "message": "I\u0027m not sure what you\u0027re asking. In the case of an element with just one text child, we don\u0027t ignore anything.",
+      "parentUuid": "b9e76a96_9bb1133d",
       "revId": "75f19726fb04729c36d5b4cd7c4d9931a151bee7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
