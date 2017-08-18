@@ -46,6 +46,30 @@
       "revId": "b3a699a772d0768f2da54ca98105434798b930f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e569cd_ea609923",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-18T14:10:32Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s wait for that CL to land first.",
+      "parentUuid": "e8921424_9dd19c1d",
+      "range": {
+        "startLine": 1068,
+        "startChar": 16,
+        "endLine": 1068,
+        "endChar": 33
+      },
+      "revId": "b3a699a772d0768f2da54ca98105434798b930f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
