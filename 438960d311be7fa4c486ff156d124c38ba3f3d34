@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25c5a95f_3f2d2776",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-18T09:37:54Z",
+      "side": 1,
+      "message": "Rename to ComputeVisibleSelection()",
+      "parentUuid": "c32ce433_65a9a858",
+      "range": {
+        "startLine": 490,
+        "startChar": 35,
+        "endLine": 490,
+        "endChar": 47
+      },
+      "revId": "438960d311be7fa4c486ff156d124c38ba3f3d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d041e53c_142ea98e",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "438960d311be7fa4c486ff156d124c38ba3f3d34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3903e8c_60605ea6",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-18T09:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d041e53c_142ea98e",
+      "revId": "438960d311be7fa4c486ff156d124c38ba3f3d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
