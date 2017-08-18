@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8e9b3c_bce72005",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-18T14:27:04Z",
+      "side": 1,
+      "message": "clang-format is supposed to get rid of this space. Did you run `git cl format`?",
+      "range": {
+        "startLine": 356,
+        "startChar": 36,
+        "endLine": 356,
+        "endChar": 37
+      },
+      "revId": "c2ba5429dc2b596c36b1259992af90b1f20b90b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
