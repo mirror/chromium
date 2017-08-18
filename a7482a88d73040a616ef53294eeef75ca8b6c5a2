@@ -22,6 +22,30 @@
       "revId": "a7482a88d73040a616ef53294eeef75ca8b6c5a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe0c656_45257a17",
+        "filename": "components/feedback/feedback_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-18T18:55:48Z",
+      "side": 0,
+      "message": "Because previously I also moved Uploader/UploaderChrome/UploaderFactory to Chrome.\n\nNow that I moved things back, I got rid entirely of this function, and moved that code to FeedbackData.",
+      "parentUuid": "6d5205ff_9593e8d8",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "a7482a88d73040a616ef53294eeef75ca8b6c5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
