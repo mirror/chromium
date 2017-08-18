@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "c2aed701_f298ba50",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-18T18:01:02Z",
+      "side": 1,
+      "message": "Ah, nevermind. Looks like tests inject a MessagePumpForUIStub (which is really just a message_loop_default) instead of using the actual UI message loop. To *actually* test UI type message loops would require dedicated tests like the one I wrote (RunTasksWhileShuttingDownJavaThread), or some pretty significant changes to test support code.\n\nI can\u0027t effectively regression test this in a cross-platform way currently.",
+      "parentUuid": "621c871f_744a01aa",
+      "revId": "9b6c55f9c7ceb868f29050c2bb38c931e30dffc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f3fdde3_97088744",
         "filename": "base/message_loop/message_loop_unittest.cc",
         "patchSetId": 16
