@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "f55274e9_c1eecc98",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T21:24:16Z",
+      "side": 1,
+      "message": "This is because of how Label implements GetPreferredSize(). If you know you want the column to have a fixed size, use FIXED with a specific size.",
+      "parentUuid": "31244c83_23f3f9ac",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e7d4996_ccc6f71f",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 14
