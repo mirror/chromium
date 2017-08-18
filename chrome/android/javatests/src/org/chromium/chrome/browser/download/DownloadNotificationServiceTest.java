@@ -192,7 +192,7 @@ public class DownloadNotificationServiceTest {
 
         // Resume pending downloads when network is not metered.
         // TODO(jming): Right now, assuming all downloads are resumed because of the way downloads
-        // in progress are tracked internally. Change when this is updated. http://crbug.com/755588.
+        // in progress are tracked internally.
         mDownloadNotificationService.mResumedDownloads.clear();
         DownloadManagerService.setIsNetworkMeteredForTest(false);
         mDownloadNotificationService.resumeAllPendingDownloads();
