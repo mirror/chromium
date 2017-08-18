@@ -2,6 +2,345 @@
   "comments": [
     {
       "key": {
+        "uuid": "7047462e_f3364464",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "I find it a bit annoying to have to construct the whole object if we just want to get this string. If you can think of a better way to access type string, that would be great.\nYou can ignore this comment for this CL though, I just wanted to point out this issue.",
+      "range": {
+        "startLine": 82,
+        "startChar": 39,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dfab24_b91441ed",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Comment is outdated.",
+      "range": {
+        "startLine": 113,
+        "startChar": 9,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f422b6e_fdaa45aa",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "This (and other) can easily be converted to class, since no member access is done outside of it. We can rename member data from \u0027foo\u0027 to \u0027foo_\u0027.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 8
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c182ea24_7f1a1b49",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "This too.",
+      "range": {
+        "startLine": 146,
+        "startChar": 9,
+        "endLine": 146,
+        "endChar": 16
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3ba0f1_24d1757e",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "// Check \u0027MZ\u0027 magic for a DOS header.",
+      "range": {
+        "startLine": 200,
+        "startChar": 14,
+        "endLine": 200,
+        "endChar": 28
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47767fba_9b93dcbe",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "// Offset to PE header is in DOS header.",
+      "range": {
+        "startLine": 204,
+        "startChar": 32,
+        "endLine": 204,
+        "endChar": 46
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40ea6ad_b2def2b4",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "This could be replace with\nauto* dos_header \u003d source.GetPointer\u003cpe::ImageDOSHeader\u003e();\nif (!dos_header || (dos_header-\u003ee_lfanew \u0026 0x7) !\u003d 0)\n...",
+      "range": {
+        "startLine": 204,
+        "startChar": 14,
+        "endLine": 204,
+        "endChar": 18
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26de8ec_dd4bc919",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "// Check \u0027PE\\0\\0\u0027 magic from PE header.",
+      "range": {
+        "startLine": 211,
+        "startChar": 37,
+        "endLine": 211,
+        "endChar": 49
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db34a5bb_99e55500",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Are we sure that sections are ordered by virtual_address? \nI think section_offset_map_ is expected to be sorted.\nMaybe comment about it and add check.",
+      "range": {
+        "startLine": 265,
+        "startChar": 49,
+        "endLine": 265,
+        "endChar": 64
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7db1754_066e00e4",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "I think we can avoid lazy initialization and call this directly from Parse(). We can then get rid of has_parsed_rel32_.",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 23
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059ae2e5_9d64cf4a",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Might be worthwhile to visit sections in order then. Perhaps add a TODO.",
+      "range": {
+        "startLine": 329,
+        "startChar": 5,
+        "endLine": 329,
+        "endChar": 36
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af59dbaa_97795c7e",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "// Explicit instantiation for supported classes.",
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89f27ea_b0b1f987",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Can this be in .cc?",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f865d9d2_916ddfde",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Iterator has a very specific meaning in c++. Perhaps \u0027cursor\u0027 or \u0027visitor\u0027?",
+      "range": {
+        "startLine": 76,
+        "startChar": 28,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c05fba8_d5c9a4a8",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "TYPO",
+      "range": {
+        "startLine": 120,
+        "startChar": 40,
+        "endLine": 120,
+        "endChar": 47
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c72e8c0_0530c5d2",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 1
@@ -18,6 +357,144 @@
         "startChar": 8,
         "endLine": 31,
         "endChar": 21
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89963c5_8d093f51",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "That was my mistake, sorry!",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e04a107_649ca78f",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "I think we should pass params.out to ReadReferences() so it can use it to output stuff.",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 150,
+        "endChar": 30
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5008692_7f4f1bc2",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "TYPO",
+      "range": {
+        "startLine": 39,
+        "startChar": 54,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f212a0e_80975c0b",
+        "filename": "chrome/installer/zucchini/zucchini_tools.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Urgh, I find this very ugly, but I blame iostream library.\nSomething like that might be a bit more sane:\nstd::ostringstream out;\nout \u003c\u003c std::setprecision(4) \u003c\u003c 3.14159 \u003c\u003c \"\\n\";\nstd::cout \u003c\u003c out.str();\nOr we might want to add something in io_utils for float.",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4138a358_bb954e71",
+        "filename": "chrome/installer/zucchini/zucchini_tools.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "ref.has_value() to be consistent.",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 40
+      },
+      "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156ff57e_5091cc3d",
+        "filename": "chrome/installer/zucchini/zucchini_tools.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-18T22:42:42Z",
+      "side": 1,
+      "message": "Following this logic, shouldn\u0027t Apply() and Generate*() be declared in zucchini_apply.h and zucchini_gen.h, respectively?\nThe other option is to have this declared in zucchini.h.",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 27
       },
       "revId": "52340cb18a6041c33001dff6d299eabb70b4c796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
