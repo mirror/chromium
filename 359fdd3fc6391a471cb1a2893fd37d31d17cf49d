@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d574242_315bcef1",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/border-radius-hittest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7839ab46_eba31b0e",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1165caf3_ffa48c6b",
         "filename": "third_party/WebKit/LayoutTests/hittesting/image-with-border-radius.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0653c2_8fd30d6c",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/image-with-border-radius.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1165caf3_ffa48c6b",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8625d502_bc2ba544",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/image-with-clip-path.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61ed667_3976897e",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1642cdc_6451e9e6",
         "filename": "third_party/WebKit/LayoutTests/hittesting/inline-with-clip-path.html",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "964c1b1f_57bf6bbb",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/inline-with-clip-path.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1642cdc_6451e9e6",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4642dc4_144a60ab",
         "filename": "third_party/WebKit/LayoutTests/hittesting/inner-border-radius-hittest-expected.txt",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-17T21:14:45Z",
       "side": 1,
       "message": "This should be PASS? All of the other text expectations were deleted in this patch, so maybe this was just accidentally not deleted?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d488cb_a9150d66",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/inner-border-radius-hittest-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "This was always failing. With testharness.js you need expectations for expected failures to be sure that you don\u0027t get further regressions.\n\nI\u0027m working to fix the underlying failure right now: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756532",
+      "parentUuid": "f4642dc4_144a60ab",
       "range": {
         "startLine": 2,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "fc15224f_f2949126",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/inner-border-radius-hittest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c44fad75_c6c4a52a",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dec3d59_ca6ecf58",
         "filename": "third_party/WebKit/LayoutTests/hittesting/paint-containment-hittest.html",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b840b3a4_74e79551",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/paint-containment-hittest.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T17:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dec3d59_ca6ecf58",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "359fdd3fc6391a471cb1a2893fd37d31d17cf49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
