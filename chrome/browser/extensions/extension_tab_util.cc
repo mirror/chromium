@@ -446,6 +446,7 @@ std::unique_ptr<api::tabs::MutedInfo> ExtensionTabUtil::CreateMutedInfo(
       break;
     case TabMutedReason::CONTEXT_MENU:
     case TabMutedReason::AUDIO_INDICATOR:
+    case TabMutedReason::CONTENT_SETTING:
       info->reason = api::tabs::MUTED_INFO_REASON_USER;
       break;
     case TabMutedReason::MEDIA_CAPTURE:
