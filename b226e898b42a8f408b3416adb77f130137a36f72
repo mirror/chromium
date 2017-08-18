@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b687bce_10258ad6",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1c98767_d45434c0",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7106b0e1_57212350",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24074ff4_b7e6e6cb",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7106b0e1_57212350",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bfb5b77c_e78c7810",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "I think we should postpone making a distinction until such time arrives. Right now we would be building stuff we are not using.",
+      "parentUuid": "201b96b8_9b574f33",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8807e214_145b4051",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6780cf_f365f654",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8807e214_145b4051",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7ec43377_fd78aa56",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae61f39_eacf0dc8",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95eb17a9_fa48c97d",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cf3a96_cd15bf43",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95eb17a9_fa48c97d",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "13bcc943_d7a9dbd7",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "I don\u0027t like that check:\n1. Because it messes up people\u0027s tests (you have to set up IO thread and so on, just because of the dcheck).\n2. This would be inconsistent with pretty much 100% of prefetch code. I don\u0027t think such check is applied anywhere.\n\nHere is why I don\u0027t think we need that:\n* We have a discipline of only getting the db pointer on the IO, so from our perspective this does not matter.\n* As for other users (if anyone wants to reuse), I don\u0027t care which thread that is used on either.",
+      "parentUuid": "459de99b_ab02ba23",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "957f2204_23d3887a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 3
@@ -141,6 +273,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f276cc_e8d6194d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957f2204_23d3887a",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "f209d3ce_f8282390",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108afff8_de165084",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0f03151_d9f1fc1c",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
         "patchSetId": 3
@@ -175,6 +343,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9430dee_a793f9c9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "I did consider something similar Increase/Reduce quota, but in both cases it makes things less readable.\n\nHere is why this is fine:\nGetAvailableQuota is already working within the only transaction running on top of our DB. Proper behavior is enforced in more than one place.\n\nIf we still manage to hit any race condition, we are clearly doing something wrong and fixing this API is not preventing that.",
+      "parentUuid": "e0f03151_d9f1fc1c",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "7220c216_6623b25f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca76c93_d8122e68",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a45986_4e6da88a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
         "patchSetId": 3
@@ -209,6 +413,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc86208_829f8508",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Updated comments and test description.",
+      "parentUuid": "06a45986_4e6da88a",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +457,30 @@
     },
     {
       "key": {
+        "uuid": "b29f603c_316f8617",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce88b8b_6fc69974",
+      "range": {
+        "startLine": 88,
+        "startChar": 36,
+        "endLine": 88,
+        "endChar": 61
+      },
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4a49aef_1ec794e2",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
         "patchSetId": 3
@@ -258,6 +504,30 @@
     },
     {
       "key": {
+        "uuid": "d95bdba6_1c979541",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done.\nMove the include to .cc. I am explicitly using both, therefore I am keeping both header.",
+      "parentUuid": "f4a49aef_1ec794e2",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35aaf609_6752d844",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
         "patchSetId": 3
@@ -272,6 +542,24 @@
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b0d4b9_fb39fb50",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T21:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35aaf609_6752d844",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
