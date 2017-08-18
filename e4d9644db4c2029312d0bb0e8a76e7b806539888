@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d5b347c_e9e59f5f",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1160139
+      },
+      "writtenOn": "2017-08-18T17:22:09Z",
+      "side": 1,
+      "message": "I maybe missing something ... should __NR_access and __NR_open be in place considering __aarch64__ will not be defined in this case?",
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
