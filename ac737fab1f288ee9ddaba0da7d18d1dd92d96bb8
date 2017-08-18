@@ -34,6 +34,24 @@
       "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90783fe_c8e34f17",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-18T16:11:07Z",
+      "side": 1,
+      "message": "No, as the widget being animated there is a simple solid color. That doesn\u0027t require a render surface. Render surfaces are only required when animating the opacity of windows that contain a hierarchy of layers. E.g. a browser or app window where frame, client contents and potentially different client areas use separate layers.",
+      "parentUuid": "405c79cf_50a6b703",
+      "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
