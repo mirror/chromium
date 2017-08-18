@@ -21,6 +21,8 @@ import android.view.View;
 import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -121,6 +123,46 @@ public class WebApkUtils {
             return null;
         }
         return ai.metaData;
+    }
+
+    /**
+     * Returns the new intent url, rewrite if necessary.
+     * The WebAPK may have been launched as a result of an intent filter for a different
+     * scheme or top level domain. Rewrite the scheme and host name to the scope's
+     * scheme and host name in this case, and append orginal intent if `loggedIntentUrlParam` is
+     * set.
+     */
+    public static String rewriteIntentUrlIfNecessary(String startUrl, Bundle metadata) {
+        String returnUrl = startUrl;
+        String scopeUrl = metadata.getString(WebApkMetaDataKeys.SCOPE);
+        if (!TextUtils.isEmpty(scopeUrl)) {
+            Uri parsedStartUrl = Uri.parse(startUrl);
+            Uri parsedScope = Uri.parse(scopeUrl);
+            String loggedIntentUrlParam =
+                    metadata.getString(WebApkMetaDataKeys.LOGGED_INTENT_URL_PARAM);
+            returnUrl = parsedStartUrl.buildUpon()
+                                .scheme(parsedScope.getScheme())
+                                .encodedAuthority(parsedScope.getEncodedAuthority())
+                                .build()
+                                .toString();
+            if (loggedIntentUrlParam != null && !startUrl.equals(returnUrl)) {
+                returnUrl = appendStartUrl(loggedIntentUrlParam, startUrl, returnUrl);
+            }
+        }
+        return returnUrl;
+    }
+
+    private static String appendStartUrl(String queryKey, String orginalUrl, String newStartUrl) {
+        try {
+            orginalUrl = URLEncoder.encode(orginalUrl, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return newStartUrl;
+        }
+        return Uri.parse(newStartUrl)
+                .buildUpon()
+                .appendQueryParameter(queryKey, orginalUrl)
+                .build()
+                .toString();
     }
 
     /**
