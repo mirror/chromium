@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "930b8c2f_04c117b0",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-18T01:34:36Z",
+      "side": 1,
+      "message": "Thank you for the review.\nUpdated https://docs.google.com/a/google.com/document/d/1VGw_ZlGwN2zWx33RObwkmkLmvlEl53sq9vWMPO_9Vu0/edit?usp\u003dsharing\n\n\u003e I\u0027m not seeing in this change where the field actually is generated.\nThis is in part 2. I\u0027ve added you as a reviewer there.",
+      "parentUuid": "62d38f63_9d22a0ff",
+      "range": {
+        "startLine": 61,
+        "startChar": 37,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce2cd891_9443ad72",
         "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
         "patchSetId": 3
