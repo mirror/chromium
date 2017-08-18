@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "134c8a38_c194b3e8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-18T03:30:33Z",
+      "side": 1,
+      "message": "Now, it has 2 functions with similar name:\nsetButtonStyle:(style) forButton:(ContextBarButton) and\nsetButtonStyle:(style) forUIButton:(UIButton)\nPlease advise if this is okay. thx.",
+      "revId": "f2a1d93bbdbd466187d944537ee2d19d1bf06dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
