@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "be3c7d29_695ca2bf",
+        "filename": "content/browser/service_worker/link_header_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-08-18T06:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d09c088e_dfb79db3",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb4a4a2_a87bcd93",
         "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "d6e790c4_44c3f6c8",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-08-18T06:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbb4a4a2_a87bcd93",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d4072c_74ead85f",
         "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-17T14:32:15Z",
       "side": 1,
       "message": "is git-cl format OK with this? i think we typically have a blank line after \"namespace {\" and before \"} //namespace \"",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf4082b_6f3c590e",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-08-18T06:22:42Z",
+      "side": 1,
+      "message": "git-cl format didn\u0027t care, so I\u0027m adding blank lines.",
+      "parentUuid": "40d4072c_74ead85f",
       "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
