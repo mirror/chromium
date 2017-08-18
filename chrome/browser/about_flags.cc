@@ -3352,6 +3352,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPwaMinimalUiDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kPwaMinimalUi)},
 
+    {"click-to-open-pdf", flag_descriptions::kClickToOpenPDFName,
+     flag_descriptions::kClickToOpenPDFDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kClickToOpenPDFPlaceholder)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
