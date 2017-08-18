@@ -13,13 +13,13 @@ ImeTextSpan::ImeTextSpan(Type type,
                          unsigned start_offset,
                          unsigned end_offset,
                          const Color& underline_color,
-                         bool thick,
+                         StyleableMarker::Thickness thickness,
                          const Color& background_color,
                          const Color& suggestion_highlight_color,
                          const Vector<String>& suggestions)
     : type_(type),
       underline_color_(underline_color),
-      thick_(thick),
+      thickness_(thickness),
       background_color_(background_color),
       suggestion_highlight_color_(suggestion_highlight_color),
       suggestions_(suggestions) {
@@ -54,6 +54,21 @@ ImeTextSpan::Type ConvertWebTypeToType(WebImeTextSpan::Type type) {
   return ImeTextSpan::Type::kComposition;
 }
 
+StyleableMarker::Thickness ConvertWebThicknessToStyleableMarkerThickness(
+    WebImeTextSpan::Thickness thickness) {
+  switch (thickness) {
+    case WebImeTextSpan::Thickness::kNone:
+      return StyleableMarker::Thickness::kNone;
+    case WebImeTextSpan::Thickness::kThin:
+      return StyleableMarker::Thickness::kThin;
+    case WebImeTextSpan::Thickness::kThick:
+      return StyleableMarker::Thickness::kThick;
+  }
+
+  NOTREACHED();
+  return StyleableMarker::Thickness::kThin;
+}
+
 }  // namespace
 
 ImeTextSpan::ImeTextSpan(const WebImeTextSpan& ime_text_span)
@@ -61,7 +76,8 @@ ImeTextSpan::ImeTextSpan(const WebImeTextSpan& ime_text_span)
                   ime_text_span.start_offset,
                   ime_text_span.end_offset,
                   Color(ime_text_span.underline_color),
-                  ime_text_span.thick,
+                  ConvertWebThicknessToStyleableMarkerThickness(
+                      ime_text_span.thickness),
                   Color(ime_text_span.background_color),
                   Color(ime_text_span.suggestion_highlight_color),
                   ConvertStdVectorOfStdStringsToVectorOfStrings(

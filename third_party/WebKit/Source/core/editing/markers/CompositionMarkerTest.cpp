@@ -12,14 +12,14 @@ class CompositionMarkerTest : public ::testing::Test {};
 
 TEST_F(CompositionMarkerTest, MarkerType) {
   DocumentMarker* marker = new CompositionMarker(
-      0, 1, Color::kTransparent, StyleableMarker::Thickness::kThin,
+      0, 1, Color::kTransparent, StyleableMarker::Thickness::kNone,
       Color::kTransparent);
   EXPECT_EQ(DocumentMarker::kComposition, marker->GetType());
 }
 
 TEST_F(CompositionMarkerTest, IsStyleableMarker) {
   DocumentMarker* marker = new CompositionMarker(
-      0, 1, Color::kTransparent, StyleableMarker::Thickness::kThin,
+      0, 1, Color::kTransparent, StyleableMarker::Thickness::kNone,
       Color::kTransparent);
   EXPECT_TRUE(IsStyleableMarker(*marker));
 }
