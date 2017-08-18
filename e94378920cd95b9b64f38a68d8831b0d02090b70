@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5cdc55_2b1fae45",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-18T17:49:54Z",
+      "side": 1,
+      "message": "Ooh, this is a nice test, thanks!",
+      "revId": "e94378920cd95b9b64f38a68d8831b0d02090b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
