@@ -70,6 +70,30 @@
       "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2896010e_ba54c658",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-18T03:42:06Z",
+      "side": 0,
+      "message": "The point would be to remove TrayBubbleView specific logic from ActivationEventHandler as it will be replaced with something used for menus. I agree with it. I\u0027ll change ActivateEventHandler to route events to AcceleratorController of widget of TrayBubbleView.\n\nBut I don\u0027t get the later part \"... you route to ash\u0027s AcceleratorController too.\". Does it mean \"route to ash\u0027s one by ActivationEventHandler\"? Ash\u0027s one is the global one. Other widgets also register their accelerators. It seems that global AcceleratorController behaves differently depending on the tray bubble view is open or not. I don\u0027t think other widgets expect it.",
+      "parentUuid": "e84f8d84_4b1051f1",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
