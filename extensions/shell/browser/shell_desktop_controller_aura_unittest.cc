@@ -14,7 +14,7 @@
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/native_app_window.h"
 #include "extensions/browser/app_window/test_app_window_contents.h"
-#include "extensions/common/test_util.h"
+#include "extensions/common/extension_builder.h"
 #include "extensions/shell/browser/shell_app_delegate.h"
 #include "extensions/shell/test/shell_test_base_aura.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -124,7 +124,7 @@ TEST_F(ShellDesktopControllerAuraTest, InputEvents) {
 TEST_F(ShellDesktopControllerAuraTest, CloseAppWindows) {
   const AppWindowRegistry* app_window_registry =
       AppWindowRegistry::Get(browser_context());
-  scoped_refptr<Extension> extension = test_util::CreateEmptyExtension();
+  scoped_refptr<Extension> extension = ExtensionBuilder("Test").Build();
   for (int i = 0; i < 3; i++) {
     InitAppWindow(
         controller_->CreateAppWindow(browser_context(), extension.get()));
@@ -139,7 +139,7 @@ TEST_F(ShellDesktopControllerAuraTest, CloseAppWindows) {
 TEST_F(ShellDesktopControllerAuraTest, OnAppWindowClose) {
   const AppWindowRegistry* app_window_registry =
       AppWindowRegistry::Get(browser_context());
-  scoped_refptr<Extension> extension = test_util::CreateEmptyExtension();
+  scoped_refptr<Extension> extension = ExtensionBuilder("Test").Build();
   for (int i = 0; i < 3; i++) {
     InitAppWindow(
         controller_->CreateAppWindow(browser_context(), extension.get()));

@@ -230,7 +230,7 @@ class EPKPChallengeKeyTestBase : public BrowserWithTestWindowTest {
   scoped_refptr<Extension> CreateExtension() {
     switch (profile_type_) {
       case ProfileType::USER_PROFILE:
-        return test_util::CreateEmptyExtension();
+        return ExtensionBuilder("Test").Build();
 
       case ProfileType::SIGNIN_PROFILE:
         return test_util::BuildApp(ExtensionBuilder())
