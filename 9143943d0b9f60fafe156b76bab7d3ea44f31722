@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "bfe1629b_a6418114",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-18T07:42:41Z",
+      "side": 1,
+      "message": "Bug issue added:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d756749\nIn that case, I would be curious to know what would be the correct page transition? PAGE_TRANSITION_LINK for a Javascript-initiated one? That looked weird to me at the beginning, but it could finally be that.\n\nIn a few days, I will update all the page_transition in that CL. Thanks!",
+      "parentUuid": "c8b0f6a3_542920c5",
+      "range": {
+        "startLine": 715,
+        "startChar": 35,
+        "endLine": 715,
+        "endChar": 70
+      },
+      "revId": "9143943d0b9f60fafe156b76bab7d3ea44f31722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41c53010_877b433d",
         "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
         "patchSetId": 23
