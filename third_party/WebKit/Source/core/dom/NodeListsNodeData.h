@@ -79,7 +79,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   // Oilpan: keep a weak reference to the collection objects.
   // Object unregistration is handled by GC's weak processing.
   typedef HeapHashMap<NamedNodeListKey,
-                      WeakMember<LiveNodeListBase>,
+                      TraceWrapperMember<LiveNodeListBase>,
                       NodeListAtomicCacheMapEntryHash>
       NodeListAtomicNameCacheMap;
   typedef HeapHashMap<QualifiedName, WeakMember<TagCollectionNS>>
@@ -113,7 +113,6 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
 
     T* list = T::Create(node, collection_type);
     result.stored_value->value = list;
-    ScriptWrappableVisitor::WriteBarrier(list);
     return list;
   }
 
@@ -136,7 +135,6 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
     TagCollectionNS* list =
         TagCollectionNS::Create(node, namespace_uri, local_name);
     result.stored_value->value = list;
-    ScriptWrappableVisitor::WriteBarrier(list);
     return list;
   }
 
