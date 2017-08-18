@@ -8,7 +8,10 @@
 #include <memory>
 
 #include "base/memory/ref_counted.h"
+#include "base/task_runner.h"
+#include "base/task_scheduler/scheduler_worker_pool.h"
 #include "base/task_scheduler/sequence.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
 namespace internal {
@@ -23,6 +26,10 @@ enum class ExecutionMode { PARALLEL, SEQUENCED, SINGLE_THREADED };
 
 // Creates a Sequence and pushes |task| to it. Returns that sequence.
 scoped_refptr<Sequence> CreateSequenceWithTask(std::unique_ptr<Task> task);
+
+scoped_refptr<TaskRunner> CreateTaskRunnerWithExecutionMode(
+    SchedulerWorkerPool* worker_pool,
+    test::ExecutionMode execution_mode);
 
 }  // namespace test
 }  // namespace internal
