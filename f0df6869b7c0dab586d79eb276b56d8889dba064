@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b12694e3_08728bd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T22:22:11Z",
+      "side": 1,
+      "message": "nit: Wrap CL description same as code at 80 chars",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a140bc0_b2a77d5b",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T22:22:11Z",
+      "side": 1,
+      "message": "Have you considered to go to STATE_APPS instead of STATE_START instead of combining the two states?",
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2106ee85_463855a8",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T22:22:11Z",
+      "side": 1,
+      "message": "DISABLED_ prefix is for sheriffs to disable a test to reopen the tree. Developer should figure out a way to make tests work.\n\nHere, we should update the tests to check whether start page view is used or not and skip the tests if it is not.",
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
