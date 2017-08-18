@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596cca0d_9f2115ab",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T15:56:27Z",
+      "side": 1,
+      "message": "flip? \"actually isn\u0027t\"",
+      "revId": "72db14e0adecccffce94df2eaebce4d14a4e5d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a30cb6b_81080290",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T15:56:27Z",
+      "side": 1,
+      "message": "#if DCHECK_IS_ON()\nvoid AssertIsOnIdleWorkersStack(SchedulerWorker* worker) const;\n#else\nvoid AssertIsOnIdleWorkersStack(SchedulerWorker* worker) const {}\n#endif\n\nand ifdef impl, that way compiler can optimize this call out in non-dcheck builds",
+      "revId": "72db14e0adecccffce94df2eaebce4d14a4e5d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe7bf6c_ab8347a9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T15:56:27Z",
+      "side": 1,
+      "message": "\u003d TimeTick::Now();  here and remove code from constructor.",
+      "revId": "72db14e0adecccffce94df2eaebce4d14a4e5d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b7e592_f149a354",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T15:56:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be logging this histogram in this case. I guess we were before though so we should clean this up in a follow-up CL, please file a bug and add:\n\n// TODO(crbug.com/123456): Do not log this histogram when waking up due to timeout.",
+      "revId": "72db14e0adecccffce94df2eaebce4d14a4e5d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7273245f_8c9ab686",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T15:56:27Z",
+      "side": 1,
+      "message": "nit: inline this variable, i.e.\n\nreturn worker !\u003d ... \u0026\u0026 ... ;\n\n(not sure why it wasn\u0027t before..)",
+      "revId": "72db14e0adecccffce94df2eaebce4d14a4e5d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
