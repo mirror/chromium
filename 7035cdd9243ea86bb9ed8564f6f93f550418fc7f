@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e83e9412_cccc0ef5",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "As I understand the cases where multi-process sharing of session storage only happens on Android when there is out-of-process iframes and they share a common database. This is also a special case of same origin iframes nested. So, it is very rare that we will actually have multiprocess sharing and causing us to re-load the database. I have made this Android only.",
+      "parentUuid": "8b509d0a_61b69f7c",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2270b80c_853151df",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f395368c_b9093f14",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "ouch, fixed.",
+      "parentUuid": "2270b80c_853151df",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ae3460b3_6a370297",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9a3290e_d2de47dd",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34418823_132456b7",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5438cf8_fd5b0411",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Good point. fixed it here.",
+      "parentUuid": "34418823_132456b7",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3a1c12dc_27e6a729",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecf1eda3_f43e5f88",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e59dd3b_50f0998d",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc27199_6a2ebdfb",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e59dd3b_50f0998d",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7b154f37_3ce3085f",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Um actually true, it is not required. I was paranoid for no reason.",
+      "parentUuid": "3714b839_d62fcf0b",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a18cb42b_cb2ee101",
         "filename": "content/browser/dom_storage/dom_storage_area.h",
         "patchSetId": 4
@@ -135,6 +261,42 @@
       "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1028e0ad_98f207d2",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18cb42b_cb2ee101",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f90f3315_aecf0b1b",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18cb42b_cb2ee101",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +317,42 @@
     },
     {
       "key": {
+        "uuid": "9e74c908_36adf284",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78928971_ad4197b3",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e0d0b8d_0a291712",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78928971_ad4197b3",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136f5b3f_e0bf0291",
         "filename": "content/browser/dom_storage/dom_storage_area.h",
         "patchSetId": 4
@@ -166,6 +364,24 @@
       "writtenOn": "2017-08-14T23:57:04Z",
       "side": 1,
       "message": "There are three states now and two of them are blurred together right now.\n- keys loaded\n- keys/values loaded\n- unloaded",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7857e5e_156c3de6",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "I removed this method and exposed the IsInitialImportNeeded()",
+      "parentUuid": "136f5b3f_e0bf0291",
       "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "e5f9a556_3d57bfca",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "The idea is that this value and the map are not kept in sync in both the cases.\nCase 1: When we switch from no-cache to cache:\nWe do not immediately load the data into memory and wait for the extract value or any call that requires map to be in memory. So, till then these values will be out of sync.\n\nCase 2: When we switch from cache to no-cache:\nWith this CL we actually never use this feature and not really plan to use even in the future. But, even if we did, I don\u0027t think we should immediately delete all the keys from the map. Let\u0027s take a case where there are multiple processes sharing the storage. If some process dies and starts again, this would cause the count to go from 2 to 1 and back to 2 again quickly. For this case we shouldn\u0027t be clearing and loading the whole map into memory again. So, the full map is kept around till next commit time. Once commit is done, the map is cleared. Just to give some extra time for the renderers to use the map again if needed.\n\nI agree that we could just remove values and make the keys only map. I have made that change in UpdateMapIfPossible().",
+      "parentUuid": "9adc92a2_891cd5d8",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19a4f906_2c7f7250",
         "filename": "content/browser/dom_storage/dom_storage_host.cc",
         "patchSetId": 4
@@ -206,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "17586ca8_2cd7728b",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "um I made it more subtle. wdyt?\nI didn\u0027t want to add extra argument to DOMStorageArea::SetItem()",
+      "parentUuid": "19a4f906_2c7f7250",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65f88bed_abf46341",
         "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
         "patchSetId": 4
@@ -217,6 +469,24 @@
       "writtenOn": "2017-08-14T23:57:04Z",
       "side": 1,
       "message": "Oh, the emplace() method is probably a better answer.\n\nclone-\u003eareas_.emplace(it-\u003efirst, AreaHolder(area,0))\n\nThis gives us AreaHolder grepability without the need for a special move ctor, and less happens at runtime.",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd61c33_a3be8900",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 1,
+      "message": "I think a copy or a move constructor is anyway required for std::map even for using emplace.\nI am trying to delete the copy constructor here though. I changed this to use \u003d.",
+      "parentUuid": "65f88bed_abf46341",
       "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

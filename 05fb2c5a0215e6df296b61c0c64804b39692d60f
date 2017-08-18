@@ -16,6 +16,24 @@
       "revId": "05fb2c5a0215e6df296b61c0c64804b39692d60f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75ede54_970a0738",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-18T18:41:57Z",
+      "side": 0,
+      "message": "So, we could do it because we store the map and we could reload the commit batch when we need to commit from the map. But it is no longer possible. So, the improvement of this CL would not be immediate. Previously the values were stores in map for ever and commit batch when needed. Now, it is stored in commit batch only as long as it is needed for the commit.",
+      "parentUuid": "694b8a09_0aaadf96",
+      "revId": "05fb2c5a0215e6df296b61c0c64804b39692d60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
