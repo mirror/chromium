@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c02e69a_0316449f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T16:46:13Z",
+      "side": 1,
+      "message": "Use {}",
+      "revId": "1a07aebc146a36d996f689903e40aa29200473f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb121c3_028707d7",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-18T16:46:13Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this here?",
+      "revId": "1a07aebc146a36d996f689903e40aa29200473f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
