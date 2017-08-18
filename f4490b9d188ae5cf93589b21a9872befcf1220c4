@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5a577d_b41b70ca",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T09:13:38Z",
+      "side": 1,
+      "message": "This looks a kind of hack?\nSpecifically, non-ascii chars are estimated much bigger than actual,\ne.g Kanji-chars are estimated 3 times bigger than actual.\nWhy not convert it to UTF16 once and take the size, as Luis suggested?\n(I guess, maybe performance reason on something?)\nSo, you said you had offline discussion, then please explicitly document it\nin precise.\nThen, in future, if necessary, we can fix somehow appropriately.\n\nAlso, as the comment should be applied to both here and L228, I\u0027d recommend you to extract this hack into a function in anonymous namespace.\n\nsize_t EstimateParcelPayloadSizeUpperBound(const mojom::ClipData\u0026 data) {\n  size_t result \u003d 0;\n  for (const auto\u0026 representation : data-\u003erepresentations) {\n    // ... please comment in details ...\n    result +\u003d representation.get_text().size() * 2;\n  }\n  return result;\n}\n\nthen at L236:\n\nif (EstimateParcelPayloadSizeUpperBound(*clip_data) \u003e\u003d kMax...) {\n  ... error ...\n}\n\nWDYT?",
+      "revId": "f4490b9d188ae5cf93589b21a9872befcf1220c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
