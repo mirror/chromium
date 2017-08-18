@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff8f099_7f3ca559",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T16:43:33Z",
+      "side": 1,
+      "message": "Do we want to subtract kPaddingFromScreenTop even in the vertical case? It\u0027s unclear from the comments.",
+      "revId": "659e2e2bd9a8535112d0bb1d5a70571f7a31ae1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
