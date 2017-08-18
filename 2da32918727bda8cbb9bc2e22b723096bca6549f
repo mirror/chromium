@@ -1,0 +1,419 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db21202a_d242d3d7",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "2016 → 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3633af6_ce5e3cc4",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Why specify an underlying type for the enum class instead of using the default one (\"int\")? I don\u0027t see any reason to request explicitly a \"short\" here (if we really wanted to limit memory use \"char\" would probably be better, but I don\u0027t think it is worth it).\n\nI think it would be fine without the underlying type:\n\n  enum class DialogButtonStyle {\n    ...\n  };\n\nReference: http://en.cppreference.com/w/cpp/language/enum",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22e93b1_9b38c108",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "You do not have to use an initialiser for the first enumerator (i.e. the first defined value in the enumeration). If no initialiser is passed, the value is zero according to the standard:\n\n\u003e Each enumerator is associated with a value of the underlying type. When initializers are provided in the enumerator-list, the values of enumerators are defined by those initializers. If the first enumerator does not have an initializer, the associated value is zero. For any other enumerator whose definition does not have an initializer, the associated value is the value of the previous enumerator plus one.\n\nUsually, I think we should either not use initialiser (when we do not really care about the values just that they are sequencial) or always use them (when we care about the value because they are serialised or referenced outside of the application, e.g. in an histogram).\n\nReference: http://en.cppreference.com/w/cpp/language/enum",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6f7e04_98ecd91f",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "I would recommend moving this enum in a separate file (since it is a \"class enum\" you can forward-declare it here like this \"enum class DialogButtonStyle\"). Putting each type, including enums, in separate file helps with refactoring (and reducing the dependencies between files, as a file that only need to have the declaration of the enum does not also has to process the declaration of the class DialogButtonConfiguration).",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af50a02_25ab2826",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Can you add unit test?\n\nAt least test that the properties are equals to the values passed to the initialiser and that the identifier is not nil. Another additional test would be to create two objects with the same values and check that they have different identifiers.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3a3921_d07067c8",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "This initialiser does not take a parameter named |identifier|, so I think you should remove this part.",
+      "range": {
+        "startLine": 26,
+        "startChar": 62,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b77d51f_e20cc1f0",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "nit, optional: maybe mark all those properties as \"nonnull\"",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3f6b3d_1db5f7bd",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Why not make this initialiser public? I don\u0027t see the benefit of forcing use of the factory method vs just exposing the initialiser publicly as the class is not a class cluster. I can understand the presence of a convenience factory method, but I think having the initialiser public does not break any of the encapsulation the class provides.\n\nI think both \"[DialogButtonConfiguration configWithText:text style:style]\" and \"[[DialogButtonConfiguration alloc] initWithText:text style:style]\" should both be valid.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf348e12_49dface3",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Can you add unit tests?\n\nI see at least the following things to test:\n1. two separately created objects are not equals,\n2. a copied object is equal to the original object.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7688da0_8e342531",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "nit: remove this empty line or add one before closing the anonymous namespace",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1e29cc_d8c18228",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Can you add unit test?\n\nAt least check that it is possible to instantiate a subclass that override all methods in Subclassing category to be no-op.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effb4bb5_1a6dabd2",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Other classes in your CL use the following comment that I find easier to understand. Could you update this comment to the same thing?\n\n  // Implemented by subclasses.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cb3b55_2c5e02d0",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Should it be NOTREACHED() then?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59413660_81f1fd82",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Can you add unit test?\n\nAt least check that it is possible to instantiate a subclass that overrides all method in Subclassing category to be no-op. Additionally, you can probably check that -updateConsumer: does pass the values from the subclass to the consumer.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7315580_06a28b89",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4508d2c4_10ef45f7",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ca95db_abdcb9e9",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65821429_d96f89fe",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e7b0d3_eb2fa51e",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0f42d3_c939220f",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Can you add unit tests?\n\nAt least check that it is possible to instantiate the class and that the properties are correctly initialised from the values passed to the initialiser/factory method.\n\nProbably should also test that two objects created with the same value have different identifiers.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cea5c0_f7e37cfe",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "nit, optional: maybe mark all those properties \"nonnull\"",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9324b1f3_0289c17c",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Why not expose this initialiser publicly?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7874fd7_80c61165",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:31:04Z",
+      "side": 1,
+      "message": "Can you add unit tests?\n\nIt looks like UIAlertController exposes the actions and the textFields property, so you should be able to check that creating a DialogViewController with some configuration results in the correct number of actions and the proper textFields based on the properties of the consumer.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
