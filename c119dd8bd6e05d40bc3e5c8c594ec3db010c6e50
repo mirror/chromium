@@ -22,6 +22,30 @@
       "revId": "c119dd8bd6e05d40bc3e5c8c594ec3db010c6e50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0457785_416b0e57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-18T15:25:42Z",
+      "side": 1,
+      "message": "Copied their version of the file. If this lands first, it should merge cleanly.",
+      "parentUuid": "9fb94792_77684805",
+      "range": {
+        "startLine": 293,
+        "startChar": 26,
+        "endLine": 293,
+        "endChar": 45
+      },
+      "revId": "c119dd8bd6e05d40bc3e5c8c594ec3db010c6e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
