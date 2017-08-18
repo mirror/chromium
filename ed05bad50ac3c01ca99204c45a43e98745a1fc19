@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb2f1a63_15996869",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T20:55:50Z",
+      "side": 1,
+      "message": "Where does the 76 come from?",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bab9db_f699cf51",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T20:55:50Z",
+      "side": 1,
+      "message": "private: DISALLOW...",
+      "range": {
+        "startLine": 1586,
+        "startChar": 0,
+        "endLine": 1586,
+        "endChar": 2
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6da0833_a3f2be37",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T20:55:50Z",
+      "side": 1,
+      "message": "How do you know the findbar is fully visible at this point?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 1,
+        "endLine": 1606,
+        "endChar": 69
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcc5c4b_98f8f631",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T20:55:50Z",
+      "side": 1,
+      "message": "Why does this only apply to windows and linux? Assuming we actually ran this code on mac, won\u0027t it equally apply there?",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 40
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
