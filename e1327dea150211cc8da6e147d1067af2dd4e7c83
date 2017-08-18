@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da574d4_052fc8ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T19:17:16Z",
+      "side": 1,
+      "message": "nit: I\u0027d avoid \"fork\" as we don\u0027t really do forking much :), rather we want to treat navigations to existing extensions and nonexisting ones the same.",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "e1327dea150211cc8da6e147d1067af2dd4e7c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc273da_402b343d",
+        "filename": "chrome/browser/extensions/isolated_app_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T19:17:16Z",
+      "side": 1,
+      "message": "nit: nullptr while at it.",
+      "range": {
+        "startLine": 476,
+        "startChar": 61,
+        "endLine": 476,
+        "endChar": 65
+      },
+      "revId": "e1327dea150211cc8da6e147d1067af2dd4e7c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdfd125_bcf758a6",
+        "filename": "chrome/browser/extensions/isolated_app_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T19:17:16Z",
+      "side": 1,
+      "message": "nit: same as above.",
+      "range": {
+        "startLine": 482,
+        "startChar": 65,
+        "endLine": 482,
+        "endChar": 69
+      },
+      "revId": "e1327dea150211cc8da6e147d1067af2dd4e7c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed30dcbf_068a7b25",
+        "filename": "chrome/browser/extensions/process_management_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T19:17:16Z",
+      "side": 1,
+      "message": "nit: uninstalled implies it was once installed and then removed. Maybe nonexistent or something similar?",
+      "range": {
+        "startLine": 469,
+        "startChar": 13,
+        "endLine": 469,
+        "endChar": 24
+      },
+      "revId": "e1327dea150211cc8da6e147d1067af2dd4e7c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbe3db9_61b2720b",
+        "filename": "chrome/common/extensions/extension_process_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-18T19:17:16Z",
+      "side": 1,
+      "message": "nit: \"should not\", it is pretty clear otherwise we have problems :).",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "e1327dea150211cc8da6e147d1067af2dd4e7c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
