@@ -446,6 +446,30 @@
       "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11f2e67_06888208",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T22:20:10Z",
+      "side": 1,
+      "message": "\u003e  think this can be said for most things in TabDialogs except perhaps hung renderers. I\u0027ve been leaning towards TabDialogs for dialogs that are conceptually bound to a WebContents* rather than a BrowserWindow*, which I think is the case here. BrowserView* is just used to find an anchor point (which should even be \"null\" in some cases - e.g. fullscreen, hosted/bookmark apps).\n\nThe reason I prefer Browser-\u003eBrowserWindow route is that by virtue of the function being on BrowserWindow callers are forced to go through a cross platform code path that makes sure you end up in the right place. If a different BrowserWindow implementation is used, the code just works. Calling Browser::FromWebContents() ensures you look up the Browser correctly.\n\nThe old code was:\n\nBrowser* browser \u003d chrome::FindBrowserWithWebContents(web_contents());\nbrowser-\u003ewindow()-\u003eShowSaveCreditCardBubble(web_contents(), this, is_reshow_);\n\nThe new code doesn\u0027t have the Browser, and as the implementation wants the BrowserView it has to assume BrowserView is the BrowserWindow:\n\n  BrowserView::GetBrowserViewForNativeWindow(...);\n\nAssuming BrowserView is *the* BrowserWindow certainly works now, but shouldn\u0027t this code work with other BrowserWindow implementations? At least if you route through BrowserWindow it\u0027s obvious another subclass needs to do something.\n\nMy question about active was more subtle. BrowserView::GetBrowserViewForNativeWindow() on ChromeOS for inactive tabs returns null.\n\nJust to reiterate, if the code is going to end up needing BrowserView I think it\u0027s far safer and less error prone to route through Browser for the following reasons:\n. it works with any BrowserWindow implementation.\n. You don\u0027t have to try to figure out BrowserView, the code is executing in BrowserView.\n. You don\u0027t crash when inactive tabs (you can null check to avoid the crash, but I bet most code wouldn\u0027t).",
+      "parentUuid": "c2728fe4_768c97f6",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
