@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a9da39_47dbeed6",
+        "filename": "chrome/browser/extensions/service_worker_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T16:03:42Z",
+      "side": 1,
+      "message": "nit: when doing something like this, it can be useful to use the QuitWhenIdleClosure() so that anything still running in the loop gets run.",
+      "revId": "530aaaaa9de3fcb5804e2b53ce96c1a241d9dfaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ae86a8_bc39018d",
+        "filename": "chrome/browser/extensions/service_worker_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T16:03:42Z",
+      "side": 1,
+      "message": "Hmm... waiting for IPC messages like this makes me nervous.  In particular, this test *wouldn\u0027t* fail if we sent additional IPC messages dropping the ref count below zero, since we\u0027d just check once we received \u003cn\u003e messages.  It\u0027d be better if we could wait until we know that all IPC messages have been sent from the renderer.\n\nOne way I\u0027ve dealt with this in the past is by having a pseudo-RunAllInRenderer() method that does something like:\n\nvoid Run() {\n// Queue up any IPCs\ncontent::RunAllBlockingPoolTasksUntilIdle();\n// content::ExecuteScript sends an IPC to the renderer and waits for a\n// reply. Since our IPC system is FIFO, we know that any IPC messages that\n// were sent before the ExecuteScript() one will be sent back before\n// ExecuteScript() finishes.\ncontent::ExecuteScript(web_contents, \"\");\n// In case any IPC listeners PostTask().\ncontent::RunAllBlockingPoolTasksUntilIdle();\n}\n\nThat *normally* works, since we should also know that by the time we use listener.Reply(), the test.sendMessage() function has already sent the reply to the renderer, and will thus be handled first.  The concern I would have is that I don\u0027t know how this might play with threads in the renderer process...\n\nWDYT?  Would that work, or is there a way we could tweak it to work?  Or do you prefer this approach?  (This seems like a good alternative, I\u0027m just mildly worried that it doesn\u0027t catch all the possible cases.)\n\nAlternative no. 2 is that we add a ExtensionMsg_RunAllPendingInRendererForTest, which is a bit messy, but, honestly, could end up saving us a ton of hacks/workarounds here and elsewhere.  I just wonder if content::RunAllBlockingPoolTasksUntilIdle() works in the renderer process for worker threads?",
+      "revId": "530aaaaa9de3fcb5804e2b53ce96c1a241d9dfaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f046bd_48b7959c",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/api_worker_ref_count/page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T16:03:42Z",
+      "side": 1,
+      "message": "add a comment explaining why we wait for two messages?",
+      "revId": "530aaaaa9de3fcb5804e2b53ce96c1a241d9dfaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
