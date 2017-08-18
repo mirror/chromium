@@ -234,10 +234,63 @@ template <typename Strategy>
 SelectionTemplate<Strategy>::Builder::Builder() = default;
 
 template <typename Strategy>
-SelectionTemplate<Strategy> SelectionTemplate<Strategy>::Builder::Build()
-    const {
+SelectionTemplate<Strategy>::Builder::~Builder() {
+#if DCHECK_IS_ON()
+  DCHECK(!is_built_);
+#endif
+}
+
+template <typename Strategy>
+SelectionTemplate<Strategy> SelectionTemplate<Strategy>::Builder::Build() {
+#if DCHECK_IS_ON()
+  DCHECK(!is_built_);
+#endif
   DCHECK(selection_.AssertValid());
   selection_.ResetDirectionCache();
+#if DCHECK_IS_ON()
+  is_built_ = true;
+#endif
+  return selection_;
+}
+
+template <typename Strategy>
+SelectionTemplate<Strategy>
+SelectionTemplate<Strategy>::Builder::BuildAsBackwardSelection(
+    const EphemeralRangeTemplate<Strategy>& range) {
+  DCHECK(range.IsNotNull());
+  DCHECK(!range.IsCollapsed());
+#if DCHECK_IS_ON()
+  DCHECK(!is_built_);
+#endif
+  DCHECK(selection_.IsNone()) << selection_;
+  selection_.base_ = range.EndPosition();
+  selection_.extent_ = range.StartPosition();
+  selection_.direction_ = Direction::kBackward;
+  DCHECK_GT(selection_.base_, selection_.extent_);
+#if DCHECK_IS_ON()
+  selection_.dom_tree_version_ = range.GetDocument().DomTreeVersion();
+  is_built_ = true;
+#endif
+  return selection_;
+}
+
+template <typename Strategy>
+SelectionTemplate<Strategy>
+SelectionTemplate<Strategy>::Builder::BuildAsForwardSelection(
+    const EphemeralRangeTemplate<Strategy>& range) {
+  DCHECK(range.IsNotNull());
+#if DCHECK_IS_ON()
+  DCHECK(!is_built_);
+#endif
+  DCHECK(selection_.IsNone()) << selection_;
+  selection_.base_ = range.StartPosition();
+  selection_.extent_ = range.EndPosition();
+  selection_.direction_ = Direction::kForward;
+  DCHECK_LE(selection_.base_, selection_.extent_);
+#if DCHECK_IS_ON()
+  selection_.dom_tree_version_ = range.GetDocument().DomTreeVersion();
+  is_built_ = true;
+#endif
   return selection_;
 }
 
