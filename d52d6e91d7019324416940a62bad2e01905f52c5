@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db6156b7_f3581311",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-18T19:17:54Z",
+      "side": 1,
+      "message": "Please initialize to gfx::Rect().",
+      "revId": "d52d6e91d7019324416940a62bad2e01905f52c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
