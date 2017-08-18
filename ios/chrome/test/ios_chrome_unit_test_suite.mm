@@ -4,6 +4,8 @@
 
 #include "ios/chrome/test/ios_chrome_unit_test_suite.h"
 
+#include <set>
+
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/path_service.h"
@@ -26,6 +28,9 @@
 #endif
 
 namespace {
+
+const std::set<std::string> non_port_non_domain_wildcard_schemes_{
+    kDummyExtensionScheme};
 
 class IOSChromeUnitTestSuiteInitializer
     : public testing::EmptyTestEventListener {
@@ -88,6 +93,6 @@ void IOSChromeUnitTestSuite::Initialize() {
   ios::RegisterPathProvider();
   ui::RegisterPathProvider();
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      &non_port_non_domain_wildcard_schemes_);
 }

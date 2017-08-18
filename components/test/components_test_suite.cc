@@ -5,6 +5,7 @@
 #include "components/test/components_test_suite.h"
 
 #include <memory>
+#include <set>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -32,6 +33,10 @@
 #endif
 
 namespace {
+
+// Not using kExtensionScheme to avoid the dependency to extensions.
+const std::set<std::string> non_port_non_domain_wildcard_schemes_{
+    "chrome-extension", "chrome-search"};
 
 class ComponentsTestSuite : public base::TestSuite {
  public:
@@ -82,9 +87,8 @@ class ComponentsTestSuite : public base::TestSuite {
     url::AddStandardScheme("chrome-devtools", url::SCHEME_WITHOUT_PORT);
     url::AddStandardScheme("chrome-search", url::SCHEME_WITHOUT_PORT);
 
-    // Not using kExtensionScheme to avoid the dependency to extensions.
-    ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-        "chrome-extension");
+    ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+        &non_port_non_domain_wildcard_schemes_);
   }
 
   void Shutdown() override {

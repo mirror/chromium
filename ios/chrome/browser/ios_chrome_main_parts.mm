@@ -4,6 +4,8 @@
 
 #include "ios/chrome/browser/ios_chrome_main_parts.h"
 
+#include <set>
+
 #include "base/base_switches.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
@@ -63,6 +65,9 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+const std::set<std::string> non_port_non_domain_wildcard_schemes_{
+    kDummyExtensionScheme};
 
 IOSChromeMainParts::IOSChromeMainParts(
     const base::CommandLine& parsed_command_line)
@@ -148,8 +153,8 @@ void IOSChromeMainParts::PreMainMessageLoopRun() {
 
   // ContentSettingsPattern need to be initialized before creating the
   // ChromeBrowserState.
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      &non_port_non_domain_wildcard_schemes_);
 
   // Ensure ClipboadRecentContentIOS is created.
   ClipboardRecentContent::SetInstance(CreateClipboardRecentContentIOS());
