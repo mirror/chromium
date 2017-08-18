@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c81723_42d44e0a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T19:56:25Z",
+      "side": 1,
+      "message": "Should this sanity check that there are pending tabs to load?",
+      "range": {
+        "startLine": 924,
+        "startChar": 17,
+        "endLine": 924,
+        "endChar": 43
+      },
+      "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2032307a_23f6e70f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T19:56:25Z",
+      "side": 1,
+      "message": "I\u0027m still not clear on how this is supposed to distinguish between session restore tabs (which don\u0027t need a throttle) and background opened tabs (which don\u0027t). Presumably we still want to throttle background opened tabs that a user creates during an active session restore.\n\nI also think they should be tracked as a background tab opening session, and that session restore and background tab opening sessions should be allowed to overlap.\n\nFor *reporting* it might make sense to only report a SR session when it is exclusive of BTO, and vice-versa. However, in the TM the logic to support these two activities should be able to proceed simultaneously.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 12,
+        "endLine": 1154,
+        "endChar": 35
+      },
+      "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf9d874_48358446",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-18T19:56:25Z",
+      "side": 1,
+      "message": "Or until the session is paused? And then a new session starts when it is resumed? Please document clearly how this interacts with Pause/Resume.",
+      "range": {
+        "startLine": 439,
+        "startChar": 46,
+        "endLine": 439,
+        "endChar": 54
+      },
+      "revId": "d5ad91c502bdaee322b537f1495dd19f9393ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
