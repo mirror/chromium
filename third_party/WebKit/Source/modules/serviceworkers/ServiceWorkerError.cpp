@@ -107,6 +107,7 @@ ExceptionParams GetExceptionParams(const WebServiceWorkerError& web_error) {
       return ExceptionParams(kUnknownError,
                              "An unknown error occurred within Service Worker.",
                              web_error.message);
+    case WebServiceWorkerError::kErrorTypeNone:
     case WebServiceWorkerError::kErrorTypeType:
       // ErrorTypeType should have been handled before reaching this point.
       NOTREACHED();
