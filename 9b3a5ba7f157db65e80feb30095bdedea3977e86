@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2267db6a_f19bac42",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T01:50:55Z",
+      "side": 1,
+      "message": "If we change it to SELECT DISTINCT, I\u0027ll be happy :)",
+      "revId": "9b3a5ba7f157db65e80feb30095bdedea3977e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303cdbdd_e724aa2c",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T01:50:55Z",
+      "side": 1,
+      "message": "operatin -\u003e operation",
+      "revId": "9b3a5ba7f157db65e80feb30095bdedea3977e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bc7f2a_1feb1497",
+        "filename": "components/offline_pages/core/prefetch/sent_get_operation_cleanup_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T01:50:55Z",
+      "side": 1,
+      "message": "Could you group all overrides together (no blank lines in between) and add \n// PrefetchNetworkRequestFactory implementation.\ncomment in front of them? This way, the one test method you are adding will be clearly separate.",
+      "revId": "9b3a5ba7f157db65e80feb30095bdedea3977e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
