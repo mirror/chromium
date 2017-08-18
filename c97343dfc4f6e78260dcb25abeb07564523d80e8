@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e906cab_d380052a",
+        "filename": "chrome/common/net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T03:22:13Z",
+      "side": 1,
+      "message": "optional: IMO it\u0027s easier to follow additions rather than subtractions. For example, on 34/35 you add deps not subtract deps. I marked this optional, so it\u0027s up to you if you agree and want to make the change here.",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 13
+      },
+      "revId": "c97343dfc4f6e78260dcb25abeb07564523d80e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
