@@ -8,7 +8,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
-#include "ios/chrome/browser/ui/history/history_entry.h"
+#include "components/history/core/browser/browsing_history_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 
@@ -25,9 +25,9 @@ const char kTestTitle[] = "Test";
 HistoryEntryItem* GetHistoryEntryItem(const GURL& url,
                                       const char title[],
                                       base::Time timestamp) {
-  history::HistoryEntry entry = history::HistoryEntry(
-      history::HistoryEntry::LOCAL_ENTRY, GURL(url), base::UTF8ToUTF16(title),
-      timestamp, "", false, base::string16(), false);
+  BrowsingHistoryService::HistoryEntry entry(
+      BrowsingHistoryService::HistoryEntry::LOCAL_ENTRY, GURL(url),
+      base::UTF8ToUTF16(title), timestamp, "", false, base::string16(), false);
   HistoryEntryItem* item = [[HistoryEntryItem alloc] initWithType:0
                                                      historyEntry:entry
                                                      browserState:nil
