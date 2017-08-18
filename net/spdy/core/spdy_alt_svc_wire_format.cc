@@ -9,6 +9,8 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
+#include "net/quic/core/quic_versions.h"
 #include "net/spdy/platform/api/spdy_string_utils.h"
 
 namespace net {
@@ -109,6 +111,7 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
     }
     ++c;
     // Parse parameters.
+    const bool is_ietf_format_quic = (protocol_id.compare("h2q") == 0);
     uint32_t max_age = 86400;
     VersionVector version;
     SpdyStringPiece::const_iterator parameters_end =
@@ -176,6 +179,22 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
             // List ends in comma.
             return false;
           }
+        }
+      } else if (is_ietf_format_quic && parameter_name.compare("quic") == 0) {
+        // Version is a comma separated list of hex-encoded strings of QUIC
+        // version tags. Hex-encoded string should not include leading "0x" or
+        // leading zeros.
+        if (*parameter_value_begin == '0') {
+          return false;
+        }
+        uint32_t v_tag;
+        if (!base::HexStringToUInt(std::string(parameter_value_begin, c),
+                                   &v_tag)) {
+          return false;
+        }
+        QuicVersion v = QuicTagToQuicVersion(v_tag);
+        if (v != QUIC_VERSION_UNSUPPORTED) {
+          version.push_back(v);
         }
       }
     }
