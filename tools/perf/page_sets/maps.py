@@ -10,8 +10,10 @@ from page_sets import webgl_supported_shared_state
 
 class MapsPage(page_module.Page):
 
+  # See src/content/test/gpu/gpu_tests/maps_integration_test.py for
+  # instructions on re-recording the WPR for this benchmark.
   def __init__(self, page_set):
-    url = 'http://localhost:8000/performance.html'
+    url = 'http://map-test/performance.html'
     super(MapsPage, self).__init__(
       url=url,
       page_set=page_set,

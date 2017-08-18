@@ -28,15 +28,17 @@ class MapsIntegrationTest(
 
   tools/perf/record_wpr smoothness_maps --browser=system
 
-  This produced maps_???.wpr and maps.json, which were copied from
-  tools/perf/page_sets/data into content/test/gpu/page_sets/data.
+  This produced maps_???.wpr, maps_???.wpr.sha1 and maps.json. The
+  .wpr.sha1 was copied from tools/perf/page_sets/data into
+  content/test/gpu/page_sets/data. (This harness doesn't need the
+  .json file any more.)
 
   It's worth noting that telemetry no longer allows replaying a URL that
   refers to localhost. If the recording was created for the locahost URL, one
   can update the host name by running:
 
     web-page-replay/httparchive.py remap-host maps_004.wpr \
-    localhost:10020 map-test
+    localhost:8000 map-test
 
   (web-page-replay/ can be found in third_party/catapult/telemetry/third_party/)
 
@@ -48,8 +50,8 @@ class MapsIntegrationTest(
     depot_tools/upload_to_google_storage.py --bucket=chromium-telemetry \
     maps_???.wpr
 
-  The same sha1 file and json file need to be copied into both of these
-  directories in any CL which updates the recording.
+  The same sha1 file needs to be copied into both of these directories
+  in any CL which updates the recording.
   """
 
   @classmethod
@@ -68,7 +70,7 @@ class MapsIntegrationTest(
         '--force-color-profile=srgb',
         '--enable-features=ColorCorrectRendering']
     cls.CustomizeBrowserArgs(browser_args)
-    cls.StartWPRServer(os.path.join(data_path, 'maps_004.wpr.updated'),
+    cls.StartWPRServer(os.path.join(data_path, 'maps_005.wpr'),
                        cloud_storage.PUBLIC_BUCKET)
     cls.StartBrowser()
 
@@ -80,9 +82,9 @@ class MapsIntegrationTest(
   @classmethod
   def GenerateGpuTests(cls, options):
     cls.SetParsedCommandLineOptions(options)
-    yield('Maps_maps_004',
+    yield('Maps_maps',
           'http://map-test/performance.html',
-          ('maps_004_expectations.json'))
+          ('maps_pixel_expectations.json'))
 
   def _ReadPixelExpectations(self, expectations_file):
     expectations_path = os.path.join(data_path, expectations_file)
