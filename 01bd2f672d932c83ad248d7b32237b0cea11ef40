@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eafdb9ca_599cf8c0",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "nit: please reword this to be more specific",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468083ca_07bf5920",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "Since you know the offline ID, it is possible to precompute whether you want to go to NEW_REQUEST or FINISHED in code.  Is it worth the extra SQL complexity to do it like this?",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0664acdb_d5a172d2",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "Can you pull the error code out into a variable to make for better formatting?",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d766f8_2e07d032",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "What is the meaning of |requested_urls| \u003d\u003d nullptr?\n* If it means there are no requested URLs, then this check is incorrect.\n* If it should never happen, then the check should be in |Run| and a dcheck here.",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225301c5_a33c2d96",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "nit: don\u0027t use auto here, type isn\u0027t obvious",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885147aa_4314f63b",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "Why return a unique pointer if it should never be null?",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba63132_65959910",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "requested_urls.count(url.requested_url) \u003e 0 might be simpler",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e81cf1_da9d21ab",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edc68b0_dd322438",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "possibly simpler to do EXPECT_EQ(item, store_item)",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2419ea52_8f6842b4",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "possibly simpler to do EXPECT_EQ(item, store_item)",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fc58fc_41a05474",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "You only test one of the other states, could be nice to test them all and just verify that items_before \u003d\u003d GetAllItems",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a02a9a2_04243abd",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "fyi: will need to rebase",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2158c09_b76c776f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T15:48:35Z",
+      "side": 1,
+      "message": "Did you skip 1200 on purpose?",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
