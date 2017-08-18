@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c6722f5_e5331624",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-18T21:52:01Z",
+      "side": 1,
+      "message": "A reasonable way to validate this claim at runtime would be to add a base::SequenceChecker to the class. You can DETACH_FROM_SEQUENCE in the constructor, and then ensure you DCHECK_CALLED_ON_VALID_SEQUENCE in every other method, including the destructor.",
+      "revId": "be5ce6964438297348a853529c81dd9217afeabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
