@@ -1,24 +1,30 @@
 <html>
 <head>
 
-<script>console.log("Line 4");</script>
-<script>console.log("Line 5");</script>
-<script>document.write("<scrip" + "t>console.log(\"Line 1 in document.write\");\n\n\nconsole.log(\"Line 4 in document.write\");</sc" + "ript>");</script>
-<script>console.log("Line 7");</script>
+<script>
+console.log('Line 4');
+</script>
+<script>
+console.log('Line 5');
+</script>
+<script>
+document.write(
+  '<scrip' + 't>console.log("Line 1 in document.write");\n\n\nconsole.log("Line 4 in document.write");</sc' + 'ript>'
+);
+</script>
+<script>
+console.log('Line 7');
+</script>
 
 <script>
+function onload() {
+  if (window.testRunner) testRunner.dumpAsText();
 
-function onload()
-{
-    if (window.testRunner)
-        testRunner.dumpAsText();
-
-    var script = document.createElement("script");
-    script.textContent = "console.log(\"script element\")";
-    document.head.appendChild(script);
-    document.write("<scrip" + "t>console.log(\"document.write from onload\");</sc" + "ript>");
+  var script = document.createElement('script');
+  script.textContent = 'console.log("script element")';
+  document.head.appendChild(script);
+  document.write('<scrip' + 't>console.log("document.write from onload");</sc' + 'ript>');
 }
-
 </script>
 </head>
 

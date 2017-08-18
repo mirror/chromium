@@ -3,41 +3,32 @@
 <script src="../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../http/tests/inspector/console-test.js"></script>
 <script>
+function evalSource() {
+  function b() {
+    console.trace();
+  }
 
+  function a() {
+    b();
+  }
 
-function evalSource()
-{
-    function b()
-    {
-        console.trace();
-    }
-
-    function a()
-    {
-        b();
-    }
-
-    a();
+  a();
 }
 
-function doEvalSource()
-{
-    setTimeout(function() {
-        eval("(" + evalSource + ")()//# sourceURL=evalURL.js");
-    }, 0);
+function doEvalSource() {
+  setTimeout(function() {
+    eval('(' + evalSource + ')()//# sourceURL=evalURL.js');
+  }, 0);
 }
 
-function test()
-{
-    function callback()
-    {
-        ConsoleTestRunner.dumpConsoleMessages();
-        TestRunner.completeTest();
-    }
-    TestRunner.evaluateInPage("doEvalSource()");
-    ConsoleTestRunner.addConsoleSniffer(callback);
+function test() {
+  function callback() {
+    ConsoleTestRunner.dumpConsoleMessages();
+    TestRunner.completeTest();
+  }
+  TestRunner.evaluateInPage('doEvalSource()');
+  ConsoleTestRunner.addConsoleSniffer(callback);
 }
-
 </script>
 </head>
 

@@ -3,33 +3,26 @@
 <script src="../inspector/inspector-test.js"></script>
 <script src="../inspector/elements-test.js"></script>
 <script>
-
-function createShadowRoot()
-{
-    if (window.testRunner)
-        testRunner.waitUntilDone();
-    var template = document.querySelector('#tmpl');
-    var root = document.querySelector('#host').createShadowRoot();
-    root.appendChild(template.content.cloneNode(true));
-    if (window.testRunner)
-        testRunner.showWebInspector();
-    runTest();
+function createShadowRoot() {
+  if (window.testRunner) testRunner.waitUntilDone();
+  var template = document.querySelector('#tmpl');
+  var root = document.querySelector('#host').createShadowRoot();
+  root.appendChild(template.content.cloneNode(true));
+  if (window.testRunner) testRunner.showWebInspector();
+  runTest();
 }
 
-function test()
-{
-    TestRunner.runTestSuite([
-        function testInit(next)
-        {
-            ElementsTestRunner.selectNodeAndWaitForStyles("inner", next);
-        },
+function test() {
+  TestRunner.runTestSuite([
+    function testInit(next) {
+      ElementsTestRunner.selectNodeAndWaitForStyles('inner', next);
+    },
 
-        function testDumpStyles(next)
-        {
-            ElementsTestRunner.dumpSelectedElementStyles(true);
-            next();
-        }
-    ]);
+    function testDumpStyles(next) {
+      ElementsTestRunner.dumpSelectedElementStyles(true);
+      next();
+    }
+  ]);
 }
 </script>
 </head>

@@ -4,34 +4,27 @@
 <script src="../inspector/inspector-test.js"></script>
 <script src="../inspector/resources-test.js"></script>
 <script>
+function onload() {
+  if (window.testRunner) testRunner.waitUntilDone();
 
-function onload()
-{
-    if (window.testRunner)
-        testRunner.waitUntilDone();
+  window.sessionStorage['inspector'] = 'true';
 
-    window.sessionStorage["inspector"] = "true";
-
-    if (window.testRunner)
-        testRunner.showWebInspector();
-    runTest();
+  if (window.testRunner) testRunner.showWebInspector();
+  runTest();
 }
 
-function test()
-{
-    function callback()
-    {
-        ApplicationTestRunner.domStorageModel().enable();
-        var storages = ApplicationTestRunner.domStorageModel().storages();
-        for (var i = 0; i < storages.length; ++i) {
-            TestRunner.addResult("SecurityOrigin: " + storages[i].securityOrigin);
-            TestRunner.addResult("IsLocalStorage: " + storages[i].isLocalStorage);
-        }
-        TestRunner.completeTest();
+function test() {
+  function callback() {
+    ApplicationTestRunner.domStorageModel().enable();
+    var storages = ApplicationTestRunner.domStorageModel().storages();
+    for (var i = 0; i < storages.length; ++i) {
+      TestRunner.addResult('SecurityOrigin: ' + storages[i].securityOrigin);
+      TestRunner.addResult('IsLocalStorage: ' + storages[i].isLocalStorage);
     }
-    TestRunner.deprecatedRunAfterPendingDispatches(callback);
+    TestRunner.completeTest();
+  }
+  TestRunner.deprecatedRunAfterPendingDispatches(callback);
 }
-
 </script>
 
 </head>

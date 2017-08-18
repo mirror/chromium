@@ -3,29 +3,26 @@
 <script src="../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../http/tests/inspector/console-test.js"></script>
 <script>
-
 var object = {
-    foo(a,b) {
-        console.log(42);
-    },
-    boo: function(c,d) {
-        console.log(42);
-    },
-    get baz() {},
-    set baz(x) {},
-    * gen() {}
-}
+  foo(a, b) {
+    console.log(42);
+  },
+  boo: function(c, d) {
+    console.log(42);
+  },
+  get baz() {},
+  set baz(x) {},
+  *gen() {}
+};
 console.log(object);
 
-function test()
-{
-    ConsoleTestRunner.expandConsoleMessages(step1);
-    function step1() {
-        ConsoleTestRunner.dumpConsoleMessages(false, false, TestRunner.textContentWithLineBreaks);
-        TestRunner.completeTest();
-    }
+function test() {
+  ConsoleTestRunner.expandConsoleMessages(step1);
+  function step1() {
+    ConsoleTestRunner.dumpConsoleMessages(false, false, TestRunner.textContentWithLineBreaks);
+    TestRunner.completeTest();
+  }
 }
-
 </script>
 </head>
 

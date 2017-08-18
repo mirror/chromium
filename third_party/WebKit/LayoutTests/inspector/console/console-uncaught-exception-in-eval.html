@@ -3,63 +3,49 @@
 <script src="../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../http/tests/inspector/console-test.js"></script>
 <script>
+function evalSource(name) {
+  function b() {
+    throw new Error('Exception in eval:' + name);
+  }
 
-function evalSource(name)
-{
-    function b()
-    {
-        throw new Error("Exception in eval:" + name);
-    }
+  function a() {
+    b();
+  }
 
-    function a()
-    {
-        b();
-    }
-
-    a();
+  a();
 }
 
-function doEvalWithSourceURL()
-{
-    var source = "(" + evalSource + ")(\"with sourceURL\")//# sourceURL=evalURL.js";
-    setTimeout(eval.bind(this, source), 0);
+function doEvalWithSourceURL() {
+  var source = '(' + evalSource + ')("with sourceURL")//# sourceURL=evalURL.js';
+  setTimeout(eval.bind(this, source), 0);
 }
 
-function doAnonymousEvalWith()
-{
-    var source = "(" + evalSource + ")(\"anonymous\")";
-    setTimeout(eval.bind(this, source), 0);
+function doAnonymousEvalWith() {
+  var source = '(' + evalSource + ')("anonymous")';
+  setTimeout(eval.bind(this, source), 0);
 }
 
-function test()
-{
-    TestRunner.evaluateInPage("doEvalWithSourceURL()", step2.bind(this));
+function test() {
+  TestRunner.evaluateInPage('doEvalWithSourceURL()', step2.bind(this));
 
-    function step2()
-    {
-        TestRunner.evaluateInPage("doAnonymousEvalWith()", step3.bind(this));
-    }
+  function step2() {
+    TestRunner.evaluateInPage('doAnonymousEvalWith()', step3.bind(this));
+  }
 
-    function step3()
-    {
-        if (Console.ConsoleView.instance()._visibleViewMessages.length < 2)
-            ConsoleTestRunner.addConsoleSniffer(step3);
-        else
-            step4();
-    }
+  function step3() {
+    if (Console.ConsoleView.instance()._visibleViewMessages.length < 2) ConsoleTestRunner.addConsoleSniffer(step3);
+    else step4();
+  }
 
-    function step4()
-    {
-        ConsoleTestRunner.expandConsoleMessages(onExpanded);
-    }
+  function step4() {
+    ConsoleTestRunner.expandConsoleMessages(onExpanded);
+  }
 
-    function onExpanded()
-    {
-        ConsoleTestRunner.dumpConsoleMessages();
-        TestRunner.completeTest();
-    }
+  function onExpanded() {
+    ConsoleTestRunner.dumpConsoleMessages();
+    TestRunner.completeTest();
+  }
 }
-
 </script>
 </head>
 

@@ -3,28 +3,23 @@
 <script src="../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../http/tests/inspector/console-test.js"></script>
 <script>
-
 var foo = 'fooValue';
 var bar = {
-    a: 'b'
+  a: 'b'
 };
 
-function test()
-{
-    ConsoleTestRunner.evaluateInConsole("foo", step1);
+function test() {
+  ConsoleTestRunner.evaluateInConsole('foo', step1);
 
-    function step1()
-    {
-        ConsoleTestRunner.evaluateInConsole("bar", step2);
-    }
+  function step1() {
+    ConsoleTestRunner.evaluateInConsole('bar', step2);
+  }
 
-    function step2()
-    {
-        ConsoleTestRunner.dumpConsoleMessages();
-        TestRunner.completeTest();
-    }
+  function step2() {
+    ConsoleTestRunner.dumpConsoleMessages();
+    TestRunner.completeTest();
+  }
 }
-
 </script>
 </head>
 

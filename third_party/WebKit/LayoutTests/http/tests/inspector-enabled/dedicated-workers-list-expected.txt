@@ -1,5 +1,5 @@
-CONSOLE MESSAGE: line 20: Received message from worker 1
-CONSOLE MESSAGE: line 20: Received message from worker 2
+CONSOLE MESSAGE: line 17: Received message from worker 1
+CONSOLE MESSAGE: line 17: Received message from worker 2
 Tests that dedicated workers created before worker inspection was enabled will be reported to the front-end. Bug 72020
 
 Worker inspection enabled

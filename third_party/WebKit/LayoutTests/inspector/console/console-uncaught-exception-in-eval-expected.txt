@@ -1,31 +1,31 @@
-CONSOLE ERROR: line 5: Uncaught Error: Exception in eval:with sourceURL
-CONSOLE ERROR: line 5: Uncaught Error: Exception in eval:anonymous
+CONSOLE ERROR: line 3: Uncaught Error: Exception in eval:with sourceURL
+CONSOLE ERROR: line 3: Uncaught Error: Exception in eval:anonymous
 Tests that when uncaught exception in eval'ed script ending with //# sourceURL=url is logged into console, its stack trace will have the url as the script source. Bug 47252.
 
-evalURL.js:5 Uncaught Error: Exception in eval:with sourceURL
-    at b (evalURL.js:5)
-    at a (evalURL.js:10)
-    at evalSource (evalURL.js:13)
-    at eval (evalURL.js:14)
+evalURL.js:3 Uncaught Error: Exception in eval:with sourceURL
+    at b (evalURL.js:3)
+    at a (evalURL.js:7)
+    at evalSource (evalURL.js:10)
+    at eval (evalURL.js:11)
     at eval (<anonymous>)
-b @ evalURL.js:5
-a @ evalURL.js:10
-evalSource @ evalURL.js:13
-(anonymous) @ evalURL.js:14
+b @ evalURL.js:3
+a @ evalURL.js:7
+evalSource @ evalURL.js:10
+(anonymous) @ evalURL.js:11
 setTimeout (async)
-doEvalWithSourceURL @ console-uncaught-exc…ion-in-eval.html:25
+doEvalWithSourceURL @ console-uncaught-exc…ion-in-eval.html:20
 (anonymous) @ VM:1
-VM:5 Uncaught Error: Exception in eval:anonymous
-    at b (eval at <anonymous> (unknown source), <anonymous>:5:15)
-    at a (eval at <anonymous> (unknown source), <anonymous>:10:9)
-    at evalSource (eval at <anonymous> (unknown source), <anonymous>:13:5)
-    at eval (eval at <anonymous> (unknown source), <anonymous>:14:3)
+VM:3 Uncaught Error: Exception in eval:anonymous
+    at b (eval at <anonymous> (unknown source), <anonymous>:3:11)
+    at a (eval at <anonymous> (unknown source), <anonymous>:7:5)
+    at evalSource (eval at <anonymous> (unknown source), <anonymous>:10:3)
+    at eval (eval at <anonymous> (unknown source), <anonymous>:11:3)
     at eval (<anonymous>)
-b @ VM:5
-a @ VM:10
-evalSource @ VM:13
-(anonymous) @ VM:14
+b @ VM:3
+a @ VM:7
+evalSource @ VM:10
+(anonymous) @ VM:11
 setTimeout (async)
-doAnonymousEvalWith @ console-uncaught-exc…ion-in-eval.html:31
+doAnonymousEvalWith @ console-uncaught-exc…ion-in-eval.html:25
 (anonymous) @ VM:1
 

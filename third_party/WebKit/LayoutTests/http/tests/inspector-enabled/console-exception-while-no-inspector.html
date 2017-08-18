@@ -3,57 +3,44 @@
 <script src="../inspector/inspector-test.js"></script>
 <script>
 function throwException() {
-    throw 2013;
+  throw 2013;
 }
 
-function baz()
-{
-    throwException();
+function baz() {
+  throwException();
 }
 
-function bar(callback)
-{
-    callback()
+function bar(callback) {
+  callback();
 }
 
-function foo()
-{
-    bar(baz.bind(this));
+function foo() {
+  bar(baz.bind(this));
 }
 
-
-function handleLoaded()
-{
-    if (window.testRunner)
-        testRunner.waitUntilDone();
-    setTimeout(showInspectorAndRunTest, 0);
-    foo();
+function handleLoaded() {
+  if (window.testRunner) testRunner.waitUntilDone();
+  setTimeout(showInspectorAndRunTest, 0);
+  foo();
 }
 
-
-function showInspectorAndRunTest()
-{
-    if (window.testRunner)
-        testRunner.showWebInspector();
-    runTest();
+function showInspectorAndRunTest() {
+  if (window.testRunner) testRunner.showWebInspector();
+  runTest();
 }
 
-function test()
-{
-    if (TestRunner.consoleModel.messages().length !== 1)
-        TestRunner.addResult("FAIL: found too many console messages: " + TestRunner.consoleModel.messages().length);
+function test() {
+  if (TestRunner.consoleModel.messages().length !== 1)
+    TestRunner.addResult('FAIL: found too many console messages: ' + TestRunner.consoleModel.messages().length);
 
-    var message = TestRunner.consoleModel.messages()[0];
-    var stack = message.stackTrace;
-    if (stack && stack.callFrames.length)
-        TestRunner.addResult("FAIL: found message with stack trace");
-    else
-        TestRunner.addResult("SUCCESS: message doesn't have stack trace");
+  var message = TestRunner.consoleModel.messages()[0];
+  var stack = message.stackTrace;
+  if (stack && stack.callFrames.length) TestRunner.addResult('FAIL: found message with stack trace');
+  else TestRunner.addResult("SUCCESS: message doesn't have stack trace");
 
-    TestRunner.addResult("TEST COMPLETE.");
-    TestRunner.completeTest();
+  TestRunner.addResult('TEST COMPLETE.');
+  TestRunner.completeTest();
 }
-
 </script>
 
 </head>
