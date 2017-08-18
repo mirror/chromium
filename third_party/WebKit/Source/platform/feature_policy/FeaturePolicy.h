@@ -23,23 +23,39 @@ namespace blink {
 typedef HashMap<String, WebFeaturePolicyFeature> FeatureNameMap;
 PLATFORM_EXPORT const FeatureNameMap& GetDefaultFeatureNameMap();
 
-// Converts a JSON feature policy string into a vector of whitelists, one for
-// each feature specified. Unrecognized features are filtered out. If |messages|
+// Converts a feature policy string into a vector of whitelists, one for
+// each feature specified. Unrecognized features are filtered out. If |errors|
 // is not null, then any errors in the input will cause an error message to be
-// appended to it.
+// appended to it; if |warnings| is not null, then any warnings in the input
+// will cause a warning message to be appended to it;
+// Example of a feature policy string:
+//     "vibrate a.com b.com; fullscreen 'none'; payment 'src', payment *".
 PLATFORM_EXPORT WebParsedFeaturePolicy
 ParseFeaturePolicy(const String& policy,
                    RefPtr<SecurityOrigin>,
                    Vector<String>* messages);
 
-// Converts a JSON feature policy string into a vector of whitelists (see
-// comments above), with an explicit FeatureNameMap. This method is primarily
-// used for testing.
+// Converts a feature policy string into a vector of whitelists (see comments
+// above), with an explicit FeatureNameMap. This method is primarily used for
+// testing.
 PLATFORM_EXPORT WebParsedFeaturePolicy
 ParseFeaturePolicy(const String& policy,
                    RefPtr<SecurityOrigin>,
                    Vector<String>* messages,
                    const FeatureNameMap& feature_names);
+
+PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration> ParseContainerPolicy(
+    const String& policy,
+    RefPtr<SecurityOrigin>,
+    RefPtr<SecurityOrigin>,
+    Vector<String>* messages,
+    const FeatureNameMap& feature_names);
+
+PLATFORM_EXPORT Vector<WebParsedFeaturePolicyDeclaration> ParseContainerPolicy(
+    const String& policy,
+    RefPtr<SecurityOrigin>,
+    RefPtr<SecurityOrigin>,
+    Vector<String>* messages);
 
 // Verifies whether feature policy is enabled and |feature| is supported in
 // feature policy.
