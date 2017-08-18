@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c22599fd_be306768",
+        "filename": "content/browser/tracing/background_memory_tracing_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-18T18:33:53Z",
+      "side": 1,
+      "message": "Hmm. I think we wrote parts of this with that in mind, but we actually may only be doing that in tests currently, so this is probably fine (maybe DCHECK for it though).\n\nOh you probably want a call into this from BackgroundTracingManagerImpl::AbortScenario(). There\u0027s cases where we start tracing before the user profile is loaded, then once it\u0027s loaded we discover that we shouldn\u0027t be tracing after all (incognito mode, etc), and have to abort.",
+      "parentUuid": "21382a10_f82adf31",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ffef203_5addeee7",
         "filename": "content/browser/tracing/background_memory_tracing_observer.h",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Ouch, I was expecting this to call the copy constructor :(\nBut it actually doesn\u0027t. I do not understand what this call actually does!",
       "parentUuid": "63137713_80ab4814",
+      "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6159308_8ec03000",
+        "filename": "content/browser/tracing/background_tracing_rule.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-18T18:33:53Z",
+      "side": 1,
+      "message": "Not exactly sure tbh, but I guess it\u0027s treated like an rvalue reference rather than an lvalue?",
+      "parentUuid": "28f323d9_c51ce8e1",
       "revId": "239ad803a6fc197b05c8e66c90fecdec4bc1d4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
