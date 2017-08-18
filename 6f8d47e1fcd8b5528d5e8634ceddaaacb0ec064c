@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "9970e770_8daf1cb6",
+        "filename": "base/test/test_mock_time_task_runner.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T23:48:01Z",
+      "side": 1,
+      "message": "Went for kStandalone and kBoundToThread (I didn\u0027t like kWithThreadTaskRunner because that sounds like it\u0027s creating another task runner which it isn\u0027t, it\u0027s the same task runner, it just binds it to \"current thread\" stuff)",
+      "parentUuid": "ca109f09_bfff1c7b",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8f05130_4a7c77fd",
         "filename": "base/test/test_mock_time_task_runner_unittest.cc",
         "patchSetId": 11
