@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1867c45_03b4cba7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-18T20:43:16Z",
+      "side": 1,
+      "message": "I\u0027m not following \"at the layer level\". The bug refers to SPv2 and also mentions clip paths, which we do not account for here either. So maybe I should make this todo explicitly about clip-path?",
+      "revId": "2e2076b8edea1b9462cca7b38be94d62ae755654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
