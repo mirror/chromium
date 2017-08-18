@@ -1034,6 +1034,13 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
+     * Whether or not the associated ContentView is currently attached to a window.
+     */
+    public boolean isAttachedToWindow() {
+        return mAttachedToWindow;
+    }
+
+    /**
      * @see View#onAttachedToWindow()
      */
     @SuppressWarnings("javadoc")
