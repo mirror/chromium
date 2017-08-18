@@ -15,6 +15,7 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -56,6 +57,7 @@ import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.suggestions.ThumbnailGradient;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.chrome.browser.widget.displaystyle.VerticalDisplayStyle;
@@ -124,7 +126,8 @@ public class ArticleSnippetsTest {
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+            + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
     @RetryOnFailure
     public void testSnippetAppearance() throws IOException {
         // Don't load the Bitmap on the UI thread - this is a StrictModeViolation.
@@ -260,7 +263,8 @@ public class ArticleSnippetsTest {
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+                    + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
     public void testSigninPromo() throws IOException {
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mContentView = new FrameLayout(mActivityTestRule.getActivity());
@@ -355,9 +359,16 @@ public class ArticleSnippetsTest {
         mUiDelegate = new MockUiDelegate();
         mSnippetsSource.setDefaultFavicon(getBitmap(R.drawable.star_green));
 
-        if (isModern()) {
+        FeatureUtilities.cacheChromeHomeEnabled();
+
+        if (FeatureUtilities.isChromeHomeModernEnabled()) {
             mRenderTestRule.setVariantPrefix("modern");
         }
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        FeatureUtilities.resetChromeHomeEnabledForTests();
     }
 
     private Bitmap getBitmap(@DrawableRes int resId) {
@@ -472,13 +483,5 @@ public class ArticleSnippetsTest {
                         getBitmap(R.drawable.star_green), largeIconSizePx, true);
             });
         }
-    }
-
-    /**
-     * The test is parameterized on the Suggestions Modern layout, but only some tests make sense
-     * with Modern.
-     */
-    private boolean isModern() {
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
     }
 }
