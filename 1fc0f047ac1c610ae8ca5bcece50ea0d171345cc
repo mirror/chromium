@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0fd649df_2f65927a",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6829cd44_30595289",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d78d3a_7ac2a073",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 3
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "09f50b94_8bd7fd7d",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d78d3a_7ac2a073",
+      "range": {
+        "startLine": 189,
+        "startChar": 28,
+        "endLine": 191,
+        "endChar": 66
+      },
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c3c3089_95a69deb",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 3
@@ -70,6 +112,24 @@
       "writtenOn": "2017-08-16T23:02:45Z",
       "side": 1,
       "message": "Make |num_scheduled_background_sequences_| atomic and use a CompareAndSwap scheme to do this without a lock? The lock is then only required when adding to background sequences queue which is fine.",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70d573d_0217ef38",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "If we don\u0027t add the sequence to |pending_background_sequences_|, it means that there is no foreground work. Optimizing a case where there is no foreground work doesn\u0027t seem worthwhile. If you think it\u0027s worthwhile, I would do it in a separate CL since this CL is already complex.",
+      "parentUuid": "8c3c3089_95a69deb",
       "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "45ef7c08_ece7f3ea",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "Even if we merge pools, getting a BACKGROUND task from a priority queue doesn\u0027t mean that there isn\u0027t foreground work elsewhere (e.g. single-threaded worker, UI/IO thread https://docs.google.com/document/d/1jhGUgDPGUZl_i91lf5WRQrOXlLxCgifHKQFOKyZJMCc/edit#heading\u003dh.5ntrfa1jvelr).",
+      "parentUuid": "901dd753_080f3804",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af19d74f_0f6cfb69",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 3
@@ -104,6 +182,24 @@
       "writtenOn": "2017-08-16T23:02:45Z",
       "side": 1,
       "message": "Why would |sequence| be null? Can we just DCHECK it isn\u0027t?",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8317e0c_e4246973",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "\"|sequence| is the sequence from which a task was run, if non-empty after popping a task from it.\" https://chromium-review.googlesource.com/c/615903/3/base/task_scheduler/task_tracker.h#161",
+      "parentUuid": "af19d74f_0f6cfb69",
       "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +220,24 @@
       "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0312a63_f41d4ee9",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf0962d_b310e7bb",
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "2849afb6_46eb970c",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69de61b_832763ed",
+      "range": {
+        "startLine": 207,
+        "startChar": 14,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2c2048b_0a0d542f",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 3
@@ -170,6 +308,30 @@
       "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10500f4_1991be90",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T17:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2c2048b_0a0d542f",
+      "range": {
+        "startLine": 212,
+        "startChar": 47,
+        "endLine": 212,
+        "endChar": 48
+      },
+      "revId": "1fc0f047ac1c610ae8ca5bcece50ea0d171345cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
