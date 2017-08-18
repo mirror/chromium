@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6047dc7a_89d660a8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c12776_14842751",
+      "range": {
+        "startLine": 812,
+        "startChar": 5,
+        "endLine": 813,
+        "endChar": 35
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67656b98_4c31c958",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "efdd3d0c_f8da0458",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67656b98_4c31c958",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 37
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1faf23d0_aea9caae",
         "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T23:21:05Z",
       "side": 1,
       "message": "I find this change confusing. This code wants to know where the caption buttons are, not the profile button.",
+      "range": {
+        "startLine": 170,
+        "startChar": 38,
+        "endLine": 170,
+        "endChar": 52
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e541c2_ab1067d5",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Yes, that was a bad rename (the profile and caption buttons use the same Y)\n\nChanged to DefaultCaptionButtonY instead and documented that it\u0027s for both the caption and profile buttons.",
+      "parentUuid": "1faf23d0_aea9caae",
       "range": {
         "startLine": 170,
         "startChar": 38,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "11031172_fb032dd3",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Yes.  They now style widgets with CSS, and the navigation buttons have different style classes depending on if the button is close, minimize, etc.  So they could have different margins",
+      "parentUuid": "95a46e69_412683de",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 24
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7060fc39_5472de34",
         "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
         "patchSetId": 17
@@ -114,6 +210,30 @@
       "revId": "335022ed6178012f7dcfce3016f412428b24e373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab22fdd_2d525061",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7060fc39_5472de34",
+      "range": {
+        "startLine": 669,
+        "startChar": 8,
+        "endLine": 669,
+        "endChar": 51
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cdc74945_ae80d3be",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "315ed2f7_23aadba4",
+      "range": {
+        "startLine": 685,
+        "startChar": 4,
+        "endLine": 702,
+        "endChar": 5
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b959e9ef_131e0feb",
         "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.h",
         "patchSetId": 17
@@ -160,6 +304,30 @@
       "revId": "335022ed6178012f7dcfce3016f412428b24e373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5060b35d_37a05fda",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b959e9ef_131e0feb",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "baec9231_6faf0fb4",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_layout_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c1b1e08_e83519d3",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 70
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c129444_f1ab8e5d",
         "filename": "ui/views/linux_ui/nav_button_provider.h",
         "patchSetId": 17
@@ -206,6 +398,30 @@
       "revId": "335022ed6178012f7dcfce3016f412428b24e373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f78ffb_6a00f004",
+        "filename": "ui/views/linux_ui/nav_button_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-18T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c129444_f1ab8e5d",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "335022ed6178012f7dcfce3016f412428b24e373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
