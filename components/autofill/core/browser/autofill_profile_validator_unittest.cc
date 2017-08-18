@@ -138,7 +138,7 @@ TEST_F(AutofillProfileValidatorTest, ValidateAddress_RulesLoaded) {
 }
 
 // When country code is invalid, the profile is invalid.
-TEST_F(AutofillProfileValidatorTest, ValidateAddress_CountryCodeNotExists) {
+TEST_F(AutofillProfileValidatorTest, ValidateProfile_CountryCodeNotExists) {
   const std::string country_code = "PP";
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(country_code));
@@ -158,6 +158,17 @@ TEST_F(AutofillProfileValidatorTest, ValidateAddress_RuleNotExists) {
   set_expected_status(AutofillProfile::UNVALIDATED);
 
   EXPECT_EQ(false, AreRulesLoadedForRegion(country_code));
+
+  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
+}
+
+// Validate a profile with invalid phone number and valid address.
+TEST_F(AutofillProfileValidatorTest,
+       ValidateProfile_InvalidPhone_ValidAddress) {
+  AutofillProfile profile(autofill::test::GetFullValidProfile());
+  profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
+
+  set_expected_status(AutofillProfile::INVALID);
 
   validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
 }
