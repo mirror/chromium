@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "58879ae2_a4f4f6d1",
+        "filename": "media/filters/vpx_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-18T00:00:57Z",
+      "side": 1,
+      "message": "Not without constructing a VideoDecoderConfig from a call to avformat_find_stream_info().",
+      "parentUuid": "8ec15a27_3d1858fc",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 333,
+        "endChar": 33
+      },
+      "revId": "a5d0eb01a88bc0eb834e2737894a1c4821464f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a362caa4_0d4d6c7a",
         "filename": "media/filters/vpx_video_decoder_unittest.cc",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-08-17T23:46:37Z",
       "side": 1,
       "message": "It\u0027s not apparent to me how this UT is connected to this CL. The duplicate frame could be 2 video frames that happen to have the exact same data, rather than 1 video frame referenced twice.\n\nHow does the UT fail without the changes to vpx_video_decoder.cc? I may be completely missing something :)",
+      "range": {
+        "startLine": 352,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 0
+      },
+      "revId": "a5d0eb01a88bc0eb834e2737894a1c4821464f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6f71e6_91f404f7",
+        "filename": "media/filters/vpx_video_decoder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-18T00:00:57Z",
+      "side": 1,
+      "message": "This is comparing the frame pointers, so there can\u0027t be duplicate frames unless they are actually duplicated frame buffers.\n\nGood point on the failure mode. I was just trying to ensure we had coverage for duplicate frames, which we did not have coverage for. I\u0027ve changed this to destruct all frames except the last and then touch the bits in that last frame to ensure they aren\u0027t actually destroyed.",
+      "parentUuid": "a362caa4_0d4d6c7a",
       "range": {
         "startLine": 352,
         "startChar": 2,
