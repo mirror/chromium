@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a899e81_9aa2fcb8",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-18T03:17:43Z",
+      "side": 1,
+      "message": "Nit: Can you add FeedbackPrivateDelegate: above this line?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "398be3d526a4bc1631dc7abf96ba34320b4e5599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed082bb_d21fa6e8",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-18T03:17:43Z",
+      "side": 1,
+      "message": "If this is no longer used, please remove it from here as well as from feedback.html/js",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 4
+      },
+      "revId": "398be3d526a4bc1631dc7abf96ba34320b4e5599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6c0982_84465c4b",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-18T03:17:43Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "398be3d526a4bc1631dc7abf96ba34320b4e5599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
