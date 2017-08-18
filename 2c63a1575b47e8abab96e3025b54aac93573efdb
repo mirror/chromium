@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd3677e4_017d9228",
+        "filename": "gpu/command_buffer/client/shared_memory_limits.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-18T17:08:52Z",
+      "side": 1,
+      "message": "sure, cleaned this up.",
+      "parentUuid": "66d86528_bca2729a",
+      "range": {
+        "startLine": 40,
+        "startChar": 41,
+        "endLine": 40,
+        "endChar": 42
+      },
+      "revId": "2c63a1575b47e8abab96e3025b54aac93573efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2243c74e_a17c31b7",
         "filename": "ppapi/proxy/ppb_graphics_3d_proxy.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T21:39:27Z",
       "side": 1,
       "message": "These are identical to the values in shared_memory_limits.h. Could you define the constants there or do we want the flexibility to make them different?",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "2c63a1575b47e8abab96e3025b54aac93573efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6daf2c5_30b7f4d8",
+        "filename": "ppapi/proxy/ppb_graphics_3d_proxy.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-18T17:08:52Z",
+      "side": 1,
+      "message": "True.\n\nIn the low memory case the defaults will now end up being lowered, and I wasn\u0027t sure how this would impact this code. But adding this logic to ensure it doesn\u0027t change is probably being overly cautious, and just adds more code.\n\nI\u0027ll remove this for now.",
+      "parentUuid": "2243c74e_a17c31b7",
       "range": {
         "startLine": 35,
         "startChar": 14,
