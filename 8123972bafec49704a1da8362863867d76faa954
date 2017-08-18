@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c25f57cf_2342fc7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:16:39Z",
+      "side": 1,
+      "message": "I guess what is the difference between the super class and here?  Could we do:\n\nif (isChecked() || mThumbnailBitmap \u003d\u003d null) {\n    super.updateIconView();\n} else {\n   ... thumbnail code here ...\n}\n\nIdeally, we\u0027d find a way to share code and only deviate where needed.",
+      "parentUuid": "153d30a4_47aacfa9",
+      "range": {
+        "startLine": 259,
+        "startChar": 26,
+        "endLine": 259,
+        "endChar": 47
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0be4ef01_370bd5b6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemHighlightView.java",
         "patchSetId": 4
@@ -237,6 +261,29 @@
     },
     {
       "key": {
+        "uuid": "37f98c07_0812f98d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:16:39Z",
+      "side": 1,
+      "message": "Maybe update the documentation to be a bit more assertive that you must call this after the drawable has changed to ensure selection works.",
+      "range": {
+        "startLine": 195,
+        "startChar": 26,
+        "endLine": 195,
+        "endChar": 34
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4d89230_b7752d5f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
         "patchSetId": 4
@@ -272,6 +319,30 @@
       "side": 1,
       "message": "There are just two methods setImageDrawable and setImageResource setting the Image. We can have setIconDrawable(int resourceId) and setIconDrawable(Drawable) to just set the image drawable in mIconView and call onIconDrawableChanged, but I don\u0027t see that makes so much of a difference. What do you think?",
       "parentUuid": "b4d89230_b7752d5f",
+      "range": {
+        "startLine": 197,
+        "startChar": 19,
+        "endLine": 197,
+        "endChar": 40
+      },
+      "revId": "8123972bafec49704a1da8362863867d76faa954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00adb3ef_6b5bfe6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T23:16:39Z",
+      "side": 1,
+      "message": "I think there are other things that set tint and other stuff on the drawable.  We\u0027d only be able to do this if we ensured mIconView wasn\u0027t visible as it would be too easy for child classes to set the image resource themselves.  If they could set tint, why wouldn\u0027t they be able to set the drawable (is the reasoning I would expect from them about this, and thus likely to miss it).\n\nIf there is a way to prevent mIconView from being exposed then I say we add the methods, if not, then I think this is ok.",
+      "parentUuid": "391b9d3a_d547baaa",
       "range": {
         "startLine": 197,
         "startChar": 19,
