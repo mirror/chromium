@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "793649ae_0615fdef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-18T05:59:21Z",
+      "side": 1,
+      "message": "Yes, though I\u0027m not sure what the interaction between the renderer compositor would look like on renderer crash or page load failure and would rather avoid optimizing those cases. At least at this point.",
+      "parentUuid": "4eea66d9_c0bcf8de",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 113,
+        "endChar": 32
+      },
+      "revId": "7014dc21c6ba0db27f5ea2d326fcbd217dd391f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b62ebd44_c5e0d36b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7014dc21c6ba0db27f5ea2d326fcbd217dd391f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52186bcf_0be7d622",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-18T05:59:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b62ebd44_c5e0d36b",
+      "range": {
+        "startLine": 204,
+        "startChar": 81,
+        "endLine": 204,
+        "endChar": 87
+      },
+      "revId": "7014dc21c6ba0db27f5ea2d326fcbd217dd391f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
