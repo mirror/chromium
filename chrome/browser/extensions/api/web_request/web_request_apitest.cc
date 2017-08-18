@@ -984,6 +984,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
   }
 }
 
+// Test that initiator is only included as part of event details when the
+// extension has a permission matching the initiator.
+IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MinimumAccessInitiator) {
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  ASSERT_TRUE(RunExtensionTest("webrequest_permissions/initiator")) << message_;
+}
+
 // Tests that the webRequest events aren't dispatched when the request initiator
 // is protected by policy.
 IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,

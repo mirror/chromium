@@ -27,7 +27,8 @@ function sendPost(formFile, parseableForm) {
             method: "GET",
             type: "main_frame",
             url: getURL(dirName + formFile),
-            frameUrl: getURL(dirName + formFile)
+            frameUrl: getURL(dirName + formFile),
+            initiator: getDomain(false)
           }
         },
         { label: "a-onResponseStarted",
@@ -38,7 +39,8 @@ function sendPost(formFile, parseableForm) {
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
             type: "main_frame",
-            url: getURL(dirName + formFile)
+            url: getURL(dirName + formFile),
+            initiator: getDomain()
           }
         },
         { label: "a-onCompleted",
@@ -49,7 +51,8 @@ function sendPost(formFile, parseableForm) {
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
             type: "main_frame",
-            url: getURL(dirName + formFile)
+            url: getURL(dirName + formFile),
+            initiator: getDomain()
           }
         },
         { label: "s-onBeforeRequest",
@@ -58,7 +61,8 @@ function sendPost(formFile, parseableForm) {
             method: "GET",
             type: "script",
             url: getURL("requestBody/submit.js"),
-            frameUrl: getURL(dirName + formFile)
+            frameUrl: getURL(dirName + formFile),
+            initiator: getDomain(true)
           }
         },
         { label: "s-onResponseStarted",
@@ -69,7 +73,8 @@ function sendPost(formFile, parseableForm) {
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
             type: "script",
-            url: getURL("requestBody/submit.js")
+            url: getURL("requestBody/submit.js"),
+            initiator: getDomain(true)
           }
         },
         { label: "s-onCompleted",
@@ -80,7 +85,8 @@ function sendPost(formFile, parseableForm) {
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
             type: "script",
-            url: getURL("requestBody/submit.js")
+            url: getURL("requestBody/submit.js"),
+            initiator: getDomain(true)
           }
         },
         { label: "b-onBeforeRequest",
@@ -94,7 +100,8 @@ function sendPost(formFile, parseableForm) {
               formData: formData
             } : {
               raw: [{bytes: {}}] // ArrayBuffer
-            }
+            },
+            initiator: getDomain(true)
           }
         },
         { label: "b-onResponseStarted",
@@ -105,7 +112,8 @@ function sendPost(formFile, parseableForm) {
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
             type: "main_frame",
-            url: getURL("simpleLoad/a.html")
+            url: getURL("simpleLoad/a.html"),
+            initiator: getDomain(true)
           }
         },
         { label: "b-onCompleted",
@@ -116,7 +124,8 @@ function sendPost(formFile, parseableForm) {
             statusCode: 200,
             statusLine: "HTTP/1.1 200 OK",
             type: "main_frame",
-            url: getURL("simpleLoad/a.html")
+            url: getURL("simpleLoad/a.html"),
+            initiator: getDomain(true)
           }
         }
       ],

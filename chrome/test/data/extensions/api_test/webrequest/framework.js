@@ -13,6 +13,7 @@ var tabIdMap;
 var frameIdMap;
 var testWebSocketPort;
 var testServerPort;
+var usingBrowserSideNavigation = false;
 var testServer = "www.a.com";
 var defaultScheme = "http";
 var eventsCaptured;
@@ -45,6 +46,7 @@ function runTestsForTab(tests, tab) {
   chrome.test.getConfig(function(config) {
     testServerPort = config.testServer.port;
     testWebSocketPort = config.testWebSocketPort;
+    usingBrowserSideNavigation = config.browserSideNavigationEnabled;
     chrome.test.runTests(tests);
   });
 }
@@ -69,6 +71,27 @@ function getServerURL(path, opt_host, opt_scheme) {
   var host = opt_host || testServer;
   var scheme = opt_scheme || defaultScheme;
   return scheme + "://" + host + ":" + testServerPort + "/" + path;
+}
+
+// Similar to getURL without the path. When tests are run in browser side
+// navigation mode this function will return undefined unless |invariant| is
+// true.
+function getDomain(invariant) {
+  if (!invariant && usingBrowserSideNavigation) {
+    return undefined;
+  } else {
+    return getURL('').slice(0,-1);
+  }
+}
+
+// Similar to getServerURL without the path. When tests are run in browser side
+// navigation mode this function will return undefined unless |invariant| is
+// true.
+function getServerDomain(invariant, opt_host, opt_scheme) {
+  if (!invariant && usingBrowserSideNavigation)
+    return undefined
+  else
+    return getServerURL('', opt_host, opt_scheme).slice(0, -1);
 }
 
 // Helper to advance to the next test only when the tab has finished loading.
@@ -126,6 +149,10 @@ function expect(data, order, filter, extraInfoSpec) {
     }
     if (!('type' in expectedEventData[i].details)) {
       expectedEventData[i].details.type = "main_frame";
+    }
+    if ('initiator' in expectedEventData[i].details &&
+        expectedEventData[i].details.initiator == undefined) {
+      delete expectedEventData[i].details.initiator;
     }
   }
 }
