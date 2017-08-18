@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b91ca3dc_00b6a2ee",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-18T14:42:36Z",
+      "side": 1,
+      "message": "Please add a comment to explain this magic value.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "7900fa8ff56f42ca2aae627ca2e6c138d73f4654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7915cb3b_80ad44e0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-18T14:42:36Z",
+      "side": 1,
+      "message": "Should it be limited further by checking the class of the cell if this only happens with the BookmarkSigninPromoCell?\n\nAnd please add a comment, pointing to the bug.",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 48
+      },
+      "revId": "7900fa8ff56f42ca2aae627ca2e6c138d73f4654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
