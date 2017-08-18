@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a5cae15_9723a1b4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T16:40:44Z",
+      "side": 1,
+      "message": "Can you do this check in the caller instead? i.e. don\u0027t call this if pref is null.",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a400479_e5b81a44",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T16:40:44Z",
+      "side": 1,
+      "message": "Can you do this check in the caller instead? i.e. don\u0027t call this if pref is null.",
+      "range": {
+        "startLine": 207,
+        "startChar": 21,
+        "endLine": 207,
+        "endChar": 22
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d8ed6e_99fac40e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T16:40:44Z",
+      "side": 1,
+      "message": "Nit: No need for ()\u0027s",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 113,
+        "endChar": 38
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41a24105_229f5ad6",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 7
@@ -35,6 +104,75 @@
         "startChar": 46,
         "endLine": 145,
         "endChar": 47
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad90750_e55bb190",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T16:40:44Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t use Finch in the code.",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 41
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1f62ff_ee273051",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T16:40:44Z",
+      "side": 1,
+      "message": "Nit: Maybe move the intent lines (91-93) to be closer to where intent is used - i.e. line 112. I realise connection is also used there, but I think that\u0027s cleaner to keep that first.",
+      "range": {
+        "startLine": 93,
+        "startChar": 15,
+        "endLine": 93,
+        "endChar": 27
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd795d6_8c308078",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T16:40:44Z",
+      "side": 1,
+      "message": "Nit: Just inline this into the for on line 217.",
+      "range": {
+        "startLine": 211,
+        "startChar": 21,
+        "endLine": 211,
+        "endChar": 35
       },
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
