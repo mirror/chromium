@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ce41a0db_5b15e240",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:52:20Z",
+      "side": 1,
+      "message": "I think do nothing is probably bad as the current one might be another user\u0027s wallpaper.\nIf my suspicion is correct, we might just want to switch our png decoder to the safe decoder.",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94789f1c_c646c0bb",
         "filename": "components/wallpaper/wallpaper_manager_base.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-08-17T21:25:09Z",
       "side": 1,
       "message": "Is this fine for me to put the account information in the log? It might largely improve the usefulness of this log info.",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e5c3a4_79a36823",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:52:20Z",
+      "side": 1,
+      "message": "Is it a hash code? If so, we might be OK. If it contains email string, we shouldn\u0027t.\nMight worth checking with someone who knows more about privacy though.",
+      "parentUuid": "94789f1c_c646c0bb",
       "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
