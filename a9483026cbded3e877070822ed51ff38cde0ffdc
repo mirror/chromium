@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a62ebb9b_f9fec15d",
+        "filename": "base/debug/task_annotator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-18T15:21:47Z",
+      "side": 1,
+      "message": "Making a CrashKey is apparently expensive, so let\u0027s not run this code until we find the inconsistency.\n\nI also suggest making a new version of validate that\u0027s more lightweight so it can be as performant as possible. I suggest it should just check the following:\n   1. Dummy field value.\n   2. If name string length is \u003e 20, check that character at offset 20 is not 0.\n\nThis should catch the two types of corruption we\u0027re seeing while not paying the cost for the other checks. The new function could take the posted_from info as a parameter and set up the crashkey when it finds the inconsistency.",
+      "range": {
+        "startLine": 49,
+        "startChar": 69,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "a9483026cbded3e877070822ed51ff38cde0ffdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
