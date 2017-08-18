@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5ac30b_b8e1c312",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:09:44Z",
+      "side": 1,
+      "message": "should we assert that mDeletePostfixOnNextBeginImeCommand \u003d\u003d 0 or is it fine that this would get replaced with a different value?  Would deleting two characters quickly potentially be within the same batch edit bounds?  If the latter, then clobbering is good as we\u0027d just restore the last committed one.",
+      "range": {
+        "startLine": 499,
+        "startChar": 33,
+        "endLine": 499,
+        "endChar": 39
+      },
+      "revId": "eaedf620735bcbdef9f3a4b5ce077e883d0978b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
