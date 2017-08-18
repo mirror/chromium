@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8baaa031_c1e65641",
+        "filename": "chrome/common/extensions/api/automation_internal.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-18T15:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "701b30c5_711a7a53",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa67f4e3_ff08f2fc",
         "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
         "patchSetId": 7
@@ -133,6 +151,30 @@
       "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a810a4bc_e13272a7",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-18T15:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3a10eb1_738fc07e",
+      "range": {
+        "startLine": 710,
+        "startChar": 51,
+        "endLine": 710,
+        "endChar": 61
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -264,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "c9771215_c53ced2d",
+        "filename": "ui/accessibility/ax_action_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-18T15:57:53Z",
+      "side": 1,
+      "message": "At this layer, in the non-ARC++ case, return values are ignored. I guess at some point, it might be usful to other platforms, but not sure I want to say too much here.\n\nThe response id is tracked by a client (e.g. extensions). I think we could do a better job throughout of consistently naming things e.g. renderers, browser/client, etc.\n\n We seem to use -1 in various places e.g. tree id, node id in AXActionData\u0027s ctor, so I don\u0027t know if it adds any value to address that here. Maybe we should define -1 as a named constant in AXTree or something.",
+      "parentUuid": "62b17c87_efb40ba7",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7091526_230e33bd",
         "filename": "ui/accessibility/ax_enums.idl",
         "patchSetId": 7
@@ -278,6 +338,24 @@
       "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b847c80_258b03cb",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-18T15:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7091526_230e33bd",
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
