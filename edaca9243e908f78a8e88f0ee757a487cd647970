@@ -16,6 +16,24 @@
       "revId": "edaca9243e908f78a8e88f0ee757a487cd647970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e57d1e4_f459e3db",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-18T22:39:28Z",
+      "side": 1,
+      "message": "\u003e Now that we need to explicitly pass the ContentViewCore here as a parameter of type ContentViewCore, the other params become redundant, since they can all be retrieved from the ContentViewCore instance. Is it better to remove them and do that, or to leave them to make it easier to potentially refactor away the ContentViewCore dependency at some point in the future?\n\nI vote for removing them. Chances are they\u0027ll end up being retrievable from webcontents.",
+      "parentUuid": "e2835a50_c3e52ff7",
+      "revId": "edaca9243e908f78a8e88f0ee757a487cd647970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
