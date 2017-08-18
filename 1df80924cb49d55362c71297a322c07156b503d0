@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e0fc011_66a865e4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T07:20:15Z",
+      "side": 1,
+      "message": "The first part - done.\n\nThe second part - I am not sure what the benefit is.\nWe clearly don\u0027t need to enable this functionality, when articles are disabled.",
+      "parentUuid": "ed5eecb7_2e83a3c2",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f1bf75_f425748a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1df80924cb49d55362c71297a322c07156b503d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a979c2_ac789702",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-18T07:20:15Z",
+      "side": 1,
+      "message": "True, there is no other method.",
+      "parentUuid": "54f1bf75_f425748a",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
