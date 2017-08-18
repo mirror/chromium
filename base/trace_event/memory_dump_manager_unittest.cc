@@ -829,7 +829,7 @@ TEST_F(MemoryDumpManagerTest, UnregisterAndDeleteDumpProviderSoonDuringDump) {
 }
 
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
-TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
+TEST_F(MemoryDumpManagerTest, EnableHeapProfiling_PSEUDO_STACK) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
   RegisterDumpProvider(&mdp1, nullptr);
@@ -849,7 +849,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
             AllocationContextTracker::capture_mode());
 }
 
-TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
+TEST_F(MemoryDumpManagerTest, EnableHeapProfiling_BACKGROUND) {
   InitializeMemoryDumpManagerForInProcessTesting(true /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
   RegisterDumpProvider(&mdp1, nullptr);
@@ -857,7 +857,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
 
-  mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack);
+  mdm_->EnableHeapProfiling(kHeapProfilingModeBackground);
   ASSERT_EQ(AllocationContextTracker::CaptureMode::NO_STACK,
             AllocationContextTracker::capture_mode());
   // Do nothing when already enabled.
@@ -889,11 +889,11 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled);
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
-  mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack);
+  mdm_->EnableHeapProfiling(kHeapProfilingModeBackground);
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
 }
-#endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
 
 }  // namespace trace_event
 }  // namespace base

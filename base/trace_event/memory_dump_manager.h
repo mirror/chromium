@@ -39,7 +39,7 @@ enum HeapProfilingMode {
   kHeapProfilingModeDisabled,
   kHeapProfilingModePseudo,
   kHeapProfilingModeNative,
-  kHeapProfilingModeNoStack,
+  kHeapProfilingModeBackground,
   kHeapProfilingModeTaskProfiler,
   kHeapProfilingModeInvalid
 };

@@ -210,7 +210,7 @@ void MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
         AllocationContextTracker::SetCaptureMode(
             AllocationContextTracker::CaptureMode::NATIVE_STACK);
         break;
-      case kHeapProfilingModeNoStack:
+      case kHeapProfilingModeBackground:
         AllocationContextTracker::SetCaptureMode(
             AllocationContextTracker::CaptureMode::NO_STACK);
         break;

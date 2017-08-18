@@ -290,7 +290,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
 
   // The dumps of the heap profiler should be created only when heap profiling
   // was enabled with any mode AND a DETAILED dump is requested or heap
-  // profiling was enabled with NO_STACK mode AND BACKGROUND dump is
+  // profiling was enabled with BACKGROUND mode AND BACKGROUND dump is
   // requested. However, when enabled, the overhead of the heap profiler should
   // be always reported to avoid oscillations of the malloc total in LIGHT
   // dumps.
