@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe3cec0_d8bb4345",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIWebkitMaskRepeat.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-18T04:38:45Z",
+      "side": 1,
+      "message": "This is weird. Do you have any idea why this is returning nullptr?",
+      "revId": "24bbbc15af34d05e0103230cfd139fc84c4bf8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
