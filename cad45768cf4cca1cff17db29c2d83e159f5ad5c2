@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f8b340e9_0c0c7054",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "293df7dd_b0f2a3b2",
+      "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5607560a_59c56b28",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 5
@@ -65,6 +83,24 @@
       "writtenOn": "2017-08-09T00:00:08Z",
       "side": 1,
       "message": "eh? Is this about you using map below? If so, you should rewrite to something like:\n\n  unique_test_names \u003d (self._GetUniqueTestName(t) for t in tc.test_names())\n  time_estimate \u003d float(sum(get_test_time_estimate(n) for n in unique_test_names)) / 1000",
+      "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c142106_93af0c69",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "eh, I decided I dont think its worth all this added complexity to get a good time estimate for multiple runs.\n\nI am changing it to just extrapolate time remaining from time/tests run so far",
+      "parentUuid": "5607560a_59c56b28",
       "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -85,6 +121,24 @@
       "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd1fbe7_f679e8a4",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d157aebf_51ffdc0c",
+      "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "663229fe_d11f60c3",
+        "filename": "build/android/pylib/logging_ext/__init__.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "leaving as is. Dont really care that that happens to be TEST_TIME. Just want to say \"Wont have INFO but will have custom stuff we have just above INFO\"",
+      "parentUuid": "b5748027_fab11898",
+      "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab8c12be_46031118",
         "filename": "build/android/pylib/logging_ext/__init__.py",
         "patchSetId": 5
@@ -170,6 +242,24 @@
       "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a080486_54e070b0",
+        "filename": "build/android/pylib/logging_ext/__init__.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16b0a263_ab426bf1",
+      "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

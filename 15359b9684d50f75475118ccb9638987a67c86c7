@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "91b9d11f_85caf168",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "I think there is only a single test collection object that is passed around",
+      "parentUuid": "a6d60f6b_a3a0d14d",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a13bfc16_61bb3347",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 6
@@ -64,6 +82,24 @@
       "writtenOn": "2017-08-09T02:12:53Z",
       "side": 1,
       "message": "nit: test_collection would be a better name than tc",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1bf203_77be5504",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-18T19:23:49Z",
+      "side": 1,
+      "message": "that is the name of the module unfortunately. I cant change to tests?",
+      "parentUuid": "a13bfc16_61bb3347",
       "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
