@@ -1,0 +1,76 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//mojo/public/tools/bindings/mojom.gni")
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
+import("//services/service_manager/public/tools/test/service_test.gni")
+
+static_library("service") {
+  sources = [
+    "device_sync_impl.cc",
+    "device_sync_impl.h",
+    "multidevice.cc",
+    "multidevice.h",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  public_deps = [
+    "//components/multidevice/service/public/interfaces",
+    "//services/service_manager/public/cpp",
+  ]
+}
+
+service_manifest("multidevice_manifest") {
+  name = "multidevice"
+  source = "multidevice_manifest.json"
+}
+
+service("multidevice_test_service") {
+  testonly = true
+
+  sources = [
+    "test_service_main.cc",
+  ]
+
+  deps = [
+    ":service",
+    "//base",
+    "//base/test:test_support",
+  ]
+}
+
+service_test("multidevice_unittest") {
+  testonly = true
+
+  sources = [
+    "multidevice_unittest.cc",
+  ]
+
+  catalog = ":multidevice_unittest_catalog"
+
+  include_dirs = [ "testing/gmock/include" ]
+  deps = [
+    "//base",
+    "//components/multidevice/service/public/interfaces",
+    "//mojo/common",
+    "//services/service_manager/public/cpp:service_test_support",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
+
+service_manifest("multidevice_unittest_manifest") {
+  name = "multidevice_unittest"
+  source = "multidevice_unittest_manifest.json"
+}
+
+catalog("multidevice_unittest_catalog") {
+  testonly = true
+  embedded_services = [ ":multidevice_unittest_manifest" ]
+  standalone_services = [ ":multidevice_manifest" ]
+}
