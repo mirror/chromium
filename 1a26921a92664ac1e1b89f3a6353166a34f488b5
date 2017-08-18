@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da3dabad_8f198059",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-18T12:10:32Z",
+      "side": 1,
+      "message": "Can you add a comment explaining this a bit more?",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 45
+      },
+      "revId": "1a26921a92664ac1e1b89f3a6353166a34f488b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
