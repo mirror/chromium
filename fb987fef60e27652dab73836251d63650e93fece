@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abbaa4cb_44a8878a",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "I ended up keeping this after all, because it was helpful in the new unit test that I added. I think it helps make the test code a little bit more readable.",
+      "revId": "fb987fef60e27652dab73836251d63650e93fece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

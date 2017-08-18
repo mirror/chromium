@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f4f254b7_ce2550e6",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Yep! Will do.",
+      "parentUuid": "3f9e8807_2e3672e8",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2c55940_ea4fb44d",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 12
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "I see.\n\nIn that case, passing is_enterprise_managed flag to SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial seems to make more sense. That way we can get rid of SSLErrorHandler::IsEnterpriseManaged(), and we can have a unit test for both enterprise and non-enterprise cases. WDYT?",
       "parentUuid": "3db09fcd_9d973218",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90bfce2_eca3641a",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Sure! I actually think that will make the code easier to read because it will put all the logic in one place.",
+      "parentUuid": "fea3e798_e05731fc",
       "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -298,6 +334,24 @@
       "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ed53e7_bf996177",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Just added it!",
+      "parentUuid": "99662026_18b2fc4c",
+      "revId": "b951075eaf89b3c67b38baa525701e8d6c21a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a144bfad_80455619",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d33bc1_7176b94d",
+      "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d066261_91fb8c56",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb3ab98_55f8d512",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5676,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d066261_91fb8c56",
+      "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6f1f900a_e639cbad",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5709,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a4fab7_d0ce1046",
+      "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff40fb1a_6825d5b0",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "11eb854d_9dc69c0b",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5723,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "\"Uncaught SyntaxError: Invalid or unexpected token\".\n\nI can add this to the bug!",
+      "parentUuid": "ff40fb1a_6825d5b0",
+      "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429d204e_a022b383",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0744ec06_243a3c60",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-18T19:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429d204e_a022b383",
+      "revId": "74fb15f7214d6222909da34f6eb5fd9dfe796692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
