@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <vector>
+
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "components/query_parser/snippet.h"
@@ -15,6 +17,7 @@
 namespace history {
 
 typedef int64_t URLID;
+typedef std::vector<URLID> URLIDVector;
 
 // Holds all information globally associated with one URL (one row in the
 // URL table).
