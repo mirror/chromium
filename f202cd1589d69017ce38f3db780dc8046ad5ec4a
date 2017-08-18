@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca1865a6_d3206ffa",
+        "filename": "ui/webui/resources/cr_elements/paper_checkbox_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T19:32:27Z",
+      "side": 1,
+      "message": "IIUC, it\u0027s desired to have these in one of the \"custom-style\" styles files -- if they may be used outside of this file. If we do want these out of the custom-style document scope(?) then maybe just inline the constants below (i.e. is there value in having them at this scope just to use them a few lines below).\n\nThough I think I\u0027ve only got about a 70% grasp on the style custom-style root scoping, please let me know if ya think I\u0027m misunderstanding it.\n\nhttps://www.polymer-project.org/1.0/docs/devguide/styling#custom-style",
+      "revId": "f202cd1589d69017ce38f3db780dc8046ad5ec4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
