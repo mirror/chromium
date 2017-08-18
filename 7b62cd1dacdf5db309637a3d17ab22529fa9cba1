@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5ba30a_07d33f8d",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-18T20:16:11Z",
+      "side": 1,
+      "message": "histogram",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "7b62cd1dacdf5db309637a3d17ab22529fa9cba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb51be1_7ce0c48b",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-18T20:16:11Z",
+      "side": 1,
+      "message": "in the form",
+      "range": {
+        "startLine": 49,
+        "startChar": 56,
+        "endLine": 49,
+        "endChar": 63
+      },
+      "revId": "7b62cd1dacdf5db309637a3d17ab22529fa9cba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef827154_a7a202d7",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-18T20:16:11Z",
+      "side": 1,
+      "message": "Start all of the Args descriptions with a capital letter.",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "7b62cd1dacdf5db309637a3d17ab22529fa9cba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
