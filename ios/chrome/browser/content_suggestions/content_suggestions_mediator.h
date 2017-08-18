@@ -57,6 +57,10 @@ initWithContentService:
 @property(nonatomic, weak, nullable) id<ContentSuggestionsHeaderProvider>
     headerProvider;
 
+// Whether to force the reload the Reading List section next time it is updated.
+// Reset to NO after forcing a reload.
+@property(nonatomic, assign) BOOL forceNextReadingListUpdate;
+
 // The notification promo owned by this mediator.
 - (nonnull NotificationPromoWhatsNew*)notificationPromo;
 
