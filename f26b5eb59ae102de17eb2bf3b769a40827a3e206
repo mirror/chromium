@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9944e41d_8b5dc80c",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-18T20:35:32Z",
+      "side": 1,
+      "message": "Did you consider using \u0027xxx.toFixed(2)\u0027? https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed\n\nThat does return a string instead of a number, though, and I\u0027m not sure where/how we actually use the volume value.",
+      "range": {
+        "startLine": 284,
+        "startChar": 30,
+        "endLine": 284,
+        "endChar": 75
+      },
+      "revId": "f26b5eb59ae102de17eb2bf3b769a40827a3e206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
