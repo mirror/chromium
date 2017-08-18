@@ -736,6 +736,10 @@ if (is_fuchsia) {
   # duplicating all the Fuchsia running infrastructure there.
   fuchsia_executable_runner("d8_fuchsia") {
     exe_name = "d8"
+    data = [
+      "$root_out_dir/natives_blob.bin",
+      "$root_out_dir/snapshot_blob.bin",
+    ]
   }
 }
 
