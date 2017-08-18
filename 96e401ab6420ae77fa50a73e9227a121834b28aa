@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7ed9071_a0ad40bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T05:51:37Z",
+      "side": 1,
+      "message": "nit: conficured -\u003e configured",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "96e401ab6420ae77fa50a73e9227a121834b28aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
