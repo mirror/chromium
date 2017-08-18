@@ -104,6 +104,29 @@
     },
     {
       "key": {
+        "uuid": "459de99b_ab02ba23",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "nit: it might make sense to DCHECK this class is being created and used in the IO thread as it is not wrapped with the same guarantees.",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "957f2204_23d3887a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 3
@@ -183,6 +206,52 @@
       "writtenOn": "2017-08-18T20:31:33Z",
       "side": 1,
       "message": "I\u0027d prefer something more explicit, the math here seems right but needs some explanation either in code or comments.",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce88b8b_6fc69974",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "Once the code to deal with persistent, extreme clock changes is in, let\u0027s add a test that covers both cases:\n* Clock is set back in time and queries many times from there.\n* Clock is set forward in time and queries many times from there.",
+      "range": {
+        "startLine": 88,
+        "startChar": 36,
+        "endLine": 88,
+        "endChar": 61
+      },
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a49aef_1ec794e2",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "nit: you already included simple_test_clock in the header; no actual need for this one here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 25
+      },
       "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

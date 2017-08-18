@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c3f747c9_f27d6e4e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "592a9df4_fa49a865",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "ea37b5cae3ad6dcef172efc45964cb7ef2335d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1283d2a4_d93b02f5",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 1
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "17515419_5a06fc98",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76e455f4_55497995",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "ea37b5cae3ad6dcef172efc45964cb7ef2335d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5972b37_dbab770e",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 1
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "We discussed that further yesterday and got to the following conclusion:\n* key-value is bad because it is vague and it is easy to abuse it\n* we had no good name for table tracking the \"things\", therefore we went with something something more specific. As soon as we have more things, we can actually migrate to reasonably named table tracking them.\n\nOne more argument for having a dedicated table for quota tracking: when we have more namespaces we could have different quota for those, and that would be much more useful to have in a separate table.",
       "parentUuid": "b5972b37_dbab770e",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "ea37b5cae3ad6dcef172efc45964cb7ef2335d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4df25b7f_1c281f08",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "900a4149_cd710e0a",
       "range": {
         "startLine": 21,
         "startChar": 48,
@@ -281,6 +353,30 @@
       "revId": "ea37b5cae3ad6dcef172efc45964cb7ef2335d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7db4f25_cf574573",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "2. We still need to be resilient to extreme cases (aka clock is reset and kept in the 1970s). Current code would indefinitely return 0 and stop any downloads from happening.\n3. The added parenthesis need to encompass kMaxDailyQuota too.",
+      "parentUuid": "e2cba700_934a8f5a",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "ea37b5cae3ad6dcef172efc45964cb7ef2335d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -389,6 +485,30 @@
       "side": 1,
       "message": "Done to the first.\nAs for the name, I think we control the quota of prefetch downloader class, don\u0027t we? That is why I called it that.",
       "parentUuid": "f331c02f_ec291a16",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "ea37b5cae3ad6dcef172efc45964cb7ef2335d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e326e34_1eec2e50",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T20:44:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec142806_611795bf",
       "range": {
         "startLine": 18,
         "startChar": 6,
