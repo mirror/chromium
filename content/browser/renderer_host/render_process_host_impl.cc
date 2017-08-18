@@ -2266,10 +2266,6 @@ void RenderProcessHostImpl::UpdateWidgetImportance(
   UpdateProcessPriority();
 }
 
-ChildProcessImportance RenderProcessHostImpl::GetWidgetImportanceForTesting() {
-  return ComputeEffectiveImportance();
-}
-
 ChildProcessImportance RenderProcessHostImpl::ComputeEffectiveImportance() {
   ChildProcessImportance importance = ChildProcessImportance::NORMAL;
   for (size_t i = 0u; i < arraysize(widget_importance_counts_); ++i) {
@@ -3779,11 +3775,6 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
     is_process_backgrounded_ = kLaunchingProcessIsBackgrounded;
     boost_priority_for_pending_views_ =
         kLaunchingProcessIsBoostedForPendingView;
-    return;
-  }
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableRendererPriorityManagement)) {
     return;
   }
 

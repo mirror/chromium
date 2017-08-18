@@ -16,7 +16,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
-#include "content/browser/child_process_importance.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -25,6 +24,7 @@
 #include "content/common/frame_messages.h"
 #include "content/common/renderer.mojom.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/child_process_importance.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
@@ -256,6 +256,11 @@ void MockRenderProcessHost::RemoveWidget(RenderWidgetHost* widget) {
 void MockRenderProcessHost::UpdateWidgetImportance(
     ChildProcessImportance old_value,
     ChildProcessImportance new_value) {}
+
+ChildProcessImportance MockRenderProcessHost::ComputeEffectiveImportance() {
+  NOTIMPLEMENTED();
+  return ChildProcessImportance::NORMAL;
+}
 
 void MockRenderProcessHost::SetSuddenTerminationAllowed(bool allowed) {
 }
