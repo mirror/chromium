@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "884c1e4d_05855191",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "I double checked with reillgy@ and file:// URLs shouldn\u0027t be used for HTTP tests.",
+      "parentUuid": "a59eb5d1_ab5ea313",
+      "range": {
+        "startLine": 6,
+        "startChar": 14,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe032e28_3f6bb515",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "336614e4_065cc98f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe032e28_3f6bb515",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec43792_e8fbf6cd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6341b2_a0068418",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Well, without using the test helper for resets, it now makes sense to use promise_rejects. Earlier I was having trouble because of how the helper worked - and other tests seemed to be using this helper construction as well.",
+      "parentUuid": "7ec43792_e8fbf6cd",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4900e1d1_643e0125",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b9ea63a_8593fd70",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec618b6_8b918e66",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd6eb34_a490629f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec618b6_8b918e66",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "852ac6c6_4f7f3305",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Ah, we don\u0027t. Removed.",
+      "parentUuid": "37e7e362_c56eea1e",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8bd3837_74e6b586",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
         "patchSetId": 4
@@ -130,6 +250,24 @@
       "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d181393a_464faf1c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8bd3837_74e6b586",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "f3b1e642_8ecafb10",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Oh wow thanks for noticing. That would have caused errors if I ran any tests that used the null objects after reset.",
+      "parentUuid": "e08921d7_82291e5d",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca8ec98_bacbfbdd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
         "patchSetId": 4
@@ -164,6 +320,24 @@
       "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588f3c94_b4c09449",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "I feel obligated to say that I *did* consider such a solution.. guess I assumed there were good reasons for not doing it. But I like that idea much better.",
+      "parentUuid": "3ca8ec98_bacbfbdd",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "adc9e562_1a917266",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a34907d_dfdeab44",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfde049b_f64ab300",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
         "patchSetId": 4
@@ -210,6 +408,30 @@
       "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5ab0a0_c419a822",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfde049b_f64ab300",
+      "range": {
+        "startLine": 90,
+        "startChar": 63,
+        "endLine": 90,
+        "endChar": 67
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "40279548_0982defd",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6405f5_6367e732",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "042f3da3_6b28627b",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 4
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "93808270_7fb9cc4b",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042f3da3_6b28627b",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3062d83a_98df3957",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 4
@@ -273,6 +543,24 @@
       "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9682e8be_cbd067a5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T18:34:28Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "3062d83a_98df3957",
+      "revId": "ecc2e5d6c06b61da14fb4ab0202e140967e7fe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
