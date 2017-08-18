@@ -14,9 +14,16 @@
     readonly attribute NavigationPreloadManager navigationPreload;
 
     readonly attribute USVString scope;
+    readonly attribute ServiceWorkerUpdateViaCache updateViaCache;
 
     [CallWith=ScriptState] Promise<void> update();
     [CallWith=ScriptState] Promise<boolean> unregister();
 
     attribute EventHandler onupdatefound;
+};
+
+enum ServiceWorkerUpdateViaCache {
+    "imports",
+    "all",
+    "none"
 };

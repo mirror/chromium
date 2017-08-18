@@ -159,6 +159,7 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   RegistrationJobType job_type_;
   const GURL pattern_;
   GURL script_url_;
+  const blink::WebServiceWorkerUpdateViaCache update_via_cache_;
   std::vector<RegistrationCallback> callbacks_;
   Phase phase_;
   Internal internal_;

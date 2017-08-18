@@ -36,6 +36,7 @@ class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
   void RegisterServiceWorker(
       const blink::WebURL& pattern,
       const blink::WebURL& script_url,
+      blink::WebServiceWorkerUpdateViaCache update_via_cache,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks>) override;
   void GetRegistration(
       const blink::WebURL& document_url,

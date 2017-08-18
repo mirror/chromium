@@ -34,6 +34,24 @@ void RegisterServiceWorkerFinished(int64_t trace_id, bool result) {
                          trace_id, "Success", result);
 }
 
+blink::WebServiceWorkerUpdateViaCache ParseUpdateViaCache(
+    const std::unordered_map<std::string, base::Optional<std::string>>&
+        params) {
+  // https://html.spec.whatwg.org/multipage/semantics.html#attr-link-updateviacache
+  auto cache_param = params.find("updateviacache");
+  if (cache_param == params.end())
+    return blink::WebServiceWorkerUpdateViaCache::kImports;
+  const std::string& cache = cache_param->second.value_or("");
+  if (base::EqualsCaseInsensitiveASCII(cache, "imports"))
+    return blink::WebServiceWorkerUpdateViaCache::kImports;
+  if (base::EqualsCaseInsensitiveASCII(cache, "all"))
+    return blink::WebServiceWorkerUpdateViaCache::kAll;
+  if (base::EqualsCaseInsensitiveASCII(cache, "none"))
+    return blink::WebServiceWorkerUpdateViaCache::kNone;
+  // Default value
+  return blink::WebServiceWorkerUpdateViaCache::kImports;
+}
+
 void HandleServiceWorkerLink(
     net::URLRequest* request,
     const std::string& url,
@@ -97,6 +115,9 @@ void HandleServiceWorkerLink(
   GURL scope_url = scope_param == params.end()
                        ? script_url.Resolve("./")
                        : context_url.Resolve(scope_param->second.value_or(""));
+  blink::WebServiceWorkerUpdateViaCache update_via_cache =
+      ParseUpdateViaCache(params);
+  DCHECK_NE(blink::WebServiceWorkerUpdateViaCache::kUnknown, update_via_cache);
 
   if (!context_url.is_valid() || !script_url.is_valid() ||
       !scope_url.is_valid())
@@ -120,7 +141,7 @@ void HandleServiceWorkerLink(
       "ServiceWorker", "LinkHeaderResourceThrottle::HandleServiceWorkerLink",
       ++trace_id, "Pattern", scope_url.spec(), "Script URL", script_url.spec());
   service_worker_context->RegisterServiceWorker(
-      scope_url, script_url,
+      scope_url, script_url, update_via_cache,
       base::Bind(&RegisterServiceWorkerFinished, trace_id));
 }
 

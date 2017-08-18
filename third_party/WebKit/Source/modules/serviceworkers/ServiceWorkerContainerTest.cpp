@@ -132,6 +132,7 @@ class NotReachedWebServiceWorkerProvider : public WebServiceWorkerProvider {
   void RegisterServiceWorker(
       const WebURL& pattern,
       const WebURL& script_url,
+      WebServiceWorkerUpdateViaCache update_via_cache,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks)
       override {
     ADD_FAILURE()
@@ -268,7 +269,9 @@ TEST_F(ServiceWorkerContainerTest, GetRegistration_CrossOriginURLIsRejected) {
 class StubWebServiceWorkerProvider {
  public:
   StubWebServiceWorkerProvider()
-      : register_call_count_(0), get_registration_call_count_(0) {}
+      : register_call_count_(0),
+        get_registration_call_count_(0),
+        update_via_cache_(WebServiceWorkerUpdateViaCache::kImports) {}
 
   // Creates a WebServiceWorkerProvider. This can outlive the
   // StubWebServiceWorkerProvider, but |registerServiceWorker| and
@@ -283,6 +286,9 @@ class StubWebServiceWorkerProvider {
   const WebURL& RegisterScriptURL() { return register_script_url_; }
   size_t GetRegistrationCallCount() { return get_registration_call_count_; }
   const WebURL& GetRegistrationURL() { return get_registration_url_; }
+  WebServiceWorkerUpdateViaCache UpdateViaCache() const {
+    return update_via_cache_;
+  }
 
  private:
   class WebServiceWorkerProviderImpl : public WebServiceWorkerProvider {
@@ -295,11 +301,13 @@ class StubWebServiceWorkerProvider {
     void RegisterServiceWorker(
         const WebURL& pattern,
         const WebURL& script_url,
+        WebServiceWorkerUpdateViaCache update_via_cache,
         std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks)
         override {
       owner_.register_call_count_++;
       owner_.register_scope_ = pattern;
       owner_.register_script_url_ = script_url;
+      owner_.update_via_cache_ = update_via_cache;
       registration_callbacks_to_delete_.push_back(std::move(callbacks));
     }
 
@@ -332,6 +340,7 @@ class StubWebServiceWorkerProvider {
   WebURL register_script_url_;
   size_t get_registration_call_count_;
   WebURL get_registration_url_;
+  WebServiceWorkerUpdateViaCache update_via_cache_;
 };
 
 TEST_F(ServiceWorkerContainerTest,
@@ -357,6 +366,8 @@ TEST_F(ServiceWorkerContainerTest,
               stub_provider.RegisterScope());
     EXPECT_EQ(WebURL(KURL(NullURL(), "http://localhost/x/y/worker.js")),
               stub_provider.RegisterScriptURL());
+    EXPECT_EQ(WebServiceWorkerUpdateViaCache::kImports,
+              stub_provider.UpdateViaCache());
   }
 }
 
@@ -376,6 +387,36 @@ TEST_F(ServiceWorkerContainerTest,
     EXPECT_EQ(1ul, stub_provider.GetRegistrationCallCount());
     EXPECT_EQ(WebURL(KURL(NullURL(), "http://localhost/x/index.html")),
               stub_provider.GetRegistrationURL());
+    EXPECT_EQ(WebServiceWorkerUpdateViaCache::kImports,
+              stub_provider.UpdateViaCache());
+  }
+}
+
+TEST_F(ServiceWorkerContainerTest,
+       RegisterUnregister_UpdateViaCacheOptionDelegatesToProvider) {
+  SetPageURL("http://localhost/x/index.html");
+
+  StubWebServiceWorkerProvider stub_provider;
+  Provide(stub_provider.Provider());
+
+  ServiceWorkerContainer* container = ServiceWorkerContainer::Create(
+      GetExecutionContext(), GetNavigatorServiceWorker());
+
+  // register
+  {
+    ScriptState::Scope script_scope(GetScriptState());
+    RegistrationOptions options;
+    options.setUpdateViaCache("none");
+    container->registerServiceWorker(GetScriptState(), "/x/y/worker.js",
+                                     options);
+
+    EXPECT_EQ(1ul, stub_provider.RegisterCallCount());
+    EXPECT_EQ(WebURL(KURL(KURL(), "http://localhost/x/y/")),
+              stub_provider.RegisterScope());
+    EXPECT_EQ(WebURL(KURL(KURL(), "http://localhost/x/y/worker.js")),
+              stub_provider.RegisterScriptURL());
+    EXPECT_EQ(WebServiceWorkerUpdateViaCache::kNone,
+              stub_provider.UpdateViaCache());
   }
 }
 

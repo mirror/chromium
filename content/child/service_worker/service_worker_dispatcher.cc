@@ -120,6 +120,7 @@ void ServiceWorkerDispatcher::RegisterServiceWorker(
     int provider_id,
     const GURL& pattern,
     const GURL& script_url,
+    blink::WebServiceWorkerUpdateViaCache update_via_cache,
     std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks) {
   DCHECK(callbacks);
 
@@ -134,7 +135,7 @@ void ServiceWorkerDispatcher::RegisterServiceWorker(
   }
 
   int request_id = pending_registration_callbacks_.Add(std::move(callbacks));
-  ServiceWorkerRegistrationOptions options(pattern);
+  ServiceWorkerRegistrationOptions options(pattern, update_via_cache);
 
   TRACE_EVENT_ASYNC_BEGIN2("ServiceWorker",
                            "ServiceWorkerDispatcher::RegisterServiceWorker",
@@ -185,6 +186,7 @@ void ServiceWorkerDispatcher::GetRegistration(
 
   int request_id =
       pending_get_registration_callbacks_.Add(std::move(callbacks));
+
   TRACE_EVENT_ASYNC_BEGIN1("ServiceWorker",
                            "ServiceWorkerDispatcher::GetRegistration",
                            request_id,
@@ -372,8 +374,12 @@ ServiceWorkerDispatcher::GetOrAdoptRegistration(
       Adopt(attrs.active);
 
   RegistrationObjectMap::iterator found = registrations_.find(info.handle_id);
-  if (found != registrations_.end())
+  if (found != registrations_.end()) {
+    if (found->second->UpdateViaCache() != registration_ref->update_via_cache())
+      found->second->SetRegistrationHandleReference(
+          std::move(registration_ref));
     return found->second;
+  }
 
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration.
