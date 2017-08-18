@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "c4e1e3cb_cdeace43",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-08-18T01:54:13Z",
+      "side": 1,
+      "message": "I move it to private and add comment.",
+      "parentUuid": "152d5d3a_3f05b31e",
+      "revId": "f8f1ce1948848367efdfd83b09f7518eddc00af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298bc45d_45666228",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 2
