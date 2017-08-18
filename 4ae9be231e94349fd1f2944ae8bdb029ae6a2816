@@ -94,6 +94,23 @@
     },
     {
       "key": {
+        "uuid": "bda6354d_0ab201e8",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T22:00:25Z",
+      "side": 1,
+      "message": "Same comment about binding this by reference.",
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afd952ba_9fa2568c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
