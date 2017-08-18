@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f19b2e4_1aa68a3e",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-18T15:02:52Z",
+      "side": 1,
+      "message": "This isn\u0027t actually the copy I was referring to. I meant the copy in serial_io_handler_impl.cc caused by converting from a vector\u003cuint8_t\u003e to vector\u003cchar\u003e.\n\nWe shouldn\u0027t make the change you propose here because our code style discourages passing vector\u003cchar\u003e by value.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "b3980f41d259cc2c94498012971fe1dff493972d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
