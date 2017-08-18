@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60b0014a_68e73949",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "Can you add unit tests?\n\nAt least check that it is possible to instantiate the class.",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17bf3be_e31d6e39",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "Can you update comment to indicate that |request| must not be nil? Maybe also inform the compiler with \"_Nonull\" annotation.",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc0f0bb_853748b1",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_mediator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "Can you add unit tests?\n\nAt least check that it is possible to instantiate the class.",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7eb8db4_2b0ec58a",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "Can you add unit tests?\n\nAt least check that after calling the factory/initialiser, the properties are correctly initialised from the passed parameters. Also check that -completeAuthenticationWithUsername:password: calls the callback with the correct values.",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ef7ca1_4155fda0",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "nonull → non null/nil.",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4074205a_a0aee899",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "- (instancetype)init NS_UNAVAILABLE;",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ddcfcb_6dee984e",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "Why not expose this initialiser publicly since the factory method just call it (to me this mean that the initialiser is already more or less public anyway)?",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3407b12d_009dd1b2",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T08:38:30Z",
+      "side": 1,
+      "message": "NS_DESIGNATED_INITIALIZER",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
