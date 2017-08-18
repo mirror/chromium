@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa540540_62579af7",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-18T16:53:19Z",
+      "side": 1,
+      "message": "Is the DCHECK valid? Say the client creates a texture with one target, kicks off the decode (passes the target check - mmh, actually, does it check when using passthrough? See comments I left in gpu_video_decode_accelerator.cc), reallocates the texture with a different target, then decode finishes and tries to bind the image with the original target.",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45beaa1a_7d46a2b2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-18T16:53:19Z",
+      "side": 1,
+      "message": "Could the texture be still referenced by the bind point but gone (e.g. deleted on another context in the share group)?",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff975c8_5e3062d9",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-18T16:53:19Z",
+      "side": 1,
+      "message": "Do we have an equivalent check for the passthrough case?",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb8627a_1c5bf8ee",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-18T16:53:19Z",
+      "side": 1,
+      "message": "Ditto, do we need this check for passthrough?",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
