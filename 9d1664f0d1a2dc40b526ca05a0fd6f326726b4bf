@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21681ae9_729d1f85",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: remove this space or add spaces to other |idl_text| variables in other tests for consistency. Ditto for the following tests.",
+      "range": {
+        "startLine": 186,
+        "startChar": 44,
+        "endLine": 186,
+        "endChar": 45
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b6e566_4249e83e",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: I\u0027d omit line 191 and 192 because we already have tests for enum.",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d9a578_b1cd35a0",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: remove spaces around parenthesis.",
+      "range": {
+        "startLine": 195,
+        "startChar": 28,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7145109_2a50ee8a",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: In other tests you use |attribute|. Please use either one and don\u0027t mixed them.",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 8
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb06c2f1_32a9a5e3",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: you can use attribute.GetProperty(\u0027VALUE\u0027) which is slightly shorter.",
+      "range": {
+        "startLine": 271,
+        "startChar": 29,
+        "endLine": 271,
+        "endChar": 63
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40ff73d_6edb76ee",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: Use a temporary variable as you call this three times?",
+      "range": {
+        "startLine": 308,
+        "startChar": 28,
+        "endLine": 308,
+        "endChar": 63
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9948d65c_a61684a1",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "nit: error.GetProperties()[\u0027PROD\u0027] -\u003e error.GetProperty(\u0027PROD\u0027)",
+      "range": {
+        "startLine": 323,
+        "startChar": 46,
+        "endLine": 323,
+        "endChar": 75
+      },
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e97292_d3af9513",
+        "filename": "tools/idl_parser/test_parser/interface_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-18T04:25:40Z",
+      "side": 1,
+      "message": "Please remove these two empty lines.",
+      "revId": "9d1664f0d1a2dc40b526ca05a0fd6f326726b4bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
