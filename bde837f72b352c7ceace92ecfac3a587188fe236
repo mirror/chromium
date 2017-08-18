@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8090f88_68a74df3",
+        "filename": "chrome/browser/extensions/chrome_extension_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "IIUC, this \u003cemph\u003eis\u003c/emph\u003e the ExtensionWebContentsObserver for Chrome and a subclass of ExtensinoWebContentsObserver (there is one ExtensionWebContentsObserver per WebContents and for Chrome this is the one). Please see this:\nhttps://cs.chromium.org/chromium/src/extensions/browser/extensions_browser_client.h?l\u003d235\n\nwhose override in ChromeExtensionBrowserClient returns ChromeExtensionWebContentsObserver.",
+      "parentUuid": "2b187c13_6c20d6d5",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6145e891_d5c0763c",
         "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bedd44d4_0f3b9c91",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "I agree this is unnecessary (and perhaps wrong). RenderFrameDeleted on line 86 should be just fine.",
+      "parentUuid": "6145e891_d5c0763c",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94116203_936bc4c1",
         "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T21:09:09Z",
       "side": 1,
       "message": "Hmm, why do we need to store the throttle here? Throttles don\u0027t have a very long lifetime and storing them on your own seem like a recipe for problems.",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f619544_89b4f725",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "Thanks for the comment. We need to throttle a navigation until the Stream for PDF resource is ready. When it is ready, the corresponding MimeHandlerService API needs to be provided to the frame for this navigation and then ask the throttle to resume navigation.\n\nIf there is a chance that throttle might go away then I will add a call from the dtor of  MimeHandlerViewExtensionNavigationThrottle to this class to clear the reference.\n\nIs there a better way to pause and unpause a navigation?\n\nAlso, if fiddling with navigation is risky there might be another way: make MimeHandlerServiceImpl truly asynchronous, that is, a call to getStreamInfo in JS will have to wait until the stream is ready. In that case we do not need to throttle navigations to PDF extension. But we will need to (maybe substantially) change the extension code, MimeHandlerService, and MimeHandlerStreamManager.",
+      "parentUuid": "94116203_936bc4c1",
       "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "4e2ffa2a_67f14805",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67cd5bc5_abab6302",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 59
+      },
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ec6e93_a6f5be01",
         "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9911df72_4332c10f",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "Ack. Removing all spaces.",
+      "parentUuid": "06ec6e93_a6f5be01",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +209,30 @@
       "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07d55cb_473654a8",
+        "filename": "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "Ack. I did define one in the cc file. The only usage of this is initializing the field element though however.",
+      "parentUuid": "99b79b94_a362ab70",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 36
+      },
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +265,24 @@
       "side": 1,
       "message": "This was a most recent change needed after the rebase. I put it here just to make sure I get a frame type rather than plugin type and therefore get a call to LoadOrRedirectSubframe. I think something like this might be required. I will make sure it will be updated for the flash case in above as well.",
       "parentUuid": "8d2146d5_6392b8a1",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395d306e_68bbb4f7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLEmbedElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-18T00:20:04Z",
+      "side": 1,
+      "message": "Changed in the latest patch.",
+      "parentUuid": "b73547cd_64547288",
       "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
