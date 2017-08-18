@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a92a19cc_37d3b886",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T17:41:10Z",
+      "side": 1,
+      "message": "Thank you for detailed explanation!",
+      "revId": "db6c9932186e48c5cd3da5b25a1169bef607e62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d802fad4_11f1ab90",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T17:41:10Z",
+      "side": 1,
+      "message": "nit: What does \"+ time\" means? Do you mean time complexity is O(memory)?",
+      "revId": "db6c9932186e48c5cd3da5b25a1169bef607e62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb00cbe4_55085d63",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T17:41:10Z",
+      "side": 1,
+      "message": "Similar for \"+ t\"? Maybe typo of + time?",
+      "revId": "db6c9932186e48c5cd3da5b25a1169bef607e62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701bbf4e_a77d55ac",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T17:41:10Z",
+      "side": 1,
+      "message": "style: Please remove paren.",
+      "revId": "db6c9932186e48c5cd3da5b25a1169bef607e62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
