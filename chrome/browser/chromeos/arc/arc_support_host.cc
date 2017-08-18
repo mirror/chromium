@@ -597,17 +597,22 @@ void ArcSupportHost::OnMessage(const base::DictionaryValue& message) {
       error_delegate_->OnWindowClosed();
     }
   } else if (event == kEventOnAuthSucceeded) {
-    DCHECK(auth_delegate_);
     std::string code;
     if (!message.GetString(kCode, &code)) {
       NOTREACHED();
       return;
     }
+    DCHECK(auth_delegate_);
     auth_delegate_->OnAuthSucceeded(code);
   } else if (event == kEventOnAuthFailed) {
-    DCHECK(auth_delegate_);
     std::string error_message;
     if (!message.GetString(kAuthErrorMessage, &error_message)) {
+      NOTREACHED();
+      return;
+    }
+    // TODO(ljusten): Find out why auth_delegate_ can be NULL.
+    // https://crbug.com/756144.
+    if (!auth_delegate_) {
       NOTREACHED();
       return;
     }
