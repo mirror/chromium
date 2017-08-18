@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a5287d_8d9ef841",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T12:46:29Z",
+      "side": 1,
+      "message": "is this extra emphasis needed? it\u0027s clear from the function signatures that they return new objects.",
+      "range": {
+        "startLine": 221,
+        "startChar": 39,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "58e2466901f2222d977a477398d69903a9305115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4262dd_7cc305f7",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T12:46:29Z",
+      "side": 1,
+      "message": "#include \"base/stl_util.h\"\n  return base::ContainsKey(extra_targets_, tag) ? extra_targets_[tag] : {};",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "58e2466901f2222d977a477398d69903a9305115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e633daea_64c71de9",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-18T12:46:29Z",
+      "side": 1,
+      "message": "extra_targets_[tag] since you don\u0027t want/need the range checking done by at()",
+      "range": {
+        "startLine": 231,
+        "startChar": 11,
+        "endLine": 231,
+        "endChar": 33
+      },
+      "revId": "58e2466901f2222d977a477398d69903a9305115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
