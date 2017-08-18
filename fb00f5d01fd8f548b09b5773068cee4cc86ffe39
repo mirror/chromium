@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dce3e517_e602cfcb",
+        "filename": "base/task_scheduler/task_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T22:10:40Z",
+      "side": 1,
+      "message": "Let\u0027s use an enum for public API (can still be stored as bool in params)",
+      "range": {
+        "startLine": 346,
+        "startChar": 21,
+        "endLine": 346,
+        "endChar": 25
+      },
+      "revId": "fb00f5d01fd8f548b09b5773068cee4cc86ffe39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c656086b_b2b34467",
+        "filename": "base/task_scheduler/task_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T22:10:40Z",
+      "side": 1,
+      "message": "Why isn\u0027t this TEST_P as well?",
+      "revId": "fb00f5d01fd8f548b09b5773068cee4cc86ffe39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
