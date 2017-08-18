@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d515c6c4_063a435c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-18T22:49:35Z",
+      "side": 1,
+      "message": "nit:... \"on the bots\". (since you\u0027re not enabling it for users)",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "6c1a2d78e256c889265b31cc0ad26b4163ad4ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
