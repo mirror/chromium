@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3349a9e1_02edbcc4",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T00:08:37Z",
+      "side": 1,
+      "message": "This sounds like base::Optional. I would suggest base::Optional\u003cSessionData\u003e FromDictValue(const base::DictionaryValue\u0026); What do you think?",
+      "parentUuid": "62a973fd_e7430bdf",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b43c4425_bf96a919",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 9
@@ -59,6 +83,30 @@
       "writtenOn": "2017-08-17T23:49:46Z",
       "side": 1,
       "message": "Use the explicit keyword for single-argument constructors.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "3aa2f927e86538aeaafc2f913eff6d0bacac504c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79555d7_016bdc4e",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-18T00:08:37Z",
+      "side": 1,
+      "message": "This is for OriginData, right?",
+      "parentUuid": "b43c4425_bf96a919",
       "range": {
         "startLine": 76,
         "startChar": 2,
