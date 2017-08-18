@@ -65,6 +65,7 @@ class Pointer : public SurfaceTreeHost,
   // Overridden from ui::EventHandler:
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnScrollEvent(ui::ScrollEvent* event) override;
+  void OnTouchEvent(ui::TouchEvent* event) override;
 
   // Overridden from WMHelper::CursorObserver:
   void OnCursorSizeChanged(ui::CursorSize cursor_size) override;
@@ -91,6 +92,14 @@ class Pointer : public SurfaceTreeHost,
 
   // Update |cursor_| to |cursor_bitmap_| transformed for the current display.
   void UpdateCursor();
+
+  // Handles leaving the previously set target in |focus_surface_|.
+  void ReleaseFocusSurface();
+
+  // Handles entering a new surface. |target| must not be null.
+  void AcquireFocusSurface(Surface* target,
+                           const gfx::PointF& location,
+                           int pressed_button_flags);
 
   // The delegate instance that all events are dispatched to.
   PointerDelegate* const delegate_;
