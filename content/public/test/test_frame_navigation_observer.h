@@ -13,7 +13,8 @@
 namespace content {
 
 // Helper for waiting until the navigation in a specific frame tree node (and
-// all of its subframes) has completed loading.
+// all of its subframes) has completed loading. Saves some of the arguments of
+// the navigation.
 class TestFrameNavigationObserver : public WebContentsObserver {
  public:
   // Create and register a new TestFrameNavigationObserver which will track
@@ -23,6 +24,8 @@ class TestFrameNavigationObserver : public WebContentsObserver {
   explicit TestFrameNavigationObserver(const ToRenderFrameHost& adapter);
 
   ~TestFrameNavigationObserver() override;
+
+  ui::PageTransition transition_type() { return transition_type_.value(); }
 
   // Runs a nested run loop and blocks until the full load has
   // completed.
@@ -50,6 +53,9 @@ class TestFrameNavigationObserver : public WebContentsObserver {
   // If true, this object is waiting for commit only, not for the full load
   // of the document.
   bool wait_for_commit_;
+
+  // Saved arguments from NavigationHandle.
+  base::Optional<ui::PageTransition> transition_type_;
 
   // The RunLoop used to spin the message loop.
   base::RunLoop run_loop_;
