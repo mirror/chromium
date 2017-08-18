@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dbefafc6_8b723156",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T05:22:46Z",
+      "side": 1,
+      "message": "IIUC, your CL to allow it is under review and expected to done within a several days.\nIf you do not mind, could you work on it in this CL?\nOr, if you\u0027d like doing it in another CL works for me, too.",
+      "parentUuid": "d251ea05_2faf597b",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c190ae15_89321523",
         "filename": "google_apis/drive/task_util.h",
         "patchSetId": 2
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "|runner| and |callbac| are stored in the internal storage as RepeatingCallbacks, and for each invocation of the resulting callback, they are converted to OnceCallbacks and passed to Run.\nI.e.:\nbase::RepeatingClosure cb \u003d base::Bind([]{});\n\nbase::OnceClosure cb1 \u003d cb;\nstd::move(cb1).Run();\n\nbase::OnceClosure cb2 \u003d cb;\nstd::move(cb2).Run();",
       "parentUuid": "4d1925f0_35b2582d",
+      "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e1ce29_5b2ad8e8",
+        "filename": "google_apis/drive/task_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-18T05:22:46Z",
+      "side": 1,
+      "message": "oh, the conversion is done on actual invocation. Good to know.",
+      "parentUuid": "2d80300a_53fac6dc",
       "revId": "441e53b2f1361ca21a7ecf58a7076d82447e82dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
