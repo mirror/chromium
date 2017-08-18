@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "318a64b0_c1d8e83f",
+        "filename": "ash/resources/vector_icons/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-18T08:50:37Z",
+      "side": 1,
+      "message": "Fix the order alphabetically.",
+      "revId": "feb7cf0ae69c583ab82ba9db9c15147dead95c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
