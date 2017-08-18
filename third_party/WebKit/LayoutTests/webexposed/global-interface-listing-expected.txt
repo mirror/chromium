@@ -8563,6 +8563,7 @@ interface WebGLTexture
     getter lastUploadedVideoHeight
     getter lastUploadedVideoTimestamp
     getter lastUploadedVideoWidth
+    getter lastUploadedVideoFrameWasSkipped
     method constructor
 interface WebGLTransformFeedback
     attribute @@toStringTag
