@@ -49,6 +49,9 @@ class DEVICE_VR_EXPORT VRDevice {
   bool CheckPresentingDisplay(VRDisplayImpl* display);
   VRDisplayImpl* GetPresentingDisplay() { return presenting_display_; }
 
+  virtual void PauseTracking(){};
+  virtual void ResumeTracking(){};
+
   void OnChanged();
   void OnExitPresent();
   void OnBlur();

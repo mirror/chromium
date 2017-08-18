@@ -58,10 +58,6 @@ class VrShellDelegate : public device::GvrDelegateProvider {
                            jlong interval_micros);
   void OnPause(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void OnResume(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
-  void UpdateNonPresentingContext(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      jlong context);
   bool IsClearActivatePending(JNIEnv* env,
                               const base::android::JavaParamRef<jobject>& obj);
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
@@ -73,9 +69,6 @@ class VrShellDelegate : public device::GvrDelegateProvider {
 
   // device::GvrDelegateProvider implementation.
   void ExitWebVRPresent() override;
-  void CreateVRDisplayInfo(
-      const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
-      uint32_t device_id) override;
 
  private:
   // device::GvrDelegateProvider implementation.
@@ -86,7 +79,12 @@ class VrShellDelegate : public device::GvrDelegateProvider {
   void OnDisplayAdded(device::VRDisplayImpl* display) override;
   void OnDisplayRemoved(device::VRDisplayImpl* display) override;
   void OnListeningForActivateChanged(device::VRDisplayImpl* display) override;
+  void CreateVRDisplayInfo(
+      gvr::GvrApi* gvr_api,
+      const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
+      uint32_t device_id) override;
   void GetNextMagicWindowPose(
+      gvr::GvrApi* gvr_api,
       device::VRDisplayImpl* display,
       device::mojom::VRDisplay::GetNextMagicWindowPoseCallback callback)
       override;
@@ -108,7 +106,6 @@ class VrShellDelegate : public device::GvrDelegateProvider {
   device::mojom::VRSubmitFrameClientPtr submit_client_;
   device::mojom::VRPresentationProviderRequest presentation_provider_request_;
   bool pending_successful_present_request_ = false;
-  std::unique_ptr<gvr::GvrApi> gvr_api_;
 
   std::map<content::RenderWidgetHost*, device::VRDisplayImpl*> displays_;
   std::map<device::VRDisplayImpl*, std::unique_ptr<DelegateWebContentsObserver>>
