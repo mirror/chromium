@@ -16,7 +16,7 @@ function returnProcessList(processList) {
   var proclist = $('proclist');
   proclist.innerText = '';
   for (let proc of processList) {
-    /** @const */ var row = document.createElement('div');
+    const row = document.createElement('div');
     row.className = 'procrow';
 
     var description = document.createTextNode(proc[1] + ' ');
