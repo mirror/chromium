@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -125,6 +126,9 @@ class PageHandler : public DevToolsDomainHandler,
 
   Response BringToFront() override;
 
+  Response SetDownloadBehavior(const std::string& behavior,
+                               Maybe<std::string> download_path) override;
+
  private:
   enum EncodingFormat { PNG, JPEG };
 
@@ -150,6 +154,8 @@ class PageHandler : public DevToolsDomainHandler,
   void Observe(int type,
                const NotificationSource& source,
                const NotificationDetails& details) override;
+
+  void OverrideDownloadDelegate();
 
   bool enabled_;
 
