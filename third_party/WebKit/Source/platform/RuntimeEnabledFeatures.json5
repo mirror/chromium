@@ -1058,6 +1058,10 @@
       status: "stable",
     },
     {
+      name: "TurnOff2DAndOpacityCompositorAnimations",
+      status: "experimental",
+    },
+    {
       name: "UnclosedFormControlIsInvalid",
       status: "experimental",
     },
