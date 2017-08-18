@@ -10,6 +10,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
 #include "net/url_request/url_request_test_util.h"
