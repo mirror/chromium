@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf160f7_73175942",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-18T11:17:10Z",
+      "side": 1,
+      "message": "nit: Add an empty line below to separate C headers from C++ ones.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be71899_ecc995c7",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-18T11:17:10Z",
+      "side": 1,
+      "message": "We were using ScopedHandle before. Why not keep it?",
+      "range": {
+        "startLine": 435,
+        "startChar": 4,
+        "endLine": 435,
+        "endChar": 10
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e72ddf_0fee397b",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-18T11:17:10Z",
+      "side": 1,
+      "message": "This was a CHECK before. Can we keep it that way?",
+      "range": {
+        "startLine": 437,
+        "startChar": 4,
+        "endLine": 437,
+        "endChar": 13
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefaf553_77289fb2",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-18T11:17:10Z",
+      "side": 1,
+      "message": "This also was a CHECK. Let\u0027s not downgrade to DCHECK without good reason.",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 13
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b206a51c_2d750cf3",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-18T11:17:10Z",
+      "side": 1,
+      "message": "nit: Why does this snippet move around? Not a big deal though.",
+      "range": {
+        "startLine": 461,
+        "startChar": 2,
+        "endLine": 461,
+        "endChar": 30
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

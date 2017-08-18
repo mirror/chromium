@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2f272f_6d435ede",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-18T11:17:10Z",
+      "side": 0,
+      "message": "Does the new code handle this known Fuchsia issue properly?",
+      "range": {
+        "startLine": 458,
+        "startChar": 32,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "844e26c176db3c589099d36b2677d25088726bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
