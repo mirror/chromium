@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b68ac1_24f4a677",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T01:34:11Z",
+      "side": 1,
+      "message": "Please include a comment about the intended size result.\n\ne.g. https://cs.chromium.org/search/?q\u003dfont-size.*%5C/%5C*+file:settings\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

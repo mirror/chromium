@@ -16,6 +16,24 @@
       "revId": "5f1653ef581c7412c66561f98b152cd274d9a0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c9c1ec_ec4adda0",
+        "filename": "chrome/browser/resources/settings/settings_main/settings_main.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T01:34:11Z",
+      "side": 0,
+      "message": "There can be differences. This jsbin shows some:\n\nhttp://jsbin.com/tamiyexavu/7/edit?html,css,output\n\nMaybe double check that the layout (padding/margins) renders the same in this case.",
+      "parentUuid": "5e059697_bcb576c1",
+      "revId": "5f1653ef581c7412c66561f98b152cd274d9a0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
