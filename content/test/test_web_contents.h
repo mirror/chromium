@@ -60,7 +60,6 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
   // WebContentsTester implementation.
   void CommitPendingNavigation() override;
   TestRenderFrameHost* GetPendingMainFrame() const override;
-  void StartNavigation(const GURL& url) override;
   void NavigateAndCommit(const GURL& url) override;
   void TestSetIsLoading(bool value) override;
   void ProceedWithCrossSiteNavigation() override;
@@ -93,6 +92,21 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
       const std::vector<gfx::Size>& original_bitmap_sizes) override;
   void SetLastCommittedURL(const GURL& url) override;
   void SetWasRecentlyAudible(bool audible) override;
+
+  // Creates a pending navigation to |url|. Also simulates the
+  // DidStartProvisionalLoad received from the renderer.  To commit the
+  // navigation, callers should use
+  // RenderFrameHostTester::SimulateNavigationCommit. Callers can then use
+  // RenderFrameHostTester::SimulateNavigationStop to simulate the navigation
+  // stop.
+  // Note that this function is meant for callers that want to control the
+  // timing of navigation events precisely. Other callers should use
+  // NavigateAndCommit.
+  // PlzNavigate: this does not simulate the DidStartProvisionalLoad from the
+  // renderer, as it only should be received after the navigation is ready to
+  // commit.
+  // DEPRECATED: Use NavigationSimulator instead.
+  void StartNavigation(const GURL& url);
 
   // True if a cross-site navigation is pending.
   bool CrossProcessNavigationPending();
