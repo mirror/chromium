@@ -186,6 +186,30 @@
       "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47849e7b_89ccee46",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-18T16:02:22Z",
+      "side": 1,
+      "message": "\u003e Or we can decide that loading the preferences in BACKGROUND priority is not problematic.\n\nLoading preferences is top priority on Desktop as it essentially prevents every service from functioning (hence why it\u0027s done synchronously for the initial profile on startup). Is that different on ios/?",
+      "parentUuid": "d081d55f_0b751449",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
