@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40bdd8c_c019520e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-on-paint-worklet.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-18T01:46:28Z",
+      "side": 1,
+      "message": "For some reason this is not a move in git. Can you check what the problem is?",
+      "revId": "399fb7d3c987b00b4a296139adab650fc2426a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
