@@ -22,6 +22,30 @@
       "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92a6ac8_e38dfad2",
+        "filename": "base/files/file_path.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-18T20:43:44Z",
+      "side": 1,
+      "message": "These were added fairly recently, in May. I think most code was and still is using EXPECT_TRUE(a\u003d\u003db) instead of EXPECT_EQ(a, b) to workaround lack of operator\u003c\u003c.",
+      "parentUuid": "3ecca9be_dcf6c246",
+      "range": {
+        "startLine": 454,
+        "startChar": 16,
+        "endLine": 454,
+        "endChar": 33
+      },
+      "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
