@@ -1169,6 +1169,48 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
   return GetContentClient()->renderer()->OverrideFlashEmbedWithHTML(url);
 }
 
+blink::WebURL RenderFrameImpl::OverridePDFEmbedWithHTML(
+    const blink::WebURL& url,
+    const blink::WebString& orig_mime_type) {
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return blink::WebURL();
+
+  if (orig_mime_type == "application/x-google-chrome-pdf") {
+    // This mime type should be handled by pepper plugin.
+    return blink::WebURL();
+  }
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  WebPluginInfo info;
+  std::string mime_type;
+  bool found = false;
+  Send(new FrameHostMsg_GetPluginInfo(
+      routing_id_, url, frame_->Top()->GetSecurityOrigin(),
+      orig_mime_type.Utf8(), &found, &info, &mime_type));
+  if (!found)
+    return blink::WebURL();
+
+  WebPluginParams params_to_use;
+  params_to_use.mime_type = WebString::FromUTF8(mime_type);
+
+  if (orig_mime_type.Utf8() == "application/pdf" ||
+      orig_mime_type.Utf8() == "text/pdf") {
+    return GetContentClient()->renderer()->GetHandlerURLForPdfResource(url);
+  }
+#endif
+  return blink::WebURL();
+}
+
+v8::Local<v8::Object> RenderFrameImpl::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return v8::Local<v8::Object>();
+
+  return GetContentClient()->renderer()->GetV8ScriptableObjectForPluginFrame(
+      isolate, frame);
+}
+
 // RenderFrameImpl ----------------------------------------------------------
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),
@@ -1830,6 +1872,12 @@ void RenderFrameImpl::OnSwapOut(
   RenderViewImpl* render_view = render_view_;
   bool is_main_frame = is_main_frame_;
   int routing_id = GetRoutingID();
+
+  if (!is_main_frame_ && frame_->Parent() &&
+      frame_->Parent()->IsWebLocalFrame()) {
+    FromWebFrame(frame_->Parent()->ToWebLocalFrame())
+        ->ChildFrameWillSwap(frame_, proxy->web_frame());
+  }
 
   // Now that all of the cleanup is complete and the browser side is notified,
   // start using the RenderFrameProxy.
@@ -5134,6 +5182,12 @@ bool RenderFrameImpl::SwapIn() {
 
   unique_name_helper_.set_propagated_name(proxy->unique_name());
 
+  if (!is_main_frame_ && frame_->Parent() &&
+      frame_->Parent()->IsWebLocalFrame()) {
+    FromWebFrame(frame_->Parent()->ToWebLocalFrame())
+        ->ChildFrameWillSwap(frame_, proxy->web_frame());
+  }
+
   // Note: Calling swap() will detach and delete |proxy|, so do not reference it
   // after this.
   if (!proxy->web_frame()->Swap(frame_))
@@ -7128,6 +7182,13 @@ void RenderFrameImpl::ReportPeakMemoryStats() {
         "MainFrame.PeakDuringLoad",
         peak_memory_metrics_.total_allocated_per_render_view_mb);
   }
+}
+
+void RenderFrameImpl::ChildFrameWillSwap(blink::WebFrame* old_frame,
+                                         blink::WebFrame* new_frame) {
+  DCHECK_EQ(frame_, old_frame->Parent());
+  for (auto& observer : observers_)
+    observer.ChildFrameWillSwap(old_frame, new_frame);
 }
 
 RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(

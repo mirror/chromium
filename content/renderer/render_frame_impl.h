@@ -246,6 +246,12 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Overwrites the given URL to use an HTML5 embed if possible.
   blink::WebURL OverrideFlashEmbedWithHTML(const blink::WebURL& url) override;
+  blink::WebURL OverridePDFEmbedWithHTML(
+      const blink::WebURL& url,
+      const blink::WebString& orig_mime_type) override;
+  v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame) override;
 
   ~RenderFrameImpl() override;
 
@@ -1187,6 +1193,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void UpdatePeakMemoryStats();
   void ReportPeakMemoryStats();
   void BindWidget(mojom::WidgetRequest request);
+
+  // Callbed by a child RenderFrame to notify that the child WebFrame is being
+  // swapped. If |old_frame| is local then the child is swapping out and if it
+  // is remote the child is swapping in.
+  void ChildFrameWillSwap(blink::WebFrame* old_frame,
+                          blink::WebFrame* new_frame);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
