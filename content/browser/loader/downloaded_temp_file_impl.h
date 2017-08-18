@@ -11,25 +11,35 @@
 
 namespace content {
 
-// DownloadedTempFileImpl is created on the download_to_file mode of resource
-// loading. The instance is held by the client and lives until the client
-// destroys the interface, slightly after the URLLoader is destroyed.
+// DownloadedTempFileImpl is created on the |download_to_file| or
+// |download_to_blob| mode of resource loading. The instance is held by the
+// client and lives until the client destroys the interface, slightly after the
+// URLLoader is destroyed.
 class CONTENT_EXPORT DownloadedTempFileImpl final
     : public mojom::DownloadedTempFile {
  public:
+  enum class Type { FILE, BLOB };
+
   // Creates a DownloadedTempFileImpl, binds it as a strong interface, and
   // returns the interface ptr to be passed to the client.
   // That means:
   //  * The DownloadedTempFile object created here is essentially owned by the
   //    client. It keeps alive until the client destroys the other endpoint.
-  static mojom::DownloadedTempFilePtr Create(int child_id, int request_id);
+  static mojom::DownloadedTempFilePtr CreateForFile(int child_id,
+                                                    int request_id);
 
-  DownloadedTempFileImpl(int child_id, int request_id);
+  // Same as above, but will revoke the blob instead of the file for the given
+  // request.
+  static mojom::DownloadedTempFilePtr CreateForBlob(int child_id,
+                                                    int request_id);
+
+  DownloadedTempFileImpl(int child_id, int request_id, Type type);
   ~DownloadedTempFileImpl() override;
 
  private:
   const int child_id_;
   const int request_id_;
+  const Type type_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadedTempFileImpl);
 };

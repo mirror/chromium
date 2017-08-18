@@ -286,6 +286,11 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT bool DownloadToFile() const;
   BLINK_PLATFORM_EXPORT void SetDownloadToFile(bool);
 
+  // If true, the response body will be downloaded to a blob managed by the
+  // WebURLLoader. See WebURLResponse::blobUUID.
+  BLINK_PLATFORM_EXPORT bool DownloadToBlob() const;
+  BLINK_PLATFORM_EXPORT void SetDownloadToBlob(bool);
+
   // True if the requestor wants to receive the response body as a stream.
   BLINK_PLATFORM_EXPORT bool UseStreamOnResponse() const;
   BLINK_PLATFORM_EXPORT void SetUseStreamOnResponse(bool);

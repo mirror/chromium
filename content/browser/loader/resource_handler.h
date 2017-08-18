@@ -127,9 +127,9 @@ class CONTENT_EXPORT ResourceHandler {
       std::unique_ptr<ResourceController> controller) = 0;
 
   // This notification is synthesized by the RedirectToFileResourceHandler
-  // to indicate progress of 'download_to_file' requests. OnReadCompleted
-  // calls are consumed by the RedirectToFileResourceHandler and replaced
-  // with OnDataDownloaded calls.
+  // to indicate progress of 'download_to_file' or 'download_to_blob" requests.
+  // OnReadCompleted calls are consumed by the RedirectToFileResourceHandler and
+  // replaced with OnDataDownloaded calls.
   virtual void OnDataDownloaded(int bytes_downloaded) = 0;
 
  protected:

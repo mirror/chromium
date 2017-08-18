@@ -31,6 +31,7 @@
 #include "net/base/mime_sniffer.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
+#include "storage/browser/blob/blob_storage_context.h"
 
 namespace content {
 namespace {
@@ -117,12 +118,14 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     ResourceDispatcherHostImpl* rdh,
     mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
-    ResourceType resource_type)
+    ResourceType resource_type,
+    base::WeakPtr<storage::BlobStorageContext> blob_context)
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
+      blob_storage_context_(std::move(blob_context)),
       weak_factory_(this) {
   DCHECK(url_loader_client_);
   InitializeResourceBufferConstants();
@@ -189,10 +192,16 @@ void MojoAsyncResourceHandler::OnResponseStarted(
 
   mojom::DownloadedTempFilePtr downloaded_file_ptr;
   if (!response->head.download_file_path.empty()) {
-    downloaded_file_ptr = DownloadedTempFileImpl::Create(info->GetChildID(),
-                                                         info->GetRequestID());
+    downloaded_file_ptr = DownloadedTempFileImpl::CreateForFile(
+        info->GetChildID(), info->GetRequestID());
     rdh_->RegisterDownloadedTempFile(info->GetChildID(), info->GetRequestID(),
                                      response->head.download_file_path);
+  } else if (!response->head.blob_uuid.empty() && blob_storage_context_) {
+    downloaded_file_ptr = DownloadedTempFileImpl::CreateForBlob(
+        info->GetChildID(), info->GetRequestID());
+    rdh_->RegisterDownloadedTempBlob(
+        info->GetChildID(), info->GetRequestID(),
+        blob_storage_context_->GetBlobDataFromUUID(response->head.blob_uuid));
   }
 
   url_loader_client_->OnReceiveResponse(response->head, base::nullopt,

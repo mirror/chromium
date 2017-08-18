@@ -198,6 +198,7 @@ ResourceResponse::ResourceResponse(CrossThreadResourceResponseData* data)
   decoded_body_length_ = data->decoded_body_length_;
   downloaded_file_path_ = data->downloaded_file_path_;
   downloaded_file_handle_ = data->downloaded_file_handle_;
+  blob_uuid_ = data->blob_uuid_;
 
   // Bug https://bugs.webkit.org/show_bug.cgi?id=60397 this doesn't support
   // whatever values may be present in the opaque m_extraData structure.
@@ -266,6 +267,7 @@ std::unique_ptr<CrossThreadResourceResponseData> ResourceResponse::CopyData()
   data->decoded_body_length_ = decoded_body_length_;
   data->downloaded_file_path_ = downloaded_file_path_.IsolatedCopy();
   data->downloaded_file_handle_ = downloaded_file_handle_;
+  data->blob_uuid_ = blob_uuid_.IsolatedCopy();
 
   // Bug https://bugs.webkit.org/show_bug.cgi?id=60397 this doesn't support
   // whatever values may be present in the opaque m_extraData structure.
@@ -603,12 +605,23 @@ void ResourceResponse::SetDownloadedFilePath(
     downloaded_file_handle_.Clear();
     return;
   }
-  // TODO(dmurph): Investigate whether we need the mimeType on this blob.
   std::unique_ptr<BlobData> blob_data =
       BlobData::CreateForFileWithUnknownSize(downloaded_file_path_);
   blob_data->DetachFromCurrentThread();
   downloaded_file_handle_ = BlobDataHandle::Create(std::move(blob_data), -1);
 }
+
+void ResourceResponse::SetBlobUUID(const String& blob_uuid) {
+  blob_uuid_ = blob_uuid;
+  if (blob_uuid_.IsEmpty()) {
+    blob_handle_.Clear();
+    return;
+  }
+  blob_handle_ =
+      BlobDataHandle::Create(blob_uuid_, "", BlobDataItem::kToEndOfFile);
+}
+
+void SetBlobSize(uint64_t) {}
 
 void ResourceResponse::AppendRedirectResponse(
     const ResourceResponse& response) {

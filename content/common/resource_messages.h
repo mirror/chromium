@@ -199,6 +199,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceResponseInfo)
   IPC_STRUCT_TRAITS_MEMBER(load_timing)
   IPC_STRUCT_TRAITS_MEMBER(devtools_info)
   IPC_STRUCT_TRAITS_MEMBER(download_file_path)
+  IPC_STRUCT_TRAITS_MEMBER(blob_uuid)
   IPC_STRUCT_TRAITS_MEMBER(was_fetched_via_spdy)
   IPC_STRUCT_TRAITS_MEMBER(was_alpn_negotiated)
   IPC_STRUCT_TRAITS_MEMBER(was_alternate_protocol_available)
@@ -276,6 +277,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequest)
   IPC_STRUCT_TRAITS_MEMBER(fetch_frame_type)
   IPC_STRUCT_TRAITS_MEMBER(request_body)
   IPC_STRUCT_TRAITS_MEMBER(download_to_file)
+  IPC_STRUCT_TRAITS_MEMBER(download_to_blob)
   IPC_STRUCT_TRAITS_MEMBER(has_user_gesture)
   IPC_STRUCT_TRAITS_MEMBER(enable_load_timing)
   IPC_STRUCT_TRAITS_MEMBER(enable_upload_progress)
@@ -408,6 +410,10 @@ IPC_MESSAGE_CONTROL1(ResourceHostMsg_UploadProgress_ACK,
 
 // Sent when the renderer process deletes a resource loader.
 IPC_MESSAGE_CONTROL1(ResourceHostMsg_ReleaseDownloadedFile,
+                     int /* request_id */)
+
+// Sent when the renderer process deletes a resource loader.
+IPC_MESSAGE_CONTROL1(ResourceHostMsg_ReleaseDownloadedBlob,
                      int /* request_id */)
 
 // Sent by the renderer when a resource request changes priority.

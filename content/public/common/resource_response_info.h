@@ -87,6 +87,9 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // becomes available.
   base::FilePath download_file_path;
 
+  // The uuid of the blob that contains the response data.
+  std::string blob_uuid;
+
   // True if the response was delivered using SPDY.
   bool was_fetched_via_spdy;
 

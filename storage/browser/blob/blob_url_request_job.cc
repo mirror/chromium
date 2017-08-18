@@ -56,6 +56,8 @@ BlobURLRequestJob::BlobURLRequestJob(net::URLRequest* request,
   if (blob_handle) {
     blob_handle_.reset(new BlobDataHandle(*blob_handle));
     blob_reader_ = blob_handle_->CreateReader(file_system_context);
+  } else {
+    DVLOG(1) << "Blob does not exist";
   }
 }
 

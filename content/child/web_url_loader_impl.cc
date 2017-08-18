@@ -623,6 +623,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   resource_request->request_body =
       GetRequestBodyForWebURLRequest(request).get();
   resource_request->download_to_file = request.DownloadToFile();
+  resource_request->download_to_blob = request.DownloadToBlob();
   resource_request->has_user_gesture = request.HasUserGesture();
   resource_request->enable_load_timing = true;
   resource_request->enable_upload_progress = request.ReportUploadProgress();
@@ -969,8 +970,8 @@ bool WebURLLoaderImpl::Context::CanHandleDataURLRequestLocally(
     return false;
 
   // The fast paths for data URL, Start() and HandleDataURL(), don't support
-  // the downloadToFile option.
-  if (request.DownloadToFile())
+  // the downloadToFile or downloadToBlob option.
+  if (request.DownloadToFile() || request.DownloadToBlob())
     return false;
 
   // Data url requests from object tags may need to be intercepted as streams
@@ -1124,6 +1125,7 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
   response->SetConnectionReused(info.load_timing.socket_reused);
   response->SetDownloadFilePath(
       blink::FilePathToWebString(info.download_file_path));
+  response->SetBlobUUID(WebString::FromUTF8(info.blob_uuid));
   response->SetWasFetchedViaSPDY(info.was_fetched_via_spdy);
   response->SetWasFetchedViaServiceWorker(info.was_fetched_via_service_worker);
   response->SetWasFetchedViaForeignFetch(info.was_fetched_via_foreign_fetch);
