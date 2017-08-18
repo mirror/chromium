@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12cc0d7e_ccd22ec7",
+        "filename": "ash/system/user/tray_user_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T21:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68883f63_0eda3969",
+      "revId": "265cd07087f1c4e1bf860bab31b3c0f82824ffa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9513244b_be3ced4a",
         "filename": "ash/test/ash_test_base.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T18:39:32Z",
       "side": 1,
       "message": "nit: \"n\" to \"user_count\" or \"session_count\" or \"users\"\n\nAlso, should this function be called something like CreateUserSessions()? Just from reading the header it\u0027s not obvious to me if a new test should call SimulateLogin() vs. SimulateUserLogin().",
+      "revId": "265cd07087f1c4e1bf860bab31b3c0f82824ffa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779fa680_bcb1841d",
+        "filename": "ash/test/ash_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-18T21:27:25Z",
+      "side": 1,
+      "message": "Makes sense. Renamed to CreateUserSessions and n -\u003e session_count.",
+      "parentUuid": "9513244b_be3ced4a",
       "revId": "265cd07087f1c4e1bf860bab31b3c0f82824ffa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
