@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32797ece_b84ca648",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-18T15:48:09Z",
+      "side": 1,
+      "message": "optional: This could just be a \"bool baked_in\". WDYT?",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275d5117_7d396350",
+        "filename": "components/ntp_tiles/tile_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-18T15:48:09Z",
+      "side": 1,
+      "message": "Just BAKED_IN? Otherwise we\u0027d have to append _SITE to all of these.\nOr maybe POPULAR_BAKED_IN? After all these also come out of PopularSites.\n\nAlso, just to double-check: This enum isn\u0027t directly used for any UMA histograms. right? Just as a suffix?",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
