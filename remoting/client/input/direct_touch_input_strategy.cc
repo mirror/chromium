@@ -59,6 +59,9 @@ ViewMatrix::Point DirectTouchInputStrategy::GetCursorPosition() const {
   return cursor_position_;
 }
 
+void DirectTouchInputStrategy::FocusViewportOnCursor(
+    DesktopViewport* viewport) const {}
+
 ViewMatrix::Vector2D DirectTouchInputStrategy::MapScreenVectorToDesktop(
     const ViewMatrix::Vector2D& delta,
     const DesktopViewport& viewport) const {
