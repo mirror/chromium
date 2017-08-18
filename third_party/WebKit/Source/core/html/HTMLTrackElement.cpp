@@ -84,10 +84,7 @@ void HTMLTrackElement::ParseAttribute(
     const AttributeModificationParams& params) {
   const QualifiedName& name = params.name;
   if (name == srcAttr) {
-    if (!params.new_value.IsEmpty())
       ScheduleLoad();
-    else if (track_)
-      track_->RemoveAllCues();
 
     // 4.8.10.12.3 Sourcing out-of-band text tracks
     // As the kind, label, and srclang attributes are set, changed, or removed,
@@ -182,6 +179,24 @@ void HTMLTrackElement::LoadTimerFired(TimerBase*) {
   // Otherwise, let CORS mode be No CORS.
   const AtomicString& cors_mode = MediaElementCrossOriginAttribute();
 
+  // Whenever a track element has its src attribute set, changed,
+  // or removed, the user agent must immediately empty the
+  // element's text track's text track list of cues.
+  // Currently there are no other implementations clearing cues
+  // list _immediately_, so we are trying to align with what they are
+  // doing and remove cues in this timer tick.
+  // Also we will first check if the new URL is not equal with
+  // the previous URL (there is an unclarified issue in spec
+  // about it, see: https://github.com/whatwg/html/issues/2916)
+  if (url != url_) {
+    if (track_)
+      track_->RemoveAllCues();
+  } else {
+    return;
+  }
+
+  url_ = url;
+
   // 9. End the synchronous section, continuing the remaining steps in parallel.
 
   // 10. If URL is not the empty string, perform a potentially CORS-enabled
@@ -192,28 +207,6 @@ void HTMLTrackElement::LoadTimerFired(TimerBase*) {
     DidCompleteLoad(kFailure);
     return;
   }
-
-  if (url == url_) {
-    DCHECK(loader_);
-    switch (loader_->LoadState()) {
-      case TextTrackLoader::kIdle:
-      case TextTrackLoader::kLoading:
-        // If loading of the resource from this URL is in progress, return
-        // early.
-        break;
-      case TextTrackLoader::kFinished:
-        DidCompleteLoad(kSuccess);
-        break;
-      case TextTrackLoader::kFailed:
-        DidCompleteLoad(kFailure);
-        break;
-      default:
-        NOTREACHED();
-    }
-    return;
-  }
-
-  url_ = url;
 
   if (loader_)
     loader_->CancelLoad();
