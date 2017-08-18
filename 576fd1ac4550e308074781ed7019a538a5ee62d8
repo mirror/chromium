@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a1d31c2_cc99d73f",
+        "filename": "base/containers/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T20:47:18Z",
+      "side": 1,
+      "message": "Oops, was missing a \u0027no\u0027",
+      "parentUuid": "dd8fc3f3_fd15f162",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "576fd1ac4550e308074781ed7019a538a5ee62d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "469aafd0_db09595c",
         "filename": "base/containers/span.h",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-18T20:38:30Z",
       "side": 1,
       "message": "I don\u0027t understand what \"[span.cons]\" is (same below for the other ones).",
+      "revId": "576fd1ac4550e308074781ed7019a538a5ee62d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e191d9d_a4de743d",
+        "filename": "base/containers/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T20:47:18Z",
+      "side": 1,
+      "message": "These are just taken from the proposal (search for [span.cons]). Presumably they\u0027ll eventually be section headers if the proposal is accepted.",
+      "parentUuid": "469aafd0_db09595c",
       "revId": "576fd1ac4550e308074781ed7019a538a5ee62d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
