@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe681f15_f985727d",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "It shouldn\u0027t need to because all the methods execute on the same thread.",
+      "parentUuid": "f32ac7fa_13dab137",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6ad31fa_caed375f",
         "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T18:41:34Z",
       "side": 1,
       "message": "what if the it returns nullptr, should we call NotifyError?",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9755be0_658e1b52",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "a6ad31fa_caed375f",
       "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "258dc2df_2813a37a",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d27f41d_04f1331b",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ce1f2b2_199ceafd",
         "filename": "content/browser/appcache/appcache_url_loader_job.cc",
         "patchSetId": 10
@@ -64,6 +118,30 @@
       "writtenOn": "2017-08-18T18:54:21Z",
       "side": 1,
       "message": "It looks like MaybeLoadFallbackForResponse can possibly get called twice, once here and once in OnReceiveResponse, we handled this in the NavigationURLLoaderNetworkService like this...\n\n    if (completion_status.error_code !\u003d net::OK \u0026\u0026 !received_response_) {\n      // If the default loader (network) was used to handle the URL load\n      // request we need to see if the handlers want to potentially create a\n      // new loader for the response. e.g. AppCache.\n      if (MaybeCreateLoaderForResponse(ResourceResponseHead()))\n        return;\n    }",
+      "range": {
+        "startLine": 211,
+        "startChar": 27,
+        "endLine": 211,
+        "endChar": 37
+      },
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b5c189_b21c8db4",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "Thanks done.",
+      "parentUuid": "2ce1f2b2_199ceafd",
       "range": {
         "startLine": 211,
         "startChar": 27,
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "cce9a908_8675176e",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8423f607_06622928",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a5be8f_fc4ba667",
         "filename": "content/browser/appcache/appcache_url_loader_job.h",
         "patchSetId": 10
@@ -104,6 +200,24 @@
       "writtenOn": "2017-08-18T18:41:34Z",
       "side": 1,
       "message": "could this method either be private or hoisted into the ctor?",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2f9e4f_fa107d23",
+        "filename": "content/browser/appcache/appcache_url_loader_job.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "Made it private.",
+      "parentUuid": "06a5be8f_fc4ba667",
       "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +238,24 @@
       "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a99aec_6a48b4a8",
+        "filename": "content/browser/appcache/appcache_url_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-18T19:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c966136_78a5679f",
+      "revId": "f74666424691d5e33b6d73a3cd9aeb5462fc1723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
