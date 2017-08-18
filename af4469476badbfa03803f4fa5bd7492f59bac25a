@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81ae9faa_8c181c26",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d964ea6f_88a50053",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b2695f5_b0e9929d",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f36708_58a41591",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:45:11Z",
+      "side": 1,
+      "message": "Updated the comment. How about \"A service worker\u0027s message pipe to request StartWorker/StopWorker.\"?",
+      "parentUuid": "9b2695f5_b0e9929d",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1c08c4a5_fee2b9df",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:45:11Z",
+      "side": 1,
+      "message": "Yes, I think we no longer need to have EmbeddedWorkerInstanceClient::StartWorker() since mojom::Renderer::CreateServiceWorker() could be the message. For that change, we need to move the args currently passed on StartWorker to CreateServiceWorkerParams.",
+      "parentUuid": "c887b931_140465ff",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08893f58_6d387af6",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d15e63_474fe374",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:45:11Z",
+      "side": 1,
+      "message": "Yeah, that might be a bit confusing... I actually used this name since I want to move EWInstanceClientImpl::StartWorker to Renderer::CreateServiceWorker in later patch, but let\u0027s rename the method at the moment. \nRenamed it to CreateEmbeddedWorkerInstanceClient() for now and updated the comment. Thanks.",
+      "parentUuid": "08893f58_6d387af6",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8f9b3349_e6ffa3fd",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:45:11Z",
+      "side": 1,
+      "message": "I tried to add a comment about that. How about this?",
+      "parentUuid": "1d5715ba_ab6420c7",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a37a6f_6ed7dbb0",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d305e0b_a8a862a3",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-18T04:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a37a6f_6ed7dbb0",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
