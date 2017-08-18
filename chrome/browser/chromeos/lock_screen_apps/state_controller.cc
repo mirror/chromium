@@ -389,6 +389,8 @@ void StateController::MoveToBackground() {
   } else if (GetLockScreenNoteState() == TrayActionState::kActive) {
     note_app_window_metrics_->MovedToBackground();
     UpdateLockScreenNoteState(TrayActionState::kBackground);
+    ResetNoteTakingWindowAndMoveToNextState(
+        true /*close_window*/, NoteTakingExitReason::kUnlockButtonPressed);
   }
 }
 
