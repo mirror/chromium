@@ -22,6 +22,30 @@
       "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe7c438_a641b68f",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T22:22:11Z",
+      "side": 1,
+      "message": "Thanks. Your suggestion would simplify the client a lot.\n\nTalked with varkha@ offline.\nI think the only concern when varkha@ introduced the reporter [1] is that because some animation is called so often, we try not interrupt with the animation and \"simplicity would win (and avoid some non-trivial instantiation and reconstitution costs for the histogram objects)\".\n\nActually we need to instance the reporter for every animation, and might need to create the histogram object for every animation. UMA_HISTOGRAM_PERCENTAGE will call base::LinearHistogram::FactoryGet. We do not know if the histogram object could be cached or not.\n\nBut on the other hand, we can simplify the override function to take Report(string uma_name, int value), so that we can only have one global AnimationMetricsReporter in ChromeOS? Not one lazy instance for each kind of reporter?\n\nWDYT? varkha@ could you please add more if I am missing something.\n\n[1] https://codereview.chromium.org/2631333002#msg62",
+      "parentUuid": "b0be8707_f4d8edde",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 73
+      },
+      "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
