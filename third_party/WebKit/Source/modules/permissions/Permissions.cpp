@@ -18,6 +18,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalFrame.h"
+#include "modules/notifications/Notification.h"
 #include "modules/permissions/PermissionDescriptor.h"
 #include "modules/permissions/PermissionStatus.h"
 #include "modules/permissions/PermissionUtils.h"
@@ -118,6 +119,19 @@ ScriptPromise Permissions::query(ScriptState* script_state,
   if (exception_state.HadException())
     return exception_state.Reject(script_state);
 
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  // Defer to the notification feature for the "notifications" and "push"
+  // permissions, which applies additional renderer-side restrictions.
+  if (descriptor->name == PermissionName::NOTIFICATIONS ||
+      descriptor->name == PermissionName::PUSH_NOTIFICATIONS) {
+    TaskComplete(
+        resolver, std::move(descriptor),
+        Notification::PermissionStatus(ExecutionContext::From(script_state)));
+    return promise;
+  }
+
   // This must be called after `parsePermission` because the website might
   // be able to run code.
   PermissionService* service = GetService(ExecutionContext::From(script_state));
@@ -127,9 +141,6 @@ ScriptPromise Permissions::query(ScriptState* script_state,
         DOMException::Create(
             kInvalidStateError,
             "In its current state, the global scope can't query permissions."));
-
-  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
-  ScriptPromise promise = resolver->Promise();
 
   // If the current origin is a file scheme, it will unlikely return a
   // meaningful value because most APIs are broken on file scheme and no
