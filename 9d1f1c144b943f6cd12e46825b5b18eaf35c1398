@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "968c1f29_f212a54b",
+        "filename": "third_party/webdriver/patch.diff",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-08-18T02:51:55Z",
+      "side": 1,
+      "message": "Is it a NewerThan or EqualTo?",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "9d1f1c144b943f6cd12e46825b5b18eaf35c1398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
