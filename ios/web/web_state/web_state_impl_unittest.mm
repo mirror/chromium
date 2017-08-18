@@ -129,7 +129,8 @@ class MockWebStatePolicyDecider : public WebStatePolicyDecider {
   virtual ~MockWebStatePolicyDecider() {}
 
   MOCK_METHOD1(ShouldAllowRequest, bool(NSURLRequest* request));
-  MOCK_METHOD1(ShouldAllowResponse, bool(NSURLResponse* response));
+  MOCK_METHOD2(ShouldAllowResponse,
+               bool(NSURLResponse* response, bool for_main_frame));
   MOCK_METHOD0(WebStateDestroyed, void());
 };
 
@@ -585,6 +586,12 @@ TEST_F(WebStateImplTest, PolicyDeciderTest) {
   MockWebStatePolicyDecider decider2(web_state_.get());
   EXPECT_EQ(web_state_.get(), decider.web_state());
 
+  NSURL* url = [NSURL URLWithString:@"http://example.com"];
+  NSURLResponse* response = [[NSURLResponse alloc] initWithURL:url
+                                                      MIMEType:@"text/html"
+                                         expectedContentLength:0
+                                              textEncodingName:nil];
+
   // Test that ShouldAllowRequest() is called.
   EXPECT_CALL(decider, ShouldAllowRequest(_)).Times(1).WillOnce(Return(true));
   EXPECT_CALL(decider2, ShouldAllowRequest(_)).Times(1).WillOnce(Return(true));
@@ -606,22 +613,26 @@ TEST_F(WebStateImplTest, PolicyDeciderTest) {
   }
 
   // Test that ShouldAllowResponse() is called.
-  EXPECT_CALL(decider, ShouldAllowResponse(_)).Times(1).WillOnce(Return(true));
-  EXPECT_CALL(decider2, ShouldAllowResponse(_)).Times(1).WillOnce(Return(true));
-  EXPECT_TRUE(web_state_->ShouldAllowResponse(nil));
+  EXPECT_CALL(decider, ShouldAllowResponse(response, true))
+      .Times(1)
+      .WillOnce(Return(true));
+  EXPECT_CALL(decider2, ShouldAllowResponse(response, true))
+      .Times(1)
+      .WillOnce(Return(true));
+  EXPECT_TRUE(web_state_->ShouldAllowResponse(response, true));
 
   // Test that ShouldAllowResponse() is stopping on negative answer. Only one
   // one the decider should be called.
   {
     bool decider_called = false;
     bool decider2_called = false;
-    EXPECT_CALL(decider, ShouldAllowResponse(_))
+    EXPECT_CALL(decider, ShouldAllowResponse(response, false))
         .Times(AtMost(1))
         .WillOnce(DoAll(Assign(&decider_called, true), Return(false)));
-    EXPECT_CALL(decider2, ShouldAllowResponse(_))
+    EXPECT_CALL(decider2, ShouldAllowResponse(response, false))
         .Times(AtMost(1))
         .WillOnce(DoAll(Assign(&decider2_called, true), Return(false)));
-    EXPECT_FALSE(web_state_->ShouldAllowResponse(nil));
+    EXPECT_FALSE(web_state_->ShouldAllowResponse(response, false));
     EXPECT_FALSE(decider_called && decider2_called);
   }
 
