@@ -1174,6 +1174,9 @@ extern const char kUseAndroidMidiApiDescription[];
 extern const char kUseDdljsonApiName[];
 extern const char kUseDdljsonApiDescription[];
 
+extern const char kThirdPartyDoodlesName[];
+extern const char kThirdPartyDoodlesDescription[];
+
 extern const char kXGEOVisibleNetworksName[];
 extern const char kXGEOVisibleNetworksDescription[];
 
