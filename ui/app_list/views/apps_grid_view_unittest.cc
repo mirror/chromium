@@ -639,8 +639,7 @@ TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
   test_api_->LayoutToIdealBounds();
 }
 
-// TODO(warx): enable this test for |test_with_fullscreen_|, crbug.com/742581.
-TEST_F(AppsGridViewTest, MouseDragFlipPage) {
+TEST_P(AppsGridViewTest, MouseDragFlipPage) {
   apps_grid_view_->set_page_flip_delay_in_ms_for_testing(10);
   GetPaginationModel()->SetTransitionDurations(10, 10);
 
@@ -652,10 +651,14 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   EXPECT_EQ(0, GetPaginationModel()->selected_page());
 
   gfx::Point from = GetItemTileRectAt(0, 0).CenterPoint();
-  gfx::Point to =
-      gfx::Point(apps_grid_view_->width(), apps_grid_view_->height() / 2);
+  gfx::Point to;
+  const gfx::Rect apps_grid_bounds = apps_grid_view_->GetBoundsInScreen();
+  if (test_with_fullscreen_)
+    to = gfx::Point(apps_grid_bounds.width() / 2, apps_grid_bounds.bottom());
+  else
+    to = gfx::Point(apps_grid_bounds.right(), apps_grid_view_->height() / 2);
 
-  // Drag to right edge.
+  // For fullscreen/bubble launcher, drag to the bottom/right of bounds.
   page_flip_waiter.Reset();
   SimulateDrag(AppsGridView::MOUSE, from, to);
 
@@ -668,8 +671,12 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
 
   apps_grid_view_->EndDrag(true);
 
-  // Now drag to the left edge and test the other direction.
-  to.set_x(0);
+  // Now drag to the top/left edge and test the other direction for
+  // fullscreen/bubble launcher.
+  if (test_with_fullscreen_)
+    to.set_y(apps_grid_bounds.y());
+  else
+    to.set_x(0);
 
   page_flip_waiter.Reset();
   SimulateDrag(AppsGridView::MOUSE, from, to);
