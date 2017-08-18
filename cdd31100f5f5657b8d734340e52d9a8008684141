@@ -16,6 +16,74 @@
       "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1779ab31_7bca61ff",
+        "filename": "components/viz/host/renderer_settings_creation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-18T15:10:30Z",
+      "side": 1,
+      "message": "If you have spare time (i.e. no action is required as part of this CL), I think that it might be nice to pull this out and put it in base::CommandLine.",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b026de52_3e02c055",
+        "filename": "services/viz/compositing/privileged/interfaces/renderer_settings.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-18T15:10:30Z",
+      "side": 1,
+      "message": "nit: sort them alphabetically by name?",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf8ee25_b0ee889f",
+        "filename": "ui/base/ui_base_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-18T15:10:30Z",
+      "side": 1,
+      "message": "\"scale factor\" means something else in the compositor. How about \"slow down factor\" here to match the name of the option?",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97954ca_3e39a18f",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-18T15:10:30Z",
+      "side": 1,
+      "message": "nit: these are suppose to be kept sorted too.",
+      "revId": "cdd31100f5f5657b8d734340e52d9a8008684141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
