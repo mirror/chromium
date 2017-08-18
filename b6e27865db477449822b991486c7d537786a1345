@@ -34,6 +34,24 @@
       "revId": "b6e27865db477449822b991486c7d537786a1345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbc6380_430a44f2",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-18T23:05:22Z",
+      "side": 1,
+      "message": "sure that works.",
+      "parentUuid": "cbb457f8_b2014e3f",
+      "revId": "b6e27865db477449822b991486c7d537786a1345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
