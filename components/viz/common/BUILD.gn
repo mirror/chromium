@@ -40,6 +40,8 @@ viz_component("common") {
     "quads/resource_format.h",
     "quads/shared_bitmap.cc",
     "quads/shared_bitmap.h",
+    "quads/shared_quad_state.cc",
+    "quads/shared_quad_state.h",
     "quads/single_release_callback.cc",
     "quads/single_release_callback.h",
     "quads/texture_mailbox.cc",
@@ -84,6 +86,7 @@ viz_component("common") {
 
   deps = [
     "//base",
+    "//cc/base",
     "//gpu",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
