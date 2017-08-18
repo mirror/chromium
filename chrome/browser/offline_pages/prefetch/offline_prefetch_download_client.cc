@@ -23,12 +23,22 @@ void OfflinePrefetchDownloadClient::OnServiceInitialized(
     bool state_lost,
     const std::vector<download::DownloadMetaData>& downloads) {
   std::vector<std::string> outstanding_download_guids;
-  for (const auto& download : downloads)
-    outstanding_download_guids.emplace_back(download.guid);
+  std::vector<PrefetchDownloadResult> success_downloads;
+  for (const auto& download : downloads) {
+    if (download.completion_info.has_value()) {
+      outstanding_download_guids.emplace_back(download.guid);
+    } else {
+      success_downloads.push_back({download.guid,
+                                   download.completion_info->path,
+                                   download.completion_info->bytes_downloaded});
+    }
+  }
 
   PrefetchDownloader* downloader = GetPrefetchDownloader();
-  if (downloader)
-    downloader->OnDownloadServiceReady(outstanding_download_guids);
+  if (downloader) {
+    downloader->OnDownloadServiceReady(outstanding_download_guids,
+                                       success_downloads);
+  }
 }
 
 void OfflinePrefetchDownloadClient::OnServiceUnavailable() {

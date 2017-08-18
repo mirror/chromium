@@ -87,7 +87,7 @@ class PrefetchDownloaderTest : public testing::Test {
     download_service_.set_is_ready(ready);
     if (ready) {
       GetPrefetchDownloader()->OnDownloadServiceReady(
-          std::vector<std::string>());
+          std::vector<std::string>(), std::vector<PrefetchDownloadResult>());
     } else {
       GetPrefetchDownloader()->OnDownloadServiceShutdown();
     }

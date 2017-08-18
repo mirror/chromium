@@ -30,7 +30,8 @@ class PrefetchDownloader {
   // Called when the download service is initialized and can accept the
   // downloads.
   virtual void OnDownloadServiceReady(
-      const std::vector<std::string>& outstanding_download_ids) = 0;
+      const std::vector<std::string>& outstanding_download_ids,
+      const std::vector<PrefetchDownloadResult>& success_downloads) = 0;
 
   // Called when the download service fails to initialize and should not be
   // used.

@@ -97,6 +97,13 @@ class PrefetchDispatcher {
   virtual void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) = 0;
 
+  // Called when a download service is up and notifies us about the ongoing and
+  // completed downloads. The prefetch system should clean up the database to
+  // be consistent with the ones from the download system.
+  virtual void CleanupDownloads(
+      const std::vector<std::string>& outstanding_download_ids,
+      const std::vector<PrefetchDownloadResult>& success_downloads) = 0;
+
   // Called when a download is completed successfully or fails.
   virtual void DownloadCompleted(
       const PrefetchDownloadResult& download_result) = 0;

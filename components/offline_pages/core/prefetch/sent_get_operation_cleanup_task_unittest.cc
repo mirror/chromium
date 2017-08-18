@@ -102,8 +102,7 @@ TEST_F(SentGetOperationCleanupTaskTest, NoRetryForOngoingRequest) {
   std::unique_ptr<PrefetchItem> store_item =
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
-  EXPECT_EQ(PrefetchItemState::SENT_GET_OPERATION, store_item->state);
-  EXPECT_EQ(item.get_operation_attempts, store_item->get_operation_attempts);
+  EXPECT_EQ(item, *store_item);
 }
 
 TEST_F(SentGetOperationCleanupTaskTest, ErrorOnMaxAttempts) {
@@ -146,8 +145,7 @@ TEST_F(SentGetOperationCleanupTaskTest, SkipForOngoingRequestWithMaxAttempts) {
   std::unique_ptr<PrefetchItem> store_item =
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
-  EXPECT_EQ(PrefetchItemState::SENT_GET_OPERATION, store_item->state);
-  EXPECT_EQ(item.get_operation_attempts, store_item->get_operation_attempts);
+  EXPECT_EQ(item, *store_item);
 }
 
 TEST_F(SentGetOperationCleanupTaskTest, NoUpdateForOtherStates) {
@@ -165,8 +163,7 @@ TEST_F(SentGetOperationCleanupTaskTest, NoUpdateForOtherStates) {
   std::unique_ptr<PrefetchItem> store_item =
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
-  EXPECT_EQ(PrefetchItemState::NEW_REQUEST, store_item->state);
-  EXPECT_EQ(item.get_operation_attempts, store_item->get_operation_attempts);
+  EXPECT_EQ(item, *store_item);
 }
 
 }  // namespace offline_pages

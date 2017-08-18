@@ -85,7 +85,8 @@ void PrefetchDownloaderImpl::CancelDownload(const std::string& download_id) {
 }
 
 void PrefetchDownloaderImpl::OnDownloadServiceReady(
-    const std::vector<std::string>& outstanding_download_ids) {
+    const std::vector<std::string>& outstanding_download_ids,
+    const std::vector<PrefetchDownloadResult>& success_downloads) {
   DCHECK_EQ(download::DownloadService::ServiceStatus::READY,
             download_service_->GetStatus());
   service_started_ = true;

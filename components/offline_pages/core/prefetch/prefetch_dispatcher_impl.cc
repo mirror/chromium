@@ -15,6 +15,7 @@
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
 #include "components/offline_pages/core/prefetch/download_archives_task.h"
+#include "components/offline_pages/core/prefetch/download_cleanup_task.h"
 #include "components/offline_pages/core/prefetch/download_completed_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
@@ -215,6 +216,14 @@ void PrefetchDispatcherImpl::DidGetOperationRequest(
   task_queue_.AddTask(base::MakeUnique<PageBundleUpdateTask>(
       prefetch_store, this, operation_name, pages));
   LogRequestResult("GetOperationRequest", status, operation_name, pages);
+}
+
+void PrefetchDispatcherImpl::CleanupDownloads(
+    const std::vector<std::string>& outstanding_download_ids,
+    const std::vector<PrefetchDownloadResult>& success_downloads) {
+  task_queue_.AddTask(base::MakeUnique<DownloadCleanupTask>(
+      service_->GetPrefetchStore(), outstanding_download_ids,
+      success_downloads));
 }
 
 void PrefetchDispatcherImpl::DownloadCompleted(

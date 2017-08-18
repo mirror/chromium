@@ -32,6 +32,9 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
   void SchedulePipelineProcessing() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
+  void CleanupDownloads(
+      const std::vector<std::string>& outstanding_download_ids,
+      const std::vector<PrefetchDownloadResult>& success_downloads) override;
   void DownloadCompleted(
       const PrefetchDownloadResult& download_result) override;
   void ImportCompleted(int64_t offline_id, bool success) override;
