@@ -47,6 +47,7 @@
 @synthesize reloadButton = _reloadButton;
 @synthesize stopButton = _stopButton;
 @synthesize progressBar = _progressBar;
+@synthesize usesTabStrip = _usesTabStrip;
 
 - (instancetype)init {
   self = [super init];
@@ -167,8 +168,8 @@
   [buttonConstraints
       addObject:[self.tabSwitchStripButton.widthAnchor
                     constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.tabSwitchStripButton addTarget:self.dispatcher
-                                action:@selector(showTabStrip)
+  [self.tabSwitchStripButton addTarget:self
+                                action:@selector(tabSwitcherButtonTapped:)
                       forControlEvents:UIControlEventTouchUpInside];
   [self.tabSwitchStripButton
       setTitleColor:UIColorFromRGB(kToolbarButtonTitleNormalColor)
@@ -420,6 +421,15 @@
   [self.parentViewController presentViewController:alertController
                                           animated:YES
                                         completion:nil];
+}
+
+// Action for tabSwitcherButton.
+- (void)tabSwitcherButtonTapped:(id)sender {
+  if (self.usesTabStrip) {
+    [self.dispatcher performSelector:@selector(showTabStrip)];
+  } else {
+    [self.dispatcher performSelector:@selector(showTabGrid)];
+  }
 }
 
 @end
