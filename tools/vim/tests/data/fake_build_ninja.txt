@@ -19,6 +19,9 @@ rule cxx_sysroot_abs
 rule cxx_sysroot_rel
   command = $cxx -Ia --sysroot=../../build/sysroot-image -isysroot ../../build/mac.sdk $in -o $out
 
+rule cxx_isystem
+  command = $cxx -Ib -isystema -isystem ../../build/c -isystem /usr/lib/include $in -o $out
+
 rule link
   command = $link $in $out
 
@@ -56,3 +59,6 @@ build obj/seven.o: cxx_sysroot_rel ../../seven.cc
 build obj/eight.o: cxx ../../eight.m
 
 build obj/nine.o: cxx ../../nine.mm
+
+build obj/ten.o: cxx_isystem ../../ten.cc
+
