@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b87d18_244ce7f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Nit: trailing whitespace \u003dP",
+      "range": {
+        "startLine": 21,
+        "startChar": 65,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93ca38a_17c2e3ae",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "\" as\" -\u003e \". As\"",
+      "range": {
+        "startLine": 77,
+        "startChar": 25,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a915e4_89c0e3b7",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Nit: explicit",
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285a3284_a5cf7ac3",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Nit: SingleThreadTaskRunner* const",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf81f39_4c15b8c8",
+        "filename": "base/test/test_mock_time_task_runner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "This name is a bit confusing: I would rename it to should_quit_run_loop_ or something",
+      "range": {
+        "startLine": 410,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 19
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f373fb14_cd978f74",
+        "filename": "base/test/test_mock_time_task_runner.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Nit: no space",
+      "range": {
+        "startLine": 54,
+        "startChar": 61,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7307b57a_0449acca",
+        "filename": "base/test/test_mock_time_task_runner.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Any reason not to just fold kBound into kDefault and have it be the default behavior?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f05130_4a7c77fd",
+        "filename": "base/test/test_mock_time_task_runner_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Nit: auto (this applies to any other thing that uses MakeUnique or MakeRefCounted)",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de3a82d_78b48daf",
+        "filename": "base/test/test_mock_time_task_runner_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Just curious, why not 64? \u003d)\n\nI thought we were going for some neat power of 2 thing where we could easily tell which task got dropped, since the resulting sum would always be unique \u003d)",
+      "range": {
+        "startLine": 43,
+        "startChar": 50,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bbfc05_7a126522",
+        "filename": "base/test/test_mock_time_task_runner_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Nit: auto",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc981ce_806ad167",
+        "filename": "base/threading/thread_task_runner_handle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T10:32:32Z",
+      "side": 1,
+      "message": "Please use auto here, that\u0027s one of the reasons we decided to add MakeUnique.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "6f8d47e1fcd8b5528d5e8634ceddaaacb0ec064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
