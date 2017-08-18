@@ -2691,6 +2691,12 @@ const char kArcBootCompleted[] = "Load Android apps automatically";
 const char kArcBootCompletedDescription[] =
     "Allow Android apps to start automatically after signing in.";
 
+const char kArcNativeBridgeExperimentName[] =
+    "Enable native bridge experiment for ARC";
+
+const char kArcNativeBridgeExperimentDescription[] =
+    "Enables experimental native bridge feature.";
+
 const char kEnableImeMenuName[] = "Enable opt-in IME menu";
 
 const char kEnableImeMenuDescription[] =
