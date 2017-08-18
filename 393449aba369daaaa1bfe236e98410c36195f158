@@ -122,6 +122,24 @@
       "revId": "393449aba369daaaa1bfe236e98410c36195f158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5599416_65bf1ac9",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T08:19:49Z",
+      "side": 1,
+      "message": "Ah, I see. |status| can be updated at line 267. I missed the line. Acked.",
+      "parentUuid": "9ac5d9d6_9041614b",
+      "revId": "393449aba369daaaa1bfe236e98410c36195f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
