@@ -1,0 +1,43 @@
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
+++ROLE_SYSTEM_TABLE xml-roles:grid
+++++ROLE_SYSTEM_ROW SELECTABLE xml-roles:row
+++++++ROLE_SYSTEM_CELL name='A1' SELECTABLE xml-roles:columnheader
+++++++++ROLE_SYSTEM_STATICTEXT name='A1'
+++++++ROLE_SYSTEM_CELL name='B1' SELECTABLE xml-roles:columnheader
+++++++++ROLE_SYSTEM_STATICTEXT name='B1'
+++++ROLE_SYSTEM_ROW SELECTABLE xml-roles:row
+++++++ROLE_SYSTEM_CELL name='A2' SELECTABLE xml-roles:gridcell
+++++++++ROLE_SYSTEM_STATICTEXT name='A2'
+++++++ROLE_SYSTEM_CELL name='B2' SELECTABLE xml-roles:gridcell
+++++++++ROLE_SYSTEM_STATICTEXT name='B2'
+++++ROLE_SYSTEM_COLUMN
+++++ROLE_SYSTEM_COLUMN
+++++IA2_ROLE_SECTION
+++ROLE_SYSTEM_TABLE xml-roles:grid
+++++ROLE_SYSTEM_ROW SELECTABLE xml-roles:row
+++++++ROLE_SYSTEM_CELL name='A1' SELECTABLE xml-roles:columnheader
+++++++++ROLE_SYSTEM_STATICTEXT name='A1'
+++++++ROLE_SYSTEM_CELL name='B1' SELECTABLE xml-roles:columnheader
+++++++++ROLE_SYSTEM_STATICTEXT name='B1'
+++++ROLE_SYSTEM_ROW SELECTABLE xml-roles:row
+++++++ROLE_SYSTEM_CELL name='A2' SELECTABLE xml-roles:gridcell
+++++++++ROLE_SYSTEM_STATICTEXT name='A2'
+++++++ROLE_SYSTEM_CELL name='B2' SELECTABLE xml-roles:gridcell
+++++++++ROLE_SYSTEM_STATICTEXT name='B2'
+++++ROLE_SYSTEM_COLUMN
+++++ROLE_SYSTEM_COLUMN
+++++IA2_ROLE_SECTION
+++ROLE_SYSTEM_TABLE xml-roles:grid
+++++ROLE_SYSTEM_ROW SELECTABLE xml-roles:row
+++++++ROLE_SYSTEM_CELL name='A1' SELECTABLE xml-roles:columnheader
+++++++++ROLE_SYSTEM_STATICTEXT name='A1'
+++++++ROLE_SYSTEM_CELL name='B1' SELECTABLE xml-roles:columnheader
+++++++++ROLE_SYSTEM_STATICTEXT name='B1'
+++++ROLE_SYSTEM_ROW SELECTABLE xml-roles:row
+++++++ROLE_SYSTEM_CELL name='A2' SELECTABLE xml-roles:gridcell
+++++++++ROLE_SYSTEM_STATICTEXT name='A2'
+++++++ROLE_SYSTEM_CELL name='B2' SELECTABLE xml-roles:gridcell
+++++++++ROLE_SYSTEM_STATICTEXT name='B2'
+++++ROLE_SYSTEM_COLUMN
+++++ROLE_SYSTEM_COLUMN
+++++IA2_ROLE_SECTION
