@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "d76b43db_70358c66",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-18T22:31:28Z",
+      "side": 1,
+      "message": "Why do we need to go to STATE_APPS here? I think we just make both STATE_START and STATE_APPS use AppsContainerView, but we still need to distinguish these two states?",
+      "parentUuid": "5a140bc0_b2a77d5b",
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2106ee85_463855a8",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 7
