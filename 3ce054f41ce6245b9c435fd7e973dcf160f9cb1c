@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb3dd285_01936d39",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Resolved with new patch.",
+      "parentUuid": "1f36bf80_344ac517",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e314179f_f1309458",
         "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c57d4f_49be96ac",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e314179f_f1309458",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "828f55b4_5afc148b",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7cd4f287_6900addf",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e80342_79654d78",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e6298d_20fdb0d5",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "16e80342_79654d78",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "78fcdbe2_d9996b89",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1fb4d3e_692bbebd",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 78
+      },
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20b711e3_df60ed03",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 14
@@ -107,6 +203,24 @@
       "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640b86b7_b0a3aae4",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b711e3_df60ed03",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "b2f85f31_8f3668c2",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667f32ed_593a50c9",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d03e447b_f22713a6",
         "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.h",
         "patchSetId": 14
@@ -141,6 +273,24 @@
       "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1789e8_c18630a0",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-18T22:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03e447b_f22713a6",
+      "revId": "3ce054f41ce6245b9c435fd7e973dcf160f9cb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
