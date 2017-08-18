@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c39416a_876bbe09",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/japanese-rl-selection-clear-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "Since there are no visuals (image expectations) I am going to run some of these manually to see, it does look like the invalidation rects have changed quite a bit in this patch, particularly for the SVG text expectations.\n\nYour description explains this as being due to altering spacing, and fixing bugs. So I think this explains, but wanted to call out for a checkpoint in any case as part of the review.",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5427e8_f9345397",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "Could we maybe land this SetFromBounds logic consolidation as a separate change, to make this change more focused?",
+      "range": {
+        "startLine": 624,
+        "startChar": 2,
+        "endLine": 624,
+        "endChar": 67
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16150d57_ac6315b2",
+        "filename": "third_party/WebKit/Source/core/layout/line/GlyphOverflow.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "I think what you are saying in the comment here is that the bounds param passed in originates from ShapeResult::Bounds(), but it wasn\u0027t immediately clear to me. Maybe we should revise comment to clarify? Also, are we actually assured that this will always be the case, since we don\u0027t know what callers are actually doing?\n\nMaybe we could instead document for the method what the bounds are expected to be, and cite ShapeResult methods as examples rather than definitive expectation?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c58a27_e30eb038",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "Vertical",
+      "range": {
+        "startLine": 468,
+        "startChar": 7,
+        "endLine": 468,
+        "endChar": 14
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142c3cf9_c9fbe50c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "Is there a rough diagram in a W3C spec with some sample characters and bounding boxes we could link to, or create, to make it easier for folks reading to gain background? It feels like a picture would be really helpful.",
+      "range": {
+        "startLine": 476,
+        "startChar": 9,
+        "endLine": 476,
+        "endChar": 32
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb85e5a_484aef14",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "add \u0027coordinates\u0027 after logical",
+      "range": {
+        "startLine": 485,
+        "startChar": 8,
+        "endLine": 485,
+        "endChar": 16
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8480ba11_518a5c10",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T17:57:06Z",
+      "side": 1,
+      "message": "Is this for performance purposes? Could we try without first to avoid templates, or do we already know we need to do this?",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
