@@ -11,6 +11,7 @@
 namespace ash {
 
 class WindowSelectorDelegate;
+class OverviewWindowDragController;
 
 class ASH_EXPORT DelayedAnimationObserver {
  public:
@@ -44,6 +45,10 @@ class ASH_EXPORT WindowSelectorDelegate {
   // first before destroying the window.
   virtual void RemoveAndDestroyAnimationObserver(
       DelayedAnimationObserver* animation_observer) = 0;
+
+  // Returns the drag controller for an overview window item. Create one if it
+  // doesn't exist.
+  virtual OverviewWindowDragController* GetOverviewWindowDragController() = 0;
 
  protected:
   virtual ~WindowSelectorDelegate() {}
