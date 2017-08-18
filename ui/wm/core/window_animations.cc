@@ -301,6 +301,7 @@ void AnimateHideWindowCommon(aura::Window* window,
 
   // Property sets within this scope will be implicitly animated.
   ScopedHidingAnimationSettings hiding_settings(window);
+  hiding_settings.layer_animation_settings()->CacheRenderSurface();
   base::TimeDelta duration = GetWindowVisibilityAnimationDuration(*window);
   if (duration > base::TimeDelta())
     hiding_settings.layer_animation_settings()->SetTransitionDuration(duration);
