@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "372fb128_fb89caf4",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T01:09:41Z",
+      "side": 1,
+      "message": "Thanks. |bounds| here is display::Display::bounds() which is in DIP. I\u0027ve changed it to scale the origin and size, and tested it with  --force-display-scale-factor.\n\nThere may be similar issues lurking that I\u0027ll test for when I start observing display changes.",
+      "parentUuid": "309208d5_d955296d",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a436cd_6faa772b",
         "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-16T05:25:09Z",
       "side": 1,
       "message": "My only concern is that the views implementation may assume things to be of certain types (e.g. always expect a WindowTreeHost to be a DesktopWindowTreeHost, etc.), even if not right now, in some unfortunate future change. So I would encourage you to split out the relevant parts of DesktopScreenX11/DesktopScreenWin out of views, and into //ui/display/[x11|win], so we don\u0027t have to worry about this. (please file a crbug and a TODO here referencing that)",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902091b3_b785af15",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T01:09:41Z",
+      "side": 1,
+      "message": "Done. Filed crbug.com/756680 -- not sure what component to assign it to though.",
+      "parentUuid": "65a436cd_6faa772b",
       "revId": "617950d42afe0474e61963788d58869807249071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "617950d42afe0474e61963788d58869807249071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de398d1_11aa7419",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-18T01:09:41Z",
+      "side": 1,
+      "message": "We can just clear the map all at once. I\u0027ll make RemoveRootWindowController just take a pointer and tear down that object, and let the functions worry about erasing the container (that way calling RemoveRootWindowController() doesn\u0027t unexpectedly invalidate iterators)",
+      "parentUuid": "654f579f_e35f9247",
+      "revId": "617950d42afe0474e61963788d58869807249071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
