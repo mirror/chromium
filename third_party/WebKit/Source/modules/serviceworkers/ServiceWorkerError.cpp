@@ -54,60 +54,61 @@ struct ExceptionParams {
 
 ExceptionParams GetExceptionParams(const WebServiceWorkerError& web_error) {
   switch (web_error.error_type) {
-    case WebServiceWorkerError::kErrorTypeAbort:
+    case mojom::WebServiceWorkerErrorType::Abort:
       return ExceptionParams(kAbortError,
                              "The Service Worker operation was aborted.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeActivate:
+    case mojom::WebServiceWorkerErrorType::Activate:
       // Not currently returned as a promise rejection.
       // TODO: Introduce new ActivateError type to ExceptionCodes?
       return ExceptionParams(kAbortError,
                              "The Service Worker activation failed.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeDisabled:
+    case mojom::WebServiceWorkerErrorType::Disabled:
       return ExceptionParams(kNotSupportedError,
                              "Service Worker support is disabled.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeInstall:
+    case mojom::WebServiceWorkerErrorType::Install:
       // TODO: Introduce new InstallError type to ExceptionCodes?
       return ExceptionParams(kAbortError,
                              "The Service Worker installation failed.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeScriptEvaluateFailed:
+    case mojom::WebServiceWorkerErrorType::ScriptEvaluateFailed:
       return ExceptionParams(kAbortError,
                              "The Service Worker script failed to evaluate.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeNavigation:
+    case mojom::WebServiceWorkerErrorType::Navigation:
       // ErrorTypeNavigation should have bailed out before calling this.
       NOTREACHED();
       return ExceptionParams(kUnknownError);
-    case WebServiceWorkerError::kErrorTypeNetwork:
+    case mojom::WebServiceWorkerErrorType::Network:
       return ExceptionParams(kNetworkError,
                              "The Service Worker failed by network.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeNotFound:
+    case mojom::WebServiceWorkerErrorType::NotFound:
       return ExceptionParams(
           kNotFoundError,
           "The specified Service Worker resource was not found.",
           web_error.message);
-    case WebServiceWorkerError::kErrorTypeSecurity:
+    case mojom::WebServiceWorkerErrorType::Security:
       return ExceptionParams(
           kSecurityError,
           "The Service Worker security policy prevented an action.",
           web_error.message);
-    case WebServiceWorkerError::kErrorTypeState:
+    case mojom::WebServiceWorkerErrorType::State:
       return ExceptionParams(kInvalidStateError,
                              "The Service Worker state was not valid.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeTimeout:
+    case mojom::WebServiceWorkerErrorType::Timeout:
       return ExceptionParams(kAbortError,
                              "The Service Worker operation timed out.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeUnknown:
+    case mojom::WebServiceWorkerErrorType::Unknown:
       return ExceptionParams(kUnknownError,
                              "An unknown error occurred within Service Worker.",
                              web_error.message);
-    case WebServiceWorkerError::kErrorTypeType:
+    case mojom::WebServiceWorkerErrorType::None:
+    case mojom::WebServiceWorkerErrorType::Type:
       // ErrorTypeType should have been handled before reaching this point.
       NOTREACHED();
       return ExceptionParams(kUnknownError);
@@ -132,14 +133,14 @@ v8::Local<v8::Value> ServiceWorkerErrorForUpdate::Take(
     const WebServiceWorkerError& web_error) {
   ScriptState* script_state = resolver->GetScriptState();
   switch (web_error.error_type) {
-    case WebServiceWorkerError::kErrorTypeNetwork:
-    case WebServiceWorkerError::kErrorTypeNotFound:
-    case WebServiceWorkerError::kErrorTypeScriptEvaluateFailed:
+    case mojom::WebServiceWorkerErrorType::Network:
+    case mojom::WebServiceWorkerErrorType::NotFound:
+    case mojom::WebServiceWorkerErrorType::ScriptEvaluateFailed:
       // According to the spec, these errors during update should result in
       // a TypeError.
       return V8ThrowException::CreateTypeError(
           script_state->GetIsolate(), GetExceptionParams(web_error).message);
-    case WebServiceWorkerError::kErrorTypeType:
+    case mojom::WebServiceWorkerErrorType::Type:
       return V8ThrowException::CreateTypeError(script_state->GetIsolate(),
                                                web_error.message);
     default:

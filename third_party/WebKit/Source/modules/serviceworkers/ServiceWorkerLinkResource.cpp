@@ -92,7 +92,7 @@ void ServiceWorkerLinkResource::Process() {
         "Cannot register service worker with <link> element. " +
             error_message));
     WTF::MakeUnique<RegistrationCallback>(owner_)->OnError(
-        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeSecurity,
+        WebServiceWorkerError(mojom::WebServiceWorkerErrorType::Security,
                               error_message));
     return;
   }
