@@ -2086,6 +2086,7 @@ test("base_unittests") {
     "metrics/statistics_recorder_unittest.cc",
     "native_library_unittest.cc",
     "observer_list_unittest.cc",
+    "optional_mac_unittest.mm",
     "optional_unittest.cc",
     "os_compat_android_unittest.cc",
     "path_service_unittest.cc",
