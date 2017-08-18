@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d0c6cb_286dfe25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-18T15:37:59Z",
+      "side": 1,
+      "message": "nit: \"the object *was* correctly hooked up\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "bed57ea9a15704ea3ba367065d75c645be111236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9643bb9d_42154bee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-18T15:37:59Z",
+      "side": 1,
+      "message": "nit: remove \"easier\"?",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "bed57ea9a15704ea3ba367065d75c645be111236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b739b3e7_e85d2b24",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-18T15:37:59Z",
+      "side": 1,
+      "message": "Can this check be removed as well?  (Don\u0027t know, just opportunity question.)",
+      "range": {
+        "startLine": 282,
+        "startChar": 16,
+        "endLine": 282,
+        "endChar": 38
+      },
+      "revId": "bed57ea9a15704ea3ba367065d75c645be111236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939c0cda_5bdf91f5",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-18T15:37:59Z",
+      "side": 1,
+      "message": "And this one?",
+      "range": {
+        "startLine": 689,
+        "startChar": 17,
+        "endLine": 689,
+        "endChar": 39
+      },
+      "revId": "bed57ea9a15704ea3ba367065d75c645be111236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
