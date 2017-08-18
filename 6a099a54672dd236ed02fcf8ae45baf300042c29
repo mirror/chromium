@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b49b12e7_9f99caaf",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-18T18:12:27Z",
+      "side": 1,
+      "message": "If you keep with this structure, how can this happen?  Should it be a DCHECK instead?",
+      "range": {
+        "startLine": 402,
+        "startChar": 50,
+        "endLine": 402,
+        "endChar": 0
+      },
+      "revId": "6a099a54672dd236ed02fcf8ae45baf300042c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
