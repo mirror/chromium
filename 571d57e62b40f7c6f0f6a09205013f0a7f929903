@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5a17c9_92af8287",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 0,
+      "message": "This is definitely removing the test. I think maybe we should not be returning auto for the whitelist?",
+      "range": {
+        "startLine": 2713,
+        "startChar": 14,
+        "endLine": 2713,
+        "endChar": 0
+      },
+      "revId": "571d57e62b40f7c6f0f6a09205013f0a7f929903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

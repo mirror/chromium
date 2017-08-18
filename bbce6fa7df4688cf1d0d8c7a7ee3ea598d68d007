@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e88e52c9_3e987244",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 1,
+      "message": "You need to re-create this in the input_router_impl.cc as well.",
+      "range": {
+        "startLine": 514,
+        "startChar": 5,
+        "endLine": 514,
+        "endChar": 15
+      },
+      "revId": "bbce6fa7df4688cf1d0d8c7a7ee3ea598d68d007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "594262b3_bca1808d",
         "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
         "patchSetId": 6

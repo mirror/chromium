@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15581c24_9be83ea1",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 1,
+      "message": "Please make the same changes to the InputRouterImpl as well.",
+      "range": {
+        "startLine": 268,
+        "startChar": 7,
+        "endLine": 268,
+        "endChar": 15
+      },
+      "revId": "eb828114271a1699c88d15ca76913d49b0412fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee777287_d69408ef",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 1,
+      "message": "I think this needs some tests. I\u0027m specifically wondering about the state of these bits when they are flipped back and forth between the different whitelist vs allowed sets...",
+      "revId": "eb828114271a1699c88d15ca76913d49b0412fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebcb89b_bd7ed4cb",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 1,
+      "message": "Set the default values inline; here. This is now allowed in Chromium.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "eb828114271a1699c88d15ca76913d49b0412fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3745eabc_733f8a45",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 1,
+      "message": "This certainly needs a comment",
+      "range": {
+        "startLine": 1071,
+        "startChar": 18,
+        "endLine": 1071,
+        "endChar": 49
+      },
+      "revId": "eb828114271a1699c88d15ca76913d49b0412fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ac49d9_4eea14a2",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2538,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-18T14:46:28Z",
+      "side": 1,
+      "message": "Perhaps these should be saying None?",
+      "revId": "eb828114271a1699c88d15ca76913d49b0412fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
