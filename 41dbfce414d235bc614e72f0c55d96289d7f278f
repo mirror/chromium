@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f0149f4_f827610f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-18T04:30:22Z",
+      "side": 1,
+      "message": "do you mean CSSTokenizerInputStream?",
+      "revId": "41dbfce414d235bc614e72f0c55d96289d7f278f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5750c98_74c04613",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-18T04:30:22Z",
+      "side": 1,
+      "message": "call UncheckedConsumeInternal from this method to avoid duplication and match the pattern of other checked/unchecked methods in this class",
+      "revId": "41dbfce414d235bc614e72f0c55d96289d7f278f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
