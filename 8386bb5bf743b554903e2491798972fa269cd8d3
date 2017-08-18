@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aa160bd_0af2045b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T15:28:01Z",
+      "side": 1,
+      "message": "I\u0027m moving the ScopedAllowIO from CreateBrowserStateDirectory to EnsureBrowserStateDirectoriesCreated (as I\u0027m merging both functions) in ios/chrome/browser/browser_state/chrome_browser_state_impl.cc.\n\nThis confuse the presubmit check that think the line are added while they are just moved around.",
+      "parentUuid": "f0a9096b_7ad50de1",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "469f0984_d307c85e",
         "filename": "ios/chrome/browser/browser_state/chrome_browser_state.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7221ea9d_72490c0d",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T15:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "469f0984_d307c85e",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4122e52_c919141e",
+        "filename": "ios/chrome/browser/browser_state/off_the_record_chrome_browser_state_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T15:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f9aad4a_2f0b1966",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408b2399_7edb86d2",
         "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state.mm",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb597211_e85214d2",
+        "filename": "ios/chrome/browser/browser_state/test_chrome_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T15:28:01Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "408b2399_7edb86d2",
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d081d55f_0b751449",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-18T15:28:01Z",
+      "side": 1,
+      "message": "I\u0027ve based this on ChromeBrowserMainParts implementation (when initialising BrowserProcessImpl which is the desktop class corresponding to ApplicationContextImpl). It uses USER_VISIBLE with the following comment:\n\n  // The initial read is done synchronously, the TaskPriority is thus only used\n  // for flushes to disks and BACKGROUND is therefore appropriate. Priority of\n  // remaining BACKGROUND+BLOCK_SHUTDOWN tasks is bumped by the TaskScheduler on\n  // shutdown. However, some shutdown use cases happen without\n  // TaskScheduler::Shutdown() (e.g. ChromeRestartRequest::Start() and\n  // BrowserProcessImpl::EndSession()) and we must thus unfortunately make this\n  // USER_VISIBLE until we solve https://crbug.com/747495 to allow bumping\n  // priority of a sequence on demand.\n\nSo the reasoning is that USER_VISIBLE is only necessary on desktop because of a bug with shutdown thanks to the synchronous loading of the preferences. However, on iOS, the loading of the preferences is not synchronous but is done asynchronously the first time ApplicationContext::GetLocalState() is called.\n\nAs loading the preferences is necessary for proper behaviour of many components, delaying the load has impact on user, thus USER_VISIBLE. Maybe we should refactor this code to load the preferences synchronously on iOS too as desktop which would allow us to use BACKGROUND then (since on iOS there is no way to shutdown without TaskScheduler::Shutdown).\n\nOr we can decide that loading the preferences in BACKGROUND priority is not problematic.\n\nWDYT?",
+      "parentUuid": "18ca4a33_32e05a54",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
