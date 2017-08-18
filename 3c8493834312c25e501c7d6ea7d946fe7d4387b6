@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d90595ed_2088c359",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-08-18T07:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4da6256c_7708cf20",
+      "revId": "3c8493834312c25e501c7d6ea7d946fe7d4387b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9158b86f_c1c11973",
         "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-17T21:15:13Z",
       "side": 1,
       "message": "How do we know that the ordering 1, 2, 0, 3 sorts them? I get the impression that fast mode simply returns them in a different order from accurate mode and this fixes it.",
+      "range": {
+        "startLine": 139,
+        "startChar": 49,
+        "endLine": 139,
+        "endChar": 58
+      },
+      "revId": "3c8493834312c25e501c7d6ea7d946fe7d4387b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d014a70_6bb74ccc",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-08-18T07:40:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure the principle about the order of detecting face, but those are real results after detecting services/test/data/face_pose.png.",
+      "parentUuid": "9158b86f_c1c11973",
       "range": {
         "startLine": 139,
         "startChar": 49,
