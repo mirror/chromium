@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dae8708_d3fb3712",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T20:53:31Z",
+      "side": 1,
+      "message": "Note: \u003cif expr\u003d\"chromeos\"\u003e at line 157",
+      "revId": "9634fd3dc8cec7430e0c3a23021b80c47d5b214c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121f80ef_a9f035f4",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T20:53:31Z",
+      "side": 1,
+      "message": "Note: \u003cif expr\u003d\"chromeos\"\u003e at line 1146",
+      "revId": "9634fd3dc8cec7430e0c3a23021b80c47d5b214c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b3f0ab_142b03f4",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3408,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-18T20:53:31Z",
+      "side": 1,
+      "message": "Note: \u003cif expr\u003d\"chromeos\"\u003e at line 3055",
+      "revId": "9634fd3dc8cec7430e0c3a23021b80c47d5b214c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
