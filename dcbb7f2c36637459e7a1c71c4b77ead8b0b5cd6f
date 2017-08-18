@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eb4e0b3f_3175fb14",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "I implemented the hacky solution, with a TODO to fix it.",
+      "parentUuid": "fce2803f_3375bdcd",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5915ffec_0c76c83a",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 5
@@ -121,6 +139,24 @@
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590f6592_d0d12384",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13cf07be_7e531c53",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +224,24 @@
       "side": 1,
       "message": "\u003e this can happen when seed is expired, and a job is pending, but in that case, we don\u0027t have valid data to send back?\n\nnot done",
       "parentUuid": "5c54baf6_06245f85",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1177210_2b779de1",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "I\u0027m not sure what we should do in this case. It could be possible that the seed is expired from the Service\u0027s perspective, but would still be more fresh than the version of the seed that the app has. Should we not give them the most recent seed we have available?",
+      "parentUuid": "a5e5d927_64e2ca91",
       "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

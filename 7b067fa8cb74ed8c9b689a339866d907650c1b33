@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "938a487a_7aef14a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59026bd8_e1b47681",
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a795a11_17a3f0ab",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "1d5f8422_104d831f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a795a11_17a3f0ab",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "166ce98d_42e0aa20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "It\u0027s still true. But the IPC is asynchronous and slow, so the seed it sends won\u0027t be used until the next time the app starts.",
+      "parentUuid": "e72f994e_d80f2fac",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5382a60e_e607e7c1",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
         "patchSetId": 7
@@ -85,6 +151,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb08e9b_817bf6ca",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5382a60e_e607e7c1",
+      "range": {
+        "startLine": 652,
+        "startChar": 12,
+        "endLine": 653,
+        "endChar": 56
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f71caeaf_4e7df878",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb8042d0_0c516df2",
+      "range": {
+        "startLine": 45,
+        "startChar": 81,
+        "endLine": 45,
+        "endChar": 92
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "841329df_8c29298a",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 7
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "206ad06e_5081f6f5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841329df_8c29298a",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04cc9154_3fbb72d4",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 7
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-18T16:42:47Z",
       "side": 1,
       "message": "This seems wrong in the case where the seedPref is expired and there exists a pending job - in that case we will send the current seed back to the WebView app (i.e. the expired seed).\n\nI think this if-statement should be\n\nif (seedPref.isSeedExpired()) {\n    if (!pendingJobExists()) {\n        scheduleSeedFetchJob();\n    }\n    sendMessageToWebView(msg.replyTo, AwVariationsUtils.MSG_WITHOUT_SEED_DATA);\n} else {\n    sendMessageToWebView(msg.replyTo, AwVariationsUtils.MSG_WITH_SEED_DATA);\n}",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 13
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46bbb4a_f05731e6",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Sure. I made that change.\n\nI do think its possible that the service could have an expired seed that\u0027s still more fresh than the seed the app has. In this case we may want to send back the expired seed?",
+      "parentUuid": "04cc9154_3fbb72d4",
       "range": {
         "startLine": 112,
         "startChar": 12,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "3f992776_7532e2ed",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Added comments. Not sure we actually need both, setOverrideDeadline may be sufficient.",
+      "parentUuid": "48040329_e607fa99",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 141,
+        "endChar": 74
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a5cae15_9723a1b4",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 7
@@ -200,6 +386,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124f2248_0f8af876",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a5cae15_9723a1b4",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "1a0e3da4_6580887c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3bf2608_2ec66ea4",
+      "range": {
+        "startLine": 182,
+        "startChar": 40,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a400479_e5b81a44",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 7
@@ -246,6 +480,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9a965e_a565d51c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a400479_e5b81a44",
+      "range": {
+        "startLine": 207,
+        "startChar": 21,
+        "endLine": 207,
+        "endChar": 22
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "a326be4e_416462a5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed36ff7_5f6f7747",
+      "range": {
+        "startLine": 229,
+        "startChar": 66,
+        "endLine": 229,
+        "endChar": 73
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2125f272_e91d0d0d",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 7
@@ -292,6 +574,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3708922b_fc768459",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2125f272_e91d0d0d",
+      "range": {
+        "startLine": 241,
+        "startChar": 53,
+        "endLine": 241,
+        "endChar": 60
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "e888c8f9_f1a2f4d7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2801480b_eed5a847",
+      "range": {
+        "startLine": 34,
+        "startChar": 86,
+        "endLine": 35,
+        "endChar": 49
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600180b7_52cb25ac",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
         "patchSetId": 7
@@ -329,6 +659,30 @@
       "writtenOn": "2017-08-18T16:42:47Z",
       "side": 1,
       "message": "Don\u0027t we want to reschedule the job??\n(onStopJob could be called for lots of reasons, e.g. that we lost our network connection)",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947946cf_8497b38f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Bo and I were discussing this earlier. I think it comes down to how aggressive we choose to be with keeping our seed fresh.",
+      "parentUuid": "600180b7_52cb25ac",
       "range": {
         "startLine": 63,
         "startChar": 0,
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "a3835258_6d11a55c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d8ed6e_99fac40e",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 113,
+        "endChar": 38
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5b27d62_c32fe268",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
         "patchSetId": 7
@@ -384,6 +762,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee43776_0a07d6ca",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Yes, it can unbind once the data has been sent from here.",
+      "parentUuid": "e5b27d62_c32fe268",
+      "range": {
+        "startLine": 123,
+        "startChar": 12,
+        "endLine": 123,
+        "endChar": 69
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "170d406f_394335c5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "954fd1d4_396a5135",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0046ccd1_b4596789",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 7
@@ -433,6 +859,30 @@
     },
     {
       "key": {
+        "uuid": "a435711b_eb7e2228",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "It\u0027s used a few places: https://cs.chromium.org/search/?q\u003d%22EEE,+dd+MMM+yyyy+HH:mm:ss+z%22+package:%5Echromium$\u0026type\u003dcs\n\nIt should be safe to assume it wont change.",
+      "parentUuid": "0046ccd1_b4596789",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 75
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41a24105_229f5ad6",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 7
@@ -450,6 +900,24 @@
     },
     {
       "key": {
+        "uuid": "d4f25936_7c62a732",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done, I think, not totally sure what you mean with both the true and false lines.",
+      "parentUuid": "41a24105_229f5ad6",
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a85bddd_36448fdd",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 7
@@ -461,6 +929,30 @@
       "writtenOn": "2017-08-18T16:42:47Z",
       "side": 1,
       "message": "Why are we renaming the temp file in the finally-statement? Please add a comment :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f003c400_e186627d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "I\u0027ve moved it outside, should be fine since it will only execute if the file is successfully written?",
+      "parentUuid": "4a85bddd_36448fdd",
       "range": {
         "startLine": 96,
         "startChar": 0,
@@ -496,6 +988,30 @@
     },
     {
       "key": {
+        "uuid": "519a65a1_c8160a62",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "no, should be 3. I\u0027ll fix that next patch-set",
+      "parentUuid": "22a3808c_157d5575",
+      "range": {
+        "startLine": 145,
+        "startChar": 46,
+        "endLine": 145,
+        "endChar": 47
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2e87a27_59fc5f68",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
         "patchSetId": 7
@@ -516,6 +1032,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a141ad_530c315c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e87a27_59fc5f68",
+      "range": {
+        "startLine": 35,
+        "startChar": 25,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -542,6 +1082,30 @@
     },
     {
       "key": {
+        "uuid": "abf7cd44_f959f51d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2adb911c_d03d3da0",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0768266f_44e25f2f",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
         "patchSetId": 7
@@ -562,6 +1126,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5753d61_744b4371",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0768266f_44e25f2f",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -588,6 +1176,30 @@
     },
     {
       "key": {
+        "uuid": "7eee89a7_d99fa5a0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1204a6_b5b8ea87",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 65
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ad90750_e55bb190",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
         "patchSetId": 7
@@ -611,6 +1223,30 @@
     },
     {
       "key": {
+        "uuid": "55601b21_01c1baff",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad90750_e55bb190",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 41
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1f62ff_ee273051",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
         "patchSetId": 7
@@ -631,6 +1267,30 @@
       "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cf2586_08b9d976",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1f62ff_ee273051",
+      "range": {
+        "startLine": 93,
+        "startChar": 15,
+        "endLine": 93,
+        "endChar": 27
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -680,6 +1340,30 @@
     },
     {
       "key": {
+        "uuid": "4576990a_7151032f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/variations/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "Did today, testReadAndWriteSeedPref and testCopySeedPref fail, but they should be fixed when I change a 4 to a 3 (on monday)",
+      "parentUuid": "656c3098_0f76e353",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 71
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed1cf8e_a85af417",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/variations/AwVariationsConfigurationServiceTest.java",
         "patchSetId": 7
@@ -691,6 +1375,30 @@
       "writtenOn": "2017-08-18T16:42:47Z",
       "side": 1,
       "message": "This test only makes sense if the two getOrCreateVariationsDirectory() methods return different directories, is this always the case?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329858e7_3ac3a624",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/variations/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-18T23:54:17Z",
+      "side": 1,
+      "message": "the service returns /data/user/0/org.chromium.android_webview.shell/files\nwhile the seedhandler returns /data/user/0/org.chromium.android_webview.shell/app_webview",
+      "parentUuid": "1ed1cf8e_a85af417",
       "range": {
         "startLine": 107,
         "startChar": 0,
