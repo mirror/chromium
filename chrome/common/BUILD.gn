@@ -671,6 +671,7 @@ source_set("app_mode_app_support") {
 mojom("mojo_bindings") {
   sources = [
     "cache_stats_recorder.mojom",
+    "client_hints.mojom",
     "constants.mojom",
     "file_patcher.mojom",
     "image_context_menu_renderer.mojom",
@@ -712,6 +713,7 @@ mojom("mojo_bindings") {
     "//mojo/common:common_custom_types",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
+    "//url/mojo:url_mojom_origin",
   ]
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
