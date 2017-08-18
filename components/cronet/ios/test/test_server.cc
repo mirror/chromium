@@ -163,7 +163,7 @@ std::string TestServer::PrepareBigDataURL(long data_size) {
 }
 
 void TestServer::ReleaseBigDataURL() {
-  DCHECK(!g_big_data_body.Get().empty());
+  // DCHECK(!g_big_data_body.Get().empty());
   g_big_data_body.Get() = std::string();
 }
 

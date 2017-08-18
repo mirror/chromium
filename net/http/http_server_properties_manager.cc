@@ -403,10 +403,13 @@ HttpServerPropertiesManager::server_network_stats_map() const {
 bool HttpServerPropertiesManager::SetQuicServerInfo(
     const QuicServerId& server_id,
     const std::string& server_info) {
+  LOG(INFO) << "ZZZ: HttpServerPropertiesManager::SetQuicServerInfo start";
   DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
   bool changed =
       http_server_properties_impl_->SetQuicServerInfo(server_id, server_info);
   if (changed)
+    LOG(INFO) << "ZZZ: HttpServerPropertiesManager::SetQuicServerInfo "
+                 "ScheduleUpdatePrefsOnNetworkSequence: SET_QUIC_SERVER_INFO";
     ScheduleUpdatePrefsOnNetworkSequence(SET_QUIC_SERVER_INFO);
   return changed;
 }
@@ -1062,6 +1065,9 @@ void HttpServerPropertiesManager::UpdatePrefsFromCacheOnNetworkSequence() {
 
 void HttpServerPropertiesManager::UpdatePrefsFromCacheOnNetworkSequence(
     const base::Closure& completion) {
+  LOG(INFO) << "ZZZ: "
+               "HttpServerPropertiesManager::"
+               "UpdatePrefsFromCacheOnNetworkSequence start";
   DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
 
   // It is in MRU order.
@@ -1178,6 +1184,9 @@ void HttpServerPropertiesManager::UpdatePrefsFromCacheOnNetworkSequence(
   std::unique_ptr<IPAddress> last_quic_addr = base::MakeUnique<IPAddress>();
   http_server_properties_impl_->GetSupportsQuic(last_quic_addr.get());
   // Update the preferences on the pref thread.
+  LOG(INFO) << "ZZZ: "
+               "HttpServerPropertiesManager::"
+               "UpdatePrefsFromCacheOnNetworkSequence posting";
   pref_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&HttpServerPropertiesManager::UpdatePrefsOnPrefThread,
@@ -1211,6 +1220,8 @@ void HttpServerPropertiesManager::UpdatePrefsOnPrefThread(
     std::unique_ptr<RecentlyBrokenAlternativeServices>
         recently_broken_alternative_services,
     const base::Closure& completion) {
+  LOG(INFO) << "ZZZ: HttpServerPropertiesManager::UpdatePrefsOnPrefThread";
+
   typedef base::MRUCache<url::SchemeHostPort, ServerPref> ServerPrefMap;
   ServerPrefMap server_pref_map(ServerPrefMap::NO_AUTO_EVICT);
 

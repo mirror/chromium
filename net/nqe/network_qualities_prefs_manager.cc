@@ -82,7 +82,7 @@ NetworkQualitiesPrefsManager::~NetworkQualitiesPrefsManager() {
     network_quality_estimator_->RemoveNetworkQualitiesCacheObserver(this);
 }
 
-void NetworkQualitiesPrefsManager::InitializeOnNetworkThread(
+void NetworkQualitiesPrefsManager:: InitializeOnNetworkThread(
     NetworkQualityEstimator* network_quality_estimator) {
   DCHECK(!network_task_runner_);
   DCHECK(network_quality_estimator);

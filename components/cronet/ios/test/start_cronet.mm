@@ -13,10 +13,10 @@ namespace cronet {
 
 void StartCronet(int port) {
   [Cronet setUserAgent:@"CronetTest/1.0.0.0" partial:NO];
-  [Cronet setHttp2Enabled:true];
+  [Cronet setHttp2Enabled:false];
   [Cronet setQuicEnabled:true];
   [Cronet setAcceptLanguages:@"en-US,en"];
-  [Cronet addQuicHint:@"test.example.com" port:443 altPort:443];
+  [Cronet addQuicHint:@"www.gstatic.com" port:443 altPort:443];
   [Cronet enableTestCertVerifierForTesting];
   [Cronet setHttpCacheType:CRNHttpCacheTypeDisabled];
 
