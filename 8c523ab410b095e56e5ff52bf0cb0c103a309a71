@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f27e0021_4c2b3195",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T21:16:49Z",
+      "side": 1,
+      "message": "nit: not really done as stated. :)",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749cb708_427b973a",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T21:16:49Z",
+      "side": 1,
+      "message": "nit: for some reason both Justin and me assumed this was an std::set* which might be more appropriate here. Its count() has log(N) time complexity and its return type is size_t (unsigned).\n\n*: vector doesn\u0027t even has a count method(). :)",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d5115d_2aa4eb06",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T21:16:49Z",
+      "side": 1,
+      "message": "Use and std::set here and then later use PrefetchStoreTestUtil::GetAllItems and just compare-equals both sets.",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 33
+      },
+      "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
