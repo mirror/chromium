@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "ef424f6d_3b12d3d1",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-18T20:07:04Z",
+      "side": 1,
+      "message": "Ok, so I think I\u0027ve figured this out.  Warning, this is based on reading the code, not actually sitting down and writing either tests or logging to confirm this (either of them would be non-trivial).  Also note that this is as of p491708 (which is when the weak pointer code existed in this CL); the weak pointer code has changed since and I haven\u0027t sat down and analyzed the new code.\n\nBut what I think is going on is:\n\n* WeakPtrs and WeakPtrFactorys are based on WeakPtr::Reference::Flags, which are shared between pointers and factories, and are reset on invalidation.  \n* A sequence checker is associated with the flag.  When the flag is created, the sequence checker is detached from the current sequence.  (I\u0027ll note that I\"m not completely certain why this is, since flags are created lazily when needed, and I don\u0027t think that one is created just by the construction of a factory.  So I don\u0027t think this is needed for thread transfer of factories.)\n* The sequence_checker_ is checked (bound to sequence on first check) if a) Invalidate() is called on the flag and the flag has more than one reference (destruction of factory or intentional invalidation), or b) IsValid() is called on the flag (WeakPtr::Get()).\n\n* The timeline in the old ExtensionRequestNotifier (and I believe by proxy in the ExtensionCookieManagerDelegate it was copied from) was: \n* Create factory on UI thread\n* Multiple instances of:\n** Create weak pointer on IO thread\n** Call WeakPtr::Get() on UI thread (binds to UI thread)\n** Destroy weak pointer on UI thread.\n* Destroy factory on IO thread (doesn\u0027t do sequence check because there are no references other than the factory\u0027s).\n\n* If there had been a test to destroy the notifier when there was a notification to the UI thread outstanding, that would have caught this.\n\nGiven that we\u0027re no longer using weak pointers (as you pointed out, they weren\u0027t doing anything for us), I don\u0027t feel an urge to write that test.  I believe you agreed verbally, but here\u0027s the writeup and another chance to disagree.",
+      "parentUuid": "5e3da9dc_bd9b8efd",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f50ae499cc540094f79d7945ce597c7b1d36e440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd60ad00_025a5f99",
         "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
         "patchSetId": 9
