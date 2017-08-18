@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f55334d_aeb82998",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-18T16:16:50Z",
+      "side": 1,
+      "message": "Yes, as far as I understand, see https://cs.chromium.org/chromium/src/base/bind_helpers.h?rcl\u003dd943bb502bd6b611e5e8c43b6678b16cb780b9fe\u0026l\u003d24",
+      "parentUuid": "8c97aeeb_7f9ee25a",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2068db82_a9f46d45",
         "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99743a67_bb422f92",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-18T16:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2068db82_a9f46d45",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b62f260d_69d2690d",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-18T16:16:50Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right.\n\nGoing with your second option to be completely consistent with data_reduction_proxy_data---it seems cleaner to have a single style for nested structures (although note that data_reduction_proxy_data has what I think is test-specific behavior in the ExtraRequestCompleteInfo copy constructor).",
+      "parentUuid": "c3e08d94_823ab76c",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "315bd62a_6f5707ad",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-07T19:17:56Z",
       "side": 1,
       "message": "this is a nice extension of capabilities for waiting, thanks! I prefer to add this to the existing PageLoadMetricsWaiter class so implementers have have to work with a single waiter. Was your concern with the main vs sub frame issue? We can figure that out by doing:\n\n// It is safe for us to use UnsafeFindFrameByFrameTreeNodeId here since we only want to know if a given frame is a main frame, not get the actual RFH.\nbool is_main_frame \u003d \ncontent::WebContents::FromFrameTreeNodeId(extra_request_complete_info.frame_tree_node_id)-\u003eUnsafeFindFrameByFrameTreeNodeId(extra_request_complete_info.frame_tree_node_id)-\u003eGetParent() \u003d\u003d nullptr;\n\nWe could then make the PageLoadMetricsWaiter\u0027s PageLoadMetricsObserver implement OnLoadedResource, forward that to PageLoadMetricsWaiter, and add a new TimingField enum entry LOAD_TIMING_INFO which has its bit cleared in the OnLoadedResource method.",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecfdab35_4a2e1243",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-18T16:16:50Z",
+      "side": 1,
+      "message": "I kept it separate as to not mix OnTimingUpdated events with OnLoadedResource events (as the Wait() method of PageLoadMetricsWaiter specifically mentions OnTimingUpdated). Also things like Page vs SubFrame -level expectations didn\u0027t seem to fit well with the loading metrics, and the fact that OnCommit is too late to add an observer.\n\nBut I agree it\u0027s nicer to have just a single waiter, and have updated the API accordingly.\n\nMain frame vs subframe wasn\u0027t an issue as my tests don\u0027t have subframes, I wasn\u0027t even thinking of that ;)  I\u0027ve made the waiting on load_timing_info independent of frames, LMK if that doesn\u0027t make sense.\n\nAlso, I think it\u0027s safe to add the observer when the tracker is created rather than on commit.",
+      "parentUuid": "315bd62a_6f5707ad",
       "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +171,24 @@
       "side": 1,
       "message": "One thing that\u0027s surprising here though, is that if /nonexisting-resource returns a non-200 error code like 404, it should be ignored and never passed through to PLMOs, which means the waiter should hang.\n\nWhich suggests to me that something funny is going on - perhaps /nonexisting-resource returns a 200 response code? Maybe the test server has a default handler that returns a 200.\n\nMaybe you could add some logging code in the observer to see if that\u0027s happening. If so, this may not be testing a failure after all and maybe we should remove this test case.\n\nThe other failure case I was thinking of was when a provisional load fails to commit. In that case, I\u0027d still like observers to see all timing up to the failure point. The closest test we have that you could model after is AbortNewNavigation. I suspect though that we do not log any load timing metrics for aborted navigations yet. So we can defer that if you prefer.",
       "parentUuid": "16d8d521_d9cc7844",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3312a01d_3e5a0a3e",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-18T16:16:50Z",
+      "side": 1,
+      "message": "Using 404 still passes the test. Could this be because the loading metrics come before the commit? (see my addition of OnTrackerCreated, which is necessary to intercept the loading metrics)",
+      "parentUuid": "84cf0183_8c5c5a9c",
       "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
