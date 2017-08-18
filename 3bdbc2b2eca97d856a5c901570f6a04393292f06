@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b38aba4_199085bc",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-18T00:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea08aab7_de6476ed",
+      "revId": "3bdbc2b2eca97d856a5c901570f6a04393292f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9106dc_6177ec43",
         "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3bdbc2b2eca97d856a5c901570f6a04393292f06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6933b31_8e041ad5",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-18T00:47:25Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9a9106dc_6177ec43",
+      "revId": "3bdbc2b2eca97d856a5c901570f6a04393292f06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
