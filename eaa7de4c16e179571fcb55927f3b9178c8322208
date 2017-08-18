@@ -118,6 +118,30 @@
       "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948e03e7_8be3f869",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-18T06:00:18Z",
+      "side": 1,
+      "message": "Added CQ-DEPEND on CL:605108",
+      "parentUuid": "e7e6f31e_e6ed397e",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "eaa7de4c16e179571fcb55927f3b9178c8322208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
