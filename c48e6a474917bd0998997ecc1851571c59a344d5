@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33c056a_51e89c23",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-18T12:30:09Z",
+      "side": 1,
+      "message": "In line 1730, more conditions are checked.\n\nAs I understand, we shouldn\u0027t check whether the element is autofilled (because the pre-condition is that there are no saved credentials). But SetAutofilled is mentioned in the tests.\n\nHere we also expect that element.IsPasswordField() is true. If it is correct, please mention in the comment to function that |element| must be a password field.",
+      "range": {
+        "startLine": 1759,
+        "startChar": 7,
+        "endLine": 1759,
+        "endChar": 32
+      },
+      "revId": "c48e6a474917bd0998997ecc1851571c59a344d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588044f8_9552a7a6",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-18T12:30:09Z",
+      "side": 1,
+      "message": "Please describe when the method returns true.",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "c48e6a474917bd0998997ecc1851571c59a344d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
