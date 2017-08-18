@@ -16,6 +16,24 @@
       "revId": "1a615082f36eac91ac2af66a423fe8dc9c8d9504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035363ec_091d7407",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-18T06:17:27Z",
+      "side": 1,
+      "message": "Done.\n\nAs we chatted offline, that\u0027s slightly less protective actually. For example, if the signal is emitted for unknown reasons right after browser-restart-on-signin-because-of-non-default-chrome-flags, the same issue can still repro, but I guess I was just being too paranoid. The global flag would work just fine hopefully.",
+      "parentUuid": "1e23b0e6_52a1caf6",
+      "revId": "1a615082f36eac91ac2af66a423fe8dc9c8d9504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
