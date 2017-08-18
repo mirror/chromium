@@ -103,6 +103,11 @@ const char kCastStreamingHwEncodingDescription[] =
     "This option enables support in Cast Streaming for encoding video streams "
     "using platform hardware.";
 
+const char kClickToOpenPDFName[] = "Click to open embedded PDFs";
+const char kClickToOpenPDFDescription[] =
+    "Show a placeholder for embedded PDFs that allows the user to click to "
+    "download the PDF when a PDF viewer is unavailable.";
+
 const char kCloudImportName[] = "Cloud Import";
 const char kCloudImportDescription[] = "Allows the cloud-import feature.";
 
