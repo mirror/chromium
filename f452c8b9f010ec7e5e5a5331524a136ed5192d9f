@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "f97a402a_c0c0c03b",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-18T07:59:52Z",
+      "side": 1,
+      "message": "Reg: HTTPHeaderMap I think it\u0027s also used in other places in Blink, would it be probably easier to just define std:: version of it separately?  We can convert it to HTTPHeaderMap internally at boundary when necessary.\n\nKeep using WebString / WebURL as methd parameters sound fine with me.\n\nYes, pimpl pattern can be used only if it helps. If all private fields/methods can just use std::/base:: types no need to use that.",
+      "parentUuid": "31f4a056_213ac242",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5b883a_dc6fe362",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
