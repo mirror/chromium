@@ -105,6 +105,24 @@
       "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8882754_da8284e8",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-18T17:56:55Z",
+      "side": 1,
+      "message": "At this point, we don\u0027t haven\u0027t calculated if net_error is a certificate error yet. Is it fine to pass ssl_info/fatal unconditionally until we reach NavigationRequest?",
+      "parentUuid": "335cf2fc_5c17b0c6",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
