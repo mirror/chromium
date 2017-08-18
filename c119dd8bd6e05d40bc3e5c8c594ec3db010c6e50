@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb94792_77684805",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-18T04:18:17Z",
+      "side": 1,
+      "message": "Michael added this in this CL, which is also in review:\nhttps://chromium-review.googlesource.com/c/618988\n\nI think it is better to check the combo of chrome home and modern before this thing returns true (we could likely copy his line for line and submit as part of this if his get\u0027s hung up).",
+      "range": {
+        "startLine": 293,
+        "startChar": 26,
+        "endLine": 293,
+        "endChar": 45
+      },
+      "revId": "c119dd8bd6e05d40bc3e5c8c594ec3db010c6e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
