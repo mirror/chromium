@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea3dce2d_6e90c991",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-18T16:20:22Z",
+      "side": 1,
+      "message": "One last thought.\n\nI\u0027m looking at the use of this, and it\u0027s always as the second parameter of MaybeBlockPopup. It\u0027s always:\n\nMaybeBlockPopup(wc, GetOpenerUrlForCurrentPage(wc)...\n\nand isn\u0027t useful except for the times that it\u0027s used there. Pondering the definition of MaybeBlockPopup, can we do better? Perhaps a base::Optional\u003cGURL\u003e for that second parameter? Have MaybeBlockPopup assume that the opener url is what GetOpenerUrlForCurrentPage returns, unless explicitly overridden by the caller?\n\nThat way we don\u0027t have to expose GetOpenerUrlForCurrentPage outside the popup blocker, and callers don\u0027t have to know to use it for calls to MaybeBlockPopup.\n\n(And then, of course, inline its code right into the code of MaybeBlockPopup, etc.)",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "3aa48345ed2122e0b03388c1813e76eb08307c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
