@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ff20f0e_8e92b314",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-18T09:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b19ee2_bcb2dd13",
+      "revId": "38384d34f49bac0f1e967ea2a189e81e3804629e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d801852e_6ec11b56",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "38384d34f49bac0f1e967ea2a189e81e3804629e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242d89f_bdbff930",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-18T09:25:10Z",
+      "side": 1,
+      "message": "Yes it would be nice. I agree.\nBut the return value is a bool and it becomes less clear what means false/true with CheckCredentialedSubresource(). For instance, should we block the request when the check return false? (no)\nI suppose I have to do like CheckContentSecurityPolicy..(), I have to add an enum in that case. It will maintain clarity. I think using an enum here is overkill, but it is probably the right thing to do.",
+      "parentUuid": "d801852e_6ec11b56",
+      "revId": "38384d34f49bac0f1e967ea2a189e81e3804629e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
