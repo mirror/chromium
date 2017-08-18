@@ -16,6 +16,24 @@
       "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016cbdf8_e74c57d0",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-18T21:48:56Z",
+      "side": 1,
+      "message": "Please refer to reveman@\u0027s comment here:\nhttps://chromium-review.googlesource.com/c/619931/1/ash/wm/window_animations.cc#380\n\n\"This is really ForceRenderSurfaceUseAndEnableCachingForIt(). Being able to force render surface usage is really useful in some cases but in general we should avoid that unless we\u0027re not already using a render surface. Render surfaces should be avoided when possible as they increase memory usage and has some additional cost compared to drawing a simple layer directly even when caching is enabled.\"",
+      "parentUuid": "8c134bb9_004effe4",
+      "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
