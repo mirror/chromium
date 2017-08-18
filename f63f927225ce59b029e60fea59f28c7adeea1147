@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b2072c5_538ae6a3",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T16:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c329eb4e_ee47dc78",
+      "revId": "f63f927225ce59b029e60fea59f28c7adeea1147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b68fc6ac_3681eac7",
         "filename": "components/crash/content/app/crashpad.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f63f927225ce59b029e60fea59f28c7adeea1147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444df808_d1fe2f2c",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T16:39:45Z",
+      "side": 1,
+      "message": "This is crash_reporter::RequestSingleCrashUploadImpl, the thunk is ::RequestSingleCrashUploadImpl. I\u0027d like to keep the same names for the exports as I work through this, but perhaps as a last step, I can rename those who no longer have any thunking to them..,",
+      "parentUuid": "b68fc6ac_3681eac7",
+      "revId": "f63f927225ce59b029e60fea59f28c7adeea1147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

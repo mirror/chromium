@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93dc7af6_0876f519",
+        "filename": "chrome_elf/blacklist/blacklist.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T16:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ba6037_99f33384",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aff097ee_da38fd0f",
         "filename": "chrome_elf/blacklist/blacklist.cc",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d914cb88_9627934e",
+        "filename": "chrome_elf/blacklist/blacklist.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T16:39:45Z",
+      "side": 1,
+      "message": "Sure, though I hate the trinary operator for readability and debuggability.",
+      "parentUuid": "aff097ee_da38fd0f",
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34943185_aee9f78f",
         "filename": "chrome_elf/blacklist/blacklist.h",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cec80d2_544a374a",
+        "filename": "chrome_elf/blacklist/blacklist.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T16:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34943185_aee9f78f",
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf33142_6b1a60ec",
+        "filename": "chrome_elf/blacklist/blacklist.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T16:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6a6991_1b7b62da",
+      "range": {
+        "startLine": 84,
+        "startChar": 13,
+        "endLine": 84,
+        "endChar": 14
+      },
+      "revId": "e7ac9e86bedfd3b7787ab6bc8ced5db1e3983769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
