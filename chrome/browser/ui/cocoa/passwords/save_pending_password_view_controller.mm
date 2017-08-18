@@ -32,6 +32,7 @@
 }
 
 - (void)onSaveClicked:(id)sender {
+  [self disableEditMode];
   ManagePasswordsBubbleModel* model = self.model;
   if (model) {
     model->OnSaveClicked();
@@ -68,15 +69,18 @@
 
 // Focus handler for editable username field.
 - (void)controlTextDidEndEditing:(NSNotification*)notification {
-  PendingPasswordItemView* row =
-      [[passwordItemContainer_ subviews] objectAtIndex:0];
-  self.model->OnUsernameEdited(
-      base::SysNSStringToUTF16([[row usernameField] stringValue]));
   [self disableEditMode];
 }
 
 - (BOOL)disableEditMode {
   if (editMode_) {
+    PendingPasswordItemView* row =
+        [[passwordItemContainer_ subviews] objectAtIndex:0];
+    ManagePasswordsBubbleModel* model = self.model;
+    if (model) {
+      model->OnUsernameEdited(
+          base::SysNSStringToUTF16([[row usernameField] stringValue]));
+    }
     editMode_ = FALSE;
     [editButton_ setEnabled:TRUE];
     [self refreshRow];
