@@ -111,6 +111,12 @@ void RequestSingleCrashUpload(const std::string& local_id);
 
 void DumpWithoutCrashing();
 
+// The implementation function for GetReports.
+void GetReportsImpl(std::vector<Report>* reports);
+
+// The implementation function for RequestSingleCrashUploadImpl.
+void RequestSingleCrashUploadImpl(const std::string& local_id);
+
 namespace internal {
 
 #if defined(OS_WIN)
