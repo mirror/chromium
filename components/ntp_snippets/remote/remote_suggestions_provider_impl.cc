@@ -187,6 +187,20 @@ bool IsSignedOutUsersSubscriptionForPushedSuggestionsEnabled() {
       kEnableSignedOutUsersSubscriptionForPushedSuggestionsDefault);
 }
 
+// Whether categories (except articles) which are not present in the last fetch
+// response should be deleted.
+const bool kEnableCategoriesNotPresentInLastFetchResponseDeletionDefault =
+    false;
+const char kEnableCategoriesNotPresentInLastFetchResponseDeletionParamName[] =
+    "enable_categories_not_present_in_last_fetch_response_deletion";
+
+bool IsCategoriesNotPresentInLastFetchResponseDeletionEnabled() {
+  return base::GetFieldTrialParamByFeatureAsBool(
+      ntp_snippets::kArticleSuggestionsFeature,
+      kEnableCategoriesNotPresentInLastFetchResponseDeletionParamName,
+      kEnableCategoriesNotPresentInLastFetchResponseDeletionDefault);
+}
+
 template <typename SuggestionPtrContainer>
 std::unique_ptr<std::vector<std::string>> GetSuggestionIDVector(
     const SuggestionPtrContainer& suggestions) {
@@ -815,6 +829,26 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   // TODO(tschumann): The suggestions fetcher needs to signal errors so that we
   // know why we received no data. If an error occured, none of the following
   // should take place.
+
+  if (fetched_categories &&
+      IsCategoriesNotPresentInLastFetchResponseDeletionEnabled()) {
+    for (auto& item : category_contents_) {
+      Category category = item.first;
+      CategoryContent* content = &item.second;
+      if (!content->included_in_last_server_response &&
+          category != articles_category_) {
+        database_->DeleteImages(GetSuggestionIDVector(content->suggestions));
+        database_->DeleteSnippets(GetSuggestionIDVector(content->suggestions));
+        content->suggestions.clear();
+        database_->DeleteImages(GetSuggestionIDVector(content->dismissed));
+        database_->DeleteSnippets(GetSuggestionIDVector(content->dismissed));
+        content->dismissed.clear();
+      }
+    }
+    // This will delete empty categories not present in the last fetch (except
+    // articles).
+    ClearExpiredDismissedSuggestions();
+  }
 
   // We might have gotten new categories (or updated the titles of existing
   // ones), so update the pref.
