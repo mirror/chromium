@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "cab30161_4e7afc2d",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-18T16:50:07Z",
+      "side": 1,
+      "message": "This reverses the ordering of the requests, right?\nIs it intended?",
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0656a8_d0f7a6ba",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-18T16:50:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 83,
+        "startChar": 28,
+        "endLine": 83,
+        "endChar": 46
+      },
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ade6f5_b9a4e189",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-18T16:50:07Z",
+      "side": 1,
+      "message": "As discussed offline, detached_info_ is not really required.\n\nWhat about having PreresolveJob holding a nullptr PreresolveInfo*, and a member function:\n\nbool is_detached() { return !preresolve_info_; }",
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12236bb2_a85a1f76",
         "filename": "chrome/browser/renderer_host/chrome_render_message_filter.cc",
         "patchSetId": 2
