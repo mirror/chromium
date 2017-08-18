@@ -264,6 +264,13 @@ public class Stack {
     }
 
     /**
+     * @return An android context.
+     */
+    Context getContext() {
+        return mLayout.getContext();
+    }
+
+    /**
      * @param tabmodel The model to attach to this stack.
      */
     public void setTabModel(TabModel tabmodel) {

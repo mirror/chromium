@@ -48,6 +48,7 @@ public class FeatureUtilities {
     private static Boolean sHasRecognitionIntentHandler;
     private static Boolean sChromeHomeEnabled;
     private static String sChromeHomeSwipeLogicType;
+    private static Boolean sUseModernDesign;
 
     private static String sCachedHerbFlavor;
     private static boolean sIsHerbFlavorCached;
@@ -284,6 +285,18 @@ public class FeatureUtilities {
         }
 
         return sChromeHomeEnabled;
+    }
+
+    /**
+     * @return Whether or not Chrome is using the modern design.
+     */
+    public static boolean isUsingModernDesign() {
+        if (!ChromeFeatureList.isInitialized()) return false;
+        if (sUseModernDesign == null) {
+            sUseModernDesign =
+                    ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
+        }
+        return sUseModernDesign;
     }
 
     /**
