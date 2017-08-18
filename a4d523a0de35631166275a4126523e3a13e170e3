@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c497a09_98b75232",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-18T00:46:11Z",
+      "side": 0,
+      "message": "This makes me a bit sad (to lose this test), but the correct alternative is properly trying to remove our about:blank redirection, and I\u0027m not sure that\u0027s something that should be tackled in this patch... WDYT?",
+      "revId": "a4d523a0de35631166275a4126523e3a13e170e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
