@@ -9,6 +9,7 @@ namespace navigation_interception {
 NavigationParams::NavigationParams(const GURL& url,
                                    const content::Referrer& referrer,
                                    bool has_user_gesture,
+                                   bool was_started_from_context_menu,
                                    bool is_post,
                                    ui::PageTransition transition_type,
                                    bool is_redirect,
@@ -18,6 +19,7 @@ NavigationParams::NavigationParams(const GURL& url,
     : url_(url),
       referrer_(referrer),
       has_user_gesture_(has_user_gesture),
+      was_started_from_context_menu_(was_started_from_context_menu),
       is_post_(is_post),
       transition_type_(transition_type),
       is_redirect_(is_redirect),
@@ -28,4 +30,3 @@ NavigationParams::NavigationParams(const GURL& url,
 NavigationParams::NavigationParams(const NavigationParams&) = default;
 
 }  // namespace navigation_interception
-

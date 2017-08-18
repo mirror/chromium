@@ -5,8 +5,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
+#include "chrome/browser/renderer_context_menu/render_view_context_menu_test_util.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
@@ -18,6 +20,7 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/common/context_menu_params.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_registry.h"
@@ -157,11 +160,12 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
 
     EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
     EXPECT_EQ(++num_browsers, chrome::GetBrowserCount(profile()));
-    EXPECT_NE(browser(), chrome::FindLastActive());
+    const Browser* app_window = chrome::FindLastActive();
+    EXPECT_NE(browser(), app_window);
+    EXPECT_TRUE(app_window->is_app());
 
     EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
-    EXPECT_EQ(target_url, chrome::FindLastActive()
-                              ->tab_strip_model()
+    EXPECT_EQ(target_url, app_window->tab_strip_model()
                               ->GetActiveWebContents()
                               ->GetLastCommittedURL());
   }
@@ -289,6 +293,92 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
                  browser()->tab_strip_model()->GetActiveWebContents(),
                  out_of_scope_url, LinkTarget::SELF));
 }
+
+class BookmarkAppUrlRedirectorContextMenuBrowserTest
+    : public BookmarkAppUrlRedirectorBrowserTest,
+      public ::testing::WithParamInterface<std::string> {};
+
+// Tests that clicking "Open link in new tab" on a URL specified by GetParam(),
+// always opens a new tab in the background.
+IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorContextMenuBrowserTest,
+                       ContextMenuNewTab) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  size_t num_browsers = chrome::GetBrowserCount(profile());
+  int num_tabs = browser()->tab_strip_model()->count();
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  const GURL initial_url = initial_tab->GetLastCommittedURL();
+
+  const GURL target_url = embedded_test_server()->GetURL(GetParam());
+  ui_test_utils::UrlLoadObserver url_observer(
+      target_url, content::NotificationService::AllSources());
+  content::ContextMenuParams params;
+  params.page_url = initial_tab->GetLastCommittedURL();
+  params.link_url = target_url;
+  TestRenderViewContextMenu menu(initial_tab->GetMainFrame(), params);
+  menu.Init();
+  menu.ExecuteCommand(IDC_CONTENT_CONTEXT_OPENLINKNEWTAB, 0 /* event_flags */);
+  url_observer.Wait();
+
+  EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+  EXPECT_EQ(browser(), chrome::FindLastActive());
+
+  const TabStripModel* tab_strip_model = browser()->tab_strip_model();
+  EXPECT_EQ(++num_tabs, tab_strip_model->count());
+  EXPECT_EQ(initial_tab, tab_strip_model->GetActiveWebContents());
+
+  const content::WebContents* new_tab =
+      tab_strip_model->GetWebContentsAt(tab_strip_model->count() - 1);
+  EXPECT_NE(initial_tab, new_tab);
+
+  EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+  EXPECT_EQ(target_url, new_tab->GetLastCommittedURL());
+}
+
+// Tests that clicking "Open link in new window" on a URL specified by
+// GetParam(), always opens a new non-app window.
+IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorContextMenuBrowserTest,
+                       ContextMenuNewWindow) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  size_t num_browsers = chrome::GetBrowserCount(profile());
+  int num_tabs = browser()->tab_strip_model()->count();
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  const GURL initial_url = initial_tab->GetLastCommittedURL();
+
+  const GURL target_url = embedded_test_server()->GetURL(GetParam());
+  ui_test_utils::UrlLoadObserver url_observer(
+      target_url, content::NotificationService::AllSources());
+  content::ContextMenuParams params;
+  params.page_url = initial_tab->GetLastCommittedURL();
+  params.link_url = target_url;
+  TestRenderViewContextMenu menu(initial_tab->GetMainFrame(), params);
+  menu.Init();
+  menu.ExecuteCommand(IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW,
+                      0 /* event_flags */);
+  url_observer.Wait();
+
+  EXPECT_EQ(++num_browsers, chrome::GetBrowserCount(profile()));
+  const Browser* new_window = chrome::FindLastActive();
+  EXPECT_NE(browser(), new_window);
+  EXPECT_FALSE(new_window->is_app());
+
+  EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
+  EXPECT_EQ(initial_tab, browser()->tab_strip_model()->GetActiveWebContents());
+
+  EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+  EXPECT_EQ(target_url, new_window->tab_strip_model()
+                            ->GetActiveWebContents()
+                            ->GetLastCommittedURL());
+}
+
+INSTANTIATE_TEST_CASE_P(BookmarkAppUrlRedirectorContextMenuBrowserTestInstance,
+                        BookmarkAppUrlRedirectorContextMenuBrowserTest,
+                        testing::Values(kInScopeUrlPath, kOutOfScopeUrlPath));
 
 // Tests that clicking links inside the app doesn't open new browser windows.
 IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, InAppNavigation) {
