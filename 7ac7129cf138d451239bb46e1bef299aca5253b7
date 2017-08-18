@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9b8ebc_62bc5306",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "nit: move to previous line",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91d2711_b715487e",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_view_protocol.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Header guards.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e5ec7d_24339141",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_view_protocol.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "All top-level declarations should generally have comments.\n\nhttps://google.github.io/styleguide/objcguide.xml#Declaration_Comments",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02fe0a1_7bfde0a2",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd32906b_12ccc23d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4763dd_c911cf31",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380892d8_42e6f4e8",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "This should go between lines 5 and 7.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8272bf5f_7ca8f3be",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Header guards.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5345eaf8_3db2d68d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb97a7f_3bf08fc3",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "This file should have a unittest.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adca71b_6b12e148",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "// namespace",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395d9960_63b9c417",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "This looks unsafe – storing an autoreleased variable in an ivar.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0ec8da_19f5b383",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Why the dereference here?",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf91a63e_ce5f262a",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Header guards.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da177ac2_6e31612f",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073a1e96_70e3375e",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "dark_theme",
+      "range": {
+        "startLine": 14,
+        "startChar": 51,
+        "endLine": 14,
+        "endChar": 60
+      },
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c298b3e_84d541d4",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "dark_theme",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18c32ba_3fcc413b",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Guards",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cb8247_331549b5",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Comment",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a203d71_66eaef7f",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Comes before line 5",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c08455_f0304dd4",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "I think this is a bit unusual. I\u0027d expect to see a block/lambda for a static, but not for a local const variable.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6431be_6f5f9af7",
+        "filename": "chrome/browser/ui/cocoa/nsview_additions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Any reason to create this new file instead of putting them in the //ui/base NSView additions?",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21a6176_b8c47b34",
+        "filename": "chrome/browser/ui/cocoa/nsview_additions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "This should have a test.",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b344fe0c_7d5d690b",
+        "filename": "ui/base/cocoa/hover_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "Comment",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad07f61_f3f75080",
+        "filename": "ui/base/cocoa/hover_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "What\u0027s this? (comment)",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a4d88d_186e674d",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-18T20:49:20Z",
+      "side": 1,
+      "message": "nit: {} required",
+      "revId": "7ac7129cf138d451239bb46e1bef299aca5253b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
