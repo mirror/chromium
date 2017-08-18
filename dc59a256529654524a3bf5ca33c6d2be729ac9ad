@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce7a4767_33b48fdc",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "255e76ed_00baf034",
+      "range": {
+        "startLine": 47,
+        "startChar": 68,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db076f3c_8a631963",
         "filename": "ui/base/cocoa/menu_controller.mm",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5c840f1a_3062e324",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db076f3c_8a631963",
+      "range": {
+        "startLine": 48,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38e2bbee_3299b1a2",
         "filename": "ui/base/cocoa/menu_controller.mm",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f825d9_fa354f7a",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38e2bbee_3299b1a2",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "27580668_63fff18b",
+        "filename": "ui/base/cocoa/menu_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "982bec5a_8d23a814",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaef3644_8ad2bcff",
         "filename": "ui/base/cocoa/menu_controller_unittest.mm",
         "patchSetId": 6
@@ -96,6 +180,24 @@
       "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901ca777_a8214965",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaef3644_8ad2bcff",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "823c56d3_21b0ea48",
+        "filename": "ui/base/cocoa/menu_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "I mentioned this earlier (https://chromium-review.googlesource.com/c/616100/3/ui/base/cocoa/menu_controller_unittest.mm#116). Copying my comment here:\n\nIt seems that \u0027using\u0027 is only for member templates, but not member template specialization [1].\n\nI\u0027m keeping this as \u0027typedef\u0027 for now.  \n\n[1] Visit http://en.cppreference.com/w/cpp/language/using_declaration and grep for \"cannot refer to a member template specialization\".",
+      "parentUuid": "cbf22860_e7ed987e",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee18aa9a_adae404b",
         "filename": "ui/views/controls/menu/submenu_view.cc",
         "patchSetId": 6
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-17T07:39:21Z",
       "side": 1,
       "message": "hm - this repeated implementation is not ideal. I think it does belong on MenuModel, it just shouldn\u0027t be declared virtual. This is per sky\u0027s comment at https://chromium-review.googlesource.com/c/616100/3/ui/base/models/menu_model.h#104\n\n(in which case, adjust my earlier comments accordingly :).",
+      "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20167685_79d814c3",
+        "filename": "ui/views/controls/menu/submenu_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-18T01:41:54Z",
+      "side": 1,
+      "message": "I chatted with sky@ today, and we concluded that this method needs stay on this class, and that the MenuModel::IsMenuModelEmpty() should be removed. There are a few reasons why.\n\nFirst, the SubmenuView nor MenuItemView classes do not have knowledge of the menu model. So even if MenuModel::IsMenuModelEmpty() existed, it could not be used by the SubmenuView. We would still need this SubmenuView::HasVisibleChildren().   \n\nSecond, we agreed that the MenuModel::IsMenuModelEmpty() method should be removed entirely because its functionality is only used in the menu_controller.mm and called only once. It would be better to offload this logic to the menu_controller.mm rather (as a function in an anonymous namespace) than create a very custom method in the MenuModel.",
+      "parentUuid": "ee18aa9a_adae404b",
       "revId": "dc59a256529654524a3bf5ca33c6d2be729ac9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
