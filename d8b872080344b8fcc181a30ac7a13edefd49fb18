@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "598f6e4b_56486e5c",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "See the comments later, but I think that if we allowed the validator to own a copy of the policy object, then we wouldn\u0027t need to keep it around here as well.",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aabd6f6_2bd6d4e1",
+        "filename": "content/common/origin_trials/trial_policy_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "NON_EXPORTED_BASE was recently removed (see https://chromium-review.googlesource.com/614703), so we shouldn\u0027t need this anymore.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15790d13_d59936a5",
+        "filename": "third_party/WebKit/common/origin_trials/trial_policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "Can this method take a url::Origin, rather than a GURL?",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3988c8f7_f15b14e8",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "This class probably needs to be BLINK_COMMON_EXPORTed, too, since it\u0027s the return type for TrialToken::IsValid\n\nOr else, maybe it\u0027s possible to make it a public nested class, like blink::TrialToken::Status",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf885d7c_92e844d4",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "I expect that the blink:: namespace can be excised from this entire file.",
+      "range": {
+        "startLine": 234,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 7
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b424fdd7_77e4d4d0",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "If policy_ is going to be a raw ptr,and could be null (as in ValidateToken), we should DCHECK() it here (and in the other methods which use it)",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aade223b_585339ab",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "Do these need to be virtual?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bac3017_f8cdd02d",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "It doesn\u0027t look this class owns the policy, which means that other objects have to keep policies objects around in instance variables in order to use a validator. Would it be possible to use a std::unique_ptr here, and pass ownership of a policy object to the validator when it is constructed?",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e7ce87_96deb5b5",
+        "filename": "third_party/WebKit/public/platform/WebTrialTokenValidator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-18T03:48:31Z",
+      "side": 1,
+      "message": "This seems strange -- if you have a WebTrialTokenValidator object, why do you also need a TrialTokenValidator in order to validate a token?\n\nWould it be possible for the abstract WebTrialTokenValidator to be ignorant of the actual validator? -- the WebTrialTokenValidatorImpl in content could require one in the constructor, and then this method wouldn\u0027t need to have it passed in explicitly.",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 73
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
