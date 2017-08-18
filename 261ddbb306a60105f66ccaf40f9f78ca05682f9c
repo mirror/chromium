@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06769b10_1144bc30",
+        "filename": "chrome/browser/search_engines/template_url_service_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T08:41:14Z",
+      "side": 1,
+      "message": "I think you can also specify field trial parameters on the command line, right? Could we remove this command line switch then?",
+      "revId": "261ddbb306a60105f66ccaf40f9f78ca05682f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7476601e_f18f7aaf",
+        "filename": "chrome/browser/search_engines/template_url_service_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-18T08:41:14Z",
+      "side": 1,
+      "message": "I think I would check only for a non-empty value here and warn about an invalid URL when actually using it -- if someone by accident passes an invalid URL, it would be silently ignored otherwise.",
+      "range": {
+        "startLine": 146,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 56
+      },
+      "revId": "261ddbb306a60105f66ccaf40f9f78ca05682f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
