@@ -52,6 +52,24 @@
       "revId": "5f1653ef581c7412c66561f98b152cd274d9a0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0381e2a_27102538",
+        "filename": "chrome/browser/resources/settings/settings_main/settings_main.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T19:20:54Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "5aef74e5_c1a35b3b",
+      "revId": "5f1653ef581c7412c66561f98b152cd274d9a0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

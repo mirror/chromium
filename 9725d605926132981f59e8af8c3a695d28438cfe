@@ -34,6 +34,24 @@
       "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af095ace_bd8346a3",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-18T19:20:54Z",
+      "side": 1,
+      "message": "How about going with 15px or 16px?\n\nAlso, WDYT of moving this to a cr variable and using that var here and in Settings?",
+      "parentUuid": "74391e3e_d168c164",
+      "revId": "9725d605926132981f59e8af8c3a695d28438cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
