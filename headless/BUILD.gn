@@ -371,12 +371,15 @@ component("headless") {
     "//components/security_state/core",
     "//content/public/common",
     "//content/public/common:service_names",
+    "//gin",
     "//services/service_manager/public/cpp",
+    "//third_party/WebKit/public:blink",
     "//ui/base",
     "//ui/compositor",
     "//ui/display",
     "//ui/events/devices",
     "//url",
+    "//v8",
   ]
 
   if (is_component_build) {
