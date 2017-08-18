@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0186ac6c_893b59ea",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T00:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16f8088_f4a20fd0",
+      "range": {
+        "startLine": 1617,
+        "startChar": 29,
+        "endLine": 1617,
+        "endChar": 56
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496a61ba_577318a6",
         "filename": "ui/views/view.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c573f9ca_785b80b6",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T00:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "496a61ba_577318a6",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 26
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "74d5131c_cface396",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T00:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d84a3590_73b8a5c2",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 5
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a607e82_8c39790e",
         "filename": "ui/views/view.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-18T00:13:04Z",
       "side": 1,
       "message": "How about removing these and making AddObserver public?",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 5
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1dcbc1_a7f4891b",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T00:57:30Z",
+      "side": 1,
+      "message": "That was my previous implementation. https://chromium-review.googlesource.com/c/618040/13..14/ui/views/view.cc\n\nThis keeps the code shorter, and since the only non-const method exposed is AddOffset(), it looked reasonable to use it via operator overload. WDYT?",
+      "parentUuid": "5a607e82_8c39790e",
       "range": {
         "startLine": 184,
         "startChar": 4,
@@ -114,6 +210,30 @@
       "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d424c726_41e5b237",
+        "filename": "ui/views/view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4459,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-18T00:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb076ed_3d63fcbd",
+      "range": {
+        "startLine": 4459,
+        "startChar": 7,
+        "endLine": 4459,
+        "endChar": 51
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
