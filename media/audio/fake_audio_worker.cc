@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/base/fake_audio_worker.h"
+#include "media/audio/fake_audio_worker.h"
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -53,7 +53,7 @@ class FakeAudioWorker::Worker
   // Used to cancel any delayed tasks still inside the worker loop's queue.
   base::CancelableClosure worker_task_cb_;
 
-  THREAD_CHECKER(thread_checker_);
+  base::ThreadChecker thread_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(Worker);
 };
@@ -61,7 +61,8 @@ class FakeAudioWorker::Worker
 FakeAudioWorker::FakeAudioWorker(
     const scoped_refptr<base::SingleThreadTaskRunner>& worker_task_runner,
     const AudioParameters& params)
-    : worker_(new Worker(worker_task_runner, params)) {}
+    : worker_(new Worker(worker_task_runner, params)) {
+}
 
 FakeAudioWorker::~FakeAudioWorker() {
   DCHECK(worker_->IsStopped());
@@ -85,7 +86,7 @@ FakeAudioWorker::Worker::Worker(
           static_cast<float>(params.sample_rate()))) {
   // Worker can be constructed on any thread, but will DCHECK that its
   // Start/Stop methods are called from the same thread.
-  DETACH_FROM_THREAD(thread_checker_);
+  thread_checker_.DetachFromThread();
 }
 
 FakeAudioWorker::Worker::~Worker() {
@@ -97,8 +98,8 @@ bool FakeAudioWorker::Worker::IsStopped() {
   return worker_cb_.is_null();
 }
 
-void FakeAudioWorker::Worker::Start(const base::Closure& worker_cb) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+void FakeAudioWorker::Worker::Start(const base::Closure& worker_cb)  {
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!worker_cb.is_null());
   {
     base::AutoLock scoped_lock(worker_cb_lock_);
@@ -116,7 +117,7 @@ void FakeAudioWorker::Worker::DoStart() {
 }
 
 void FakeAudioWorker::Worker::Stop() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   {
     base::AutoLock scoped_lock(worker_cb_lock_);
     if (worker_cb_.is_null())
@@ -150,8 +151,8 @@ void FakeAudioWorker::Worker::DoRead() {
     delay += buffer_duration_ * (-delay / buffer_duration_ + 1);
   next_read_time_ = now + delay;
 
-  worker_task_runner_->PostDelayedTask(FROM_HERE, worker_task_cb_.callback(),
-                                       delay);
+  worker_task_runner_->PostDelayedTask(
+      FROM_HERE, worker_task_cb_.callback(), delay);
 }
 
 }  // namespace media

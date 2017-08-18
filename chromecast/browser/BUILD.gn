@@ -274,7 +274,7 @@ source_set("browsertests") {
     "//chromecast/base:chromecast_switches",
     "//chromecast/base/metrics",
     "//components/prefs",
-    "//media:test_support",
+    "//media/base:test_support",
   ]
 }
 

@@ -17,7 +17,10 @@ source_set("android") {
     "screen_capture_machine_android.cc",
     "screen_capture_machine_android.h",
   ]
-  configs += [ "//media:media_config" ]
+  configs += [
+    "//media:media_config",
+    "//media:media_implementation",
+  ]
   deps = [
     ":screen_capture_jni_headers",
     "//media/capture/mojo:image_capture",
