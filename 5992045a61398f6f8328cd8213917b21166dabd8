@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ecca9be_dcf6c246",
+        "filename": "base/files/file_path.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-18T20:38:53Z",
+      "side": 1,
+      "message": "This sounds like we should only use these functions all over the place. Do you know why this wasn\u0027t needed up until now?",
+      "range": {
+        "startLine": 454,
+        "startChar": 16,
+        "endLine": 454,
+        "endChar": 33
+      },
+      "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
