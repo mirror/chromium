@@ -22,6 +22,30 @@
       "revId": "5423c95aa98b5ecdfe399a37249ed109e5ae721b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb688b9f_cb2730cd",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-18T15:50:47Z",
+      "side": 1,
+      "message": "It should be the screen coordinates. We do compare location within apps_grid_view\u0027s coordinates. But we do the convert here: https://cs.chromium.org/chromium/src/ui/app_list/views/apps_grid_view.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d1443.",
+      "parentUuid": "451cb19c_62ad020f",
+      "range": {
+        "startLine": 655,
+        "startChar": 54,
+        "endLine": 655,
+        "endChar": 71
+      },
+      "revId": "5423c95aa98b5ecdfe399a37249ed109e5ae721b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
