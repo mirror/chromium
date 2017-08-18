@@ -1178,7 +1178,6 @@ IN_PROC_BROWSER_TEST_F(WebViewPopupInteractiveTest,
 // of simulating mouse drag code's dependency on platforms.
 
 // Flaky: https://crbug.com/700483
-#if defined(OS_CHROMEOS) && !defined(USE_OZONE)
 IN_PROC_BROWSER_TEST_P(WebViewDragDropInteractiveTest,
                        DISABLED_DragDropWithinWebView) {
   LoadAndLaunchPlatformApp("web_view/dnd_within_webview", "connected");
@@ -1216,7 +1215,6 @@ IN_PROC_BROWSER_TEST_P(WebViewDragDropInteractiveTest,
   }
   ASSERT_EQ("Drop me", last_drop_data_);
 }
-#endif  // (defined(OS_CHROMEOS))
 
 IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, Navigation) {
   TestHelper("testNavigation", "web_view/navigation", NO_TEST_SERVER);
