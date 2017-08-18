@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "145e4dae_428c28b0",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-18T06:47:33Z",
+      "side": 1,
+      "message": "\u003e \u003e (2) (looks over killing. just INSIDE_BLINK looks enough)\n\u003e \n\u003e Hiding actual fields in INSIDE_BLINK would make the exposed struct size incompatible, we\u0027ll need to follow pimpl pattern for member fields.\n\nAh, I see. Sorry, I was misunderstanding that it\u0027s done commonly in WebKit/public and is viable here. It\u0027s not commonly done (only inside WebServiceWorkerInstalledScriptsManager.h) and though allocation of WebCORSPreflightResultCache is done inside Blink but can be destroyed outside of Blink where the mismatch will be problematic.",
+      "parentUuid": "6aa8eb77_9450314c",
+      "revId": "f452c8b9f010ec7e5e5a5331524a136ed5192d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5b883a_dc6fe362",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 3
