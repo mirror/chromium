@@ -7,6 +7,8 @@
 
 #include "components/crash/content/app/crashpad.h"
 
+#include <windows.h>
+
 extern "C" {
 
 // TODO(siggi): Rename these functions to something descriptive and unique,
@@ -26,6 +28,14 @@ void RequestSingleCrashUploadImpl(const std::string& local_id);
 // beyond that point (e.g. during tests).
 void GetCrashReportsImpl(const crash_reporter::Report** reports,
                          size_t* report_count);
+
+// Crashes the process after generating a dump for the provided exception. Note
+// that the crash reporter should be initialized before calling this function
+// for it to do anything.
+// NOTE: This function is used by SyzyASAN to invoke a crash. If you change the
+// the name or signature of this function you will break SyzyASAN instrumented
+// releases of Chrome. Please contact syzygy-team@chromium.org before doing so!
+int CrashForException(EXCEPTION_POINTERS* info);
 
 }  // extern "C"
 

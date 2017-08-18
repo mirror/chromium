@@ -5,6 +5,7 @@
 #include "components/crash/content/app/export_thunks.h"
 
 #include "components/crash/content/app/crashpad.h"
+#include "third_party/crashpad/crashpad/client/crashpad_client.h"
 
 void RequestSingleCrashUploadThunk(const std::string& local_id) {
   crash_reporter::RequestSingleCrashUploadImpl(local_id);
@@ -29,4 +30,15 @@ void GetCrashReportsImpl(const crash_reporter::Report** reports,
   crash_reporter::GetReportsImpl(&crash_reports);
   *reports = crash_reports.data();
   *report_count = crash_reports.size();
+}
+
+// Crashes the process after generating a dump for the provided exception. Note
+// that the crash reporter should be initialized before calling this function
+// for it to do anything.
+// NOTE: This function is used by SyzyASAN to invoke a crash. If you change the
+// the name or signature of this function you will break SyzyASAN instrumented
+// releases of Chrome. Please contact syzygy-team@chromium.org before doing so!
+int CrashForException(EXCEPTION_POINTERS* info) {
+  crash_reporter::GetCrashpadClient().DumpAndCrash(info);
+  return EXCEPTION_CONTINUE_SEARCH;
 }
