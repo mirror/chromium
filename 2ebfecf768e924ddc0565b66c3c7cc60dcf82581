@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f46c20a_4375aa7b",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T19:07:23Z",
+      "side": 1,
+      "message": "using CallId \u003d int; instead?",
+      "revId": "2ebfecf768e924ddc0565b66c3c7cc60dcf82581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4ba0b9_9c05503f",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T19:07:23Z",
+      "side": 1,
+      "message": "std::move(info.sent_messages[id])",
+      "revId": "2ebfecf768e924ddc0565b66c3c7cc60dcf82581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb28e0b8_beec35f3",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-18T19:07:23Z",
+      "side": 1,
+      "message": "std::vector\u003cstd::string\u003e messages \u003d std::move(info.pending_messages);\n    for (std::string\u0026 message : messages)\n      session-\u003eSendMessageToClient(std::move(message));",
+      "revId": "2ebfecf768e924ddc0565b66c3c7cc60dcf82581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
