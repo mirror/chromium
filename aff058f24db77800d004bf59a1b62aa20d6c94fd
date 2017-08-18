@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f53de1d0_4f3bc1b2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T14:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d57b16_2eb31f67",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43832e94_5dfe08fd",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5de871_3660f48d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T14:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43832e94_5dfe08fd",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +130,54 @@
       "writtenOn": "2017-08-18T13:12:58Z",
       "side": 1,
       "message": "Wasn\u0027t this supposed to be operator\u003c ? The methods does an inequality comparison.\n\nIf not, then please avoid overloading operator(). Its semantics are not clear (what does it mean to call a class)? Use regular methods instead.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d28bab_9a915c59",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T14:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ae8fcb_1b527b9f",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3438475f_d693c2ef",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T14:20:44Z",
+      "side": 1,
+      "message": "Moved to a function in the .cc file.",
+      "parentUuid": "bc68625b_2f939daf",
       "range": {
         "startLine": 26,
         "startChar": 17,

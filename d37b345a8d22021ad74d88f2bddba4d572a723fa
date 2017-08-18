@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "aaae59ff_ec57b9b6",
+        "filename": "chrome/traffic_annotation/annotations_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-18T14:20:44Z",
+      "side": 1,
+      "message": "Let\u0027s continue this offline, I will send an email.",
+      "parentUuid": "72068c0e_c5c393a3",
+      "revId": "d37b345a8d22021ad74d88f2bddba4d572a723fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b368d4_a82ac3a1",
         "filename": "chrome/traffic_annotation/annotations_list.xml",
         "patchSetId": 1
