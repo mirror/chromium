@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d25e8cf_32aab62e",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/virtual/wheelscrolllatching/fast/compositor-wheel-scroll-latching/touchpad-scroll-impl-to-main-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T20:32:40Z",
+      "side": 1,
+      "message": "Is this ok?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67af8ecd_63097808",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T20:32:40Z",
+      "side": 1,
+      "message": "Can we add a comment on what this is doing? As a new reader to it, it looks unusual since it seems like it is just to skip the DCHECK_LT, but then it leaves the SelectionPaintRange instance in what seems like it could be an unusual state. And then I thought perhaps we\u0027d see similar checks in other methods, which we do at say 236 below. Perhaps this logic should also be moved to a helper method we could use where needed for sharing?",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176b4034_8b0f68fd",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T20:32:40Z",
+      "side": 1,
+      "message": "nit: could use ||",
+      "range": {
+        "startLine": 370,
+        "startChar": 13,
+        "endLine": 373,
+        "endChar": 13
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f87b03_4fb94366",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-18T20:32:40Z",
+      "side": 1,
+      "message": "nit: could use ||",
+      "range": {
+        "startLine": 383,
+        "startChar": 2,
+        "endLine": 386,
+        "endChar": 13
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
