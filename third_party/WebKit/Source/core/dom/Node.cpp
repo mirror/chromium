@@ -49,8 +49,8 @@
 #include "core/dom/FlatTreeTraversal.h"
 #include "core/dom/GetRootNodeOptions.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
-#include "core/dom/NodeRareData.h"
 #include "core/dom/NodeTraversal.h"
+#include "core/dom/Node-inl.h"
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/Range.h"
 #include "core/dom/ShadowRoot.h"
@@ -1145,17 +1145,6 @@ ShadowRoot* Node::V1ShadowRootOfParent() const {
   if (Element* parent = parentElement())
     return parent->ShadowRootIfV1();
   return nullptr;
-}
-
-Element* Node::OwnerShadowHost() const {
-  if (ShadowRoot* root = ContainingShadowRoot())
-    return &root->host();
-  return nullptr;
-}
-
-ShadowRoot* Node::ContainingShadowRoot() const {
-  Node& root = GetTreeScope().RootNode();
-  return root.IsShadowRoot() ? ToShadowRoot(&root) : nullptr;
 }
 
 Node* Node::NonBoundaryShadowTreeRootNode() {

@@ -26,6 +26,7 @@
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/Node-inl.h"
 #include "core/dom/ScriptableDocumentParser.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/StyleEngine.h"

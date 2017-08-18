@@ -186,6 +186,7 @@ blink_core_sources("dom") {
     "NamedNodeMap.h",
     "Node.cpp",
     "Node.h",
+    "Node-inl.h",
     "NodeChildRemovalTracker.cpp",
     "NodeChildRemovalTracker.h",
     "NodeComputedStyle.h",

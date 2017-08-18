@@ -34,6 +34,7 @@
 #include "core/CoreExport.h"
 #include "core/css/CSSSelectorList.h"
 #include "core/dom/DistributedNodes.h"
+#include "core/dom/Node-inl.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/html/HTMLElement.h"
 

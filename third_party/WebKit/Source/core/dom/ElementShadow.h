@@ -28,6 +28,7 @@
 #define ElementShadow_h
 
 #include "core/CoreExport.h"
+#include "core/dom/Node-inl.h"
 #include "core/dom/ShadowRoot.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"

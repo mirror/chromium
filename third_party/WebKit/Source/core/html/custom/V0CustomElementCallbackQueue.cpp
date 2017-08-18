@@ -30,6 +30,7 @@
 
 #include "core/html/custom/V0CustomElementCallbackQueue.h"
 
+#include "core/dom/Node-inl.h"
 #include "core/dom/ShadowRoot.h"
 
 namespace blink {
