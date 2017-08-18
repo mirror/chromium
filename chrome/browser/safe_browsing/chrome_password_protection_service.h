@@ -21,6 +21,13 @@ class SafeBrowsingService;
 class SafeBrowsingNavigationObserverManager;
 class SafeBrowsingUIManager;
 
+using OnWarningDone =
+    base::OnceCallback<void(PasswordProtectionService::WarningAction)>;
+
+// Shows the platform-specific password reuse modal dialog.
+void ShowPasswordReuseModalWarningDialog(content::WebContents* web_contents,
+                                         OnWarningDone done_callback);
+
 // ChromePasswordProtectionService extends PasswordProtectionService by adding
 // access to SafeBrowsingNaivigationObserverManager and Profile.
 class ChromePasswordProtectionService : public PasswordProtectionService {
@@ -31,6 +38,11 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   ~ChromePasswordProtectionService() override;
 
   static bool ShouldShowChangePasswordSettingUI(Profile* profile);
+
+  void ShowModalWarning(
+      content::WebContents* web_contents,
+      const LoginReputationClientRequest* request_proto,
+      const LoginReputationClientResponse* response_proto) override;
 
  protected:
   // PasswordProtectionService overrides.
