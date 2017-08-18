@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d20dce_c83f5e82",
+        "filename": "base/task_scheduler/priority_queue.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "Make a separate CL for this.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0016d4f_3ae03955",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "This could be in scheduler_worker_pool_unittest.cc (extract the code to start a pool into a helper method that does a switch/case on the pool type).",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 1
+      },
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad07550_4fcd4e48",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "Move this after line 27 (with an empty line before the #if and after the #endif).\n\ne.g. https://cs.chromium.org/chromium/src/base/debug/stack_trace_unittest.cc?l\u003d21",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d10ac0_b6c84921",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "// Schedule sequences added to |priority_queue_| before Start().",
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47648188_a52bd145",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cPriorityQueue::Transaction\u003e transaction(\n        priority_queue_.BeginTransaction());\nif (transaction-\u003eIsEmpty())\n  return nullptr;\nreturn transaction-\u003ePopSequence();",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acb347c_e5782bad",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "Move this after generic tests.\n\nIdentifiers are associated with tests in the same fixture. If the Win tests are first, the first identifiers will be associated with the Windows tests on Windows and to the Generic tests on other platforms. If the Generic tests are first, they will always get the first identifiers ( same tests get the same identifiers on all platforms).",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 6
+      },
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a24e70_0c01fa3c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "tasks",
+      "range": {
+        "startLine": 40,
+        "startChar": 39,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d467e0e9_664896e9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "This file is not needed. See my comment https://chromium-review.googlesource.com/c/615667/9/base/task_scheduler/scheduler_worker_pool_impl_unittest.cc#302",
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1452f0d3_b3897c4b",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "Move this to test_utils.cc. Add a forward declaration in this file before line 19:\n\nclass SchedulerWorkerPool;",
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4c2e3c_a4d65013",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "This should be included in the .cc file, not here.",
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b11bd5_9a758c8f",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-18T15:34:41Z",
+      "side": 1,
+      "message": "// Creates a TaskRunner that posts tasks to |worker_pool| with the |execution_mode| execution mode and the WithBaseSyncPrimitives() trait.",
+      "revId": "92e152b6549ba48336e9792a981147c857c399f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
