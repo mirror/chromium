@@ -46,6 +46,30 @@
       "revId": "c97343dfc4f6e78260dcb25abeb07564523d80e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42d8dadc_967dc495",
+        "filename": "chrome/common/net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T18:32:11Z",
+      "side": 1,
+      "message": "(you are right, gyp style guide said to subtract vs add)",
+      "parentUuid": "1a3ab64d_9ce54aad",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 13
+      },
+      "revId": "c97343dfc4f6e78260dcb25abeb07564523d80e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
