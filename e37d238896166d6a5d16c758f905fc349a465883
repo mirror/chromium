@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e91ae2f7_1c53a346",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "In the patch 12, DVLOGF is always used for tracing and its log level is the same as the corrsponded one in gpu/media/VDA.\nVLOGF(1) is used for error log because the error should be shown.",
+      "parentUuid": "f6efb7d4_1dc28e78",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd24f538_d0dc375a",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "e37d238896166d6a5d16c758f905fc349a465883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b557b234_d3003525",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd24f538_d0dc375a",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 75
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "37b4e5da_a623c5d7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8824ee84_53cd7d4a",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 72
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7638a1f0_0bb904fb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f0a37ca8_036173ee",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "I added the code in the patch 12. The name needs to be \"ChromeArc\" because it is used in the following code.\ncs/chromeos_public/src/third_party/autotest/files/client/cros/video/constants.py?rcl\u003dc87e1fb55b38126984a1e363660f14149381a59d\u0026l\u003d32\n\nShould I change the name \"GpuArc\" with changing ChromiumOS code?",
+      "parentUuid": "7638a1f0_0bb904fb",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 46
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4274f59f_a292addb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -108,6 +204,24 @@
       "revId": "e37d238896166d6a5d16c758f905fc349a465883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8efcf0_9efe7e6c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4274f59f_a292addb",
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "1edea028_8aca45e8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce199d87_fab01731",
+      "range": {
+        "startLine": 320,
+        "startChar": 17,
+        "endLine": 320,
+        "endChar": 26
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4fc9990_07062015",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 9
@@ -154,6 +292,30 @@
       "revId": "e37d238896166d6a5d16c758f905fc349a465883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f8d461_9a2124c1",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-18T02:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4fc9990_07062015",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
