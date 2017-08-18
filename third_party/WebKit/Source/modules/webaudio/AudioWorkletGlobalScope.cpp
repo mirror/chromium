@@ -15,6 +15,7 @@
 #include "modules/webaudio/AudioParamDescriptor.h"
 #include "modules/webaudio/AudioWorkletProcessor.h"
 #include "modules/webaudio/AudioWorkletProcessorDefinition.h"
+#include "modules/webaudio/AudioWorkletProcessorInfo.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -206,6 +207,23 @@ bool AudioWorkletGlobalScope::Process(AudioWorkletProcessor* processor,
 AudioWorkletProcessorDefinition* AudioWorkletGlobalScope::FindDefinition(
     const String& name) {
   return processor_definition_map_.at(name);
+}
+
+unsigned AudioWorkletGlobalScope::GetNumberOfRegisteredDefinitions() {
+  return processor_definition_map_.size();
+}
+
+std::unique_ptr<Vector<AudioWorkletProcessorInfo>>
+AudioWorkletGlobalScope::GenerateProcessorInfoForSynchronization() {
+  std::unique_ptr<Vector<AudioWorkletProcessorInfo>> info_list;
+  for (auto definition_entry : processor_definition_map_) {
+    // Send the definition that is not synchronized yet.
+    if (!definition_entry.value->IsSynchronized()) {
+      definition_entry.value->SetSynchronized();
+      info_list->emplace_back(definition_entry.value);
+    }
+  }
+  return info_list;
 }
 
 DEFINE_TRACE(AudioWorkletGlobalScope) {

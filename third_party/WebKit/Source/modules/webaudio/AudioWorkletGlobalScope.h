@@ -9,13 +9,15 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "modules/ModulesExport.h"
+#include "modules/webaudio/AudioParamDescriptor.h"
+#include "modules/webaudio/AudioWorkletProcessorDefinition.h"
 #include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 class AudioBuffer;
 class AudioWorkletProcessor;
-class AudioWorkletProcessorDefinition;
+class AudioWorkletProcessorInfo;
 class ExceptionState;
 
 // This is constructed and destroyed on a worker thread, and all methods also
@@ -49,6 +51,10 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
                AudioBuffer* output_buffer);
 
   AudioWorkletProcessorDefinition* FindDefinition(const String& name);
+  unsigned GetNumberOfRegisteredDefinitions();
+
+  std::unique_ptr<Vector<AudioWorkletProcessorInfo>>
+      GenerateProcessorInfoForSynchronization();
 
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();

@@ -54,6 +54,7 @@ blink_modules_sources("webaudio") {
     "AudioWorkletProcessor.h",
     "AudioWorkletProcessorDefinition.cpp",
     "AudioWorkletProcessorDefinition.h",
+    "AudioWorkletProcessorInfo.h",
     "AudioWorkletThread.cpp",
     "AudioWorkletThread.h",
     "BaseAudioContext.cpp",

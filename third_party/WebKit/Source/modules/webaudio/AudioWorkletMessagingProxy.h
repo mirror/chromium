@@ -10,6 +10,8 @@
 
 namespace blink {
 
+class AudioParamInfo;
+class AudioWorkletProcessorInfo;
 class ExecutionContext;
 class WorkerThread;
 
@@ -22,7 +24,12 @@ class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
 
   // Invoked by AudioWorkletObjectProxy to synchronize the information from
   // AudioWorkletGlobalScope after the script code evaluation.
-  void SynchronizeWorkletData();
+  void SynchronizeWorkletProcessorInfo(
+      std::unique_ptr<Vector<AudioWorkletProcessorInfo>>);
+
+  bool IsProcessorRegistered(const String& name);
+  const Vector<AudioParamInfo> GetAudioParamInfoForProcessor(
+      const String& name) const;
 
  private:
   ~AudioWorkletMessagingProxy() override;
@@ -33,6 +40,7 @@ class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
       ParentFrameTaskRunners*) override;
 
   std::unique_ptr<WorkerThread> CreateWorkerThread() override;
+  std::unique_ptr<HashMap<String, Vector<AudioParamInfo>>> processor_info_map_;
 };
 
 }  // namespace blink

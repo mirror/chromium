@@ -5,6 +5,7 @@
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 
 #include "modules/webaudio/AudioWorkletObjectProxy.h"
+#include "modules/webaudio/AudioWorkletProcessorInfo.h"
 #include "modules/webaudio/AudioWorkletThread.h"
 
 namespace blink {
@@ -16,12 +17,27 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
 
 AudioWorkletMessagingProxy::~AudioWorkletMessagingProxy() {}
 
-void AudioWorkletMessagingProxy::SynchronizeWorkletData() {
+void AudioWorkletMessagingProxy::SynchronizeWorkletProcessorInfo(
+    std::unique_ptr<Vector<AudioWorkletProcessorInfo>> info_list) {
   DCHECK(IsMainThread());
 
-  // TODO(crbug.com/755566): the argument will be a set of a node name and
-  // parameter descriptors. Use the information to update the copy in
-  // AudioWorkletMessagingProxy.
+  for (auto& processor_info : *info_list) {
+    if (!processor_info_map_->Contains(processor_info.GetName())) {
+      processor_info_map_->Set(processor_info.GetName(),
+                               processor_info.GetAudioParamInfo());
+    }
+  }
+}
+
+bool AudioWorkletMessagingProxy::IsProcessorRegistered(const String& name) {
+  return processor_info_map_->Contains(name);
+}
+
+const Vector<AudioParamInfo>
+AudioWorkletMessagingProxy::GetAudioParamInfoForProcessor(
+    const String& name) const {
+  DCHECK(processor_info_map_->Contains(name));
+  return processor_info_map_->at(name);
 }
 
 std::unique_ptr<ThreadedWorkletObjectProxy>

@@ -41,6 +41,9 @@ class MODULES_EXPORT AudioWorkletProcessorDefinition final
   const Vector<String> GetAudioParamDescriptorNames() const;
   const AudioParamDescriptor* GetAudioParamDescriptor(const String& key) const;
 
+  bool IsSynchronized() { return is_synchronized_; }
+  void SetSynchronized() { is_synchronized_ = true; }
+
   DEFINE_INLINE_TRACE() { visitor->Trace(audio_param_descriptors_); };
   DECLARE_TRACE_WRAPPERS();
 
@@ -52,6 +55,7 @@ class MODULES_EXPORT AudioWorkletProcessorDefinition final
       v8::Local<v8::Function> process);
 
   const String name_;
+  bool is_synchronized_ = false;
 
   // The definition is per global scope. The active instance of
   // |AudioProcessorWorklet| should be passed into these to perform JS function.
