@@ -2071,6 +2071,11 @@ void EventHandler::UpdateLastScrollbarUnderMouse(Scrollbar* scrollbar,
   }
 }
 
+void EventHandler::OnRemoveScrollbar(Scrollbar* scrollbar) {
+  if (last_scrollbar_under_mouse_ == scrollbar)
+    last_scrollbar_under_mouse_ = nullptr;
+}
+
 WebInputEventResult EventHandler::HandleTouchEvent(
     const WebTouchEvent& event,
     const Vector<WebTouchEvent>& coalesced_events) {

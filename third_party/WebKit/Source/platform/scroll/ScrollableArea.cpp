@@ -408,14 +408,8 @@ void ScrollableArea::DidAddScrollbar(Scrollbar& scrollbar,
   SetScrollbarOverlayColorTheme(GetScrollbarOverlayColorTheme());
 }
 
-void ScrollableArea::WillRemoveScrollbar(Scrollbar& scrollbar,
-                                         ScrollbarOrientation orientation) {
-  if (ScrollAnimatorBase* scroll_animator = ExistingScrollAnimator()) {
-    if (orientation == kVerticalScrollbar)
-      scroll_animator->WillRemoveVerticalScrollbar(scrollbar);
-    else
-      scroll_animator->WillRemoveHorizontalScrollbar(scrollbar);
-  }
+void ScrollableArea::WillRemoveScrollbar(Scrollbar&, ScrollbarOrientation) {
+  NOTREACHED();
 }
 
 void ScrollableArea::ContentsResized() {

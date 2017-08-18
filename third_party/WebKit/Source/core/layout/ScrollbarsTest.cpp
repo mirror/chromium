@@ -146,6 +146,13 @@ class ParameterizedScrollbarsTest : public ::testing::WithParamInterface<bool>,
     return WebView().CoreHitTestResultAt(WebPoint(x, y));
   }
 
+  void RemoveElementById(const AtomicString& id) {
+    Element* element = GetDocument().getElementById(id);
+    DCHECK(element);
+    element->remove();
+    Compositor().BeginFrame();
+  }
+
   EventHandler& EventHandler() {
     return GetDocument().GetFrame()->GetEventHandler();
   }
@@ -255,7 +262,49 @@ TEST_P(ParameterizedScrollbarsTest,
   EXPECT_TRUE(scrollable_root->HorizontalScrollbar()->FrameRect().IsEmpty());
 }
 
-// Ensure hit test correct for scrollbar of element with translateZ(0)
+// Ensure remove a mousd press scrollbar does not crash.
+TEST_P(ParameterizedScrollbarsTest, RemoveMousePressScrollbarNotCrash) {
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
+
+  WebView().Resize(WebSize(200, 200));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "}"
+      "#d {"
+      "  overflow: auto;"
+      "  width: 100px;"
+      "  height: 100px;"
+      "}"
+      "#long {"
+      "  height: 1000px;"
+      "}"
+      "</style>"
+      "<div id='d'>"
+      "  <div id='long'></div>"
+      "</div>");
+  Compositor().BeginFrame();
+
+  HitTestResult result = HitTest(95, 10);
+  DCHECK(result.GetScrollbar());
+
+  HandleMouseMoveEvent(95, 10);
+  HandleMousePressEvent(95, 10);
+  EXPECT_EQ(result.GetScrollbar()->PressedPart(), ScrollbarPart::kThumbPart);
+
+  RemoveElementById("d");
+
+  // Next mouse move should not crash.
+  HandleMouseMoveEvent(95, 11);
+  // Scrollbar removed, no press part update.
+  EXPECT_EQ(result.GetScrollbar()->PressedPart(), ScrollbarPart::kThumbPart);
+}
+
+// Ensure hit test correct for scrollbar of element with translateZ(0).
 TEST_P(ParameterizedScrollbarsTest, HitTestTranslateZElementScrollbar) {
   RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
 

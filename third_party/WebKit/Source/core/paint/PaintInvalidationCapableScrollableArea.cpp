@@ -4,9 +4,11 @@
 
 #include "core/paint/PaintInvalidationCapableScrollableArea.h"
 
+#include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
@@ -29,7 +31,14 @@ void PaintInvalidationCapableScrollableArea::WillRemoveScrollbar(
             scrollbar, PaintInvalidationReason::kScrollControl);
   }
 
-  ScrollableArea::WillRemoveScrollbar(scrollbar, orientation);
+  if (ScrollAnimatorBase* scroll_animator = ExistingScrollAnimator()) {
+    if (orientation == kVerticalScrollbar)
+      scroll_animator->WillRemoveVerticalScrollbar(scrollbar);
+    else
+      scroll_animator->WillRemoveHorizontalScrollbar(scrollbar);
+  }
+
+  GetLayoutBox()->GetFrame()->GetEventHandler().OnRemoveScrollbar(&scrollbar);
 }
 
 static LayoutRect ScrollControlVisualRect(
