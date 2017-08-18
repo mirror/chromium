@@ -7,9 +7,9 @@ package org.chromium.android_webview.test;
 import android.content.Context;
 import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
-import android.webkit.GeolocationPermissions;
 
 import org.chromium.android_webview.AwContents;
+import org.chromium.android_webview.AwGeolocationPermissions;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.Feature;
@@ -61,16 +61,16 @@ public class GeolocationTest extends AwTestBase {
 
     private static class GrantPermisionAwContentClient extends TestAwContentsClient {
         @Override
-        public void onGeolocationPermissionsShowPrompt(String origin,
-                GeolocationPermissions.Callback callback) {
+        public void onGeolocationPermissionsShowPrompt(
+                String origin, AwGeolocationPermissions.Callback callback) {
             callback.invoke(origin, true, true);
         }
     }
 
     private static class DefaultPermisionAwContentClient extends TestAwContentsClient {
         @Override
-        public void onGeolocationPermissionsShowPrompt(String origin,
-                GeolocationPermissions.Callback callback) {
+        public void onGeolocationPermissionsShowPrompt(
+                String origin, AwGeolocationPermissions.Callback callback) {
             // This method is empty intentionally to simulate callback is not referenced.
         }
     }

@@ -7,11 +7,11 @@ package org.chromium.android_webview.test;
 import android.support.test.filters.MediumTest;
 import android.test.MoreAsserts;
 import android.util.Pair;
-import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwCookieManager;
 import org.chromium.android_webview.AwSettings;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.test.util.CookieUtils;
 import org.chromium.android_webview.test.util.CookieUtils.TestValueCallback;
 import org.chromium.android_webview.test.util.JSUtils;
@@ -715,7 +715,7 @@ public class CookieManagerTest extends AwTestBase {
     }
 
     private void setCookieOnUiThread(final String url, final String cookie,
-            final ValueCallback<Boolean> callback) throws Throwable {
+            final AwValueCallback<Boolean> callback) throws Throwable {
         runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -724,7 +724,7 @@ public class CookieManagerTest extends AwTestBase {
         });
     }
 
-    private void removeSessionCookiesOnUiThread(final ValueCallback<Boolean> callback)
+    private void removeSessionCookiesOnUiThread(final AwValueCallback<Boolean> callback)
             throws Throwable {
         runTestOnUiThread(new Runnable() {
             @Override
@@ -734,7 +734,7 @@ public class CookieManagerTest extends AwTestBase {
         });
     }
 
-    private void removeAllCookiesOnUiThread(final ValueCallback<Boolean> callback)
+    private void removeAllCookiesOnUiThread(final AwValueCallback<Boolean> callback)
             throws Throwable {
         runTestOnUiThread(new Runnable() {
             @Override

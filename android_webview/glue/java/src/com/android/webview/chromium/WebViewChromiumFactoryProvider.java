@@ -566,7 +566,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                     // TODO(ntfschr): add @Override once next android SDK rolls
                     public void initSafeBrowsing(Context context, ValueCallback<Boolean> callback) {
                         AwContentsStatics.initSafeBrowsing(
-                                context.getApplicationContext(), callback);
+                                context.getApplicationContext(), Converters.toAwType(callback));
                     }
 
                     /**
@@ -580,7 +580,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                     // TODO(ntfschr): add @Override once next android SDK rolls
                     public void setSafeBrowsingWhitelist(
                             List<String> urls, ValueCallback<Boolean> callback) {
-                        AwContentsStatics.setSafeBrowsingWhitelist(urls, callback);
+                        AwContentsStatics.setSafeBrowsingWhitelist(
+                                urls, Converters.toAwType(callback));
                     }
 
                     /**

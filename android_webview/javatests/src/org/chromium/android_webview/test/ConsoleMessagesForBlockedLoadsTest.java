@@ -8,9 +8,9 @@ import static org.junit.Assert.assertNotEquals;
 
 import android.support.test.filters.SmallTest;
 import android.util.Pair;
-import android.webkit.ConsoleMessage;
 import android.webkit.WebSettings;
 
+import org.chromium.android_webview.AwConsoleMessage;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.test.util.CommonResources;
@@ -51,10 +51,10 @@ public class ConsoleMessagesForBlockedLoadsTest extends AwTestBase {
         mWebServer = TestWebServer.start();
     }
 
-    private ConsoleMessage getSingleErrorMessage() {
-        ConsoleMessage result = null;
-        for (ConsoleMessage m : mOnConsoleMessageHelper.getMessages()) {
-            if (m.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
+    private AwConsoleMessage getSingleErrorMessage() {
+        AwConsoleMessage result = null;
+        for (AwConsoleMessage m : mOnConsoleMessageHelper.getMessages()) {
+            if (m.messageLevel() == AwConsoleMessage.MessageLevel.ERROR) {
                 assertNull(result);
                 result = m;
             }
@@ -76,8 +76,8 @@ public class ConsoleMessagesForBlockedLoadsTest extends AwTestBase {
         final String pageUrl = mWebServer.setResponse("/page.html", pageHtml, null);
         mOnConsoleMessageHelper.clearMessages();
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), pageUrl);
-        ConsoleMessage errorMessage = getSingleErrorMessage();
-        assertNotEquals(errorMessage.message().indexOf(iframeUrl), -1);
+        AwConsoleMessage errorMessage = getSingleErrorMessage();
+        assertTrue(errorMessage.message().indexOf(iframeUrl) != -1);
     }
 
     @SmallTest
@@ -96,7 +96,7 @@ public class ConsoleMessagesForBlockedLoadsTest extends AwTestBase {
             String secureUrl = httpsServer.setResponse("/secure.html", secureHtml, null);
             mOnConsoleMessageHelper.clearMessages();
             loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), secureUrl);
-            ConsoleMessage errorMessage = getSingleErrorMessage();
+            AwConsoleMessage errorMessage = getSingleErrorMessage();
             assertNotEquals(errorMessage.message().indexOf(imageUrl), -1);
             assertNotEquals(errorMessage.message().indexOf(secureUrl), -1);
         } finally {
@@ -130,7 +130,7 @@ public class ConsoleMessagesForBlockedLoadsTest extends AwTestBase {
         final String pageUrl = mWebServer.setResponse("/page.html", pageHtml, null);
         mOnConsoleMessageHelper.clearMessages();
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), pageUrl);
-        ConsoleMessage errorMessage = getSingleErrorMessage();
+        AwConsoleMessage errorMessage = getSingleErrorMessage();
         assertNotEquals(errorMessage.message().indexOf(iframeXslUrl), -1);
         assertNotEquals(errorMessage.message().indexOf(iframeXmlUrl), -1);
     }

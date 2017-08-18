@@ -5,9 +5,9 @@
 package org.chromium.android_webview.test;
 
 import android.support.test.filters.SmallTest;
-import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwContents;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.test.TestAwContentsClient.DoUpdateVisitedHistoryHelper;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
@@ -19,10 +19,10 @@ import org.chromium.net.test.util.TestWebServer;
  */
 public class AwContentsClientVisitedHistoryTest extends AwTestBase {
     private static class GetVisitedHistoryHelper extends CallbackHelper {
-        private ValueCallback<String[]> mCallback;
+        private AwValueCallback<String[]> mCallback;
         private boolean mSaveCallback;
 
-        public ValueCallback<String[]> getCallback() {
+        public AwValueCallback<String[]> getCallback() {
             assert getCallCount() > 0;
             return mCallback;
         }
@@ -31,7 +31,7 @@ public class AwContentsClientVisitedHistoryTest extends AwTestBase {
             mSaveCallback = value;
         }
 
-        public void notifyCalled(ValueCallback<String[]> callback) {
+        public void notifyCalled(AwValueCallback<String[]> callback) {
             if (mSaveCallback) {
                 mCallback = callback;
             }
@@ -52,7 +52,7 @@ public class AwContentsClientVisitedHistoryTest extends AwTestBase {
         }
 
         @Override
-        public void getVisitedHistory(ValueCallback<String[]> callback) {
+        public void getVisitedHistory(AwValueCallback<String[]> callback) {
             getGetVisitedHistoryHelper().notifyCalled(callback);
         }
 

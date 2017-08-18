@@ -44,7 +44,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.permission.AwGeolocationCallback;
 import org.chromium.android_webview.permission.AwPermissionRequest;
@@ -1444,7 +1443,7 @@ public class AwContents implements SmartClipProvider {
     }
 
     private void requestVisitedHistoryFromClient() {
-        ValueCallback<String[]> callback = value -> {
+        AwValueCallback<String[]> callback = value -> {
             if (value != null) {
                 // Replace null values with empty strings, because they can't be represented as
                 // native strings.
@@ -2007,7 +2006,7 @@ public class AwContents implements SmartClipProvider {
     }
 
     public void saveWebArchive(
-            final String basename, boolean autoname, final ValueCallback<String> callback) {
+            final String basename, boolean autoname, final AwValueCallback<String> callback) {
         if (TRACE) Log.i(TAG, "%s saveWebArchive=%s", this, basename);
         if (!autoname) {
             saveWebArchiveInternal(basename, callback);
@@ -2246,7 +2245,7 @@ public class AwContents implements SmartClipProvider {
     /**
      * @see ContentViewCore.evaluateJavaScript(String, JavaScriptCallback)
      */
-    public void evaluateJavaScript(String script, final ValueCallback<String> callback) {
+    public void evaluateJavaScript(String script, final AwValueCallback<String> callback) {
         if (TRACE) Log.i(TAG, "%s evaluateJavascript=%s", this, script);
         if (isDestroyedOrNoOperation(WARN)) return;
         JavaScriptCallback jsCallback = null;
@@ -2263,7 +2262,7 @@ public class AwContents implements SmartClipProvider {
         mWebContents.evaluateJavaScript(script, jsCallback);
     }
 
-    public void evaluateJavaScriptForTests(String script, final ValueCallback<String> callback) {
+    public void evaluateJavaScriptForTests(String script, final AwValueCallback<String> callback) {
         if (TRACE) Log.i(TAG, "%s evaluateJavascriptForTests=%s", this, script);
         if (isDestroyedOrNoOperation(NO_WARN)) return;
         JavaScriptCallback jsCallback = null;
@@ -2734,7 +2733,7 @@ public class AwContents implements SmartClipProvider {
     /** Callback for generateMHTML. */
     @CalledByNative
     private static void generateMHTMLCallback(
-            String path, long size, ValueCallback<String> callback) {
+            String path, long size, AwValueCallback<String> callback) {
         if (callback == null) return;
         callback.onReceiveValue(size < 0 ? null : path);
     }
@@ -2967,7 +2966,7 @@ public class AwContents implements SmartClipProvider {
 
     @VisibleForTesting
     public void evaluateJavaScriptOnInterstitialForTesting(
-            String script, final ValueCallback<String> callback) {
+            String script, final AwValueCallback<String> callback) {
         if (TRACE) Log.i(TAG, "%s evaluateJavascriptOnInterstitial=%s", this, script);
         if (isDestroyedOrNoOperation(WARN)) return;
         JavaScriptCallback jsCallback = null;
@@ -3007,7 +3006,7 @@ public class AwContents implements SmartClipProvider {
         }
     }
 
-    private void saveWebArchiveInternal(String path, final ValueCallback<String> callback) {
+    private void saveWebArchiveInternal(String path, final AwValueCallback<String> callback) {
         if (path == null || isDestroyedOrNoOperation(WARN)) {
             if (callback == null) return;
 
@@ -3457,7 +3456,7 @@ public class AwContents implements SmartClipProvider {
 
     private native void nativeDocumentHasImages(long nativeAwContents, Message message);
     private native void nativeGenerateMHTML(
-            long nativeAwContents, String path, ValueCallback<String> callback);
+            long nativeAwContents, String path, AwValueCallback<String> callback);
 
     private native void nativeAddVisitedLinks(long nativeAwContents, String[] visitedLinks);
     private native void nativeZoomBy(long nativeAwContents, float delta);

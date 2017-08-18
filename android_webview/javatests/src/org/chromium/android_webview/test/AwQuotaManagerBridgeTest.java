@@ -5,11 +5,11 @@
 package org.chromium.android_webview.test;
 
 import android.util.Pair;
-import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwQuotaManagerBridge;
 import org.chromium.android_webview.AwSettings;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.test.util.AwQuotaManagerBridgeTestUtil;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.DisabledTest;
@@ -99,13 +99,12 @@ public class AwQuotaManagerBridgeTest extends AwTestBase {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                bridge.getQuotaForOrigin("foo.com",
-                        new ValueCallback<Long>() {
-                            @Override
-                            public void onReceiveValue(Long quota) {
-                                callbackHelper.notifyCalled(quota);
-                            }
-                        });
+                bridge.getQuotaForOrigin("foo.com", new AwValueCallback<Long>() {
+                    @Override
+                    public void onReceiveValue(Long quota) {
+                        callbackHelper.notifyCalled(quota);
+                    }
+                });
             }
         });
         callbackHelper.waitForCallback(callCount);
@@ -122,13 +121,12 @@ public class AwQuotaManagerBridgeTest extends AwTestBase {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                bridge.getUsageForOrigin(origin,
-                        new ValueCallback<Long>() {
-                            @Override
-                            public void onReceiveValue(Long usage) {
-                                callbackHelper.notifyCalled(usage);
-                            }
-                        });
+                bridge.getUsageForOrigin(origin, new AwValueCallback<Long>() {
+                    @Override
+                    public void onReceiveValue(Long usage) {
+                        callbackHelper.notifyCalled(usage);
+                    }
+                });
             }
         });
         callbackHelper.waitForCallback(callCount);

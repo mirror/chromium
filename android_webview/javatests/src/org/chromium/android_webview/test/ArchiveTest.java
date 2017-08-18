@@ -5,11 +5,11 @@
 package org.chromium.android_webview.test;
 
 import android.support.test.filters.SmallTest;
-import android.webkit.ValueCallback;
 
 import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import org.chromium.android_webview.AwContents;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.Feature;
@@ -54,7 +54,7 @@ public class ArchiveTest extends AwTestBase {
         // Set up a handler to handle the completion callback
         final Semaphore s = new Semaphore(0);
         final AtomicReference<String> msgPath = new AtomicReference<String>();
-        final ValueCallback<String> callback = new ValueCallback<String>() {
+        final AwValueCallback<String> callback = new AwValueCallback<String>() {
             @Override
             public void onReceiveValue(String path) {
                 msgPath.set(path);
@@ -172,7 +172,7 @@ public class ArchiveTest extends AwTestBase {
     }
 
     private void saveWebArchiveAndWaitForUiPost(
-            final String path, boolean autoname, final ValueCallback<String> callback) {
+            final String path, boolean autoname, final AwValueCallback<String> callback) {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {

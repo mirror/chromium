@@ -4,11 +4,10 @@
 
 package org.chromium.android_webview.test.util;
 
-import android.webkit.ValueCallback;
-
 import junit.framework.Assert;
 
 import org.chromium.android_webview.AwCookieManager;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.test.AwTestBase;
 import org.chromium.base.test.util.CallbackHelper;
 
@@ -23,9 +22,9 @@ public class CookieUtils {
     /**
      * A CallbackHelper for use with setCookie/removeXXXCookie.
      */
-    public static class TestValueCallback<T> implements ValueCallback<T> {
+    public static class TestValueCallback<T> implements AwValueCallback<T> {
         /**
-         * We only have one intresting method on ValueCallback: onReceiveValue.
+         * We only have one intresting method on AwValueCallback: onReceiveValue.
          */
         public static class OnReceiveValueHelper<T> extends CallbackHelper {
             private T mValue;

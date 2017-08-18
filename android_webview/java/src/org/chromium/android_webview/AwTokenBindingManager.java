@@ -5,7 +5,6 @@
 package org.chromium.android_webview;
 
 import android.net.Uri;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
@@ -39,14 +38,14 @@ public final class AwTokenBindingManager {
         nativeEnableTokenBinding();
     }
 
-    public void getKey(Uri origin, String[] spec, ValueCallback<KeyPair> callback) {
+    public void getKey(Uri origin, String[] spec, AwValueCallback<KeyPair> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("callback can't be null");
         }
         nativeGetTokenBindingKey(origin.getHost(), callback);
     }
 
-    public void deleteKey(Uri origin, ValueCallback<Boolean> callback) {
+    public void deleteKey(Uri origin, AwValueCallback<Boolean> callback) {
         if (origin == null) {
             throw new IllegalArgumentException("origin can't be null");
         }
@@ -54,14 +53,14 @@ public final class AwTokenBindingManager {
         nativeDeleteTokenBindingKey(origin.getHost(), callback);
     }
 
-    public void deleteAllKeys(ValueCallback<Boolean> callback) {
+    public void deleteAllKeys(AwValueCallback<Boolean> callback) {
         // null callback is allowed
         nativeDeleteAllTokenBindingKeys(callback);
     }
 
     @CalledByNative
     private static void onKeyReady(
-            ValueCallback<KeyPair> callback, byte[] privateKeyBytes, byte[] publicKeyBytes) {
+            AwValueCallback<KeyPair> callback, byte[] privateKeyBytes, byte[] publicKeyBytes) {
         if (privateKeyBytes == null || publicKeyBytes == null) {
             callback.onReceiveValue(null);
             return;
@@ -80,13 +79,13 @@ public final class AwTokenBindingManager {
     }
 
     @CalledByNative
-    private static void onDeletionComplete(ValueCallback<Boolean> callback) {
+    private static void onDeletionComplete(AwValueCallback<Boolean> callback) {
         // At present, the native deletion complete callback always succeeds.
         callback.onReceiveValue(true);
     }
 
     private native void nativeEnableTokenBinding();
-    private native void nativeGetTokenBindingKey(String host, ValueCallback<KeyPair> callback);
-    private native void nativeDeleteTokenBindingKey(String host, ValueCallback<Boolean> callback);
-    private native void nativeDeleteAllTokenBindingKeys(ValueCallback<Boolean> callback);
+    private native void nativeGetTokenBindingKey(String host, AwValueCallback<KeyPair> callback);
+    private native void nativeDeleteTokenBindingKey(String host, AwValueCallback<Boolean> callback);
+    private native void nativeDeleteAllTokenBindingKeys(AwValueCallback<Boolean> callback);
 }

@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwBrowserContext;
 import org.chromium.android_webview.AwContents;
@@ -28,6 +27,7 @@ import org.chromium.android_webview.AwSafeBrowsingConversionHelper;
 import org.chromium.android_webview.AwSafeBrowsingResponse;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.AwWebContentsObserver;
 import org.chromium.android_webview.ErrorCodeConversionHelper;
 import org.chromium.android_webview.SafeBrowsingAction;
@@ -226,7 +226,7 @@ public class SafeBrowsingTest extends AwTestBase {
 
         @Override
         public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-                ValueCallback<AwSafeBrowsingResponse> callback) {
+                AwValueCallback<AwSafeBrowsingResponse> callback) {
             mLastRequest = request;
             mLastThreatType = threatType;
             callback.onReceiveValue(new AwSafeBrowsingResponse(mAction, mReporting));
@@ -273,7 +273,8 @@ public class SafeBrowsingTest extends AwTestBase {
         }
     }
 
-    private static class WhitelistHelper extends CallbackHelper implements ValueCallback<Boolean> {
+    private static class WhitelistHelper
+            extends CallbackHelper implements AwValueCallback<Boolean> {
         public boolean success;
 
         public void onReceiveValue(Boolean success) {
@@ -332,7 +333,7 @@ public class SafeBrowsingTest extends AwTestBase {
     }
 
     private void evaluateJavaScriptOnInterstitialOnUiThread(
-            final String script, final ValueCallback<String> callback) {
+            final String script, final AwValueCallback<String> callback) {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -345,7 +346,7 @@ public class SafeBrowsingTest extends AwTestBase {
         final String script = "document.readyState;";
         final JavaScriptHelper helper = new JavaScriptHelper();
 
-        final ValueCallback<String> callback = new ValueCallback<String>() {
+        final AwValueCallback<String> callback = new AwValueCallback<String>() {
             @Override
             public void onReceiveValue(String value) {
                 helper.setValue(value);
@@ -970,7 +971,7 @@ public class SafeBrowsingTest extends AwTestBase {
         CallbackHelper helper = new CallbackHelper();
         int count = helper.getCallCount();
         mOnUiThread = false;
-        AwContentsStatics.initSafeBrowsing(ctx, new ValueCallback<Boolean>() {
+        AwContentsStatics.initSafeBrowsing(ctx, new AwValueCallback<Boolean>() {
             @Override
             public void onReceiveValue(Boolean b) {
                 mOnUiThread = ThreadUtils.runningOnUiThread();

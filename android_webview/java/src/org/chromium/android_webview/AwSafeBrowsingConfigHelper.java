@@ -7,7 +7,6 @@ package org.chromium.android_webview;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
@@ -39,10 +38,10 @@ public class AwSafeBrowsingConfigHelper {
             Class awSafeBrowsingApiHelperClass =
                     Class.forName("com.android.webview.chromium.AwSafeBrowsingApiHandler");
             Method getUserOptInPreference = awSafeBrowsingApiHelperClass.getDeclaredMethod(
-                    getUserOptInPreferenceMethodName, Context.class, ValueCallback.class);
+                    getUserOptInPreferenceMethodName, Context.class, AwValueCallback.class);
             getUserOptInPreference.invoke(null, appContext,
-                    (ValueCallback<Boolean>) optin -> setSafeBrowsingUserOptIn(
-                            optin == null ? false : optin));
+                    (AwValueCallback<Boolean>)
+                    optin -> setSafeBrowsingUserOptIn(optin == null ? false : optin));
         } catch (ClassNotFoundException e) {
             // This is not an error; it just means this device doesn't have specialized services.
         } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException e) {
