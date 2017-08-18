@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller.h"
 #include "components/password_manager/core/browser/test_password_store.h"
+#include "components/password_manager/core/common/password_manager_features.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -104,6 +105,10 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase, UsernameChanged) {
 
 IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
                        ManualFallbackForSaving) {
+  if (!base::FeatureList::IsEnabled(
+          password_manager::features::kEnableManualSaving))
+    return;
+
   NavigateToFile("/password/password_form.html");
 
   std::string focus("document.getElementById('password_field').focus();");
@@ -132,6 +137,10 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
 
 IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
                        ManualFallbackForSaving_HideAfterTimeout) {
+  if (!base::FeatureList::IsEnabled(
+          password_manager::features::kEnableManualSaving))
+    return;
+
   NavigateToFile("/password/password_form.html");
   ManagePasswordsUIController::set_save_fallback_timeout_in_seconds(0);
 
