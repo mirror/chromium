@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62379e68_46ae5a12",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "It\u0027s for std::min",
+      "parentUuid": "e7b70b79_1b5fde4d",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe48e056_e5846f61",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d8adea_f5d13fed",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Removed...  I was thinking it was passed by value instead of reference, for some reason.",
+      "parentUuid": "fe48e056_e5846f61",
+      "range": {
+        "startLine": 18,
+        "startChar": 33,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "632c7c8e_b907f1ff",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f7f60655_27bacffe",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 31
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b837efed_39555d54",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 23
@@ -91,6 +163,30 @@
       "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11aff453_34652204",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Done.  Didn\u0027t do it for this one because the path needs a query string appended to it to be used.",
+      "parentUuid": "b837efed_39555d54",
+      "range": {
+        "startLine": 173,
+        "startChar": 39,
+        "endLine": 173,
+        "endChar": 55
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e57bd801_38f0c3b1",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Done, though I\u0027m not sure it improves the code, with the strlen, the base::StringPrintf, and the PRIuS.",
+      "parentUuid": "bc29919a_a43da209",
+      "range": {
+        "startLine": 194,
+        "startChar": 19,
+        "endLine": 194,
+        "endChar": 25
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61543cf7_7110046b",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 23
@@ -137,6 +257,30 @@
       "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c0094c_fe8d3e11",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "It exceeds the limit if the limit had been enabled (Which it is not).  i.e., the purpose is to check that we can receive large response bodies on the Path of Death.  Rephrased.",
+      "parentUuid": "61543cf7_7110046b",
+      "range": {
+        "startLine": 337,
+        "startChar": 21,
+        "endLine": 337,
+        "endChar": 26
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f058345d_456a5c6d",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "I agree it\u0027s incomprehensible.  I\u0027ve removed the \"Limit\" part of these names - \"WithSizeBelowLimit\" should imply the use of a size limit, I think?  Happy to go with \"WithSizeLimitSizeBelowLimit\", just thinking fewer words is easier to read.",
+      "parentUuid": "bc60c5e1_d7e2b3f3",
+      "range": {
+        "startLine": 366,
+        "startChar": 28,
+        "endLine": 366,
+        "endChar": 63
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edaf5bc7_c3d9cd7b",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 23
@@ -183,6 +351,30 @@
       "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5088e046_4c980a79",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edaf5bc7_c3d9cd7b",
+      "range": {
+        "startLine": 398,
+        "startChar": 7,
+        "endLine": 398,
+        "endChar": 57
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "d2a9e80e_519c58e9",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Removed comment (And fixed the grammar in the place where I this test from, and forgot to remove the comment)",
+      "parentUuid": "e647ae05_25e4b112",
+      "range": {
+        "startLine": 545,
+        "startChar": 39,
+        "endLine": 545,
+        "endChar": 40
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c775df_315ac2be",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 23
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "98b7a297_6849656c",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Great catch!\n\nThat case is an error (Even if it\u0027s a head request, we still try and read the body, and get an empty pipe).  Added an error for that case, and tests.  There\u0027s also the case where we receive successful completion without a response, which was also incorrectly being counted as a success.",
+      "parentUuid": "93c775df_315ac2be",
+      "range": {
+        "startLine": 578,
+        "startChar": 2,
+        "endLine": 578,
+        "endChar": 21
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "475e6d1b_49ebef82",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 23
@@ -243,6 +483,30 @@
       "writtenOn": "2017-08-17T17:50:01Z",
       "side": 1,
       "message": "Is there a test that gets part way through sending a response and then completes with a net error?",
+      "range": {
+        "startLine": 874,
+        "startChar": 7,
+        "endLine": 874,
+        "endChar": 26
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401df840_8078c6ad",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "Doesn\u0027t CloseClientPipeOrder test this?  Both when we the data pipe closes and then we receive an error, and when the we receive the error and then the data pipe closes (And when the pipe closes successfully, with an error, or in the case of truncation).  Or am I misunderstanding you?",
+      "parentUuid": "475e6d1b_49ebef82",
       "range": {
         "startLine": 874,
         "startChar": 7,
@@ -275,6 +539,30 @@
       "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c07f77_44987d3f",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-18T03:12:59Z",
+      "side": 1,
+      "message": "You\u0027re right - added a pair of tests, and made sure we fail in that case.",
+      "parentUuid": "1bd0241a_2120b071",
+      "range": {
+        "startLine": 953,
+        "startChar": 43,
+        "endLine": 953,
+        "endChar": 62
+      },
+      "revId": "49ab80d3be72ff1eed38f832794f27e201931b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
