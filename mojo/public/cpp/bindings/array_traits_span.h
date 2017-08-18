@@ -12,13 +12,6 @@
 
 namespace mojo {
 
-// TODO(dcheng): Remove these type aliases.
-template <typename T>
-using CArray = base::Span<T>;
-
-template <typename T>
-using ConstCArray = base::Span<const T>;
-
 template <typename T>
 struct ArrayTraits<base::Span<T>> {
   using Element = T;

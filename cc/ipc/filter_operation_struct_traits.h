@@ -5,6 +5,7 @@
 #ifndef CC_IPC_FILTER_OPERATION_STRUCT_TRAITS_H_
 #define CC_IPC_FILTER_OPERATION_STRUCT_TRAITS_H_
 
+#include "base/containers/span.h"
 #include "cc/base/filter_operation.h"
 #include "cc/ipc/filter_operation.mojom-shared.h"
 #include "skia/public/interfaces/blur_image_filter_tile_mode_struct_traits.h"
@@ -126,10 +127,10 @@ struct StructTraits<cc::mojom::FilterOperationDataView, cc::FilterOperation> {
     return operation.image_filter();
   }
 
-  static ConstCArray<float> matrix(const cc::FilterOperation& operation) {
+  static base::Span<const float> matrix(const cc::FilterOperation& operation) {
     if (operation.type() != cc::FilterOperation::COLOR_MATRIX)
-      return ConstCArray<float>();
-    return ConstCArray<float>(operation.matrix());
+      return base::Span<const float>();
+    return operation.matrix();
   }
 
   static int32_t zoom_inset(const cc::FilterOperation& operation) {
@@ -181,7 +182,7 @@ struct StructTraits<cc::mojom::FilterOperationDataView, cc::FilterOperation> {
         // TODO(fsamuel): It would be nice to modify cc::FilterOperation to
         // avoid this extra copy.
         cc::FilterOperation::Matrix matrix_buffer = {};
-        CArray<float> matrix(matrix_buffer);
+        base::Span<float> matrix(matrix_buffer);
         if (!data.ReadMatrix(&matrix))
           return false;
         out->set_matrix(matrix_buffer);
