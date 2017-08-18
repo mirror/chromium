@@ -147,9 +147,9 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         mContentVirtualDisplay.setTo(primaryDisplay);
         // Set the initial content size and DPR to be applied to reparented tabs. Otherwise, Chrome
         // will crash due to a GL buffer initialized with zero bytes.
-        mLastContentWidth = mContentVirtualDisplay.getDisplayWidth();
-        mLastContentHeight = mContentVirtualDisplay.getDisplayHeight();
-        mLastContentDpr = mContentVirtualDisplay.getDipScale();
+        mLastContentWidth = mActivity.getActivityTab().getWidth();
+        mLastContentHeight = mActivity.getActivityTab().getHeight();
+        mLastContentDpr = 1.0f;
 
         mInterceptNavigationDelegate = new InterceptNavigationDelegateImpl(
                 new VrExternalNavigationDelegate(mActivity.getActivityTab()),
