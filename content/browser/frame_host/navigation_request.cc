@@ -39,6 +39,7 @@
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_request_body.h"
@@ -384,6 +385,17 @@ void NavigationRequest::BeginNavigation() {
 
   state_ = STARTED;
 
+  if (ShouldBlockCredentialedSubresources()) {
+    // Create a navigation handle so that the correct error code can be set on
+    // it by OnRequestFailed().
+    CreateNavigationHandle();
+    OnRequestFailed(false, net::ERR_ABORTED);
+
+    // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
+    // destroyed the NavigationRequest.
+    return;
+  }
+
   // Check Content Security Policy before the NavigationThrottles run. This
   // gives CSP a chance to modify requests that NavigationThrottles would
   // otherwise block. Similarly, the NavigationHandle is created afterwards, so
@@ -546,6 +558,17 @@ void NavigationRequest::OnRequestRedirected(
   common_params_.referrer.url = GURL(redirect_info.new_referrer);
   common_params_.referrer =
       Referrer::SanitizeForRequest(common_params_.url, common_params_.referrer);
+
+  if (ShouldBlockCredentialedSubresources()) {
+    // Create a navigation handle so that the correct error code can be set on
+    // it by OnRequestFailed().
+    CreateNavigationHandle();
+    OnRequestFailed(false, net::ERR_ABORTED);
+
+    // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
+    // destroyed the NavigationRequest.
+    return;
+  }
 
   // Check Content Security Policy before the NavigationThrottles run. This
   // gives CSP a chance to modify requests that NavigationThrottles would
@@ -1018,6 +1041,31 @@ NavigationRequest::CheckContentSecurityPolicyFrameSrc(bool is_redirect) {
   }
 
   return CONTENT_SECURITY_POLICY_CHECK_FAILED;
+}
+
+bool NavigationRequest::ShouldBlockCredentialedSubresources() const {
+  // It only applies to subframes.
+  if (frame_tree_node()->IsMainFrame())
+    return false;
+
+  // URLs with no embedded credentials are not blocked.
+  if (!common_params_.url.has_username() && !common_params_.url.has_password())
+    return false;
+
+  // Warn the user about the request being blocked.
+  FrameTreeNode* parent_ftn = frame_tree_node()->parent();
+  DCHECK(parent_ftn);
+  RenderFrameHostImpl* parent = parent_ftn->current_frame_host();
+  DCHECK(parent);
+  const char* console_message =
+      "Subresource requests whose URLs contain embedded credentials (e.g. "
+      "`https://user:pass@host/`) are blocked. See "
+      "https://www.chromestatus.com/feature/5669008342777856 for more details. "
+      "Use the --disable-features=BlockCredentialedSubresources flag to turn "
+      "this off.";
+  parent->AddMessageToConsole(CONSOLE_MESSAGE_LEVEL_INFO, console_message);
+
+  return base::FeatureList::IsEnabled(features::kBlockCredentialedSubresources);
 }
 
 }  // namespace content
