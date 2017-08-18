@@ -187,6 +187,20 @@ bool IsSignedOutUsersSubscriptionForPushedSuggestionsEnabled() {
       kEnableSignedOutUsersSubscriptionForPushedSuggestionsDefault);
 }
 
+// Whether notification info is overriden for fetched suggestions. Note that
+// this param does not overwrite other switches which could disable these
+// notifications.
+const bool kForceFetchedSuggestionsNotificationsDefault = false;
+const char kForceFetchedSuggestionsNotificationsParamName[] =
+    "force_fetched_suggestions_notifications";
+
+bool ShouldForceFetchedSuggestionsNotifications() {
+  return base::GetFieldTrialParamByFeatureAsBool(
+      ntp_snippets::kNotificationsFeature,
+      kForceFetchedSuggestionsNotificationsParamName,
+      kForceFetchedSuggestionsNotificationsDefault);
+}
+
 template <typename SuggestionPtrContainer>
 std::unique_ptr<std::vector<std::string>> GetSuggestionIDVector(
     const SuggestionPtrContainer& suggestions) {
@@ -733,6 +747,19 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     // TODO(tschumann): What happens if this was a user-triggered, interactive
     // request? Is the UI waiting indefinitely now?
     return;
+  }
+
+  if (ShouldForceFetchedSuggestionsNotifications()) {
+    if (fetched_categories) {
+      const base::Time deadline = clock_->Now() + base::TimeDelta::FromDays(7);
+      for (FetchedCategory& fetched_category : *fetched_categories) {
+        for (std::unique_ptr<RemoteSuggestion>& suggestion :
+             fetched_category.suggestions) {
+          suggestion->set_should_notify(true);
+          suggestion->set_notification_deadline(deadline);
+        }
+      }
+    }
   }
 
   if (!IsFetchedSuggestionsNotificationsEnabled()) {
