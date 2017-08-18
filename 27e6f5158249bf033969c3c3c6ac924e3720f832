@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f71aa47_762254a8",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-18T17:04:48Z",
+      "side": 1,
+      "message": "Looking at the code, MouseWheelPhaseHandler sometimes sends an event to this RenderWidgetHostViewBase, which will be inconsistent since we don\u0027t send all the other events to the view. Also, I\u0027m worried about the lifetime here. And MouseWheelPhaseHandler has a lot of logic which does not apply in our automation case.\n\nCan we instead send two events, one with PhaseBegan, another with PhaseEnded, so that every mousewheel is a separate sequence? Doing any timeouts during automation is not good, since it\u0027s not a user which interacts with Chrome, but another program with it\u0027s own timing.",
+      "range": {
+        "startLine": 283,
+        "startChar": 37,
+        "endLine": 283,
+        "endChar": 76
+      },
+      "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
