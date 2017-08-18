@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1f9ff0f_ff4fd44c",
+        "filename": "ash/public/cpp/shelf_item_delegate.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-18T15:38:26Z",
+      "side": 1,
+      "message": "I added enum traits for the menu item type, but adding a more general MenuModel typemap is beyond the scope of this CL. I\u0027ll consider pursuing that later, if we need to transport menus beyond the shelf/wallpaper use case.",
+      "parentUuid": "853ae1b7_5bed86cc",
+      "revId": "8a64de3543f92e767791ed1bca88077090bb2aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18cc9a8c_24b8e7e9",
         "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
         "patchSetId": 36
@@ -33,6 +51,24 @@
       "revId": "8a64de3543f92e767791ed1bca88077090bb2aac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef945b1_4f6c32d6",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-18T15:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18cc9a8c_24b8e7e9",
+      "revId": "8a64de3543f92e767791ed1bca88077090bb2aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
