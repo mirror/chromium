@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fc23bf6_7bb4f6d9",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_policy_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-18T16:31:38Z",
+      "side": 1,
+      "message": "The corresponding prefs are true by default - so can we just delete this block?",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 80
+      },
+      "revId": "5f6a67821687b9fa670cc0c794f4505be4c107cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d626b37a_37724c73",
         "filename": "chrome/browser/chromeos/policy/device_local_account_policy_provider.cc",
         "patchSetId": 1
@@ -18,6 +41,52 @@
         "startChar": 63,
         "endLine": 85,
         "endChar": 67
+      },
+      "revId": "5f6a67821687b9fa670cc0c794f4505be4c107cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9964ea77_493e429d",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-18T16:31:38Z",
+      "side": 1,
+      "message": "nit: Update the comment: there\u0027s now one new case for the immersive fullscreen - the public session.",
+      "range": {
+        "startLine": 317,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 56
+      },
+      "revId": "5f6a67821687b9fa670cc0c794f4505be4c107cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb5f400_52d9bc1f",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-18T16:31:38Z",
+      "side": 1,
+      "message": "nit: I\u0027d say that doing this in a single expression, when immersive_enabled is initialized, is easier to read.",
+      "range": {
+        "startLine": 322,
+        "startChar": 4,
+        "endLine": 323,
+        "endChar": 31
       },
       "revId": "5f6a67821687b9fa670cc0c794f4505be4c107cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
