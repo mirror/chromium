@@ -93,9 +93,7 @@ void TrayUserTest::InitializeParameters(int users_logged_in,
   ASSERT_LE(users_logged_in,
             static_cast<int>(arraysize(kPredefinedUserEmails)));
   for (int i = 0; i < users_logged_in; ++i)
-    GetSessionControllerClient()->AddUserSession(kPredefinedUserEmails[i]);
-  GetSessionControllerClient()->SetSessionState(
-      session_manager::SessionState::ACTIVE);
+    SimulateUserLogin(kPredefinedUserEmails[i]);
 
   TestShellDelegate* shell_delegate =
       static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
@@ -202,7 +200,7 @@ TEST_F(TrayUserTest, MultiUserModeDoesNotAllowToAddUser) {
   generator.set_async(false);
 
   // Set the number of logged in users.
-  GetSessionControllerClient()->CreatePredefinedUserSessions(5);
+  SimulateLogin(5);
 
   // Verify that nothing is shown.
   EXPECT_FALSE(tray()->IsSystemBubbleVisible());
