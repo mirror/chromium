@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07e7926b_9b155a29",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-006-ref.html",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-18T16:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d202d07_dce1b748",
+      "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ffe17fb_49451163",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
         "patchSetId": 23
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b745db9_4a5bb9d6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-18T16:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ffe17fb_49451163",
+      "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc7ec6bf_32b68ec7",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
         "patchSetId": 23
@@ -50,6 +86,24 @@
       "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdedd58_e02e4368",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-18T16:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc7ec6bf_32b68ec7",
+      "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
