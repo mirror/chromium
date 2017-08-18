@@ -22,6 +22,30 @@
       "revId": "db1c9d4dcb35ed27e7c5b7c0b7deafb1fe701adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960a9e30_f4e1e190",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-18T00:21:46Z",
+      "side": 0,
+      "message": "As I commented above, The HidService Asynchronously runs the callback here, but Synchronously runs its observer\u0027s OnDeviceAdded()/OnDeviceRemoved(). If there was a new device-removing event be post before we post this callback, The HidDeviceManager may find its OnDeviceAdded()/OnDeviceRemoved() runs earlier than the HidDeviceManager::OnEnumerationComplete, and goes crash. WDYT?",
+      "parentUuid": "9a35de91_73f1f19b",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "db1c9d4dcb35ed27e7c5b7c0b7deafb1fe701adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
