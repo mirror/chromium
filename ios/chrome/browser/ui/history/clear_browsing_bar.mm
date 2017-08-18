@@ -110,7 +110,7 @@ typedef NS_ENUM(BOOL, ButtonPlacement) { Leading, Trailing };
   return self;
 }
 
-#pragma mark Public Methods
+#pragma mark - Public Methods
 
 - (void)setEditing:(BOOL)editing {
   _editing = editing;
@@ -160,7 +160,7 @@ typedef NS_ENUM(BOOL, ButtonPlacement) { Leading, Trailing };
               forControlEvents:UIControlEventTouchUpInside];
 }
 
-#pragma mark Private Methods
+#pragma mark - Private Methods
 
 - (void)styleButton:(UIButton*)button forPlacement:(ButtonPlacement)placement {
   BOOL leading = placement == Leading;
