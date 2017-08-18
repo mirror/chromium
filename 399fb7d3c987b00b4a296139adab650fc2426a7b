@@ -16,6 +16,24 @@
       "revId": "399fb7d3c987b00b4a296139adab650fc2426a7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1199ea6_e33d10d7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-on-paint-worklet.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-18T17:43:48Z",
+      "side": 1,
+      "message": "I think the formatting makes the file fall below the similarity threshold for a move. Unfortunately, doesn\u0027t look like it can be configured right now w/ Gerrit:\nhttps://bugs.chromium.org/p/gerrit/issues/detail?id\u003d6441#c37",
+      "parentUuid": "c40bdd8c_c019520e",
+      "revId": "399fb7d3c987b00b4a296139adab650fc2426a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
