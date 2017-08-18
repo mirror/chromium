@@ -52,6 +52,24 @@
       "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f36d6d2_e46cfc17",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-18T02:23:28Z",
+      "side": 1,
+      "message": "Thanks for clarifying it, but I am a bit confused about that:\nJake said \"It could resolve once the service worker has begun activating.\", but in https://github.com/w3c/ServiceWorker/issues/1015, he also said \"I\u0027d prefer it if skipWaiting always waited until the service worker became activating, but as @asutherland points out there\u0027s too much code out there using it in waitUntil, so it\u0027ll become a deadlock.\", and in the commit https://github.com/w3c/ServiceWorker/pull/1019, \"(so promise resolves right away after\nsetting the skip waiting flag)\"",
+      "parentUuid": "67270e99_c6634e69",
+      "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
