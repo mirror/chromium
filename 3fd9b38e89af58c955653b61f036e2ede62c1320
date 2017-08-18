@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16f8088_f4a20fd0",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T00:13:04Z",
+      "side": 1,
+      "message": "Generally we pass data like this by const\u0026. Make a copy if you need to.",
+      "range": {
+        "startLine": 1617,
+        "startChar": 29,
+        "endLine": 1617,
+        "endChar": 56
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496a61ba_577318a6",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T00:13:04Z",
+      "side": 1,
+      "message": "Please add a description. You want a class here. See style guide for distinction between when to use struct vs class.",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 26
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84a3590_73b8a5c2",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T00:13:04Z",
+      "side": 1,
+      "message": "I would prefer a single constructor. I\u0027m ok with default args where appropriate.",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 5
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a607e82_8c39790e",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T00:13:04Z",
+      "side": 1,
+      "message": "How about removing these and making AddObserver public?",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 5
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb076ed_3d63fcbd",
+        "filename": "ui/views/view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4459,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-18T00:13:04Z",
+      "side": 1,
+      "message": "As you share so few assertions between the different parameters I think you should go with two separate tests. Easier to reason about and follow.g",
+      "range": {
+        "startLine": 4459,
+        "startChar": 7,
+        "endLine": 4459,
+        "endChar": 51
+      },
+      "revId": "3fd9b38e89af58c955653b61f036e2ede62c1320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
