@@ -15,10 +15,8 @@
           "mojom::ModuleEventSink",
           "rappor::mojom::RapporRecorder",
           "safe_browsing::mojom::SafeBrowsing",
-          "spellcheck::mojom::SpellCheckHost",
-          "spellcheck::mojom::SpellCheckPanelHost",
           "translate::mojom::ContentTranslateDriver"
-	],
+        ],
         "url_keyed_metrics": [
           "ukm::mojom::UkmRecorderInterface"
         ],
@@ -74,7 +72,7 @@
           "translate::mojom::ContentTranslateDriver",
 
           // TODO(beng): These should be moved to a separate capability.
-	  "media::mojom::MediaEngagementScoreDetailsProvider",
+          "media::mojom::MediaEngagementScoreDetailsProvider",
           "mojom::OmniboxPageHandler",
           "mojom::PluginsPageHandler",
           "mojom::SiteEngagementDetailsProvider",
