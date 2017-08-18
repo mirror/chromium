@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/logging.h"
 #include "base/memory/discardable_memory.h"
 #include "base/memory/ptr_util.h"
 #include "components/printing/service/pdf_compositor_impl.h"
