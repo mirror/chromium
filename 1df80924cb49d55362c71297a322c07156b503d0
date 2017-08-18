@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "502f33fa_40cebdf7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-18T07:59:49Z",
+      "side": 1,
+      "message": "We have existing server-side configs that use the NTPArticleSuggestions feature. If we want to enable this param for some percentage of users, we\u0027ll have to split all the groups there. If it were a separate feature, then we could just add a new, separate config.\n\nOf course, you\u0027re right that this param doesn\u0027t make sense without NTPArticleSuggestions, and so logically it should be attached to that. But since it\u0027s been default-enabled for a long while now, IMO it\u0027d be okay to make this a separate feature.\n\nAnyway, I\u0027ll leave it up to you.",
+      "parentUuid": "3e0fc011_66a865e4",
+      "revId": "1df80924cb49d55362c71297a322c07156b503d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f1bf75_f425748a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
