@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17b6b378_4b5a1266",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-18T16:55:10Z",
+      "side": 1,
+      "message": "Isn\u0027t this what the notifier does internally after calling OnManagerGoingDown?  I think the bug is that we can\u0027t destroy notifier_ here, because it has things it will execute right after calling this function.  Maybe just remove notifier_.reset()?",
+      "range": {
+        "startLine": 271,
+        "startChar": 2,
+        "endLine": 271,
+        "endChar": 43
+      },
+      "revId": "b8158e9f02779a2f0b6eb0c2d02c8cc3e5ab4edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
