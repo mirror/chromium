@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28658590_11d61fda",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-18T23:03:14Z",
+      "side": 1,
+      "message": "Can we use fewer shards here, say, 5?",
+      "revId": "9ae32757a73767b6da022540aab7cc8ddc551b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
