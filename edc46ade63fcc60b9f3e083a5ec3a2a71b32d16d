@@ -46,6 +46,30 @@
       "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bd1e97_4f715419",
+        "filename": "cc/tiles/checker_image_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-18T18:09:20Z",
+      "side": 1,
+      "message": "Actually, I did want to specifically UMA how many vetoes are happening because of software raster. Since that happens in the tracker, having the disabling reason be explicit there instead of a generic force_disable flag feels better. Wdyt?",
+      "parentUuid": "14f91915_b2347181",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "edc46ade63fcc60b9f3e083a5ec3a2a71b32d16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
