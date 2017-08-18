@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "da3e7c45_177be393",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-18T12:33:41Z",
+      "side": 1,
+      "message": "Going with your recommendation for now.",
+      "parentUuid": "6e124439_c1b7d344",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "038091b5_71dd981f",
         "filename": "components/content_settings/core/common/content_settings_pattern.h",
         "patchSetId": 8
@@ -170,6 +194,24 @@
       "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfcdcd7_1662e42d",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-18T12:33:41Z",
+      "side": 1,
+      "message": "Made irrelevant by the other thread, would go with \"Add\" though.",
+      "parentUuid": "52097dc7_15e2c375",
+      "revId": "4457ad8cdc559dfc40a3ca53e6558615f48f049c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
