@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a1bcd5_6c8b0e47",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-18T19:14:21Z",
+      "side": 1,
+      "message": "FYI: this is a weird corner case, where the delegate actually decided to create a WebContents inside of ShouldCreateWebContents.\n\nHowever, AFAIK that behavior only happens from DriveWebContentsManager::ShouldCreateWebContents and for BackgroundContents (which is an app permission), so I think neither of those are spam/popunder risks. So I think we can probably leave it untouched.",
+      "revId": "d1dec26e4332bc8c92e9ace2c588a844bd40e3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b3404b_f83b6aea",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-18T19:14:21Z",
+      "side": 1,
+      "message": "You all probably talked this through in an earlier patch set, but what\u0027s the reason for filtering by disposition at all (which cases are you hoping to exclude)? |new_contents| here is always a fresh WebContents.",
+      "revId": "d1dec26e4332bc8c92e9ace2c588a844bd40e3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
