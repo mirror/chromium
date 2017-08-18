@@ -199,8 +199,8 @@ void PermissionServiceImpl::RequestPermission(
   std::vector<PermissionDescriptorPtr> permissions;
   permissions.push_back(std::move(permission));
   RequestPermissions(std::move(permissions), origin, user_gesture,
-                     base::Bind(&PermissionRequestResponseCallbackWrapper,
-                                base::Passed(&callback)));
+                     base::BindOnce(&PermissionRequestResponseCallbackWrapper,
+                                    base::Passed(&callback)));
 }
 
 void PermissionServiceImpl::RequestPermissions(
