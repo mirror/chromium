@@ -14,6 +14,7 @@
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/protocol/native_input_event_builder.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/browser/renderer_host/input/mouse_wheel_phase_handler.h"
 #include "content/browser/renderer_host/input/touch_emulator.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/common/input/synthetic_pinch_gesture_params.h"
@@ -247,8 +248,8 @@ InputHandler::InputHandler()
       input_queued_(false),
       page_scale_factor_(1.0),
       last_id_(0),
-      weak_factory_(this) {
-}
+      mouse_wheel_phase_handler_(nullptr),
+      weak_factory_(this) {}
 
 InputHandler::~InputHandler() {
 }
@@ -268,12 +269,19 @@ void InputHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
     host_->GetRenderWidgetHost()->RemoveInputEventObserver(this);
     if (ignore_input_events_)
       host_->GetRenderWidgetHost()->SetIgnoreInputEvents(false);
+    DCHECK(mouse_wheel_phase_handler_);
+    mouse_wheel_phase_handler_.reset();
   }
   host_ = host;
   if (host) {
     host->GetRenderWidgetHost()->AddInputEventObserver(this);
     if (ignore_input_events_)
       host_->GetRenderWidgetHost()->SetIgnoreInputEvents(true);
+    if (host_->GetRenderWidgetHost()->GetView()) {
+      mouse_wheel_phase_handler_.reset(
+          new MouseWheelPhaseHandler(host_->GetRenderWidgetHost(),
+                                     host_->GetRenderWidgetHost()->GetView()));
+    }
   }
 }
 
@@ -474,10 +482,16 @@ void InputHandler::DispatchMouseEvent(
   host_->GetRenderWidgetHost()->Focus();
   input_queued_ = false;
   pending_mouse_callbacks_.push_back(std::move(callback));
-  if (wheel_event)
+  if (wheel_event) {
+    DCHECK(mouse_wheel_phase_handler_);
+    // The wheel event will get forwarded directly, should_route_event must be
+    // false.
+    mouse_wheel_phase_handler_->AddPhaseIfNeededAndScheduleEndEvent(
+        *wheel_event, false);
     host_->GetRenderWidgetHost()->ForwardWheelEvent(*wheel_event);
-  else
+  } else {
     host_->GetRenderWidgetHost()->ForwardMouseEvent(*mouse_event);
+  }
   if (!input_queued_) {
     pending_mouse_callbacks_.back()->sendSuccess();
     pending_mouse_callbacks_.pop_back();
