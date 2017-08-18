@@ -38,7 +38,6 @@ import io.netty.handler.ssl.SupportedCipherSuiteFilter;
  * Wrapper class to start a HTTP/2 test server.
  */
 public final class Http2TestServer {
-    private static final ConditionVariable sBlock = new ConditionVariable();
     private static Channel sServerChannel;
     private static final String TAG = Http2TestServer.class.getSimpleName();
 
@@ -106,13 +105,14 @@ public final class Http2TestServer {
                 new Http2TestServerRunnable(new File(CertTestUtil.CERTS_DIRECTORY + certFileName),
                         new File(CertTestUtil.CERTS_DIRECTORY + keyFileName)))
                 .start();
-        sBlock.block();
+        Http2TestServerRunnable.blockUntilStarted();
         return true;
     }
 
     private Http2TestServer() {}
 
     private static class Http2TestServerRunnable implements Runnable {
+        private static final ConditionVariable sBlock = new ConditionVariable();
         private final SslContext mSslCtx;
 
         Http2TestServerRunnable(File certFile, File keyFile) throws Exception {
@@ -128,6 +128,11 @@ public final class Http2TestServer {
                     Http2SecurityUtil.CIPHERS, SupportedCipherSuiteFilter.INSTANCE,
                     applicationProtocolConfig, 0, 0);
         }
+
+        public static void blockUntilStarted() {
+            sBlock.block();
+        }
+
 
         public void run() {
             try {
