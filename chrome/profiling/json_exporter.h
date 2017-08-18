@@ -17,7 +17,8 @@ void ExportAllocationEventSetToJSON(
     int pid,
     const AllocationEventSet& set,
     const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
-    std::ostream& out);
+    std::ostream& out,
+    const std::string& metadata);
 
 }  // namespace profiling
 
