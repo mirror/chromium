@@ -59,6 +59,10 @@ class ContextualSuggestionsService : public KeyedService {
       net::URLFetcherDelegate* fetcher_delegate,
       ContextualSuggestionsCallback callback);
 
+  // Advises the service to stop creating a suggestions to stop creating a
+  // suggestion request, if the later was started.
+  void StopCreatingFetcher();
+
   // Returns a URL representing the address of the server where the zero suggest
   // request is being sent. Does not take into account whether sending this
   // request is prohibited (e.g. in an incognito window).
@@ -112,6 +116,8 @@ class ContextualSuggestionsService : public KeyedService {
   // Helper for fetching OAuth2 access tokens. This is non-null when an access
   // token request is currently in progress.
   std::unique_ptr<AccessTokenFetcher> token_fetcher_;
+
+  bool waiting_for_fetcher_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSuggestionsService);
 };
