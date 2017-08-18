@@ -283,6 +283,7 @@ bool IsMainFrameBeforeActivationEnabled() {
 }
 
 bool IsCheckerImagingEnabled() {
+  /*
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           cc::switches::kDisableCheckerImaging))
     return false;
@@ -292,8 +293,7 @@ bool IsCheckerImagingEnabled() {
     return true;
 
   if (base::FeatureList::IsEnabled(features::kCheckerImaging))
-    return true;
-
+    return true; */
   return false;
 }
 
