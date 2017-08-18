@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40929269_3f69a356",
+        "filename": "content/browser/loader/downloaded_temp_file_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T10:49:14Z",
+      "side": 1,
+      "message": "I think kFile / kBlob is preferred now.",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "933f03f9806003faecf53a242001a5c0bd6fb3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54e8f9c_392cdf71",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T10:49:14Z",
+      "side": 1,
+      "message": "Can you remove this function? Test code can now use the constructor taking the create function.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "933f03f9806003faecf53a242001a5c0bd6fb3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cccfe1_63966597",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T10:49:14Z",
+      "side": 1,
+      "message": "nullptr?",
+      "range": {
+        "startLine": 1543,
+        "startChar": 29,
+        "endLine": 1543,
+        "endChar": 36
+      },
+      "revId": "933f03f9806003faecf53a242001a5c0bd6fb3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf17f9dd_283373ee",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T10:49:14Z",
+      "side": 1,
+      "message": "Why are you sure that |blob_context| is not null whereas you aren\u0027t at L1542?",
+      "range": {
+        "startLine": 1552,
+        "startChar": 30,
+        "endLine": 1552,
+        "endChar": 42
+      },
+      "revId": "933f03f9806003faecf53a242001a5c0bd6fb3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da0fb0d_ffc660a2",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-18T10:49:14Z",
+      "side": 1,
+      "message": "map.erase(request_id) would be simpler.",
+      "revId": "933f03f9806003faecf53a242001a5c0bd6fb3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
