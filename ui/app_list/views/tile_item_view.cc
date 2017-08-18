@@ -55,10 +55,25 @@ class BadgeBackgroundImageSource : public gfx::CanvasImageSource {
 
 namespace app_list {
 
+class BADGE : public views::ImageView {
+  void OnBoundsChanged(const gfx::Rect& previous_bounds) override {
+    LOG(ERROR) << "BOUNDS ********** " << parent() << ": "
+               << GetBoundsInScreen().x() << " " << GetBoundsInScreen().y();
+    ImageView::OnBoundsChanged(previous_bounds);
+  }
+};
+
+class ICON : public views::ImageView {
+  void PreferredSizeChanged() override {
+    LOG(ERROR) << "PreferredSizeChanged ********** " << parent() << ": ";
+    ImageView::PreferredSizeChanged();
+  }
+};
+
 TileItemView::TileItemView()
     : views::CustomButton(this),
       parent_background_color_(SK_ColorTRANSPARENT),
-      icon_(new views::ImageView),
+      icon_(new ICON),
       badge_(nullptr),
       title_(new views::Label),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
@@ -75,7 +90,7 @@ TileItemView::TileItemView()
 
   AddChildView(icon_);
   if (features::IsPlayStoreAppSearchEnabled()) {
-    badge_ = new views::ImageView();
+    badge_ = new BADGE();
     badge_->set_can_process_events_within_subtree(false);
     badge_->SetVerticalAlignment(views::ImageView::LEADING);
     AddChildView(badge_);
