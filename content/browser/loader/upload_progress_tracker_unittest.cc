@@ -19,14 +19,9 @@ namespace {
 
 class TestingUploadProgressTracker : public UploadProgressTracker {
  public:
-  TestingUploadProgressTracker(
-      const tracked_objects::Location& location,
-      UploadProgressReportCallback report_callback,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-      : UploadProgressTracker(location,
-                              std::move(report_callback),
-                              nullptr,
-                              std::move(task_runner)),
+  TestingUploadProgressTracker(const tracked_objects::Location& location,
+                               UploadProgressReportCallback report_callback)
+      : UploadProgressTracker(location, std::move(report_callback), nullptr),
         current_time_(base::TimeTicks::Now()) {}
 
   void set_upload_progress(const net::UploadProgress& upload_progress) {
@@ -55,13 +50,11 @@ class TestingUploadProgressTracker : public UploadProgressTracker {
 class UploadProgressTrackerTest : public ::testing::Test {
  public:
   UploadProgressTrackerTest()
-      : task_runner_handle_(mock_task_runner_),
-        upload_progress_tracker_(
+      : upload_progress_tracker_(
             FROM_HERE,
             base::BindRepeating(
                 &UploadProgressTrackerTest::OnUploadProgressReported,
-                base::Unretained(this)),
-            mock_task_runner_) {}
+                base::Unretained(this))) {}
 
  private:
   void OnUploadProgressReported(const net::UploadProgress& progress) {
@@ -78,8 +71,8 @@ class UploadProgressTrackerTest : public ::testing::Test {
   // Mocks the current thread's task runner which will also be used as the
   // UploadProgressTracker's task runner.
   scoped_refptr<base::TestMockTimeTaskRunner> mock_task_runner_ =
-      new base::TestMockTimeTaskRunner;
-  base::ThreadTaskRunnerHandle task_runner_handle_;
+      base::MakeRefCounted<base::TestMockTimeTaskRunner>(
+          base::TestMockTimeTaskRunner::Type::kBound);
 
   TestingUploadProgressTracker upload_progress_tracker_;
 

@@ -10,8 +10,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/sequenced_task_runner.h"
-#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
@@ -36,9 +34,7 @@ class CONTENT_EXPORT UploadProgressTracker {
 
   UploadProgressTracker(const tracked_objects::Location& location,
                         UploadProgressReportCallback report_progress,
-                        net::URLRequest* request,
-                        scoped_refptr<base::SequencedTaskRunner> task_runner =
-                            base::SequencedTaskRunnerHandle::Get());
+                        net::URLRequest* request);
   ~UploadProgressTracker();
 
   void OnAckReceived();
