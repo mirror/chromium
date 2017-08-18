@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59424375_a485f0f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T02:03:50Z",
+      "side": 1,
+      "message": "shutted -\u003e shut",
+      "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f004e9_de017e7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T02:03:50Z",
+      "side": 1,
+      "message": "to shutdown -\u003e to shut down",
+      "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd626398_576c32a7",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T02:03:50Z",
+      "side": 1,
+      "message": "If this destroys |this|, should we return at line 421 to avoid further operations on |this|?",
+      "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb73fe62_46452bfd",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-18T02:03:50Z",
+      "side": 1,
+      "message": "From my personal experience, multiple maps sometimes cause inconsistent state because of code changes, so how about unifying these maps? For example,\n\n  struct Entry {\n    ScriptStatus status;\n    std::unique_ptr\u003cData\u003e data;\n  };\n  std::map\u003cGURL, Entry\u003e script_data_;\n\nBy the way, do we really need to have a separate field for |status|? Data class has |is_valid_| field, so I wonder if it\u0027s available for distinguishing the status instead of |status|.",
+      "revId": "4f921f4c16e2cc5b9d9b2f0869385aac9b4d3999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
