@@ -870,7 +870,7 @@ void CheckClientDownloadRequest::SendRequest() {
             destination: GOOGLE_OWNED_SERVICE
           }
           policy {
-            cookies_allowed: true
+            cookies_allowed: YES
             cookies_store: "Safe Browsing cookies store"
             setting:
               "Users can enable or disable the entire Safe Browsing service in "
