@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2bfd17a4_a5db24bf",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T23:12:57Z",
+      "side": 1,
+      "message": "Not really done. Add a reply explaining why something else was done.\nAlso, clock couldn\u0027t be \"const\" as Now() is not const.",
+      "parentUuid": "24074ff4_b7e6e6cb",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "201b96b8_9b574f33",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
@@ -247,6 +265,30 @@
       "side": 1,
       "message": "I don\u0027t like that check:\n1. Because it messes up people\u0027s tests (you have to set up IO thread and so on, just because of the dcheck).\n2. This would be inconsistent with pretty much 100% of prefetch code. I don\u0027t think such check is applied anywhere.\n\nHere is why I don\u0027t think we need that:\n* We have a discipline of only getting the db pointer on the IO, so from our perspective this does not matter.\n* As for other users (if anyone wants to reuse), I don\u0027t care which thread that is used on either.",
       "parentUuid": "459de99b_ab02ba23",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "311941ac_b7814eb1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-18T23:12:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13bcc943_d7a9dbd7",
       "range": {
         "startLine": 33,
         "startChar": 25,
