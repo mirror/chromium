@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_HISTORY_BROWSING_HISTORY_SERVICE_H_
-#define CHROME_BROWSER_HISTORY_BROWSING_HISTORY_SERVICE_H_
+#ifndef COMPONENTS_HISTORY_CORE_BROWSER_BROWSING_HISTORY_SERVICE_H_
+#define COMPONENTS_HISTORY_CORE_BROWSER_BROWSING_HISTORY_SERVICE_H_
 
 #include <stdint.h>
 
@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
@@ -27,26 +29,22 @@
 #include "components/sync/driver/sync_service_observer.h"
 #include "url/gurl.h"
 
-namespace browser_sync {
-class ProfileSyncService;
-}  // namespace browser_sync
-
-namespace history {
-class HistoryService;
-class QueryResults;
-struct QueryOptions;
-}  // namespace history
-
 namespace syncer {
+class SyncService;
 class SyncServiceObserver;
 }  // namespace syncer
 
-class Profile;
+FORWARD_DECLARE_TEST(BrowsingHistoryHandlerTest, ObservingWebHistoryDeletions);
 
-class BrowsingHistoryServiceHandler;
+namespace history {
+
+class BrowsingHistoryDriver;
+class HistoryService;
+class QueryResults;
+struct QueryOptions;
 
 // Interacts with HistoryService, WebHistoryService, and SyncService to query
-// history and provide results to the associated BrowsingHistoryServiceHandler.
+// history and provide results to the associated BrowsingHistoryDriver.
 class BrowsingHistoryService : public history::HistoryServiceObserver,
                                public history::WebHistoryServiceObserver,
                                public syncer::SyncServiceObserver {
@@ -78,8 +76,8 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
     virtual ~HistoryEntry();
 
     // Comparison function for sorting HistoryEntries from newest to oldest.
-    static bool SortByTimeDescending(
-        const HistoryEntry& entry1, const HistoryEntry& entry2);
+    static bool SortByTimeDescending(const HistoryEntry& entry1,
+                                     const HistoryEntry& entry2);
 
     // The type of visits this entry represents: local, remote, or both.
     EntryType entry_type;
@@ -95,6 +93,7 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
     std::string client_id;
 
     // Timestamps of all local or remote visits the same URL on the same day.
+    // TODO(skym): These should probably be converted to base::Time.
     std::set<int64_t> all_timestamps;
 
     // If true, this entry is a search result.
@@ -130,9 +129,9 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
     base::Time end_time;
   };
 
-  BrowsingHistoryService(
-      Profile* profile,
-      BrowsingHistoryServiceHandler* handler);
+  BrowsingHistoryService(BrowsingHistoryDriver* handler,
+                         history::HistoryService* local_history,
+                         syncer::SyncService* sync_service);
   ~BrowsingHistoryService() override;
 
   // Core implementation of history querying.
@@ -141,8 +140,7 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
 
   // Removes |items| from history.
   void RemoveVisits(
-      std::vector<std::unique_ptr<BrowsingHistoryService::HistoryEntry>>*
-          items);
+      const std::vector<BrowsingHistoryService::HistoryEntry>& items);
 
   // SyncServiceObserver implementation.
   void OnStateChanged(syncer::SyncService* sync) override;
@@ -160,12 +158,12 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
                      history::QueryResults* results);
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(BrowsingHistoryHandlerTest,
+  FRIEND_TEST_ALL_PREFIXES(::BrowsingHistoryHandlerTest,
                            ObservingWebHistoryDeletions);
 
   // Combines the query results from the local history database and the history
   // server, and sends the combined results to the
-  // BrowsingHistoryServiceHandler.
+  // BrowsingHistoryDriver.
   void ReturnResultsToHandler();
 
   // Callback from |web_history_timer_| when a response from web history has
@@ -236,8 +234,8 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
   ScopedObserver<history::WebHistoryService, history::WebHistoryServiceObserver>
       web_history_service_observer_;
 
-  // ProfileSyncService observer listens to late initialization of history sync.
-  ScopedObserver<browser_sync::ProfileSyncService, syncer::SyncServiceObserver>
+  // SyncService observer listens to late initialization of history sync.
+  ScopedObserver<syncer::SyncService, syncer::SyncServiceObserver>
       sync_service_observer_;
 
   // Whether the last call to Web History returned synced results.
@@ -246,9 +244,11 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
   // Whether there are other forms of browsing history on the history server.
   bool has_other_forms_of_browsing_history_;
 
-  Profile* profile_;
+  BrowsingHistoryDriver* driver_;
 
-  BrowsingHistoryServiceHandler* handler_;
+  history::HistoryService* local_history_;
+
+  syncer::SyncService* sync_service_;
 
   // The clock used to vend times.
   std::unique_ptr<base::Clock> clock_;
@@ -258,4 +258,6 @@ class BrowsingHistoryService : public history::HistoryServiceObserver,
   DISALLOW_COPY_AND_ASSIGN(BrowsingHistoryService);
 };
 
-#endif  // CHROME_BROWSER_HISTORY_BROWSING_HISTORY_SERVICE_H_
+}  // namespace history
+
+#endif  // COMPONENTS_HISTORY_CORE_BROWSER_BROWSING_HISTORY_SERVICE_H_
