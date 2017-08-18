@@ -22,6 +22,30 @@
       "revId": "bca53376c43fa9e1344d3836468aeeeb8c238ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1bfa7b_f874480d",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-18T13:43:10Z",
+      "side": 1,
+      "message": "I looked into revision history but I could not find the reason why we don\u0027t consider such case as dismissing a menu. Revised the function name by this reason.\n\nHowever, since this is a change that is required by M61 release, I would like to preserve the existing behavior with mouse click for now and apply it to touch as well.",
+      "parentUuid": "0bcc2d55_fde49068",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "bca53376c43fa9e1344d3836468aeeeb8c238ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
