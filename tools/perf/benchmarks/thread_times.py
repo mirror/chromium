@@ -80,7 +80,9 @@ class ThreadTimesKeyHitTestCases(_ThreadTimes):
     return StoryExpectations()
 
 
-class ThreadTimesFastPathMobileSites(_ThreadTimes):
+@benchmark.Owner(emails=['vmiura@chromium.org'])
+@benchmark.Enabled('android')
+class ThreadTimesKeyMobileSitesSmooth(_ThreadTimes):
   """Measures timeline metrics while performing smoothness action on
   key mobile sites labeled with fast-path tag.
   http://www.chromium.org/developers/design-documents/rendering-benchmarks"""
