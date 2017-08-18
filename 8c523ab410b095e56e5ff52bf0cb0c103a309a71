@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acf87687_15854736",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T21:53:10Z",
+      "side": 1,
+      "message": "Grr, renaming the file but keeping the old file open in edotor does strange things.\nFixed.",
+      "parentUuid": "f27e0021_4c2b3195",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "749cb708_427b973a",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "edd009c4_2c294e11",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T21:53:10Z",
+      "side": 1,
+      "message": "Done. It is a set.",
+      "parentUuid": "749cb708_427b973a",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d5115d_2aa4eb06",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task_unittest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b985192e_c2a59c55",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T21:53:10Z",
+      "side": 1,
+      "message": "Done\nNot sure it simplified the code, but looks better.",
+      "parentUuid": "91d5115d_2aa4eb06",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 33
+      },
+      "revId": "8c523ab410b095e56e5ff52bf0cb0c103a309a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

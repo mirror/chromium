@@ -395,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "18298d26_a328ca6b",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-18T21:53:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0ff6c8_a4799056",
+      "revId": "01bd2f672d932c83ad248d7b32237b0cea11ef40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9e81cf1_da9d21ab",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_reconciler.cc",
         "patchSetId": 1
