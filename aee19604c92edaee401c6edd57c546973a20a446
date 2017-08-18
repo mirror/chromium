@@ -1,0 +1,514 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8522602_323c309c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Doesn\u0027t really seem useful: this is mostly to help check-webkit-style from confusing itself... but multiline comments are pretty rare.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc072ea_d7faa5ac",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "I guess this is another \"warn if the style checker is complained\" type warning.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee04459c_190685e0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Presumably, if something is unsupported, we\u0027ll warn.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0b4053_bf9744eb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Other Chrome code seems to get by fine without this warning.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cdbedb_a8e34878",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Clang warns.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f53d5e3_deadb8eb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Clang warns.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bebfee_bc909c95",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Doesn\u0027t work in Clang.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96590491_23a8c8d8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "clang-format can figure out template formatting.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54f6761_c7b19abe",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "The Chromium port directory hasn\u0027t existed for several years, and we don\u0027t seem to have missed this warning.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f484ec_82b4e398",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "We don\u0027t use these functions in Blink.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843121ba_85117989",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "clang-format does a good job of keeping this from appearing deceptive, so I don\u0027t think it\u0027s necessary to ban this.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c577523_bf4b8f38",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "No clue why this isn\u0027t firing more, but it\u0027s incompatible with the current style guidelines.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5594167_ade560cd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "This actively violates Google/Chrome style, so remove.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8153ef01_aec56966",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "This doesn\u0027t seem high value enough to have a presubmit check.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a786dc2_3d2b8573",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "This isn\u0027t ideal, but Chrome seems to get by fine without it. It does confuse clang-format though...",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d910533d_1b8c481a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "None of these deprecated macros are used anymore in Blink.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e0fada_3106ce74",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "We like nullptr. We don\u0027t like 0 as NULL.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33608ae6_105f868a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "They are discouraged, but I\u0027m not sure it\u0027s worth a presubmit.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2751e6b_e84a5ba6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2489,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "All the WTF includes have been fixed at this point, and the power of self-consistency should more or less enforce it.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabb006c_2824a501",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "The Chromium port directory hasn\u0027t existed in a number of years.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f3fb83_c8757f4a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2499,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "This is kind of nice, but clang-format header sorting should make it obvious when this happens (and again, Chrome hasn\u0027t ever needed this, so why does Blink?)",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9103c87_67d4bfb1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2566,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Clang warns.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e98b15_f871074a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2582,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "In theory, our warnings and sizes step should catch this.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1352c0d8_db095bb5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Doesn\u0027t build in Chrome.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1384b578_0ce48344",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Doesn\u0027t seem useful to have a warning just for this.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624e39d1_89b94d1f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "clang-format makes this appear non-deceptive.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def8dc8f_38e32ccc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2706,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Definitely discouraged, but I\u0027m not sure it\u0027s worth adding a style check for this (Chrome doesn\u0027t have this)",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2356893d_acab1543",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2722,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "Doesn\u0027t seem important to mandate this.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628eb526_45a1d197",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2820,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "A variable named l is not great, but code review to enforce that should be sufficient.",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd01a26a_ffbdeb8d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3017,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-18T21:33:49Z",
+      "side": 0,
+      "message": "No clue what this is trying to enforce (and it seems to be disabled by default anyway)",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
