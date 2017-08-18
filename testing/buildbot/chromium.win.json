@@ -3,49 +3,73 @@
     "gtest_tests": [
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "accessibility_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "app_shell_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "aura_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "base_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "battor_agent_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "boringssl_crypto_tests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          }
         },
         "test": "boringssl_ssl_tests"
       },
       {
         "swarming": {
           "can_use_on_swarming_builders": true,
+          "dimension_sets": {
+            "integrity": "medium"
+          },
           "shards": 10
         },
         "test": "browser_tests"
