@@ -22,6 +22,30 @@
       "revId": "5d30f116a9802b402be22126dc6a01f3f1eddecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c0c49_938c4313",
+        "filename": "chrome/browser/profiles/avatar_menu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-18T21:01:26Z",
+      "side": 1,
+      "message": "I\u0027ve removed END.",
+      "parentUuid": "44406829_0458f17b",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 7
+      },
+      "revId": "5d30f116a9802b402be22126dc6a01f3f1eddecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
