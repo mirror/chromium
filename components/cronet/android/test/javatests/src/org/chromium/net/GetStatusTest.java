@@ -4,22 +4,9 @@
 
 package org.chromium.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import static org.chromium.net.CronetTestRule.getContext;
-
 import android.os.ConditionVariable;
 import android.support.test.filters.SmallTest;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.CronetTestFramework;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
@@ -37,11 +24,7 @@ import java.util.concurrent.Executors;
  * Tests that {@link org.chromium.net.impl.CronetUrlRequest#getStatus(StatusListener)} works as
  * expected.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class GetStatusTest {
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
+public class GetStatusTest extends CronetTestBase {
     private CronetTestFramework mTestFramework;
 
     private static class TestStatusListener extends StatusListener {
@@ -61,19 +44,20 @@ public class GetStatusTest {
             mBlock.close();
         }
     }
-    @Before
-    public void setUp() throws Exception {
-        mTestFramework = mTestRule.startCronetTestFramework();
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        mTestFramework = startCronetTestFramework();
         assertTrue(NativeTestServer.startNativeTestServer(getContext()));
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Override
+    protected void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
         mTestFramework.mCronetEngine.shutdown();
+        super.tearDown();
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testSimpleGet() throws Exception {
@@ -132,7 +116,6 @@ public class GetStatusTest {
         assertEquals("GET", callback.mResponseAsString);
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testInvalidLoadState() throws Exception {
@@ -164,7 +147,6 @@ public class GetStatusTest {
         }
     }
 
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     // Regression test for crbug.com/606872.

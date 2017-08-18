@@ -4,21 +4,8 @@
 
 package org.chromium.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import static org.chromium.net.CronetTestRule.getContext;
-
 import android.support.test.filters.SmallTest;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.impl.CronetUploadDataStream;
@@ -33,19 +20,16 @@ import java.util.concurrent.Executors;
  * {@code UploadDataProvider} to simulate different ordering of reset, init,
  * read, and rewind calls.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class CronetUploadTest {
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
+public class CronetUploadTest extends CronetTestBase {
     private TestDrivenDataProvider mDataProvider;
     private CronetUploadDataStream mUploadDataStream;
     private TestUploadDataStreamHandler mHandler;
 
-    @Before
+    @Override
     @SuppressWarnings("PrimitiveArrayPassedToVarargsMethod")
-    public void setUp() throws Exception {
-        mTestRule.startCronetTestFramework();
+    protected void setUp() throws Exception {
+        super.setUp();
+        startCronetTestFramework();
         ExecutorService executor = Executors.newSingleThreadExecutor();
         List<byte[]> reads = Arrays.asList("hello".getBytes());
         mDataProvider = new TestDrivenDataProvider(executor, reads);
@@ -54,17 +38,17 @@ public class CronetUploadTest {
                 getContext(), mUploadDataStream.createUploadDataStreamForTesting());
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Override
+    protected void tearDown() throws Exception {
         // Destroy handler's native objects.
         mHandler.destroyNativeObjects();
+        super.tearDown();
     }
 
     /**
      * Tests that after some data is read, init triggers a rewind, and that
      * before the rewind completes, init blocks.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -114,7 +98,6 @@ public class CronetUploadTest {
      * Tests that after some data is read, init triggers a rewind, and that
      * after the rewind completes, init does not block.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -163,7 +146,6 @@ public class CronetUploadTest {
      * Tests that if init before read completes, a rewind is triggered when
      * read completes.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -199,7 +181,6 @@ public class CronetUploadTest {
      * is triggered. This test is the same as testReadCompleteTriggerRewind
      * except that this test invokes reset and init again in the end.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -218,7 +199,6 @@ public class CronetUploadTest {
      * Tests that if reset before read completes, no rewind is triggered, and
      * that a following init triggers rewind.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -254,7 +234,6 @@ public class CronetUploadTest {
      * onDestroyUploadDataStream() method is invoked. However, the test should
      * pass either way, though we are interested in the latter case.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -286,7 +265,6 @@ public class CronetUploadTest {
      * onDestroyUploadDataStream() method is invoked. However, the test should
      * pass either way, though we are interested in the latter case.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet

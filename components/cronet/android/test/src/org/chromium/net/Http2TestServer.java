@@ -38,7 +38,7 @@ import io.netty.handler.ssl.SupportedCipherSuiteFilter;
  * Wrapper class to start a HTTP/2 test server.
  */
 public final class Http2TestServer {
-    private static ConditionVariable sBlock;
+    private static final ConditionVariable sBlock = new ConditionVariable();
     private static Channel sServerChannel;
     private static final String TAG = Http2TestServer.class.getSimpleName();
 
@@ -102,23 +102,12 @@ public final class Http2TestServer {
 
     public static boolean startHttp2TestServer(
             Context context, String certFileName, String keyFileName) throws Exception {
-        resetBlock();
         new Thread(
                 new Http2TestServerRunnable(new File(CertTestUtil.CERTS_DIRECTORY + certFileName),
                         new File(CertTestUtil.CERTS_DIRECTORY + keyFileName)))
                 .start();
         sBlock.block();
         return true;
-    }
-
-    /**
-     * Function that reset static variable sBlock.
-     *
-     * Some of the current cronet tests' mechanism of running the same tests twice.
-     * In the second run, sBlock.open() would have been called previous run.
-     */
-    private static void resetBlock() {
-        sBlock = new ConditionVariable();
     }
 
     private Http2TestServer() {}

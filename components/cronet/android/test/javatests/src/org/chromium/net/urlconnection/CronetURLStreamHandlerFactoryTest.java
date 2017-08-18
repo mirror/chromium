@@ -4,32 +4,20 @@
 
 package org.chromium.net.urlconnection;
 
-import static org.junit.Assert.assertEquals;
-
 import android.support.test.filters.SmallTest;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetTestRule;
+import org.chromium.net.CronetTestBase;
 
 /**
  * Test for CronetURLStreamHandlerFactory.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
 @SuppressWarnings("deprecation")
-public class CronetURLStreamHandlerFactoryTest {
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
-    @Test
+public class CronetURLStreamHandlerFactoryTest extends CronetTestBase {
     @SmallTest
     @Feature({"Cronet"})
     public void testRequireConfig() throws Exception {
-        mTestRule.startCronetTestFramework();
+        startCronetTestFramework();
         try {
             new CronetURLStreamHandlerFactory(null);
         } catch (NullPointerException e) {

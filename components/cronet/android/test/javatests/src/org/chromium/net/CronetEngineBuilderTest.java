@@ -4,23 +4,14 @@
 
 package org.chromium.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import static org.chromium.net.CronetProvider.PROVIDER_NAME_APP_PACKAGED;
 import static org.chromium.net.CronetProvider.PROVIDER_NAME_FALLBACK;
-import static org.chromium.net.CronetTestRule.getContext;
 
 import android.content.Context;
 import android.support.test.filters.SmallTest;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,19 +20,13 @@ import java.util.List;
 /**
  * Tests {@link CronetEngine.Builder}.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class CronetEngineBuilderTest {
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
-    @Rule
-    public final CronetTestRule mTestRule = new CronetTestRule();
-
+public class CronetEngineBuilderTest extends CronetTestBase {
     /**
      * Tests the comparison of two strings that contain versions.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
-    @CronetTestRule.OnlyRunNativeCronet
+    @OnlyRunNativeCronet
     public void testVersionComparison() {
         assertVersionIsHigher("22.44", "22.43.12");
         assertVersionIsLower("22.43.12", "022.124");
@@ -58,7 +43,6 @@ public class CronetEngineBuilderTest {
      * the last in the list. Other providers should be ordered by placing providers
      * with the higher version first.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testProviderOrdering() {
@@ -82,7 +66,6 @@ public class CronetEngineBuilderTest {
      * Tests that the providers that are disabled are not included in the list of available
      * providers when the provider is selected by the default selection logic.
      */
-    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testThatDisabledProvidersAreExcluded() {
