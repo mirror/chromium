@@ -399,7 +399,7 @@ int PrivilegedRand(int min, int max) {
   return 4;
 }
 
-#if defined(OS_IOS) && !TARGET_IPHONE_SIMULATOR
+#if defined(OS_IOS) && !TARGET_IPHONE_SIMULATOR || defined(OS_FUCHSIA)
 // TODO(droger): On iOS this test fails on device (but passes on simulator).
 // See http://crbug.com/227760.
 #define MAYBE_ConnectFail DISABLED_ConnectFail
