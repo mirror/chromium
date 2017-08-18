@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7dd680c_44605303",
+        "filename": "content/browser/renderer_host/pepper/pepper_file_system_browser_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-18T03:57:11Z",
+      "side": 1,
+      "message": "We can not yet, since QuotaReservation has not yet migrated to OnceCallback.\nLet me punt it to a next round.",
+      "parentUuid": "84c5c7e5_c9b682c0",
+      "range": {
+        "startLine": 382,
+        "startChar": 27,
+        "endLine": 382,
+        "endChar": 31
+      },
+      "revId": "a689c78ccdb28dd0962048a40a25444f311a6074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afcec4ae_82219234",
         "filename": "content/renderer/pepper/pepper_audio_encoder_host.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a689c78ccdb28dd0962048a40a25444f311a6074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b4a70a_494e1d80",
+        "filename": "content/renderer/pepper/pepper_audio_encoder_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-18T03:57:11Z",
+      "side": 1,
+      "message": "Done\n\nThis is also need an update to the callee, AudioEncoderImpl::Encode. Though, as it\u0027s in this file and the change is small, I updated the callee.",
+      "parentUuid": "afcec4ae_82219234",
+      "range": {
+        "startLine": 444,
+        "startChar": 28,
+        "endLine": 444,
+        "endChar": 45
+      },
+      "revId": "a689c78ccdb28dd0962048a40a25444f311a6074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
