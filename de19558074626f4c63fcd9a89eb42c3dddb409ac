@@ -22,6 +22,29 @@
       "revId": "de19558074626f4c63fcd9a89eb42c3dddb409ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6535eb4e_82d49b6b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2184,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-18T08:46:51Z",
+      "side": 1,
+      "message": "This is supposed to be the time the renderer process was initialized (InitializeWebKit() finished), used for UMA. Is there a way to preserve that?",
+      "range": {
+        "startLine": 2184,
+        "startChar": 43,
+        "endLine": 2184,
+        "endChar": 65
+      },
+      "revId": "de19558074626f4c63fcd9a89eb42c3dddb409ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
