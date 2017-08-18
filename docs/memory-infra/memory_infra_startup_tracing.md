@@ -11,7 +11,13 @@ Start Chrome as follows:
              --trace-startup-file=/tmp/trace.json \
              --trace-startup-duration=7
 
-On Android, enable startup tracing and start Chrome as follows:
+On Android, first ensure that Chrome can write output files to storage. Replace
+"org.chromium.chrome" with the Chrome package you are tracing:
+
+    $ adb shell pm grant org.chromium.chrome android.permission.READ_EXTERNAL_STORAGE
+    $ adb shell pm grant org.chromium.chrome android.permission.WRITE_EXTERNAL_STORAGE
+
+Then enable startup tracing and start Chrome as follows:
 
     $ build/android/adb_chrome_public_command_line \
           --trace-startup=-*,disabled-by-default-memory-infra \
