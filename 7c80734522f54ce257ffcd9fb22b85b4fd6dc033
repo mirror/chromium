@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d202d07_dce1b748",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-006-ref.html",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-18T08:07:08Z",
+      "side": 1,
+      "message": "I suggest that you just delete the table here. Nothing should be painted, after all.",
+      "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffe17fb_49451163",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-18T08:07:08Z",
+      "side": 1,
+      "message": "Hmm.. shouldn\u0027t this method be const?",
+      "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7ec6bf_32b68ec7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-18T08:07:08Z",
+      "side": 1,
+      "message": "Method should be const.",
+      "revId": "7c80734522f54ce257ffcd9fb22b85b4fd6dc033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
