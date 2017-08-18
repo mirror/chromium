@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e7c6cc_98be26b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:49:14Z",
+      "side": 1,
+      "message": "Extra whitespace at the end of the line?",
+      "revId": "241413ba615b1b353abd40f3bd2bf12df30957f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f984a12a_5f71a098",
+        "filename": "ios/chrome/browser/ui/settings/bandwidth_management_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:49:14Z",
+      "side": 1,
+      "message": "+marq wanted to find a different way to handle this, per the parent CL.  We should resolve this today.",
+      "revId": "241413ba615b1b353abd40f3bd2bf12df30957f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991764b3_631452c4",
+        "filename": "ios/chrome/browser/ui/settings/sync_encryption_passphrase_collection_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-18T11:49:14Z",
+      "side": 1,
+      "message": "Who is still using this old constructor?  When will we be able to remove it?",
+      "revId": "241413ba615b1b353abd40f3bd2bf12df30957f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
