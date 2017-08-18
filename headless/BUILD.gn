@@ -523,6 +523,10 @@ test("headless_unittests") {
     deps += [ "//components/crash/content/browser" ]
   }
 
+  if (is_win) {
+    deps += [ "//components/crash/content/app:export_thunks" ]
+  }
+
   if (enable_basic_printing) {
     sources += [ "lib/browser/headless_printing_unittest.cc" ]
     deps += [ "//components/printing/browser" ]
@@ -662,7 +666,10 @@ test("headless_browsertests") {
   ]
 
   if (!is_fuchsia) {
-    deps += [ "//components/crash/content/browser" ]
+    deps += [
+      "//components/crash/content/app:test_support",
+      "//components/crash/content/browser",
+    ]
   }
 
   # Only include this if we built the js_binary
@@ -795,6 +802,7 @@ static_library("headless_shell_lib") {
     defines = [ "HEADLESS_USE_CRASPHAD" ]
 
     deps += [
+      "//components/crash/content/app:export_thunks",
       "//components/crash/content/app:run_as_crashpad_handler",
       "//content:sandbox_helper_win",
       "//sandbox",
