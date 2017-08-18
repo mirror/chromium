@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4069e11_2e5411f0",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T21:09:11Z",
+      "side": 1,
+      "message": "Yep. I added a check in the backend and updated the tests.",
+      "parentUuid": "9afe0f29_0806455c",
+      "revId": "3b4acb0939a7f4784a11751e4a78d78cd26f291e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96578fa2_d95739f3",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3b4acb0939a7f4784a11751e4a78d78cd26f291e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b5c6db_37b26ef3",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-18T21:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96578fa2_d95739f3",
+      "revId": "3b4acb0939a7f4784a11751e4a78d78cd26f291e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
