@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61bfb29b_928b5723",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "vr namespace is not needed.",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcdfff2_fbe4f677",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 10
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fc3027_181a7a4c",
+        "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 8
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b48729c_046a1310",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "It looks like there are quite a few code duplication with url_bar_texture. It might make sense to create a common class for WebVrUrlToast and UrlBarTexture to avoid the duplication.\nDon\u0027t worry about it in this CL given that you are officially OOO. I can help with it after it is landed.",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3fe6df_c7079b1e",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b54cdeb_71c4b4a2",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "doesn\u0027t need to be static?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a23afb_dd039a96",
+        "filename": "chrome/browser/vr/vr_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-18T19:03:22Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
