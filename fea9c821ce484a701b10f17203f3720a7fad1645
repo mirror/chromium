@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f51c1ec8_eec0413a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-18T07:55:11Z",
+      "side": 1,
+      "message": "Agree! This makes |pending_provider_context_| usage/lifetime clearer, I\u0027ll address this based on ps#1.",
+      "parentUuid": "d8e93c7b_6cf65954",
+      "range": {
+        "startLine": 777,
+        "startChar": 44,
+        "endLine": 777,
+        "endChar": 45
+      },
+      "revId": "fea9c821ce484a701b10f17203f3720a7fad1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f1f7b2e_b4bbbb0c",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-18T07:45:57Z",
       "side": 1,
       "message": "Hmm, I prefer having the instance to having its id since just having id doesn\u0027t tell about the lifetime of the object.\nHow about renaming |provider_context_| to |pending_provider_context_| to indicate that this is only for starting up, and releasing the reference in WorkerContextStarted()? I assume the code would be simpler if we use |provider_context_| than having each parameter.",
+      "revId": "fea9c821ce484a701b10f17203f3720a7fad1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1bb26b_22f05547",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-18T07:55:11Z",
+      "side": 1,
+      "message": "Yeah ps#1 is doing that way, and I agree ps#2 becomes complicated..",
+      "parentUuid": "9f1f7b2e_b4bbbb0c",
       "revId": "fea9c821ce484a701b10f17203f3720a7fad1645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
