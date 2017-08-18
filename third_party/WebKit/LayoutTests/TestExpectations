@@ -622,7 +622,6 @@ crbug.com/728378 virtual/layout_ng/overflow/overflow-position-004.html [ Failure
 ### virtual/mojo-loading/http/tests/devtools
 
 ### Manually fix after migration
-crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-dir.js [ NeedsManualRebaseline ]
 
 # ====== DevTools test migration failures until here ======
 
@@ -2943,7 +2942,7 @@ crbug.com/733524 [ Mac ] virtual/mojo-loading/http/tests/security/contentSecurit
 # Sheriff failures 2017-06-23
 crbug.com/736548 [ Mac ] css2.1/t040304-c64-uri-00-a-g.html [ Failure Pass ]
 
-crbug.com/v8/6529 http/tests/devtools/console/console-dir.js [ NeedsManualRebaseline ]
+
 crbug.com/v8/6529 inspector/console/console-format.html [ NeedsManualRebaseline ]
 
 crbug.com/737959 http/tests/misc/object-image-load-outlives-gc-without-crashing.html [ Failure Pass ]
