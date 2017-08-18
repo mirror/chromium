@@ -35,6 +35,7 @@ import android.webkit.WebViewProvider;
 
 import com.android.webview.chromium.WebViewDelegateFactory.WebViewDelegate;
 
+import org.chromium.android_webview.AwAutofillProvider;
 import org.chromium.android_webview.AwBrowserContext;
 import org.chromium.android_webview.AwBrowserProcess;
 import org.chromium.android_webview.AwContents;
@@ -65,6 +66,7 @@ import org.chromium.base.library_loader.NativeLibraries;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.components.autofill.AutofillProvider;
 import org.chromium.content.browser.input.LGEmailActionModeWorkaround;
+import org.chromium.content_public.browser.ContentClassFactoryInstaller;
 import org.chromium.net.NetworkChangeNotifier;
 
 import java.io.File;
@@ -453,6 +455,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         }
 
         mRunQueue.drainQueue();
+
+        ContentClassFactoryInstaller.installFactory();
     }
 
     boolean hasStarted() {
@@ -724,13 +728,14 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         return mWebViewDelegate;
     }
 
-    // The method to support unreleased Android.
     WebViewContentsClientAdapter createWebViewContentsClientAdapter(WebView webView,
             Context context) {
         return new WebViewContentsClientAdapter(webView, context, mWebViewDelegate);
     }
 
     AutofillProvider createAutofillProvider(Context context, ViewGroup containerView) {
-        return null;
+        // TODO(michaelbai): The Autofill feature shall be enabled by the app's SDK level. See
+        // https://crbug.com/717190.
+        return new AwAutofillProvider(context, containerView);
     }
 }

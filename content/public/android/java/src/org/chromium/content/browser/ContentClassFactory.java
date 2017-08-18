@@ -35,14 +35,13 @@ public class ContentClassFactory {
     /**
      * Constructor.
      */
-    protected ContentClassFactory() {}
+    public ContentClassFactory() {}
 
     /**
      * Creates SmartSelectorProvider object.
      */
     public SmartSelectionProvider createSmartSelectionProvider(
             SmartSelectionProvider.ResultCallback callback, WindowAndroid windowAndroid) {
-        // Implemented by a subclass.
-        return null;
+        return new SmartSelectionProviderImpl(callback, windowAndroid);
     }
 }
