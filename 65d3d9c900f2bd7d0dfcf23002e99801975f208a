@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8493ffa1_cb358967",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-18T02:15:21Z",
+      "side": 1,
+      "message": "There\u0027s an MD4() single-shot function that will save you a little bit of typing.",
+      "revId": "65d3d9c900f2bd7d0dfcf23002e99801975f208a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d0f5ad_e1ee9b9f",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-18T02:15:21Z",
+      "side": 1,
+      "message": "Likewise, this can use the HMAC() single-shot function for a little less typing.",
+      "revId": "65d3d9c900f2bd7d0dfcf23002e99801975f208a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
