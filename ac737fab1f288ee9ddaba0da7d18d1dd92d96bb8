@@ -16,6 +16,24 @@
       "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405c79cf_50a6b703",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-18T16:03:46Z",
+      "side": 1,
+      "message": "There is an opacity animation for the screen shield. Do we need to use render surface caching there ([1]) as well as during overview mode shutdown ([2])?\n\n[1] - https://cs.chromium.org/chromium/src/ash/wm/overview/window_grid.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d674\n\n[2] https://cs.chromium.org/chromium/src/ash/wm/overview/window_grid.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d294",
+      "parentUuid": "844751f6_b002b945",
+      "revId": "ac737fab1f288ee9ddaba0da7d18d1dd92d96bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
