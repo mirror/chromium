@@ -3,19 +3,34 @@
     "gtest_tests": [
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "integrity": "medium"
+            }
+          ]
         },
         "test": "accessibility_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "integrity": "medium"
+            }
+          ]
         },
         "test": "app_shell_unittests"
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "integrity": "medium"
+            }
+          ]
         },
         "test": "aura_unittests"
       },
